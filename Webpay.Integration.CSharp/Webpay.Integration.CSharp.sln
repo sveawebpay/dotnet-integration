@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpay.Integration.CSharp", "Webpay.Integration.CSharp.csproj", "{7F1E3F74-6C5A-45EA-BFA6-28133010A136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpay.Integration.CSharp.Test", "Webpay.Integration.CSharp.Test\Webpay.Integration.CSharp.Test.csproj", "{9DCD3B6B-C40C-4416-A970-25623E57EAA5}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs2010.sveaekonomi.se:8080/tfs/projects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Webpay.Integration.CSharp.csproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = Webpay.Integration.CSharp.Test\\Webpay.Integration.CSharp.Test.csproj
+		SccProjectName2 = Webpay.Integration.CSharp.Test
+		SccLocalPath2 = Webpay.Integration.CSharp.Test
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|x86.ActiveCfg = Release|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

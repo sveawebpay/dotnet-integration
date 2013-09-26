@@ -41,21 +41,8 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 WriteSimpleElement("iscompany", order.GetIsCompanyIdentity() ? "true" : "false");
                 
                 SerializeCustomer(order);
-
                 SerializeRows(rows);
-
-                if (payment.GetExcludedPaymentMethod() != null)
-                {
-                    _xmlw.WriteStartElement("excludepaymentMethods");
-
-                    List<string> excludeList = payment.GetExcludedPaymentMethod();
-                    foreach (string str in excludeList)
-                    {
-                        WriteSimpleElement("exclude", str);
-                    }
-
-                    _xmlw.WriteEndElement();
-                }
+                SerializeExcludedPaymentMethods(payment.GetExcludedPaymentMethod());
 
                 WriteSimpleElement("addinvoicefee", "false");
                 _xmlw.WriteEndDocument();
@@ -226,6 +213,22 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             WriteSimpleElement("unit", row.GetUnit());
         
             _xmlw.WriteEndElement();
+        }
+
+        private void SerializeExcludedPaymentMethods(List<string> excludedPaymentMethod)
+        {
+            if (excludedPaymentMethod != null)
+            {
+                _xmlw.WriteStartElement("excludepaymentMethods");
+
+                List<string> excludeList = excludedPaymentMethod;
+                foreach (string str in excludeList)
+                {
+                    WriteSimpleElement("exclude", str);
+                }
+
+                _xmlw.WriteEndElement();
+            }
         }
 
         private void WriteSimpleElement(string name, string value)

@@ -45,10 +45,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
-            const string expectedSub = "KORTCERT";
-            string actual = html.Substring(html.IndexOf("<paymentmethod>", 0) + "<paymentmethod>".Length, expectedSub.Length);
 
-            Assert.AreEqual(expectedSub, actual);
+            Assert.True(html.Contains("<paymentmethod>KORTCERT</paymentmethod>"));
         }
 
         [Test]
@@ -92,10 +90,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
-            const string expectedSub = "INVOICE";
-            string actual = html.Substring(html.IndexOf("<paymentmethod>", 0) + "<paymentmethod>".Length, expectedSub.Length);
 
-            Assert.AreEqual(expectedSub, actual);
+            Assert.True(html.Contains("<paymentmethod>INVOICE</paymentmethod>"));
         }
     }
 }

@@ -81,9 +81,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
-            const string expected = "18750";
-            string amount = html.Substring(html.IndexOf("<amount>") + 8, expected.Length);
-            Assert.AreEqual(expected, amount);
+
+            Assert.True(html.Contains("<amount>18750</amount>"));
         }
 
         [Test]
@@ -133,9 +132,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
-            const string expected = "18750";
-            string amount = html.Substring(html.IndexOf("<amount>") + 8, expected.Length);
-            Assert.AreEqual(expected, amount);
+
+            Assert.True(html.Contains("<amount>18750</amount>"));
         }
     }
 }

@@ -32,43 +32,18 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
 
                 _xmlw = payment.GetPaymentSpecificXml(_xmlw);
                 WriteSimpleElement("customerrefno", order.GetClientOrderNumber());
-                WriteSimpleElement("returnurl", payment.GetReturnUrl());
-                WriteSimpleElement("cancelurl", payment.GetCancelUrl());
                 WriteSimpleElement("currency", order.GetCurrency());
                 WriteSimpleElement("amount", payment.GetAmount().ToString());
-                WriteSimpleElement("lang", payment.GetPayPageLanguageCode().ToLower());
-
-                SerializeCustomer(order);
-
                 WriteSimpleElement("vat", payment.GetVat().ToString());
-
-                if (order.GetIsCompanyIdentity())
-                {
-                    if (order.GetCompanyCustomer().GetIpAddress() != null)
-                        WriteSimpleElement("ipaddress", order.GetCompanyCustomer().GetIpAddress());
-                }
-                else
-                {
-                    if (order.GetIndividualCustomer().GetIpAddress() != null)
-                        WriteSimpleElement("ipaddress", order.GetIndividualCustomer().GetIpAddress());
-                }
-
-                SerializeRows(rows);
-
-                if (payment.GetExcludedPaymentMethod() != null)
-                {
-                    _xmlw.WriteStartElement("excludepaymentMethods");
-
-                    List<string> excludeList = payment.GetExcludedPaymentMethod();
-                    foreach (string str in excludeList)
-                    {
-                        WriteSimpleElement("exclude", str);
-                    }
-
-                    _xmlw.WriteEndElement();
-                }
-
+                WriteSimpleElement("lang", payment.GetPayPageLanguageCode().ToLower());
+                WriteSimpleElement("returnurl", payment.GetReturnUrl());
+                WriteSimpleElement("cancelurl", payment.GetCancelUrl());
                 WriteSimpleElement("iscompany", order.GetIsCompanyIdentity() ? "true" : "false");
+                
+                SerializeCustomer(order);
+                SerializeRows(rows);
+                SerializeExcludedPaymentMethods(payment.GetExcludedPaymentMethod());
+
                 WriteSimpleElement("addinvoicefee", "false");
                 _xmlw.WriteEndDocument();
             }
@@ -79,6 +54,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         private void SerializeCustomer(CreateOrderBuilder order)
         {
             CustomerIdentity customer;
+
             if (order.GetIsCompanyIdentity())
             {
                 customer = order.GetCompanyCustomer();
@@ -103,87 +79,71 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 WriteSimpleElement("ssn", customer.CompanyIdentity.CompanyVatNumber);
             }
 
-            //set for individual customer
+            //Individual customer
             if (!order.GetIsCompanyIdentity())
             {
-                if (customer.IndividualIdentity != null)
+                IndividualIdentity individualIdentity = customer.IndividualIdentity;
+
+                if (individualIdentity != null)
                 {
-                    if (customer.IndividualIdentity.FirstName != null)
+                    if (individualIdentity.FirstName != null)
                     {
-                        WriteSimpleElement("firstname", customer.IndividualIdentity.FirstName);
+                        WriteSimpleElement("firstname", individualIdentity.FirstName);
                     }
-                    if (customer.IndividualIdentity.LastName != null)
+
+                    if (individualIdentity.LastName != null)
                     {
-                        WriteSimpleElement("lastname", customer.IndividualIdentity.LastName);
+                        WriteSimpleElement("lastname", individualIdentity.LastName);
                     }
-                    if (customer.IndividualIdentity.Initials != null)
+
+                    if (individualIdentity.Initials != null)
                     {
-                        WriteSimpleElement("initials", customer.IndividualIdentity.Initials);
+                        WriteSimpleElement("initials", individualIdentity.Initials);
                     }
-                }
-                if (customer.Email != null)
-                {
-                    WriteSimpleElement("email", customer.Email);
-                }
-                if (customer.PhoneNumber != null)
-                {
-                    WriteSimpleElement("phone", customer.PhoneNumber);
-                }
-                if (customer.Street != null)
-                {
-                    WriteSimpleElement("address", customer.Street);
-                }
-                if (customer.ZipCode != null)
-                {
-                    WriteSimpleElement("zip", customer.ZipCode);
-                }
-                if (customer.HouseNumber != null)
-                {
-                    WriteSimpleElement("housenumber", customer.HouseNumber);
-                }
-                if (customer.CoAddress != null)
-                {
-                    WriteSimpleElement("address2", customer.CoAddress);
-                }
-                if (customer.Locality != null)
-                {
-                    WriteSimpleElement("city", customer.Locality);
                 }
             }
+            //Company customer
             else
             {
                 if (customer.FullName != null)
                 {
                     WriteSimpleElement("firstname", customer.FullName);
                 }
-                if (customer.Email != null)
-                {
-                    WriteSimpleElement("email", customer.Email);
-                }
-                if (customer.PhoneNumber != null)
-                {
-                    WriteSimpleElement("phone", customer.PhoneNumber);
-                }
-                if (customer.Street != null)
-                {
-                    WriteSimpleElement("address", customer.Street);
-                }
-                if (customer.ZipCode != null)
-                {
-                    WriteSimpleElement("zip", customer.ZipCode);
-                }
-                if (customer.HouseNumber != null)
-                {
-                    WriteSimpleElement("housenumber", customer.HouseNumber);
-                }
-                if (customer.CoAddress != null)
-                {
-                    WriteSimpleElement("address2", customer.CoAddress);
-                }
-                if (customer.Locality != null)
-                {
-                    WriteSimpleElement("city", customer.Locality);
-                }
+            }
+
+            if (customer.PhoneNumber != null)
+            {
+                WriteSimpleElement("phone", customer.PhoneNumber);
+            }
+
+            if (customer.Email != null)
+            {
+                WriteSimpleElement("email", customer.Email);
+            }
+
+            if (customer.Street != null)
+            {
+                WriteSimpleElement("address", customer.Street);
+            }
+
+            if (customer.HouseNumber != null)
+            {
+                WriteSimpleElement("housenumber", customer.HouseNumber);
+            }
+
+            if (customer.CoAddress != null)
+            {
+                WriteSimpleElement("address2", customer.CoAddress);
+            }
+
+            if (customer.ZipCode != null)
+            {
+                WriteSimpleElement("zip", customer.ZipCode);
+            }
+
+            if (customer.Locality != null)
+            {
+                WriteSimpleElement("city", customer.Locality);
             }
 
             if (order.GetCountryCode() != 0)
@@ -192,6 +152,21 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             }
 
             _xmlw.WriteEndElement();
+
+            if (order.GetIsCompanyIdentity())
+            {
+                if (order.GetCompanyCustomer().GetIpAddress() != null)
+                {
+                    WriteSimpleElement("ipaddress", order.GetCompanyCustomer().GetIpAddress());
+                }
+            }
+            else
+            {
+                if (order.GetIndividualCustomer().GetIpAddress() != null)
+                {
+                    WriteSimpleElement("ipaddress", order.GetIndividualCustomer().GetIpAddress());
+                }
+            }
         }
 
         /// <summary>
@@ -238,6 +213,22 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             WriteSimpleElement("unit", row.GetUnit());
         
             _xmlw.WriteEndElement();
+        }
+
+        private void SerializeExcludedPaymentMethods(List<string> excludedPaymentMethod)
+        {
+            if (excludedPaymentMethod != null)
+            {
+                _xmlw.WriteStartElement("excludepaymentMethods");
+
+                List<string> excludeList = excludedPaymentMethod;
+                foreach (string str in excludeList)
+                {
+                    WriteSimpleElement("exclude", str);
+                }
+
+                _xmlw.WriteEndElement();
+            }
         }
 
         private void WriteSimpleElement(string name, string value)

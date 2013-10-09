@@ -16,8 +16,8 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         public string GetXml(HostedPayment payment)
         {
             var xmlOutput = new Utf8StringWriter(Encoding.UTF8);
-            CreateOrderBuilder order = payment.GetCreateOrderBuilder();
-            List<HostedOrderRowBuilder> rows = payment.GetRowBuilder();
+            var order = payment.GetCreateOrderBuilder();
+            var rows = payment.GetRowBuilder();
 
             var xmlSettings = new XmlWriterSettings
                 {
@@ -74,7 +74,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             {
                 WriteSimpleElement("ssn", customer.IndividualIdentity.BirthDate);
             }
-            else if (order.GetIsCompanyIdentity() && !order.GetCountryCode().Equals(CountryCode.SE))//euro country, Company customer and nationalId not set
+            else if (order.GetIsCompanyIdentity() && order.GetCountryCode() != CountryCode.SE)//euro country, Company customer and nationalId not set
             {
                 WriteSimpleElement("ssn", customer.CompanyIdentity.CompanyVatNumber);
             }
@@ -82,24 +82,12 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             //Individual customer
             if (!order.GetIsCompanyIdentity())
             {
-                IndividualIdentity individualIdentity = customer.IndividualIdentity;
-
+                var individualIdentity = customer.IndividualIdentity;
                 if (individualIdentity != null)
                 {
-                    if (individualIdentity.FirstName != null)
-                    {
-                        WriteSimpleElement("firstname", individualIdentity.FirstName);
-                    }
-
-                    if (individualIdentity.LastName != null)
-                    {
-                        WriteSimpleElement("lastname", individualIdentity.LastName);
-                    }
-
-                    if (individualIdentity.Initials != null)
-                    {
-                        WriteSimpleElement("initials", individualIdentity.Initials);
-                    }
+                    WriteSimpleElement("firstname", individualIdentity.FirstName);
+                    WriteSimpleElement("lastname", individualIdentity.LastName);
+                    WriteSimpleElement("initials", individualIdentity.Initials);
                 }
             }
             //Company customer
@@ -182,7 +170,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         
             _xmlw.WriteStartElement("orderrows");
         
-            foreach(HostedOrderRowBuilder row in rows) 
+            foreach(var row in rows) 
             {
                 SerializeRow(row);
             }
@@ -215,36 +203,26 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             _xmlw.WriteEndElement();
         }
 
-        private void SerializeExcludedPaymentMethods(List<string> excludedPaymentMethod)
+        private void SerializeExcludedPaymentMethods(IEnumerable<string> excludedPaymentMethod)
         {
-            if (excludedPaymentMethod != null)
+            if (excludedPaymentMethod == null) 
+                return;
+
+            _xmlw.WriteStartElement("excludepaymentMethods");
+
+            foreach (var str in excludedPaymentMethod)
             {
-                _xmlw.WriteStartElement("excludepaymentMethods");
-
-                List<string> excludeList = excludedPaymentMethod;
-                foreach (string str in excludeList)
-                {
-                    WriteSimpleElement("exclude", str);
-                }
-
-                _xmlw.WriteEndElement();
+                WriteSimpleElement("exclude", str);
             }
+
+            _xmlw.WriteEndElement();
         }
 
         private void WriteSimpleElement(string name, string value)
         {
             if (value == null)
-            {
                 return;
-            }
-
-            _xmlw.WriteStartElement(name);
-
-            if (!value.Equals(""))
-            {
-                _xmlw.WriteChars(value.ToCharArray(), 0, value.ToCharArray().Length);
-            }
-            _xmlw.WriteEndElement();
+            _xmlw.WriteElementString(name, value);
         }
     }
 }

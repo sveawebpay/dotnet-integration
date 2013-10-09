@@ -1,4 +1,4 @@
 dotnet-integration
 ===================
 
-SveaWebPay integration package for C#/.Net.
+SveaWebPay integration package for C#/.Net

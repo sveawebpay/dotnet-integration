@@ -95,13 +95,13 @@
     <Compile Include="Webservice\Payment\HostedPaymentResponseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Webpay.Integration.CSharp.csproj">
-      <Project>{7F1E3F74-6C5A-45EA-BFA6-28133010A136}</Project>
-      <Name>Webpay.Integration.CSharp</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Webpay.Integration.CSharp\Webpay.Integration.CSharp.csproj">
+      <Project>{7f1e3f74-6c5a-45ea-bfa6-28133010a136}</Project>
+      <Name>Webpay.Integration.CSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

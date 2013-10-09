@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpay.Integration.CSharp", "Webpay.Integration.CSharp.csproj", "{7F1E3F74-6C5A-45EA-BFA6-28133010A136}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpay.Integration.CSharp.Test", "Webpay.Integration.CSharp.Test\Webpay.Integration.CSharp.Test.csproj", "{9DCD3B6B-C40C-4416-A970-25623E57EAA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DDF78A26-3A7E-4786-88E7-5149E7F02001}"
@@ -12,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DDF78A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webpay.Integration.CSharp", "Webpay.Integration.CSharp\Webpay.Integration.CSharp.csproj", "{7F1E3F74-6C5A-45EA-BFA6-28133010A136}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,18 +20,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|x86.ActiveCfg = Release|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DCD3B6B-C40C-4416-A970-25623E57EAA5}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F1E3F74-6C5A-45EA-BFA6-28133010A136}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

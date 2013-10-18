@@ -112,13 +112,14 @@ namespace Webpay.Integration.CSharp.Order.Create
             {
                 CustomerId.CountryCode = countryCode.ToString().ToUpper();
 
-                if (CountryCode.Equals(CountryCode.SE) && CustomerId.CustomerType.Equals(CustomerType.Company))
+                if (CountryCode == CountryCode.SE && CustomerId.CustomerType == CustomerType.Company)
                 {
-                    CustomerId.NationalIdNumber = CustomerId.CompanyIdentity.CompanyVatNumber ?? CustomerId.NationalIdNumber;
+                    CustomerId.NationalIdNumber = CustomerId.CompanyIdentity.CompanyVatNumber ??
+                                                  CustomerId.NationalIdNumber;
                     CustomerId.CompanyIdentity = null;
                 }
             }
-                
+
             _hasSetCountryCode = true;
             return this;
         }
@@ -131,19 +132,27 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         public override CreateOrderBuilder AddDiscount(IRowBuilder itemDiscount)
         {
-            if (itemDiscount.GetType() == new FixedDiscountBuilder().GetType())
-                FixedDiscountRows.Add((FixedDiscountBuilder)itemDiscount);
+            if (itemDiscount is FixedDiscountBuilder)
+            {
+                FixedDiscountRows.Add(itemDiscount as FixedDiscountBuilder);
+            }
             else
-                RelativeDiscountRows.Add((RelativeDiscountBuilder)itemDiscount);
+            {
+                RelativeDiscountRows.Add(itemDiscount as RelativeDiscountBuilder);
+            }
             return this;
         }
 
         public override CreateOrderBuilder AddFee(IRowBuilder itemFee)
         {
             if (itemFee.GetType() == new ShippingFeeBuilder().GetType())
-                ShippingFeeRows.Add((ShippingFeeBuilder)itemFee);
+            {
+                ShippingFeeRows.Add((ShippingFeeBuilder) itemFee);
+            }
             else
-                InvoiceFeeRows.Add((InvoiceFeeBuilder)itemFee);
+            {
+                InvoiceFeeRows.Add((InvoiceFeeBuilder) itemFee);
+            }
             return this;
         }
 
@@ -217,7 +226,7 @@ namespace Webpay.Integration.CSharp.Order.Create
         /// <param name="paymentMethod"></param>
         /// <exception cref="SveaWebPayValidationException"></exception>
         /// <returns>PaymentMethodPayment</returns>
-        public PaymentMethodPayment UsePaymentMethod(PaymentMethod paymentMethod) 
+        public PaymentMethodPayment UsePaymentMethod(PaymentMethod paymentMethod)
         {
             return new PaymentMethodPayment(this, paymentMethod);
         }
@@ -240,12 +249,18 @@ namespace Webpay.Integration.CSharp.Order.Create
         /// <returns>PaymentPlanPayment</returns>
         public PaymentPlanPayment UsePaymentPlanPayment(long? campaignCode)
         {
-    		if(campaignCode == null)
-                throw new SveaWebPayValidationException("MISSING VALUE - Campaign code must be set. Add parameter in .UsePaymentPlanPayment(campaignCode)");
-    		if(CustomerId.GetType() == new CompanyCustomer().GetType())
-                throw new SveaWebPayValidationException("ERROR - CompanyCustomer is not allowed to use payment plan option.");
-    	
-            return UsePaymentPlanPayment(campaignCode, false);        
+            if (campaignCode == null)
+            {
+                throw new SveaWebPayValidationException(
+                    "MISSING VALUE - Campaign code must be set. Add parameter in .UsePaymentPlanPayment(campaignCode)");
+            }
+            if (CustomerId is CompanyCustomer)
+            {
+                throw new SveaWebPayValidationException(
+                    "ERROR - CompanyCustomer is not allowed to use payment plan option.");
+            }
+
+            return UsePaymentPlanPayment(campaignCode, false);
         }
 
         /// <summary>
@@ -255,36 +270,36 @@ namespace Webpay.Integration.CSharp.Order.Create
         /// <param name="sendAutomaticGiroPaymentForm"></param>
         /// <exception cref="SveaWebPayValidationException"></exception>
         /// <returns>PaymentPlanPayment</returns>
-        public PaymentPlanPayment UsePaymentPlanPayment(long? campaignCode, bool sendAutomaticGiroPaymentForm) 
+        public PaymentPlanPayment UsePaymentPlanPayment(long? campaignCode, bool sendAutomaticGiroPaymentForm)
         {
             _campaignCode = campaignCode;
             _sendAutomaticGiroPaymentForm = sendAutomaticGiroPaymentForm;
             return new PaymentPlanPayment(this);
         }
-    
+
         public CreateOrderBuilder AddCustomerDetails(CustomerIdentity customerIdentity)
         {
             CustomerId = customerIdentity;
             if (_hasSetCountryCode)
+            {
                 CustomerId.CountryCode = CountryCode.ToString().ToUpper();
+            }
             return this;
         }
 
         public bool GetIsCompanyIdentity()
         {
-            if (CustomerId.CustomerType == CustomerType.Company)
-                return true;
-            return false;
+            return CustomerId.CustomerType == CustomerType.Company;
         }
 
         public CompanyCustomer GetCompanyCustomer()
         {
-            return (CompanyCustomer)GetCustomerIdentity();
+            return (CompanyCustomer) GetCustomerIdentity();
         }
 
         public IndividualCustomer GetIndividualCustomer()
         {
-            return (IndividualCustomer)GetCustomerIdentity();
+            return (IndividualCustomer) GetCustomerIdentity();
         }
 
         public CustomerIdentity GetCustomerIdentity()
@@ -297,13 +312,19 @@ namespace Webpay.Integration.CSharp.Order.Create
             var customer = new CustomerIdentity
                 {
                     CoAddress = CustomerId.CoAddress,
-                    CompanyIdentity = (CustomerId.CountryCode != null && CustomerId.CountryCode.Equals("SE")) ? null : CustomerId.CompanyIdentity,
+                    CompanyIdentity =
+                        (CustomerId.CountryCode != null && CustomerId.CountryCode == "SE")
+                            ? null
+                            : CustomerId.CompanyIdentity,
                     CountryCode = CustomerId.CountryCode,
                     CustomerType = CustomerId.CustomerType,
                     Email = CustomerId.Email,
                     FullName = CustomerId.FullName,
                     HouseNumber = CustomerId.HouseNumber,
-                    IndividualIdentity = (CustomerId.CountryCode != null && CustomerId.CountryCode.Equals("SE")) ? null : CustomerId.IndividualIdentity,
+                    IndividualIdentity =
+                        (CustomerId.CountryCode != null && CustomerId.CountryCode == "SE")
+                            ? null
+                            : CustomerId.IndividualIdentity,
                     IpAddress = CustomerId.IpAddress,
                     Locality = CustomerId.Locality,
                     NationalIdNumber = CustomerId.NationalIdNumber,
@@ -329,7 +350,6 @@ namespace Webpay.Integration.CSharp.Order.Create
         public CreateOrderBuilder Run(ICreateBuilderCommand runner)
         {
             return runner.Run(this);
-        } 
-
+        }
     }
 }

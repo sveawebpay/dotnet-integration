@@ -9,81 +9,6 @@ namespace Webpay.Integration.CSharp.Response.Hosted
     {
         public readonly SveaConfig Config = new SveaConfig();
 
-        public SveaResponse(string responseXmlBase64, string secretWord)
-        {
-            SetValues(responseXmlBase64);
-        }
-
-        private void SetValues(string xmlBase64)
-        {
-            string xml = Base64Util.DecodeBase64String(xmlBase64);
-            Xml = xml;
-
-            var d1 = new XmlDocument();
-            d1.LoadXml(xml);
-
-            XmlNodeList nodeList = d1.GetElementsByTagName("response");
-            try
-            {
-                int size = nodeList.Count;
-
-                for (int i = 0; i < size; i++)
-                {
-                    var element = (XmlElement)nodeList.Item(i);
-                    int status = int.Parse(GetTagValue(element, "statuscode"));
-                    if (status == 0)
-                    {
-                        OrderAccepted = true;
-                        ResultCode = "0 (ORDER_ACCEPTED)";
-                    }
-                    else
-                    {
-                        OrderAccepted = false;
-                        SetErrorParams(status);
-                    }
-
-                    TransactionId = GetTagAttribute(element, "transaction", "id");
-                    PaymentMethod = GetTagValue(element, "paymentmethod");
-                    MerchantId = GetTagValue(element, "merchantid");
-                    ClientOrderNumber = GetTagValue(element, "customerrefno");
-                    int minorAmount = int.Parse(GetTagValue(element, "amount"));
-                    Amount = minorAmount*0.01;
-                    Currency = GetTagValue(element, "currency");
-                    SubscriptionId = GetTagValue(element, "subscriptionid");
-                    SubscriptionType = GetTagValue(element, "subscriptiontype");
-                    CardType = GetTagValue(element, "cardtype");
-                    MaskedCardNumber = GetTagValue(element, "maskedcardno");
-                    ExpiryMonth = GetTagValue(element, "expirymonth");
-                    ExpiryYear = GetTagValue(element, "expiryyear");
-                    AuthCode = GetTagValue(element, "authcode");
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-        }
-
-
-        private string GetTagAttribute(XmlElement elementNode, string tagName, string attributeName)
-        {
-            XmlNode trans = elementNode.GetElementsByTagName(tagName).Item(0);
-            XmlNamedNodeMap attr = trans.Attributes;
-            return attr.GetNamedItem(attributeName).Value;
-        }
-
-        private string GetTagValue(XmlElement elementNode, string tagName)
-        {
-            XmlNodeList nodeList = elementNode.GetElementsByTagName(tagName);
-            var element = (XmlElement)nodeList.Item(0);
-            if (element != null && element.HasChildNodes)
-            {
-                XmlNodeList textList = element.ChildNodes;
-                return textList.Item(0).Value;
-            }
-            return null;
-        }
-
         public string TransactionId { get; set; }
 
         public string ClientOrderNumber { get; set; }
@@ -112,13 +37,92 @@ namespace Webpay.Integration.CSharp.Response.Hosted
 
         public string Xml { get; set; }
 
+        /// <summary>
+        /// SveaResponse
+        /// </summary>
+        /// <param name="responseXmlBase64"></param>
+        /// <param name="secretWord"></param>
+        /// <exception cref="Exception"></exception>
+        public SveaResponse(string responseXmlBase64, string secretWord)
+        {
+            SetValues(responseXmlBase64);
+        }
+
+        private void SetValues(string xmlBase64)
+        {
+            string xml = Base64Util.DecodeBase64String(xmlBase64);
+            Xml = xml;
+
+            var d1 = new XmlDocument();
+            d1.LoadXml(xml);
+
+            foreach (XmlElement element in d1.GetElementsByTagName("response"))
+            {
+                var status = int.Parse(GetTagValue(element, "statuscode"));
+                if (status == 0)
+                {
+                    OrderAccepted = true;
+                    ResultCode = "0 (ORDER_ACCEPTED)";
+                }
+                else
+                {
+                    OrderAccepted = false;
+                    SetErrorParams(status);
+                }
+
+                TransactionId = GetTagAttribute(element, "transaction", "id");
+                PaymentMethod = GetTagValue(element, "paymentmethod");
+                MerchantId = GetTagValue(element, "merchantid");
+                ClientOrderNumber = GetTagValue(element, "customerrefno");
+                Amount = int.Parse(GetTagValue(element, "amount")) * 0.01;
+                Currency = GetTagValue(element, "currency");
+                SubscriptionId = GetTagValue(element, "subscriptionid");
+                SubscriptionType = GetTagValue(element, "subscriptiontype");
+                CardType = GetTagValue(element, "cardtype");
+                MaskedCardNumber = GetTagValue(element, "maskedcardno");
+                ExpiryMonth = GetTagValue(element, "expirymonth");
+                ExpiryYear = GetTagValue(element, "expiryyear");
+                AuthCode = GetTagValue(element, "authcode");
+            }
+        }
+
+        private string GetTagAttribute(XmlElement elementNode, string tagName, string attributeName)
+        {
+            XmlNode trans = elementNode.GetElementsByTagName(tagName).Item(0);
+            if (trans != null)
+            {
+                XmlNamedNodeMap attr = trans.Attributes;
+                if (attr != null)
+                {
+                    return attr.GetNamedItem(attributeName).Value;
+                }
+            }
+            return null;
+        }
+
+        private string GetTagValue(XmlElement elementNode, string tagName)
+        {
+            XmlNodeList nodeList = elementNode.GetElementsByTagName(tagName);
+            var element = (XmlElement)nodeList.Item(0);
+            if (element != null && element.HasChildNodes)
+            {
+                XmlNodeList textList = element.ChildNodes;
+                XmlNode xmlNode = textList.Item(0);
+                if (xmlNode != null)
+                {
+                    return xmlNode.Value;
+                }
+            }
+            return null;
+        }
+
         private void SetErrorParams(int resultCode)
         {
             switch (resultCode)
             {
                 case 1:
                     ResultCode = resultCode + " (REQUIRES_MANUAL_REVIEW)";
-                    ErrorMessage = 
+                    ErrorMessage =
                         "Request performed successfully but requires manual review from merchant. Applicable PaymentMethod: PAYPAL.";
                     break;
                 case 100:

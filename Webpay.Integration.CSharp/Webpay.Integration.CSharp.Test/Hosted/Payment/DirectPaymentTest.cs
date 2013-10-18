@@ -39,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             PaymentForm form = WebpayConnection.CreateOrder()
                                                .AddOrderRow(Item.OrderRow()
-                                                                .SetAmountExVat(new decimal(100.00))
+                                                                .SetAmountExVat(100.00M)
                                                                 .SetArticleNumber("1")
                                                                 .SetQuantity(2)
                                                                 .SetUnit("st")
@@ -90,7 +90,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             PaymentForm form = WebpayConnection.CreateOrder()
                                                .AddOrderRow(Item.OrderRow()
-                                                                .SetAmountExVat(new decimal(100.00))
+                                                                .SetAmountExVat(100.00M)
                                                                 .SetArticleNumber("1")
                                                                 .SetQuantity(2)
                                                                 .SetUnit("st")

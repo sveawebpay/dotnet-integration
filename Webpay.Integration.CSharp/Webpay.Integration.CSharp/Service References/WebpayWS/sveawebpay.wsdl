@@ -1,5 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://webservices.sveaekonomi.se/webpay" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://webservices.sveaekonomi.se/webpay" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://webservices.sveaekonomi.se/webpay" xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  targetNamespace="https://webservices.sveaekonomi.se/webpay"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@sveaekonomi.se for more information. -CreateOrder -CancelOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="https://webservices.sveaekonomi.se/webpay">
@@ -47,7 +56,8 @@
       </s:complexType>
       <s:complexType name="ArrayOfClientInvoiceRowInfo">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientInvoiceRowInfo" nillable="true" type="tns:ClientInvoiceRowInfo" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientInvoiceRowInfo" nillable="true"
+                     type="tns:ClientInvoiceRowInfo" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ClientInvoiceRowInfo">
@@ -428,7 +438,8 @@
       <s:element name="CheckInternalScoringResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CheckInternalScoringResult" type="tns:CheckInternalScoringResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="CheckInternalScoringResult"
+                       type="tns:CheckInternalScoringResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -540,7 +551,8 @@
       <s:element name="GetPaymentPlanStatusResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanStatusResult" type="tns:GetPaymentPlanStatusResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanStatusResult"
+                       type="tns:GetPaymentPlanStatusResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -629,7 +641,8 @@
       <s:element name="ApprovePaymentPlanResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="ApprovePaymentPlanResult" type="tns:ApprovePaymentPlanResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApprovePaymentPlanResult"
+                       type="tns:ApprovePaymentPlanResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -671,7 +684,8 @@
       <s:element name="GetPaymentPlanOptionsResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanOptionsResult" type="tns:GetPaymentPlanOptionsResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanOptionsResult"
+                       type="tns:GetPaymentPlanOptionsResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -687,7 +701,8 @@
       </s:complexType>
       <s:complexType name="ArrayOfPaymentPlanOption">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanOption" nillable="true" type="tns:PaymentPlanOption" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanOption" nillable="true"
+                     type="tns:PaymentPlanOption" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="PaymentPlanOption">
@@ -830,7 +845,8 @@
       </s:simpleType>
       <s:complexType name="ArrayOfCustomerAddress">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerAddress" nillable="true" type="tns:CustomerAddress" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerAddress" nillable="true"
+                     type="tns:CustomerAddress" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="CustomerAddress">
@@ -951,7 +967,8 @@
       <s:element name="GetPaymentPlanParamsResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsResult" type="tns:GetPaymentPlanParamsResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsResult"
+                       type="tns:GetPaymentPlanParamsResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -966,7 +983,8 @@
       </s:complexType>
       <s:complexType name="ArrayOfCampainCodeInfo">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="CampainCodeInfo" nillable="true" type="tns:CampainCodeInfo" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CampainCodeInfo" nillable="true"
+                     type="tns:CampainCodeInfo" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="CampainCodeInfo">
@@ -1234,7 +1252,8 @@
       <s:element name="GetPaymentPlanParamsEuResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsEuResult" type="tns:GetPaymentPlanParamsEuResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsEuResult"
+                       type="tns:GetPaymentPlanParamsEuResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -1250,7 +1269,8 @@
       </s:complexType>
       <s:complexType name="ArrayOfCampaignCodeInfo">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="CampaignCodeInfo" nillable="true" type="tns:CampaignCodeInfo" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CampaignCodeInfo" nillable="true"
+                     type="tns:CampaignCodeInfo" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="CampaignCodeInfo">
@@ -1289,7 +1309,8 @@
       <s:element name="GetPaymentPlanContractDetailsEuResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanContractDetailsEuResult" type="tns:GetPaymentPlanContractDetailsEuResponse" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanContractDetailsEuResult"
+                       type="tns:GetPaymentPlanContractDetailsEuResponse" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -1802,7 +1823,8 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetPaymentPlanContractDetailsEu">
-      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu" style="document" />
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu"
+                      style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2021,7 +2043,8 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetPaymentPlanContractDetailsEu">
-      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu" style="document" />
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu"
+                        style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

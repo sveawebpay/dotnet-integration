@@ -16,7 +16,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
+                                                                            .SetAmountExVat(100.00M)
                                                                             .SetDescription("Specification")
                                                                             .SetName("Prod")
                                                                             .SetUnit("st")
@@ -62,7 +62,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                 .AddOrderRow(Item.OrderRow()
                                                  .SetArticleNumber("1")
                                                  .SetQuantity(2)
-                                                 .SetAmountExVat(new decimal(100.00))
+                                                 .SetAmountExVat(100.00M)
                                                  .SetDescription("Specification")
                                                  .SetName("Prod")
                                                  .SetUnit("st")
@@ -98,7 +98,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             {
                 Assert.AreEqual("ERROR - CompanyCustomer is not allowed to use payment plan option.", ex.Message);
             }
-            
         }
     }
 }

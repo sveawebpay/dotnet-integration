@@ -177,8 +177,8 @@ namespace Webpay.Integration.CSharp.Test.Order
         private CreateOrderBuilder CreateCompanyDetails(CreateOrderBuilder orderBuilder)
         {
             return orderBuilder.AddCustomerDetails(Item.CompanyCustomer()
-                                                 .SetCompanyName("TestCompagniet")
-                                                 .SetVatNumber("2345234"));
+                                                       .SetCompanyName("TestCompagniet")
+                                                       .SetVatNumber("2345234"));
         }
 
         private void CreateTestOrderRow()
@@ -186,7 +186,7 @@ namespace Webpay.Integration.CSharp.Test.Order
             _order.AddOrderRow(Item.OrderRow()
                                    .SetArticleNumber("1")
                                    .SetQuantity(2)
-                                   .SetAmountExVat(new decimal(100.00))
+                                   .SetAmountExVat(100.00M)
                                    .SetDescription("Specification")
                                    .SetUnit("st")
                                    .SetVatPercent(25)
@@ -217,8 +217,8 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.AddDiscount(Item.FixedDiscount()
                                    .SetDiscountId("1")
-                                   .SetAmountIncVat(new decimal(100.00))
-                                   .SetAmountIncVat(new decimal(100.00))
+                                   .SetAmountIncVat(100.00M)
+                                   .SetAmountIncVat(100.00M)
                                    .SetDescription("FixedDiscount"));
         }
 

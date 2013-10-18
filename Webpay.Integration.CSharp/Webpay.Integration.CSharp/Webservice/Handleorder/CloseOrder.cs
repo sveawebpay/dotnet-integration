@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
 
         protected ClientAuthInfo GetStoreAuthorization()
         {
-            PaymentType type = (_order.GetOrderType().Equals("Invoice") ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN);
+            PaymentType type = (_order.GetOrderType() == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN);
 
             var auth = new ClientAuthInfo
                 {
@@ -49,7 +49,9 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         {
             string errors = ValidateRequest();
             if (errors != "")
+            {
                 throw new SveaWebPayValidationException(errors);
+            }
 
             var orderInfo = new CloseOrderInformation {SveaOrderId = _order.GetOrderId()};
 
@@ -81,7 +83,7 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
                 },
                                            new EndpointAddress(
                                                _order.GetConfig()
-                                                     .GetEndPoint(_order.GetOrderType().Equals("Invoice")
+                                                     .GetEndPoint(_order.GetOrderType() == "Invoice"
                                                                       ? PaymentType.INVOICE
                                                                       : PaymentType.PAYMENTPLAN)));
 

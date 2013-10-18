@@ -65,22 +65,22 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage = "MISSING VALUE - Return url is required, SetReturnUrl(...).\n";
 
             var exception = Assert.Throws<SveaWebPayValidationException>(() =>
-            {
-                CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                           .SetCountryCode(CountryCode.SE)
-                                           .SetClientOrderNumber("nr22")
-                                           .SetCurrency(Currency.SEK)
-                                           .AddOrderRow(Item.OrderRow()
-                                                            .SetAmountExVat(4)
-                                                            .SetVatPercent(25)
-                                                            .SetQuantity(1))
-                                           .AddFee(Item.ShippingFee())
-                                           .AddDiscount(Item.FixedDiscount())
-                                           .AddDiscount(Item.RelativeDiscount());
+                {
+                    CreateOrderBuilder order = WebpayConnection.CreateOrder()
+                                                               .SetCountryCode(CountryCode.SE)
+                                                               .SetClientOrderNumber("nr22")
+                                                               .SetCurrency(Currency.SEK)
+                                                               .AddOrderRow(Item.OrderRow()
+                                                                                .SetAmountExVat(4)
+                                                                                .SetVatPercent(25)
+                                                                                .SetQuantity(1))
+                                                               .AddFee(Item.ShippingFee())
+                                                               .AddDiscount(Item.FixedDiscount())
+                                                               .AddDiscount(Item.RelativeDiscount());
 
-                var payment = new FakeHostedPayment(order);
-                payment.CalculateRequestValues();
-            });
+                    var payment = new FakeHostedPayment(order);
+                    payment.CalculateRequestValues();
+                });
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
@@ -94,7 +94,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetValidator(new VoidValidator())
                                                        .SetClientOrderNumber("1")
                                                        .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(new decimal(5.0))
+                                                                        .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
                                                        .AddCustomerDetails(Item.CompanyCustomer()
@@ -113,7 +113,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetCountryCode(CountryCode.NL)
                                                        .SetCurrency(Currency.EUR)
                                                        .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(new decimal(5.0))
+                                                                        .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
                                                        .AddCustomerDetails(Item.CompanyCustomer()
@@ -132,7 +132,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetCountryCode(CountryCode.DE)
                                                        .SetCurrency(Currency.EUR)
                                                        .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(new decimal(5.0))
+                                                                        .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
                                                        .AddCustomerDetails(Item.CompanyCustomer()
@@ -242,28 +242,53 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Zip code is required for all customers when countrycode is NL. Use SetZipCode().\n";
 
             var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.CreateOrder()
-                                                                                               .AddOrderRow(Item.OrderRow()
-                                                                                                                .SetArticleNumber("1")
-                                                                                                                .SetQuantity(2)
-                                                                                                                .SetAmountExVat(new decimal(100.00))
-                                                                                                                .SetDescription("Specification")
-                                                                                                                .SetName("Prod")
-                                                                                                                .SetUnit("st")
-                                                                                                                .SetVatPercent(25)
-                                                                                                                .SetDiscountPercent(0))
-                                                                                               .AddDiscount(Item.RelativeDiscount()
-                                                                                                                .SetDiscountId("1")
-                                                                                                                .SetDiscountPercent(50)
-                                                                                                                .SetUnit("st")
-                                                                                                                .SetName("Relative")
-                                                                                                                .SetDescription("RelativeDiscount"))
-                                                                                               .AddCustomerDetails(Item.IndividualCustomer())
-                                                                                               .SetCountryCode(CountryCode.NL)
-                                                                                               .SetClientOrderNumber("33")
-                                                                                               .SetOrderDate("2012-12-12")
+                                                                                               .AddOrderRow(Item
+                                                                                                                .OrderRow
+                                                                                                                ()
+                                                                                                                .SetArticleNumber
+                                                                                                                ("1")
+                                                                                                                .SetQuantity
+                                                                                                                (2)
+                                                                                                                .SetAmountExVat
+                                                                                                                (100.00M)
+                                                                                                                .SetDescription
+                                                                                                                ("Specification")
+                                                                                                                .SetName
+                                                                                                                ("Prod")
+                                                                                                                .SetUnit
+                                                                                                                ("st")
+                                                                                                                .SetVatPercent
+                                                                                                                (25)
+                                                                                                                .SetDiscountPercent
+                                                                                                                (0))
+                                                                                               .AddDiscount(Item
+                                                                                                                .RelativeDiscount
+                                                                                                                ()
+                                                                                                                .SetDiscountId
+                                                                                                                ("1")
+                                                                                                                .SetDiscountPercent
+                                                                                                                (50)
+                                                                                                                .SetUnit
+                                                                                                                ("st")
+                                                                                                                .SetName
+                                                                                                                ("Relative")
+                                                                                                                .SetDescription
+                                                                                                                ("RelativeDiscount"))
+                                                                                               .AddCustomerDetails(
+                                                                                                   Item
+                                                                                                       .IndividualCustomer
+                                                                                                       ())
+                                                                                               .SetCountryCode(
+                                                                                                   CountryCode.NL)
+                                                                                               .SetClientOrderNumber(
+                                                                                                   "33")
+                                                                                               .SetOrderDate(
+                                                                                                   "2012-12-12")
                                                                                                .SetCurrency(Currency.SEK)
-                                                                                               .UsePaymentMethod(PaymentMethod.INVOICE)
-                                                                                               .SetReturnUrl("http://myurl.se")
+                                                                                               .UsePaymentMethod(
+                                                                                                   PaymentMethod.INVOICE)
+                                                                                               .SetReturnUrl(
+                                                                                                   "http://myurl.se")
                                                                                                .GetPaymentForm());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
@@ -279,28 +304,53 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Locality is required for all customers when countrycode is DE. Use SetLocality().\n" +
                 "MISSING VALUE - Zip code is required for all customers when countrycode is DE. Use SetCustomerZipCode().\n";
             var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.CreateOrder()
-                                                                                               .AddOrderRow(Item.OrderRow()
-                                                                                                                .SetArticleNumber("1")
-                                                                                                                .SetQuantity(2)
-                                                                                                                .SetAmountExVat(new decimal(100.00))
-                                                                                                                .SetDescription("Specification")
-                                                                                                                .SetName("Prod")
-                                                                                                                .SetUnit("st")
-                                                                                                                .SetVatPercent(25)
-                                                                                                                .SetDiscountPercent(0))
-                                                                                               .AddDiscount(Item.RelativeDiscount()
-                                                                                                                .SetDiscountId("1")
-                                                                                                                .SetDiscountPercent(50)
-                                                                                                                .SetUnit("st")
-                                                                                                                .SetName("Relative")
-                                                                                                                .SetDescription("RelativeDiscount"))
-                                                                                               .AddCustomerDetails(Item.IndividualCustomer())
-                                                                                               .SetCountryCode(CountryCode.DE)
-                                                                                               .SetClientOrderNumber("33")
-                                                                                               .SetOrderDate("2012-12-12")
+                                                                                               .AddOrderRow(Item
+                                                                                                                .OrderRow
+                                                                                                                ()
+                                                                                                                .SetArticleNumber
+                                                                                                                ("1")
+                                                                                                                .SetQuantity
+                                                                                                                (2)
+                                                                                                                .SetAmountExVat
+                                                                                                                (100.00M)
+                                                                                                                .SetDescription
+                                                                                                                ("Specification")
+                                                                                                                .SetName
+                                                                                                                ("Prod")
+                                                                                                                .SetUnit
+                                                                                                                ("st")
+                                                                                                                .SetVatPercent
+                                                                                                                (25)
+                                                                                                                .SetDiscountPercent
+                                                                                                                (0))
+                                                                                               .AddDiscount(Item
+                                                                                                                .RelativeDiscount
+                                                                                                                ()
+                                                                                                                .SetDiscountId
+                                                                                                                ("1")
+                                                                                                                .SetDiscountPercent
+                                                                                                                (50)
+                                                                                                                .SetUnit
+                                                                                                                ("st")
+                                                                                                                .SetName
+                                                                                                                ("Relative")
+                                                                                                                .SetDescription
+                                                                                                                ("RelativeDiscount"))
+                                                                                               .AddCustomerDetails(
+                                                                                                   Item
+                                                                                                       .IndividualCustomer
+                                                                                                       ())
+                                                                                               .SetCountryCode(
+                                                                                                   CountryCode.DE)
+                                                                                               .SetClientOrderNumber(
+                                                                                                   "33")
+                                                                                               .SetOrderDate(
+                                                                                                   "2012-12-12")
                                                                                                .SetCurrency(Currency.SEK)
-                                                                                               .UsePaymentMethod(PaymentMethod.INVOICE)
-                                                                                               .SetReturnUrl("http://myurl.se")
+                                                                                               .UsePaymentMethod(
+                                                                                                   PaymentMethod.INVOICE)
+                                                                                               .SetReturnUrl(
+                                                                                                   "http://myurl.se")
                                                                                                .GetPaymentForm());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));

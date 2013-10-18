@@ -17,19 +17,19 @@
             return SwpProdUrl;
         }
 
-        public static string GetTestWebserviceUrl() 
+        public static string GetTestWebserviceUrl()
         {
             return SwpTestWsUrl;
-	    }
+        }
 
-        public static string GetTestPayPageUrl() 
+        public static string GetTestPayPageUrl()
         {
             return SwpTestUrl;
-	    }
-    
-        public static IConfigurationProvider GetDefaultConfig() 
+        }
+
+        public static IConfigurationProvider GetDefaultConfig()
         {
-    	    return new SveaTestConfigurationProvider();
+            return new SveaTestConfigurationProvider();
         }
     }
 }

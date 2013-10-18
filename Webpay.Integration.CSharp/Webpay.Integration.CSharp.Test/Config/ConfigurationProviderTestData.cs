@@ -34,7 +34,9 @@ namespace Webpay.Integration.CSharp.Test.Config
         public string GetEndPoint(PaymentType type)
         {
             if (PaymentType.HOSTED == type)
+            {
                 return SveaConfig.GetTestPayPageUrl();
+            }
             return SveaConfig.GetTestWebserviceUrl();
         }
     }

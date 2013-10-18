@@ -14,10 +14,15 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
 
         protected override CreateOrderInformation SetOrderType(CreateOrderInformation information)
         {
-            if (CrOrderBuilder.GetIsCompanyIdentity() && CrOrderBuilder.GetCompanyCustomer().GetAddressSelector() != null)
+            if (CrOrderBuilder.GetIsCompanyIdentity() &&
+                CrOrderBuilder.GetCompanyCustomer().GetAddressSelector() != null)
+            {
                 OrderInfo.AddressSelector = CrOrderBuilder.GetCompanyCustomer().GetAddressSelector();
+            }
             else
+            {
                 OrderInfo.AddressSelector = "";
+            }
 
             OrderInfo.OrderType = OrderType.Invoice;
             return OrderInfo;

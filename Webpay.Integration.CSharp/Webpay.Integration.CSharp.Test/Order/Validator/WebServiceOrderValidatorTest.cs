@@ -209,7 +209,6 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Birth date is required for individual customers when countrycode is DE. Use SetBirthDate().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n";
 
-
             var exception = Assert.Throws<SveaWebPayValidationException>(() =>
                 {
                     var builder = WebpayConnection.CreateOrder();
@@ -369,7 +368,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(new decimal(5.0))
+                                                                        .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
                                                        .AddCustomerDetails(Item.IndividualCustomer()
@@ -421,7 +420,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailOnMissingOrderTypeForInvoiceOrder()
         {
             const string expectedMessage =
-                "MISSING VALUE - SetInvoiceDistributionType is requred for DeliverInvoiceOrder.";
+                "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.";
 
             var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder()
                                                                                                .AddOrderRow(Item
@@ -482,7 +481,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                 .AddOrderRow(Item.OrderRow()
                                                  .SetArticleNumber("1")
                                                  .SetQuantity(2)
-                                                 .SetAmountExVat(new decimal(100.00))
+                                                 .SetAmountExVat(100.00M)
                                                  .SetDescription("Specification")
                                                  .SetName("Prod")
                                                  .SetUnit("st")
@@ -516,7 +515,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
+                                                                            .SetAmountExVat(100.00M)
                                                                             .SetDescription("Specification")
                                                                             .SetName("Prod")
                                                                             .SetUnit("st")

@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+
 namespace Webpay.Integration.CSharp.Util.Constant
 {
     public class PaymentMethod
     {
+        public string Value { get; private set; }
+        public PaymentMethodType PaymentMethodType { get; private set; }
+
         public static readonly PaymentMethod BANKAXESS = new PaymentMethod("BANKAXESS", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod NORDEASE = new PaymentMethod("DBNORDEASE", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod SEBSE = new PaymentMethod("DBSEBSE", PaymentMethodType.DIRECT);
@@ -13,10 +17,9 @@ namespace Webpay.Integration.CSharp.Util.Constant
         public static readonly PaymentMethod SKRILL = new PaymentMethod("SKRILL", PaymentMethodType.CARD);
         public static readonly PaymentMethod PAYPAL = new PaymentMethod("PAYPAL", PaymentMethodType.PSP);
         public static readonly PaymentMethod INVOICE = new PaymentMethod("INVOICE", PaymentMethodType.INVOICE);
-        public static readonly PaymentMethod PAYMENTPLAN = new PaymentMethod("PAYMENTPLAN", PaymentMethodType.PAYMENTPLAN);
 
-        public string Value { get; private set; }
-        public PaymentMethodType PaymentMethodType { get; private set; }
+        public static readonly PaymentMethod PAYMENTPLAN = new PaymentMethod("PAYMENTPLAN",
+                                                                             PaymentMethodType.PAYMENTPLAN);
 
         private PaymentMethod(string value, PaymentMethodType paymentMethodType)
         {
@@ -33,10 +36,10 @@ namespace Webpay.Integration.CSharp.Util.Constant
                 SHBSE,
                 SWEDBANKSE,
                 KORTCERT,
-				SKRILL,       
-				PAYPAL,
-				INVOICE,
-				PAYMENTPLAN
+                SKRILL,
+                PAYPAL,
+                INVOICE,
+                PAYMENTPLAN
             };
     }
 }

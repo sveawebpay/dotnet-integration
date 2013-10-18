@@ -66,9 +66,8 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             ConfigureExcludedPaymentMethod();
         }
 
-        public override XmlWriter GetPaymentSpecificXml(XmlWriter xmlw)
+        public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-            return xmlw;
         }
     }
 }

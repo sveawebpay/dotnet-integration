@@ -59,6 +59,12 @@
             return this;
         }
 
+        public decimal GetQuantity()
+        {
+            //There can only be one shipping fee per row
+            return 1M;
+        }
+
         public decimal? GetAmountExVat()
         {
             return _amountExVat;
@@ -100,6 +106,12 @@
         public string GetUnit()
         {
             return _unit;
+        }
+
+        public string GetArticleNumber()
+        {
+            //For shippping fees the article number is synonomous with the shipping Id
+            return GetShippingId();
         }
 
         /// <summary>

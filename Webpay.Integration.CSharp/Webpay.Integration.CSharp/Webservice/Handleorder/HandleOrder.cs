@@ -25,7 +25,7 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
 
         private ClientAuthInfo GetStoreAuthorization()
         {
-            PaymentType type = (_order.GetOrderType() == OrderType.INVOICE)
+            var type = (_order.GetOrderType() == OrderType.INVOICE)
                                    ? PaymentType.INVOICE
                                    : PaymentType.PAYMENTPLAN;
 
@@ -44,17 +44,7 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         /// <returns>Error message compilation string</returns>
         public string ValidateOrder()
         {
-            var errors = "";
-            try
-            {
-                errors = HandleOrderValidator.Validate(_order);
-            }
-            catch (NullReferenceException ex)
-            {
-                errors += "NullReference in validaton of HandleOrder";
-            }
-
-            return errors;
+            return _order == null ? "NullReference in validaton of HandleOrder" : HandleOrderValidator.Validate(_order);
         }
 
         /// <summary>
@@ -66,7 +56,9 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         {
             var errors = ValidateOrder();
             if (errors.Length > 0)
+            {
                 throw new SveaWebPayValidationException(errors);
+            }
 
             var formatter = new WebServiceRowFormatter<DeliverOrderBuilder>(_order);
 
@@ -102,28 +94,16 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         private static InvoiceDistributionType ConvertInvoiceDistributionType(
             Util.Constant.InvoiceDistributionType getInvoiceDistributionType)
         {
-            switch (getInvoiceDistributionType)
-            {
-                case Util.Constant.InvoiceDistributionType.EMAIL:
-                    return InvoiceDistributionType.Email;
-                case Util.Constant.InvoiceDistributionType.POST:
-                    return InvoiceDistributionType.Post;
-                default:
-                    throw new NotImplementedException();
-            }
+            return getInvoiceDistributionType == Util.Constant.InvoiceDistributionType.EMAIL
+                       ? InvoiceDistributionType.Email
+                       : InvoiceDistributionType.Post;
         }
 
         private static WebpayWS.OrderType ConvertOrderType(OrderType orderType)
         {
-            switch (orderType)
-            {
-                case OrderType.INVOICE:
-                    return WebpayWS.OrderType.Invoice;
-                case OrderType.PAYMENTPLAN:
-                    return WebpayWS.OrderType.PaymentPlan;
-                default:
-                    throw new NotImplementedException();
-            }
+            return orderType == OrderType.INVOICE
+                       ? WebpayWS.OrderType.Invoice
+                       : WebpayWS.OrderType.PaymentPlan;
         }
 
         /// <summary>

@@ -34,14 +34,14 @@ namespace Webpay.Integration.CSharp.Util.Constant
             };
 
 
-        public static List<string> GetAllInvoiceValues()
+        public static IEnumerable<string> GetAllInvoiceValues()
         {
-            return AllInvoiceValueTypes.Select(it => it.Value).ToList();
+            return AllInvoiceValueTypes.Select(it => it.Value);
         }
 
-        public static List<InvoiceType> GetAllInvoiceTypes()
+        public static IEnumerable<InvoiceType> GetAllInvoiceTypes()
         {
-            return AllInvoiceValueTypes.Select(it => it).ToList();
+            return AllInvoiceValueTypes.Select(it => it);
         }
     }
 }

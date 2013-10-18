@@ -7,15 +7,8 @@
         private string _description;
         private long _amount;
         private long _vat;
-        private int _quantity;
+        private decimal _quantity;
         private string _unit;
-
-        public HostedOrderRowBuilder()
-        {
-            _sku = "";
-            _name = "";
-            _description = "";
-        }
 
         public string GetSku()
         {
@@ -72,12 +65,12 @@
             return this;
         }
 
-        public int GetQuantity()
+        public decimal GetQuantity()
         {
             return _quantity;
         }
 
-        public HostedOrderRowBuilder SetQuantity(int quantity)
+        public HostedOrderRowBuilder SetQuantity(decimal quantity)
         {
             _quantity = quantity;
             return this;

@@ -114,7 +114,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
 
         private ClientAuthInfo GetStoreAuthorization()
         {
-            PaymentType type = (_orderType.Equals("Invoice") ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN);
+            PaymentType type = (_orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN);
             var auth = new ClientAuthInfo
                 {
                     ClientNumber = _config.GetClientNumber(type, _countryCode),
@@ -133,11 +133,13 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
             }
             if (_orderType == null)
             {
-                errors += "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n";
+                errors +=
+                    "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n";
             }
             if (_nationalNumber == null && _companyId == null)
             {
-                errors += "MISSING VALUE - either nationalNumber or companyId is required. Use: SetCompany(...) or SetIndividual(...).\n";
+                errors +=
+                    "MISSING VALUE - either nationalNumber or companyId is required. Use: SetCompany(...) or SetIndividual(...).\n";
             }
             return errors;
         }
@@ -186,7 +188,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
                         }
                 },
                                            new EndpointAddress(
-                                               _config.GetEndPoint(_orderType.Equals("Invoice")
+                                               _config.GetEndPoint(_orderType == "Invoice"
                                                                        ? PaymentType.INVOICE
                                                                        : PaymentType.PAYMENTPLAN)));
 

@@ -2,7 +2,7 @@
 
 namespace Webpay.Integration.CSharp.Order.Validator
 {
-    interface IOrderValidator
+    internal interface IOrderValidator
     {
         string Validate(CreateOrderBuilder order);
     }

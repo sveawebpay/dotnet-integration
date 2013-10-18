@@ -74,7 +74,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
 
             _xml = _xmlBuilder.GetXml(payment);
 
-            Assert.True(_xml.Contains("<customer><ssn>666666</ssn><firstname>Julius</firstname><lastname>Caesar</lastname><initials>JS</initials><phone>999999</phone><email>test@svea.com</email><address>Gatan</address><housenumber>23</housenumber><address2>c/o Eriksson</address2><zip>9999</zip><city>Stan</city><country>SE</country></customer>"));
+            Assert.True(
+                _xml.Contains(
+                    "<customer><ssn>666666</ssn><firstname>Julius</firstname><lastname>Caesar</lastname><initials>JS</initials><phone>999999</phone><email>test@svea.com</email><address>Gatan</address><housenumber>23</housenumber><address2>c/o Eriksson</address2><zip>9999</zip><city>Stan</city><country>SE</country></customer>"));
             Assert.True(_xml.Contains("<ipaddress>123.123.123.123</ipaddress>"));
         }
 
@@ -106,7 +108,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
 
             _xml = _xmlBuilder.GetXml(payment);
 
-            Assert.True(_xml.Contains("<customer><ssn>666666</ssn><firstname>TestCompagniet</firstname><phone>999999</phone><email>test@svea.com</email><address>Gatan</address><housenumber>23</housenumber><address2>c/o Eriksson</address2><zip>9999</zip><city>Stan</city><country>SE</country></customer>"));
+            Assert.True(
+                _xml.Contains(
+                    "<customer><ssn>666666</ssn><firstname>TestCompagniet</firstname><phone>999999</phone><email>test@svea.com</email><address>Gatan</address><housenumber>23</housenumber><address2>c/o Eriksson</address2><zip>9999</zip><city>Stan</city><country>SE</country></customer>"));
             Assert.True(_xml.Contains("<ipaddress>123.123.123.123</ipaddress>"));
         }
 
@@ -157,7 +161,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
 
             _xml = _xmlBuilder.GetXml(payment);
 
-            Assert.True(_xml.Contains("<orderrows><row><sku>0</sku><name>Product</name><description>Good product</description><amount>500</amount><vat>100</vat><quantity>1</quantity><unit>kg</unit></row></orderrows>"));
+            Assert.True(
+                _xml.Contains(
+                    "<orderrows><row><sku>0</sku><name>Product</name><description>Good product</description><amount>500</amount><vat>100</vat><quantity>1</quantity><unit>kg</unit></row></orderrows>"));
         }
 
         [Test]
@@ -178,7 +184,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
-            Assert.True(_xml.Contains("<excludepaymentMethods><exclude>BANKAXESS</exclude><exclude>PAYPAL</exclude><exclude>KORTCERT</exclude><exclude>SKRILL</exclude><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEASPLITEU_NL</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEASPLITEU_NO</exclude></excludepaymentMethods>"));
+            Assert.True(
+                _xml.Contains(
+                    "<excludepaymentMethods><exclude>BANKAXESS</exclude><exclude>PAYPAL</exclude><exclude>KORTCERT</exclude><exclude>SKRILL</exclude><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEASPLITEU_NL</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEASPLITEU_NO</exclude></excludepaymentMethods>"));
         }
 
         [Test]
@@ -199,7 +207,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
-            Assert.True(_xml.Contains("<excludepaymentMethods><exclude>PAYPAL</exclude><exclude>DBNORDEASE</exclude><exclude>DBSEBSE</exclude><exclude>DBSEBFTGSE</exclude><exclude>DBSHBSE</exclude><exclude>DBSWEDBANKSE</exclude><exclude>BANKAXESS</exclude><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEASPLITEU_NL</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEASPLITEU_NO</exclude></excludepaymentMethods>"));
+            Assert.True(
+                _xml.Contains(
+                    "<excludepaymentMethods><exclude>PAYPAL</exclude><exclude>DBNORDEASE</exclude><exclude>DBSEBSE</exclude><exclude>DBSEBFTGSE</exclude><exclude>DBSHBSE</exclude><exclude>DBSWEDBANKSE</exclude><exclude>BANKAXESS</exclude><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEASPLITEU_NL</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEASPLITEU_NO</exclude></excludepaymentMethods>"));
         }
 
         [Test]

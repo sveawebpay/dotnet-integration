@@ -15,6 +15,9 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
     [TestFixture]
     public class HostedPaymentResponseTest
     {
+        private const string ExpectedResponseStart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        private const string ExpectedNordeaResponseStart = "<html><head><SCRIPT LANGUAGE='JavaScript'>";
+
         [Test]
         public void TestDoCardPaymentRequest()
         {
@@ -22,7 +25,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                .AddOrderRow(Item.OrderRow()
                                                                 .SetArticleNumber("1")
                                                                 .SetQuantity(2)
-                                                                .SetAmountExVat(new decimal(100.00))
+                                                                .SetAmountExVat(100.00M)
                                                                 .SetDescription("Specification")
                                                                 .SetName("Prod")
                                                                 .SetUnit("st")
@@ -39,7 +42,9 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                    "https://test.sveaekonomi.se/webpay/admin/merchantresponsetest.xhtml")
                                                .GetPaymentForm();
 
-            Assert.AreEqual("OK", PostRequest(form));
+            var postResponse = PostRequest(form);
+            Assert.That(postResponse.Item1, Is.EqualTo("OK"));
+            Assert.That(postResponse.Item2.StartsWith(ExpectedResponseStart));
         }
 
         [Test]
@@ -49,7 +54,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                .AddOrderRow(Item.OrderRow()
                                                                 .SetArticleNumber("1")
                                                                 .SetQuantity(2)
-                                                                .SetAmountExVat(new decimal(100.00))
+                                                                .SetAmountExVat(100.00M)
                                                                 .SetDescription("Specification")
                                                                 .SetName("Prod")
                                                                 .SetUnit("st")
@@ -66,10 +71,12 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                    "https://test.sveaekonomi.se/webpay/admin/merchantresponsetest.xhtml")
                                                .GetPaymentForm();
 
-            Assert.AreEqual("OK", PostRequest(form));
+            var postResponse = PostRequest(form);
+            Assert.That(postResponse.Item1, Is.EqualTo("OK"));
+            Assert.That(postResponse.Item2.StartsWith(ExpectedNordeaResponseStart));
         }
 
-        private string PostRequest(PaymentForm form)
+        private static Tuple<string, string> PostRequest(PaymentForm form)
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder();
 
@@ -92,7 +99,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                 post.Write(formData, 0, formData.Length);
             }
 
-            //TODO: Test result in some way
             string result;
             string statusCode;
             using (var response = request.GetResponse() as HttpWebResponse)
@@ -105,7 +111,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                 statusCode = response.StatusCode.ToString();
             }
 
-            return statusCode;
+            return new Tuple<string, string>(statusCode, result);
         }
     }
 }

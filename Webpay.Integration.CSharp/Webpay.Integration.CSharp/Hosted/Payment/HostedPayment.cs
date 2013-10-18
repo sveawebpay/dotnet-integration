@@ -81,8 +81,10 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public string ValidateOrder()
         {
             var errors = "";
-            if (ReturnUrl.Equals(""))
+            if (string.IsNullOrEmpty(ReturnUrl))
+            {
                 errors += "MISSING VALUE - Return url is required, SetReturnUrl(...).\n";
+            }
 
             var validator = new HostedOrderValidator();
 
@@ -90,14 +92,14 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var payment = this as PaymentMethodPayment;
             if (payment != null)
             {
-                if (payment.GetPaymentMethod().Equals(PaymentMethod.INVOICE) ||
-                    payment.GetPaymentMethod().Equals(PaymentMethod.PAYMENTPLAN))
+                if (payment.GetPaymentMethod() == PaymentMethod.INVOICE ||
+                    payment.GetPaymentMethod() == PaymentMethod.PAYMENTPLAN)
                 {
-                    if (CrOrderBuilder.GetCountryCode().Equals(CountryCode.NL))
+                    if (CrOrderBuilder.GetCountryCode() == CountryCode.NL)
                     {
                         errors += new IdentityValidator().ValidateNlIdentity(CrOrderBuilder);
                     }
-                    else if (CrOrderBuilder.GetCountryCode().Equals(CountryCode.DE))
+                    else if (CrOrderBuilder.GetCountryCode() == CountryCode.DE)
                     {
                         errors += new IdentityValidator().ValidateDeIdentity(CrOrderBuilder);
                     }
@@ -119,7 +121,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         {
             var errors = ValidateOrder();
             if (errors.Length > 0)
+            {
                 throw new SveaWebPayValidationException(errors);
+            }
 
             var formatter = new HostedRowFormatter<CreateOrderBuilder>();
 
@@ -145,7 +149,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
                                              .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode()));
             form.SetSecretWord(CrOrderBuilder.GetConfig().GetSecret(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode()));
 
-            form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != 0
+            form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != CountryCode.NONE
                                       ? CrOrderBuilder.GetCountryCode()
                                       : CountryCode.SE);
 
@@ -162,7 +166,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         /// </summary>
         /// <param name="xmlw"></param>
         /// <returns>XMLStreamWriter</returns>
-        public abstract XmlWriter GetPaymentSpecificXml(XmlWriter xmlw);
+        public abstract void WritePaymentSpecificXml(XmlWriter xmlw);
 
         /// <summary>
         /// WriteSimpleElement
@@ -172,12 +176,13 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         /// <param name="value"></param>
         protected void WriteSimpleElement(XmlWriter xmlw, string name, string value)
         {
-            if (value != null)
+            if (value == null)
             {
-                xmlw.WriteStartElement(name);
-                xmlw.WriteChars(value.ToCharArray(), 0, value.ToCharArray().Length);
-                xmlw.WriteEndElement();
+                return;
             }
+            xmlw.WriteStartElement(name);
+            xmlw.WriteChars(value.ToCharArray(), 0, value.ToCharArray().Length);
+            xmlw.WriteEndElement();
         }
     }
 }

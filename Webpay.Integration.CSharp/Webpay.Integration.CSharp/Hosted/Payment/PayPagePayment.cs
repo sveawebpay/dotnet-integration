@@ -15,7 +15,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         private string _paymentMethod;
         private readonly List<string> _includedPaymentMethod;
 
-        public PayPagePayment(CreateOrderBuilder orderBuilder): base(orderBuilder)
+        public PayPagePayment(CreateOrderBuilder orderBuilder) : base(orderBuilder)
         {
             _includedPaymentMethod = new List<string>();
         }
@@ -27,12 +27,18 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
         public PayPagePayment SetPaymentMethod(PaymentMethod paymentMethod)
         {
-            if (paymentMethod.Equals(PaymentMethod.INVOICE))
+            if (paymentMethod == PaymentMethod.INVOICE)
+            {
                 _paymentMethod = GetValidInvoiceTypeForIncludedList();
-            else if (paymentMethod.Equals(PaymentMethod.PAYMENTPLAN))
+            }
+            else if (paymentMethod == PaymentMethod.PAYMENTPLAN)
+            {
                 _paymentMethod = GetValidPaymentPlanTypeForIncludedList();
+            }
             else
+            {
                 _paymentMethod = paymentMethod.Value;
+            }
             return this;
         }
 
@@ -92,103 +98,113 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             return this;
         }
 
-        private void AddCollectionToExcludePaymentMethodList(IEnumerable<PaymentMethod> paymentMethods) 
+        private void AddCollectionToExcludePaymentMethodList(IEnumerable<PaymentMethod> paymentMethods)
         {
             foreach (var pm in paymentMethods)
             {
-                if (pm.Equals(PaymentMethod.INVOICE))
+                if (pm == PaymentMethod.INVOICE)
                 {
-				    ExcludedPaymentMethod.AddRange(InvoiceType.GetAllInvoiceValues());
-			    }
-                else if (pm.Equals(PaymentMethod.PAYMENTPLAN))
+                    ExcludedPaymentMethod.AddRange(InvoiceType.GetAllInvoiceValues());
+                }
+                else if (pm == PaymentMethod.PAYMENTPLAN)
                 {
-                    ExcludedPaymentMethod.AddRange(PaymentPlanType.AllPaymentPlanValues());								  				
-			    }
-			    else
+                    ExcludedPaymentMethod.AddRange(PaymentPlanType.AllPaymentPlanValues());
+                }
+                else
+                {
                     ExcludedPaymentMethod.Add(pm.Value);
-		    }
-	    }
+                }
+            }
+        }
 
-	    public PayPagePayment ExcludePaymentMethod() 
+        public PayPagePayment ExcludePaymentMethod()
         {
-		    var emptyList = new List<PaymentMethod>(); 
-		    return ExcludePaymentMethod(emptyList);
-	    }
-	
-	    public PayPagePayment IncludePaymentMethod() {
-		    var emptyList = new List<PaymentMethod>(); 
-		    return IncludePaymentMethod(emptyList);
-	    }
+            var emptyList = new List<PaymentMethod>();
+            return ExcludePaymentMethod(emptyList);
+        }
 
-        public PayPagePayment IncludePaymentMethod(List<PaymentMethod> paymentMethods) 
+        public PayPagePayment IncludePaymentMethod()
         {
-		    AddCollectionToIncludedPaymentMethodList(paymentMethods);
-	
-		    // Exclude all payment methods		
-		    var excluded = new ExcludePayments();
-		    ExcludedPaymentMethod = excluded.ExcludeInvoicesAndPaymentPlan();
+            var emptyList = new List<PaymentMethod>();
+            return IncludePaymentMethod(emptyList);
+        }
 
-		    ExcludedPaymentMethod.Add(PaymentMethod.KORTCERT.Value);
-		    ExcludedPaymentMethod.Add(PaymentMethod.SKRILL.Value);
-		    ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
-		    ExcludeDirectPaymentMethod();
+        public PayPagePayment IncludePaymentMethod(IEnumerable<PaymentMethod> paymentMethods)
+        {
+            AddCollectionToIncludedPaymentMethodList(paymentMethods);
 
-		    // Remove the included methods from the excluded payment methods
-		    foreach(string pm in _includedPaymentMethod) 
+            // Exclude all payment methods		
+            var excluded = new ExcludePayments();
+            ExcludedPaymentMethod = excluded.ExcludeInvoicesAndPaymentPlan();
+
+            ExcludedPaymentMethod.Add(PaymentMethod.KORTCERT.Value);
+            ExcludedPaymentMethod.Add(PaymentMethod.SKRILL.Value);
+            ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
+            ExcludeDirectPaymentMethod();
+
+            // Remove the included methods from the excluded payment methods
+            foreach (string pm in _includedPaymentMethod)
             {
-			    ExcludedPaymentMethod.Remove(pm);
-		    }
+                ExcludedPaymentMethod.Remove(pm);
+            }
 
-		    return this;
-	    }
-	
-	    private string GetValidPaymentPlanTypeForIncludedList()
+            return this;
+        }
+
+        private string GetValidPaymentPlanTypeForIncludedList()
         {
             foreach (var ppt in PaymentPlanType.AllPaymentPlanValueTypes)
             {
-			    //never include from old flow to include list - won´t show in paypage
-                if (CrOrderBuilder.GetCountryCode().Equals(CountryCode.SE) && 
-					    ppt.Equals(PaymentPlanType.PAYMENTPLANSE))
-				    continue;
-			    //include only Payment plan for current country 
-                if (ppt.CountryCode.Equals(CrOrderBuilder.GetCountryCode()))	
-				    return ppt.Value;				  	
-		    }
-		    return "";
-	    }
-	
-	    private string GetValidInvoiceTypeForIncludedList() 
+                //never include from old flow to include list - won´t show in paypage
+                if (CrOrderBuilder.GetCountryCode() == CountryCode.SE &&
+                    ppt == PaymentPlanType.PAYMENTPLANSE)
+                {
+                    continue;
+                }
+                //include only Payment plan for current country 
+                if (ppt.CountryCode == CrOrderBuilder.GetCountryCode())
+                {
+                    return ppt.Value;
+                }
+            }
+            return "";
+        }
+
+        private string GetValidInvoiceTypeForIncludedList()
         {
             foreach (var it in InvoiceType.AllInvoiceValueTypes)
             {
-			    //never include old flow to include list
-                if (CrOrderBuilder.GetCountryCode().Equals(CountryCode.SE) && it.Equals(InvoiceType.INVOICESE))
-				    continue;
-
-                if (it.CountryCode.Equals(CrOrderBuilder.GetCountryCode()))
+                //never include old flow to include list
+                if (CrOrderBuilder.GetCountryCode() == CountryCode.SE && it == InvoiceType.INVOICESE)
+                {
+                    continue;
+                }
+                if (it.CountryCode == CrOrderBuilder.GetCountryCode())
+                {
                     return it.Value;
-		    }
-		    return "";
-	    }
+                }
+            }
+            return "";
+        }
 
-        private void AddCollectionToIncludedPaymentMethodList(IEnumerable<PaymentMethod> paymentMethods) 
+        private void AddCollectionToIncludedPaymentMethodList(IEnumerable<PaymentMethod> paymentMethods)
         {
-            foreach (var pm in paymentMethods) 
+            foreach (var pm in paymentMethods)
             {
-			    if (pm.Equals(PaymentMethod.INVOICE)) 
-                {  
-				    _includedPaymentMethod.Add(GetValidInvoiceTypeForIncludedList());			
-			    }
-			    else if (pm.Equals(PaymentMethod.PAYMENTPLAN))
-			    {
-			        _includedPaymentMethod.Add(GetValidPaymentPlanTypeForIncludedList());
-			    }
-			    else
-			    {
+                if (pm == PaymentMethod.INVOICE)
+                {
+                    _includedPaymentMethod.Add(GetValidInvoiceTypeForIncludedList());
+                }
+                else if (pm == PaymentMethod.PAYMENTPLAN)
+                {
+                    _includedPaymentMethod.Add(GetValidPaymentPlanTypeForIncludedList());
+                }
+                else
+                {
                     _includedPaymentMethod.Add(pm.Value);
-			    }
-		    }		
-	    }
+                }
+            }
+        }
 
         /// <summary>
         /// CalculateRequestValues
@@ -200,14 +216,12 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             ConfigureExcludedPaymentMethod();
         }
 
-        public override XmlWriter GetPaymentSpecificXml(XmlWriter xmlw)
+        public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-		    if (_paymentMethod != null) 
+            if (_paymentMethod != null)
             {
-			    WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod);
-		    }
-
-		    return xmlw;
-	    }
+                WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod);
+            }
+        }
     }
 }

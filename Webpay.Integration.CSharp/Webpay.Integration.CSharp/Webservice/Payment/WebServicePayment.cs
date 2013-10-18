@@ -38,18 +38,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
         /// <returns>Error message compilation string</returns>
         public string ValidateOrder()
         {
-            var errors = "";
-            try
-            {
-                var validator = new WebServiceOrderValidator();
-                errors = validator.Validate(CrOrderBuilder);
-            }
-            catch (NullReferenceException ex)
-            {
-                errors += "NullReference in validaton of WebServiceOrderValidator";
-            }
-
-            return errors;
+            return CrOrderBuilder == null ? "NullReference in validaton of WebServiceOrderValidator" : new WebServiceOrderValidator().Validate(CrOrderBuilder);
         }
 
         /// <summary>
@@ -61,7 +50,9 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
         {
             var errors = ValidateOrder();
             if (errors.Length > 0)
+            {
                 throw new SveaWebPayValidationException(errors);
+            }
 
             var sveaOrder = new CreateOrderEuRequest {Auth = GetPasswordBasedAuthorization()};
 

@@ -11,15 +11,17 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     public class PaymentMethodPayment : HostedPayment
     {
         private PaymentMethod _paymentMethod;
-        
-        public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod) : base(createOrderBuilder)
+
+        public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod)
+            : base(createOrderBuilder)
         {
             _paymentMethod = paymentMethod;
         }
 
-    
-        public PaymentMethod GetPaymentMethod() {
-    	    return _paymentMethod;
+
+        public PaymentMethod GetPaymentMethod()
+        {
+            return _paymentMethod;
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             return this;
         }
 
-        public PaymentMethodPayment ConfigureExcludedPaymentMethod() 
+        public PaymentMethodPayment ConfigureExcludedPaymentMethod()
         {
             return this;
         }
@@ -58,14 +60,12 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             ConfigureExcludedPaymentMethod();
         }
 
-        public override XmlWriter GetPaymentSpecificXml(XmlWriter xmlw)
+        public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-            if (_paymentMethod != null) 
+            if (_paymentMethod != null)
             {
                 WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod.Value);
             }
-        
-            return xmlw;
         }
     }
 }

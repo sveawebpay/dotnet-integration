@@ -8,7 +8,7 @@
         private decimal? _amountExVat;
         private decimal? _amountIncVat;
         private decimal? _vatPercent;
-        private int _quantity;
+        private decimal _quantity;
         private string _unit;
         private int _vatDiscount;
         private int _discountPercent;
@@ -95,7 +95,7 @@
             return this;
         }
 
-        public int GetQuantity()
+        public decimal GetQuantity()
         {
             return _quantity;
         }

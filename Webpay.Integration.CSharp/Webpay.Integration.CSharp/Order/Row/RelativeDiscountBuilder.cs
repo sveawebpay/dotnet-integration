@@ -65,6 +65,12 @@
             return _unit;
         }
 
+        public string GetArticleNumber()
+        {
+            //For relative discounts the article number is synonomous with the discount id
+            return GetDiscountId();
+        }
+
         /// <summary>
         /// SetUnit
         /// </summary>
@@ -79,6 +85,42 @@
         public int GetDiscountPercent()
         {
             return _discountPercent;
+        }
+
+        public decimal GetQuantity()
+        {
+            //There can only be one fixed discount per row
+            return 1M;
+        }
+
+        /// <summary>
+        /// Do not use.
+        /// Will return null.
+        /// </summary>
+        /// <returns>null</returns>
+        public decimal? GetAmountExVat()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Do not use.
+        /// Will return null.
+        /// </summary>
+        /// <returns>null</returns>
+        public decimal? GetVatPercent()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Do not use.
+        /// Will return null.
+        /// </summary>
+        /// <returns>null</returns>
+        public decimal? GetAmountIncVat()
+        {
+            return null;
         }
 
         /// <summary>

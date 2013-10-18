@@ -2,7 +2,7 @@
 
 namespace Webpay.Integration.CSharp.Order.Identity
 {
-    public abstract class Customer<T>:CustomerIdentity
+    public abstract class Customer<T> : CustomerIdentity
     {
         public string GetEmail()
         {
@@ -24,11 +24,6 @@ namespace Webpay.Integration.CSharp.Order.Identity
             return ZipCode;
         }
 
-        public string GetIpAddress()
-        {
-            return IpAddress;
-        }
-
         public string GetStreetAddress()
         {
             return Street;
@@ -42,11 +37,16 @@ namespace Webpay.Integration.CSharp.Order.Identity
         public string GetLocality()
         {
             return Locality;
-        }        
+        }
 
         public string GetCoAddress()
         {
             return CoAddress;
+        }
+
+        public string GetIpAddress()
+        {
+            return IpAddress;
         }
 
         protected void SetFullName(string firstName, string lastName)
@@ -62,7 +62,6 @@ namespace Webpay.Integration.CSharp.Order.Identity
         /// <param name="email"></param>
         /// <returns>CustomerIdentity</returns>
         public abstract T SetEmail(string email);
-
 
         /// <summary>
         /// Optional

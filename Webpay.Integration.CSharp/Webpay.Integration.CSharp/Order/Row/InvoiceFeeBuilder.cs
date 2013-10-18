@@ -42,6 +42,12 @@
             return this;
         }
 
+        public decimal GetQuantity()
+        {
+            //There can only be one invoice fee per row
+            return 1M;
+        }
+
         public decimal? GetAmountExVat()
         {
             return _amountExVat;
@@ -66,6 +72,12 @@
         public string GetUnit()
         {
             return _unit;
+        }
+
+        public string GetArticleNumber()
+        {
+            //Invoice fees have no article number
+            return "";
         }
 
         /// <summary>

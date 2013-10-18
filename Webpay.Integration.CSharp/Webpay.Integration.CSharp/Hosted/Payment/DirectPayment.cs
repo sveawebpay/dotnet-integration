@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         {
             CountryCode countryCode = CrOrderBuilder.GetCountryCode();
 
-            if (!countryCode.Equals(CountryCode.SE))
+            if (countryCode != CountryCode.SE)
             {
                 ExcludedPaymentMethod.Add(PaymentMethod.SEBSE.Value);
                 ExcludedPaymentMethod.Add(PaymentMethod.NORDEASE.Value);
@@ -49,7 +49,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
                 ExcludedPaymentMethod.Add(PaymentMethod.SHBSE.Value);
                 ExcludedPaymentMethod.Add(PaymentMethod.SWEDBANKSE.Value);
             }
-            if (!countryCode.Equals(CountryCode.NO))
+            if (countryCode != (CountryCode.NO))
             {
                 ExcludedPaymentMethod.Add(PaymentMethod.BANKAXESS.Value);
             }
@@ -72,9 +72,8 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             ConfigureExcludedPaymentMethod();
         }
 
-        public override XmlWriter GetPaymentSpecificXml(XmlWriter xmlw)
+        public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-            return xmlw;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                          .SetArticleNumber("1")
                                                                                          .SetQuantity(2)
                                                                                          .SetAmountExVat(
-                                                                                             new decimal(100.00))
+                                                                                             100.00M)
                                                                                          .SetDescription("Specification")
                                                                                          .SetName("Prod")
                                                                                          .SetUnit("st")
@@ -42,7 +42,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                            .SetArticleNumber("1")
                                                                                            .SetQuantity(2)
                                                                                            .SetAmountExVat(
-                                                                                               new decimal(100.00))
+                                                                                               100.00M)
                                                                                            .SetDescription(
                                                                                                "Specification")
                                                                                            .SetName("Prod")
@@ -70,7 +70,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
+                                                                            .SetAmountExVat(100.00M)
                                                                             .SetDescription("Specification")
                                                                             .SetName("Prod")
                                                                             .SetUnit("st")
@@ -96,7 +96,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)
-                                                                              .SetAmountExVat(new decimal(100.00))
+                                                                              .SetAmountExVat(100.00M)
                                                                               .SetDescription("Specification")
                                                                               .SetName("Prod")
                                                                               .SetUnit("st")
@@ -124,7 +124,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)
-                                                                              .SetAmountExVat(new decimal(100.00))
+                                                                              .SetAmountExVat(100.00M)
                                                                               .SetDescription("Specification")
                                                                               .SetName("Prod")
                                                                               .SetUnit("st")
@@ -156,7 +156,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)
-                                                                              .SetAmountExVat(new decimal(100.00))
+                                                                              .SetAmountExVat(100.00M)
                                                                               .SetDescription("Specification")
                                                                               .SetName("Prod")
                                                                               .SetUnit("st")
@@ -194,7 +194,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                          .SetArticleNumber("1")
                                                                                          .SetQuantity(2)
                                                                                          .SetAmountExVat(
-                                                                                             new decimal(1000.00))
+                                                                                             1000.00M)
                                                                                          .SetDescription("Specification")
                                                                                          .SetName("Prod")
                                                                                          .SetUnit("st")
@@ -205,12 +205,17 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                                     "194605092222")
                                                                                                 .SetInitials("SB")
                                                                                                 .SetBirthDate("19231212")
-                                                                                                .SetName("Tess", "Testson")
-                                                                                                .SetEmail("test@svea.com")
+                                                                                                .SetName("Tess",
+                                                                                                         "Testson")
+                                                                                                .SetEmail(
+                                                                                                    "test@svea.com")
                                                                                                 .SetPhoneNumber("999999")
-                                                                                                .SetIpAddress("123.123.123")
-                                                                                                .SetStreetAddress("Gatan", "23")
-                                                                                                .SetCoAddress("c/o Eriksson")
+                                                                                                .SetIpAddress(
+                                                                                                    "123.123.123")
+                                                                                                .SetStreetAddress(
+                                                                                                    "Gatan", "23")
+                                                                                                .SetCoAddress(
+                                                                                                    "c/o Eriksson")
                                                                                                 .SetZipCode("9999")
                                                                                                 .SetLocality("Stan"))
                                                                         .SetCountryCode(CountryCode.SE)
@@ -225,7 +230,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                            .SetArticleNumber("1")
                                                                                            .SetQuantity(2)
                                                                                            .SetAmountExVat(
-                                                                                               new decimal(100.00))
+                                                                                               100.00M)
                                                                                            .SetDescription(
                                                                                                "Specification")
                                                                                            .SetName("Prod")
@@ -298,7 +303,7 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)
-                                                                              .SetAmountExVat(new decimal(1000.00))
+                                                                              .SetAmountExVat(1000.00M)
                                                                               .SetDescription("Specification")
                                                                               .SetName("Prod")
                                                                               .SetUnit("st")

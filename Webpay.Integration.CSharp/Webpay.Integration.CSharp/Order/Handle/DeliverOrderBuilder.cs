@@ -5,8 +5,6 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Webservice.Handleorder;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
-using OrderType = Webpay.Integration.CSharp.Util.Constant.OrderType;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
@@ -151,19 +149,27 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public override DeliverOrderBuilder AddDiscount(IRowBuilder itemDiscount)
         {
-            if (itemDiscount.GetType() == new FixedDiscountBuilder().GetType())
-                FixedDiscountRows.Add((FixedDiscountBuilder)itemDiscount);
+            if (itemDiscount is FixedDiscountBuilder)
+            {
+                FixedDiscountRows.Add(itemDiscount as FixedDiscountBuilder);
+            }
             else
-                RelativeDiscountRows.Add((RelativeDiscountBuilder)itemDiscount);
+            {
+                RelativeDiscountRows.Add(itemDiscount as RelativeDiscountBuilder);
+            }
             return this;
         }
 
         public override DeliverOrderBuilder AddFee(IRowBuilder itemFee)
         {
-            if (itemFee.GetType() == new ShippingFeeBuilder().GetType())
-                ShippingFeeRows.Add((ShippingFeeBuilder)itemFee);
+            if (itemFee is ShippingFeeBuilder)
+            {
+                ShippingFeeRows.Add(itemFee as ShippingFeeBuilder);
+            }
             else
-                InvoiceFeeRows.Add((InvoiceFeeBuilder)itemFee);
+            {
+                InvoiceFeeRows.Add(itemFee as InvoiceFeeBuilder);
+            }
             return this;
         }
     }

@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
+                                                                            .SetAmountExVat(100.00M)
                                                                             .SetDescription("Specification")
                                                                             .SetName("Prod")
                                                                             .SetVatPercent(0)

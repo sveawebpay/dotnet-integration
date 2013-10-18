@@ -34,7 +34,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
                 {
                     ClientNumber = _config.GetClientNumber(PaymentType.PAYMENTPLAN, _countryCode),
                     Password = _config.GetPassword(PaymentType.PAYMENTPLAN, _countryCode),
-                    Username = _config.GetUsername(PaymentType.PAYMENTPLAN, _countryCode) 
+                    Username = _config.GetUsername(PaymentType.PAYMENTPLAN, _countryCode)
                 };
 
             return auth;
@@ -59,7 +59,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
             string errors = ValidateRequest();
             if (errors.Length > 0)
             {
-                throw new SveaWebPayValidationException(errors,null);
+                throw new SveaWebPayValidationException(errors, null);
             }
 
             var request = new GetPaymentPlanParamsEuRequest
@@ -79,15 +79,15 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
             GetPaymentPlanParamsEuRequest request = PrepareRequest();
 
             Soapsc = new ServiceSoapClient(new BasicHttpBinding
-            {
-                Name = "ServiceSoap",
-                Security = new BasicHttpSecurity
                 {
-                    Mode = BasicHttpSecurityMode.Transport
-                }
-            },
-                               new EndpointAddress(
-                                   _config.GetEndPoint(PaymentType.PAYMENTPLAN)));
+                    Name = "ServiceSoap",
+                    Security = new BasicHttpSecurity
+                        {
+                            Mode = BasicHttpSecurityMode.Transport
+                        }
+                },
+                                           new EndpointAddress(
+                                               _config.GetEndPoint(PaymentType.PAYMENTPLAN)));
 
             return Soapsc.GetPaymentPlanParamsEu(request);
         }

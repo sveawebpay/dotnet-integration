@@ -120,19 +120,19 @@ namespace Webpay.Integration.CSharp.Config
 
         public string GetMerchantId(PaymentType type, CountryCode country)
         {
-            return PaymentType.HOSTED == type ? "1130" : "";
+            return type == PaymentType.HOSTED ? "1130" : "";
         }
 
         public string GetSecret(PaymentType type, CountryCode country)
         {
-            return PaymentType.HOSTED == type
+            return type == PaymentType.HOSTED
                        ? "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"
                        : "";
         }
 
         public string GetEndPoint(PaymentType type)
         {
-            return PaymentType.HOSTED == type ? SveaConfig.GetTestPayPageUrl() : SveaConfig.GetTestWebserviceUrl();
+            return type == PaymentType.HOSTED ? SveaConfig.GetTestPayPageUrl() : SveaConfig.GetTestWebserviceUrl();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Helper;
 
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
+                                                                            .SetAmountExVat(100.00M)
                                                                             .SetDescription("Specification")
                                                                             .SetName("Prod")
                                                                             .SetVatPercent(0)
@@ -54,12 +54,12 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                        .SetVatPercent(25)
                                                                        .SetUnit("st"))
                                                            .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                   .SetNationalIdNumber("194605092222"))
-                                                           .SetCountryCode(CountryCode.SE)
-                                                           .SetOrderDate("2012-12-12")
-                                                           .SetClientOrderNumber("33")
-                                                           .SetCurrency(Currency.SEK)
-                                                           .SetCustomerReference("33")
+                                                                                   .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                           .SetOrderDate(TestingTool.DefaultTestDate)
+                                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                           .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
@@ -92,12 +92,12 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                          .SetVatPercent(0)
                                                                          .SetUnit("st"))
                                                              .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber("194605092222"))
-                                                             .SetCountryCode(CountryCode.SE)
-                                                             .SetOrderDate("2012-12-12")
-                                                             .SetClientOrderNumber("33")
-                                                             .SetCurrency(Currency.SEK)
-                                                             .SetCustomerReference("33")
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 

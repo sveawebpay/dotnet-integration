@@ -5,7 +5,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 {
-    class FakeHostedPayment : HostedPayment
+    internal class FakeHostedPayment : HostedPayment
     {
         public FakeHostedPayment(CreateOrderBuilder createOrderBuilder) : base(createOrderBuilder)
         {
@@ -40,9 +40,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             ConfigureExcludedPaymentMethod();
         }
 
-        public override XmlWriter GetPaymentSpecificXml(XmlWriter xmlw)
+        public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-            return xmlw;
         }
     }
 }

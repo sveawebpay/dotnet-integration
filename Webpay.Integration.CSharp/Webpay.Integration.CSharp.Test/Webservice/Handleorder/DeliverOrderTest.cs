@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.WebpayWS;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
-using OrderType = Webpay.Integration.CSharp.WebpayWS.OrderType;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
 {
@@ -29,37 +28,22 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         [Test]
         public void TestDeliverInvoice()
         {
-
             DeliverOrderEuRequest request = null;
-            Assert.DoesNotThrow(() => {
-                request = _order.AddOrderRow(Item.OrderRow()
-                                             .SetArticleNumber("1")
-                                             .SetQuantity(2)
-                                             .SetAmountExVat(new decimal(100.00))
-                                             .SetDescription("Specification")
-                                             .SetName("Prod")
-                                             .SetUnit("st")
-                                             .SetVatPercent(25)
-                                             .SetDiscountPercent(0))
-                            .AddFee(Item.ShippingFee()
-                                        .SetShippingId("33")
-                                        .SetName("shipping")
-                                        .SetDescription("Specification")
-                                        .SetAmountExVat(50)
-                                        .SetUnit("st")
-                                        .SetVatPercent(25)
-                                        .SetDiscountPercent(0))
-                            .AddDiscount(Item.FixedDiscount()
-                                             .SetAmountIncVat(10))
-                            .SetInvoiceDistributionType(InvoiceDistributionType.POST)
-                            .SetOrderId(54086L)
-                            .SetNumberOfCreditDays(1)
-                            .SetCreditInvoice(117L)
-                            .SetCountryCode(CountryCode.SE)
-                            .DeliverInvoiceOrder()
-                            .PrepareRequest();
-                        }
-                    );
+            Assert.DoesNotThrow(() =>
+                {
+                    request = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                    .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                                    .AddDiscount(Item.FixedDiscount()
+                                                     .SetAmountIncVat(10))
+                                    .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                    .SetOrderId(54086L)
+                                    .SetNumberOfCreditDays(1)
+                                    .SetCreditInvoice(117L)
+                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                    .DeliverInvoiceOrder()
+                                    .PrepareRequest();
+                }
+                );
             //First order row is a product
 
             var invoiceDetails = request.DeliverOrderInformation.DeliverInvoiceDetails;
@@ -69,7 +53,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
             // First row
             Assert.That(firstOrderRow.ArticleNumber, Is.EqualTo("1"));
             Assert.That(firstOrderRow.Description, Is.EqualTo("Prod: Specification"));
-            Assert.That(firstOrderRow.PricePerUnit,Is.EqualTo(100.00));
+            Assert.That(firstOrderRow.PricePerUnit, Is.EqualTo(100.00M));
 
             Assert.AreEqual(2, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].NumberOfUnits);
             Assert.AreEqual("st", request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].Unit);
@@ -90,8 +74,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
 
             Assert.AreEqual(1, request.DeliverOrderInformation.DeliverInvoiceDetails.NumberOfCreditDays);
 
-            Assert.That(invoiceDetails.InvoiceDistributionType,Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
-
+            Assert.That(invoiceDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
 
 
             Assert.AreEqual(true, request.DeliverOrderInformation.DeliverInvoiceDetails.IsCreditInvoice);
@@ -105,7 +88,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         {
             DeliverOrderEuRequest request = _order
                 .SetOrderId(54086L)
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .DeliverPaymentPlanOrder()
                 .PrepareRequest();
 
@@ -118,18 +101,10 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         {
             DeliverOrderEuResponse response =
                 WebpayConnection.DeliverOrder()
-                                .AddOrderRow(Item.OrderRow()
-                                                 .SetArticleNumber("1")
-                                                 .SetQuantity(2)
-                                                 .SetAmountExVat(new decimal(100.00))
-                                                 .SetDescription("Specification")
-                                                 .SetName("Prod")
-                                                 .SetUnit("st")
-                                                 .SetVatPercent(25)
-                                                 .SetDiscountPercent(0))
+                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .SetOrderId(54086L)
                                 .SetInvoiceDistributionType(InvoiceDistributionType.POST)
-                                .SetCountryCode(CountryCode.SE)
+                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                 .DeliverInvoiceOrder()
                                 .DoRequest();
 

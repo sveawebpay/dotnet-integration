@@ -3,7 +3,7 @@ using Webpay.Integration.CSharp.Order.Validator;
 
 namespace Webpay.Integration.CSharp.Test.Order
 {
-    class VoidValidator : OrderValidator
+    internal class VoidValidator : OrderValidator
     {
         public int NoOfCalls;
 

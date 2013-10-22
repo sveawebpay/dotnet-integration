@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Test.Order
@@ -42,17 +43,17 @@ namespace Webpay.Integration.CSharp.Test.Order
             _order = CreateTestCustomerIdentity(_order);
 
             Assert.AreEqual(_order.GetIndividualCustomer().GetInitials(), "SB");
-            Assert.AreEqual(_order.GetIndividualCustomer().NationalIdNumber, "194609052222");
+            Assert.AreEqual(_order.GetIndividualCustomer().NationalIdNumber, "194605092222");
             Assert.AreEqual(_order.GetIndividualCustomer().GetFirstName(), "Tess");
-            Assert.AreEqual(_order.GetIndividualCustomer().GetLastName(), "Testson");
+            Assert.AreEqual(_order.GetIndividualCustomer().GetLastName(), "Persson");
             Assert.AreEqual(_order.GetIndividualCustomer().GetBirthDate(), "19231212");
             Assert.AreEqual(_order.GetIndividualCustomer().Email, "test@svea.com");
-            Assert.AreEqual(_order.GetIndividualCustomer().PhoneNumber, "999999");
+            Assert.AreEqual(_order.GetIndividualCustomer().PhoneNumber, "0811111111");
             Assert.AreEqual(_order.GetIndividualCustomer().IpAddress, "123.123.123");
-            Assert.AreEqual(_order.GetIndividualCustomer().Street, "Gatan");
-            Assert.AreEqual(_order.GetIndividualCustomer().HouseNumber, "23");
-            Assert.AreEqual(_order.GetIndividualCustomer().CoAddress, "c/o Eriksson");
-            Assert.AreEqual(_order.GetIndividualCustomer().ZipCode, "9999");
+            Assert.AreEqual(_order.GetIndividualCustomer().Street, "Testgatan");
+            Assert.AreEqual(_order.GetIndividualCustomer().HouseNumber, "1");
+            Assert.AreEqual(_order.GetIndividualCustomer().CoAddress, "c/o Eriksson, Erik");
+            Assert.AreEqual(_order.GetIndividualCustomer().ZipCode, "99999");
             Assert.AreEqual(_order.GetIndividualCustomer().Locality, "Stan");
         }
 
@@ -101,7 +102,7 @@ namespace Webpay.Integration.CSharp.Test.Order
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetAmountExVat(), 50);
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetUnit(), "st");
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetVatPercent(), 25);
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), 0, 0);
+            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), 0);
         }
 
         [Test]
@@ -129,15 +130,15 @@ namespace Webpay.Integration.CSharp.Test.Order
         [Test]
         public void TestBuildOrderWithOrderDate()
         {
-            _order.SetOrderDate("2012-12-12");
+            _order.SetOrderDate(TestingTool.DefaultTestDate);
 
-            Assert.AreEqual("2012-12-12", _order.GetOrderDate());
+            Assert.AreEqual(TestingTool.DefaultTestDate, _order.GetOrderDate());
         }
 
         [Test]
         public void TestBuildOrderWithCountryCode()
         {
-            _order.SetCountryCode(CountryCode.SE);
+            _order.SetCountryCode(TestingTool.DefaultTestCountryCode);
 
             Assert.AreEqual(CountryCode.SE, _order.GetCountryCode());
         }
@@ -145,7 +146,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         [Test]
         public void TestBuildOrderWithCurrency()
         {
-            _order.SetCurrency(Currency.SEK);
+            _order.SetCurrency(TestingTool.DefaultTestCurrency);
 
             Assert.AreEqual("SEK", _order.GetCurrency());
         }
@@ -153,83 +154,47 @@ namespace Webpay.Integration.CSharp.Test.Order
         [Test]
         public void TestBuildOrderWithClientOrderNumber()
         {
-            _order.SetClientOrderNumber("33");
+            _order.SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber);
 
-            Assert.AreEqual("33", _order.GetClientOrderNumber());
+            Assert.AreEqual(TestingTool.DefaultTestClientOrderNumber, _order.GetClientOrderNumber());
         }
 
         private static CreateOrderBuilder CreateTestCustomerIdentity(CreateOrderBuilder orderBuilder)
         {
-            return orderBuilder.AddCustomerDetails(Item.IndividualCustomer()
-                                                       .SetNationalIdNumber("194609052222")
-                                                       .SetInitials("SB")
-                                                       .SetBirthDate("19231212")
-                                                       .SetName("Tess", "Testson")
-                                                       .SetEmail("test@svea.com")
-                                                       .SetPhoneNumber("999999")
-                                                       .SetIpAddress("123.123.123")
-                                                       .SetStreetAddress("Gatan", "23")
-                                                       .SetCoAddress("c/o Eriksson")
-                                                       .SetZipCode("9999")
-                                                       .SetLocality("Stan"));
+            return orderBuilder.AddCustomerDetails(TestingTool.CreateIndividualCustomer());
         }
 
         private CreateOrderBuilder CreateCompanyDetails(CreateOrderBuilder orderBuilder)
         {
-            return orderBuilder.AddCustomerDetails(Item.CompanyCustomer()
-                                                 .SetCompanyName("TestCompagniet")
-                                                 .SetVatNumber("2345234"));
+            return orderBuilder.AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer());
         }
 
         private void CreateTestOrderRow()
         {
-            _order.AddOrderRow(Item.OrderRow()
-                                   .SetArticleNumber("1")
-                                   .SetQuantity(2)
-                                   .SetAmountExVat(new decimal(100.00))
-                                   .SetDescription("Specification")
-                                   .SetUnit("st")
-                                   .SetVatPercent(25)
-                                   .SetVatDiscount(0));
+            _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow());
         }
 
         private void CreateShippingFeeRow()
         {
-            _order.AddFee(Item.ShippingFee()
-                              .SetAmountExVat(50)
-                              .SetShippingId("33")
-                              .SetDescription("Specification")
-                              .SetVatPercent(25));
+            _order.AddFee(TestingTool.CreateExVatBasedShippingFee());
         }
 
         private void CreateTestInvoiceFee()
         {
-            _order.AddFee(Item.InvoiceFee()
-                              .SetName("Svea fee")
-                              .SetDescription("Fee for invoice")
-                              .SetAmountExVat(50)
-                              .SetUnit("st")
-                              .SetVatPercent(25)
-                              .SetDiscountPercent(0));
+            _order.AddFee(TestingTool.CreateExVatBasedInvoiceFee());
         }
 
         private void CreateTestFixedDiscountRow()
         {
             _order.AddDiscount(Item.FixedDiscount()
                                    .SetDiscountId("1")
-                                   .SetAmountIncVat(new decimal(100.00))
-                                   .SetAmountIncVat(new decimal(100.00))
+                                   .SetAmountIncVat(100.00M)
                                    .SetDescription("FixedDiscount"));
         }
 
         private void CreateTestRelativeDiscountBuilder()
         {
-            _order.AddDiscount(Item.RelativeDiscount()
-                                   .SetDiscountId("1")
-                                   .SetDiscountPercent(50)
-                                   .SetDescription("RelativeDiscount")
-                                   .SetName("Relative")
-                                   .SetUnit("st"));
+            _order.AddDiscount(TestingTool.CreateRelativeDiscount());
         }
     }
 }

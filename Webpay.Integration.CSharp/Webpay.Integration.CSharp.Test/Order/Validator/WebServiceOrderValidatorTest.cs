@@ -1,10 +1,12 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Handleorder;
@@ -30,15 +32,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .AddCustomerDetails(Item.CompanyCustomer()
-                                                                               .SetNationalIdNumber("666666")
-                                                                               .SetEmail("test@svea.com")
-                                                                               .SetPhoneNumber("999999")
-                                                                               .SetIpAddress("123.123.123.123")
-                                                                               .SetStreetAddress("Gatan", "23")
-                                                                               .SetCoAddress("c/o Eriksson")
-                                                                               .SetZipCode("9999")
-                                                                               .SetLocality("Stan"));
+                                                       .AddCustomerDetails(TestingTool.CreateCompanyCustomer());
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
         }
 
@@ -51,7 +45,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .SetValidator(new VoidValidator())
-                                                       .SetClientOrderNumber("1")
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddCustomerDetails(null);
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
@@ -65,9 +59,9 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .SetValidator(new VoidValidator())
-                                                       .SetClientOrderNumber("1")
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddCustomerDetails(Item.IndividualCustomer()
-                                                                               .SetNationalIdNumber("194609052222"));
+                                                                               .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber));
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
         }
@@ -77,26 +71,9 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         {
             const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).";
             var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder()
-                                                                                               .AddOrderRow(Item
-                                                                                                                .OrderRow
-                                                                                                                ()
-                                                                                                                .SetArticleNumber
-                                                                                                                ("1")
-                                                                                                                .SetQuantity
-                                                                                                                (2)
-                                                                                                                .SetAmountExVat
-                                                                                                                (new decimal
-                                                                                                                     (100.00))
-                                                                                                                .SetDescription
-                                                                                                                ("Specification")
-                                                                                                                .SetName
-                                                                                                                ("Prod")
-                                                                                                                .SetUnit
-                                                                                                                ("st")
-                                                                                                                .SetVatPercent
-                                                                                                                (25)
-                                                                                                                .SetDiscountPercent
-                                                                                                                (0))
+                                                                                               .AddOrderRow(
+                                                                                                   TestingTool
+                                                                                                       .CreateExVatBasedOrderRow())
                                                                                                .SetNumberOfCreditDays(1)
                                                                                                .SetOrderId(2345L)
                                                                                                .SetInvoiceDistributionType
@@ -128,8 +105,8 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator())
-                                                       .SetClientOrderNumber("1")
-                                                       .SetCountryCode(CountryCode.SE);
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode);
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
         }
@@ -142,10 +119,10 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .SetValidator(new VoidValidator())
-                                                       .SetClientOrderNumber("1")
-                                                       .SetCountryCode(CountryCode.SE)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .AddCustomerDetails(Item.IndividualCustomer()
-                                                                               .SetNationalIdNumber("194609052222"));
+                                                                               .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber));
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
         }
@@ -158,11 +135,10 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Two of the values must be set: AmountExVat(not set), AmountIncVat(not set) or VatPercent(not set) for Orderrow. Use two of: SetAmountExVat(), SetAmountIncVat or SetVatPercent().\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetClientOrderNumber("1")
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddOrderRow(Item.OrderRow())
-                                                       .AddCustomerDetails(Item.IndividualCustomer()
-                                                                               .SetNationalIdNumber("194605092222"))
-                                                       .SetCountryCode(CountryCode.SE)
+                                                       .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetValidator(new VoidValidator());
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
@@ -178,7 +154,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator())
-                                                       .SetCountryCode(CountryCode.SE);
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode);
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
         }
@@ -209,7 +185,6 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Birth date is required for individual customers when countrycode is DE. Use SetBirthDate().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n";
 
-
             var exception = Assert.Throws<SveaWebPayValidationException>(() =>
                 {
                     var builder = WebpayConnection.CreateOrder();
@@ -222,7 +197,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
 
                     var order = builder
                         .SetCountryCode(CountryCode.DE)
-                        .SetOrderDate("Mon, 15 Aug 05 15:52:01 +0000")
+                        .SetOrderDate(new DateTime(2005, 08, 15, 15, 52, 1))
                         .AddCustomerDetails(customer)
                         .UseInvoicePayment();
 
@@ -245,7 +220,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
 
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetClientOrderNumber("1")
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(CountryCode.DE)
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator());
@@ -260,7 +235,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Vat number is required for company customers when countrycode is DE. Use SetVatNumber().\n";
 
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetClientOrderNumber("1")
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(CountryCode.DE)
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
@@ -271,7 +246,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                                                .SetStreetAddress("Adalbertsteinweg", "1")
                                                                                .SetLocality("AACHEN")
                                                                                .SetZipCode("52070"))
-                                                       .SetOrderDate("2012-09-09")
+                                                       .SetOrderDate(new DateTime(2012, 09, 09))
                                                        .SetValidator(new VoidValidator());
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
@@ -365,17 +340,31 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
+        public void TestFailOnMissingOrderDate()
+        {
+            const string expectedMessage =
+                "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .AddOrderRow(TestingTool.CreateMiniOrderRow())
+                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .SetOrderDate(new DateTime())
+                                                       .SetValidator(new VoidValidator());
+
+            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+        }
+
+        [Test]
         public void TestSucceedOnGoodValuesSe()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(new decimal(5.0))
-                                                                        .SetVatPercent(25)
-                                                                        .SetQuantity(1))
+                                                       .AddOrderRow(TestingTool.CreateMiniOrderRow())
                                                        .AddCustomerDetails(Item.IndividualCustomer()
-                                                                               .SetNationalIdNumber("194605092222"))
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetOrderDate("2012-05-01")
+                                                                               .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetOrderDate(new DateTime(2012, 05, 01))
                                                        .SetValidator(new VoidValidator());
 
             Assert.AreEqual("", _orderValidator.Validate(order));
@@ -385,34 +374,15 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailOnMissingOrderIdOnDeliverOrder()
         {
             const string expectedMessage = "MISSING VALUE - SetOrderId is required.";
-            var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder()
-                                                                                               .AddOrderRow(Item
-                                                                                                                .OrderRow
-                                                                                                                ()
-                                                                                                                .SetArticleNumber
-                                                                                                                ("1")
-                                                                                                                .SetQuantity
-                                                                                                                (2)
-                                                                                                                .SetAmountExVat
-                                                                                                                (new decimal
-                                                                                                                     (100.00))
-                                                                                                                .SetDescription
-                                                                                                                ("Specification")
-                                                                                                                .SetName
-                                                                                                                ("Prod")
-                                                                                                                .SetUnit
-                                                                                                                ("st")
-                                                                                                                .SetVatPercent
-                                                                                                                (25)
-                                                                                                                .SetDiscountPercent
-                                                                                                                (0))
-                                                                                               .SetNumberOfCreditDays(1)
-                                                                                               .SetInvoiceDistributionType
-                                                                                   (InvoiceDistributionType.POST)
-                                                                                               .SetCountryCode(
-                                                                                                   CountryCode.SE)
-                                                                                               .DeliverInvoiceOrder()
-                                                                                               .PrepareRequest());
+            var exception =
+                Assert.Throws<SveaWebPayValidationException>(() =>
+                                                             WebpayConnection.DeliverOrder()
+                                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                                             .SetNumberOfCreditDays(1)
+                                                                             .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                             .DeliverInvoiceOrder()
+                                                                             .PrepareRequest());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
@@ -421,35 +391,17 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailOnMissingOrderTypeForInvoiceOrder()
         {
             const string expectedMessage =
-                "MISSING VALUE - SetInvoiceDistributionType is requred for DeliverInvoiceOrder.";
+                "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.";
 
-            var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder()
-                                                                                               .AddOrderRow(Item
-                                                                                                                .OrderRow
-                                                                                                                ()
-                                                                                                                .SetArticleNumber
-                                                                                                                ("1")
-                                                                                                                .SetQuantity
-                                                                                                                (2)
-                                                                                                                .SetAmountExVat
-                                                                                                                (new decimal
-                                                                                                                     (100.00))
-                                                                                                                .SetDescription
-                                                                                                                ("Specification")
-                                                                                                                .SetName
-                                                                                                                ("Prod")
-                                                                                                                .SetUnit
-                                                                                                                ("st")
-                                                                                                                .SetVatPercent
-                                                                                                                (25)
-                                                                                                                .SetDiscountPercent
-                                                                                                                (0))
-                                                                                               .SetNumberOfCreditDays(1)
-                                                                                               .SetOrderId(2345L)
-                                                                                               .SetCountryCode(
-                                                                                                   CountryCode.SE)
-                                                                                               .DeliverInvoiceOrder()
-                                                                                               .PrepareRequest());
+            var exception =
+                Assert.Throws<SveaWebPayValidationException>(() =>
+                                                             WebpayConnection.DeliverOrder()
+                                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                                             .SetNumberOfCreditDays(1)
+                                                                             .SetOrderId(2345L)
+                                                                             .SetCountryCode(CountryCode.SE)
+                                                                             .DeliverInvoiceOrder()
+                                                                             .PrepareRequest());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
@@ -464,9 +416,8 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 () => WebpayConnection.DeliverOrder()
                                       .SetNumberOfCreditDays(1)
                                       .SetOrderId(2345L)
-                                      .SetInvoiceDistributionType(
-                                          InvoiceDistributionType.POST)
-                                      .SetCountryCode(CountryCode.SE)
+                                      .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                       .DeliverInvoiceOrder()
                                       .DoRequest());
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
@@ -479,26 +430,10 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             try
             {
                 WebpayConnection.CreateOrder()
-                                .AddOrderRow(Item.OrderRow()
-                                                 .SetArticleNumber("1")
-                                                 .SetQuantity(2)
-                                                 .SetAmountExVat(new decimal(100.00))
-                                                 .SetDescription("Specification")
-                                                 .SetName("Prod")
-                                                 .SetUnit("st")
-                                                 .SetVatPercent(25)
-                                                 .SetDiscountPercent(0))
-                                .AddCustomerDetails(Item.CompanyCustomer()
-                                                        .SetNationalIdNumber("666666")
-                                                        .SetEmail("test@svea.com")
-                                                        .SetPhoneNumber("999999")
-                                                        .SetIpAddress("123.123.123.123")
-                                                        .SetStreetAddress("Gatan", "23")
-                                                        .SetCoAddress("c/o Eriksson")
-                                                        .SetZipCode("9999")
-                                                        .SetLocality("Stan"))
-                                .SetCountryCode(CountryCode.SE)
-                                .SetOrderDate("2012-09-09")
+                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
+                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                .SetOrderDate(new DateTime(2012, 09, 09))
                                 .UsePaymentPlanPayment(777L);
 
                 Assert.Fail("Expected exception not thrown.");
@@ -513,22 +448,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailOnMissingCountryCodeOfCloseOrder()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder()
-                                                           .AddOrderRow(Item.OrderRow()
-                                                                            .SetArticleNumber("1")
-                                                                            .SetQuantity(2)
-                                                                            .SetAmountExVat(new decimal(100.00))
-                                                                            .SetDescription("Specification")
-                                                                            .SetName("Prod")
-                                                                            .SetUnit("st")
-                                                                            .SetVatPercent(25)
-                                                                            .SetDiscountPercent(0))
+                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                   .SetNationalIdNumber(
-                                                                                       "194605092222"))
-                                                           .SetCountryCode(CountryCode.SE)
-                                                           .SetClientOrderNumber("33")
-                                                           .SetOrderDate("2012-12-12")
-                                                           .SetCurrency(Currency.SEK)
+                                                                                   .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                           .SetOrderDate(TestingTool.DefaultTestDate)
+                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.WebpayWS;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
@@ -12,21 +12,13 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         public void TestCloseOrder()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(new decimal(100.00))
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(25)
-                                                                              .SetDiscountPercent(0))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber("194605092222"))
-                                                             .SetCountryCode(CountryCode.SE)
-                                                             .SetClientOrderNumber("33")
-                                                             .SetOrderDate("2012-12-12")
-                                                             .SetCurrency(Currency.SEK)
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
@@ -35,7 +27,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
 
             CloseOrderEuResponse closeResponse = WebpayConnection.CloseOrder()
                                                                  .SetOrderId(response.CreateOrderResult.SveaOrderId)
-                                                                 .SetCountrycode(CountryCode.SE)
+                                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                  .CloseInvoiceOrder()
                                                                  .DoRequest();
 

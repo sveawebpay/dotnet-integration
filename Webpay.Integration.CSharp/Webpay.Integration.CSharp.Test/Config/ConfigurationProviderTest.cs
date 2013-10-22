@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 
@@ -9,49 +9,147 @@ namespace Webpay.Integration.CSharp.Test.Config
     [TestFixture]
     public class ConfigurationProviderTest
     {
-        [Test]
-        public void TestDefaultTestConfig()
+        private IConfigurationProvider _defaultConf;
+
+        [SetUp]
+        public void SetUp()
         {
-            IConfigurationProvider conf = SveaConfig.GetDefaultConfig();
-            Assert.AreEqual("sverigetest", conf.GetUsername(PaymentType.INVOICE, CountryCode.SE));
-            Assert.AreEqual("sverigetest", conf.GetPassword(PaymentType.PAYMENTPLAN, CountryCode.SE));
-            Assert.AreEqual(36000, conf.GetClientNumber(PaymentType.PAYMENTPLAN, CountryCode.NO));
-            Assert.AreEqual("1130", conf.GetMerchantId(PaymentType.HOSTED, CountryCode.NL));
-            Assert.AreEqual("https://webservices.sveaekonomi.se/webpay_test/SveaWebPay.asmx?WSDL",
-                            conf.GetEndPoint(PaymentType.INVOICE));
+            _defaultConf = SveaConfig.GetDefaultConfig();
         }
 
         [Test]
-        public void TestConfiguration()
+        public void TestGetDefaultConfigSe()
+        {
+            const CountryCode countrycode = CountryCode.SE;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(79021));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(59999));
+
+            Assert.That(_defaultConf.GetMerchantId(PaymentType.HOSTED, countrycode), Is.EqualTo("1130"));
+
+            Assert.That(_defaultConf.GetSecret(PaymentType.HOSTED, countrycode), 
+                Is.EqualTo("8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"));
+
+            Assert.That(_defaultConf.GetEndPoint(PaymentType.HOSTED),
+                Is.EqualTo("https://test.sveaekonomi.se/webpay/payment"));
+            Assert.That(_defaultConf.GetEndPoint(PaymentType.INVOICE),
+                Is.EqualTo("https://webservices.sveaekonomi.se/webpay_test/SveaWebPay.asmx?WSDL"));
+        }
+
+        [Test]
+        public void TestGetDefaultConfigDk()
+        {
+            const CountryCode countrycode = CountryCode.DK;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(62008));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(64008));
+        }
+
+        [Test]
+        public void TestGetDefaultConfigDe()
+        {
+            const CountryCode countrycode = CountryCode.DE;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(14997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(16997));
+        }
+
+        [Test]
+        public void TestGetDefaultConfigFi()
+        {
+            const CountryCode countrycode = CountryCode.FI;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(26136));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(27136));
+        }
+
+        [Test]
+        public void TestGetDefaultConfigNo()
+        {
+            const CountryCode countrycode = CountryCode.NO;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(33308));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(32503));
+        }
+
+        [Test]
+        public void TestGetDefaultConfigNl()
+        {
+            const CountryCode countrycode = CountryCode.NL;
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
+
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(85997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(86997));
+        }
+
+        [Test]
+        public void TestProductionUrls()
+        {
+            Assert.That(SveaConfig.GetProdPayPageUrl(), Is.EqualTo("https://webpay.sveaekonomi.se/webpay/payment"));
+            Assert.That(SveaConfig.GetProdWebserviceUrl(), Is.EqualTo("https://webservices.sveaekonomi.se/webpay/SveaWebPay.asmx?WSDL"));
+        }
+
+        [Test]
+        public void TestConnectionWithTestConfiguration()
         {
             var conf = new ConfigurationProviderTestData();
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(conf)
-                                                 .AddOrderRow(Item.OrderRow()
-                                                                  .SetArticleNumber("1")
-                                                                  .SetQuantity(2)
-                                                                  .SetAmountExVat(new decimal(100.00))
-                                                                  .SetDescription("Specification")
-                                                                  .SetName("Prod")
-                                                                  .SetUnit("st")
-                                                                  .SetVatPercent(25)
-                                                                  .SetDiscountPercent(0))
-                                                 .AddOrderRow(Item.OrderRow()
-                                                                  .SetArticleNumber("1")
-                                                                  .SetQuantity(2)
-                                                                  .SetAmountExVat(new decimal(100.00))
-                                                                  .SetDescription("Specification")
-                                                                  .SetName("Prod")
-                                                                  .SetVatPercent(25)
-                                                                  .SetDiscountPercent(0))
-                                                 .AddCustomerDetails(Item.IndividualCustomer()
-                                                                         .SetNationalIdNumber("194605092222")
-                                                                         .SetIpAddress("123.123.123"))
-                                                 .SetCountryCode(CountryCode.SE)
-                                                 .SetOrderDate("2012-12-12")
-                                                 .SetClientOrderNumber("33")
-                                                 .SetCurrency(Currency.SEK)
-                                                 .UseInvoicePayment()
-                                                 .DoRequest();
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                             .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .UseInvoicePayment()
+                                                             .DoRequest();
 
             Assert.AreEqual(true, response.Accepted);
         }

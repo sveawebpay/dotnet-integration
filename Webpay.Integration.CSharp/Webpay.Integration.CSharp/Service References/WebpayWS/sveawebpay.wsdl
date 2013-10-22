@@ -1,0 +1,2074 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://webservices.sveaekonomi.se/webpay" xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  targetNamespace="https://webservices.sveaekonomi.se/webpay"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@sveaekonomi.se for more information. -CreateOrder -CancelOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://webservices.sveaekonomi.se/webpay">
+      <s:element name="CreateOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:OrderRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Order" type="tns:ClientOrderInfo" />
+              <s:element minOccurs="0" maxOccurs="1" name="InvoiceRows" type="tns:ArrayOfClientInvoiceRowInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BasicRequest" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Auth" type="tns:ClientAuthInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientAuthInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ClientNumber" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientOrderInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ClientOrderNr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerReference" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerEmail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCompany" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="PreApprovedCustomerId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressSelector" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfClientInvoiceRowInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientInvoiceRowInfo" nillable="true"
+                     type="tns:ClientInvoiceRowInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientInvoiceRowInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ArticleNr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PricePerUnit" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NrOfUnits" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="VatPercent" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountPercent" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderResult" type="tns:OrderResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:OrderRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="WillBuyInvoices" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorizeId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorizedAmount" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExpirationDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValidCustomer" type="tns:CreditReportCustomer" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BasicResponse" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Accepted" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OrderRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="CusomterCreditRejected" />
+          <s:enumeration value="CustomerOverCreditLimit" />
+          <s:enumeration value="CustomerAbuseBlock" />
+          <s:enumeration value="OrderExpired" />
+          <s:enumeration value="ClientOverCreditLimit" />
+          <s:enumeration value="OrderIsClosed" />
+          <s:enumeration value="OrderOverSveaLimit" />
+          <s:enumeration value="OrderOverClientLimit" />
+          <s:enumeration value="CustomerSveaRejected" />
+          <s:enumeration value="CustomerCreditNoSuchEntity" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CreditReportCustomer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LegalName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Postcode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Postarea" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BusinessType" type="tns:BusinessTypeCode" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="BusinessTypeCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Person" />
+          <s:enumeration value="Business" />
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="GovernmentalOrganization" />
+          <s:enumeration value="Organization" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeOrderAmount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ChangeOrderAmountRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ChangeOrderAmountRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="RemainingInvoiceRows" type="tns:ArrayOfClientInvoiceRowInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ChangeOrderAmountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangeOrderAmountResult" type="tns:ChangeOrderAmountResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ChangeOrderAmountResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:ChangeOrderAmountRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="NewCreditCheckDone" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorizeId" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorizedAmount" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValidCustomer" type="tns:CreditReportCustomer" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="ChangeOrderAmountRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="OrderNotAuthorized" />
+          <s:enumeration value="CusomterCreditRejected" />
+          <s:enumeration value="OrderExpired" />
+          <s:enumeration value="OrderIsClosed" />
+          <s:enumeration value="OrderDoesNotExist" />
+          <s:enumeration value="AmountToHigh" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreateInvoice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CreateInvoiceRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreateInvoiceRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="Invoice" type="tns:ClientInvoiceInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ClientInvoiceInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfCreditDays" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceDistributionForm" type="tns:InvoiceDistributionCode" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceNrToCredit" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="InvoiceRows" type="tns:ArrayOfClientInvoiceRowInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="InvoiceDistributionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Post" />
+          <s:enumeration value="Email" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreateInvoiceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateInvoiceResult" type="tns:CreateInvoiceResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreateInvoiceResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="BoughtInvoiceText" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OcrPaymentAccountNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="InvoiceAmount" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="InvoiceAmountCheckDigit" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OcrReference" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:InvoiceRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="InvoiceNumber" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="InvoiceDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DueDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="PdfLinkIncluded" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="PdfLink" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="InvoiceRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="NotAuthorized" />
+          <s:enumeration value="Expired" />
+          <s:enumeration value="OverAuthorizedAmount" />
+          <s:enumeration value="OrderIsClosed" />
+          <s:enumeration value="CreditInvoiceNotInOrder" />
+          <s:enumeration value="CreditAmountTooHigh" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeOrderInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ChangeOrderInfoRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ChangeOrderInfoRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ChangeClientOrderNr" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="NewClientOrderNr" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ChangeCustomerReference" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="NewCustomerReference" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ChangeOrderInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangeOrderInfoResult" type="tns:ChangeOrderInfoResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ChangeOrderInfoResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:ChangeOrderInfoRejectionCode" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="ChangeOrderInfoRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="OrderDoesNotExist" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CloseOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CloseOrderRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CloseOrderRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CloseOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CloseOrderResult" type="tns:CloseOrderResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CloseOrderResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:CloseOrderRejectionCode" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="CloseOrderRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="OrderAlreadyClosed" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetOrders">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetOrdersRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetOrdersRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ClientOrderNr" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ClientOrderNrIncluded" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNrIncluded" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetOrdersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrdersResult" type="tns:GetOrdersResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetOrdersResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Orders" type="tns:ArrayOfOrderStatus" />
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:GetOrdersRejectionCode" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderStatus" nillable="true" type="tns:OrderStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OrderStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ClientOrderNr" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ClosedDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SveaOrderNr" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WillBuyInvoices" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpirationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValidCustomer" type="tns:CreditReportCustomer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Invoices" type="tns:ArrayOfInvoiceStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInvoiceStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InvoiceStatus" nillable="true" type="tns:InvoiceStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InvoiceStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceAmountWithoutVat" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceVat" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceNumber" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DueDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="GetOrdersRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="NoSearchParametersSupplied" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CheckInternalScoring">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CheckInternalScoringRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CheckInternalScoringRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCompany" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CheckInternalScoringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckInternalScoringResult"
+                       type="tns:CheckInternalScoringResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CheckInternalScoringResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:CheckInternalScoringRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreditDecisionId" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="CheckInternalScoringRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Approved" />
+          <s:enumeration value="Denied" />
+          <s:enumeration value="Error" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreatePaymentPlan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CreatePaymentPlanRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreatePaymentPlanRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InvoiceRows" type="tns:ArrayOfClientInvoiceRowInfo" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="PayPlan" type="tns:ClientPaymentPlanInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ClientPaymentPlanInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SendAutomaticGiropaymentForm" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CampainCode" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClientPaymentPlanNr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerPhoneNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCompany" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityNumberCoApplicant" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerEmailCoApplicant" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerPhoneNumberCoApplicant" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressSelector" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreatePaymentPlanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreatePaymentPlanResult" type="tns:CreatePaymentPlanResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreatePaymentPlanResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:CreatePaymentPlanRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorizedAmount" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ContractNumber" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ContractNumberIncluded" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValidCustomer" type="tns:CreditReportCustomer" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValidCustomerCoApplicant" type="tns:CreditReportCustomer" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="CreatePaymentPlanRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="CustomerCreditRejected" />
+          <s:enumeration value="CustomerOverCreditLimit" />
+          <s:enumeration value="CustomerAbuseBlock" />
+          <s:enumeration value="ClientOverCreditLimit" />
+          <s:enumeration value="PaymentPlanIsCancelled" />
+          <s:enumeration value="OverOrderLimit" />
+          <s:enumeration value="CustomerSveaRejected" />
+          <s:enumeration value="CustomerCreditNoSuchEntity" />
+          <s:enumeration value="InvalidCampainCodeAmountCombination" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetPaymentPlanStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanStatusRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanStatusRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPaymentPlanStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanStatusResult"
+                       type="tns:GetPaymentPlanStatusResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanStatusResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:GetPaymentPlanStatusRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:GetPaymentPlanResponseStatus" />
+              <s:element minOccurs="1" maxOccurs="1" name="CampainCode" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="GetPaymentPlanStatusRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="PaymentPlanDoesNotExist" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="GetPaymentPlanResponseStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Cancelled" />
+          <s:enumeration value="Pending" />
+          <s:enumeration value="Activated" />
+          <s:enumeration value="OrderDoesNotExist" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CancelPaymentPlan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CancelPaymentPlanRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CancelPaymentPlanRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CancelPaymentPlanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPaymentPlanResult" type="tns:CancelPaymentPlanResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CancelPaymentPlanResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:CancelPaymentPlanRejectionCode" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="CancelPaymentPlanRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="PaymentPlanDoesNotExist" />
+          <s:enumeration value="WrongStatus" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ApprovePaymentPlan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ApprovePaymentPlanRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ApprovePaymentPlanRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ApprovePaymentPlanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ApprovePaymentPlanResult"
+                       type="tns:ApprovePaymentPlanResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ApprovePaymentPlanResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ContractNumber" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:ApprovePaymentPlanRejectionCode" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="ApprovePaymentPlanRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="PaymentPlanDoesNotExist" />
+          <s:enumeration value="WrongStatus" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetPaymentPlanOptions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanOptionsRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanOptionsRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="InvoiceRows" type="tns:ArrayOfClientInvoiceRowInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPaymentPlanOptionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanOptionsResult"
+                       type="tns:GetPaymentPlanOptionsResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanOptionsResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PaymentPlanOptions" type="tns:ArrayOfPaymentPlanOption" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPaymentPlanOption">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanOption" nillable="true"
+                     type="tns:PaymentPlanOption" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentPlanOption">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CampainCode" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentPlanType" type="tns:PaymentPlanTypeCode" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContractLengthInMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonthlyAnnuity" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="InitialFee" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotificationFee" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="InterestRatePercent" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="EffectiveInterestRatePercent" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NrOfInterestFreeMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NrOfPaymentFreeMonths" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="PaymentPlanTypeCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Standard" />
+          <s:enumeration value="InterestFree" />
+          <s:enumeration value="InterestAndAmortizationFree" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetContractPdf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetContractPdfRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetContractPdfRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SveaPaymentPlanNr" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetContractPdfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContractPdfResult" type="tns:GetContractPdfResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetContractPdfResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:GetContractPdfRejectionCode" />
+              <s:element minOccurs="1" maxOccurs="1" name="FileLengthInBytes" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileBinaryDataBase64" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PdfLink" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="GetContractPdfRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="PaymentPlanDoesNotExist" />
+          <s:enumeration value="WrongStatus" />
+          <s:enumeration value="ContractExpired" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="AddToBlockList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:AddToBlockListRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddToBlockListRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCompany" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReasonForBlock" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddToBlockListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddToBlockListResult" type="tns:AddToBlockListResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddToBlockListResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetAddresses">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetCustomerAddressesRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetCustomerAddressesRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="IsCompany" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetAddressesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAddressesResult" type="tns:GetCustomerAddressesResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetCustomerAddressesResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:GetCustomerAddressesRejectionCode" />
+              <s:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfCustomerAddress" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="GetCustomerAddressesRejectionCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Error" />
+          <s:enumeration value="Accepted" />
+          <s:enumeration value="NoSuchEntity" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfCustomerAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerAddress" nillable="true"
+                     type="tns:CustomerAddress" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LegalName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Postcode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Postarea" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BusinessType" type="tns:BusinessTypeCode" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressSelector" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAddressesEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetAddressesEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetAddressesEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="GetAddressesInformation" type="tns:GetAddressesInformation" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GetAddressesInformation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerType" type="tns:CustomerType" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NationalIdNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="CustomerType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Individual" />
+          <s:enumeration value="Company" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetAddressesEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAddressesEuResult" type="tns:GetAddressesEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetAddressesEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="GetAddressesResult" type="tns:GetAddressesResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GetAddressesResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfAddressItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAddressItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AddressItem" nillable="true" type="tns:AddressItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AddressItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NationalIdNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerType" type="tns:CustomerType" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Address">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CoAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Locality" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Ping">
+        <s:complexType />
+      </s:element>
+      <s:element name="PingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PingResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPaymentPlanParams">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanParamsRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanParamsRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPaymentPlanParamsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsResult"
+                       type="tns:GetPaymentPlanParamsResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanParamsResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CampainCodes" type="tns:ArrayOfCampainCodeInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfCampainCodeInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CampainCodeInfo" nillable="true"
+                     type="tns:CampainCodeInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CampainCodeInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CampainCode" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentPlanType" type="tns:PaymentPlanTypeCode" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContractLengthInMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonthlyAnnuityFactor" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="InitialFee" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotificationFee" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="InterestRatePercent" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="NrOfInterestFreeMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NrOfPaymentFreeMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FromAmount" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="ToAmount" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateOrderEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CreateOrderEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreateOrderEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CreateOrderInformation" type="tns:CreateOrderInformation" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CreateOrderInformation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ClientOrderNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderRows" type="tns:ArrayOfOrderRow" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerIdentity" type="tns:CustomerIdentity" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressSelector" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderDeliveryAddress" type="tns:Address" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="tns:OrderType" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatePaymentPlanDetails" type="tns:CreatePaymentPlanDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderRow">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderRow" nillable="true" type="tns:OrderRow" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OrderRow">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ArticleNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PricePerUnit" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfUnits" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="VatPercent" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountPercent" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerIdentity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="NationalIdNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IpAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CoAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Locality" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerType" type="tns:CustomerType" />
+          <s:element minOccurs="0" maxOccurs="1" name="IndividualIdentity" type="tns:IndividualIdentity" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyIdentity" type="tns:CompanyIdentity" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="IndividualIdentity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Initials" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CompanyIdentity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyIdentification" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyVatNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OrderType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Invoice" />
+          <s:enumeration value="PaymentPlan" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CreatePaymentPlanDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CampaignCode" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CoCustomerIdentity" type="tns:CustomerIdentity" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendAutomaticGiroPaymentForm" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="FixedMonthlyAmount" nillable="true" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateOrderEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderEuResult" type="tns:CreateOrderEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreateOrderEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateOrderResult" type="tns:CreateOrderResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CreateOrderResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SveaOrderId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SveaWillBuyOrder" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerIdentity" type="tns:CustomerIdentity" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpirationDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClientOrderNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CloseOrderEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:CloseOrderEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CloseOrderEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CloseOrderInformation" type="tns:CloseOrderInformation" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CloseOrderInformation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SveaOrderId" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CloseOrderEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CloseOrderEuResult" type="tns:CloseOrderEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CloseOrderEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="DeliverOrderEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:DeliverOrderEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DeliverOrderEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="DeliverOrderInformation" type="tns:DeliverOrderInformation" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DeliverOrderInformation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SveaOrderId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="tns:OrderType" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliverInvoiceDetails" type="tns:DeliverInvoiceDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeliverInvoiceDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfCreditDays" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceDistributionType" type="tns:InvoiceDistributionType" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCreditInvoice" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceIdToCredit" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderRows" type="tns:ArrayOfOrderRow" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="InvoiceDistributionType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Post" />
+          <s:enumeration value="Email" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="DeliverOrderEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeliverOrderEuResult" type="tns:DeliverOrderEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DeliverOrderEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="DeliverOrderResult" type="tns:DeliverOrderResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DeliverOrderResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="tns:OrderType" />
+          <s:element minOccurs="0" maxOccurs="1" name="InvoiceResultDetails" type="tns:InvoiceResultDetails" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentPlanResultDetails" type="tns:PaymentPlanResultDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InvoiceResultDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="DueDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="InvoiceDistributionType" type="tns:InvoiceDistributionType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ocr" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LowestAmountToPay" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentPlanResultDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContractNumber" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPaymentPlanParamsEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanParamsEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanParamsEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPaymentPlanParamsEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanParamsEuResult"
+                       type="tns:GetPaymentPlanParamsEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanParamsEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CampaignCodes" type="tns:ArrayOfCampaignCodeInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfCampaignCodeInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CampaignCodeInfo" nillable="true"
+                     type="tns:CampaignCodeInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CampaignCodeInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CampaignCode" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PaymentPlanType" type="tns:PaymentPlanTypeCode" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContractLengthInMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonthlyAnnuityFactor" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="InitialFee" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotificationFee" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="InterestRatePercent" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfInterestFreeMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfPaymentFreeMonths" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FromAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ToAmount" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPaymentPlanContractDetailsEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanContractDetailsEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanContractDetailsEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrderRows" type="tns:ArrayOfOrderRow" />
+              <s:element minOccurs="1" maxOccurs="1" name="MonthlyAmount" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPaymentPlanContractDetailsEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanContractDetailsEuResult"
+                       type="tns:GetPaymentPlanContractDetailsEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetPaymentPlanContractDetailsEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ContractLengthMonths" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MonthlyAmount" type="s:decimal" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+              <s:element minOccurs="1" maxOccurs="1" name="InitialFee" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetContractPdfEu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetContractPdfEuRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetContractPdfEuRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ContractNumber" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetContractPdfEuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContractPdfEuResult" type="tns:GetContractPdfEuResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GetContractPdfEuResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FileLengthInBytes" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileBinaryDataBase64" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PdfLink" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrder" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderAmountSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeOrderAmount" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderAmountSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeOrderAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateInvoiceSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateInvoice" />
+  </wsdl:message>
+  <wsdl:message name="CreateInvoiceSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeOrderInfo" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeOrderInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CloseOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:CloseOrder" />
+  </wsdl:message>
+  <wsdl:message name="CloseOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:CloseOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrders" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckInternalScoringSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckInternalScoring" />
+  </wsdl:message>
+  <wsdl:message name="CheckInternalScoringSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckInternalScoringResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreatePaymentPlanSoapIn">
+    <wsdl:part name="parameters" element="tns:CreatePaymentPlan" />
+  </wsdl:message>
+  <wsdl:message name="CreatePaymentPlanSoapOut">
+    <wsdl:part name="parameters" element="tns:CreatePaymentPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelPaymentPlanSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlan" />
+  </wsdl:message>
+  <wsdl:message name="CancelPaymentPlanSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApprovePaymentPlanSoapIn">
+    <wsdl:part name="parameters" element="tns:ApprovePaymentPlan" />
+  </wsdl:message>
+  <wsdl:message name="ApprovePaymentPlanSoapOut">
+    <wsdl:part name="parameters" element="tns:ApprovePaymentPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanOptionsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanOptions" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanOptionsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContractPdfSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContractPdf" />
+  </wsdl:message>
+  <wsdl:message name="GetContractPdfSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContractPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddToBlockListSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToBlockList" />
+  </wsdl:message>
+  <wsdl:message name="AddToBlockListSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToBlockListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAddresses" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAddressesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressesEuSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAddressesEu" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressesEuSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAddressesEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="PingSoapIn">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="PingSoapOut">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanParamsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanParams" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanParamsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanParamsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderEuSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderEu" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderEuSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="CloseOrderEuSoapIn">
+    <wsdl:part name="parameters" element="tns:CloseOrderEu" />
+  </wsdl:message>
+  <wsdl:message name="CloseOrderEuSoapOut">
+    <wsdl:part name="parameters" element="tns:CloseOrderEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeliverOrderEuSoapIn">
+    <wsdl:part name="parameters" element="tns:DeliverOrderEu" />
+  </wsdl:message>
+  <wsdl:message name="DeliverOrderEuSoapOut">
+    <wsdl:part name="parameters" element="tns:DeliverOrderEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanParamsEuSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanParamsEu" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanParamsEuSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanParamsEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanContractDetailsEuSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanContractDetailsEu" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentPlanContractDetailsEuSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanContractDetailsEuResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContractPdfEuSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContractPdfEu" />
+  </wsdl:message>
+  <wsdl:message name="GetContractPdfEuSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContractPdfEuResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="CreateOrder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CreateOrderSoapIn" />
+      <wsdl:output message="tns:CreateOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderAmount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:ChangeOrderAmountSoapIn" />
+      <wsdl:output message="tns:ChangeOrderAmountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvoice">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CreateInvoiceSoapIn" />
+      <wsdl:output message="tns:CreateInvoiceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:ChangeOrderInfoSoapIn" />
+      <wsdl:output message="tns:ChangeOrderInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CloseOrderSoapIn" />
+      <wsdl:output message="tns:CloseOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetOrdersSoapIn" />
+      <wsdl:output message="tns:GetOrdersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckInternalScoring">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CheckInternalScoringSoapIn" />
+      <wsdl:output message="tns:CheckInternalScoringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreatePaymentPlan">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CreatePaymentPlanSoapIn" />
+      <wsdl:output message="tns:CreatePaymentPlanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentPlanStatusSoapIn" />
+      <wsdl:output message="tns:GetPaymentPlanStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlan">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:CancelPaymentPlanSoapIn" />
+      <wsdl:output message="tns:CancelPaymentPlanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApprovePaymentPlan">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:ApprovePaymentPlanSoapIn" />
+      <wsdl:output message="tns:ApprovePaymentPlanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanOptions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentPlanOptionsSoapIn" />
+      <wsdl:output message="tns:GetPaymentPlanOptionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetContractPdfSoapIn" />
+      <wsdl:output message="tns:GetContractPdfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToBlockList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:AddToBlockListSoapIn" />
+      <wsdl:output message="tns:AddToBlockListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddresses">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetAddressesSoapIn" />
+      <wsdl:output message="tns:GetAddressesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressesEu">
+      <wsdl:input message="tns:GetAddressesEuSoapIn" />
+      <wsdl:output message="tns:GetAddressesEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input message="tns:PingSoapIn" />
+      <wsdl:output message="tns:PingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParams">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deprecated</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentPlanParamsSoapIn" />
+      <wsdl:output message="tns:GetPaymentPlanParamsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderEu">
+      <wsdl:input message="tns:CreateOrderEuSoapIn" />
+      <wsdl:output message="tns:CreateOrderEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrderEu">
+      <wsdl:input message="tns:CloseOrderEuSoapIn" />
+      <wsdl:output message="tns:CloseOrderEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrderEu">
+      <wsdl:input message="tns:DeliverOrderEuSoapIn" />
+      <wsdl:output message="tns:DeliverOrderEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParamsEu">
+      <wsdl:input message="tns:GetPaymentPlanParamsEuSoapIn" />
+      <wsdl:output message="tns:GetPaymentPlanParamsEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
+      <wsdl:input message="tns:GetPaymentPlanContractDetailsEuSoapIn" />
+      <wsdl:output message="tns:GetPaymentPlanContractDetailsEuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdfEu">
+      <wsdl:input message="tns:GetContractPdfEuSoapIn" />
+      <wsdl:output message="tns:GetContractPdfEuSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateOrder">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderAmount">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/ChangeOrderAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvoice">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderInfo">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/ChangeOrderInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrder">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CloseOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInternalScoring">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CheckInternalScoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePaymentPlan">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreatePaymentPlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanStatus">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlan">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CancelPaymentPlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApprovePaymentPlan">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/ApprovePaymentPlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanOptions">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdf">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetContractPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToBlockList">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/AddToBlockList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddresses">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetAddresses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressesEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetAddressesEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/Ping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParams">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParams" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateOrderEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrderEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/CloseOrderEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrderEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/DeliverOrderEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParamsEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParamsEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu"
+                      style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdfEu">
+      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateOrder">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderAmount">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/ChangeOrderAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvoice">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateInvoice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderInfo">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/ChangeOrderInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrder">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CloseOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInternalScoring">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CheckInternalScoring" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePaymentPlan">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreatePaymentPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanStatus">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlan">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CancelPaymentPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApprovePaymentPlan">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/ApprovePaymentPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanOptions">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanOptions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdf">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetContractPdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToBlockList">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/AddToBlockList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddresses">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetAddresses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressesEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetAddressesEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParams">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParams" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CreateOrderEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrderEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/CloseOrderEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrderEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/DeliverOrderEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanParamsEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParamsEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu"
+                        style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractPdfEu">
+      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@sveaekonomi.se for more information. -CreateOrder -CancelOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

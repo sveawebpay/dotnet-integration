@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.WebpayWS;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.GetPaymentPlanParams
@@ -13,7 +13,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.GetPaymentPlanParams
         {
             GetPaymentPlanParamsEuResponse response =
                 WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
-                                .SetCountrycode(CountryCode.SE)
+                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                 .DoRequest();
 
             Assert.AreEqual(0, response.ResultCode);

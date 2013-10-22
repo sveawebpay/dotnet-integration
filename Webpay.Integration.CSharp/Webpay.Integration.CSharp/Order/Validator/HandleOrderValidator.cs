@@ -33,7 +33,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
         private static string ValidateCountry(DeliverOrderBuilder order)
         {
             return order.GetCountryCode() == CountryCode.NONE ||
-                !Enum.IsDefined(typeof(CountryCode), order.GetCountryCode())
+                   !Enum.IsDefined(typeof (CountryCode), order.GetCountryCode())
                        ? "MISSING VALUE - CountryCode is required, use SetCountryCode(...)."
                        : "";
         }
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
         private static string ValidateOrderType(DeliverOrderBuilder order)
         {
             return order.GetOrderType() == OrderType.NONE ||
-                !Enum.IsDefined(typeof(OrderType), order.GetOrderType())
+                   !Enum.IsDefined(typeof (OrderType), order.GetOrderType())
                        ? "MISSING VALUE - OrderType is missing for DeliverOrder, use SetOrderType()."
                        : "";
         }
@@ -55,7 +55,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
         {
             if (order.GetOrderId() > 0 && order.GetOrderType() == OrderType.INVOICE &&
                 (order.GetInvoiceDistributionType() == InvoiceDistributionType.NONE ||
-                !Enum.IsDefined(typeof (InvoiceDistributionType), order.GetInvoiceDistributionType())))
+                 !Enum.IsDefined(typeof (InvoiceDistributionType), order.GetInvoiceDistributionType())))
             {
                 return "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.";
             }

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Hosted.Payment;
 using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Test.Hosted.Payment
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             var excludePaymentMethod = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.NORDEASE};
 
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludePaymentMethod(excludePaymentMethod);
 
@@ -50,7 +51,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestDefaultSe()
         {
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage();
 
             payPagePayment.ConfigureExcludedPaymentMethod();
@@ -62,7 +63,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestSetPaymentMethode()
         {
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.INVOICE);
 
@@ -90,7 +91,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestSetPaymentMethodPaymentPlanSe()
         {
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
 
@@ -105,7 +106,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var list = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN};
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludePaymentMethod(list);
 
@@ -132,7 +133,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestExcludeCardPaymentMethod()
         {
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludeCardPaymentMethod();
 
@@ -148,7 +149,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var includedPaymentMethod = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .IncludePaymentMethod(includedPaymentMethod);
 
@@ -159,7 +160,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestExcludeDirectPaymentMethodSmall()
         {
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludeDirectPaymentMethod();
 
@@ -184,7 +185,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                 };
 
             PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
-                                                            .SetCountryCode(CountryCode.SE)
+                                                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .IncludePaymentMethod(includedPaymentMethod);
 
@@ -204,32 +205,19 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.KORTCERT};
 
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(Item.ShippingFee()
                                                            .SetAmountExVat(50)
                                                            .SetShippingId("33")
                                                            .SetDescription("Specification")
                                                            .SetVatPercent(25))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                                   Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .ExcludePaymentMethod(paymentMethods)
                                                .SetReturnUrl("http://myurl.se")
@@ -237,7 +225,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             string xml = form.GetXmlMessage();
             const string expected =
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?><!--Message generated by Integration package C#--><payment><customerrefno>33</customerrefno><currency>SEK</currency><amount>18750</amount><vat>3750</vat><lang>en</lang><returnurl>http://myurl.se</returnurl><iscompany>false</iscompany><customer><ssn>194605092222</ssn><country>SE</country></customer><orderrows><row><sku>1</sku><name>Prod</name><description>Specification</description><amount>12500</amount><vat>2500</vat><quantity>2</quantity><unit>st</unit></row><row><sku>33</sku><name /><description>Specification</description><amount>6250</amount><vat>1250</vat><quantity>1</quantity></row><row><sku>1</sku><name>Relative</name><description>RelativeDiscount</description><amount>-12500</amount><vat>-2500</vat><quantity>1</quantity><unit>st</unit></row></orderrows><excludepaymentMethods><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>KORTCERT</exclude></excludepaymentMethods><addinvoicefee>false</addinvoicefee></payment>";
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?><!--Message generated by Integration package C#--><payment><currency>SEK</currency><amount>18750</amount><vat>3750</vat><lang>en</lang><returnurl>http://myurl.se</returnurl><iscompany>false</iscompany><customer><ssn>194605092222</ssn><country>SE</country></customer><orderrows><row><sku>1</sku><name>Prod</name><description>Specification</description><amount>12500</amount><vat>2500</vat><quantity>2</quantity><unit>st</unit></row><row><sku>33</sku><name /><description>Specification</description><amount>6250</amount><vat>1250</vat><quantity>1</quantity></row><row><sku>1</sku><name>Relative</name><description>RelativeDiscount</description><amount>-12500</amount><vat>-2500</vat><quantity>1</quantity><unit>st</unit></row></orderrows><excludepaymentMethods><exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEAINVOICEEU_NO</exclude><exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEAINVOICEEU_DE</exclude><exclude>KORTCERT</exclude></excludepaymentMethods><addinvoicefee>false</addinvoicefee></payment>";
             Assert.AreEqual(expected, xml);
         }
 
@@ -245,27 +233,13 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestPayPagePaymentExcludeCardPayments()
         {
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
-                                               .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
+                                               .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .ExcludeCardPaymentMethod()
                                                .SetReturnUrl("http://myurl.se")
@@ -285,27 +259,13 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestExcludeDirectPaymentMethodLarge()
         {
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
-                                               .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
+                                               .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .ExcludeDirectPaymentMethod()
                                                .SetReturnUrl("http://myurl.se")
@@ -323,27 +283,14 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN, PaymentMethod.SKRILL};
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                                   Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .IncludePaymentMethod(paymentMethods)
                                                .SetReturnUrl("http://myurl.se")
@@ -361,27 +308,14 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                                   Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .IncludePaymentMethod(paymentMethods)
                                                .SetReturnUrl("http://myurl.se")
@@ -398,27 +332,14 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestPayPagePaymentIncludePaymentMethodEmpty()
         {
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddDiscount(Item.RelativeDiscount()
-                                                                .SetDiscountId("1")
-                                                                .SetDiscountPercent(50)
-                                                                .SetUnit("st")
-                                                                .SetName("Relative")
-                                                                .SetDescription("RelativeDiscount"))
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
-                                                   Item.IndividualCustomer().SetNationalIdNumber("194605092222"))
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("33")
-                                               .SetOrderDate("2012-12-12")
-                                               .SetCurrency(Currency.SEK)
+                                                   Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetOrderDate(TestingTool.DefaultTestDate)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPage()
                                                .IncludePaymentMethod()
                                                .SetReturnUrl("http://myurl.se")

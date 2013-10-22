@@ -6,7 +6,7 @@ using System.Web;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
-using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Security;
 
@@ -15,28 +15,17 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
     [TestFixture]
     public class HostedPaymentResponseTest
     {
-        private const string ExpectedResponseStart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-        private const string ExpectedNordeaResponseStart = "<html><head><SCRIPT LANGUAGE='JavaScript'>";
+        private const string ExpectedResponseStart = "<html><head><SCRIPT LANGUAGE='JavaScript'>";
 
         [Test]
         public void TestDoCardPaymentRequest()
         {
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddCustomerDetails(Item.CompanyCustomer()
-                                                                       .SetVatNumber("2345234")
-                                                                       .SetCompanyName("TestCompagniet"))
-                                               .SetCountryCode(CountryCode.SE)
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
-                                               .SetCurrency(Currency.SEK)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPageCardOnly()
                                                .SetReturnUrl(
                                                    "https://test.sveaekonomi.se/webpay/admin/merchantresponsetest.xhtml")
@@ -51,21 +40,11 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         public void TestDoNordeaSePaymentRequest()
         {
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetArticleNumber("1")
-                                                                .SetQuantity(2)
-                                                                .SetAmountExVat(100.00M)
-                                                                .SetDescription("Specification")
-                                                                .SetName("Prod")
-                                                                .SetUnit("st")
-                                                                .SetVatPercent(25)
-                                                                .SetDiscountPercent(0))
-                                               .AddCustomerDetails(Item.CompanyCustomer()
-                                                                       .SetVatNumber("2345234")
-                                                                       .SetCompanyName("TestCompagniet"))
-                                               .SetCountryCode(CountryCode.SE)
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
-                                               .SetCurrency(Currency.SEK)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePaymentMethod(PaymentMethod.NORDEASE)
                                                .SetReturnUrl(
                                                    "https://test.sveaekonomi.se/webpay/admin/merchantresponsetest.xhtml")
@@ -73,7 +52,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
             var postResponse = PostRequest(form);
             Assert.That(postResponse.Item1, Is.EqualTo("OK"));
-            Assert.That(postResponse.Item2.StartsWith(ExpectedNordeaResponseStart));
+            Assert.That(postResponse.Item2.StartsWith(ExpectedResponseStart));
         }
 
         private static Tuple<string, string> PostRequest(PaymentForm form)

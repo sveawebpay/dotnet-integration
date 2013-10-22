@@ -1,5 +1,4 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Validator;
@@ -26,8 +25,8 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         private ClientAuthInfo GetStoreAuthorization()
         {
             var type = (_order.GetOrderType() == OrderType.INVOICE)
-                                   ? PaymentType.INVOICE
-                                   : PaymentType.PAYMENTPLAN;
+                           ? PaymentType.INVOICE
+                           : PaymentType.PAYMENTPLAN;
 
             var auth = new ClientAuthInfo
                 {

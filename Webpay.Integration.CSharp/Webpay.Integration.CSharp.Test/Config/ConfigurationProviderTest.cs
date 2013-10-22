@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 
@@ -26,30 +26,13 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             var conf = new ConfigurationProviderTestData();
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(conf)
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(100.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(25)
-                                                                              .SetDiscountPercent(0))
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(100.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetVatPercent(25)
-                                                                              .SetDiscountPercent(0))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber("194605092222")
-                                                                                     .SetIpAddress("123.123.123"))
-                                                             .SetCountryCode(CountryCode.SE)
-                                                             .SetOrderDate("2012-12-12")
-                                                             .SetClientOrderNumber("33")
-                                                             .SetCurrency(Currency.SEK)
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                             .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 

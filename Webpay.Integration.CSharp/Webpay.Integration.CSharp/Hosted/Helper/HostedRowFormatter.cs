@@ -62,7 +62,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
 
                 _newRows.Add(tempRow);
                 _totalAmount += Convert.ToInt64(tempRow.GetAmount() * row.GetQuantity());
-                _totalVat += (long)(tempRow.GetVat() * row.GetQuantity());
+                _totalVat += (long) (tempRow.GetVat() * row.GetQuantity());
             }
         }
 
@@ -78,8 +78,8 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 var tempRow = GetNewTempRow(row, row.GetShippingId());
 
                 decimal plusVatCounter = row.GetVatPercent() != null
-                             ? (row.GetVatPercent().GetValueOrDefault() * 0.01M) + 1
-                             : 0;
+                                             ? (row.GetVatPercent().GetValueOrDefault() * 0.01M) + 1
+                                             : 0;
 
                 if (row.GetAmountExVat() != null && row.GetVatPercent() != null)
                 {

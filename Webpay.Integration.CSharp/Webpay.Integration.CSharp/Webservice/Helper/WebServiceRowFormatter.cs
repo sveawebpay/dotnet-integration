@@ -84,7 +84,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                 if (existingRow is FixedDiscountBuilder)
                 {
-                    decimal amount = ((FixedDiscountBuilder)existingRow).GetAmount();
+                    decimal amount = ((FixedDiscountBuilder) existingRow).GetAmount();
                     decimal productTotalAfterDiscount = _totalAmountInclVat - amount;
                     decimal totalProductVatAsAmountAfterDiscount = _totalVatAsPercent * productTotalAfterDiscount;
                     decimal discountVatAsAmount = _totalVatAsAmount - totalProductVatAsAmountAfterDiscount;
@@ -105,7 +105,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                     orderRow.VatPercent =
                         Math.Round(
-                            (_totalVatAsAmount * 100.0M * (existingRow.GetDiscountPercent() / pricePerUnitExVat / 100.0M)),
+                            (_totalVatAsAmount * 100.0M *
+                             (existingRow.GetDiscountPercent() / pricePerUnitExVat / 100.0M)),
                             2);
 
                     //Relative discounts is a special case where we want to use the discount percent in calculations
@@ -116,7 +117,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 else
                 {
                     orderRow = SerializeAmountAndVat(existingRow.GetAmountExVat(), existingRow.GetVatPercent(),
-                                 existingRow.GetAmountIncVat(), orderRow);
+                                                     existingRow.GetAmountIncVat(), orderRow);
                 }
 
                 _newRows.Add(orderRow);

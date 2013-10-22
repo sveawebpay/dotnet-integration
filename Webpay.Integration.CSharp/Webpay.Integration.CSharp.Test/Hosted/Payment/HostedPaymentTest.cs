@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Test.Hosted.Payment
@@ -14,9 +15,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestCalculateRequestValuesNullExtraRows()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetClientOrderNumber("nr22")
-                                                       .SetCurrency(Currency.SEK)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)
@@ -37,9 +38,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestVatPercentAndAmountIncVatCalculation()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetClientOrderNumber("nr22")
-                                                       .SetCurrency(Currency.SEK)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(5)
                                                                         .SetVatPercent(25)
@@ -60,9 +61,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestAmountIncVatAndvatPercentShippingFee()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetClientOrderNumber("nr22")
-                                                       .SetCurrency(Currency.SEK)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(5)
                                                                         .SetVatPercent(25)
@@ -85,13 +86,10 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestAmountIncVatAndAmountExVatCalculation()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetClientOrderNumber("nr22")
-                                                       .SetCurrency(Currency.SEK)
-                                                       .AddOrderRow(Item.OrderRow()
-                                                                        .SetAmountExVat(4)
-                                                                        .SetAmountIncVat(5)
-                                                                        .SetQuantity(1));
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                       .AddOrderRow(TestingTool.CreateMiniOrderRow());
 
             order.SetShippingFeeRows(null);
             order.SetFixedDiscountRows(null);
@@ -109,22 +107,14 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestCreatePaymentForm()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
-                                                       .SetCountryCode(CountryCode.SE)
-                                                       .SetClientOrderNumber("nr22")
-                                                       .SetCurrency(Currency.SEK)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
-                                                       .AddCustomerDetails(Item.CompanyCustomer()
-                                                                               .SetNationalIdNumber("666666")
-                                                                               .SetEmail("test@svea.com")
-                                                                               .SetPhoneNumber("999999")
-                                                                               .SetIpAddress("123.123.123.123")
-                                                                               .SetStreetAddress("Gatan", "23")
-                                                                               .SetCoAddress("c/o Eriksson")
-                                                                               .SetZipCode("9999")
-                                                                               .SetLocality("Stan"));
+                                                       .AddCustomerDetails(TestingTool.CreateCompanyCustomer());
 
             var payment = new FakeHostedPayment(order);
             payment.SetReturnUrl("myurl");

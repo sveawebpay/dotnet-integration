@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
         /// </summary>
         /// <param name="countryCode"></param>
         /// <returns>GetPaymentPlanParams</returns>
-        public GetPaymentPlanParams SetCountrycode(CountryCode countryCode)
+        public GetPaymentPlanParams SetCountryCode(CountryCode countryCode)
         {
             _countryCode = countryCode;
             return this;

@@ -42,7 +42,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return _orderType;
         }
 
-        public CloseOrderBuilder SetCountrycode(CountryCode countryCode)
+        public CloseOrderBuilder SetCountryCode(CountryCode countryCode)
         {
             _countryCode = countryCode;
             return this;

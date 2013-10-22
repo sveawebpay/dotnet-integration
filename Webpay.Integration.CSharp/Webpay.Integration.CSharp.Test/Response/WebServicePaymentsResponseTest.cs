@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
@@ -14,23 +15,14 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestDeliverInvoiceOrderResult()
         {
             CreateOrderEuResponse createOrderResponse = WebpayConnection.CreateOrder()
-                                                                        .AddOrderRow(Item.OrderRow()
-                                                                                         .SetArticleNumber("1")
-                                                                                         .SetQuantity(2)
-                                                                                         .SetAmountExVat(
-                                                                                             100.00M)
-                                                                                         .SetDescription("Specification")
-                                                                                         .SetName("Prod")
-                                                                                         .SetUnit("st")
-                                                                                         .SetVatPercent(25)
-                                                                                         .SetDiscountPercent(0))
-                                                                        .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                                .SetNationalIdNumber(
-                                                                                                    "194605092222"))
-                                                                        .SetCountryCode(CountryCode.SE)
-                                                                        .SetClientOrderNumber("33")
-                                                                        .SetOrderDate("2012-12-12")
-                                                                        .SetCurrency(Currency.SEK)
+                                                                        .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                                        .AddCustomerDetails(
+                                                                            TestingTool.CreateIndividualCustomer())
+                                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                        .SetClientOrderNumber(
+                                                                            TestingTool.DefaultTestClientOrderNumber)
+                                                                        .SetOrderDate(TestingTool.DefaultTestDate)
+                                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                                         .UseInvoicePayment()
                                                                         .DoRequest();
 
@@ -38,24 +30,14 @@ namespace Webpay.Integration.CSharp.Test.Response
             Assert.IsTrue(createOrderResponse.Accepted);
 
             DeliverOrderEuResponse deliverOrderResponse = WebpayConnection.DeliverOrder()
-                                                                          .AddOrderRow(Item.OrderRow()
-                                                                                           .SetArticleNumber("1")
-                                                                                           .SetQuantity(2)
-                                                                                           .SetAmountExVat(
-                                                                                               100.00M)
-                                                                                           .SetDescription(
-                                                                                               "Specification")
-                                                                                           .SetName("Prod")
-                                                                                           .SetUnit("st")
-                                                                                           .SetVatPercent(25)
-                                                                                           .SetDiscountPercent(0))
+                                                                          .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                           .SetOrderId(
                                                                               createOrderResponse.CreateOrderResult
                                                                                                  .SveaOrderId)
                                                                           .SetNumberOfCreditDays(1)
                                                                           .SetInvoiceDistributionType(
                                                                               InvoiceDistributionType.POST)
-                                                                          .SetCountryCode(CountryCode.SE)
+                                                                          .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                           .DeliverInvoiceOrder()
                                                                           .DoRequest();
 
@@ -67,21 +49,14 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestCompanyIdRequest()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder()
-                                                           .AddOrderRow(Item.OrderRow()
-                                                                            .SetArticleNumber("1")
-                                                                            .SetQuantity(2)
-                                                                            .SetAmountExVat(100.00M)
-                                                                            .SetDescription("Specification")
-                                                                            .SetName("Prod")
-                                                                            .SetUnit("st")
-                                                                            .SetVatPercent(25)
-                                                                            .SetDiscountPercent(0))
+                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddCustomerDetails(Item.CompanyCustomer()
                                                                                    .SetNationalIdNumber("4354kj"))
-                                                           .SetCountryCode(CountryCode.SE)
-                                                           .SetClientOrderNumber("33")
-                                                           .SetOrderDate("2012-12-12")
-                                                           .SetCurrency(Currency.SEK)
+                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                           .SetClientOrderNumber(
+                                                               TestingTool.DefaultTestClientOrderNumber)
+                                                           .SetOrderDate(TestingTool.DefaultTestDate)
+                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
@@ -93,21 +68,14 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestCompanyIdResponse()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(100.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(25)
-                                                                              .SetDiscountPercent(0))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
-                                                                                     .SetNationalIdNumber("4608142222"))
-                                                             .SetCountryCode(CountryCode.SE)
-                                                             .SetClientOrderNumber("33")
-                                                             .SetOrderDate("2012-12-12")
-                                                             .SetCurrency(Currency.SEK)
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetClientOrderNumber(
+                                                                 TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
@@ -121,15 +89,7 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestDeCompanyIdentity()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(100.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(19)
-                                                                              .SetDiscountPercent(0))
+                                                             .AddOrderRow(TestingTool.CreateOrderRowDe())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
                                                                                      .SetNationalIdNumber("12345")
                                                                                      .SetVatNumber("DE123456789")
@@ -138,8 +98,9 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                      .SetZipCode("52070")
                                                                                      .SetLocality("AACHEN"))
                                                              .SetCountryCode(CountryCode.DE)
-                                                             .SetClientOrderNumber("33")
-                                                             .SetOrderDate("2012-12-12")
+                                                             .SetClientOrderNumber(
+                                                                 TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
                                                              .SetCurrency(Currency.EUR)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
@@ -153,15 +114,7 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestNlCompanyIdentity()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(100.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(6)
-                                                                              .SetDiscountPercent(0))
+                                                             .AddOrderRow(TestingTool.CreateOrderRowNl())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
                                                                                      .SetCompanyName("Svea bakkerij 123")
                                                                                      .SetVatNumber("NL123456789A12")
@@ -170,8 +123,9 @@ namespace Webpay.Integration.CSharp.Test.Response
                                                                                      .SetZipCode("1111 CD")
                                                                                      .SetLocality("BARENDRECHT"))
                                                              .SetCountryCode(CountryCode.NL)
-                                                             .SetClientOrderNumber("33")
-                                                             .SetOrderDate("2012-12-12")
+                                                             .SetClientOrderNumber(
+                                                                 TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
                                                              .SetCurrency(Currency.EUR)
                                                              .UseInvoicePayment()
                                                              .DoRequest();
@@ -185,65 +139,32 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestDeliverPaymentPlanOrderResult()
         {
             GetPaymentPlanParamsEuResponse paymentPlanParamResponse = WebpayConnection.GetPaymentPlanParams()
-                                                                                      .SetCountrycode(CountryCode.SE)
+                                                                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                                       .DoRequest();
             long code = paymentPlanParamResponse.CampaignCodes[0].CampaignCode;
 
             CreateOrderEuResponse createOrderResponse = WebpayConnection.CreateOrder()
-                                                                        .AddOrderRow(Item.OrderRow()
-                                                                                         .SetArticleNumber("1")
-                                                                                         .SetQuantity(2)
-                                                                                         .SetAmountExVat(
-                                                                                             1000.00M)
-                                                                                         .SetDescription("Specification")
-                                                                                         .SetName("Prod")
-                                                                                         .SetUnit("st")
-                                                                                         .SetVatPercent(25)
-                                                                                         .SetDiscountPercent(0))
-                                                                        .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                                .SetNationalIdNumber(
-                                                                                                    "194605092222")
-                                                                                                .SetInitials("SB")
-                                                                                                .SetBirthDate("19231212")
-                                                                                                .SetName("Tess",
-                                                                                                         "Testson")
-                                                                                                .SetEmail(
-                                                                                                    "test@svea.com")
-                                                                                                .SetPhoneNumber("999999")
-                                                                                                .SetIpAddress(
-                                                                                                    "123.123.123")
-                                                                                                .SetStreetAddress(
-                                                                                                    "Gatan", "23")
-                                                                                                .SetCoAddress(
-                                                                                                    "c/o Eriksson")
-                                                                                                .SetZipCode("9999")
-                                                                                                .SetLocality("Stan"))
-                                                                        .SetCountryCode(CountryCode.SE)
-                                                                        .SetCustomerReference("33")
-                                                                        .SetClientOrderNumber("nr26")
-                                                                        .SetOrderDate("2012-12-12")
-                                                                        .SetCurrency(Currency.SEK)
+                                                                        .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                                                                        .AddCustomerDetails(
+                                                                            TestingTool.CreateIndividualCustomer())
+                                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                        .SetCustomerReference(
+                                                                            TestingTool.DefaultTestClientOrderNumber)
+                                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                                        .SetOrderDate(TestingTool.DefaultTestDate)
+                                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                                         .UsePaymentPlanPayment(code)
                                                                         .DoRequest();
+
             DeliverOrderEuResponse deliverOrderResponse = WebpayConnection.DeliverOrder()
-                                                                          .AddOrderRow(Item.OrderRow()
-                                                                                           .SetArticleNumber("1")
-                                                                                           .SetQuantity(2)
-                                                                                           .SetAmountExVat(
-                                                                                               100.00M)
-                                                                                           .SetDescription(
-                                                                                               "Specification")
-                                                                                           .SetName("Prod")
-                                                                                           .SetUnit("st")
-                                                                                           .SetVatPercent(25)
-                                                                                           .SetDiscountPercent(0))
+                                                                          .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                           .SetOrderId(
                                                                               createOrderResponse.CreateOrderResult
                                                                                                  .SveaOrderId)
                                                                           .SetNumberOfCreditDays(1)
                                                                           .SetInvoiceDistributionType(
                                                                               InvoiceDistributionType.POST)
-                                                                          .SetCountryCode(CountryCode.SE)
+                                                                          .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                           .DeliverPaymentPlanOrder()
                                                                           .DoRequest();
 
@@ -255,7 +176,7 @@ namespace Webpay.Integration.CSharp.Test.Response
         {
             GetPaymentPlanParamsEuResponse response =
                 WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
-                                .SetCountrycode(CountryCode.SE)
+                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                 .DoRequest();
 
             Assert.IsTrue(response.Accepted);
@@ -276,9 +197,9 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestResultGetAddresses()
         {
             GetAddressesEuResponse request = WebpayConnection.GetAddresses()
-                                                             .SetCountryCode(CountryCode.SE)
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                              .SetOrderTypeInvoice()
-                                                             .SetIndividual("194605092222")
+                                                             .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
                                                              .SetZipCode("99999")
                                                              .DoRequest();
 
@@ -295,38 +216,19 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestPaymentPlanRequestReturnsAcceptedResult()
         {
             GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams()
-                                                                              .SetCountrycode(CountryCode.SE)
+                                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                               .DoRequest();
             long code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(Item.OrderRow()
-                                                                              .SetArticleNumber("1")
-                                                                              .SetQuantity(2)
-                                                                              .SetAmountExVat(1000.00M)
-                                                                              .SetDescription("Specification")
-                                                                              .SetName("Prod")
-                                                                              .SetUnit("st")
-                                                                              .SetVatPercent(25)
-                                                                              .SetDiscountPercent(0))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber("194605092222")
-                                                                                     .SetInitials("SB")
-                                                                                     .SetBirthDate("19231212")
-                                                                                     .SetName("Tess", "Testson")
-                                                                                     .SetEmail("test@svea.com")
-                                                                                     .SetPhoneNumber("999999")
-                                                                                     .SetIpAddress("123.123.123")
-                                                                                     .SetStreetAddress("Gatan", "23")
-                                                                                     .SetCoAddress("c/o Eriksson")
-                                                                                     .SetZipCode("9999")
-                                                                                     .SetLocality("Stan"))
-                                                             .SetCountryCode(CountryCode.SE)
-                                                             .SetCustomerReference("33")
-                                                             .SetClientOrderNumber("nr26")
-                                                             .SetOrderDate("2012-12-12")
-                                                             .SetCurrency(Currency.SEK)
-                                                             .SetCountryCode(CountryCode.SE)
+                                                             .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                                                             .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                              .UsePaymentPlanPayment(code)
                                                              .DoRequest();
 

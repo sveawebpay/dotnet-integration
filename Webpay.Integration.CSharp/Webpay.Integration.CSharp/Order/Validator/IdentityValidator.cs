@@ -9,9 +9,9 @@ namespace Webpay.Integration.CSharp.Order.Validator
             //check Company identity
             if (order.GetCustomerIdentity().NationalIdNumber == null)
             {
-                return order.GetIsCompanyIdentity() ? 
-                    "MISSING VALUE - Organisation number is required for company customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n" : 
-                    "MISSING VALUE - National number(ssn) is required for individual customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n";
+                return order.GetIsCompanyIdentity()
+                           ? "MISSING VALUE - Organisation number is required for company customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n"
+                           : "MISSING VALUE - National number(ssn) is required for individual customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n";
             }
 
             return "";
@@ -34,7 +34,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
                         "MISSING VALUE - Birth date is required for individual customers when countrycode is NL. Use SetBirthDate().\n";
                 }
                 if (order.GetIndividualCustomer().GetFirstName() == null ||
-                     order.GetIndividualCustomer().GetLastName() == null)
+                    order.GetIndividualCustomer().GetLastName() == null)
                 {
                     errors +=
                         "MISSING VALUE - Name is required for individual customers when countrycode is NL. Use SetName().\n";
@@ -88,7 +88,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
                         "MISSING VALUE - Birth date is required for individual customers when countrycode is DE. Use SetBirthDate().\n";
                 }
                 if (order.GetIndividualCustomer().GetFirstName() == null ||
-                     order.GetIndividualCustomer().GetLastName() == null)
+                    order.GetIndividualCustomer().GetLastName() == null)
                 {
                     errors +=
                         "MISSING VALUE - Name is required for individual customers when countrycode is DE. Use SetName().\n";

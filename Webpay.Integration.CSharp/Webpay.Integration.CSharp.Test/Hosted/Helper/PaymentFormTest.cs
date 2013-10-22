@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Hosted.Helper;
-using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Security;
 
 namespace Webpay.Integration.CSharp.Test.Hosted.Helper
@@ -18,22 +17,11 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             string base64Payment = Base64Util.EncodeBase64String("0");
             string mac = HashUtil.CreateHash(base64Payment + SecretWord);
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetCurrency(Currency.SEK)
-                                               .SetClientOrderNumber("nr26")
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetQuantity(1)
-                                                                .SetAmountExVat(4)
-                                                                .SetAmountIncVat(5))
-                                               .AddCustomerDetails(Item.CompanyCustomer()
-                                                                       .SetNationalIdNumber("666666")
-                                                                       .SetEmail("test@svea.com")
-                                                                       .SetPhoneNumber("999999")
-                                                                       .SetIpAddress("123.123.123.123")
-                                                                       .SetStreetAddress("Gatan", "23")
-                                                                       .SetCoAddress("c/o Eriksson")
-                                                                       .SetZipCode("9999")
-                                                                       .SetLocality("Stan"))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .AddOrderRow(TestingTool.CreateMiniOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
                                                .UsePayPageDirectBankOnly()
                                                .SetReturnUrl("http:myurl")
                                                .GetPaymentForm();
@@ -69,22 +57,11 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             string mac = HashUtil.CreateHash(base64Payment + SecretWord);
 
             PaymentForm form = WebpayConnection.CreateOrder()
-                                               .SetCountryCode(CountryCode.SE)
-                                               .SetClientOrderNumber("nr26")
-                                               .SetCurrency(Currency.SEK)
-                                               .AddOrderRow(Item.OrderRow()
-                                                                .SetQuantity(1)
-                                                                .SetAmountExVat(4)
-                                                                .SetAmountIncVat(5))
-                                               .AddCustomerDetails(Item.CompanyCustomer()
-                                                                       .SetNationalIdNumber("666666")
-                                                                       .SetEmail("test@svea.com")
-                                                                       .SetPhoneNumber("999999")
-                                                                       .SetIpAddress("123.123.123.123")
-                                                                       .SetStreetAddress("Gatan", "23")
-                                                                       .SetCoAddress("c/o Eriksson")
-                                                                       .SetZipCode("9999")
-                                                                       .SetLocality("Stan"))
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
+                                               .AddOrderRow(TestingTool.CreateMiniOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
                                                .UsePayPageDirectBankOnly()
                                                .SetReturnUrl("http:myurl.se")
                                                .GetPaymentForm();

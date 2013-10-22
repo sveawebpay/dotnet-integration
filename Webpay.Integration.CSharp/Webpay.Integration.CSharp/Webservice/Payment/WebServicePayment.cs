@@ -38,7 +38,9 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
         /// <returns>Error message compilation string</returns>
         public string ValidateOrder()
         {
-            return CrOrderBuilder == null ? "NullReference in validaton of WebServiceOrderValidator" : new WebServiceOrderValidator().Validate(CrOrderBuilder);
+            return CrOrderBuilder == null
+                       ? "NullReference in validaton of WebServiceOrderValidator"
+                       : new WebServiceOrderValidator().Validate(CrOrderBuilder);
         }
 
         /// <summary>

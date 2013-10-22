@@ -103,7 +103,7 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         private string GetTagValue(XmlElement elementNode, string tagName)
         {
             XmlNodeList nodeList = elementNode.GetElementsByTagName(tagName);
-            var element = (XmlElement)nodeList.Item(0);
+            var element = (XmlElement) nodeList.Item(0);
             if (element != null && element.HasChildNodes)
             {
                 XmlNodeList textList = element.ChildNodes;

@@ -28,9 +28,8 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         /// SveaResponse
         /// </summary>
         /// <param name="responseXmlBase64"></param>
-        /// <param name="secretWord"></param>
         /// <exception cref="Exception"></exception>
-        public SveaResponse(string responseXmlBase64, string secretWord)
+        public SveaResponse(string responseXmlBase64)
         {
             SetValues(responseXmlBase64);
         }

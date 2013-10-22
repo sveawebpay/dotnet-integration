@@ -5,7 +5,7 @@
         private string _discountId;
         private string _name;
         private string _description;
-        private int _discountPercent;
+        private decimal _discountPercent;
         private string _unit;
 
         public string GetDiscountId()
@@ -82,7 +82,7 @@
             return this;
         }
 
-        public int GetDiscountPercent()
+        public decimal GetDiscountPercent()
         {
             return _discountPercent;
         }

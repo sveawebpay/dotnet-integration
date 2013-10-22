@@ -7,7 +7,7 @@
         string GetUnit();
 
         string GetArticleNumber();
-        int GetDiscountPercent();
+        decimal GetDiscountPercent();
         decimal GetQuantity();
 
         decimal? GetAmountExVat();

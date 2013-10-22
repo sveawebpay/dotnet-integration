@@ -102,7 +102,7 @@ namespace Webpay.Integration.CSharp.Test.Order
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetAmountExVat(), 50);
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetUnit(), "st");
             Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetVatPercent(), 25);
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), 0, 0);
+            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), 0);
         }
 
         [Test]

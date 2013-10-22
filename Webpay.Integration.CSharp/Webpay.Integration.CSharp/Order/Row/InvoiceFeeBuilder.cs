@@ -108,7 +108,7 @@
             return this;
         }
 
-        public int GetDiscountPercent()
+        public decimal GetDiscountPercent()
         {
             return _discountPercent;
         }

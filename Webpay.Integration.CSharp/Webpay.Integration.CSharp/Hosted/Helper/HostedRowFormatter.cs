@@ -141,7 +141,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             {
                 var tempRow = GetNewTempRow(row, row.GetDiscountId());
 
-                double discountFactor = row.GetDiscountPercent() * 0.01;
+                decimal discountFactor = row.GetDiscountPercent() * 0.01M;
 
                 tempRow.SetAmount(Convert.ToInt64(-(discountFactor * _totalAmount)));
                 _totalAmount -= tempRow.GetAmount();

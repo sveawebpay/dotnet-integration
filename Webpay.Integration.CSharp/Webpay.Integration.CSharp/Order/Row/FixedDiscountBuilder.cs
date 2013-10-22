@@ -71,7 +71,7 @@
             return GetDiscountId();
         }
 
-        public int GetDiscountPercent()
+        public decimal GetDiscountPercent()
         {
             //We do not give discounts on discounts
             return 0;

@@ -10,31 +10,18 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         public readonly SveaConfig Config = new SveaConfig();
 
         public string TransactionId { get; set; }
-
         public string ClientOrderNumber { get; set; }
-
         public string PaymentMethod { get; set; }
-
         public string MerchantId { get; set; }
-
         public double Amount { get; set; }
-
         public string Currency { get; set; }
-
         public string SubscriptionId { get; set; }
-
         public string SubscriptionType { get; set; }
-
         public string CardType { get; set; }
-
         public string MaskedCardNumber { get; set; }
-
         public string ExpiryMonth { get; set; }
-
         public string ExpiryYear { get; set; }
-
         public string AuthCode { get; set; }
-
         public string Xml { get; set; }
 
         /// <summary>
@@ -50,11 +37,10 @@ namespace Webpay.Integration.CSharp.Response.Hosted
 
         private void SetValues(string xmlBase64)
         {
-            string xml = Base64Util.DecodeBase64String(xmlBase64);
-            Xml = xml;
+            Xml = Base64Util.DecodeBase64String(xmlBase64);
 
             var d1 = new XmlDocument();
-            d1.LoadXml(xml);
+            d1.LoadXml(Xml);
 
             foreach (XmlElement element in d1.GetElementsByTagName("response"))
             {

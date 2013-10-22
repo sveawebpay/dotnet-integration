@@ -9,12 +9,12 @@ namespace Webpay.Integration.CSharp.Test.Config
     [TestFixture]
     public class ConfigurationProviderTest
     {
-        private IConfigurationProvider defaultConf;
+        private IConfigurationProvider _defaultConf;
 
         [SetUp]
         public void SetUp()
         {
-            defaultConf = SveaConfig.GetDefaultConfig();
+            _defaultConf = SveaConfig.GetDefaultConfig();
         }
 
         [Test]
@@ -22,25 +22,25 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.SE;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("sverigetest"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(79021));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(59999));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(79021));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(59999));
 
-            Assert.That(defaultConf.GetMerchantId(PaymentType.HOSTED, countrycode), Is.EqualTo("1130"));
+            Assert.That(_defaultConf.GetMerchantId(PaymentType.HOSTED, countrycode), Is.EqualTo("1130"));
 
-            Assert.That(defaultConf.GetSecret(PaymentType.HOSTED, countrycode), 
+            Assert.That(_defaultConf.GetSecret(PaymentType.HOSTED, countrycode), 
                 Is.EqualTo("8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"));
 
-            Assert.That(defaultConf.GetEndPoint(PaymentType.HOSTED),
+            Assert.That(_defaultConf.GetEndPoint(PaymentType.HOSTED),
                 Is.EqualTo("https://test.sveaekonomi.se/webpay/payment"));
-            Assert.That(defaultConf.GetEndPoint(PaymentType.INVOICE),
+            Assert.That(_defaultConf.GetEndPoint(PaymentType.INVOICE),
                 Is.EqualTo("https://webservices.sveaekonomi.se/webpay_test/SveaWebPay.asmx?WSDL"));
         }
 
@@ -49,16 +49,16 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.DK;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("danmarktest2"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(62008));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(64008));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(62008));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(64008));
         }
 
         [Test]
@@ -66,16 +66,16 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.DE;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("germanytest"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(14997));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(16997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(14997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(16997));
         }
 
         [Test]
@@ -83,16 +83,16 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.FI;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("finlandtest2"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(26136));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(27136));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(26136));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(27136));
         }
 
         [Test]
@@ -100,16 +100,16 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.NO;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("norgetest2"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(33308));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(32503));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(33308));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(32503));
         }
 
         [Test]
@@ -117,16 +117,16 @@ namespace Webpay.Integration.CSharp.Test.Config
         {
             const CountryCode countrycode = CountryCode.NL;
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode), Is.EqualTo("hollandtest"));
 
-            Assert.That(defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
-            Assert.That(defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
-                Is.EqualTo(defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetUsername(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetUsername(PaymentType.PAYMENTPLAN, countrycode)));
+            Assert.That(_defaultConf.GetPassword(PaymentType.INVOICE, countrycode),
+                Is.EqualTo(_defaultConf.GetPassword(PaymentType.PAYMENTPLAN, countrycode)));
 
-            Assert.That(defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(85997));
-            Assert.That(defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(86997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(85997));
+            Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(86997));
         }
 
         [Test]

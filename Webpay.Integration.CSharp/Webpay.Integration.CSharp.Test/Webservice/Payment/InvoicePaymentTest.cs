@@ -310,7 +310,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
-            Assert.AreEqual(TestingTool.DefaultTestDate, request.CreateOrderInformation.OrderDate.ToShortDateString());
+            Assert.AreEqual(TestingTool.DefaultTestDate, request.CreateOrderInformation.OrderDate);
             Assert.AreEqual("33", request.CreateOrderInformation.ClientOrderNumber);
             Assert.AreEqual(OrderType.Invoice, request.CreateOrderInformation.OrderType);
             Assert.AreEqual("ref33", request.CreateOrderInformation.CustomerReference);

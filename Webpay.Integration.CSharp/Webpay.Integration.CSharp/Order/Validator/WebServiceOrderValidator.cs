@@ -1,4 +1,5 @@
-﻿using Webpay.Integration.CSharp.Order.Create;
+﻿using System;
+using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Validator
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
 
             ValidateRequiredFieldsForOrder(order);
             ValidateOrderRow(order);
-            if (string.IsNullOrEmpty(order.GetOrderDate()))
+            if (order.GetOrderDate() == DateTime.MinValue)
             {
                 Errors += "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
             }

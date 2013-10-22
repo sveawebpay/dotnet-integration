@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
@@ -196,7 +197,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
 
                     var order = builder
                         .SetCountryCode(CountryCode.DE)
-                        .SetOrderDate("Mon, 15 Aug 05 15:52:01 +0000")
+                        .SetOrderDate(new DateTime(2005, 08, 15, 15, 52, 1))
                         .AddCustomerDetails(customer)
                         .UseInvoicePayment();
 
@@ -245,7 +246,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                                                .SetStreetAddress("Adalbertsteinweg", "1")
                                                                                .SetLocality("AACHEN")
                                                                                .SetZipCode("52070"))
-                                                       .SetOrderDate("2012-09-09")
+                                                       .SetOrderDate(new DateTime(2012, 09, 09))
                                                        .SetValidator(new VoidValidator());
 
             Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
@@ -339,6 +340,23 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
+        public void TestFailOnMissingOrderDate()
+        {
+            const string expectedMessage =
+                "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                       .AddOrderRow(TestingTool.CreateMiniOrderRow())
+                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .SetOrderDate(new DateTime())
+                                                       .SetValidator(new VoidValidator());
+
+            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+        }
+
+        [Test]
         public void TestSucceedOnGoodValuesSe()
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder()
@@ -346,7 +364,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .AddCustomerDetails(Item.IndividualCustomer()
                                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                       .SetOrderDate("2012-05-01")
+                                                       .SetOrderDate(new DateTime(2012, 05, 01))
                                                        .SetValidator(new VoidValidator());
 
             Assert.AreEqual("", _orderValidator.Validate(order));
@@ -415,7 +433,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                .SetOrderDate("2012-09-09")
+                                .SetOrderDate(new DateTime(2012, 09, 09))
                                 .UsePaymentPlanPayment(777L);
 
                 Assert.Fail("Expected exception not thrown.");

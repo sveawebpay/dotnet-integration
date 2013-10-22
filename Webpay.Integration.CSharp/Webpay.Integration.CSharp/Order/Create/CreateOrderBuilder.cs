@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Hosted.Payment;
@@ -21,7 +22,7 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         private string _clientOrderNumber;
         private string _customerReference;
-        private string _orderDate;
+        private DateTime _orderDate;
         private string _currency;
         private long? _campaignCode;
         private bool _sendAutomaticGiroPaymentForm;
@@ -71,12 +72,12 @@ namespace Webpay.Integration.CSharp.Order.Create
             return this;
         }
 
-        public string GetOrderDate()
+        public DateTime GetOrderDate()
         {
             return _orderDate;
         }
 
-        public CreateOrderBuilder SetOrderDate(string orderDate)
+        public CreateOrderBuilder SetOrderDate(DateTime orderDate)
         {
             _orderDate = orderDate;
             return this;

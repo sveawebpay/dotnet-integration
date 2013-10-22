@@ -74,7 +74,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                                                CrOrderBuilder.GetSendAutomaticGiroPaymentForm()
                                                        }
                                                    : null,
-                    OrderDate = DateTime.Parse(CrOrderBuilder.GetOrderDate()),
+                    OrderDate = CrOrderBuilder.GetOrderDate(),
                     CustomerReference = CrOrderBuilder.GetCustomerReference(),
                     OrderRows = formattedOrderRows
                 };

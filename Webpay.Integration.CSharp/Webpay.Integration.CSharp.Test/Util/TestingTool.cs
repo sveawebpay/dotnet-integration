@@ -1,4 +1,5 @@
-﻿using Webpay.Integration.CSharp.Order.Identity;
+﻿using System;
+using Webpay.Integration.CSharp.Order.Identity;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -8,11 +9,11 @@ namespace Webpay.Integration.CSharp.Test.Util
     {
         public const CountryCode DefaultTestCountryCode = CountryCode.SE;
         public const Currency DefaultTestCurrency = Currency.SEK;
-        public const string DefaultTestDate = "2012-12-12";
         public const string DefaultTestClientOrderNumber = "33";
         public const string DefaultTestCustomerReferenceNumber = "ref33";
         public const string DefaultTestIndividualNationalIdNumber = "194605092222";
         public const string DefaultTestCompanyNationalIdNumber = "164608142222";
+        public static readonly DateTime DefaultTestDate = new DateTime(2012, 12, 12);
 
         public static OrderRowBuilder CreateMiniOrderRow()
         {

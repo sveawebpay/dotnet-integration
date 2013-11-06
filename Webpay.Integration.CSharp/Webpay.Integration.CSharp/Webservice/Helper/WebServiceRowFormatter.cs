@@ -11,9 +11,11 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         private readonly OrderBuilder<T> _order;
 
         private decimal _totalAmountExVat;
-        private decimal _totalAmountInclVat;
+        private decimal _totalAmountIncVat;
         private decimal _totalVatAsAmount;
         private decimal _totalVatAsPercent;
+
+        private Dictionary<decimal, decimal> _totalAmountPerVatRateIncVat;
 
         private List<OrderRow> _newRows;
 
@@ -22,7 +24,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             _order = order;
         }
 
-        public OrderRow[] FormatRows()
+        public List<OrderRow> FormatRows()
         {
             _newRows = new List<OrderRow>();
 
@@ -33,100 +35,222 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             FormatInvoiceFeeRows();
             FormatFixedDiscountRows();
             FormatRelativeDiscountRows();
-            return _newRows.ToArray();
+            return _newRows;
         }
 
         private void CalculateTotals()
         {
             _totalAmountExVat = 0;
             _totalVatAsAmount = 0;
+
+            _totalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
+
             List<OrderRowBuilder> orderRows = _order.GetOrderRows();
             foreach (OrderRowBuilder existingRow in orderRows)
             {
                 decimal vatPercentAsHundredth = existingRow.GetVatPercent() != null
                                                     ? existingRow.GetVatPercent().GetValueOrDefault() * 0.01M
                                                     : 0;
+
+                decimal vatPercent = existingRow.GetVatPercent().GetValueOrDefault();
+                decimal amountExVat = existingRow.GetAmountExVat().GetValueOrDefault();
+                decimal amountIncVat = existingRow.GetAmountIncVat().GetValueOrDefault();
+                decimal quantity = existingRow.GetQuantity();
+
                 if (existingRow.GetVatPercent() != null && existingRow.GetAmountExVat() != null)
                 {
-                    _totalAmountExVat += existingRow.GetAmountExVat().GetValueOrDefault();
-                    _totalVatAsAmount += vatPercentAsHundredth * existingRow.GetAmountExVat().GetValueOrDefault();
+                    _totalAmountExVat += amountExVat * quantity;
+                    _totalVatAsAmount += vatPercentAsHundredth * amountExVat * quantity;
+                    _totalAmountIncVat += (amountExVat + (vatPercentAsHundredth * amountExVat)) * quantity;
+
+                    if (_totalAmountPerVatRateIncVat.ContainsKey(vatPercent))
+                    {
+                        _totalAmountPerVatRateIncVat[vatPercent] +=
+                            (amountExVat * quantity * (1 + vatPercent / 100));
+                    }
+                    else
+                    {
+                        _totalAmountPerVatRateIncVat.Add(vatPercent, amountExVat * quantity * (1 + vatPercent / 100));
+                    }
                 }
                 else if (existingRow.GetVatPercent() != null && existingRow.GetAmountIncVat() != null)
                 {
-                    _totalAmountInclVat += existingRow.GetAmountIncVat().GetValueOrDefault();
-                    _totalVatAsAmount += (vatPercentAsHundredth / (1 + vatPercentAsHundredth)) *
-                                         existingRow.GetAmountIncVat().GetValueOrDefault();
+                    _totalAmountIncVat += amountIncVat * quantity;
+                    _totalVatAsAmount += (vatPercentAsHundredth / (1 + vatPercentAsHundredth)) * amountIncVat * quantity;
+                    _totalAmountExVat += (amountIncVat - ((vatPercentAsHundredth / (1 + vatPercentAsHundredth)) * amountIncVat)) * quantity;
+
+                    if (_totalAmountPerVatRateIncVat.ContainsKey(vatPercent))
+                    {
+                        _totalAmountPerVatRateIncVat[vatPercent] += amountIncVat * quantity;
+                    }
+                    else
+                    {
+                        _totalAmountPerVatRateIncVat.Add(vatPercent, amountIncVat * quantity);
+                    }
                 }
                 else
                 {
-                    _totalAmountInclVat += existingRow.GetAmountIncVat().GetValueOrDefault();
-                    _totalAmountExVat += existingRow.GetAmountExVat().GetValueOrDefault();
-                    _totalVatAsAmount += existingRow.GetAmountIncVat().GetValueOrDefault() -
-                                         existingRow.GetAmountExVat().GetValueOrDefault();
+                    _totalAmountIncVat += amountIncVat * quantity;
+                    _totalAmountExVat += amountExVat * quantity;
+                    _totalVatAsAmount += (amountIncVat - amountExVat) * quantity;
+
+                    decimal vatRate = (amountIncVat == 0.0M || amountExVat == 0.0M) ? 0 : 
+                        ((existingRow.GetAmountIncVat().GetValueOrDefault() / existingRow.GetAmountExVat().GetValueOrDefault()) - 1) * 100;
+
+                    if (_totalAmountPerVatRateIncVat.ContainsKey(vatRate))
+                    {
+                        _totalAmountPerVatRateIncVat[vatRate] +=
+                            (amountExVat * quantity * (1 + vatRate / 100));
+                    }
+                    else
+                    {
+                        _totalAmountPerVatRateIncVat.Add(vatRate, amountExVat * quantity * (1 + vatRate / 100));
+                    }
                 }
             }
-            _totalAmountInclVat = _totalAmountExVat + _totalVatAsAmount;
-            _totalAmountExVat = _totalAmountInclVat - _totalVatAsAmount;
-            _totalVatAsPercent = _totalAmountInclVat != 0 ? (_totalVatAsAmount / _totalAmountInclVat) : 0;
+            //_totalAmountIncVat = _totalAmountExVat + _totalVatAsAmount;
+            //_totalAmountExVat = _totalAmountIncVat - _totalVatAsAmount;
+            //_totalVatAsPercent = _totalAmountIncVat != 0 ? (_totalVatAsAmount / _totalAmountIncVat) : 0;
             // e.g. 0,20 if percentage 20
         }
 
-        private void FormatRows(IEnumerable<IRowBuilder> rows)
+        private decimal BankersRound(decimal value)
+        {
+            return Math.Round(value, 2, MidpointRounding.ToEven);
+        }
+
+        private OrderRow NewRowBasedOnExisting(IRowBuilder existingRow)
+        {
+            var newOrderRow = new OrderRow();
+            newOrderRow = SerializeOrder(existingRow.GetArticleNumber(), existingRow.GetDescription(),
+                                      existingRow.GetName(), existingRow.GetUnit(), newOrderRow);
+
+            newOrderRow.DiscountPercent = existingRow.GetDiscountPercent();
+            newOrderRow.NumberOfUnits = existingRow.GetQuantity();
+
+            return newOrderRow;
+        }
+
+        private void FormatRowLists(IEnumerable<IRowBuilder> rows)
         {
             foreach (var existingRow in rows)
             {
-                var orderRow = new OrderRow();
-                orderRow = SerializeOrder(existingRow.GetArticleNumber(), existingRow.GetDescription(),
-                                          existingRow.GetName(), existingRow.GetUnit(), orderRow);
-
-                orderRow.DiscountPercent = existingRow.GetDiscountPercent();
-                orderRow.NumberOfUnits = existingRow.GetQuantity();
-
                 if (existingRow is FixedDiscountBuilder)
                 {
-                    decimal amount = ((FixedDiscountBuilder) existingRow).GetAmount();
-                    decimal productTotalAfterDiscount = _totalAmountInclVat - amount;
-                    decimal totalProductVatAsAmountAfterDiscount = _totalVatAsPercent * productTotalAfterDiscount;
-                    decimal discountVatAsAmount = _totalVatAsAmount - totalProductVatAsAmountAfterDiscount;
-                    decimal pricePerUnitExMoms = Math.Round((amount - discountVatAsAmount) * 100.0M) / 100.0M;
+                    if (existingRow.GetAmountIncVat() != null && existingRow.GetVatPercent() == null && existingRow.GetAmountExVat() == null)
+                    {
+                        foreach (var rateAmountValuePair in _totalAmountPerVatRateIncVat)
+                        {
+                            var orderRow = NewRowBasedOnExisting(existingRow);
 
-                    orderRow.PricePerUnit = -pricePerUnitExMoms;
-                    orderRow.VatPercent =
-                        Math.Round((discountVatAsAmount * 100.0M / (amount - discountVatAsAmount) * 100.0M)) /
-                        100.0M;
+                            decimal vatRate = rateAmountValuePair.Key;
+                            decimal amountAtThisVatRateIncVat = rateAmountValuePair.Value;
+
+                            if (_totalAmountPerVatRateIncVat.Count > 1)
+                            {
+                                string name = existingRow.GetName();
+                                string description = existingRow.GetDescription();
+
+                                orderRow.Description = FormatDiscountRowDescription(name, description, (long)vatRate);
+                            }
+
+                            decimal discountAtThisVatRateIncVat =
+                                existingRow.GetAmountIncVat().GetValueOrDefault() * (amountAtThisVatRateIncVat / _totalAmountIncVat);
+                            decimal discountAtThisVatRateExVat = discountAtThisVatRateIncVat - discountAtThisVatRateIncVat * ReverseVatRate(vatRate);
+
+                            orderRow.PricePerUnit = -BankersRound(discountAtThisVatRateExVat);
+                            orderRow.VatPercent = vatRate;
+
+                            _newRows.Add(orderRow);
+                        }
+                    }
+                    else if (existingRow.GetAmountIncVat() != null && existingRow.GetVatPercent() != null && existingRow.GetAmountExVat() == null)
+                    {
+                        var orderRow = NewRowBasedOnExisting(existingRow);
+
+                        decimal vatRate = existingRow.GetVatPercent().GetValueOrDefault();
+                        decimal discountAtThisVatRateIncVat = existingRow.GetAmountIncVat().GetValueOrDefault();
+                        decimal discountAtThisVatRateExVat = discountAtThisVatRateIncVat - discountAtThisVatRateIncVat * ReverseVatRate(vatRate);
+
+                        orderRow.PricePerUnit = -BankersRound(discountAtThisVatRateExVat);
+                        orderRow.VatPercent = vatRate;
+
+                        _newRows.Add(orderRow);
+                    }
+                    else if (existingRow.GetAmountIncVat() == null && existingRow.GetVatPercent() != null && existingRow.GetAmountExVat() != null)
+                    {
+                        var orderRow = NewRowBasedOnExisting(existingRow);
+
+                        orderRow.PricePerUnit = -BankersRound(existingRow.GetAmountExVat().GetValueOrDefault());
+                        orderRow.VatPercent = existingRow.GetVatPercent().GetValueOrDefault();
+
+                        _newRows.Add(orderRow);
+                    }
                 }
                 else if (existingRow is RelativeDiscountBuilder)
                 {
-                    decimal pricePerUnitExVat =
-                        Math.Round((_totalAmountExVat * (existingRow.GetDiscountPercent() * 0.01M)) * 100.00M) /
-                        100.00M;
+                    foreach (var rateAmountValuePair in _totalAmountPerVatRateIncVat)
+                    {
+                        var orderRow = NewRowBasedOnExisting(existingRow);
 
-                    orderRow.PricePerUnit = -pricePerUnitExVat;
+                        decimal vatRate = rateAmountValuePair.Key;
+                        decimal amountAtThisVatRateIncVat = rateAmountValuePair.Value;
 
-                    orderRow.VatPercent =
-                        Math.Round(
-                            (_totalVatAsAmount * 100.0M *
-                             (existingRow.GetDiscountPercent() / pricePerUnitExVat / 100.0M)),
-                            2);
+                        if (_totalAmountPerVatRateIncVat.Count > 1)
+                        {
+                            string name = existingRow.GetName();
+                            string description = existingRow.GetDescription();
 
-                    //Relative discounts is a special case where we want to use the discount percent in calculations
-                    //but not display it on the order row. Since that would imply that it's a discount on a discount.
-                    //So that is why we force the value to 0 below.
-                    orderRow.DiscountPercent = 0;
+                            orderRow.Description = FormatDiscountRowDescription(name, description, (long)vatRate);
+                        }
+
+                        decimal amountAtThisVatRateExVat = amountAtThisVatRateIncVat - amountAtThisVatRateIncVat * ReverseVatRate(vatRate);
+                        decimal discountExVat = amountAtThisVatRateExVat * (existingRow.GetDiscountPercent() / 100);
+                        
+                        orderRow.PricePerUnit = -BankersRound(discountExVat);
+                        orderRow.VatPercent = vatRate;
+                        
+                        //Relative discounts is a special case where we want to use the discount percent in calculations
+                        //but not display it on the order row. Since that would imply that it's a discount on a discount.
+                        //So that is why we force the value to 0 below.
+                        orderRow.DiscountPercent = 0;
+
+                        _newRows.Add(orderRow);
+                    }
                 }
                 else
                 {
-                    orderRow = SerializeAmountAndVat(existingRow.GetAmountExVat(), existingRow.GetVatPercent(),
-                                                     existingRow.GetAmountIncVat(), orderRow);
+                    _newRows.Add(SerializeAmountAndVat(existingRow.GetAmountExVat(), existingRow.GetVatPercent(), 
+                        existingRow.GetAmountIncVat(), NewRowBasedOnExisting(existingRow)));
                 }
-
-                _newRows.Add(orderRow);
             }
+        }
+
+        private decimal ReverseVatRate(decimal rate)
+        {
+            return (1 - (1 / (1 + rate / 100)));
+        }
+
+        private string FormatDiscountRowDescription(string name, string description, long vatRate)
+        {
+            string formattedDescription;
+            if (name != null)
+            {
+                formattedDescription = name + (description == null ? "" : ": " + description);
+            }
+            else
+            {
+                formattedDescription = description ?? "";
+            }
+
+            formattedDescription += " (" + vatRate + "%)";
+
+            return formattedDescription;
         }
 
         private void FormatOrderRows()
         {
-            FormatRows(_order.GetOrderRows());
+            FormatRowLists(_order.GetOrderRows());
         }
 
         private void FormatShippingFeeRows()
@@ -135,7 +259,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             {
                 return;
             }
-            FormatRows(_order.GetShippingFeeRows());
+            FormatRowLists(_order.GetShippingFeeRows());
         }
 
         private void FormatInvoiceFeeRows()
@@ -144,7 +268,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             {
                 return;
             }
-            FormatRows(_order.GetInvoiceFeeRows());
+            FormatRowLists(_order.GetInvoiceFeeRows());
         }
 
         private void FormatFixedDiscountRows()
@@ -153,7 +277,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             {
                 return;
             }
-            FormatRows(_order.GetFixedDiscountRows());
+            FormatRowLists(_order.GetFixedDiscountRows());
         }
 
         private void FormatRelativeDiscountRows()
@@ -162,7 +286,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             {
                 return;
             }
-            FormatRows(_order.GetRelativeDiscountRows());
+            FormatRowLists(_order.GetRelativeDiscountRows());
         }
 
         private OrderRow SerializeOrder(string articleNumber, string description, string name, string unit,
@@ -170,13 +294,13 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         {
             orderRow.ArticleNumber = articleNumber;
 
-            if (description != null)
+            if (name != null)
             {
-                orderRow.Description = (name != null ? name + ": " : "") + "" + description;
+                orderRow.Description = name + (description == null ? "" : ": " + description);
             }
-            else if (name != null)
+            else
             {
-                orderRow.Description = name;
+                orderRow.Description = description ?? "";
             }
 
             orderRow.Unit = unit;
@@ -189,18 +313,18 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         {
             if (vatPercent != null && amountExVat != null)
             {
-                orderRow.PricePerUnit = amountExVat.GetValueOrDefault();
+                orderRow.PricePerUnit = Math.Round(amountExVat.GetValueOrDefault(), 2, MidpointRounding.ToEven);
                 orderRow.VatPercent = vatPercent.GetValueOrDefault();
             }
             else if (vatPercent != null && amountIncVat != null)
             {
-                orderRow.PricePerUnit = amountIncVat.GetValueOrDefault() /
-                                        ((0.01M * vatPercent.GetValueOrDefault()) + 1);
+                orderRow.PricePerUnit = Math.Round(amountIncVat.GetValueOrDefault() /
+                                        ((0.01M * vatPercent.GetValueOrDefault()) + 1), 2, MidpointRounding.ToEven);
                 orderRow.VatPercent = vatPercent.GetValueOrDefault();
             }
-            else
+            else if (amountExVat != null && amountIncVat != null)
             {
-                orderRow.PricePerUnit = amountExVat.GetValueOrDefault();
+                orderRow.PricePerUnit = Math.Round(amountExVat.GetValueOrDefault(), 2, MidpointRounding.ToEven);
                 orderRow.VatPercent = ((amountIncVat.GetValueOrDefault() / amountExVat.GetValueOrDefault()) - 1) * 100;
             }
             return orderRow;

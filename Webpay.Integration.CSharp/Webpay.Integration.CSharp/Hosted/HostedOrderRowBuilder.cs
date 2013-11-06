@@ -43,6 +43,7 @@
             return this;
         }
 
+        //AmountIncVat
         public long GetAmount()
         {
             return _amount;

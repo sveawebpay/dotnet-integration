@@ -8,14 +8,20 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
 {
     public class HostedRowFormatter<T>
     {
-        private long _totalAmount;
-        private long _totalVat;
+        private decimal _totalAmount;
+        private decimal _totalVat;
+        private decimal _totalShippingAmount;
+        private decimal _totalShippingVat;
         private readonly List<HostedOrderRowBuilder> _newRows;
 
         public HostedRowFormatter()
         {
-            _totalAmount = 0L;
-            _totalVat = 0L;
+            _totalAmount = 0M;
+            _totalVat = 0M;
+
+            _totalShippingAmount = 0M;
+            _totalShippingVat = 0M;
+
             _newRows = new List<HostedOrderRowBuilder>();
         }
 
@@ -36,34 +42,47 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 var tempRow = GetNewTempRow(row, row.GetArticleNumber());
 
                 decimal vatFactor = row.GetVatPercent() != null
-                                        ? (row.GetVatPercent().GetValueOrDefault() * 0.01M) + 1
+                                        ? (row.GetVatPercent().GetValueOrDefault() / 100) + 1
                                         : 0;
 
                 decimal amountExVat = row.GetAmountExVat().GetValueOrDefault();
-                tempRow.SetAmount(Convert.ToInt64((amountExVat * 100) * vatFactor));
+                decimal amountIncVat = row.GetAmountIncVat().GetValueOrDefault();
+                decimal tempAmount;
+                decimal tempVat;
 
                 if (row.GetAmountExVat() != null && row.GetVatPercent() != null)
                 {
-                    tempRow.SetAmount(Convert.ToInt64((row.GetAmountExVat() * 100) * vatFactor));
-                    tempRow.SetVat(Convert.ToInt64(tempRow.GetAmount() - (row.GetAmountExVat() * 100)));
+                    tempAmount = amountExVat * vatFactor;
+                    tempVat = amountExVat * (row.GetVatPercent().GetValueOrDefault() / 100);
                 }
                 else if (row.GetAmountIncVat() != null && row.GetVatPercent() != null)
                 {
-                    tempRow.SetAmount(Convert.ToInt64((row.GetAmountIncVat() * 100)));
-                    tempRow.SetVat(Convert.ToInt64(tempRow.GetAmount() - (tempRow.GetAmount() / vatFactor)));
+                    tempAmount = amountIncVat;
+                    tempVat = amountIncVat - (amountIncVat / vatFactor);
                 }
                 else
                 {
-                    tempRow.SetAmount(Convert.ToInt64(row.GetAmountIncVat() * 100));
-                    tempRow.SetVat(Convert.ToInt64((row.GetAmountIncVat() - row.GetAmountExVat()) * 100));
+                    tempAmount = amountIncVat;
+                    tempVat = amountIncVat - amountExVat;
                 }
 
+                tempRow.SetAmount(ConvertFromDecimalToCentesimal(tempAmount));
+                tempRow.SetVat(ConvertFromDecimalToCentesimal(tempVat));
                 tempRow.SetQuantity(row.GetQuantity());
 
+                _totalAmount += tempAmount * row.GetQuantity();
+                _totalVat += tempVat * row.GetQuantity();
+
                 _newRows.Add(tempRow);
-                _totalAmount += Convert.ToInt64(tempRow.GetAmount() * row.GetQuantity());
-                _totalVat += (long) (tempRow.GetVat() * row.GetQuantity());
             }
+        }
+
+        private long ConvertFromDecimalToCentesimal(decimal value)
+        {
+            value = Math.Truncate(value * 10000) / 10000; //Remove insignificant decimals
+            value = Math.Round(value, 2, MidpointRounding.ToEven); //Bankers rounding to two decimals
+            value = value * 100; //Convert to centesimal value (kr -> öre, eur -> cent, and so on)
+            return Convert.ToInt64(value); //Return as long
         }
 
         private void FormatShippingFeeRows(OrderBuilder<T> orderBuilder)
@@ -77,28 +96,40 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             {
                 var tempRow = GetNewTempRow(row, row.GetShippingId());
 
-                decimal plusVatCounter = row.GetVatPercent() != null
-                                             ? (row.GetVatPercent().GetValueOrDefault() * 0.01M) + 1
+                decimal vatFactor = row.GetVatPercent() != null
+                                             ? (row.GetVatPercent().GetValueOrDefault() / 100) + 1
                                              : 0;
+
+                decimal amountIncVat = row.GetAmountIncVat().GetValueOrDefault();
+                decimal amountExVat = row.GetAmountExVat().GetValueOrDefault();
+                decimal tempAmount;
+                decimal tempVat;
 
                 if (row.GetAmountExVat() != null && row.GetVatPercent() != null)
                 {
-                    tempRow.SetAmount(Convert.ToInt64((row.GetAmountExVat().GetValueOrDefault() * 100) * plusVatCounter));
-                    tempRow.SetVat(
-                        Convert.ToInt64(tempRow.GetAmount() - (row.GetAmountExVat().GetValueOrDefault() * 100)));
+                    tempAmount = amountExVat * vatFactor;
+                    tempVat = tempAmount - amountExVat;
                 }
                 else if (row.GetAmountIncVat() != null && row.GetVatPercent() != null)
                 {
-                    tempRow.SetAmount(Convert.ToInt64(row.GetAmountIncVat().GetValueOrDefault() * 100));
-                    tempRow.SetVat(Convert.ToInt64(tempRow.GetAmount() - (tempRow.GetAmount() / plusVatCounter)));
+                    tempAmount = amountIncVat;
+                    tempVat = tempAmount - (tempAmount / vatFactor);
                 }
                 else
                 {
-                    decimal amountIncVat = row.GetAmountIncVat().GetValueOrDefault();
-                    tempRow.SetAmount(Convert.ToInt64(amountIncVat * 100));
-                    decimal amountExVat = row.GetAmountExVat().GetValueOrDefault();
-                    tempRow.SetVat(Convert.ToInt64(amountIncVat - amountExVat));
+                    tempAmount = amountIncVat;
+                    tempVat = amountIncVat - amountExVat;
                 }
+
+                tempRow.SetAmount(ConvertFromDecimalToCentesimal(tempAmount));
+                tempRow.SetVat(ConvertFromDecimalToCentesimal(tempVat));
+                tempRow.SetQuantity(row.GetQuantity());
+
+                _totalShippingAmount = tempAmount * row.GetQuantity();
+                _totalShippingVat = tempVat * row.GetQuantity();
+
+                _totalAmount += _totalShippingAmount;
+                _totalVat += _totalShippingVat;
 
                 _newRows.Add(tempRow);
             }
@@ -115,15 +146,48 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             {
                 var tempRow = GetNewTempRow(row, row.GetDiscountId());
 
-                tempRow.SetAmount(Convert.ToInt64(-(row.GetAmount() * 100)));
+                decimal vatFactor = row.GetVatPercent() != null
+                        ? (row.GetVatPercent().GetValueOrDefault() / 100) + 1
+                        : 0;
 
-                _totalAmount -= Convert.ToInt64(row.GetAmount());
+                decimal tempAmount;
+                decimal tempVat;
+                decimal amountExVat = row.GetAmountExVat().GetValueOrDefault();
+                decimal amountIncVat = row.GetAmountIncVat().GetValueOrDefault();
 
-                double discountFactor = tempRow.GetAmount() * 1.0 / _totalAmount;
+                if (row.GetAmountExVat() != null && row.GetVatPercent() != null)
+                {
+                    tempAmount = amountExVat * vatFactor;
+                    tempVat = amountExVat * (row.GetVatPercent().GetValueOrDefault() / 100);
+                }
+                else if (row.GetAmountIncVat() != null && row.GetVatPercent() != null)
+                {
+                    tempAmount = amountIncVat;
+                    tempVat = amountIncVat - (amountIncVat / vatFactor);
+                }
+                else if (row.GetAmountIncVat() != null && row.GetAmountExVat() != null)
+                {
+                    tempAmount = amountIncVat;
+                    tempVat = amountIncVat - amountExVat;
+                }
+                else
+                {
+                    tempAmount = amountIncVat;
+                    tempVat = _totalAmount * _totalVat == 0 ? 
+                                amountIncVat : 
+                                amountIncVat / _totalAmount * _totalVat;
+                }
+
+                decimal discountedAmount = -tempAmount;
+                tempRow.SetAmount(ConvertFromDecimalToCentesimal(discountedAmount));
+
+                _totalAmount += discountedAmount;
 
                 if (_totalVat > 0)
                 {
-                    tempRow.SetVat(Convert.ToInt64(_totalVat * discountFactor));
+                    decimal discountedVat = -tempVat;
+                    tempRow.SetVat(ConvertFromDecimalToCentesimal(discountedVat));
+                    _totalVat += discountedVat;
                 }
 
                 _newRows.Add(tempRow);
@@ -141,15 +205,22 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             {
                 var tempRow = GetNewTempRow(row, row.GetDiscountId());
 
-                decimal discountFactor = row.GetDiscountPercent() * 0.01M;
+                decimal discountFactor = row.GetDiscountPercent() / 100;
 
-                tempRow.SetAmount(Convert.ToInt64(-(discountFactor * _totalAmount)));
-                _totalAmount -= tempRow.GetAmount();
+                decimal discountAmount = (_totalAmount - _totalShippingAmount) * discountFactor;
+                decimal discountVat = 0;
+                tempRow.SetAmount(-ConvertFromDecimalToCentesimal(discountAmount));
+                _totalAmount = _totalAmount - discountAmount;
+                
 
                 if (_totalVat > 0)
                 {
-                    tempRow.SetVat(Convert.ToInt64(-(_totalVat * discountFactor)));
+                    discountVat = (_totalVat - _totalShippingVat) * discountFactor;
+                    _totalVat = _totalVat - discountVat;
                 }
+
+                tempRow.SetAmount(-ConvertFromDecimalToCentesimal(discountAmount));
+                tempRow.SetVat(-ConvertFromDecimalToCentesimal(discountVat));
 
                 _newRows.Add(tempRow);
             }
@@ -176,14 +247,26 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             return tempRow;
         }
 
+        [Obsolete("This method is considered imprecise and may return values effected by rounding errors. Use GetTotalAmount() instead")]
         public long FormatTotalAmount(IEnumerable<HostedOrderRowBuilder> rows)
         {
-            return (long) rows.Sum(row => row.GetAmount() * row.GetQuantity());
+            return (long)rows.Sum(row => row.GetAmount() * row.GetQuantity());
         }
 
+        [Obsolete("This method is considered imprecise and may return values effected by rounding errors. Use GetTotalVat() instead")]
         public long FormatTotalVat(IEnumerable<HostedOrderRowBuilder> rows)
         {
-            return (long) rows.Sum(row => row.GetVat() * row.GetQuantity());
+            return (long)rows.Sum(row => row.GetVat() * row.GetQuantity());
+        }
+
+        public long GetTotalAmount()
+        {
+            return ConvertFromDecimalToCentesimal(_totalAmount);
+        }
+
+        public long GetTotalVat()
+        {
+            return ConvertFromDecimalToCentesimal(_totalVat);
         }
     }
 }

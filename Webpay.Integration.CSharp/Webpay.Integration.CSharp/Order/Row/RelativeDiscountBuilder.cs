@@ -67,7 +67,7 @@
 
         public string GetArticleNumber()
         {
-            //For relative discounts the article number is synonomous with the discount id
+            //For relative discounts the article number is synonymous with the discount id
             return GetDiscountId();
         }
 

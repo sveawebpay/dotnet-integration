@@ -111,7 +111,7 @@ namespace Webpay.Integration.CSharp.Test.Order
             CreateTestFixedDiscountRow();
 
             Assert.AreEqual("1", _order.GetFixedDiscountRows()[0].GetDiscountId());
-            Assert.AreEqual(_order.GetFixedDiscountRows()[0].GetAmount(), 100);
+            Assert.AreEqual(_order.GetFixedDiscountRows()[0].GetAmountIncVat(), 100);
             Assert.AreEqual("FixedDiscount", _order.GetFixedDiscountRows()[0].GetDescription());
         }
 

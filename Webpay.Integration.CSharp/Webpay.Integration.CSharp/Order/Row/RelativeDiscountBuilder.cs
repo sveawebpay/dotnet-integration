@@ -1,4 +1,6 @@
-﻿namespace Webpay.Integration.CSharp.Order.Row
+﻿using System;
+
+namespace Webpay.Integration.CSharp.Order.Row
 {
     public class RelativeDiscountBuilder : IRowBuilder
     {
@@ -98,6 +100,7 @@
         /// Will return null.
         /// </summary>
         /// <returns>null</returns>
+        [Obsolete("Do not use this method. It only returns null.", true)]
         public decimal? GetAmountExVat()
         {
             return null;
@@ -108,6 +111,7 @@
         /// Will return null.
         /// </summary>
         /// <returns>null</returns>
+        [Obsolete("Do not use this method. It only returns null.", true)]
         public decimal? GetVatPercent()
         {
             return null;
@@ -118,6 +122,7 @@
         /// Will return null.
         /// </summary>
         /// <returns>null</returns>
+        [Obsolete("Do not use this method. It only returns null.", true)]
         public decimal? GetAmountIncVat()
         {
             return null;

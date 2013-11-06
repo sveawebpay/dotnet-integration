@@ -179,6 +179,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(1, formatRowsList.Count);
             Assert.AreEqual(262462, formattedTotalAmount); // 262462,5 rounded half-to-even
             Assert.AreEqual(52492, formattedTotalVat); // 52492,5 rounded half-to-even
         }
@@ -203,6 +204,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(1, formatRowsList.Count);
             Assert.AreEqual(262462, formattedTotalAmount); // 262462,5 rounded half-to-even
             Assert.AreEqual(52492, formattedTotalVat); // 52492,5 rounded half-to-even
         }
@@ -227,6 +229,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(1, formatRowsList.Count);
             Assert.AreEqual(262462, formattedTotalAmount); // 262462,5 rounded half-to-even
             Assert.AreEqual(52492, formattedTotalVat); // 52492,5 rounded half-to-even
         }
@@ -251,6 +254,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(2, formatRowsList.Count);
             Assert.AreEqual(261462, formattedTotalAmount); // 262462,5 - 1000 discount rounded half-to-even
             Assert.AreEqual(52292, formattedTotalVat); // 52492,5  -  200 discount (= 10/2624,62*524,92) rounded half-to-even
         }
@@ -275,6 +279,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(2, formatRowsList.Count);
             Assert.AreEqual(261212, formattedTotalAmount); // 262462,5 - 1250 discount rounded half-to-even
             Assert.AreEqual(52242, formattedTotalVat); // 52492,5 - 250 discount rounded half-to-even
         }
@@ -297,11 +302,12 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 
             // follows HostedPayment calculateRequestValues() outline:
             var formatter = new HostedRowFormatter<CreateOrderBuilder>();
-
             List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
+            
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(3, formatRowsList.Count);
             // 100*250/356 = 70.22 incl. 25% vat => 14.04 vat as amount 
             // 100*106/356 = 29.78 incl. 6% vat => 1.69 vat as amount 
             // matches 15,73 discount (= 100/356 *56) discount
@@ -333,6 +339,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(3, formatRowsList.Count);
             Assert.AreEqual(23100, formattedTotalAmount); // 35600 - 12500 discount
             Assert.AreEqual(3100, formattedTotalVat); //  5600 -  2500 discount
         }
@@ -360,6 +367,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(3, formatRowsList.Count);
             Assert.AreEqual(25600, formattedTotalAmount); // 35600 - 10000 discount
             Assert.AreEqual(5600, formattedTotalVat); //  5600 - 0 discount
         }
@@ -387,6 +395,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(3, formatRowsList.Count);
             Assert.AreEqual(25600, formattedTotalAmount); // 35600 - 10000 discount
             Assert.AreEqual(3600, formattedTotalVat); //  5600 - 2000 discount
         }
@@ -410,6 +419,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(2, formatRowsList.Count);
             Assert.AreEqual(196847, formattedTotalAmount); // (262462,5  - 65615,625 discount (25%) rounded half-to-even
             Assert.AreEqual(39369, formattedTotalVat); //  52492,5  - 13123,125 discount (25%) rounded half-to-even
         }
@@ -433,6 +443,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(2, formatRowsList.Count);
             Assert.AreEqual(6562, formattedTotalAmount); // 8748,75 - 2187,18 discount rounded half-to-even
             Assert.AreEqual(1312, formattedTotalVat); // 1749,75 - 437,5 discount (1750*.25) rounded half-to-even
         }
@@ -460,6 +471,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 
+            Assert.AreEqual(3, formatRowsList.Count);
             // 5000*.25 = 1250
             // 600*.25 = 150  
             // matches 1400 discount

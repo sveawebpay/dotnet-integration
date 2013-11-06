@@ -240,10 +240,14 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             Assert.AreEqual("1", request.CreateOrderInformation.OrderRows[2].ArticleNumber);
-            Assert.AreEqual("RelativeDiscount", request.CreateOrderInformation.OrderRows[2].Description);
-            Assert.AreEqual(-85.74, request.CreateOrderInformation.OrderRows[2].PricePerUnit);
+            Assert.AreEqual("RelativeDiscount (25%)", request.CreateOrderInformation.OrderRows[2].Description);
+            Assert.AreEqual("RelativeDiscount (6%)", request.CreateOrderInformation.OrderRows[3].Description);
+            Assert.AreEqual(-85.74, 
+                request.CreateOrderInformation.OrderRows[2].PricePerUnit +
+                request.CreateOrderInformation.OrderRows[3].PricePerUnit);
             Assert.AreEqual(1, request.CreateOrderInformation.OrderRows[2].NumberOfUnits);
-            Assert.AreEqual(16.64, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(6, request.CreateOrderInformation.OrderRows[3].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
         }
 
@@ -277,10 +281,14 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             Assert.AreEqual("1", request.CreateOrderInformation.OrderRows[2].ArticleNumber);
-            Assert.AreEqual("FixedDiscount", request.CreateOrderInformation.OrderRows[2].Description);
-            Assert.AreEqual(-85.74, request.CreateOrderInformation.OrderRows[2].PricePerUnit);
+            Assert.AreEqual("FixedDiscount (25%)", request.CreateOrderInformation.OrderRows[2].Description);
+            Assert.AreEqual("FixedDiscount (6%)", request.CreateOrderInformation.OrderRows[3].Description);
+            Assert.AreEqual(-85.74, 
+                request.CreateOrderInformation.OrderRows[2].PricePerUnit +
+                request.CreateOrderInformation.OrderRows[3].PricePerUnit);
             Assert.AreEqual(1, request.CreateOrderInformation.OrderRows[2].NumberOfUnits);
-            Assert.AreEqual(16.64, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(6, request.CreateOrderInformation.OrderRows[3].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
         }
 

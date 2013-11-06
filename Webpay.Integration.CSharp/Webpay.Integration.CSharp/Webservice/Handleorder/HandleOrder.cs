@@ -70,7 +70,7 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
                         InvoiceIdToCredit = _order.GetCreditInvoice(),
                         IsCreditInvoice = _order.GetCreditInvoice().HasValue,
                         NumberOfCreditDays = _order.GetNumberOfCreditDays(),
-                        OrderRows = formatter.FormatRows()
+                        OrderRows = formatter.FormatRows().ToArray()
                     };
             }
 

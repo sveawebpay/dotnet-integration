@@ -6,11 +6,11 @@ using System.Web;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Security;
+using Webpay.Integration.CSharp.Util.Testing;
 
-namespace Webpay.Integration.CSharp.Test.Webservice.Payment
+namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 {
     [TestFixture]
     public class HostedPaymentResponseTest

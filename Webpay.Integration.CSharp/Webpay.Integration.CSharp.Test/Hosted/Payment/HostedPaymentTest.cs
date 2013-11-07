@@ -4,8 +4,8 @@ using Webpay.Integration.CSharp.Hosted;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 
 namespace Webpay.Integration.CSharp.Test.Hosted.Payment
 {
@@ -303,7 +303,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             // follows HostedPayment calculateRequestValues() outline:
             var formatter = new HostedRowFormatter<CreateOrderBuilder>();
             List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
-            
+
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 

@@ -112,6 +112,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Webservice\Getaddresses\GetAddresses.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\GetPaymentPlanParams.cs" />
+    <Compile Include="Webservice\Getpaymentplanparams\PaymentPlanPricePerMonth.cs" />
     <Compile Include="Webservice\Handleorder\CloseOrder.cs" />
     <Compile Include="Webservice\Handleorder\DeliverInvoice.cs" />
     <Compile Include="Webservice\Handleorder\DeliverPaymentPlan.cs" />

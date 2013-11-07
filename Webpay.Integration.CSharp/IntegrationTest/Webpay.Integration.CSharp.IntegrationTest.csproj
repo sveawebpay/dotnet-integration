@@ -61,6 +61,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Webservice\GetAddress\GetAddressesTest.cs" />
     <Compile Include="Webservice\GetPaymentPlanParams\GetPaymentPlanParamsTest.cs" />
+    <Compile Include="Webservice\GetPaymentPlanParams\PaymentPlanPricePerMonthTest.cs" />
+    <Compile Include="Webservice\HandleOrder\CloseOrderTest.cs" />
+    <Compile Include="Webservice\HandleOrder\DeliverOrderTest.cs" />
+    <Compile Include="Webservice\Payment\CreateInvoiceOrderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

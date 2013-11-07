@@ -85,7 +85,6 @@
     <Compile Include="Util\Security\HashUtilTest.cs" />
     <Compile Include="Util\Security\Base64UtilTest.cs" />
     <Compile Include="Webservice\Handleorder\DeliverOrderTest.cs" />
-    <Compile Include="Webservice\Handleorder\CloseOrderTest.cs" />
     <Compile Include="Webservice\Helper\WebserviceRowFormatterTest.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanTest.cs" />
     <Compile Include="Webservice\Payment\InvoicePaymentTest.cs" />

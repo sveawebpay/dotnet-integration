@@ -1,6 +1,8 @@
-﻿using Webpay.Integration.CSharp.Config;
+﻿using System.Collections.Generic;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Handle;
+using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Getaddresses;
 using Webpay.Integration.CSharp.Webservice.Getpaymentplanparams;
 
@@ -104,6 +106,17 @@ namespace Webpay.Integration.CSharp
         public static GetAddresses GetAddresses()
         {
             return GetAddresses(SveaConfig.GetDefaultConfig());
+        }
+
+        /// <summary>
+        /// Calculate the prices per month for the payment plan campaigns
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="paymentPlanParams"></param>
+        /// <returns>PaymentPlanPricePerMonth</returns>
+        public static List<Dictionary<string, long>> PaymentPlanPricePerMonth(decimal amount, GetPaymentPlanParamsEuResponse paymentPlanParams)
+        {
+            return new PaymentPlanPricePerMonth().Calculate(amount, paymentPlanParams);
         }
     }
 }

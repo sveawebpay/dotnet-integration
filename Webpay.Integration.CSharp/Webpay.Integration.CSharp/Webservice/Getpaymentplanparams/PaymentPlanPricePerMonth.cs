@@ -15,8 +15,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
                 return pricesPerMonth;
             }
 
-            CampaignCodeInfo[] campaignCodes = paymentPlanParams.CampaignCodes;
-            foreach (var campaignCode in campaignCodes)
+            foreach (var campaignCode in paymentPlanParams.CampaignCodes)
             {
                 decimal fromAmount = campaignCode.FromAmount;
                 decimal toAmount = campaignCode.ToAmount;

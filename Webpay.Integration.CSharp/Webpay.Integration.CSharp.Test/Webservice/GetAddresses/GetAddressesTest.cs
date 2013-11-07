@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Webpay.Integration.CSharp.Test.Util;
+using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.GetAddresses

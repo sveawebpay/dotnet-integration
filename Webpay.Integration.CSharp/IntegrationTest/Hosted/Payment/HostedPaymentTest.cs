@@ -7,7 +7,7 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 
-namespace Webpay.Integration.CSharp.Test.Hosted.Payment
+namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 {
     [TestFixture]
     public class HostedPaymentTest
@@ -159,7 +159,6 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
          * 30*69.99*1.25 = 2624.625 => 2624.62 w/Bankers rounding (half-to-even)
          * problem, sums to 2624.7, in xml request, i.e. calculates 30* round( (69.99*1.25), 2) :( 
          */
-
         [Test]
         public void TestAmountFromMultipleItemsDefinedWithExVatAndVatPercent()
         {
@@ -304,7 +303,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             // follows HostedPayment calculateRequestValues() outline:
             var formatter = new HostedRowFormatter<CreateOrderBuilder>();
             List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
-
+            
             long formattedTotalAmount = formatter.GetTotalAmount();
             long formattedTotalVat = formatter.GetTotalVat();
 

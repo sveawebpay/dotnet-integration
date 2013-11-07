@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns>OrderRowBuilder</returns>
-        public OrderRowBuilder SetQuantity(int quantity)
+        public OrderRowBuilder SetQuantity(decimal quantity)
         {
             _quantity = quantity;
             return this;

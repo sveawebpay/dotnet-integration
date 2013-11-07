@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Test.Config;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Handleorder;
 

@@ -33,25 +33,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         }
 
         [Test]
-        public void TestInvoiceDoRequestWithIpAddressSetSe()
-        {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber)
-                                                                                     .SetIpAddress("123.123.123"))
-                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                             .SetOrderDate(TestingTool.DefaultTestDate)
-                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                             .UseInvoicePayment()
-                                                             .DoRequest();
-
-            Assert.IsTrue(response.Accepted);
-        }
-
-        [Test]
         public void TestInvoiceRequestObjectWithAuth()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder()
@@ -372,25 +353,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.AreEqual("st", request.CreateOrderInformation.OrderRows[2].Unit);
             Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
-        }
-
-        [Test]
-        public void TestInvoiceRequestUsingAmountIncVatWithZeroVatPercent()
-        {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                             .SetOrderDate(TestingTool.DefaultTestDate)
-                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
-                                                             .UseInvoicePayment()
-                                                             .DoRequest();
-
-            Assert.IsTrue(response.Accepted);
         }
 
         [Test]

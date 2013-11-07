@@ -41,6 +41,8 @@
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,9 +57,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Hosted\Payment\FakeHostedPayment.cs" />
-    <Compile Include="Hosted\Payment\HostedPaymentTest.cs" />
+    <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webservice\GetAddress\GetAddressesTest.cs" />
+    <Compile Include="Webservice\GetPaymentPlanParams\GetPaymentPlanParamsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

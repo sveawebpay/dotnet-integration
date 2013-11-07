@@ -10,7 +10,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Security;
 using Webpay.Integration.CSharp.Util.Testing;
 
-namespace Webpay.Integration.CSharp.Test.Webservice.Payment
+namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 {
     [TestFixture]
     public class HostedPaymentResponseTest

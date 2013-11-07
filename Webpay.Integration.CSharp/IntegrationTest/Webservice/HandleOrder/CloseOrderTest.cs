@@ -3,7 +3,7 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 
-namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
+namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
 {
     [TestFixture]
     public class CloseOrderTest

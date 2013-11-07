@@ -159,7 +159,6 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
          * 30*69.99*1.25 = 2624.625 => 2624.62 w/Bankers rounding (half-to-even)
          * problem, sums to 2624.7, in xml request, i.e. calculates 30* round( (69.99*1.25), 2) :( 
          */
-
         [Test]
         public void TestAmountFromMultipleItemsDefinedWithExVatAndVatPercent()
         {

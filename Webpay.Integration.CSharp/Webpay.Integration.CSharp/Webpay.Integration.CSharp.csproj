@@ -106,6 +106,7 @@
     <Compile Include="Util\Calculation\MathUtil.cs" />
     <Compile Include="Util\Security\Base64Util.cs" />
     <Compile Include="Util\Security\HashUtil.cs" />
+    <Compile Include="Util\Testing\TestingTool.cs" />
     <Compile Include="Util\Xml\Utf8StringWriter.cs" />
     <Compile Include="WebpayConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

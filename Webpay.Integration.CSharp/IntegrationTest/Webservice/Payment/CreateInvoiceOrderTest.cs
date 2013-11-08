@@ -216,5 +216,38 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.AreEqual("1102 HG", response.CreateOrderResult.CustomerIdentity.ZipCode);
             Assert.AreEqual("BARENDRECHT", response.CreateOrderResult.CustomerIdentity.Locality);
         }
+
+        [Test]
+        public void TestFormatShippingFeeRowsZero()
+        {
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+                                                             .AddOrderRow(Item.OrderRow()
+                                                                              .SetArticleNumber("1")
+                                                                              .SetQuantity(2)
+                                                                              .SetAmountExVat(10)
+                                                                              .SetDescription("Specification")
+                                                                              .SetName("Prod")
+                                                                              .SetVatPercent(0)
+                                                                              .SetDiscountPercent(0))
+                                                             .AddFee(Item.ShippingFee()
+                                                                         .SetShippingId("0")
+                                                                         .SetName("Tess")
+                                                                         .SetDescription("Tester")
+                                                                         .SetAmountExVat(0)
+                                                                         .SetVatPercent(0)
+                                                                         .SetUnit("st"))
+                                                             .AddCustomerDetails(Item.IndividualCustomer()
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                                                             .UseInvoicePayment()
+                                                             .DoRequest();
+
+            Assert.AreEqual(0, response.ResultCode);
+            Assert.IsTrue(response.Accepted);
+        }
     }
 }

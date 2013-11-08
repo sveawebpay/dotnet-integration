@@ -33,7 +33,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 
             var postResponse = PostRequest(form);
             Assert.That(postResponse.Item1, Is.EqualTo("OK"));
-            Assert.That(postResponse.Item2.StartsWith(ExpectedResponseStart));
         }
 
         [Test]

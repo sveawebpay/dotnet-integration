@@ -54,7 +54,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
         /// </summary>
         /// <exception cref="SveaWebPayValidationException"></exception>
         /// <returns>SveaRequest</returns>
-        private GetPaymentPlanParamsEuRequest PrepareRequest()
+        public GetPaymentPlanParamsEuRequest PrepareRequest()
         {
             string errors = ValidateRequest();
             if (errors.Length > 0)

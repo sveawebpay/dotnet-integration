@@ -61,8 +61,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Config\ConfigurationProviderTestData.cs" />
-    <Compile Include="Config\ConfigurationProviderTest.cs" />
     <Compile Include="Hosted\Helper\PaymentFormTest.cs" />
     <Compile Include="Hosted\Helper\HostedXmlBuilderTest.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatterTest.cs" />

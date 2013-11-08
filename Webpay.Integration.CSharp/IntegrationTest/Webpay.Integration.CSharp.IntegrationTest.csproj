@@ -57,6 +57,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Config\ConfigurationProviderTest.cs" />
     <Compile Include="Config\ConfigurationProviderTestData.cs" />
     <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

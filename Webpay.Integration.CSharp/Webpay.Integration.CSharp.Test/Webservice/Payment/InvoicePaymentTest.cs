@@ -105,6 +105,25 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         }
 
         [Test]
+        public void TestCompanyIdRequest()
+        {
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                           .AddCustomerDetails(Item.CompanyCustomer()
+                                                                                   .SetNationalIdNumber("4354kj"))
+                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                           .SetClientOrderNumber(
+                                                               TestingTool.DefaultTestClientOrderNumber)
+                                                           .SetOrderDate(TestingTool.DefaultTestDate)
+                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                           .UseInvoicePayment()
+                                                           .PrepareRequest();
+
+            Assert.AreEqual(79021, request.Auth.ClientNumber);
+            Assert.AreEqual("4354kj", request.CreateOrderInformation.CustomerIdentity.NationalIdNumber);
+        }
+
+        [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityCompanyFromNl()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder()

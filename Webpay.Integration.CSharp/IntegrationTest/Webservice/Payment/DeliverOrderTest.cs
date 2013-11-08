@@ -45,6 +45,42 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.AreEqual(0.0, response.DeliverOrderResult.InvoiceResultDetails.LowestAmountToPay);
         }
 
+        [Test]
+        public void TestDeliverPaymentPlanOrderResult()
+        {
+            GetPaymentPlanParamsEuResponse paymentPlanParamResponse = WebpayConnection.GetPaymentPlanParams()
+                                                                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                                      .DoRequest();
+            long code = paymentPlanParamResponse.CampaignCodes[0].CampaignCode;
+
+            CreateOrderEuResponse createOrderResponse = WebpayConnection.CreateOrder()
+                                                                        .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                                                                        .AddCustomerDetails(
+                                                                            TestingTool.CreateIndividualCustomer())
+                                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                        .SetCustomerReference(
+                                                                            TestingTool.DefaultTestClientOrderNumber)
+                                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                                        .SetOrderDate(TestingTool.DefaultTestDate)
+                                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                                        .UsePaymentPlanPayment(code)
+                                                                        .DoRequest();
+
+            DeliverOrderEuResponse deliverOrderResponse = WebpayConnection.DeliverOrder()
+                                                                          .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                                          .SetOrderId(
+                                                                              createOrderResponse.CreateOrderResult
+                                                                                                 .SveaOrderId)
+                                                                          .SetNumberOfCreditDays(1)
+                                                                          .SetInvoiceDistributionType(
+                                                                              InvoiceDistributionType.POST)
+                                                                          .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                          .DeliverPaymentPlanOrder()
+                                                                          .DoRequest();
+
+            Assert.IsTrue(deliverOrderResponse.Accepted);
+        }
+
         private long CreateInvoiceAndReturnOrderId()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder()

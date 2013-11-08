@@ -57,8 +57,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Config\ConfigurationProviderTest.cs" />
+    <Compile Include="Config\ConfigurationProviderTestData.cs" />
     <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webservice\CreateOrder\CreateOrderTest.cs" />
     <Compile Include="Webservice\GetAddress\GetAddressesTest.cs" />
     <Compile Include="Webservice\GetPaymentPlanParams\GetPaymentPlanParamsTest.cs" />
     <Compile Include="Webservice\GetPaymentPlanParams\PaymentPlanPricePerMonthTest.cs" />

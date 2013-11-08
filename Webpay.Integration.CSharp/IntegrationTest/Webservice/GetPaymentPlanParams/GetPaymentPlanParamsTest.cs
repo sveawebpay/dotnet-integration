@@ -44,5 +44,28 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
             Assert.AreEqual(1000, response.CampaignCodes[0].FromAmount);
             Assert.AreEqual(50000, response.CampaignCodes[0].ToAmount);
         }
+
+        [Test]
+        public void TestPaymentPlanRequestReturnsAcceptedResult()
+        {
+            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams()
+                                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                              .DoRequest();
+            long code = paymentPlanParam.CampaignCodes[0].CampaignCode;
+
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+                                                             .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                                                             .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .UsePaymentPlanPayment(code)
+                                                             .DoRequest();
+
+            Assert.IsTrue(response.Accepted);
+        }
     }
 }

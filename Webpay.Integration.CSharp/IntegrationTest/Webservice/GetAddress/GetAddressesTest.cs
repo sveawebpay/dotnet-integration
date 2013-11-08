@@ -27,20 +27,20 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
         [Test]
         public void TestResultGetAddresses()
         {
-            GetAddressesEuResponse response = WebpayConnection.GetAddresses()
-                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                              .SetIndividual("194605092222")
-                                                              .SetZipCode("99999")
-                                                              .SetOrderTypeInvoice()
-                                                              .DoRequest();
+            GetAddressesEuResponse request = WebpayConnection.GetAddresses()
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderTypeInvoice()
+                                                             .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
+                                                             .SetZipCode("99999")
+                                                             .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.AreEqual(true, response.Accepted);
-            Assert.AreEqual("Tess T", response.GetAddressesResult.Addresses[0].FirstName);
-            Assert.AreEqual("Persson", response.GetAddressesResult.Addresses[0].LastName);
-            Assert.AreEqual("Testgatan 1", response.GetAddressesResult.Addresses[0].Address.Street);
-            Assert.AreEqual("99999", response.GetAddressesResult.Addresses[0].Address.ZipCode);
-            Assert.AreEqual("Stan", response.GetAddressesResult.Addresses[0].Address.Locality);
+            Assert.AreEqual(0, request.ResultCode);
+            Assert.IsTrue(request.Accepted);
+            Assert.AreEqual("Tess T", request.GetAddressesResult.Addresses[0].FirstName);
+            Assert.AreEqual("Persson", request.GetAddressesResult.Addresses[0].LastName);
+            Assert.AreEqual("Testgatan 1", request.GetAddressesResult.Addresses[0].Address.Street);
+            Assert.AreEqual("99999", request.GetAddressesResult.Addresses[0].Address.ZipCode);
+            Assert.AreEqual("Stan", request.GetAddressesResult.Addresses[0].Address.Locality);
         }
     }
 }

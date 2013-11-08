@@ -149,7 +149,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
         /// </summary>
         /// <exception cref="SveaWebPayValidationException"></exception>
         /// <returns>SveaRequest</returns>
-        private GetAddressesEuRequest PrepareRequest()
+        public GetAddressesEuRequest PrepareRequest()
         {
             string errors = ValidateRequest();
             if (errors.Length > 0)

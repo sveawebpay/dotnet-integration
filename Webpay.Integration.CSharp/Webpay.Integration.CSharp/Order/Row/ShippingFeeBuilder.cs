@@ -110,7 +110,7 @@
 
         public string GetArticleNumber()
         {
-            //For shippping fees the article number is synonomous with the shipping Id
+            //For shippping fees the article number is synonymous with the shipping Id
             return GetShippingId();
         }
 

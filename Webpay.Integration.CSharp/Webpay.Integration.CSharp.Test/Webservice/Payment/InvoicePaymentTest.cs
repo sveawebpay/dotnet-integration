@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 using OrderType = Webpay.Integration.CSharp.WebpayWS.OrderType;
 
@@ -30,25 +30,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.AreEqual(CountryCode.SE.ToString().ToUpper(),
                             request.CreateOrderInformation.CustomerIdentity.CountryCode);
             Assert.AreEqual(CustomerType.Individual, request.CreateOrderInformation.CustomerIdentity.CustomerType);
-        }
-
-        [Test]
-        public void TestInvoiceDoRequestWithIpAddressSetSe()
-        {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber)
-                                                                                     .SetIpAddress("123.123.123"))
-                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                             .SetOrderDate(TestingTool.DefaultTestDate)
-                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                             .UseInvoicePayment()
-                                                             .DoRequest();
-
-            Assert.IsTrue(response.Accepted);
         }
 
         [Test]
@@ -121,6 +102,25 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.AreEqual("Persson", request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.LastName);
             Assert.AreEqual("SB", request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.Initials);
             Assert.AreEqual("19231212", request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.BirthDate);
+        }
+
+        [Test]
+        public void TestCompanyIdRequest()
+        {
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                                           .AddCustomerDetails(Item.CompanyCustomer()
+                                                                                   .SetNationalIdNumber("4354kj"))
+                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                           .SetClientOrderNumber(
+                                                               TestingTool.DefaultTestClientOrderNumber)
+                                                           .SetOrderDate(TestingTool.DefaultTestDate)
+                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                           .UseInvoicePayment()
+                                                           .PrepareRequest();
+
+            Assert.AreEqual(79021, request.Auth.ClientNumber);
+            Assert.AreEqual("4354kj", request.CreateOrderInformation.CustomerIdentity.NationalIdNumber);
         }
 
         [Test]
@@ -240,10 +240,14 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             Assert.AreEqual("1", request.CreateOrderInformation.OrderRows[2].ArticleNumber);
-            Assert.AreEqual("RelativeDiscount", request.CreateOrderInformation.OrderRows[2].Description);
-            Assert.AreEqual(-85.74, request.CreateOrderInformation.OrderRows[2].PricePerUnit);
+            Assert.AreEqual("RelativeDiscount (25%)", request.CreateOrderInformation.OrderRows[2].Description);
+            Assert.AreEqual("RelativeDiscount (6%)", request.CreateOrderInformation.OrderRows[3].Description);
+            Assert.AreEqual(-85.74,
+                            request.CreateOrderInformation.OrderRows[2].PricePerUnit +
+                            request.CreateOrderInformation.OrderRows[3].PricePerUnit);
             Assert.AreEqual(1, request.CreateOrderInformation.OrderRows[2].NumberOfUnits);
-            Assert.AreEqual(16.64, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(6, request.CreateOrderInformation.OrderRows[3].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
         }
 
@@ -277,10 +281,14 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             Assert.AreEqual("1", request.CreateOrderInformation.OrderRows[2].ArticleNumber);
-            Assert.AreEqual("FixedDiscount", request.CreateOrderInformation.OrderRows[2].Description);
-            Assert.AreEqual(-85.74, request.CreateOrderInformation.OrderRows[2].PricePerUnit);
+            Assert.AreEqual("FixedDiscount (25%)", request.CreateOrderInformation.OrderRows[2].Description);
+            Assert.AreEqual("FixedDiscount (6%)", request.CreateOrderInformation.OrderRows[3].Description);
+            Assert.AreEqual(-85.74,
+                            request.CreateOrderInformation.OrderRows[2].PricePerUnit +
+                            request.CreateOrderInformation.OrderRows[3].PricePerUnit);
             Assert.AreEqual(1, request.CreateOrderInformation.OrderRows[2].NumberOfUnits);
-            Assert.AreEqual(16.64, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
+            Assert.AreEqual(6, request.CreateOrderInformation.OrderRows[3].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
         }
 
@@ -364,25 +372,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.AreEqual("st", request.CreateOrderInformation.OrderRows[2].Unit);
             Assert.AreEqual(25, request.CreateOrderInformation.OrderRows[2].VatPercent);
             Assert.AreEqual(0, request.CreateOrderInformation.OrderRows[2].DiscountPercent);
-        }
-
-        [Test]
-        public void TestInvoiceRequestUsingAmountIncVatWithZeroVatPercent()
-        {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                             .SetOrderDate(TestingTool.DefaultTestDate)
-                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
-                                                             .UseInvoicePayment()
-                                                             .DoRequest();
-
-            Assert.IsTrue(response.Accepted);
         }
 
         [Test]

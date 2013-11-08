@@ -6,8 +6,8 @@ using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Handleorder;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
@@ -79,7 +79,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                                                                .SetInvoiceDistributionType
                                                                                    (InvoiceDistributionType.POST)
                                                                                                .DeliverInvoiceOrder()
-                                                                                               .DoRequest());
+                                                                                               .PrepareRequest());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
@@ -91,7 +91,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n" +
                                            "MISSING VALUE - either nationalNumber or companyId is required. Use: SetCompany(...) or SetIndividual(...).\n";
             var exception =
-                Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.GetAddresses().DoRequest());
+                Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.GetAddresses().PrepareRequest());
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -335,7 +335,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
             var exception =
                 Assert.Throws<SveaWebPayValidationException>(
-                    () => WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig()).DoRequest());
+                    () => WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig()).PrepareRequest());
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -419,7 +419,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                       .SetInvoiceDistributionType(InvoiceDistributionType.POST)
                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                       .DeliverInvoiceOrder()
-                                      .DoRequest());
+                                      .PrepareRequest());
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -442,45 +442,6 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             {
                 Assert.AreEqual(expectedMessage, ex.Message);
             }
-        }
-
-        [Test]
-        public void TestFailOnMissingCountryCodeOfCloseOrder()
-        {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
-                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                                           .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                   .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                           .UseInvoicePayment()
-                                                           .PrepareRequest();
-
-
-            var serviceSoapClient = new ServiceSoapClient(new BasicHttpBinding
-                {
-                    Name = "ServiceSoap",
-                    Security = new BasicHttpSecurity
-                        {
-                            Mode = BasicHttpSecurityMode.Transport
-                        }
-                },
-                                                          new EndpointAddress(
-                                                              SveaConfig.GetDefaultConfig()
-                                                                        .GetEndPoint(PaymentType.INVOICE)));
-
-
-            CreateOrderEuResponse response = serviceSoapClient.CreateOrderEu(request);
-
-            Assert.AreEqual(true, response.Accepted);
-            CloseOrder closeRequest = WebpayConnection.CloseOrder()
-                                                      .SetOrderId(response.CreateOrderResult.SveaOrderId)
-                                                      .CloseInvoiceOrder();
-
-            const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
-            Assert.AreEqual(expectedMessage, closeRequest.ValidateRequest());
         }
     }
 }

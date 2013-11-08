@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
@@ -59,7 +59,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
             var sveaOrder = new CreateOrderEuRequest {Auth = GetPasswordBasedAuthorization()};
 
             var formatter = new WebServiceRowFormatter<CreateOrderBuilder>(CrOrderBuilder);
-            var formattedOrderRows = formatter.FormatRows();
+            List<OrderRow> formattedOrderRows = formatter.FormatRows();
 
             // make order rows and put in CreateOrderInformation
             OrderInfo = new CreateOrderInformation
@@ -76,7 +76,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                                    : null,
                     OrderDate = CrOrderBuilder.GetOrderDate(),
                     CustomerReference = CrOrderBuilder.GetCustomerReference(),
-                    OrderRows = formattedOrderRows
+                    OrderRows = formattedOrderRows.ToArray()
                 };
 
             sveaOrder.CreateOrderInformation = SetOrderType(OrderInfo);

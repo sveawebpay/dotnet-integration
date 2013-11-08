@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Test.Util;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 
 namespace Webpay.Integration.CSharp.Test.Order
 {
@@ -111,7 +111,7 @@ namespace Webpay.Integration.CSharp.Test.Order
             CreateTestFixedDiscountRow();
 
             Assert.AreEqual("1", _order.GetFixedDiscountRows()[0].GetDiscountId());
-            Assert.AreEqual(_order.GetFixedDiscountRows()[0].GetAmount(), 100);
+            Assert.AreEqual(_order.GetFixedDiscountRows()[0].GetAmountIncVat(), 100);
             Assert.AreEqual("FixedDiscount", _order.GetFixedDiscountRows()[0].GetDescription());
         }
 

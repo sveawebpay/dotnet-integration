@@ -128,8 +128,8 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var formatter = new HostedRowFormatter<CreateOrderBuilder>();
 
             HrowBuilder = formatter.FormatRows(CrOrderBuilder);
-            Amount = formatter.FormatTotalAmount(HrowBuilder);
-            Vat = formatter.FormatTotalVat(HrowBuilder);
+            Amount = formatter.GetTotalAmount();
+            Vat = formatter.GetTotalVat();
         }
 
         /// <summary>

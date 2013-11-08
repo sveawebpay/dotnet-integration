@@ -61,8 +61,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Config\ConfigurationProviderTestData.cs" />
-    <Compile Include="Config\ConfigurationProviderTest.cs" />
     <Compile Include="Hosted\Helper\PaymentFormTest.cs" />
     <Compile Include="Hosted\Helper\HostedXmlBuilderTest.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatterTest.cs" />
@@ -80,19 +78,12 @@
     <Compile Include="Order\VoidValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response\HostedPaymentResponseTest.cs" />
-    <Compile Include="Response\CreateOrderResponseTest.cs" />
-    <Compile Include="Response\WebServicePaymentsResponseTest.cs" />
     <Compile Include="Util\Security\HashUtilTest.cs" />
     <Compile Include="Util\Security\Base64UtilTest.cs" />
-    <Compile Include="Util\TestingTool.cs" />
-    <Compile Include="Webservice\GetAddresses\GetAddressesTest.cs" />
-    <Compile Include="Webservice\GetPaymentPlanParams\GetPaymentPlanParamsTest.cs" />
     <Compile Include="Webservice\Handleorder\DeliverOrderTest.cs" />
-    <Compile Include="Webservice\Handleorder\CloseOrderTest.cs" />
     <Compile Include="Webservice\Helper\WebserviceRowFormatterTest.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanTest.cs" />
     <Compile Include="Webservice\Payment\InvoicePaymentTest.cs" />
-    <Compile Include="Webservice\Payment\HostedPaymentResponseTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

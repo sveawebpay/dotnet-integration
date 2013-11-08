@@ -3,7 +3,7 @@ using Webpay.Integration.CSharp.Order.Identity;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.Test.Util
+namespace Webpay.Integration.CSharp.Util.Testing
 {
     public static class TestingTool
     {

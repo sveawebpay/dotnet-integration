@@ -6,7 +6,9 @@
         private string _name;
         private string _description;
         private string _unit = "";
-        private decimal _amount;
+        private decimal? _amountExVat;
+        private decimal? _amountIncVat;
+        private decimal? _vatPercent;
 
         public string GetDiscountId()
         {
@@ -67,7 +69,7 @@
 
         public string GetArticleNumber()
         {
-            //For fixed discounts the article number is synonomous with the discount id
+            //For fixed discounts the article number is synonymous with the discount id
             return GetDiscountId();
         }
 
@@ -94,49 +96,60 @@
             return this;
         }
 
-        public decimal GetAmount()
-        {
-            return _amount;
-        }
-
-        /// <summary>
-        /// Do not use.
-        /// Will return null.
-        /// </summary>
-        /// <returns>null</returns>
         public decimal? GetAmountExVat()
         {
-            return null;
+            return _amountExVat;
         }
 
-        /// <summary>
-        /// Do not use.
-        /// Will return null.
-        /// </summary>
-        /// <returns>null</returns>
         public decimal? GetVatPercent()
         {
-            return null;
+            return _vatPercent;
         }
 
-        /// <summary>
-        /// Do not use.
-        /// Will return null.
-        /// </summary>
-        /// <returns>null</returns>
         public decimal? GetAmountIncVat()
         {
-            return null;
+            return _amountIncVat;
         }
 
         /// <summary>
-        /// Optional
+        /// If only AmountIncVat is given, for Invoice and Payment plan payment methods we calculate the discount split across the tax (vat) rates present 
+        /// in the order. This will ensure that the correct discount vat is applied to the order. This means that the discount will show up split across 
+        /// multiple rows on the invoice, one for each tax rate present in the order.
+        /// 
+        /// For Card and Direct bank payments we only subtract the appropriate amount from the request, but we still honour the specified percentage, if
+        /// given using two the functions below. 
+        /// 
+        /// Otherwise, it is required to use precisely two of the functions setAmountExVat(), setAmountIncVat() and setVatPercent().
+        /// If two of these three attributes are specified, we respect the amount indicated and include the discount with the specified tax rate.
         /// </summary>
         /// <param name="amountDiscountOnTotalPrice"></param>
         /// <returns>FixedDiscountBuilder</returns>
         public FixedDiscountBuilder SetAmountIncVat(decimal amountDiscountOnTotalPrice)
         {
-            _amount = amountDiscountOnTotalPrice;
+            _amountIncVat = amountDiscountOnTotalPrice;
+            return this;
+        }
+
+        /// <summary>
+        /// Required to use at least two of the functions setAmountExVat(), setAmountIncVat(), setVatPercent().
+        /// If two of these three attributes are specified, we respect the amount indicated and include a discount with the appropriate tax rate.
+        /// </summary>
+        /// <param name="vatPercent"></param>
+        /// <returns>FixedDiscountBuilder</returns>
+        public FixedDiscountBuilder SetVatPercent(decimal vatPercent)
+        {
+            _vatPercent = vatPercent;
+            return this;
+        }
+
+        /// <summary>
+        /// Required to use at least two of the functions setAmountExVat(), setAmountIncVat(), setVatPercent().
+        /// </summary>
+        /// <param name="amountDiscountExVat"></param>
+        /// <returns>FixedDiscountBuilder</returns>
+        public FixedDiscountBuilder SetAmountExVat(decimal amountDiscountExVat)
+        {
+            _amountExVat = amountDiscountExVat;
             return this;
         }
     }

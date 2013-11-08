@@ -33,7 +33,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 xmlw.WriteStartElement("payment");
 
                 payment.WritePaymentSpecificXml(xmlw);
-                doWriteSimple("customerrefno", order.GetCustomerReference());
+                doWriteSimple("customerrefno", order.GetClientOrderNumber()); //This is not an error. Do not confuse with order.GetCustomerReference().
                 doWriteSimple("currency", order.GetCurrency());
                 doWriteSimple("amount", payment.GetAmount().ToString(CultureInfo.InvariantCulture));
                 doWriteSimple("vat", payment.GetVat().ToString(CultureInfo.InvariantCulture));

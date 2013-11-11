@@ -1,9 +1,9 @@
 # C#/.Net Integration Package API for SveaWebPay
 
 ## Index
-* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#introduction)
-* [2. Build](https://github.com/sveawebpay/dotnet-integration/tree/master#build)
-* [3. Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#configuration)
+* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
+* [2. Build](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build)
+* [3. Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#3-configuration)
 * [4. CreateOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#4-CreateOrder)
     * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#41-specify-order)
     * [Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#42-customer-identity)

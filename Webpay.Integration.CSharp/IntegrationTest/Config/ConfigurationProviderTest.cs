@@ -12,6 +12,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
     public class ConfigurationProviderTest
     {
         private IConfigurationProvider _defaultConf;
+        private const string ExpectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
 
         [SetUp]
         public void SetUp()
@@ -159,59 +160,49 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
         [Test]
         public void TestConnectionCreateOrderFailsIfNoConfigurationIsProvided()
         {
-            const string expectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
-
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.CreateOrder()
                                                                                      .UseInvoicePayment()
                                                                                      .DoRequest());
 
-            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
         }
 
         [Test]
         public void TestConnectionDeliverOrderFailsIfNoConfigurationIsProvided()
         {
-            const string expectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
-
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.DeliverOrder()
                                                                                      .DeliverInvoiceOrder()
                                                                                      .DoRequest());
 
-            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
         }
 
         [Test]
         public void TestConnectionCloseOrderFailsIfNoConfigurationIsProvided()
         {
-            const string expectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
-
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.CloseOrder()
                                                                                      .CloseInvoiceOrder()
                                                                                      .DoRequest());
 
-            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
         }
 
         [Test]
         public void TestConnectionGetAddressFailsIfNoConfigurationIsProvided()
         {
-            const string expectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
-
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.GetAddresses()
                                                                                      .DoRequest());
 
-            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
         }
 
         [Test]
         public void TestConnectionGetPaymentPlanFailsIfNoConfigurationIsProvided()
         {
-            const string expectedMessage = "A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()";
-
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.GetPaymentPlanParams()
                                                                                      .DoRequest());
 
-            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
         }
     }
 }

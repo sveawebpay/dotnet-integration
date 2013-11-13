@@ -48,12 +48,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
         [Test]
         public void TestPaymentPlanRequestReturnsAcceptedResult()
         {
-            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams()
+            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
                                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                               .DoRequest();
             long code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                              .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)

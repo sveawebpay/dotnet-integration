@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 
@@ -10,7 +11,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
         [Test]
         public void TestGetAddresses()
         {
-            GetAddressesEuResponse response = WebpayConnection.GetAddresses()
+            GetAddressesEuResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .SetIndividual("460509-2222")
                                                               .SetZipCode("99999")
@@ -27,7 +28,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
         [Test]
         public void TestResultGetAddresses()
         {
-            GetAddressesEuResponse request = WebpayConnection.GetAddresses()
+            GetAddressesEuResponse request = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                              .SetOrderTypeInvoice()
                                                              .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)

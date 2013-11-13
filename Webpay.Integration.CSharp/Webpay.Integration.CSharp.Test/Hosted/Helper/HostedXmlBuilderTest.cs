@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
@@ -24,7 +25,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestBasicXml()
         {
-            _order = WebpayConnection.CreateOrder()
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                      .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                      .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -49,7 +50,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestXmlWithIndividualCustomer()
         {
-            _order = WebpayConnection.CreateOrder()
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                      .SetCurrency(TestingTool.DefaultTestCurrency)
                                      .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -84,7 +85,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestXmlWithCompanyCustomer()
         {
-            _order = WebpayConnection.CreateOrder()
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                      .AddOrderRow(Item.OrderRow()
                                                       .SetAmountExVat(4)
                                                       .SetVatPercent(25)
@@ -109,7 +110,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestXmlCancelUrl()
         {
-            _order = WebpayConnection.CreateOrder()
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                      .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                      .SetCurrency(TestingTool.DefaultTestCurrency)
                                      .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -129,7 +130,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestOrderRowXml()
         {
-            _order = WebpayConnection.CreateOrder()
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                      .AddOrderRow(Item.OrderRow()
                                                       .SetArticleNumber("0")
                                                       .SetName("Product")
@@ -158,7 +159,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestDirectPaymentSpecificXml()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -178,7 +179,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestCardPaymentSpecificXml()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -198,7 +199,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestPayPagePaymentSpecificXmlNullPaymentMethod()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -216,7 +217,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestPayPagePaymentSetLanguageCode()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -235,7 +236,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestPayPagePaymentPayPal()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -254,7 +255,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestPayPagePaymentSpecificXml()
         {
-            _xml = WebpayConnection.CreateOrder()
+            _xml = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)

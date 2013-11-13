@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -14,7 +15,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         [SetUp]
         public void SetUp()
         {
-            _order = WebpayConnection.CreateOrder();
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
             _order.SetValidator(new VoidValidator());
         }
 

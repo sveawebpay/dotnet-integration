@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Hosted.Payment;
 using Webpay.Integration.CSharp.Order.Row;
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var excludePaymentMethod = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.NORDEASE};
 
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludePaymentMethod(excludePaymentMethod);
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetExcludePaymentMethodDefaultConfigurationNoExcluded()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .UsePayPage()
                                                             .ExcludePaymentMethod();
             payPagePayment.IncludePaymentMethod();
@@ -50,7 +51,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestDefaultSe()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage();
 
@@ -62,7 +63,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetPaymentMethode()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.INVOICE);
@@ -76,7 +77,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetPaymentMethodDe()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(CountryCode.DE)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.INVOICE);
@@ -90,7 +91,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetPaymentMethodPaymentPlanSe()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
@@ -105,7 +106,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestExcludePaymentPlanSe()
         {
             var list = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN};
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludePaymentMethod(list);
@@ -119,7 +120,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetPaymentMethodPaymentPlanNl()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(CountryCode.NL)
                                                             .UsePayPage()
                                                             .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
@@ -132,7 +133,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestExcludeCardPaymentMethod()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludeCardPaymentMethod();
@@ -148,7 +149,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestIncludeCardPaymentMethod()
         {
             var includedPaymentMethod = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .IncludePaymentMethod(includedPaymentMethod);
@@ -159,7 +160,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestExcludeDirectPaymentMethodSmall()
         {
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .ExcludeDirectPaymentMethod();
@@ -184,7 +185,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                     PaymentMethod.NORDEASE
                 };
 
-            PayPagePayment payPagePayment = WebpayConnection.CreateOrder()
+            PayPagePayment payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                             .UsePayPage()
                                                             .IncludePaymentMethod(includedPaymentMethod);
@@ -204,7 +205,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         {
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.KORTCERT};
 
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(Item.ShippingFee()
                                                            .SetAmountExVat(50)
@@ -232,7 +233,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestPayPagePaymentExcludeCardPayments()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
@@ -258,7 +259,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestExcludeDirectPaymentMethodLarge()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
@@ -282,7 +283,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestIncludePaymentPlan()
         {
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN, PaymentMethod.SKRILL};
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
@@ -307,7 +308,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         public void TestPayPagePaymentIncludePaymentMethod()
         {
             var paymentMethods = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(
@@ -331,7 +332,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestPayPagePaymentIncludePaymentMethodEmpty()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(

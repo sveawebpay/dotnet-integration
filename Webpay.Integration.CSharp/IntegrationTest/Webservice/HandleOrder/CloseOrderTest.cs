@@ -14,7 +14,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
         [Test]
         public void TestCloseOrder()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(Item.IndividualCustomer()
                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
             Assert.AreEqual(0, response.ResultCode);
             Assert.IsTrue(response.Accepted);
 
-            CloseOrderEuResponse closeResponse = WebpayConnection.CloseOrder()
+            CloseOrderEuResponse closeResponse = WebpayConnection.CloseOrder(SveaConfig.GetDefaultConfig())
                                                                  .SetOrderId(response.CreateOrderResult.SveaOrderId)
                                                                  .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                  .CloseInvoiceOrder()
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
         [Test]
         public void TestFailOnMissingCountryCodeOfCloseOrder()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(Item.IndividualCustomer()
                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -57,7 +57,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
             Assert.AreEqual(0, response.ResultCode);
             Assert.IsTrue(response.Accepted);
 
-            CloseOrder closeOrder = WebpayConnection.CloseOrder()
+            CloseOrder closeOrder = WebpayConnection.CloseOrder(SveaConfig.GetDefaultConfig())
                                                     .SetOrderId(orderId)
                                                     .CloseInvoiceOrder();
 

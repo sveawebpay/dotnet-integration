@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Test.Order;
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [SetUp]
         public void SetUp()
         {
-            _order = WebpayConnection.CreateOrder().SetValidator(new VoidValidator());
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig()).SetValidator(new VoidValidator());
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestSetAuthorization()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                .AddFee(TestingTool.CreateExVatBasedInvoiceFee())

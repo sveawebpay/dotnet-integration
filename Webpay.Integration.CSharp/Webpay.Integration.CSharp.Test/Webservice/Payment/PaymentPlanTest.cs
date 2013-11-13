@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -11,7 +12,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestPaymentPlanRequestObjectSpecifics()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
@@ -32,7 +33,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         {
             try
             {
-                WebpayConnection.CreateOrder()
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                 .AddCustomerDetails(TestingTool.CreateCompanyCustomer())

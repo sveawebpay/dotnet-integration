@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
@@ -13,7 +14,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatOrderRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetArticleNumber("0")
                                                                         .SetName("Tess")
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatShippingFeeRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddFee(Item.ShippingFee()
                                                                    .SetShippingId("0")
                                                                    .SetName("Tess")
@@ -58,7 +59,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatShippingFeeRowsVat()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddFee(Item.ShippingFee()
                                                                    .SetAmountExVat(4)
                                                                    .SetVatPercent(25));
@@ -73,7 +74,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatFixedDiscountRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddDiscount(Item.FixedDiscount()
                                                                         .SetDiscountId("0")
                                                                         .SetName("Tess")
@@ -93,7 +94,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmount()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddDiscount(Item.FixedDiscount()
                                                                         .SetAmountIncVat(4));
 
@@ -106,7 +107,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatFixedDiscountRowsVat()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)
@@ -126,7 +127,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatRelativeDiscountRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddDiscount(Item.RelativeDiscount()
                                                                         .SetDiscountId("0")
                                                                         .SetName("Tess")
@@ -146,7 +147,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         [Test]
         public void TestFormatRelativeDiscountRowsVat()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)

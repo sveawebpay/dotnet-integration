@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -15,7 +16,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         [SetUp]
         public void SetUp()
         {
-            _order = WebpayConnection.DeliverOrder();
+            _order = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig());
         }
 
         [Test]

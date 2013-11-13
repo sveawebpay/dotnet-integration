@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
@@ -15,7 +16,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestCalculateRequestValuesNullExtraRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestVatPercentAndAmountIncVatCalculation()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -61,7 +62,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountIncVatAndvatPercentShippingFee()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -86,7 +87,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountIncVatAndAmountExVatCalculation()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -107,7 +108,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestCreatePaymentForm()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -162,7 +163,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsDefinedWithExVatAndVatPercent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetArticleNumber("0")
                                                                         .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
@@ -187,7 +188,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsDefinedWithIncVatAndVatPercent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetArticleNumber("0")
                                                                         .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
@@ -212,7 +213,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsDefinedWithExVatAndIncVat()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetArticleNumber("0")
                                                                         .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
@@ -239,7 +240,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsWithFixedDiscountIncVatOnly()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(69.99M)
                                                                         .SetVatPercent(25)
@@ -263,7 +264,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsWithFixedDiscountIncVatAndVatPercent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(69.99M)
                                                                         .SetVatPercent(25)
@@ -288,7 +289,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountWithFixedDiscountIncVatOnlyWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -319,7 +320,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountWithFixedDiscountIncVatAndVatPercentWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -347,7 +348,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountWithFixedDiscountExVatAndVatPercentWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -375,7 +376,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountWithFixedDiscountExVatAndIncVatWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -404,7 +405,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsWithRelativeDiscountWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(69.99M)
                                                                         .SetVatPercent(25)
@@ -428,7 +429,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountFromMultipleItemsWithRelativeDiscountWithDifferentVatRatesPresent2()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(69.99M)
                                                                         .SetVatPercent(25)
@@ -452,7 +453,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestAmountWithRelativeDiscountWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)

@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -20,7 +21,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
         [Test]
         public void TestDoCardPaymentRequest()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
         [Test]
         public void TestDoNordeaSePaymentRequest()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -56,7 +57,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 
         private static Tuple<string, string> PostRequest(PaymentForm form)
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder();
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
 
             form.SetMacSha512(
                 HashUtil.CreateHash(form.GetXmlMessageBase64() +

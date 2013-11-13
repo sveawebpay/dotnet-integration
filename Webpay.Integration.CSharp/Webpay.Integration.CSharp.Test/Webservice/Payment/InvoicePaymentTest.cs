@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -13,7 +14,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                            .AddCustomerDetails(Item.IndividualCustomer()
@@ -35,7 +36,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectWithAuth()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
@@ -55,7 +56,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestSetAuth()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                            .AddCustomerDetails(Item.IndividualCustomer()
@@ -75,7 +76,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityIndividualFromNl()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
@@ -107,7 +108,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestCompanyIdRequest()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddCustomerDetails(Item.CompanyCustomer()
                                                                                    .SetNationalIdNumber("4354kj"))
@@ -126,7 +127,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityCompanyFromNl()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddCustomerDetails(TestingTool.CreateIndividualCustomerNl())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
@@ -154,7 +155,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityCompanyFromSe()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
@@ -174,7 +175,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectForSEorderOnOneProductRow()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                            .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
@@ -214,7 +215,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectWithRelativeDiscountOnDifferentProductVat()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(1)
@@ -254,7 +255,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectWithFixedDiscountOnDifferentProductVat()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(1)
@@ -295,7 +296,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestObjectWithCreateOrderInformation()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
@@ -328,7 +329,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestUsingAmountIncVatWithVatPercent()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddCustomerDetails(Item.CompanyCustomer()
                                                                                    .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
                                                                                    .SetAddressSelector("ad33")
@@ -377,7 +378,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestInvoiceRequestUsingAmountIncVatWithAmountExVat()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateIncAndExVatOrderRow())
                                                            .AddFee(TestingTool.CreateIncAndExVatShippingFee())
                                                            .AddFee(TestingTool.CreateIncAndExVatInvoiceFee())

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -14,7 +15,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatOrderRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetArticleNumber("0")
                                                                         .SetName("Tess")
@@ -38,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatShippingFeeRows()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(Item.OrderRow()
                                                                             .SetArticleNumber("1")
                                                                             .SetQuantity(2)
@@ -76,7 +77,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatInvoiceFeeRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddFee(Item.InvoiceFee()
                                                                    .SetDescription("Tester")
                                                                    .SetAmountExVat(4)
@@ -97,7 +98,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)
@@ -123,7 +124,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatRelativeDiscountRows()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4)
                                                                         .SetVatPercent(25)
@@ -152,7 +153,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmountIncVatWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -198,7 +199,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsMixedItemVatSpecAmountIncVatWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetAmountIncVat(125.00M)
@@ -243,7 +244,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmountIncVatAndVatPercentWithSingleVatRatePresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4.0M)
                                                                         .SetVatPercent(25)
@@ -272,7 +273,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmountIncVatAndVatPercentWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -307,7 +308,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmountExVatAndVatPercentWithSingleVatRatePresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(4.0M)
                                                                         .SetVatPercent(25)
@@ -336,7 +337,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatFixedDiscountRowsAmountExVatAndVatPercentWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)
@@ -370,7 +371,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatRelativeDiscountRowsWithSingleVatRatePresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(12)
@@ -399,7 +400,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         [Test]
         public void TestFormatRelativeDiscountRowsWithDifferentVatRatesPresent()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25)

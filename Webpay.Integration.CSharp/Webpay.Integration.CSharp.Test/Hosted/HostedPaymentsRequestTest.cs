@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Util.Testing;
 
@@ -10,7 +11,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted
         [Test]
         public void TestDoCardPaymentRequest()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                .AddFee(TestingTool.CreateExVatBasedInvoiceFee())

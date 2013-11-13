@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -12,7 +13,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceDoRequestWithIpAddressSetSe()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                              .AddCustomerDetails(Item.IndividualCustomer()
@@ -32,7 +33,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceRequestUsingAmountIncVatWithZeroVatPercent()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                              .AddCustomerDetails(Item.IndividualCustomer()
@@ -53,7 +54,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceRequestFailing()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(
                                                                  Item.IndividualCustomer().SetNationalIdNumber(""))
@@ -70,7 +71,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestCalculationWithTwelvePercentVat()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(1)
@@ -97,7 +98,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestCalculationWithSixPercentVat()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)
@@ -124,7 +125,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceForIndividualFromSe()
         {
-            var response = WebpayConnection.CreateOrder()
+            var response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                            .AddCustomerDetails(
                                                Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -154,7 +155,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceCompanySe()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                              .SetOrderDate(TestingTool.DefaultTestDate)
                                                              .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -180,7 +181,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestInvoiceForIndividualFromNl()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateOrderRowNl())
                                                              .AddCustomerDetails(Item.IndividualCustomer()
                                                                                      .SetBirthDate("19550307")
@@ -220,7 +221,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestFormatShippingFeeRowsZero()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(Item.OrderRow()
                                                                               .SetArticleNumber("1")
                                                                               .SetQuantity(2)

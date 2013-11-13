@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Util.Security;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         {
             string base64Payment = Base64Util.EncodeBase64String("0");
             string mac = HashUtil.CreateHash(base64Payment + SecretWord);
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
@@ -56,7 +57,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             string base64Payment = Base64Util.EncodeBase64String("0");
             string mac = HashUtil.CreateHash(base64Payment + SecretWord);
 
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                .SetCurrency(TestingTool.DefaultTestCurrency)

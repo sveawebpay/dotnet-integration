@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -13,7 +14,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestPayPagePaymentWithSetPaymentMethod()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(Item.IndividualCustomer()
@@ -42,7 +43,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestPayPagePaymentWithSetPaymentMethodNl()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddDiscount(TestingTool.CreateRelativeDiscount())
                                                .AddCustomerDetails(Item.IndividualCustomer()

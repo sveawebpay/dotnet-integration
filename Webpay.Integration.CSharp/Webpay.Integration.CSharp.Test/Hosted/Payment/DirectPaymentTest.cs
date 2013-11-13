@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Security;
@@ -13,7 +14,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestConfigureExcludedPaymentMethodSe()
         {
-            List<string> excluded = WebpayConnection.CreateOrder()
+            List<string> excluded = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                     .UsePayPageDirectBankOnly()
                                                     .ConfigureExcludedPaymentMethod()
@@ -25,7 +26,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestConfigureExcludedPaymentMethodNo()
         {
-            List<string> excluded = WebpayConnection.CreateOrder()
+            List<string> excluded = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                     .SetCountryCode(CountryCode.NO)
                                                     .UsePayPageDirectBankOnly()
                                                     .ConfigureExcludedPaymentMethod()
@@ -37,7 +38,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestBuildDirectBankPayment()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
@@ -60,7 +61,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestBuildDirectBankPaymentNotSe()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                .AddFee(TestingTool.CreateExVatBasedInvoiceFee())

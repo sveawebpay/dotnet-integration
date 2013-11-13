@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -13,7 +14,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         public void TestDeliverPaymentPlanOrderDoRequest()
         {
             DeliverOrderEuResponse response =
-                WebpayConnection.DeliverOrder()
+                WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .SetOrderId(54086L)
                                 .SetInvoiceDistributionType(InvoiceDistributionType.POST)
@@ -29,7 +30,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         {
             long orderId = CreateInvoiceAndReturnOrderId();
 
-            DeliverOrderEuResponse response = WebpayConnection.DeliverOrder()
+            DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
@@ -48,12 +49,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestDeliverPaymentPlanOrderResult()
         {
-            GetPaymentPlanParamsEuResponse paymentPlanParamResponse = WebpayConnection.GetPaymentPlanParams()
+            GetPaymentPlanParamsEuResponse paymentPlanParamResponse = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
                                                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                                       .DoRequest();
             long code = paymentPlanParamResponse.CampaignCodes[0].CampaignCode;
 
-            CreateOrderEuResponse createOrderResponse = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse createOrderResponse = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                                         .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                                         .AddCustomerDetails(
                                                                             TestingTool.CreateIndividualCustomer())
@@ -66,7 +67,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                                         .UsePaymentPlanPayment(code)
                                                                         .DoRequest();
 
-            DeliverOrderEuResponse deliverOrderResponse = WebpayConnection.DeliverOrder()
+            DeliverOrderEuResponse deliverOrderResponse = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                           .SetOrderId(
                                                                               createOrderResponse.CreateOrderResult
@@ -83,7 +84,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 
         private long CreateInvoiceAndReturnOrderId()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                              .AddCustomerDetails(Item.IndividualCustomer()
                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))

@@ -23,7 +23,7 @@ namespace Webpay.Integration.CSharp
         {
             if (config == null)
             {
-                throw new SveaWebPayException("A configuration must be provided. For testing puposes use SveaConfig.GetDefaultConfig()");
+                throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
             }
 
             return new CreateOrderBuilder(config);
@@ -38,7 +38,7 @@ namespace Webpay.Integration.CSharp
         {
             if (config == null)
             {
-                throw new SveaWebPayException("A configuration must be provided. For testing puposes use SveaConfig.GetDefaultConfig()");
+                throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
             }
 
             return new CloseOrderBuilder(config);
@@ -53,7 +53,7 @@ namespace Webpay.Integration.CSharp
         {
             if (config == null)
             {
-                throw new SveaWebPayException("A configuration must be provided. For testing puposes use SveaConfig.GetDefaultConfig()");
+                throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
             }
 
             return new DeliverOrderBuilder(config);
@@ -68,7 +68,7 @@ namespace Webpay.Integration.CSharp
         {
             if (config == null)
             {
-                throw new SveaWebPayException("A configuration must be provided. For testing puposes use SveaConfig.GetDefaultConfig()");
+                throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
             }
 
             return new GetPaymentPlanParams(config);
@@ -83,7 +83,7 @@ namespace Webpay.Integration.CSharp
         {
             if (config == null)
             {
-                throw new SveaWebPayException("A configuration must be provided. For testing puposes use SveaConfig.GetDefaultConfig()");
+                throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
             }
 
             return new GetAddresses(config);

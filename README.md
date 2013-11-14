@@ -4,7 +4,7 @@
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
 * [2. Build](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build)
 * [3. Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#3-configuration)
-* [4. CreateOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#4-CreateOrder)
+* [4. CreateOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#4-createorder)
     * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#41-specify-order)
     * [Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#42-customer-identity)
     * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#43-other-values)
@@ -658,7 +658,7 @@ Use this function to calculate the prices per month of the payment plan campaign
 
 ## 6. GetAddresses 
 Returns *getAddressesResponse* object with an *AddressSelector* for the associated addresses for a specific security number. 
-Can be used when creating an order. Only applicable for SE, NO and DK.
+Can be used when creating an order. Only applicable for SE, NO and DK. In Norway, only getAddresses of companies is supported.
 Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

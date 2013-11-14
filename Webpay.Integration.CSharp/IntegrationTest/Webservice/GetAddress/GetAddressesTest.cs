@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 
@@ -11,37 +12,62 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
         [Test]
         public void TestGetAddresses()
         {
-            GetAddressesEuResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
+            GetCustomerAddressesResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .SetIndividual("460509-2222")
                                                               .SetZipCode("99999")
                                                               .SetOrderTypeInvoice()
                                                               .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
-            Assert.AreEqual("Persson, Tess T", response.GetAddressesResult.Addresses[0].Address.FullName);
-            Assert.AreEqual("Testgatan 1", response.GetAddressesResult.Addresses[0].Address.Street);
-            Assert.AreEqual("Stan", response.GetAddressesResult.Addresses[0].Address.Locality);
+            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
+            Assert.AreEqual("Persson, Tess T", response.Addresses[0].LegalName);
+            Assert.AreEqual("Testgatan 1", response.Addresses[0].AddressLine2);
+            Assert.AreEqual("Stan", response.Addresses[0].Postarea);
         }
 
         [Test]
         public void TestResultGetAddresses()
         {
-            GetAddressesEuResponse request = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
+            GetCustomerAddressesResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                              .SetOrderTypeInvoice()
                                                              .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
-                                                             .SetZipCode("99999")
                                                              .DoRequest();
 
-            Assert.AreEqual(0, request.ResultCode);
-            Assert.IsTrue(request.Accepted);
-            Assert.AreEqual("Tess T", request.GetAddressesResult.Addresses[0].FirstName);
-            Assert.AreEqual("Persson", request.GetAddressesResult.Addresses[0].LastName);
-            Assert.AreEqual("Testgatan 1", request.GetAddressesResult.Addresses[0].Address.Street);
-            Assert.AreEqual("99999", request.GetAddressesResult.Addresses[0].Address.ZipCode);
-            Assert.AreEqual("Stan", request.GetAddressesResult.Addresses[0].Address.Locality);
+            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
+            Assert.AreEqual("Tess T", response.Addresses[0].FirstName);
+            Assert.AreEqual("Persson", response.Addresses[0].LastName);
+            Assert.AreEqual("Testgatan 1", response.Addresses[0].AddressLine2);
+            Assert.AreEqual(99999, response.Addresses[0].Postcode);
+            Assert.AreEqual("Stan", response.Addresses[0].Postarea);
+        }
+
+        [Test]
+        public void TestResultGetIndividualAddressesNO()
+        {
+            GetCustomerAddressesResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
+                                                             .SetCountryCode(CountryCode.NO)
+                                                             .SetOrderTypeInvoice()
+                                                             .SetIndividual("17054512066")
+                                                             .DoRequest();
+
+            Assert.AreEqual(GetCustomerAddressesRejectionCode.Error, response.RejectionCode);
+            Assert.That(response.ErrorMessage, Is.EqualTo("CountryCode: Supported countries are SE, DK"));
+        }
+
+        [Test]
+        public void TestResultGetCompanyAddressesNO()
+        {
+            GetCustomerAddressesResponse response = WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig())
+                                                             .SetCountryCode(CountryCode.NO)
+                                                             .SetOrderTypeInvoice()
+                                                             .SetCompany("923313850")
+                                                             .DoRequest();
+
+            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
+            Assert.AreEqual("Test firma AS", response.Addresses[0].LegalName);
+            Assert.AreEqual("Testveien 1", response.Addresses[0].AddressLine2);
+            Assert.AreEqual("Oslo", response.Addresses[0].Postarea);
         }
     }
 }

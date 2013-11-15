@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                 .DeliverInvoiceOrder()
                                 .DoRequest();
 
-            Assert.AreEqual("An order with the provided id does not exist.", response.ErrorMessage);
+            Assert.That(response.ErrorMessage, Is.EqualTo("An order with the provided id does not exist."));
         }
 
         [Test]
@@ -39,11 +39,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .DeliverInvoiceOrder()
                                                               .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
-            Assert.AreEqual(WebpayWS.InvoiceDistributionType.Post, response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType);
-            Assert.NotNull(response.DeliverOrderResult.InvoiceResultDetails.Ocr);
-            Assert.IsTrue(0 < response.DeliverOrderResult.InvoiceResultDetails.Ocr.Length);
-            Assert.AreEqual(0.0, response.DeliverOrderResult.InvoiceResultDetails.LowestAmountToPay);
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
+            Assert.That(response.DeliverOrderResult.InvoiceResultDetails.Ocr, Is.Not.Null);
+            Assert.That(response.DeliverOrderResult.InvoiceResultDetails.Ocr.Length, Is.GreaterThan(0));
+            Assert.That(response.DeliverOrderResult.InvoiceResultDetails.LowestAmountToPay, Is.EqualTo(0.0));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                                           .DeliverPaymentPlanOrder()
                                                                           .DoRequest();
 
-            Assert.IsTrue(deliverOrderResponse.Accepted);
+            Assert.That(deliverOrderResponse.Accepted, Is.True);
         }
 
         private long CreateInvoiceAndReturnOrderId()

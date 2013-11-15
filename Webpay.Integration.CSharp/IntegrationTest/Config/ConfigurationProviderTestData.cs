@@ -1,7 +1,7 @@
 ﻿using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.Test.Config
+namespace Webpay.Integration.CSharp.IntegrationTest.Config
 {
     public class ConfigurationProviderTestData : IConfigurationProvider
     {

@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
-using Webpay.Integration.CSharp.Test.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -154,7 +153,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(true, response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]

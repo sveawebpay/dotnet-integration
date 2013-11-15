@@ -19,10 +19,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                               .SetOrderTypeInvoice()
                                                               .DoRequest();
 
-            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
-            Assert.AreEqual("Persson, Tess T", response.Addresses[0].LegalName);
-            Assert.AreEqual("Testgatan 1", response.Addresses[0].AddressLine2);
-            Assert.AreEqual("Stan", response.Addresses[0].Postarea);
+            Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
+            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson, Tess T"));
+            Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testgatan 1"));
+            Assert.That(response.Addresses[0].Postarea, Is.EqualTo("Stan"));
         }
 
         [Test]
@@ -34,12 +34,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                              .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
                                                              .DoRequest();
 
-            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
-            Assert.AreEqual("Tess T", response.Addresses[0].FirstName);
-            Assert.AreEqual("Persson", response.Addresses[0].LastName);
-            Assert.AreEqual("Testgatan 1", response.Addresses[0].AddressLine2);
-            Assert.AreEqual(99999, response.Addresses[0].Postcode);
-            Assert.AreEqual("Stan", response.Addresses[0].Postarea);
+            Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
+            Assert.That(response.Addresses[0].FirstName, Is.EqualTo("Tess T"));
+            Assert.That(response.Addresses[0].LastName, Is.EqualTo("Persson"));
+            Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testgatan 1"));
+            Assert.That(response.Addresses[0].Postcode, Is.EqualTo(99999));
+            Assert.That(response.Addresses[0].Postarea, Is.EqualTo("Stan"));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                              .SetIndividual("17054512066")
                                                              .DoRequest();
 
-            Assert.AreEqual(GetCustomerAddressesRejectionCode.Error, response.RejectionCode);
+            Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Error));
             Assert.That(response.ErrorMessage, Is.EqualTo("CountryCode: Supported countries are SE, DK"));
         }
 
@@ -64,10 +64,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                              .SetCompany("923313850")
                                                              .DoRequest();
 
-            Assert.AreEqual(GetCustomerAddressesRejectionCode.Accepted, response.RejectionCode);
-            Assert.AreEqual("Test firma AS", response.Addresses[0].LegalName);
-            Assert.AreEqual("Testveien 1", response.Addresses[0].AddressLine2);
-            Assert.AreEqual("Oslo", response.Addresses[0].Postarea);
+            Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
+            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Test firma AS"));
+            Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testveien 1"));
+            Assert.That(response.Addresses[0].Postarea, Is.EqualTo("Oslo"));
         }
     }
 }

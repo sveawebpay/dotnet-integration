@@ -26,8 +26,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
         }
 
 
@@ -65,7 +65,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.IsFalse(response.Accepted);
+            Assert.That(response.Accepted, Is.False);
         }
 
         [Test]
@@ -91,8 +91,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .DoRequest();
 
 
-            Assert.IsTrue(response.Accepted);
-            Assert.AreEqual(50.4, response.CreateOrderResult.Amount);
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(50.4));
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .DoRequest();
 
 
-            Assert.IsTrue(response.Accepted);
-            Assert.AreEqual(248.04, response.CreateOrderResult.Amount);
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(248.04));
         }
 
         [Test]
@@ -138,18 +138,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 
             Assert.IsTrue(response.Accepted);
             Assert.IsTrue(response.CreateOrderResult.SveaWillBuyOrder);
-            Assert.AreEqual(250.00, response.CreateOrderResult.Amount);
-            Assert.AreEqual("Invoice", response.CreateOrderResult.OrderType);
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(250.00));
+            Assert.That(response.CreateOrderResult.OrderType, Is.EqualTo("Invoice"));
 
             //CustomerIdentity            
-            Assert.AreEqual("194605092222", response.CreateOrderResult.CustomerIdentity.NationalIdNumber);
-            Assert.AreEqual("SE", response.CreateOrderResult.CustomerIdentity.CountryCode);
-            Assert.AreEqual(CustomerType.Individual, response.CreateOrderResult.CustomerIdentity.CustomerType);
-            Assert.AreEqual("Persson, Tess T", response.CreateOrderResult.CustomerIdentity.FullName);
-            Assert.AreEqual("Testgatan 1", response.CreateOrderResult.CustomerIdentity.Street);
-            Assert.AreEqual("c/o Eriksson, Erik", response.CreateOrderResult.CustomerIdentity.CoAddress);
-            Assert.AreEqual("99999", response.CreateOrderResult.CustomerIdentity.ZipCode);
-            Assert.AreEqual("Stan", response.CreateOrderResult.CustomerIdentity.Locality);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.NationalIdNumber, Is.EqualTo("194605092222"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CountryCode, Is.EqualTo("SE"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.FullName, Is.EqualTo("Persson, Tess T"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Street, Is.EqualTo("Testgatan 1"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CoAddress, Is.EqualTo("c/o Eriksson, Erik"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("99999"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("Stan"));
         }
 
         [Test]
@@ -172,10 +172,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
-            Assert.IsTrue(response.CreateOrderResult.SveaWillBuyOrder);
-            Assert.AreEqual("SE", response.CreateOrderResult.CustomerIdentity.CountryCode);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.CreateOrderResult.SveaWillBuyOrder, Is.True);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CountryCode, Is.EqualTo("SE"));
         }
 
         [Test]
@@ -198,24 +198,24 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
-            Assert.IsTrue(response.CreateOrderResult.SveaWillBuyOrder);
-            Assert.AreEqual(212.00, response.CreateOrderResult.Amount);
-            Assert.AreEqual("Invoice", response.CreateOrderResult.OrderType);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.CreateOrderResult.SveaWillBuyOrder, Is.True);
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(212.00));
+            Assert.That(response.CreateOrderResult.OrderType, Is.EqualTo("Invoice"));
 
             //CustomerIdentity            
-            Assert.IsNull(response.CreateOrderResult.CustomerIdentity.Email);
-            Assert.IsNull(response.CreateOrderResult.CustomerIdentity.IpAddress);
-            Assert.AreEqual("NL", response.CreateOrderResult.CustomerIdentity.CountryCode);
-            Assert.AreEqual("23", response.CreateOrderResult.CustomerIdentity.HouseNumber);
-            Assert.AreEqual(CustomerType.Individual, response.CreateOrderResult.CustomerIdentity.CustomerType);
-            Assert.IsNull(response.CreateOrderResult.CustomerIdentity.PhoneNumber);
-            Assert.AreEqual("Sneider Boasman", response.CreateOrderResult.CustomerIdentity.FullName);
-            Assert.AreEqual("Gate 42", response.CreateOrderResult.CustomerIdentity.Street);
-            Assert.AreEqual("138", response.CreateOrderResult.CustomerIdentity.CoAddress);
-            Assert.AreEqual("1102 HG", response.CreateOrderResult.CustomerIdentity.ZipCode);
-            Assert.AreEqual("BARENDRECHT", response.CreateOrderResult.CustomerIdentity.Locality);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Email, Is.Null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.IpAddress, Is.Null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CountryCode, Is.EqualTo("NL"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.HouseNumber, Is.EqualTo("23"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.PhoneNumber, Is.Null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.FullName, Is.EqualTo("Sneider Boasman"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Street, Is.EqualTo("Gate 42"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CoAddress, Is.EqualTo("138"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("1102 HG"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("BARENDRECHT"));
         }
 
         [Test]
@@ -247,8 +247,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
         }
     }
 }

@@ -90,19 +90,18 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
             //Check if payment method is EU country, PaymentMethod: INVOICE or PAYMENTPLAN    
             var payment = this as PaymentMethodPayment;
-            if (payment != null)
+            if (payment != null
+                && (payment.GetPaymentMethod() == PaymentMethod.INVOICE ||
+                    payment.GetPaymentMethod() == PaymentMethod.PAYMENTPLAN))
             {
-                if (payment.GetPaymentMethod() == PaymentMethod.INVOICE ||
-                    payment.GetPaymentMethod() == PaymentMethod.PAYMENTPLAN)
+                switch (CrOrderBuilder.GetCountryCode())
                 {
-                    if (CrOrderBuilder.GetCountryCode() == CountryCode.NL)
-                    {
+                    case CountryCode.NL:
                         errors += new IdentityValidator().ValidateNlIdentity(CrOrderBuilder);
-                    }
-                    else if (CrOrderBuilder.GetCountryCode() == CountryCode.DE)
-                    {
+                        break;
+                    case CountryCode.DE:
                         errors += new IdentityValidator().ValidateDeIdentity(CrOrderBuilder);
-                    }
+                        break;
                 }
             }
 

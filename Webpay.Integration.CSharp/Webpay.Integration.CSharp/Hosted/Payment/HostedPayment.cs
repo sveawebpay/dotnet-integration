@@ -147,7 +147,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
             form.SetMerchantId(CrOrderBuilder.GetConfig()
                                              .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode()));
-            form.SetSecretWord(CrOrderBuilder.GetConfig().GetSecret(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode()));
+            form.SetSecretWord(CrOrderBuilder.GetConfig().GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode()));
 
             form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != CountryCode.NONE
                                       ? CrOrderBuilder.GetCountryCode()

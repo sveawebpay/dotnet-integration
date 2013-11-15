@@ -61,7 +61,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 
             form.SetMacSha512(
                 HashUtil.CreateHash(form.GetXmlMessageBase64() +
-                                    order.GetConfig().GetSecret(PaymentType.HOSTED, order.GetCountryCode())));
+                                    order.GetConfig().GetSecretWord(PaymentType.HOSTED, order.GetCountryCode())));
 
             string data = "mac=" + HttpUtility.UrlEncode(form.GetMacSha512()) +
                           "&message=" + HttpUtility.UrlEncode(form.GetXmlMessageBase64()) +

@@ -112,7 +112,7 @@ namespace SveaWebpayIntegration
         /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
         /// <param name="country">country code</param>
         /// <returns>secret word string</returns>
-        public string GetSecret(PaymentType type, CountryCode country)
+        public string GetSecretWord(PaymentType type, CountryCode country)
         {
             return mySecretWord;
         }

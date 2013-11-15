@@ -48,7 +48,7 @@ namespace Webpay.Integration.CSharp.Config
         /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
         /// <param name="country">country code</param>
         /// <returns>secret word string</returns>
-        string GetSecret(PaymentType type, CountryCode country);
+        string GetSecretWord(PaymentType type, CountryCode country);
 
         /// <summary>
         /// Constants for the end point url found in the class SveaConfig

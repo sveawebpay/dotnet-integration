@@ -123,7 +123,7 @@ namespace Webpay.Integration.CSharp.Config
             return type == PaymentType.HOSTED ? "1130" : "";
         }
 
-        public string GetSecret(PaymentType type, CountryCode country)
+        public string GetSecretWord(PaymentType type, CountryCode country)
         {
             return type == PaymentType.HOSTED
                        ? "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"

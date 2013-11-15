@@ -25,7 +25,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted
                                                .SetReturnUrl("http://myurl.se")
                                                .GetPaymentForm();
 
-            Assert.NotNull(form);
+            Assert.That(form, Is.Not.Null);
         }
     }
 }

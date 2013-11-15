@@ -48,7 +48,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                               + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
                               + "</form>";
 
-            Assert.AreEqual(expected, form.GetCompleteForm());
+            Assert.That(form.GetCompleteForm(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -75,18 +75,24 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             var formHtmlFields = form.GetFormHtmlFields();
             string url = form.GetPayPageUrl();
 
-            Assert.AreEqual("<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\"" + url + "\">",
-                            formHtmlFields["form_start_tag"]);
-            Assert.AreEqual("<input type=\"hidden\" name=\"merchantid\" value=\"" + MerchantId + "\" />",
-                            formHtmlFields["input_merchantId"]);
-            Assert.AreEqual("<input type=\"hidden\" name=\"message\" value=\"" + base64Payment + "\" />",
-                            formHtmlFields["input_message"]);
-            Assert.AreEqual("<input type=\"hidden\" name=\"mac\" value=\"" + mac + "\" />", formHtmlFields["input_mac"]);
-            Assert.AreEqual(
-                "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>",
-                formHtmlFields["noscript_p_tag"]);
-            Assert.AreEqual("<input type=\"submit\" name=\"submit\" value=\"Betala\" />", formHtmlFields["input_submit"]);
-            Assert.AreEqual("</form>", formHtmlFields["form_end_tag"]);
+
+            Assert.That(formHtmlFields["form_start_tag"], 
+                Is.EqualTo("<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\"" + url + "\">"));
+
+            Assert.That(formHtmlFields["input_merchantId"],
+                Is.EqualTo("<input type=\"hidden\" name=\"merchantid\" value=\"" + MerchantId + "\" />"));
+
+            Assert.That(formHtmlFields["input_message"], 
+                Is.EqualTo("<input type=\"hidden\" name=\"message\" value=\"" + base64Payment + "\" />"));
+
+            Assert.That(formHtmlFields["input_mac"], Is.EqualTo("<input type=\"hidden\" name=\"mac\" value=\"" + mac + "\" />"));
+
+            Assert.That(formHtmlFields["noscript_p_tag"], 
+                Is.EqualTo("<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"));
+
+            Assert.That(formHtmlFields["input_submit"], Is.EqualTo("<input type=\"submit\" name=\"submit\" value=\"Betala\" />"));
+
+            Assert.That(formHtmlFields["form_end_tag"], Is.EqualTo("</form>"));
         }
     }
 }

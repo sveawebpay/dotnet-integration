@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -11,7 +12,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         [Test]
         public void TestPaymentPlanRequestObjectSpecifics()
         {
-            CreateOrderEuRequest request = WebpayConnection.CreateOrder()
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
@@ -22,9 +23,8 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .UsePaymentPlanPayment(1337L)
                                                            .PrepareRequest();
 
-            Assert.AreEqual(1337L, request.CreateOrderInformation.CreatePaymentPlanDetails.CampaignCode);
-            Assert.AreEqual(false,
-                            request.CreateOrderInformation.CreatePaymentPlanDetails.SendAutomaticGiroPaymentForm);
+            Assert.That(request.CreateOrderInformation.CreatePaymentPlanDetails.CampaignCode, Is.EqualTo(1337L));
+            Assert.That(request.CreateOrderInformation.CreatePaymentPlanDetails.SendAutomaticGiroPaymentForm, Is.False);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         {
             try
             {
-                WebpayConnection.CreateOrder()
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                 .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
@@ -46,7 +46,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             }
             catch (SveaWebPayException ex)
             {
-                Assert.AreEqual("ERROR - CompanyCustomer is not allowed to use payment plan option.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("ERROR - CompanyCustomer is not allowed to use payment plan option."));
             }
         }
     }

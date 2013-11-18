@@ -290,6 +290,10 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         public bool GetIsCompanyIdentity()
         {
+            if (CustomerId == null)
+            {
+                return false;
+            }
             return CustomerId.CustomerType == CustomerType.Company;
         }
 

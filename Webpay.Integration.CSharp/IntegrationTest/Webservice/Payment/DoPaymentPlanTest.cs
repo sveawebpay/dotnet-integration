@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
@@ -11,12 +12,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestPaymentPlanRequestReturnsAcceptedResult()
         {
-            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams()
+            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
                                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                               .DoRequest();
             long code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                              .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -28,7 +29,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UsePaymentPlanPayment(code)
                                                              .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
@@ -36,7 +37,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         {
             long orderId = createPaymentPlanAndReturnOrderId();
 
-            DeliverOrderEuResponse response = WebpayConnection.DeliverOrder()
+            DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                               .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
@@ -45,17 +46,17 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .DeliverPaymentPlanOrder()
                                                               .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         private long createPaymentPlanAndReturnOrderId()
         {
-            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams()
+            GetPaymentPlanParamsEuResponse paymentPlanParam = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
                                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                               .DoRequest();
             long code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                              .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)

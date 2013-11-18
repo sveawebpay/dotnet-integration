@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Test.Order;
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [SetUp]
         public void SetUp()
         {
-            _order = WebpayConnection.CreateOrder().SetValidator(new VoidValidator());
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig()).SetValidator(new VoidValidator());
         }
 
         [Test]
@@ -28,7 +29,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                 .ConfigureExcludedPaymentMethod()
                 .GetExcludedPaymentMethod();
 
-            Assert.AreEqual(21, excluded.Count);
+            Assert.That(excluded.Count, Is.EqualTo(21));
         }
 
         [Test]
@@ -56,8 +57,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             string vat = xml.Substring(xml.IndexOf("<vat>", System.StringComparison.InvariantCulture) + 5,
                                        expectedVat.Length);
 
-            Assert.AreEqual(expectedAmount, amount);
-            Assert.AreEqual(expectedVat, vat);
+            Assert.That(amount, Is.EqualTo(expectedAmount));
+            Assert.That(vat, Is.EqualTo(expectedVat));
         }
 
         [Test]
@@ -85,15 +86,15 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             string vat = xml.Substring(xml.IndexOf("<vat>", System.StringComparison.InvariantCulture) + 5,
                                        expectedVat.Length);
 
-            Assert.AreEqual(expectedAmount, amount);
-            Assert.AreEqual(expectedVat, vat);
+            Assert.That(amount, Is.EqualTo(expectedAmount));
+            Assert.That(vat, Is.EqualTo(expectedVat));
         }
 
 
         [Test]
         public void TestSetAuthorization()
         {
-            PaymentForm form = WebpayConnection.CreateOrder()
+            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                                .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
@@ -111,8 +112,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             const string expectedSecretWord =
                 "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3";
 
-            Assert.AreEqual(expectedMerchantId, form.GetMerchantId());
-            Assert.AreEqual(expectedSecretWord, form.GetSecretWord());
+            Assert.That(form.GetMerchantId(), Is.EqualTo(expectedMerchantId));
+            Assert.That(form.GetSecretWord(), Is.EqualTo(expectedSecretWord));
         }
     }
 }

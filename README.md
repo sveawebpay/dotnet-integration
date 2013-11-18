@@ -1,22 +1,20 @@
 # C#/.Net Integration Package API for SveaWebPay
 
 ## Index
-* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#introduction)
-* [2. Build](https://github.com/sveawebpay/dotnet-integration/tree/master#build)
-* [3. Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#configuration)
-* [4. CreateOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#4-CreateOrder)
-    * [Test mode](https://github.com/sveawebpay/dotnet-integration/tree/master#41-test-mode)
-    * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#42-specify-order)
-    * [Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#43-customer-identity)
-    * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#44-other-values)
-    * [Choose payment](https://github.com/sveawebpay/dotnet-integration/tree/master#45-choose-payment)
+* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
+* [2. Build](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build)
+* [3. Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#3-configuration)
+* [4. CreateOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#4-createorder)
+    * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#41-specify-order)
+    * [Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#42-customer-identity)
+    * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#43-other-values)
+    * [Choose payment](https://github.com/sveawebpay/dotnet-integration/tree/master#44-choose-payment)
 * [5. GetPaymentPlanParams](https://github.com/sveawebpay/dotnet-integration/tree/master#5-getpaymentplanparams)
     * [PaymentPlanPricePerMonth](https://github.com/sveawebpay/dotnet-integration/tree/master#51-paymentplanpricepermonth)
 * [6. GetAddresses](https://github.com/sveawebpay/dotnet-integration/tree/master#6-getaddresses)
 * [7. DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#7-deliverorder)
-    * [Test mode](https://github.com/sveawebpay/dotnet-integration/tree/master#41-testmode)
-    * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#42-specify-order)
-    * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#44-other-values)
+    * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#71-specify-order)
+    * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#72-other-values)
 * [8. CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#8-closeorder)
 * [9. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#9-response-handler)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
@@ -43,14 +41,12 @@ This will build the dll and place it in bin/release sub-folder of the project.
 ## 3. Configuration 
 
 The Configuration needed to be set differs of how many different payment methods and countries you have in the same installation. 
-The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is done, default settings and 
-test data found in SveaConfig.GetDefaultConfig() will be used.
+The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is created, use SveaConfig.GetDefaultConfig().
 
 **To configure Svea authorization:**
 Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods 
 return the authorization values asked for. 
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
-If left blank, the default settings will be used.
 
 *NOTE:* This solution may change in future updates! 
 
@@ -114,7 +110,7 @@ namespace SveaWebpayIntegration
         /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
         /// <param name="country">country code</param>
         /// <returns>secret word string</returns>
-        public string GetSecret(PaymentType type, CountryCode country)
+        public string GetSecretWord(PaymentType type, CountryCode country)
         {
             return mySecretWord;
         }
@@ -287,11 +283,11 @@ When discount or coupon is a percentage on total product amount.
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 4.3 Customer Identity   
+### 4.2 Customer Identity   
 Customer identity is required for invoice and payment plan orders. Required values varies 
 depending on country and customer type. For SE, NO, DK and FI national id number is required. Email and ip address are desirable.
 
-####4.3.1 Options for individual customers
+####4.2.1 Options for individual customers
 ```csharp
 .AddCustomerDetails(Item.IndividualCustomer()
     .SetNationalIdNumber("194605092222")	//Required for individual customers in SE, NO, DK and FI
@@ -307,7 +303,7 @@ depending on country and customer type. For SE, NO, DK and FI national id number
     .SetIpAddress("123.123.123")       		//Optional but desirable
 ```
 
-####4.3.2 Options for company customers
+####4.2.2 Options for company customers
 ```csharp
 .AddCustomerDetails(Item.CompanyCustomer()
     .SetNationalIdNumber("2345234")			//Required for company customers in SE, NO, DK, FI
@@ -317,7 +313,7 @@ depending on country and customer type. For SE, NO, DK and FI national id number
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-###4.4 Other values  
+###4.3 Other values  
 ```csharp
 .SetCountryCode(CountryCode.SE)         	//Required
 .SetCurrency(Currency.SEK)                     	//Required for card payment, direct payment and PayPage payment.
@@ -327,14 +323,13 @@ depending on country and customer type. For SE, NO, DK and FI national id number
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-###4.5 Choose payment 
+###4.4 Choose payment 
 End process by choosing the payment method you desire.
 
 Invoice and payment plan will perform a synchronous payment and return an object as response. 
 
 Other payments(card, direct bank and payments from the *PayPage*) on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
-The response is then returned to the return url you have specified in function *SetReturnUrl()*. If you
-use class *Response* with the xml response as parameter, you will receive a formatted object as well. 
+The response is then returned to the return url you have specified in function *SetReturnUrl()*.
 
 #### Which payment method to choose?
 Invoice and/or payment plan payments.
@@ -375,10 +370,10 @@ and the html form element as array.
 ```
 
 
-####4.5.1 PayPage with card payment options
+####4.4.1 PayPage with card payment options
 *PayPage* with availible card payments only.
 
-#####4.5.1.1 Request
+#####4.4.1.1 Request
 
 ```csharp
 PaymentForm form = WebpayConnection.CreateOrder()
@@ -402,7 +397,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.GetPaymentForm();
 
 ```
-#####4.5.1.2 Return
+#####4.4.1.2 Return
 The values of *xmlMessageBase64*, *merchantid* and *mac* are to be sent as xml to SveaWebPay.
 Function GetPaymentForm() returns object type *PaymentForm* with accessible members:
 
@@ -418,10 +413,10 @@ Function GetPaymentForm() returns object type *PaymentForm* with accessible memb
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
             
 
-####4.5.2 PayPage with direct bank payment options
+####4.4.2 PayPage with direct bank payment options
 *PayPage* with available direct bank payments only.
                 
-#####4.5.2.1 Request
+#####4.4.2.1 Request
 
 ```csharp
 PaymentForm form = WebpayConnection.CreateOrder()
@@ -444,7 +439,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.SetCancelUrl("http://myurl.se")                   //Optional
 	.GetPaymentForm();
 ```
-#####4.5.2.2 Return
+#####4.4.2.2 Return
 Returns object type PaymentForm:
            
 | Value                 | Returns    | Description                               |
@@ -459,11 +454,11 @@ Returns object type PaymentForm:
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
  
  
-####4.5.3 PayPagePayment
+####4.4.3 PayPagePayment
 *PayPage* with all available payments. You can also custom the *PayPage* by using one of the methods for *PayPagePayments*:
 SetPaymentMethod, IncludePaymentMethod, ExcludeCardPaymentMethod or ExcludeDirectPaymentMethod.
                 
-#####4.5.3.1 Request
+#####4.4.3.1 Request
 ```csharp
 PaymentForm form = WebpayConnection.CreateOrder()
 .AddOrderRow(Item.OrderRow()
@@ -487,7 +482,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.GetPaymentForm();
 ```               
 
-######4.5.3.1.1 Exclude specific payment methods
+######4.4.3.1.1 Exclude specific payment methods
 Optional if you want to include specific payment methods for *PayPage*.
 ```csharp   
 .UsePayPage()
@@ -500,7 +495,7 @@ Optional if you want to include specific payment methods for *PayPage*.
             })
 	.GetPaymentForm();
 ```
-######4.5.3.1.2 Include specific payment methods
+######4.4.3.1.2 Include specific payment methods
 Optional if you want to include specific payment methods for *PayPage*.
 ```csharp   
 .UsePayPage()
@@ -513,7 +508,7 @@ Optional if you want to include specific payment methods for *PayPage*.
 	.GetPaymentForm();
 ```
 
-######4.5.3.1.3 Exclude Card payments
+######4.4.3.1.3 Exclude Card payments
 Optional if you want to exclude all card payment methods from *PayPage*.
 ```csharp
 .UsePayPage()
@@ -522,7 +517,7 @@ Optional if you want to exclude all card payment methods from *PayPage*.
 	.GetPaymentForm();
 ```
 
-######4.5.3.1.4 Exclude Direct payments
+######4.4.3.1.4 Exclude Direct payments
 Optional if you want to exclude all direct bank payments methods from *PayPage*.
 ```csharp  
 .UsePayPage()
@@ -530,7 +525,7 @@ Optional if you want to exclude all direct bank payments methods from *PayPage*.
     .ExcludeDirectPaymentMethod()                     //Optional
     .GetPaymentForm();
 ```
-#####4.5.3.6 Return
+#####4.4.3.6 Return
 Returns object type *PaymentForm*:
                 
 | Value                 | Returns    | Description                               |
@@ -545,10 +540,10 @@ Returns object type *PaymentForm*:
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
  
 
-#### 4.5.4 PaymentMethod specified
+#### 4.4.4 PaymentMethod specified
 Go direct to specified payment method without the step *PayPage*.
 
-##### 4.5.4.1 Request
+##### 4.4.4.1 Request
 Set your store authorization here.
 ```csharp
 PaymentForm form = WebpayConnection.CreateOrder()
@@ -572,7 +567,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.GetPaymentForm();
 
 ```
-##### 4.5.4.2 Return
+##### 4.4.4.2 Return
 The values of *xmlMessageBase64*, *merchantid* and *mac* are to be sent as xml to SveaWebPay.
 Function GetPaymentForm() returns Object type PaymentForm with accessible members:
 
@@ -590,7 +585,7 @@ Function GetPaymentForm() returns Object type PaymentForm with accessible member
 
 #### Synchronous solutions - Invoice and PaymentPlan
        
-#### 4.5.5 InvoicePayment
+#### 4.4.5 InvoicePayment
 Perform an invoice payment. This payment form will perform a synchronous payment and return a response.
 Returns *CreateOrderEuResponse* object. Set your store authorization here.
 ```csharp
@@ -612,7 +607,7 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder()
 .UseInvoicePayment()
 	.DoRequest();
 ```
-#### 4.5.6 PaymentPlanPayment
+#### 4.4.6 PaymentPlanPayment
 Perform *PaymentPlanPayment*. This payment form will perform a synchronous payment and return a response.
 Returns a *CreateOrderEuResponse* object. Preceded by WebPay.GetPaymentPlanParams(...).
 Set your store authorization here.
@@ -660,7 +655,7 @@ Use this function to calculate the prices per month of the payment plan campaign
 
 ## 6. GetAddresses 
 Returns *getAddressesResponse* object with an *AddressSelector* for the associated addresses for a specific security number. 
-Can be used when creating an order. Only applicable for SE, NO and DK.
+Can be used when creating an order. Only applicable for SE, NO and DK. In Norway, only getAddresses of companies is supported.
 Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -818,7 +813,7 @@ Class *SveaResponse* will return an object structured similar to the synchronous
 Params: 
 * The POST or GET message Base64 encoded
 ```csharp
-  var respObject = new SveaResponse(responseXmlBase64); 
+	var respObject = new SveaResponse(responseXmlBase64); 
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

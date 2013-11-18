@@ -42,11 +42,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getpaymentplanparams
 
         public string ValidateRequest()
         {
-            if (_countryCode == CountryCode.NONE)
-            {
-                return "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
-            }
-            return "";
+            return _countryCode == CountryCode.NONE ? "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n" : "";
         }
 
         /// <summary>

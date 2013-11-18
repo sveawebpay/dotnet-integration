@@ -819,7 +819,7 @@
           </s:extension>
         </s:complexContent>
       </s:complexType>
-      <s:element name="GetAddressesResponse">
+      <s:element name="GetCustomerAddressesResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="GetAddressesResult" type="tns:GetCustomerAddressesResponse" />
@@ -1452,7 +1452,7 @@
     <wsdl:part name="parameters" element="tns:GetAddresses" />
   </wsdl:message>
   <wsdl:message name="GetAddressesSoapOut">
-    <wsdl:part name="parameters" element="tns:GetAddressesResponse" />
+    <wsdl:part name="parameters" element="tns:GetCustomerAddressesResponse" />
   </wsdl:message>
   <wsdl:message name="GetAddressesEuSoapIn">
     <wsdl:part name="parameters" element="tns:GetAddressesEu" />

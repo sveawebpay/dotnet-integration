@@ -149,7 +149,50 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
         /// </summary>
         /// <exception cref="SveaWebPayValidationException"></exception>
         /// <returns>SveaRequest</returns>
-        public GetAddressesEuRequest PrepareRequest()
+        public GetCustomerAddressesRequest PrepareRequest()
+        {
+            string errors = ValidateRequest();
+            if (errors.Length > 0)
+            {
+                throw new SveaWebPayValidationException(errors);
+            }
+
+            var request = new GetCustomerAddressesRequest
+            {
+                Auth = GetStoreAuthorization(),
+                CountryCode = _countryCode.ToString().ToUpper(),
+                IsCompany = _companyId != null,
+                SecurityNumber = _companyId ?? _nationalNumber
+            };
+            return request;
+        }
+
+        /// <summary>
+        /// doRequest
+        /// </summary>
+        /// <returns>GetCustomerAddressesResponse</returns>
+        public GetCustomerAddressesResponse DoRequest()
+        {
+            GetCustomerAddressesRequest request = PrepareRequest();
+
+            Soapsc = new ServiceSoapClient(new BasicHttpBinding
+            {
+                Name = "ServiceSoap",
+                Security = new BasicHttpSecurity
+                {
+                    Mode = BasicHttpSecurityMode.Transport
+                }
+            },
+                                           new EndpointAddress(
+                                               _config.GetEndPoint(_orderType == "Invoice"
+                                                                       ? PaymentType.INVOICE
+                                                                       : PaymentType.PAYMENTPLAN)));
+
+            return Soapsc.GetAddresses(request);
+        }
+
+        /*Awaiting approval
+        private GetAddressesEuRequest PrepareRequest()
         {
             string errors = ValidateRequest();
             if (errors.Length > 0)
@@ -171,11 +214,7 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
             return request;
         }
 
-        /// <summary>
-        /// doRequest
-        /// </summary>
-        /// <returns>GetAddressesResponse</returns>
-        public GetAddressesEuResponse DoRequest()
+        private GetAddressesEuResponse DoRequest()
         {
             GetAddressesEuRequest request = PrepareRequest();
 
@@ -193,6 +232,6 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
                                                                        : PaymentType.PAYMENTPLAN)));
 
             return Soapsc.GetAddressesEu(request);
-        }
+        } */
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.IntegrationTest.Config;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Test.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -27,14 +28,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
         public void TestFormatShippingFeeRowsZero()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddFee(Item.ShippingFee()
                                                                          .SetShippingId("0")
@@ -53,14 +54,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
         public void TestCompanyIdResponse()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber))
@@ -72,16 +73,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(CustomerType.Company, response.CreateOrderResult.CustomerIdentity.CustomerType);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
             Assert.IsNull(response.CreateOrderResult.CustomerIdentity.IndividualIdentity);
             Assert.IsNull(response.CreateOrderResult.CustomerIdentity.CompanyIdentity);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
         public void TestDeCompanyIdentity()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateOrderRowDe())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
                                                                                      .SetNationalIdNumber("12345")
@@ -98,15 +99,15 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.AreEqual(CustomerType.Company, response.CreateOrderResult.CustomerIdentity.CustomerType);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
         public void TestNlCompanyIdentity()
         {
-            CreateOrderEuResponse response = WebpayConnection.CreateOrder()
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateOrderRowNl())
                                                              .AddCustomerDetails(Item.CompanyCustomer()
                                                                                      .SetCompanyName("Svea bakkerij 123")
@@ -123,9 +124,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .UseInvoicePayment()
                                                              .DoRequest();
 
-            Assert.AreEqual(0, response.ResultCode);
-            Assert.AreEqual(CustomerType.Company, response.CreateOrderResult.CustomerIdentity.CustomerType);
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
+            Assert.That(response.Accepted, Is.True);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ServiceModel;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
@@ -8,8 +7,6 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
-using Webpay.Integration.CSharp.WebpayWS;
-using Webpay.Integration.CSharp.Webservice.Handleorder;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.Test.Order.Validator
@@ -31,9 +28,11 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage = "MISSING VALUE - CountryCode is required. Use SetCountryCode().\n" +
                                            "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddCustomerDetails(TestingTool.CreateCompanyCustomer());
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -43,12 +42,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - CountryCode is required. Use SetCountryCode().\n" +
                                            "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddCustomerDetails(null);
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -57,20 +57,22 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage = "MISSING VALUE - CountryCode is required. Use SetCountryCode().\n" +
                                            "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                                            "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddCustomerDetails(Item.IndividualCustomer()
                                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber));
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
         public void TestFailOnMissingCountryCodeOnDeliverOrder()
         {
             const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).";
-            var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder()
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                                                                .AddOrderRow(
                                                                                                    TestingTool
                                                                                                        .CreateExVatBasedOrderRow())
@@ -91,7 +93,8 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                            "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n" +
                                            "MISSING VALUE - either nationalNumber or companyId is required. Use: SetCompany(...) or SetIndividual(...).\n";
             var exception =
-                Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.GetAddresses().PrepareRequest());
+                Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig()).PrepareRequest());
+
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -102,13 +105,14 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - National number(ssn) is required for individual customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode);
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -117,14 +121,15 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage =
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .AddCustomerDetails(Item.IndividualCustomer()
                                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber));
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -134,14 +139,15 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Quantity is required in Item object. Use Item.SetQuantity().\n" +
                 "MISSING VALUE - Two of the values must be set: AmountExVat(not set), AmountIncVat(not set) or VatPercent(not set) for Orderrow. Use two of: SetAmountExVat(), SetAmountIncVat or SetVatPercent().\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .AddOrderRow(Item.OrderRow())
                                                        .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -151,12 +157,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - National number(ssn) is required for individual customers when countrycode is SE, NO, DK or FI. Use SetNationalIdNumber(...).\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode);
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -170,12 +177,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Zip code is required for all customers when countrycode is DE. Use SetCustomerZipCode().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetCountryCode(CountryCode.DE)
                                                        .AddCustomerDetails(Item.IndividualCustomer());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -187,7 +195,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
 
             var exception = Assert.Throws<SveaWebPayValidationException>(() =>
                 {
-                    var builder = WebpayConnection.CreateOrder();
+                    var builder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
 
                     var customer = Item.IndividualCustomer()
                                        .SetName("Tess", "Testson")
@@ -219,13 +227,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
 
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(CountryCode.DE)
                                                        .AddCustomerDetails(Item.IndividualCustomer())
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -234,7 +242,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage =
                 "MISSING VALUE - Vat number is required for company customers when countrycode is DE. Use SetVatNumber().\n";
 
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(CountryCode.DE)
                                                        .AddOrderRow(Item.OrderRow()
@@ -249,7 +257,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetOrderDate(new DateTime(2012, 09, 09))
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -264,12 +272,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Zip code is required for all customers when countrycode is NL. Use SetZipCode().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetCountryCode(CountryCode.NL).Build()
                                                        .AddCustomerDetails(Item.IndividualCustomer());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -283,12 +292,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Zip code is required for all customers when countrycode is NL. Use SetZipCode().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetCountryCode(CountryCode.NL).Build()
                                                        .AddCustomerDetails(Item.CompanyCustomer());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -301,12 +311,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Zip code is required for all customers when countrycode is DE. Use SetCustomerZipCode().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetValidator(new VoidValidator())
                                                        .SetCountryCode(CountryCode.DE).Build()
                                                        .AddCustomerDetails(Item.CompanyCustomer());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -316,7 +327,8 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - Initials is required for individual customers when countrycode is NL. Use SetInitials().\n" +
                 "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n" +
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddCustomerDetails(Item.IndividualCustomer()
                                                                                .SetBirthDate("19231212")
                                                                                .SetName("Tess", "Testson")
@@ -326,16 +338,18 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetCountryCode(CountryCode.NL)
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
         public void TestMissingCountryCodeGetPaymentPlanParams()
         {
             const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
+
             var exception =
                 Assert.Throws<SveaWebPayValidationException>(
                     () => WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig()).PrepareRequest());
+
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -345,7 +359,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
             const string expectedMessage =
                 "MISSING VALUE - OrderDate is required. Use SetOrderDate().\n";
 
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .AddOrderRow(TestingTool.CreateMiniOrderRow())
@@ -353,13 +367,13 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetOrderDate(new DateTime())
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual(expectedMessage, _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(expectedMessage));
         }
 
         [Test]
         public void TestSucceedOnGoodValuesSe()
         {
-            CreateOrderBuilder order = WebpayConnection.CreateOrder()
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(TestingTool.CreateMiniOrderRow())
                                                        .AddCustomerDetails(Item.IndividualCustomer()
                                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -367,16 +381,17 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                        .SetOrderDate(new DateTime(2012, 05, 01))
                                                        .SetValidator(new VoidValidator());
 
-            Assert.AreEqual("", _orderValidator.Validate(order));
+            Assert.That(_orderValidator.Validate(order), Is.EqualTo(""));
         }
 
         [Test]
         public void TestFailOnMissingOrderIdOnDeliverOrder()
         {
             const string expectedMessage = "MISSING VALUE - SetOrderId is required.";
+
             var exception =
                 Assert.Throws<SveaWebPayValidationException>(() =>
-                                                             WebpayConnection.DeliverOrder()
+                                                             WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                              .SetNumberOfCreditDays(1)
                                                                              .SetInvoiceDistributionType(InvoiceDistributionType.POST)
@@ -395,7 +410,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
 
             var exception =
                 Assert.Throws<SveaWebPayValidationException>(() =>
-                                                             WebpayConnection.DeliverOrder()
+                                                             WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                              .SetNumberOfCreditDays(1)
                                                                              .SetOrderId(2345L)
@@ -413,13 +428,14 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 "MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...).";
 
             var exception = Assert.Throws<SveaWebPayValidationException>(
-                () => WebpayConnection.DeliverOrder()
+                () => WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                       .SetNumberOfCreditDays(1)
                                       .SetOrderId(2345L)
                                       .SetInvoiceDistributionType(InvoiceDistributionType.POST)
                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                       .DeliverInvoiceOrder()
                                       .PrepareRequest());
+
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
 
@@ -427,21 +443,17 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailCompanyCustomerUsingPaymentPlan()
         {
             const string expectedMessage = "ERROR - CompanyCustomer is not allowed to use payment plan option.";
-            try
-            {
-                WebpayConnection.CreateOrder()
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                 .SetOrderDate(new DateTime(2012, 09, 09))
-                                .UsePaymentPlanPayment(777L);
+                                .UsePaymentPlanPayment(777L));
 
-                Assert.Fail("Expected exception not thrown.");
-            }
-            catch (SveaWebPayException ex)
-            {
-                Assert.AreEqual(expectedMessage, ex.Message);
-            }
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
     }
 }

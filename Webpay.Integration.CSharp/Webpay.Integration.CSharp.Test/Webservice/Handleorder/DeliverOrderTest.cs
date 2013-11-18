@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -15,14 +16,15 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
         [SetUp]
         public void SetUp()
         {
-            _order = WebpayConnection.DeliverOrder();
+            _order = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig());
         }
 
         [Test]
         public void TestBuildRequest()
         {
             DeliverOrderBuilder request = _order.SetOrderId(54086L);
-            Assert.AreEqual(54086L, request.GetOrderId());
+
+            Assert.That(request.GetOrderId(), Is.EqualTo(54086L));
         }
 
         [Test]
@@ -55,32 +57,31 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
             Assert.That(firstOrderRow.Description, Is.EqualTo("Prod: Specification"));
             Assert.That(firstOrderRow.PricePerUnit, Is.EqualTo(100.00M));
 
-            Assert.AreEqual(2, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].NumberOfUnits);
-            Assert.AreEqual("st", request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].Unit);
-            Assert.AreEqual(25, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].VatPercent);
-            Assert.AreEqual(0, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].DiscountPercent);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].NumberOfUnits, Is.EqualTo(2));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].Unit, Is.EqualTo("st"));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].VatPercent, Is.EqualTo(25));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[0].DiscountPercent, Is.EqualTo(0));
 
             //Second order row is shipment
-            Assert.AreEqual("33", request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].ArticleNumber);
-            Assert.AreEqual("shipping: Specification",
-                            request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].Description);
-            Assert.AreEqual(50, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].PricePerUnit);
-            Assert.AreEqual(1, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].NumberOfUnits);
-            Assert.AreEqual("st", request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].Unit);
-            Assert.AreEqual(25, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].VatPercent);
-            Assert.AreEqual(0, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].DiscountPercent);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].ArticleNumber, Is.EqualTo("33"));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].Description, Is.EqualTo("shipping: Specification"));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].PricePerUnit, Is.EqualTo(50));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].Unit, Is.EqualTo("st"));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].VatPercent, Is.EqualTo(25));
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[1].DiscountPercent, Is.EqualTo(0));
             //discount
-            Assert.AreEqual(-8.0, request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[2].PricePerUnit);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.OrderRows[2].PricePerUnit, Is.EqualTo(-8.0));
 
-            Assert.AreEqual(1, request.DeliverOrderInformation.DeliverInvoiceDetails.NumberOfCreditDays);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.NumberOfCreditDays, Is.EqualTo(1));
 
             Assert.That(invoiceDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
 
 
-            Assert.AreEqual(true, request.DeliverOrderInformation.DeliverInvoiceDetails.IsCreditInvoice);
-            Assert.AreEqual(117L, request.DeliverOrderInformation.DeliverInvoiceDetails.InvoiceIdToCredit);
-            Assert.AreEqual(54086L, request.DeliverOrderInformation.SveaOrderId);
-            Assert.AreEqual(OrderType.Invoice, request.DeliverOrderInformation.OrderType);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.IsCreditInvoice, Is.True);
+            Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.InvoiceIdToCredit, Is.EqualTo(117L));
+            Assert.That(request.DeliverOrderInformation.SveaOrderId, Is.EqualTo(54086L));
+            Assert.That(request.DeliverOrderInformation.OrderType, Is.EqualTo(OrderType.Invoice));
         }
 
         [Test]
@@ -92,8 +93,8 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
                 .DeliverPaymentPlanOrder()
                 .PrepareRequest();
 
-            Assert.AreEqual(54086L, request.DeliverOrderInformation.SveaOrderId);
-            Assert.AreEqual(OrderType.PaymentPlan, request.DeliverOrderInformation.OrderType);
+            Assert.That(request.DeliverOrderInformation.SveaOrderId, Is.EqualTo(54086L));
+            Assert.That(request.DeliverOrderInformation.OrderType, Is.EqualTo(OrderType.PaymentPlan));
         }
     }
 }

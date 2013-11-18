@@ -39,6 +39,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         private void CalculateTotals()
         {
+            _totalAmountIncVat = 0;
             _totalAmountExVat = 0;
             _totalVatAsAmount = 0;
 
@@ -47,11 +48,9 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             List<OrderRowBuilder> orderRows = _order.GetOrderRows();
             foreach (OrderRowBuilder existingRow in orderRows)
             {
-                decimal vatPercentAsHundredth = existingRow.GetVatPercent() != null
-                                                    ? existingRow.GetVatPercent().GetValueOrDefault() * 0.01M
-                                                    : 0;
-
                 decimal vatPercent = existingRow.GetVatPercent().GetValueOrDefault();
+                decimal vatPercentAsHundredth = vatPercent / 100;
+
                 decimal amountExVat = existingRow.GetAmountExVat().GetValueOrDefault();
                 decimal amountIncVat = existingRow.GetAmountIncVat().GetValueOrDefault();
                 decimal quantity = existingRow.GetQuantity();
@@ -65,11 +64,11 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     if (_totalAmountPerVatRateIncVat.ContainsKey(vatPercent))
                     {
                         _totalAmountPerVatRateIncVat[vatPercent] +=
-                            (amountExVat * quantity * (1 + vatPercent / 100));
+                            (amountExVat * quantity * (1 + vatPercentAsHundredth));
                     }
                     else
                     {
-                        _totalAmountPerVatRateIncVat.Add(vatPercent, amountExVat * quantity * (1 + vatPercent / 100));
+                        _totalAmountPerVatRateIncVat.Add(vatPercent, amountExVat * quantity * (1 + vatPercentAsHundredth));
                     }
                 }
                 else if (existingRow.GetVatPercent() != null && existingRow.GetAmountIncVat() != null)
@@ -93,9 +92,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     _totalAmountExVat += amountExVat * quantity;
                     _totalVatAsAmount += (amountIncVat - amountExVat) * quantity;
 
-                    decimal vatRate = (amountIncVat == 0.0M || amountExVat == 0.0M)
-                                          ? 0
-                                          : ((existingRow.GetAmountIncVat().GetValueOrDefault() / existingRow.GetAmountExVat().GetValueOrDefault()) - 1) * 100;
+                    decimal vatRate = (amountIncVat == 0.0M || amountExVat == 0.0M) ? 0 : 
+                        ((amountIncVat / amountExVat) - 1) * 100;
 
                     if (_totalAmountPerVatRateIncVat.ContainsKey(vatRate))
                     {

@@ -40,7 +40,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("lang", payment.GetPayPageLanguageCode().ToLower());
                 doWriteSimple("returnurl", payment.GetReturnUrl());
                 doWriteSimple("cancelurl", payment.GetCancelUrl());
-                doWriteSimple("iscompany", order.GetIsCompanyIdentity() ? "true" : "false");
+                doWriteSimple("iscompany", order.GetIsCompanyIdentity().ToString().ToLower());
 
                 SerializeCustomer(order, xmlw);
                 SerializeRows(rows, xmlw);
@@ -55,6 +55,11 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
 
         private void SerializeCustomer(CreateOrderBuilder order, XmlWriter xmlw)
         {
+            if (order.GetCustomerIdentity() == null)
+            {
+                return;
+            }
+
             CustomerIdentity customer;
             Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);
 

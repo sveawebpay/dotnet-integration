@@ -41,14 +41,12 @@ This will build the dll and place it in bin/release sub-folder of the project.
 ## 3. Configuration 
 
 The Configuration needed to be set differs of how many different payment methods and countries you have in the same installation. 
-The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is done, default settings and 
-test data found in SveaConfig.GetDefaultConfig() will be used.
+The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is created, use SveaConfig.GetDefaultConfig().
 
 **To configure Svea authorization:**
 Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods 
 return the authorization values asked for. 
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
-If left blank, the default settings will be used.
 
 *NOTE:* This solution may change in future updates! 
 
@@ -112,7 +110,7 @@ namespace SveaWebpayIntegration
         /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
         /// <param name="country">country code</param>
         /// <returns>secret word string</returns>
-        public string GetSecret(PaymentType type, CountryCode country)
+        public string GetSecretWord(PaymentType type, CountryCode country)
         {
             return mySecretWord;
         }
@@ -331,8 +329,7 @@ End process by choosing the payment method you desire.
 Invoice and payment plan will perform a synchronous payment and return an object as response. 
 
 Other payments(card, direct bank and payments from the *PayPage*) on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
-The response is then returned to the return url you have specified in function *SetReturnUrl()*. If you
-use class *Response* with the xml response as parameter, you will receive a formatted object as well. 
+The response is then returned to the return url you have specified in function *SetReturnUrl()*.
 
 #### Which payment method to choose?
 Invoice and/or payment plan payments.
@@ -816,7 +813,7 @@ Class *SveaResponse* will return an object structured similar to the synchronous
 Params: 
 * The POST or GET message Base64 encoded
 ```csharp
-  var respObject = new SveaResponse(responseXmlBase64); 
+	var respObject = new SveaResponse(responseXmlBase64); 
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

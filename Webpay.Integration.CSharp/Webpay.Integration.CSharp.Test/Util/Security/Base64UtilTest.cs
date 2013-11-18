@@ -12,13 +12,13 @@ namespace Webpay.Integration.CSharp.Test.Util.Security
         [Test]
         public void TestDecodeBase64String()
         {
-            Assert.AreEqual(Plain, Base64Util.DecodeBase64String(Encoded));
+            Assert.That(Base64Util.DecodeBase64String(Encoded), Is.EqualTo(Plain));
         }
 
         [Test]
         public void TestEncodeBase64String()
         {
-            Assert.AreEqual(Encoded, Base64Util.EncodeBase64String(Plain));
+            Assert.That(Base64Util.EncodeBase64String(Plain), Is.EqualTo(Encoded));
         }
     }
 }

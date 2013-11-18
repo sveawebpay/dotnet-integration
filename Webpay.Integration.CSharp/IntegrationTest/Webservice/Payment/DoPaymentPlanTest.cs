@@ -29,7 +29,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                              .UsePaymentPlanPayment(code)
                                                              .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .DeliverPaymentPlanOrder()
                                                               .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted, Is.True);
         }
 
         private long createPaymentPlanAndReturnOrderId()

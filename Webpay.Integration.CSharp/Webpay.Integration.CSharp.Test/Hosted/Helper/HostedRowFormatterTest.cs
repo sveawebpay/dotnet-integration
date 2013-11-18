@@ -27,13 +27,13 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual("0", newRow.GetSku());
-            Assert.AreEqual("Tess", newRow.GetName());
-            Assert.AreEqual("Tester", newRow.GetDescription());
-            Assert.AreEqual(500L, newRow.GetAmount());
-            Assert.AreEqual(100, newRow.GetVat());
-            Assert.AreEqual(1, newRow.GetQuantity());
-            Assert.AreEqual("st", newRow.GetUnit());
+            Assert.That(newRow.GetSku(), Is.EqualTo("0"));
+            Assert.That(newRow.GetName(), Is.EqualTo("Tess"));
+            Assert.That(newRow.GetDescription(), Is.EqualTo("Tester"));
+            Assert.That(newRow.GetAmount(), Is.EqualTo(500L));
+            Assert.That(newRow.GetVat(), Is.EqualTo(100));
+            Assert.That(newRow.GetQuantity(), Is.EqualTo(1));
+            Assert.That(newRow.GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]
@@ -49,11 +49,11 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual("0", newRow.GetSku());
-            Assert.AreEqual("Tess", newRow.GetName());
-            Assert.AreEqual("Tester", newRow.GetDescription());
-            Assert.AreEqual(1, newRow.GetQuantity());
-            Assert.AreEqual("st", newRow.GetUnit());
+            Assert.That(newRow.GetSku(), Is.EqualTo("0"));
+            Assert.That(newRow.GetName(), Is.EqualTo("Tess"));
+            Assert.That(newRow.GetDescription(), Is.EqualTo("Tester"));
+            Assert.That(newRow.GetQuantity(), Is.EqualTo(1));
+            Assert.That(newRow.GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual(500L, newRow.GetAmount());
-            Assert.AreEqual(100L, newRow.GetVat());
+            Assert.That(newRow.GetAmount(), Is.EqualTo(500L));
+            Assert.That(newRow.GetVat(), Is.EqualTo(100L));
         }
 
         [Test]
@@ -84,11 +84,11 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual("0", newRow.GetSku());
-            Assert.AreEqual("Tess", newRow.GetName());
-            Assert.AreEqual("Tester", newRow.GetDescription());
-            Assert.AreEqual(1, newRow.GetQuantity());
-            Assert.AreEqual("st", newRow.GetUnit());
+            Assert.That(newRow.GetSku(), Is.EqualTo("0"));
+            Assert.That(newRow.GetName(), Is.EqualTo("Tess"));
+            Assert.That(newRow.GetDescription(), Is.EqualTo("Tester"));
+            Assert.That(newRow.GetQuantity(), Is.EqualTo(1));
+            Assert.That(newRow.GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual(-400L, newRow.GetAmount());
+            Assert.That(newRow.GetAmount(), Is.EqualTo(-400L));
         }
 
         [Test]
@@ -120,8 +120,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[1];
 
-            Assert.AreEqual(-100L, newRow.GetAmount());
-            Assert.AreEqual(-20L, newRow.GetVat());
+            Assert.That(newRow.GetAmount(), Is.EqualTo(-100L));
+            Assert.That(newRow.GetVat(), Is.EqualTo(-20L));
         }
 
         [Test]
@@ -137,11 +137,11 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[0];
 
-            Assert.AreEqual("0", newRow.GetSku());
-            Assert.AreEqual("Tess", newRow.GetName());
-            Assert.AreEqual("Tester", newRow.GetDescription());
-            Assert.AreEqual(1, newRow.GetQuantity());
-            Assert.AreEqual("st", newRow.GetUnit());
+            Assert.That(newRow.GetSku(), Is.EqualTo("0"));
+            Assert.That(newRow.GetName(), Is.EqualTo("Tess"));
+            Assert.That(newRow.GetDescription(), Is.EqualTo("Tester"));
+            Assert.That(newRow.GetQuantity(), Is.EqualTo(1));
+            Assert.That(newRow.GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]
@@ -158,8 +158,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             List<HostedOrderRowBuilder> newRows = new HostedRowFormatter<CreateOrderBuilder>().FormatRows(order);
             HostedOrderRowBuilder newRow = newRows[1];
 
-            Assert.AreEqual(-50L, newRow.GetAmount());
-            Assert.AreEqual(-10L, newRow.GetVat());
+            Assert.That(newRow.GetAmount(), Is.EqualTo(-50L));
+            Assert.That(newRow.GetVat(), Is.EqualTo(-10L));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                 .SetQuantity(2);
             var rows = new List<HostedOrderRowBuilder> {row};
 
-            Assert.AreEqual(200L, new HostedRowFormatter<CreateOrderBuilder>().FormatTotalAmount(rows));
+            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalAmount(rows), Is.EqualTo(200L));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                 .SetQuantity(2);
             var rows = new List<HostedOrderRowBuilder> {row};
 
-            Assert.AreEqual(200L, new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows));
+            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows), Is.EqualTo(200L));
         }
 
         [Test]
@@ -192,7 +192,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                 .SetQuantity(2);
             var rows = new List<HostedOrderRowBuilder> {row};
 
-            Assert.AreEqual(-200L, new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows));
+            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows), Is.EqualTo(-200L));
         }
     }
 }

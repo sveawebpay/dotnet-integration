@@ -24,7 +24,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.Build();
             var v = (VoidValidator) _order.GetValidator();
-            Assert.AreEqual(1, v.NoOfCalls);
+            Assert.That(v.NoOfCalls, Is.EqualTo(1));
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Webpay.Integration.CSharp.Test.Order
                 .SetCountryCode(CountryCode.NL)
                 .Build();
 
-            Assert.AreEqual(sveaRequest.GetOrderRows().Count, 0);
-            Assert.AreEqual(sveaRequest.GetFixedDiscountRows().Count, 0);
+            Assert.That(sveaRequest.GetOrderRows().Count, Is.EqualTo(0));
+            Assert.That(sveaRequest.GetFixedDiscountRows().Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -43,19 +43,19 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order = CreateTestCustomerIdentity(_order);
 
-            Assert.AreEqual(_order.GetIndividualCustomer().GetInitials(), "SB");
-            Assert.AreEqual(_order.GetIndividualCustomer().NationalIdNumber, "194605092222");
-            Assert.AreEqual(_order.GetIndividualCustomer().GetFirstName(), "Tess");
-            Assert.AreEqual(_order.GetIndividualCustomer().GetLastName(), "Persson");
-            Assert.AreEqual(_order.GetIndividualCustomer().GetBirthDate(), "19231212");
-            Assert.AreEqual(_order.GetIndividualCustomer().Email, "test@svea.com");
-            Assert.AreEqual(_order.GetIndividualCustomer().PhoneNumber, "0811111111");
-            Assert.AreEqual(_order.GetIndividualCustomer().IpAddress, "123.123.123");
-            Assert.AreEqual(_order.GetIndividualCustomer().Street, "Testgatan");
-            Assert.AreEqual(_order.GetIndividualCustomer().HouseNumber, "1");
-            Assert.AreEqual(_order.GetIndividualCustomer().CoAddress, "c/o Eriksson, Erik");
-            Assert.AreEqual(_order.GetIndividualCustomer().ZipCode, "99999");
-            Assert.AreEqual(_order.GetIndividualCustomer().Locality, "Stan");
+            Assert.That(_order.GetIndividualCustomer().GetInitials(), Is.EqualTo("SB"));
+            Assert.That(_order.GetIndividualCustomer().NationalIdNumber, Is.EqualTo("194605092222"));
+            Assert.That(_order.GetIndividualCustomer().GetFirstName(), Is.EqualTo("Tess"));
+            Assert.That(_order.GetIndividualCustomer().GetLastName(), Is.EqualTo("Persson"));
+            Assert.That(_order.GetIndividualCustomer().GetBirthDate(), Is.EqualTo("19231212"));
+            Assert.That(_order.GetIndividualCustomer().Email, Is.EqualTo("test@svea.com"));
+            Assert.That(_order.GetIndividualCustomer().PhoneNumber, Is.EqualTo("0811111111"));
+            Assert.That(_order.GetIndividualCustomer().IpAddress, Is.EqualTo("123.123.123"));
+            Assert.That(_order.GetIndividualCustomer().Street, Is.EqualTo("Testgatan"));
+            Assert.That(_order.GetIndividualCustomer().HouseNumber, Is.EqualTo("1"));
+            Assert.That(_order.GetIndividualCustomer().CoAddress, Is.EqualTo("c/o Eriksson, Erik"));
+            Assert.That(_order.GetIndividualCustomer().ZipCode, Is.EqualTo("99999"));
+            Assert.That(_order.GetIndividualCustomer().Locality, Is.EqualTo("Stan"));
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order = CreateCompanyDetails(_order);
 
-            Assert.AreEqual("TestCompagniet", _order.GetCompanyCustomer().GetCompanyName());
-            Assert.AreEqual("2345234", _order.GetCompanyCustomer().GetVatNumber());
+            Assert.That(_order.GetCompanyCustomer().GetCompanyName(), Is.EqualTo("TestCompagniet"));
+            Assert.That(_order.GetCompanyCustomer().GetVatNumber(), Is.EqualTo("2345234"));
         }
 
         [Test]
@@ -72,14 +72,14 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             CreateTestOrderRow();
 
-            Assert.IsTrue(_order != null);
-            Assert.AreEqual(_order.GetOrderRows()[0].GetArticleNumber(), "1");
-            Assert.AreEqual(_order.GetOrderRows()[0].GetQuantity(), 2);
-            Assert.AreEqual(_order.GetOrderRows()[0].GetAmountExVat(), 100);
-            Assert.AreEqual(_order.GetOrderRows()[0].GetDescription(), "Specification");
-            Assert.AreEqual(_order.GetOrderRows()[0].GetUnit(), "st");
-            Assert.AreEqual(_order.GetOrderRows()[0].GetVatPercent(), 25);
-            Assert.AreEqual(_order.GetOrderRows()[0].GetVatDiscount(), 0);
+            Assert.That(_order, Is.Not.Null);
+            Assert.That(_order.GetOrderRows()[0].GetArticleNumber(), Is.EqualTo("1"));
+            Assert.That(_order.GetOrderRows()[0].GetQuantity(), Is.EqualTo(2));
+            Assert.That(_order.GetOrderRows()[0].GetAmountExVat(), Is.EqualTo(100));
+            Assert.That(_order.GetOrderRows()[0].GetDescription(), Is.EqualTo("Specification"));
+            Assert.That(_order.GetOrderRows()[0].GetUnit(), Is.EqualTo("st"));
+            Assert.That(_order.GetOrderRows()[0].GetVatPercent(), Is.EqualTo(25));
+            Assert.That(_order.GetOrderRows()[0].GetVatDiscount(), Is.EqualTo(0));
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             CreateShippingFeeRow();
 
-            Assert.AreEqual(_order.GetShippingFeeRows()[0].GetShippingId(), "33");
-            Assert.AreEqual("Specification", _order.GetShippingFeeRows()[0].GetDescription());
-            Assert.AreEqual(_order.GetShippingFeeRows()[0].GetAmountExVat(), 50);
-            Assert.AreEqual(_order.GetShippingFeeRows()[0].GetVatPercent(), 25);
+            Assert.That(_order.GetShippingFeeRows()[0].GetShippingId(), Is.EqualTo("33"));
+            Assert.That(_order.GetShippingFeeRows()[0].GetDescription(), Is.EqualTo("Specification"));
+            Assert.That(_order.GetShippingFeeRows()[0].GetAmountExVat(), Is.EqualTo(50));
+            Assert.That(_order.GetShippingFeeRows()[0].GetVatPercent(), Is.EqualTo(25));
         }
 
         [Test]
@@ -98,12 +98,12 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             CreateTestInvoiceFee();
 
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetName(), "Svea fee");
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDescription(), "Fee for invoice");
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetAmountExVat(), 50);
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetUnit(), "st");
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetVatPercent(), 25);
-            Assert.AreEqual(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), 0);
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetName(), Is.EqualTo("Svea fee"));
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetDescription(), Is.EqualTo("Fee for invoice"));
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetAmountExVat(), Is.EqualTo(50));
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetUnit(), Is.EqualTo("st"));
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetVatPercent(), Is.EqualTo(25));
+            Assert.That(_order.GetInvoiceFeeRows()[0].GetDiscountPercent(), Is.EqualTo(0));
         }
 
         [Test]
@@ -111,9 +111,9 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             CreateTestFixedDiscountRow();
 
-            Assert.AreEqual("1", _order.GetFixedDiscountRows()[0].GetDiscountId());
-            Assert.AreEqual(_order.GetFixedDiscountRows()[0].GetAmountIncVat(), 100);
-            Assert.AreEqual("FixedDiscount", _order.GetFixedDiscountRows()[0].GetDescription());
+            Assert.That(_order.GetFixedDiscountRows()[0].GetDiscountId(), Is.EqualTo("1"));
+            Assert.That(_order.GetFixedDiscountRows()[0].GetAmountIncVat(), Is.EqualTo(100));
+            Assert.That(_order.GetFixedDiscountRows()[0].GetDescription(), Is.EqualTo("FixedDiscount"));
         }
 
         [Test]
@@ -121,11 +121,11 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             CreateTestRelativeDiscountBuilder();
 
-            Assert.AreEqual("1", _order.GetRelativeDiscountRows()[0].GetDiscountId());
-            Assert.AreEqual(50, _order.GetRelativeDiscountRows()[0].GetDiscountPercent());
-            Assert.AreEqual("RelativeDiscount", _order.GetRelativeDiscountRows()[0].GetDescription());
-            Assert.AreEqual(_order.GetRelativeDiscountRows()[0].GetName(), "Relative");
-            Assert.AreEqual(_order.GetRelativeDiscountRows()[0].GetUnit(), "st");
+            Assert.That(_order.GetRelativeDiscountRows()[0].GetDiscountId(), Is.EqualTo("1"));
+            Assert.That(_order.GetRelativeDiscountRows()[0].GetDiscountPercent(), Is.EqualTo(50));
+            Assert.That(_order.GetRelativeDiscountRows()[0].GetDescription(), Is.EqualTo("RelativeDiscount"));
+            Assert.That(_order.GetRelativeDiscountRows()[0].GetName(), Is.EqualTo("Relative"));
+            Assert.That(_order.GetRelativeDiscountRows()[0].GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.SetOrderDate(TestingTool.DefaultTestDate);
 
-            Assert.AreEqual(TestingTool.DefaultTestDate, _order.GetOrderDate());
+            Assert.That(_order.GetOrderDate(), Is.EqualTo(TestingTool.DefaultTestDate));
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.SetCountryCode(TestingTool.DefaultTestCountryCode);
 
-            Assert.AreEqual(CountryCode.SE, _order.GetCountryCode());
+            Assert.That(_order.GetCountryCode(), Is.EqualTo(CountryCode.SE));
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.SetCurrency(TestingTool.DefaultTestCurrency);
 
-            Assert.AreEqual("SEK", _order.GetCurrency());
+            Assert.That(_order.GetCurrency(), Is.EqualTo("SEK"));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Webpay.Integration.CSharp.Test.Order
         {
             _order.SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber);
 
-            Assert.AreEqual(TestingTool.DefaultTestClientOrderNumber, _order.GetClientOrderNumber());
+            Assert.That(_order.GetClientOrderNumber(), Is.EqualTo(TestingTool.DefaultTestClientOrderNumber));
         }
 
         private static CreateOrderBuilder CreateTestCustomerIdentity(CreateOrderBuilder orderBuilder)

@@ -20,7 +20,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                     .ConfigureExcludedPaymentMethod()
                                                     .GetExcludedPaymentMethod();
 
-            Assert.AreEqual(18, excluded.Count);
+            Assert.That(excluded.Count, Is.EqualTo(18));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                     .ConfigureExcludedPaymentMethod()
                                                     .GetExcludedPaymentMethod();
 
-            Assert.AreEqual(22, excluded.Count);
+            Assert.That(excluded.Count, Is.EqualTo(22));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
 
-            Assert.True(html.Contains("<amount>18750</amount>"));
+            Assert.That(html.Contains("<amount>18750</amount>"), Is.True);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             string base64Payment = form.GetXmlMessageBase64();
             string html = Base64Util.DecodeBase64String(base64Payment);
 
-            Assert.True(html.Contains("<amount>18750</amount>"));
+            Assert.That(html.Contains("<amount>18750</amount>"), Is.True);
         }
     }
 }

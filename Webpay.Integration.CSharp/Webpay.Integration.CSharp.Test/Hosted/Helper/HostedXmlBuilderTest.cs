@@ -145,6 +145,27 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         }
 
         [Test]
+        public void TestXmlCallbackUrl()
+        {
+            _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                     .SetCurrency(TestingTool.DefaultTestCurrency)
+                                     .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                     .AddOrderRow(TestingTool.CreateMiniOrderRow())
+                                     .AddCustomerDetails(Item.CompanyCustomer());
+
+            var payment = new FakeHostedPayment(_order);
+            payment.SetCallbackUrl("http://www.callback.nu")
+                   .SetCancelUrl("http://www.cancel.com")
+                   .SetReturnUrl("http://myurl.se")
+                   .CalculateRequestValues();
+
+            _xml = _xmlBuilder.GetXml(payment);
+
+            Assert.That(_xml.Contains("<callbackurl>http://www.callback.nu</callbackurl>"), Is.True);
+        }
+
+        [Test]
         public void TestOrderRowXml()
         {
             _order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

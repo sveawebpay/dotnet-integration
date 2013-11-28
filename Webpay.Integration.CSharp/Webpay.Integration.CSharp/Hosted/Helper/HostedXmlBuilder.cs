@@ -40,6 +40,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("lang", payment.GetPayPageLanguageCode().ToLower());
                 doWriteSimple("returnurl", payment.GetReturnUrl());
                 doWriteSimple("cancelurl", payment.GetCancelUrl());
+                doWriteSimple("callbackurl", payment.GetCallbackUrl());
                 doWriteSimple("iscompany", order.GetIsCompanyIdentity().ToString().ToLower());
 
                 SerializeCustomer(order, xmlw);

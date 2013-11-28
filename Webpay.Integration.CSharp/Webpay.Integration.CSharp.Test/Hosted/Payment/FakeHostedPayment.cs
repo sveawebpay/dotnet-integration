@@ -17,6 +17,12 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             return this;
         }
 
+        public FakeHostedPayment SetCallbackUrl(string callbackUrl)
+        {
+            CallbackUrl = callbackUrl;
+            return this;
+        }
+
         public FakeHostedPayment SetReturnUrl(string returnUrl)
         {
             ReturnUrl = returnUrl;

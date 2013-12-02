@@ -294,6 +294,38 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         }
 
         [Test]
+        public void TestInvoiceWithFixedDiscountWithUneavenAmount() 
+        {
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                            .AddOrderRow(Item.OrderRow()
+                                                                .SetArticleNumber("1")
+                                                                .SetQuantity(1)
+                                                                .SetAmountExVat(240.00M)
+                                                                .SetDescription("CD")
+                                                                .SetVatPercent(25))
+                                                            .AddDiscount(Item.FixedDiscount()
+                                                                .SetAmountIncVat(101.50M)
+                                                                .SetDescription("FixedDiscount")
+                                                                .SetDiscountId("1"))
+                                                            .AddCustomerDetails(Item.IndividualCustomer()
+                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                                                                .SetOrderDate(TestingTool.DefaultTestDate)
+                                                                .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                                .UseInvoicePayment()
+                                                                .PrepareRequest();
+
+            Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("1"));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("FixedDiscount"));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(-81.2));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].Unit, Is.EqualTo(""));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].DiscountPercent, Is.EqualTo(0));
+        }
+
+        [Test]
         public void TestInvoiceRequestObjectWithCreateOrderInformation()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

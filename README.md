@@ -330,7 +330,7 @@ Invoice and payment plan will perform a synchronous payment and return an object
 
 Other payments(card, direct bank and payments from the *PayPage*) on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
 
-The response is then returned to the return url you have specified in function *SetReturnUrl()*. The response may also be sent to the url specified with setCallbackUrl() in case the customer doesn't return to the store after the transaction has concluded at the bank/card payment page.
+The response is then returned to the return url you have specified in function *SetReturnUrl()*. The response may also be sent to the url specified with *SetCallbackUrl()* in case the customer doesn't return to the store after the transaction has concluded at the bank/card payment page.
 
 If you pass the xml response to an instance of SveaResponse, you will receive a formatted response object as well.
 
@@ -401,7 +401,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 .SetCurrency(Currency.SEK)
 .UsePayPageCardOnly()
 	.SetReturnUrl("http://myurl.se")                   	//Required
-	.SetCallbackUrl("http://myurl.se")
+	.SetCallbackUrl("http://myurl.se")                   	//Optional
 	.SetCancelUrl("http://myurl.se")                   	//Optional
 	.GetPaymentForm();
 

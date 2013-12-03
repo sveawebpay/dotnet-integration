@@ -1,4 +1,5 @@
 ﻿using System;
+using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Identity;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -180,9 +181,14 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetDiscountPercent(50);
         }
 
-        public static IndividualCustomer CreateIndividualCustomer()
+        public static IndividualCustomer CreateIndividualCustomer(CountryCode country = CountryCode.SE)
         {
-            return Item.IndividualCustomer()
+            IndividualCustomer iCustomer = null;
+
+            switch (country)
+            {
+                case CountryCode.SE:
+                    iCustomer = Item.IndividualCustomer()
                        .SetInitials("SB")
                        .SetName("Tess", "Persson")
                        .SetEmail("test@svea.com")
@@ -194,21 +200,70 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetNationalIdNumber(DefaultTestIndividualNationalIdNumber)
                        .SetZipCode("99999")
                        .SetLocality("Stan");
-        }
-
-        public static IndividualCustomer CreateIndividualCustomerNl()
-        {
-            return Item.IndividualCustomer()
+                    break;
+                case CountryCode.NO:
+                    iCustomer = Item.IndividualCustomer()
+                       .SetName("Ola", "Normann")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("21222222")
+                       .SetIpAddress("123.123.123")
+                       .SetStreetAddress("Testveien", "2")
+                       .SetNationalIdNumber("17054512066")
+                       .SetZipCode("359")
+                       .SetLocality("Oslo");
+                    break;
+                case CountryCode.FI:
+                    iCustomer = Item.IndividualCustomer()
+                       .SetName("Kukka-Maaria", "Kanerva Haapakoski")
+                       .SetEmail("test@svea.com")
+                       .SetIpAddress("123.123.123")
+                       .SetStreetAddress("Atomitie", "2 C")
+                       .SetNationalIdNumber("160264-999N")
+                       .SetZipCode("370")
+                       .SetLocality("Helsinki");
+                    break;
+                case CountryCode.DK:
+                    iCustomer = Item.IndividualCustomer()
+                       .SetName("Hanne", "Jensen")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("22222222")
+                       .SetIpAddress("123.123.123")
+                       .SetStreetAddress("Testvejen", "42")
+                       .SetCoAddress("c/o Test A/S")
+                       .SetNationalIdNumber("2603692503")
+                       .SetZipCode("2100")
+                       .SetLocality("KØBENHVN Ø");
+                    break;
+                case CountryCode.DE:
+                    iCustomer = Item.IndividualCustomer()
+                       .SetName("Theo", "Giebel")
+                       .SetEmail("test@svea.com")
+                       .SetIpAddress("123.123.123")
+                       .SetStreetAddress("Zörgiebelweg", "21")
+                       .SetCoAddress("c/o Test A/S")
+                       .SetNationalIdNumber("19680403")
+                       .SetZipCode("13591")
+                       .SetLocality("BERLIN");
+                    break;
+                case CountryCode.NL:
+                    iCustomer = Item.IndividualCustomer()
                        .SetInitials("SB")
-                       .SetBirthDate("19231212")
-                       .SetName("Svea bakkerij", "123")
+                       .SetName("Sneider", "Boasman")
                        .SetEmail("test@svea.com")
                        .SetPhoneNumber("999999")
-                       .SetIpAddress("123.123.123")
-                       .SetStreetAddress("Gatan", "23")
-                       .SetCoAddress("c/o Eriksson")
-                       .SetZipCode("9999")
-                       .SetLocality("Stan");
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("Gate", "42")
+                       .SetBirthDate("19550307")
+                       .SetCoAddress("138")
+                       .SetNationalIdNumber("19550307")
+                       .SetZipCode("1102 HG")
+                       .SetLocality("BARENDRECHT");
+                    break;
+                default:
+                    throw new SveaWebPayException("Unsupported argument for method.");
+            }
+
+            return iCustomer;
         }
 
         public static CompanyCustomer CreateMiniCompanyCustomer()
@@ -219,9 +274,14 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetCompanyName("TestCompagniet");
         }
 
-        public static CompanyCustomer CreateCompanyCustomer()
+        public static CompanyCustomer CreateCompanyCustomer(CountryCode country = CountryCode.SE)
         {
-            return Item.CompanyCustomer()
+            CompanyCustomer cCustomer = null;
+
+            switch (country)
+            {
+                case CountryCode.SE:
+                    cCustomer = Item.CompanyCustomer()
                        .SetCompanyName("Tess, T Persson")
                        .SetNationalIdNumber(DefaultTestCompanyNationalIdNumber)
                        .SetEmail("test@svea.com")
@@ -231,6 +291,69 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetCoAddress("c/o Eriksson, Erik")
                        .SetZipCode("99999")
                        .SetLocality("Stan");
+                    break;
+                case CountryCode.NO:
+                    cCustomer = Item.CompanyCustomer()
+                       .SetCompanyName("Test firma AS")
+                       .SetNationalIdNumber("923313850")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("22222222")
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("Testveien", "1")
+                       .SetZipCode("259")
+                       .SetLocality("Oslo");
+                    break;
+                case CountryCode.FI:
+                    cCustomer = Item.CompanyCustomer()
+                       .SetCompanyName("Testi Yritys Oy")
+                       .SetNationalIdNumber("9999999-2")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("22222222")
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("Testitie", "1")
+                       .SetZipCode("370")
+                       .SetLocality("Helsinki");
+                    break;
+                case CountryCode.DK:
+                    cCustomer = Item.CompanyCustomer()
+                       .SetCompanyName("Test A/S")
+                       .SetNationalIdNumber("99999993")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("22222222")
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("Testvejen", "42")
+                       .SetZipCode("2100")
+                       .SetLocality("KØBENHVN Ø");
+                    break;
+                case CountryCode.DE:
+                    cCustomer = Item.CompanyCustomer()
+                       .SetCompanyName("K. H. Maier gmbH")
+                       .SetNationalIdNumber("12345")
+                       .SetVatNumber("DE123456789")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("0241/12 34 56")
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("Adalbertsteinweg", "1")
+                       .SetZipCode("52070")
+                       .SetLocality("AACHEN");
+                    break;
+                case CountryCode.NL:
+                    cCustomer = Item.CompanyCustomer()
+                       .SetCompanyName("Svea bakkerij 123")
+                       .SetVatNumber("NL123456789A12")
+                       .SetEmail("test@svea.com")
+                       .SetPhoneNumber("999999")
+                       .SetIpAddress("123.123.123.123")
+                       .SetStreetAddress("broodstraat", "1")
+                       .SetCoAddress("236")
+                       .SetZipCode("1111 CD")
+                       .SetLocality("BARENDRECHT");
+                    break;
+                default:
+                    throw new SveaWebPayException("Unsupported argument for method.");
+            }
+
+            return cCustomer;
         }
     }
 }

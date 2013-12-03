@@ -31,6 +31,12 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             return this;
         }
 
+        public CardPayment SetCallbackUrl(string callbackUrl)
+        {
+            CallbackUrl = callbackUrl;
+            return this;
+        }
+
         public CardPayment SetPayPageLanguageCode(LanguageCode languageCode)
         {
             LanguageCode = languageCode.ToString().ToLower();

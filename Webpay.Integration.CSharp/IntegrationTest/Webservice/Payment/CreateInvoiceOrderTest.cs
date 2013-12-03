@@ -183,14 +183,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateOrderRowNl())
-                                                             .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                     .SetBirthDate("19550307")
-                                                                                     .SetInitials("SB")
-                                                                                     .SetName("Sneider", "Boasman")
-                                                                                     .SetStreetAddress("Gate", "42")
-                                                                                     .SetLocality("BARENDRECHT")
-                                                                                     .SetZipCode("1102 HG")
-                                                                                     .SetCoAddress("138"))
+                                                             .AddCustomerDetails(TestingTool.CreateIndividualCustomer(CountryCode.NL))
                                                              .SetCountryCode(CountryCode.NL)
                                                              .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                              .SetOrderDate(TestingTool.DefaultTestDate)
@@ -204,18 +197,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(212.00));
             Assert.That(response.CreateOrderResult.OrderType, Is.EqualTo("Invoice"));
 
-            //CustomerIdentity            
-            Assert.That(response.CreateOrderResult.CustomerIdentity.Email, Is.Null);
+            //Returns hardcoded values that slightly differ from input        
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Email, Is.EqualTo("test@svea.com"));
             Assert.That(response.CreateOrderResult.CustomerIdentity.IpAddress, Is.Null);
             Assert.That(response.CreateOrderResult.CustomerIdentity.CountryCode, Is.EqualTo("NL"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.HouseNumber, Is.EqualTo("23"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.HouseNumber, Is.EqualTo("42"));
             Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.PhoneNumber, Is.Null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.PhoneNumber, Is.EqualTo("999999"));
             Assert.That(response.CreateOrderResult.CustomerIdentity.FullName, Is.EqualTo("Sneider Boasman"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.Street, Is.EqualTo("Gate 42"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.CoAddress, Is.EqualTo("138"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("1102 HG"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("BARENDRECHT"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Street, Is.EqualTo("Gate"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CoAddress, Is.Null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("1102 BARENDRECHT"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("HG"));
         }
 
         [Test]

@@ -77,7 +77,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                           .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                                           .AddCustomerDetails(TestingTool.CreateIndividualCustomer(CountryCode.NL))
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                            .SetCountryCode(CountryCode.NL)
                                                            .SetOrderDate(TestingTool.DefaultTestDate)
@@ -87,20 +87,20 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             Assert.That(request.CreateOrderInformation.CustomerIdentity.Email, Is.EqualTo("test@svea.com"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.PhoneNumber, Is.EqualTo("0811111111"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.IpAddress, Is.EqualTo("123.123.123"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.FullName, Is.EqualTo("Tess Persson"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.Street, Is.EqualTo("Testgatan"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.CoAddress, Is.EqualTo("c/o Eriksson, Erik"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.ZipCode, Is.EqualTo("99999"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.HouseNumber, Is.EqualTo("1"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.Locality, Is.EqualTo("Stan"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.PhoneNumber, Is.EqualTo("999999"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IpAddress, Is.EqualTo("123.123.123.123"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.FullName, Is.EqualTo("Sneider Boasman"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.Street, Is.EqualTo("Gate"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.CoAddress, Is.EqualTo("138"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.ZipCode, Is.EqualTo("1102 HG"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.HouseNumber, Is.EqualTo("42"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.Locality, Is.EqualTo("BARENDRECHT"));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.CountryCode, Is.EqualTo(CountryCode.NL.ToString().ToUpper()));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.FirstName, Is.EqualTo("Tess"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.LastName, Is.EqualTo("Persson"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.FirstName, Is.EqualTo("Sneider"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.LastName, Is.EqualTo("Boasman"));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.Initials, Is.EqualTo("SB"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.BirthDate, Is.EqualTo("19231212"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity.BirthDate, Is.EqualTo("19550307"));
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                           .AddCustomerDetails(TestingTool.CreateIndividualCustomerNl())
+                                                           .AddCustomerDetails(TestingTool.CreateCompanyCustomer(CountryCode.NL))
                                                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                                                            .SetCountryCode(CountryCode.NL)
                                                            .SetOrderDate(TestingTool.DefaultTestDate)
@@ -138,15 +138,15 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
             Assert.That(request.CreateOrderInformation.CustomerIdentity.Email, Is.EqualTo("test@svea.com"));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.PhoneNumber, Is.EqualTo("999999"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.IpAddress, Is.EqualTo("123.123.123"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IpAddress, Is.EqualTo("123.123.123.123"));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.FullName, Is.EqualTo("Svea bakkerij 123"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.Street, Is.EqualTo("Gatan"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.CoAddress, Is.EqualTo("c/o Eriksson"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.ZipCode, Is.EqualTo("9999"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.HouseNumber, Is.EqualTo("23"));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.Locality, Is.EqualTo("Stan"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.Street, Is.EqualTo("broodstraat"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.CoAddress, Is.EqualTo("236"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.ZipCode, Is.EqualTo("1111 CD"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.HouseNumber, Is.EqualTo("1"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.Locality, Is.EqualTo("BARENDRECHT"));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.CountryCode, Is.EqualTo(CountryCode.NL.ToString().ToUpper()));
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
         }
 
         [Test]
@@ -291,6 +291,38 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.That(request.CreateOrderInformation.OrderRows[2].VatPercent, Is.EqualTo(25));
             Assert.That(request.CreateOrderInformation.OrderRows[3].VatPercent, Is.EqualTo(6));
             Assert.That(request.CreateOrderInformation.OrderRows[2].DiscountPercent, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void TestInvoiceWithFixedDiscountWithUneavenAmount() 
+        {
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                            .AddOrderRow(Item.OrderRow()
+                                                                .SetArticleNumber("1")
+                                                                .SetQuantity(1)
+                                                                .SetAmountExVat(240.00M)
+                                                                .SetDescription("CD")
+                                                                .SetVatPercent(25))
+                                                            .AddDiscount(Item.FixedDiscount()
+                                                                .SetAmountIncVat(101.50M)
+                                                                .SetDescription("FixedDiscount")
+                                                                .SetDiscountId("1"))
+                                                            .AddCustomerDetails(Item.IndividualCustomer()
+                                                                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                                                                .SetOrderDate(TestingTool.DefaultTestDate)
+                                                                .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                                .UseInvoicePayment()
+                                                                .PrepareRequest();
+
+            Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("1"));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("FixedDiscount"));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(-81.2));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].Unit, Is.EqualTo(""));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].DiscountPercent, Is.EqualTo(0));
         }
 
         [Test]

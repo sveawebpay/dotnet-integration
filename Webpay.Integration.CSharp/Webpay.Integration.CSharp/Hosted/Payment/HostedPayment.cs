@@ -22,6 +22,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         protected long Vat;
         protected string ReturnUrl;
         protected string CancelUrl;
+        protected string CallbackUrl;
         protected ExcludePayments Excluded;
         protected string LanguageCode = Util.Constant.LanguageCode.en.ToString();
 
@@ -67,6 +68,11 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public string GetCancelUrl()
         {
             return CancelUrl;
+        }
+
+        public string GetCallbackUrl()
+        {
+            return CallbackUrl;
         }
 
         public string GetPayPageLanguageCode()

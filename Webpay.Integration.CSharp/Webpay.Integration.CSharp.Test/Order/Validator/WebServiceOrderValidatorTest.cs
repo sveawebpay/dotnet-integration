@@ -90,7 +90,6 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         public void TestFailOnMissingValuesForGetAddresses()
         {
             const string expectedMessage = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n" +
-                                           "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n" +
                                            "MISSING VALUE - either nationalNumber or companyId is required. Use: SetCompany(...) or SetIndividual(...).\n";
             var exception =
                 Assert.Throws<SveaWebPayValidationException>(() => WebpayConnection.GetAddresses(SveaConfig.GetDefaultConfig()).PrepareRequest());

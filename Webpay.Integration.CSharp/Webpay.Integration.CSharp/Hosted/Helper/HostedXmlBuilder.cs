@@ -132,7 +132,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         /// </summary>
         /// <param name="rows"></param>
         /// <param name="xmlw"></param>
-        private void SerializeRows(IReadOnlyCollection<HostedOrderRowBuilder> rows, XmlWriter xmlw)
+        private void SerializeRows(ICollection<HostedOrderRowBuilder> rows, XmlWriter xmlw)
         {
             if (rows == null || rows.Count == 0)
             {

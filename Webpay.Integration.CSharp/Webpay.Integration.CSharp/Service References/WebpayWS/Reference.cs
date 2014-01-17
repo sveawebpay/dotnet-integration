@@ -21,17 +21,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.OrderResponse CreateOrder(Webpay.Integration.CSharp.WebpayWS.OrderRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreateOrder", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.OrderResponse> CreateOrderAsync(Webpay.Integration.CSharp.WebpayWS.OrderRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ChangeOrderAmount", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountResponse ChangeOrderAmount(Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ChangeOrderAmount", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountResponse> ChangeOrderAmountAsync(Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreateInvoice", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -39,17 +33,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CreateInvoiceResponse CreateInvoice(Webpay.Integration.CSharp.WebpayWS.CreateInvoiceRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreateInvoice", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreateInvoiceResponse> CreateInvoiceAsync(Webpay.Integration.CSharp.WebpayWS.CreateInvoiceRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ChangeOrderInfo", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoResponse ChangeOrderInfo(Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ChangeOrderInfo", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoResponse> ChangeOrderInfoAsync(Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CloseOrder", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -57,17 +45,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CloseOrderResponse CloseOrder(Webpay.Integration.CSharp.WebpayWS.CloseOrderRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CloseOrder", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CloseOrderResponse> CloseOrderAsync(Webpay.Integration.CSharp.WebpayWS.CloseOrderRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetOrders", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.WebpayWS.GetOrdersRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetOrders", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetOrdersResponse> GetOrdersAsync(Webpay.Integration.CSharp.WebpayWS.GetOrdersRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CheckInternalScoring", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -75,17 +57,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringResponse CheckInternalScoring(Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CheckInternalScoring", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringResponse> CheckInternalScoringAsync(Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreatePaymentPlan", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanResponse CreatePaymentPlan(Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreatePaymentPlan", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanResponse> CreatePaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -93,17 +69,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusResponse GetPaymentPlanStatus(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusResponse> GetPaymentPlanStatusAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CancelPaymentPlan", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanResponse CancelPaymentPlan(Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CancelPaymentPlan", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanResponse> CancelPaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ApprovePaymentPlan", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -111,17 +81,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanResponse ApprovePaymentPlan(Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/ApprovePaymentPlan", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanResponse> ApprovePaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanOptions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsResponse GetPaymentPlanOptions(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanOptions", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsResponse> GetPaymentPlanOptionsAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetContractPdf", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -129,17 +93,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetContractPdfResponse GetContractPdf(Webpay.Integration.CSharp.WebpayWS.GetContractPdfRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetContractPdf", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetContractPdfResponse> GetContractPdfAsync(Webpay.Integration.CSharp.WebpayWS.GetContractPdfRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/AddToBlockList", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse AddToBlockList(Webpay.Integration.CSharp.WebpayWS.AddToBlockListRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/AddToBlockList", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse> AddToBlockListAsync(Webpay.Integration.CSharp.WebpayWS.AddToBlockListRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetAddresses", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -147,17 +105,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesResponse GetAddresses(Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetAddresses", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesResponse> GetAddressesAsync(Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetAddressesEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetAddressesEuResponse GetAddressesEu(Webpay.Integration.CSharp.WebpayWS.GetAddressesEuRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetAddressesEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetAddressesEuResponse> GetAddressesEuAsync(Webpay.Integration.CSharp.WebpayWS.GetAddressesEuRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/Ping", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -165,17 +117,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         string Ping();
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/Ping", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> PingAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParams", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsResponse GetPaymentPlanParams(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParams", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsResponse> GetPaymentPlanParamsAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreateOrderEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -183,17 +129,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse CreateOrderEu(Webpay.Integration.CSharp.WebpayWS.CreateOrderEuRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CreateOrderEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse> CreateOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.CreateOrderEuRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CloseOrderEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.CloseOrderEuResponse CloseOrderEu(Webpay.Integration.CSharp.WebpayWS.CloseOrderEuRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/CloseOrderEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CloseOrderEuResponse> CloseOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.CloseOrderEuRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/DeliverOrderEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -201,17 +141,11 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuResponse DeliverOrderEu(Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/DeliverOrderEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuResponse> DeliverOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParamsEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse GetPaymentPlanParamsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParamsEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse> GetPaymentPlanParamsEuAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -219,21 +153,15 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse GetPaymentPlanContractDetailsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse> GetPaymentPlanContractDetailsEuAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuResponse GetContractPdfEu(Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu", ReplyAction="*")]
-        System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuResponse> GetContractPdfEuAsync(Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuRequest request);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -270,7 +198,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -414,7 +342,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -600,7 +528,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum PaymentPlanTypeCode {
@@ -616,7 +544,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -648,7 +576,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -750,7 +678,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum InvoiceDistributionType {
@@ -763,7 +691,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -837,7 +765,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum OrderType {
@@ -850,7 +778,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -966,7 +894,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -996,6 +924,8 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         private string countryCodeField;
         
         private CustomerType customerTypeField;
+        
+        private string publicKeyField;
         
         private IndividualIdentity individualIdentityField;
         
@@ -1147,6 +1077,18 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string PublicKey {
+            get {
+                return this.publicKeyField;
+            }
+            set {
+                this.publicKeyField = value;
+                this.RaisePropertyChanged("PublicKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
         public IndividualIdentity IndividualIdentity {
             get {
                 return this.individualIdentityField;
@@ -1158,7 +1100,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
         public CompanyIdentity CompanyIdentity {
             get {
                 return this.companyIdentityField;
@@ -1180,7 +1122,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum CustomerType {
@@ -1193,7 +1135,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1267,7 +1209,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1313,7 +1255,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1499,7 +1441,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1601,7 +1543,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1717,7 +1659,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1749,7 +1691,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1767,6 +1709,8 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         private string addressLine2Field;
         
         private int postcodeField;
+        
+        private string zipcodeField;
         
         private string postareaField;
         
@@ -1852,6 +1796,18 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Zipcode {
+            get {
+                return this.zipcodeField;
+            }
+            set {
+                this.zipcodeField = value;
+                this.RaisePropertyChanged("Zipcode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
         public string Postarea {
             get {
                 return this.postareaField;
@@ -1863,7 +1819,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
         public BusinessTypeCode BusinessType {
             get {
                 return this.businessTypeField;
@@ -1875,7 +1831,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
         public string AddressSelector {
             get {
                 return this.addressSelectorField;
@@ -1887,7 +1843,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public string FirstName {
             get {
                 return this.firstNameField;
@@ -1899,7 +1855,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
         public string LastName {
             get {
                 return this.lastNameField;
@@ -1921,7 +1877,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum BusinessTypeCode {
@@ -1943,7 +1899,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2115,7 +2071,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2231,7 +2187,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2389,7 +2345,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2542,7 +2498,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CreateInvoiceResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ChangeOrderAmountResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(OrderResponse))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2588,7 +2544,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2653,7 +2609,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2732,7 +2688,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2769,7 +2725,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2806,7 +2762,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2829,7 +2785,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2866,7 +2822,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2889,7 +2845,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2926,7 +2882,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2963,7 +2919,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum GetCustomerAddressesRejectionCode {
@@ -2979,7 +2935,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2988,7 +2944,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3053,7 +3009,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum GetContractPdfRejectionCode {
@@ -3075,7 +3031,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3112,7 +3068,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3149,7 +3105,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum ApprovePaymentPlanRejectionCode {
@@ -3168,7 +3124,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3191,7 +3147,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum CancelPaymentPlanRejectionCode {
@@ -3210,7 +3166,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3261,7 +3217,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum GetPaymentPlanStatusRejectionCode {
@@ -3277,7 +3233,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum GetPaymentPlanResponseStatus {
@@ -3296,7 +3252,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3403,7 +3359,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum CreatePaymentPlanRejectionCode {
@@ -3443,7 +3399,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3480,7 +3436,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum CheckInternalScoringRejectionCode {
@@ -3496,7 +3452,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3533,7 +3489,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum GetOrdersRejectionCode {
@@ -3549,7 +3505,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3572,7 +3528,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum CloseOrderRejectionCode {
@@ -3588,7 +3544,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3611,7 +3567,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum ChangeOrderInfoRejectionCode {
@@ -3627,7 +3583,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3804,7 +3760,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum InvoiceRejectionCode {
@@ -3835,7 +3791,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3914,7 +3870,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum ChangeOrderAmountRejectionCode {
@@ -3945,7 +3901,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4052,7 +4008,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum OrderRejectionCode {
@@ -4095,7 +4051,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4183,7 +4139,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4299,7 +4255,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4359,7 +4315,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4391,7 +4347,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4465,7 +4421,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4609,7 +4565,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4683,7 +4639,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4883,7 +4839,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4957,7 +4913,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public enum InvoiceDistributionCode {
@@ -4970,7 +4926,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5086,7 +5042,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5169,7 +5125,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CreateInvoiceRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ChangeOrderAmountRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(OrderRequest))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5201,7 +5157,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5224,7 +5180,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5261,7 +5217,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5270,7 +5226,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5293,7 +5249,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5316,7 +5272,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5339,7 +5295,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5348,7 +5304,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5371,7 +5327,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5422,7 +5378,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5473,7 +5429,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5496,7 +5452,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5533,7 +5489,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5556,7 +5512,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5579,7 +5535,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5602,7 +5558,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5653,7 +5609,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5718,7 +5674,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5783,7 +5739,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5806,7 +5762,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5899,7 +5855,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5936,7 +5892,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18054")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18060")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6003,192 +5959,96 @@ namespace Webpay.Integration.CSharp.WebpayWS {
             return base.Channel.CreateOrder(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.OrderResponse> CreateOrderAsync(Webpay.Integration.CSharp.WebpayWS.OrderRequest request) {
-            return base.Channel.CreateOrderAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountResponse ChangeOrderAmount(Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountRequest request) {
             return base.Channel.ChangeOrderAmount(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountResponse> ChangeOrderAmountAsync(Webpay.Integration.CSharp.WebpayWS.ChangeOrderAmountRequest request) {
-            return base.Channel.ChangeOrderAmountAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.CreateInvoiceResponse CreateInvoice(Webpay.Integration.CSharp.WebpayWS.CreateInvoiceRequest request) {
             return base.Channel.CreateInvoice(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreateInvoiceResponse> CreateInvoiceAsync(Webpay.Integration.CSharp.WebpayWS.CreateInvoiceRequest request) {
-            return base.Channel.CreateInvoiceAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoResponse ChangeOrderInfo(Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoRequest request) {
             return base.Channel.ChangeOrderInfo(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoResponse> ChangeOrderInfoAsync(Webpay.Integration.CSharp.WebpayWS.ChangeOrderInfoRequest request) {
-            return base.Channel.ChangeOrderInfoAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.CloseOrderResponse CloseOrder(Webpay.Integration.CSharp.WebpayWS.CloseOrderRequest request) {
             return base.Channel.CloseOrder(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CloseOrderResponse> CloseOrderAsync(Webpay.Integration.CSharp.WebpayWS.CloseOrderRequest request) {
-            return base.Channel.CloseOrderAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.WebpayWS.GetOrdersRequest request) {
             return base.Channel.GetOrders(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetOrdersResponse> GetOrdersAsync(Webpay.Integration.CSharp.WebpayWS.GetOrdersRequest request) {
-            return base.Channel.GetOrdersAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringResponse CheckInternalScoring(Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringRequest request) {
             return base.Channel.CheckInternalScoring(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringResponse> CheckInternalScoringAsync(Webpay.Integration.CSharp.WebpayWS.CheckInternalScoringRequest request) {
-            return base.Channel.CheckInternalScoringAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanResponse CreatePaymentPlan(Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanRequest request) {
             return base.Channel.CreatePaymentPlan(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanResponse> CreatePaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.CreatePaymentPlanRequest request) {
-            return base.Channel.CreatePaymentPlanAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusResponse GetPaymentPlanStatus(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusRequest request) {
             return base.Channel.GetPaymentPlanStatus(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusResponse> GetPaymentPlanStatusAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanStatusRequest request) {
-            return base.Channel.GetPaymentPlanStatusAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanResponse CancelPaymentPlan(Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanRequest request) {
             return base.Channel.CancelPaymentPlan(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanResponse> CancelPaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.CancelPaymentPlanRequest request) {
-            return base.Channel.CancelPaymentPlanAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanResponse ApprovePaymentPlan(Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanRequest request) {
             return base.Channel.ApprovePaymentPlan(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanResponse> ApprovePaymentPlanAsync(Webpay.Integration.CSharp.WebpayWS.ApprovePaymentPlanRequest request) {
-            return base.Channel.ApprovePaymentPlanAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsResponse GetPaymentPlanOptions(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsRequest request) {
             return base.Channel.GetPaymentPlanOptions(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsResponse> GetPaymentPlanOptionsAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsRequest request) {
-            return base.Channel.GetPaymentPlanOptionsAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.GetContractPdfResponse GetContractPdf(Webpay.Integration.CSharp.WebpayWS.GetContractPdfRequest request) {
             return base.Channel.GetContractPdf(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetContractPdfResponse> GetContractPdfAsync(Webpay.Integration.CSharp.WebpayWS.GetContractPdfRequest request) {
-            return base.Channel.GetContractPdfAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse AddToBlockList(Webpay.Integration.CSharp.WebpayWS.AddToBlockListRequest request) {
             return base.Channel.AddToBlockList(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse> AddToBlockListAsync(Webpay.Integration.CSharp.WebpayWS.AddToBlockListRequest request) {
-            return base.Channel.AddToBlockListAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesResponse GetAddresses(Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesRequest request) {
             return base.Channel.GetAddresses(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesResponse> GetAddressesAsync(Webpay.Integration.CSharp.WebpayWS.GetCustomerAddressesRequest request) {
-            return base.Channel.GetAddressesAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetAddressesEuResponse GetAddressesEu(Webpay.Integration.CSharp.WebpayWS.GetAddressesEuRequest request) {
             return base.Channel.GetAddressesEu(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetAddressesEuResponse> GetAddressesEuAsync(Webpay.Integration.CSharp.WebpayWS.GetAddressesEuRequest request) {
-            return base.Channel.GetAddressesEuAsync(request);
         }
         
         public string Ping() {
             return base.Channel.Ping();
         }
         
-        public System.Threading.Tasks.Task<string> PingAsync() {
-            return base.Channel.PingAsync();
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsResponse GetPaymentPlanParams(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsRequest request) {
             return base.Channel.GetPaymentPlanParams(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsResponse> GetPaymentPlanParamsAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsRequest request) {
-            return base.Channel.GetPaymentPlanParamsAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse CreateOrderEu(Webpay.Integration.CSharp.WebpayWS.CreateOrderEuRequest request) {
             return base.Channel.CreateOrderEu(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse> CreateOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.CreateOrderEuRequest request) {
-            return base.Channel.CreateOrderEuAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.CloseOrderEuResponse CloseOrderEu(Webpay.Integration.CSharp.WebpayWS.CloseOrderEuRequest request) {
             return base.Channel.CloseOrderEu(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.CloseOrderEuResponse> CloseOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.CloseOrderEuRequest request) {
-            return base.Channel.CloseOrderEuAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuResponse DeliverOrderEu(Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuRequest request) {
             return base.Channel.DeliverOrderEu(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuResponse> DeliverOrderEuAsync(Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuRequest request) {
-            return base.Channel.DeliverOrderEuAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse GetPaymentPlanParamsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request) {
             return base.Channel.GetPaymentPlanParamsEu(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse> GetPaymentPlanParamsEuAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request) {
-            return base.Channel.GetPaymentPlanParamsEuAsync(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse GetPaymentPlanContractDetailsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request) {
             return base.Channel.GetPaymentPlanContractDetailsEu(request);
         }
         
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse> GetPaymentPlanContractDetailsEuAsync(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request) {
-            return base.Channel.GetPaymentPlanContractDetailsEuAsync(request);
-        }
-        
         public Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuResponse GetContractPdfEu(Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuRequest request) {
             return base.Channel.GetContractPdfEu(request);
-        }
-        
-        public System.Threading.Tasks.Task<Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuResponse> GetContractPdfEuAsync(Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuRequest request) {
-            return base.Channel.GetContractPdfEuAsync(request);
         }
     }
 }

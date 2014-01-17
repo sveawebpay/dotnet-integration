@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fa793371-92ce-468f-96fa-1f99315a599b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3fe40eab-5cf0-41fc-aa58-425cf5aa1ee8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
-    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
     <EnableDataBinding>true</EnableDataBinding>
     <ExcludedTypes />
     <ImportXmlTypes>false</ImportXmlTypes>
@@ -22,8 +21,8 @@
     <MetadataSource Address="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="sveawebpay.disco" MetadataType="Disco" ID="4bca2496-14ba-4847-855d-95d12e6cc6fe" SourceId="1" SourceUrl="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx?disco" />
-    <MetadataFile FileName="sveawebpay.wsdl" MetadataType="Wsdl" ID="e23e31d6-4469-4dac-a006-7b2a539b631b" SourceId="1" SourceUrl="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx?wsdl" />
+    <MetadataFile FileName="sveawebpay.disco" MetadataType="Disco" ID="a159b6df-73cd-42ed-98ea-0ba9e9b9a102" SourceId="1" SourceUrl="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx?disco" />
+    <MetadataFile FileName="sveawebpay.wsdl" MetadataType="Wsdl" ID="4a092644-816b-4fc5-b7e2-e2de7fc3d23a" SourceId="1" SourceUrl="https://webservices.sveaekonomi.se/webpay_test/sveawebpay.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -33,6 +33,7 @@ The API is built as a *Fluent API*, ie. you can use *method chaining* when imple
 
 To build the dll file, load up the project in Visual studio.
 Choose 'Release' as your solution configuration and press F6.
+(The solution is compatible and will compile properly with .NET Framework 4.0 and higher.)
 
 This will build the dll and place it in bin/release sub-folder of the project.
 

@@ -131,11 +131,6 @@ namespace Webpay.Integration.CSharp.Webservice.Getaddresses
             {
                 errors += "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
             }
-            if (_orderType == null)
-            {
-                errors +=
-                    "MISSING VALUE - orderType is required, use one of: SetOrderTypePaymentPlan() or SetOrderTypeInvoice().\n";
-            }
             if (_nationalNumber == null && _companyId == null)
             {
                 errors +=

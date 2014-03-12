@@ -13,10 +13,11 @@
     * [PaymentPlanPricePerMonth](https://github.com/sveawebpay/dotnet-integration/tree/master#51-paymentplanpricepermonth)
 * [6. GetAddresses](https://github.com/sveawebpay/dotnet-integration/tree/master#6-getaddresses)
 * [7. DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#7-deliverorder)
-    * [Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#71-specify-order)
+    * [Deliver Invoice order](https://github.com/sveawebpay/dotnet-integration/tree/master#71-deliver-invoice-order)
     * [Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#72-other-values)
-* [8. CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#8-closeorder)
-* [9. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#9-response-handler)
+* [8. Credit Invoice](https://github.com/sveawebpay/dotnet-integration/tree/master#8-credit-invoice)
+* [9. CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#9-closeorder)
+* [10. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#10-response-handler)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
@@ -698,16 +699,47 @@ GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ## 7. DeliverOrder                                                           
-Updates the status on a previous created order as delivered. Add rows that you want delivered. The rows will automatically be
-matched with the rows that was sent when creating the order.
-Only applicable for invoice and payment plan payments.
-Returns *DeliverOrderResult* object. Set your store authorization here.
+Use the WebpayConnection.DeliverOrder request to deliver to the customer invoices for fulfilled orders.
+Svea will invoice the customer upon receiving the DeliverOrder request.
+A DeliverOrder request may also be used to partly deliver an order on Invoice orders.
+Add rows that you want delivered. The rows will automatically be matched with the rows that was sent when creating the order.
+When Svea receives the DeliverOrder request the status on the previous created order is set to *delivered*.
+The DeliverOrder functionallity is only applicable to invoice and payment plan payment method payments.
+
+Returns *DeliverOrderEuResponse* object. Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 7.1 Specify order                                                        
-Continue by adding values for products and other. You can add OrderRow, Fee and Discount. Chose the right Item object as parameter.
-You can use the **add** functions with an Item object or an List of Item objects as parameters. 
+### 7.1 Deliver Invoice order
+This works more or less like WebpayConnection.CreateOrder above, and makes use of the same order item information.
+Add the corresponding order id and the order rows that you want delivered before making the DeliverOrder request.
+The specified rows will automatically be matched with the previous rows that was sent when creating the order.
+We recommend storing the order row data to ensure that matching orderrows can be recreated in the DeliverOrder request.
+
+If an item is left out from the DeliverOrder request that was present in the CreateOrder request, a new invoice will be created as the order is assumed to be partially fulfilled.
+Any left out items should not be delivered physically, as they will not be invoiced when the DeliverOrder request is sent.
+
+```csharp
+	var response = WebpayConnection.DeliverOrder(myConfig)
+    .AddOrderRow(
+        Item.OrderRow()
+            .SetArticleNumber("1")
+            .SetQuantity(2)
+            .SetAmountExVat(100.00M)
+            .SetDescription("Specification")
+            .SetName("Prod")
+            .SetUnit("st")
+            .SetVatPercent(25)
+            .SetDiscountPercent(0)
+        )
+        .SetOrderId(1234L) //Recieved from CreateOrder request
+        .SetInvoiceDistributionType(InvoiceDistributionType.Post)
+        .DeliverInvoiceOrder()
+            .DoRequest();
+```
+
+You can add OrderRow, Fee and Discount. Choose the right Item as parameter.
+You can use the **.Add** functions with an Item or list of Items as parameters.
 
 ```csharp
 .AddOrderRow(Item.OrderRow(). ...)
@@ -717,7 +749,7 @@ You can use the **add** functions with an Item object or an List of Item objects
 List<OrderRowBuilder> orderRows = new List<OrderRowBuilder>(); //or use another preferrable List object
 orderRows.Add(Item.OrderRow(). ...)
 ...
-CreateOrder.AddOrderRows(orderRows);
+DeliverOrder.AddOrderRows(orderRows);
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -740,7 +772,7 @@ All products and other items. It is required to have a minimum of one row.
 ```csharp
 .AddFee(Item.ShippingFee()
 	.SetAmountExVat(50)               	//Required
-	.SetVatPercent(25.00M)              	//Required
+	.SetVatPercent(25.00M)              //Required
 	.SetShippingId("33")               	//Optional
 	.SetName("shipping")               	//Optional
 	.SetDescription("Specification")   	//Optional        
@@ -766,36 +798,47 @@ If invoice order is credit invoice use setCreditInvoice(invoiceId) and setNumber
     .SetOrderId(orderId)                   								//Required. Received when creating order.
 	.SetCountryCode(CountryCode.SE)		   								//Required
     .SetNumberOfCreditDays(1)              								//Use for invoice orders.
-    .SetInvoiceDistributionType(InvoiceInvoiceDistributionType.POST)  	//Use for invoice orders. DISTRIBUTIONTYPE see APPENDIX
+    .SetInvoiceDistributionType(InvoiceDistributionType.Post)  			//Use for invoice orders. DISTRIBUTIONTYPE see APPENDIX
     .SetCreditInvoice()                    								//Use for invoice orders, if this should be a credit invoice.   
 ```
 
-```csharp
-DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(
-.AddOrderRow(Item.OrderRow()
-	.SetArticleNumber("1")
-	.SetName("Prod")
-	.SetDescription("Specification")
-	.SetQuantity(2)
-	.SetUnit("st")
-	.SetAmountExVat(100.00M)
-	.SetVatPercent(25.00M)
-	.SetDiscountPercent(0))
-		
-.SetOrderId(3434)
-.SetInvoiceDistributionType(InvoiceDistributionType.POST)
-.DeliverInvoiceOrder()	
-	.DoRequest();
-```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 8. CloseOrder                                                             
+## 8. Credit Invoice
+When you want to credit an invoice. The order must first be delivered. When doing [DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#7-deliverorder)
+you will recieve an *InvoiceId* in the Response. To credit the invoice you follow the steps as in [7. DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#7-deliverorder)
+ but you add the call `.SetCreditInvoice(invoiceId)`:
+
+```csharp
+	var response = WebpayConnection.DeliverOrder(myConfig)
+    .AddOrderRow(
+        Item.OrderRow()
+            .SetArticleNumber("1")
+            .SetQuantity(2)
+            .SetAmountExVat(100.00M)
+            .SetDescription("Specification")
+            .SetName("Prod")
+            .SetUnit("st")
+            .SetVatPercent(25)
+            .SetDiscountPercent(0)
+        )
+        .SetOrderId(1234L) //Recieved from CreateOrder request
+        .SetInvoiceDistributionType(InvoiceDistributionType.Post)
+        //Credit invoice flag. Note that you first must deliver the order and recieve an InvoiceId, then do the deliver request again but with this call:
+        .SetCreditInvoice(4321L) //Use for invoice orders, if this should be a credit invoice. Params: InvoiceId recieved from when doing DeliverOrder
+        .DeliverInvoiceOrder()
+            .DoRequest();
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+## 9. CloseOrder                                                             
 Use when you want to cancel an undelivered order. Valid only for invoice and payment plan orders. 
 Required is the order id received when creating the order. Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 8.1 Close by payment type                                                
+### 9.1 Close by payment type                                                
 ```csharp
     .CloseInvoiceOrder()
 or
@@ -811,7 +854,7 @@ CloseOrderEuResponse response =  WebpayConnection.CloseOrder()
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 9. Response handler                                                       
+## 10. Response handler                                                       
 All synchronous responses are handled through *SveaResponse* and structured into objects.
 Asynchronous responses recieved after sending the values *merchantid* and *xmlMessageBase64* to
 hosted solutions can also be processed through the *SveaResponse* class.

@@ -315,28 +315,32 @@ namespace Webpay.Integration.CSharp.Order.Create
         public CustomerIdentity GetSoapPurifiedCustomer()
         {
             var customer = new CustomerIdentity
-                {
-                    CoAddress = CustomerId.CoAddress,
-                    CompanyIdentity =
-                        (CustomerId.CountryCode != null && CustomerId.CountryCode == "SE")
-                            ? null
-                            : CustomerId.CompanyIdentity,
-                    CountryCode = CustomerId.CountryCode,
-                    CustomerType = CustomerId.CustomerType,
-                    Email = CustomerId.Email,
-                    FullName = CustomerId.FullName,
-                    HouseNumber = CustomerId.HouseNumber,
-                    IndividualIdentity =
-                        (CustomerId.CountryCode != null && CustomerId.CountryCode == "SE")
-                            ? null
-                            : CustomerId.IndividualIdentity,
-                    IpAddress = CustomerId.IpAddress,
-                    Locality = CustomerId.Locality,
-                    NationalIdNumber = CustomerId.NationalIdNumber,
-                    PhoneNumber = CustomerId.PhoneNumber,
-                    Street = CustomerId.Street,
-                    ZipCode = CustomerId.ZipCode
-                };
+            {
+                CoAddress = CustomerId.CoAddress,
+                CompanyIdentity =
+                    (CustomerId.CountryCode != null && (
+                            CustomerId.CountryCode != "DE" &&
+                            CustomerId.CountryCode != "NL"))
+                        ? null
+                        : CustomerId.CompanyIdentity,
+                CountryCode = CustomerId.CountryCode,
+                CustomerType = CustomerId.CustomerType,
+                Email = CustomerId.Email,
+                FullName = CustomerId.FullName,
+                HouseNumber = CustomerId.HouseNumber,
+                IndividualIdentity =
+                    (CustomerId.CountryCode != null && (
+                            CustomerId.CountryCode != "DE" &&
+                            CustomerId.CountryCode != "NL"))
+                        ? null
+                        : CustomerId.IndividualIdentity,
+                IpAddress = CustomerId.IpAddress,
+                Locality = CustomerId.Locality,
+                NationalIdNumber = CustomerId.NationalIdNumber,
+                PhoneNumber = CustomerId.PhoneNumber,
+                Street = CustomerId.Street,
+                ZipCode = CustomerId.ZipCode
+            };
 
             return customer;
         }

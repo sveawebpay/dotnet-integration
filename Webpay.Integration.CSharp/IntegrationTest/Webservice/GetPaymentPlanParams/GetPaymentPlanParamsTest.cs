@@ -18,10 +18,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
 
             Assert.That(response.ResultCode, Is.EqualTo(0));
             Assert.IsTrue(response.Accepted);
-            Assert.That(response.CampaignCodes.Length, Is.EqualTo(3));
+            Assert.That(response.CampaignCodes.Length, Is.EqualTo(4));
             Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(213060));
-            Assert.That(response.CampaignCodes[1].CampaignCode, Is.EqualTo(310012));
-            Assert.That(response.CampaignCodes[2].CampaignCode, Is.EqualTo(410024));
+            Assert.That(response.CampaignCodes[1].CampaignCode, Is.EqualTo(223060));
+            Assert.That(response.CampaignCodes[2].CampaignCode, Is.EqualTo(310012));
+            Assert.That(response.CampaignCodes[3].CampaignCode, Is.EqualTo(410024));
         }
 
         [Test]

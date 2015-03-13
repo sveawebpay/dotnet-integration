@@ -27,8 +27,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
             List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(2000.0M, paymentPlanParams);
 
             Assert.That(result[0]["campaignCode"], Is.EqualTo(213060));
-            Assert.That(result[0]["pricePerMonth"], Is.EqualTo(2029));
-            Assert.That(result[1]["pricePerMonth"], Is.EqualTo(202));
+            Assert.That(result[1]["pricePerMonth"], Is.EqualTo(2029));
+            Assert.That(result[2]["pricePerMonth"], Is.EqualTo(202));
         }
 
         [Test]

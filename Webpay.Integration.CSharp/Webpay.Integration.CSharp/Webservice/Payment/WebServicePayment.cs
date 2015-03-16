@@ -6,6 +6,8 @@ using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Helper;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Webpay.Integration.CSharp.Webservice.Payment
 {
@@ -58,8 +60,10 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
 
             var sveaOrder = new CreateOrderEuRequest {Auth = GetPasswordBasedAuthorization()};
 
+            var allPricesAreSpecifiedIncVat = CrOrderBuilder.GetOrderRows().All(orderRow => orderRow.GetAmountIncVat() != null);
             var formatter = new WebServiceRowFormatter<CreateOrderBuilder>(CrOrderBuilder);
             List<OrderRow> formattedOrderRows = formatter.FormatRows();
+            formattedOrderRows.ForEach(orderRow=>orderRow.PriceIncludingVat=allPricesAreSpecifiedIncVat);
 
             // make order rows and put in CreateOrderInformation
             OrderInfo = new CreateOrderInformation
@@ -76,7 +80,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                                    : null,
                     OrderDate = CrOrderBuilder.GetOrderDate(),
                     CustomerReference = CrOrderBuilder.GetCustomerReference(),
-                    OrderRows = formattedOrderRows.ToArray()
+                    OrderRows = formattedOrderRows.ToArray(),
                 };
 
             sveaOrder.CreateOrderInformation = SetOrderType(OrderInfo);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Calculation;
@@ -46,6 +47,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             _totalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
 
             List<OrderRowBuilder> orderRows = _order.GetOrderRows();
+
             foreach (OrderRowBuilder existingRow in orderRows)
             {
                 decimal vatPercent = existingRow.GetVatPercent().GetValueOrDefault();
@@ -122,6 +124,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         private void FormatRowLists(IEnumerable<IRowBuilder> rows)
         {
+            var allPricesAreSpecifiedIncVat = rows.All(orderRow => orderRow.GetAmountIncVat() != null);
+
             foreach (var existingRow in rows)
             {
                 if (existingRow is FixedDiscountBuilder)
@@ -210,7 +214,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 else
                 {
                     _newRows.Add(SerializeAmountAndVat(existingRow.GetAmountExVat(), existingRow.GetVatPercent(),
-                                                       existingRow.GetAmountIncVat(), NewRowBasedOnExisting(existingRow)));
+                                                       existingRow.GetAmountIncVat(), NewRowBasedOnExisting(existingRow), allPricesAreSpecifiedIncVat));
                 }
             }
         }
@@ -291,8 +295,9 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return orderRow;
         }
 
-        private OrderRow SerializeAmountAndVat(decimal? amountExVat, decimal? vatPercent, decimal? amountIncVat, OrderRow orderRow)
+        private OrderRow SerializeAmountAndVat(decimal? amountExVat, decimal? vatPercent, decimal? amountIncVat, OrderRow orderRow, bool allPricesAreSpecifiedIncVat)
         {
+
             if (vatPercent != null && amountExVat != null)
             {
                 orderRow.PricePerUnit = MathUtil.BankersRound(amountExVat.GetValueOrDefault());
@@ -300,13 +305,19 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             }
             else if (vatPercent != null && amountIncVat != null)
             {
-                orderRow.PricePerUnit = MathUtil.BankersRound(amountIncVat.GetValueOrDefault() /
-                                                              ((0.01M * vatPercent.GetValueOrDefault()) + 1));
+                var value = allPricesAreSpecifiedIncVat 
+                    ? amountIncVat.GetValueOrDefault() 
+                    : amountIncVat.GetValueOrDefault()/((0.01M*vatPercent.GetValueOrDefault()) + 1);
+
+                orderRow.PricePerUnit = MathUtil.BankersRound(value);
                 orderRow.VatPercent = vatPercent.GetValueOrDefault();
             }
             else if (amountExVat != null && amountIncVat != null)
             {
-                orderRow.PricePerUnit = MathUtil.BankersRound(amountExVat.GetValueOrDefault());
+                var amount = allPricesAreSpecifiedIncVat 
+                    ? amountIncVat.GetValueOrDefault() 
+                    : amountExVat.GetValueOrDefault();
+                orderRow.PricePerUnit = MathUtil.BankersRound(amount);
                 orderRow.VatPercent = ((amountIncVat.GetValueOrDefault() / amountExVat.GetValueOrDefault()) - 1) * 100;
             }
             return orderRow;

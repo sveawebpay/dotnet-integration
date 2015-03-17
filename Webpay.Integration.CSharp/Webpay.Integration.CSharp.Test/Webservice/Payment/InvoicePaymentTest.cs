@@ -385,7 +385,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             var orderRow1 = request.CreateOrderInformation.OrderRows[0];
             Assert.That(orderRow1.ArticleNumber, Is.EqualTo("1"));
             Assert.That(orderRow1.Description, Is.EqualTo("Prod: Specification"));
-            Assert.That(orderRow1.PricePerUnit, Is.EqualTo(100.00));
+            Assert.That(orderRow1.PricePerUnit, Is.EqualTo(125.00M));
             Assert.That(orderRow1.NumberOfUnits, Is.EqualTo(2));
             Assert.That(orderRow1.Unit, Is.EqualTo("st"));
             Assert.That(orderRow1.VatPercent, Is.EqualTo(25));
@@ -395,7 +395,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             var orderRow2 = request.CreateOrderInformation.OrderRows[1];
             Assert.That(orderRow2.ArticleNumber, Is.EqualTo("33"));
             Assert.That(orderRow2.Description, Is.EqualTo("shipping: Specification"));
-            Assert.That(orderRow2.PricePerUnit, Is.EqualTo(50));
+            Assert.That(orderRow2.PricePerUnit, Is.EqualTo(62.50M));
             Assert.That(orderRow2.NumberOfUnits, Is.EqualTo(1));
             Assert.That(orderRow2.Unit, Is.EqualTo("st"));
             Assert.That(orderRow2.VatPercent, Is.EqualTo(25));
@@ -405,7 +405,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             var orderRow3 = request.CreateOrderInformation.OrderRows[2];
             Assert.That(orderRow3.ArticleNumber, Is.EqualTo(""));
             Assert.That(orderRow3.Description, Is.EqualTo("Svea fee: Fee for invoice"));
-            Assert.That(orderRow3.PricePerUnit, Is.EqualTo(50));
+            Assert.That(orderRow3.PricePerUnit, Is.EqualTo(62.50M));
             Assert.That(orderRow3.NumberOfUnits, Is.EqualTo(1));
             Assert.That(orderRow3.Unit, Is.EqualTo("st"));
             Assert.That(orderRow3.VatPercent, Is.EqualTo(25));

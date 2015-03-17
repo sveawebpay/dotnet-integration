@@ -52,11 +52,6 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
         /// <returns>CreateOrderEuRequest</returns>
         public CreateOrderEuRequest PrepareRequest()
         {
-            return PrepareRequestInclOrExclVat(true);
-        }
-
-        private CreateOrderEuRequest PrepareRequestInclOrExclVat(bool tryToCreatePricesInclVat)
-        {
             var errors = ValidateOrder();
             if (errors.Length > 0)
             {

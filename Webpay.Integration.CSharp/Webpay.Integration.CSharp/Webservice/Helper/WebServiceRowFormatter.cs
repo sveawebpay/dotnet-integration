@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Webpay.Integration.CSharp.Order;
+using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Calculation;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -10,6 +11,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
     public class WebServiceRowFormatter<T>
     {
         private readonly OrderBuilder<T> _order;
+        private readonly bool _useIncVatRequestIfPossible;
 
         private decimal _totalAmountExVat;
         private decimal _totalAmountIncVat;
@@ -19,9 +21,14 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         private List<OrderRow> _newRows;
 
-        public WebServiceRowFormatter(OrderBuilder<T> order)
+        public WebServiceRowFormatter(OrderBuilder<T> order) : this(order, true)
+        {
+        }
+
+        public WebServiceRowFormatter(OrderBuilder<T> order, bool useIncVatRequestIfPossible)
         {
             _order = order;
+            _useIncVatRequestIfPossible = useIncVatRequestIfPossible;
         }
 
         public List<OrderRow> FormatRows()
@@ -213,8 +220,12 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 }
                 else
                 {
-                    _newRows.Add(SerializeAmountAndVat(existingRow.GetAmountExVat(), existingRow.GetVatPercent(),
-                                                       existingRow.GetAmountIncVat(), NewRowBasedOnExisting(existingRow), allPricesAreSpecifiedIncVat));
+                    _newRows.Add(SerializeAmountAndVat(
+                            existingRow.GetAmountExVat(), 
+                            existingRow.GetVatPercent(),
+                            existingRow.GetAmountIncVat(), 
+                            NewRowBasedOnExisting(existingRow), 
+                            _useIncVatRequestIfPossible && allPricesAreSpecifiedIncVat));
                 }
             }
         }
@@ -295,7 +306,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return orderRow;
         }
 
-        private OrderRow SerializeAmountAndVat(decimal? amountExVat, decimal? vatPercent, decimal? amountIncVat, OrderRow orderRow, bool allPricesAreSpecifiedIncVat)
+        private OrderRow SerializeAmountAndVat(decimal? amountExVat, decimal? vatPercent, decimal? amountIncVat, OrderRow orderRow, bool useIncVatSpecification)
         {
 
             if (vatPercent != null && amountExVat != null)
@@ -305,22 +316,22 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             }
             else if (vatPercent != null && amountIncVat != null)
             {
-                var value = allPricesAreSpecifiedIncVat 
+                var value = useIncVatSpecification 
                     ? amountIncVat.GetValueOrDefault() 
                     : amountIncVat.GetValueOrDefault()/((0.01M*vatPercent.GetValueOrDefault()) + 1);
 
                 orderRow.PricePerUnit = MathUtil.BankersRound(value);
                 orderRow.VatPercent = vatPercent.GetValueOrDefault();
-                orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat;
+                orderRow.PriceIncludingVat = useIncVatSpecification;
             }
             else if (amountExVat != null && amountIncVat != null)
             {
-                var amount = allPricesAreSpecifiedIncVat 
+                var amount = useIncVatSpecification 
                     ? amountIncVat.GetValueOrDefault() 
                     : amountExVat.GetValueOrDefault();
                 orderRow.PricePerUnit = MathUtil.BankersRound(amount);
                 orderRow.VatPercent = ((amountIncVat.GetValueOrDefault() / amountExVat.GetValueOrDefault()) - 1) * 100;
-                orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat;
+                orderRow.PriceIncludingVat = useIncVatSpecification;
             }
             return orderRow;
         }

@@ -52,6 +52,11 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
         /// <returns>CreateOrderEuRequest</returns>
         public CreateOrderEuRequest PrepareRequest()
         {
+            return PrepareRequestInclOrExclVat(true);
+        }
+
+        private CreateOrderEuRequest PrepareRequestInclOrExclVat(bool tryToCreatePricesInclVat)
+        {
             var errors = ValidateOrder();
             if (errors.Length > 0)
             {
@@ -61,9 +66,10 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
             var sveaOrder = new CreateOrderEuRequest {Auth = GetPasswordBasedAuthorization()};
 
             var allPricesAreSpecifiedIncVat = CrOrderBuilder.GetOrderRows().All(orderRow => orderRow.GetAmountIncVat() != null);
+
             var formatter = new WebServiceRowFormatter<CreateOrderBuilder>(CrOrderBuilder);
             List<OrderRow> formattedOrderRows = formatter.FormatRows();
-            formattedOrderRows.ForEach(orderRow=>orderRow.PriceIncludingVat=allPricesAreSpecifiedIncVat);
+            formattedOrderRows.ForEach(orderRow => orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat);
 
             // make order rows and put in CreateOrderInformation
             OrderInfo = new CreateOrderInformation
@@ -108,7 +114,8 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                            new EndpointAddress(
                                                CrOrderBuilder.GetConfig().GetEndPoint(PayType)));
 
-            return Soapsc.CreateOrderEu(request);
+            var createOrderEuResponse = Soapsc.CreateOrderEu(request);
+            return createOrderEuResponse;
         }
 
         protected abstract CreateOrderInformation SetOrderType(CreateOrderInformation information);

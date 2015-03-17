@@ -311,6 +311,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                 orderRow.PricePerUnit = MathUtil.BankersRound(value);
                 orderRow.VatPercent = vatPercent.GetValueOrDefault();
+                orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat;
             }
             else if (amountExVat != null && amountIncVat != null)
             {
@@ -319,6 +320,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     : amountExVat.GetValueOrDefault();
                 orderRow.PricePerUnit = MathUtil.BankersRound(amount);
                 orderRow.VatPercent = ((amountIncVat.GetValueOrDefault() / amountExVat.GetValueOrDefault()) - 1) * 100;
+                orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat;
             }
             return orderRow;
         }

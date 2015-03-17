@@ -382,29 +382,35 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
-            Assert.That(request.CreateOrderInformation.OrderRows[0].ArticleNumber, Is.EqualTo("1"));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].Description, Is.EqualTo("Prod: Specification"));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].PricePerUnit, Is.EqualTo(100.00));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].NumberOfUnits, Is.EqualTo(2));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].Unit, Is.EqualTo("st"));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].VatPercent, Is.EqualTo(25));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].DiscountPercent, Is.EqualTo(0));
+            var orderRow1 = request.CreateOrderInformation.OrderRows[0];
+            Assert.That(orderRow1.ArticleNumber, Is.EqualTo("1"));
+            Assert.That(orderRow1.Description, Is.EqualTo("Prod: Specification"));
+            Assert.That(orderRow1.PricePerUnit, Is.EqualTo(100.00));
+            Assert.That(orderRow1.NumberOfUnits, Is.EqualTo(2));
+            Assert.That(orderRow1.Unit, Is.EqualTo("st"));
+            Assert.That(orderRow1.VatPercent, Is.EqualTo(25));
+            Assert.That(orderRow1.DiscountPercent, Is.EqualTo(0));
+            Assert.That(orderRow1.PriceIncludingVat, Is.True);
 
-            Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("33"));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("shipping: Specification"));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(50));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].Unit, Is.EqualTo("st"));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].DiscountPercent, Is.EqualTo(0));
+            var orderRow2 = request.CreateOrderInformation.OrderRows[1];
+            Assert.That(orderRow2.ArticleNumber, Is.EqualTo("33"));
+            Assert.That(orderRow2.Description, Is.EqualTo("shipping: Specification"));
+            Assert.That(orderRow2.PricePerUnit, Is.EqualTo(50));
+            Assert.That(orderRow2.NumberOfUnits, Is.EqualTo(1));
+            Assert.That(orderRow2.Unit, Is.EqualTo("st"));
+            Assert.That(orderRow2.VatPercent, Is.EqualTo(25));
+            Assert.That(orderRow2.DiscountPercent, Is.EqualTo(0));
+            Assert.That(orderRow2.PriceIncludingVat, Is.True);
 
-            Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(""));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].Description, Is.EqualTo("Svea fee: Fee for invoice"));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].PricePerUnit, Is.EqualTo(50));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].NumberOfUnits, Is.EqualTo(1));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].Unit, Is.EqualTo("st"));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].VatPercent, Is.EqualTo(25));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].DiscountPercent, Is.EqualTo(0));
+            var orderRow3 = request.CreateOrderInformation.OrderRows[2];
+            Assert.That(orderRow3.ArticleNumber, Is.EqualTo(""));
+            Assert.That(orderRow3.Description, Is.EqualTo("Svea fee: Fee for invoice"));
+            Assert.That(orderRow3.PricePerUnit, Is.EqualTo(50));
+            Assert.That(orderRow3.NumberOfUnits, Is.EqualTo(1));
+            Assert.That(orderRow3.Unit, Is.EqualTo("st"));
+            Assert.That(orderRow3.VatPercent, Is.EqualTo(25));
+            Assert.That(orderRow3.DiscountPercent, Is.EqualTo(0));
+            Assert.That(orderRow3.PriceIncludingVat, Is.True);
         }
 
         [Test]
@@ -424,7 +430,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
             Assert.That(request.CreateOrderInformation.OrderRows[0].ArticleNumber, Is.EqualTo("1"));
             Assert.That(request.CreateOrderInformation.OrderRows[0].Description, Is.EqualTo("Prod: Specification"));
-            Assert.That(request.CreateOrderInformation.OrderRows[0].PricePerUnit, Is.EqualTo(100.00));
+            Assert.That(request.CreateOrderInformation.OrderRows[0].PricePerUnit, Is.EqualTo(125.00M));
             Assert.That(request.CreateOrderInformation.OrderRows[0].NumberOfUnits, Is.EqualTo(2));
             Assert.That(request.CreateOrderInformation.OrderRows[0].Unit, Is.EqualTo("st"));
             Assert.That(request.CreateOrderInformation.OrderRows[0].VatPercent, Is.EqualTo(25));
@@ -432,7 +438,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
             Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("33"));
             Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("shipping: Specification"));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(50));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(62.5M));
             Assert.That(request.CreateOrderInformation.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
             Assert.That(request.CreateOrderInformation.OrderRows[1].Unit, Is.EqualTo("st"));
             Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
@@ -440,7 +446,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
             Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(""));
             Assert.That(request.CreateOrderInformation.OrderRows[2].Description, Is.EqualTo("Svea fee: Fee for invoice"));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].PricePerUnit, Is.EqualTo(50));
+            Assert.That(request.CreateOrderInformation.OrderRows[2].PricePerUnit, Is.EqualTo(62.5M));
             Assert.That(request.CreateOrderInformation.OrderRows[2].NumberOfUnits, Is.EqualTo(1));
             Assert.That(request.CreateOrderInformation.OrderRows[2].Unit, Is.EqualTo("st"));
             Assert.That(request.CreateOrderInformation.OrderRows[2].VatPercent, Is.EqualTo(25));

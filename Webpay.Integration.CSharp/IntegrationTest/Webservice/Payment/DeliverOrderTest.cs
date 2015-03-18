@@ -49,17 +49,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestDeliverInvoiceOrderCreatedInclVatDeliveredInclVat()
         {
-            CreateOrderEuResponse response1 = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                              .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
-                                                              .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                              .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                              .SetOrderDate(TestingTool.DefaultTestDate)
-                                                              .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                              .UseInvoicePayment()
-                                                              .DoRequest();
-            long orderId = response1.CreateOrderResult.SveaOrderId;
+            var orderId = CreateIncVatOrderAndReturnOrderId();
 
             DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                               .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
@@ -78,8 +68,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         }
 
 
+
         [Test]
-        public void TestDeliverInvoiceOrderCreatedExclVatDeliveredInclVatRetries()
+        public void TestDeliverInvoiceOrderCreatedExclVatDeliveredInclVatRetriesWithExVat()
         {
             long orderId = CreateExVatInvoiceAndReturnOrderId();
 
@@ -151,5 +142,23 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 
             return response.CreateOrderResult.SveaOrderId;
         }
+
+        private static long CreateIncVatOrderAndReturnOrderId()
+        {
+            CreateOrderEuResponse response1 = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                              .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
+                                                              .AddCustomerDetails(Item.IndividualCustomer()
+                                                                                      .SetNationalIdNumber(
+                                                                                          TestingTool
+                                                                                              .DefaultTestIndividualNationalIdNumber))
+                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                              .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                              .SetOrderDate(TestingTool.DefaultTestDate)
+                                                              .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                              .UseInvoicePayment()
+                                                              .DoRequest();
+            return response1.CreateOrderResult.SveaOrderId;
+        }
+
     }
 }

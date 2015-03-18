@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestDeliverInvoiceOrderResult()
         {
-            long orderId = CreateInvoiceAndReturnOrderId();
+            long orderId = CreateExVatInvoiceAndReturnOrderId();
 
             DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -81,17 +81,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         [Test]
         public void TestDeliverInvoiceOrderCreatedExclVatDeliveredInclVatRetries()
         {
-            CreateOrderEuResponse response1 = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                                                              .AddCustomerDetails(Item.IndividualCustomer()
-                                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                              .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                              .SetOrderDate(TestingTool.DefaultTestDate)
-                                                              .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                              .UseInvoicePayment()
-                                                              .DoRequest();
-            long orderId = response1.CreateOrderResult.SveaOrderId;
+            long orderId = CreateExVatInvoiceAndReturnOrderId();
 
             DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                               .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
@@ -146,7 +136,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.That(deliverOrderResponse.Accepted, Is.True);
         }
 
-        private long CreateInvoiceAndReturnOrderId()
+        private long CreateExVatInvoiceAndReturnOrderId()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))

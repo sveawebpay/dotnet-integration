@@ -127,7 +127,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
 
         // same order with discount exvat should be sent with PriceIncludingVat = true but with split discount rows based on order amounts ex vat
 
-        // same order with discount exvat+vat should be sent with PriceIncludingVat = false with one discount row amount based on given exvat + vat
+        // same order with discount exvat+vat should be sent with PriceIncludingVat = true with one discount row amount based on given exvat + vat
         [Test]
         public void TestIncvatOrderWithFixedDiscountAsExvatAndVatpercentHasPriceIncludingVatTrue()
         {
@@ -208,7 +208,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             // See file IntegrationTest/WebService/Payment/FixedDiscountRowsIntegrationTest for service response tests.
         }
 
-        // same order with discount incvat+vat should be sent with PriceIncludingVat = false with one discount row amount based on given incvat + vat
+        // same order with discount incvat+vat should be sent with PriceIncludingVat = true with one discount row amount based on given incvat + vat
         [Test]
         public void TestIncvatOrderWithFixedDiscountAsIncvatAndVatpercentHasPriceIncludingVatTrue()
         {

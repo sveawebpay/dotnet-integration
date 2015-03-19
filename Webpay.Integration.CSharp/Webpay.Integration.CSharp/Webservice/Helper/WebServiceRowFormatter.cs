@@ -131,7 +131,6 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         private void FormatRowLists(IEnumerable<IRowBuilder> rows)
         {
-            var allPricesAreSpecifiedIncVat = rows.All(orderRow => orderRow.GetAmountIncVat() != null);
 
             foreach (var existingRow in rows)
             {
@@ -220,6 +219,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 }
                 else
                 {
+                    var allPricesAreSpecifiedIncVat = rows.All(orderRow => orderRow.GetAmountIncVat() != null);
                     _newRows.Add(SerializeAmountAndVat(
                             existingRow.GetAmountExVat(), 
                             existingRow.GetVatPercent(),

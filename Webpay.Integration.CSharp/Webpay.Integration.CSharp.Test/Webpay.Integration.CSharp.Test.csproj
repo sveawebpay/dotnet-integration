@@ -61,6 +61,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Webservice\Helper\ConverterTest.cs" />
     <Compile Include="Webservice\Payment\FixedDiscountRowsTest.cs" />
     <Compile Include="Hosted\Helper\PaymentFormTest.cs" />
     <Compile Include="Hosted\Helper\HostedXmlBuilderTest.cs" />

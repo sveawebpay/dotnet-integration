@@ -142,14 +142,29 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     {
                         newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
                         newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
-                        var incVatAmount = orderRow.GetAmountExVat().GetValueOrDefault() * (100 + orderRow.GetVatPercent().GetValueOrDefault()) / 100;
+                        var incVatAmount = orderRow.GetAmountExVat().GetValueOrDefault()*
+                                           (100 + orderRow.GetVatPercent().GetValueOrDefault())/100;
                         newRow.SetAmountIncVat(incVatAmount);
-                    } 
+                    }
+                    else
+                    {
+                        throw new SveaWebPayValidationException("Order is inconsistent. You need to set at least two of SetAmountIncVat, SetAmountExVat and SetVatPercent. If you set all three, make sure their values are consistent.");
+                    }
+
+                    CheckConsistency(newRow);
 
                     return newRow;
                 });
             order.NewOrderRows.AddRange(newRows);
             return order;
+        }
+
+        private static void CheckConsistency(OrderRowBuilder newRow)
+        {
+            if (newRow.GetAmountIncVat() - newRow.GetAmountExVat()*(100+newRow.GetVatPercent())/100 != 0)
+            {
+                throw new SveaWebPayValidationException(string.Format("Orderrow amounts and vat is inconsistent for row. Ex vat: {0} Inc vat: {1} Vat: {2}", newRow.GetAmountExVat(), newRow.GetAmountIncVat(), newRow.GetVatPercent()));
+            }
         }
 
 

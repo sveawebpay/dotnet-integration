@@ -91,6 +91,20 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
         [Test]
+        public void FillMissingValuesExVatIncVatAndVatGivenConsistently()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountIncVat(125.00M)
+                                                                        .SetAmountExVat(100.00M)
+                                                                        .SetVatPercent(25));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            AssertVat(result, 0, 25);
+            AssertAmountEx(result, 0, 100M);
+            AssertAmountInc(result, 0, 125M);
+        }
+
+        [Test]
         public void FillMissingValuesGivenExAndVat()
         {
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
@@ -129,6 +143,45 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                         .SetAmountExVat(0));
             var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
+
+        [Test, ExpectedException(typeof(SveaWebPayValidationException))]
+        public void FillMissingValuesInconsistentThrowsOnlyAmountIncVat()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountIncVat(10M));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+        }
+
+        [Test, ExpectedException(typeof(SveaWebPayValidationException))]
+        public void FillMissingValuesInconsistentThrowsOnlyAmountExVat()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountExVat(10M));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+        }
+
+        [Test, ExpectedException(typeof(SveaWebPayValidationException))]
+        public void FillMissingValuesInconsistentThrowsOnlyVat()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetVatPercent(10));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+        }
+
+        [Test, ExpectedException(typeof(SveaWebPayValidationException))]
+        public void FillMissingValuesAllValuesSetButInconsistently()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetVatPercent(10)
+                                                                        .SetAmountExVat(33)
+                                                                        .SetAmountIncVat(110));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+        }
+
 
 
         private void AssertAmountInc(WebServiceRowFormatter<CreateOrderBuilder>.Order result, int item, decimal amount)

@@ -72,6 +72,20 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
         [Test]
+        public void FillMissingValuesGivenIncAndExVatBothZero()
+        {
+            var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountExVat(0)
+                                                                        .SetAmountIncVat(0));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            AssertVat(result, 0, 0);
+            AssertAmountEx(result, 0, 0);
+            AssertAmountInc(result, 0, 0);
+        }
+
+
+        [Test]
         public void FillMissingValuesGivenIncAndVat()
         {
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

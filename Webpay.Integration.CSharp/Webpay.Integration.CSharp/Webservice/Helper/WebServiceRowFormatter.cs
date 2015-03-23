@@ -34,7 +34,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             _useIncVatRequestIfPossible = useIncVatRequestIfPossible;
         }
 
-        public List<OrderRow> FormatRowsOld()
+        private List<OrderRow> FormatRowsOld()
         {
             _newRows = new List<OrderRow>();
 
@@ -56,13 +56,15 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             public Dictionary<decimal, decimal> TotalAmountPerVatRateIncVat { get; private set; }
             public bool AllPricesAreSpecifiedIncVat { get; set; }
             public OrderBuilder<T> Original { get; private set; }
-            public List<OrderBuilder<T>> NewOrderRows { get; private set; }
+            public List<OrderRowBuilder> NewOrderRows { get; private set; }
+            public OrderRequest WsOrderRequest { get; private set; }
 
             public Order(OrderBuilder<T> original)
             {
                 Original = original;
-                NewOrderRows = new List<OrderBuilder<T>>();
+                NewOrderRows = new List<OrderRowBuilder>();
                 TotalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
+                WsOrderRequest = new OrderRequest();
             }
         }
 
@@ -70,7 +72,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         {
             _newRows = new List<OrderRow>();
 
-            Order res = new Maybe<OrderBuilder<T>>(_order)
+            List<OrderRow> res = new Maybe<OrderBuilder<T>>(_order)
                 .And(ConvertToOrder)
                 .And(CheckIfRowsIncVat)
                 .And(FillMissingValues)
@@ -80,15 +82,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 .And(ConvertToWebserviceOrder)
                 .Value;
 
-
-            CalculateTotals();
-
-            FormatOrderRows();
-            FormatShippingFeeRows();
-            FormatInvoiceFeeRows();
-            FormatFixedDiscountRows();
-            FormatRelativeDiscountRows();
-            return _newRows;
+            return res;
         }
 
         public static Order ConvertToOrder(OrderBuilder<T> orderBuilder)
@@ -104,12 +98,37 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public static Order FillMissingValues(Order order)
         {
-            order.Original.GetOrderRows().ConvertAll(orderRow =>
+            var newRows = order.Original.GetOrderRows().ConvertAll(orderRow =>
                 {
-                    var newRow = NewRowBasedOnExisting(orderRow);
+                    var newRow = Item
+                        .OrderRow()
+                        .SetArticleNumber(orderRow.GetArticleNumber())
+                        .SetDescription(orderRow.GetDescription())
+                        .SetName(orderRow.GetName())
+                        .SetQuantity(orderRow.GetQuantity())
+                        .SetUnit(orderRow.GetUnit());
+                    if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null &&
+                        orderRow.GetVatPercent() != null)
+                    {
+                        newRow.SetAmountExVat((decimal)orderRow.GetAmountExVat());
+                        newRow.SetAmountIncVat((decimal)orderRow.GetAmountIncVat());
+                        newRow.SetVatPercent((decimal)orderRow.GetVatPercent());
+                    }
+                    else if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null)
+                    {
+                        newRow.SetAmountExVat((decimal)orderRow.GetAmountExVat());
+                        newRow.SetAmountIncVat((decimal)orderRow.GetAmountIncVat());
+                        var vat = orderRow.GetAmountExVat() == 0 || orderRow.GetAmountIncVat() == 0
+                                      ? 0
+                                      : (orderRow.GetAmountIncVat() - orderRow.GetAmountExVat()) /
+                                        orderRow.GetAmountExVat();
+                        var vatPercent = MathUtil.BankersRound((decimal)(vat * 100));
+                        newRow.SetVatPercent(vatPercent);
+                    }
 
                     return newRow;
                 });
+            order.NewOrderRows.AddRange(newRows);
             return order;
         }
 
@@ -191,9 +210,9 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        public static Order ConvertToWebserviceOrder(Order order)
+        public static List<OrderRow> ConvertToWebserviceOrder(Order order)
         {
-            return order;
+            return order.NewOrderRows.ConvertAll(NewRowBasedOnExisting);
         }
 
 

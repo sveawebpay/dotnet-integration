@@ -11,6 +11,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
     [TestFixture]
     public class InvoicePaymentTest
     {
+
         [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe()
         {

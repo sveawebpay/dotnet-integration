@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
@@ -110,21 +111,40 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null &&
                         orderRow.GetVatPercent() != null)
                     {
-                        newRow.SetAmountExVat((decimal)orderRow.GetAmountExVat());
-                        newRow.SetAmountIncVat((decimal)orderRow.GetAmountIncVat());
-                        newRow.SetVatPercent((decimal)orderRow.GetVatPercent());
+                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
+                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+                    }
+                    else if (orderRow.GetAmountIncVat() == 0 && orderRow.GetAmountExVat() > 0 ||
+                             orderRow.GetAmountExVat() == 0 && orderRow.GetAmountIncVat() > 0)
+                    {
+                        throw new SveaWebPayValidationException("Order is inconsistent. Amount excluding and including vat must either both be 0 or both be >0.");
                     }
                     else if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null)
                     {
-                        newRow.SetAmountExVat((decimal)orderRow.GetAmountExVat());
-                        newRow.SetAmountIncVat((decimal)orderRow.GetAmountIncVat());
+                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
                         var vat = orderRow.GetAmountExVat() == 0 || orderRow.GetAmountIncVat() == 0
                                       ? 0
                                       : (orderRow.GetAmountIncVat() - orderRow.GetAmountExVat()) /
                                         orderRow.GetAmountExVat();
-                        var vatPercent = MathUtil.BankersRound((decimal)(vat * 100));
+                        var vatPercent = MathUtil.BankersRound((vat * 100).GetValueOrDefault());
                         newRow.SetVatPercent(vatPercent);
                     }
+                    else if (orderRow.GetVatPercent() != null && orderRow.GetAmountIncVat() != null)
+                    {
+                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
+                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+                        var exVatAmount = orderRow.GetAmountIncVat().GetValueOrDefault()*100/(100 + orderRow.GetVatPercent().GetValueOrDefault());
+                        newRow.SetAmountExVat(exVatAmount);
+                    }
+                    else if (orderRow.GetVatPercent() != null && orderRow.GetAmountExVat() != null)
+                    {
+                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+                        var incVatAmount = orderRow.GetAmountExVat().GetValueOrDefault() * (100 + orderRow.GetVatPercent().GetValueOrDefault()) / 100;
+                        newRow.SetAmountIncVat(incVatAmount);
+                    } 
 
                     return newRow;
                 });

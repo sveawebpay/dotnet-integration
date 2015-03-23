@@ -11,7 +11,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
     public class ConverterTest
     {
         [Test]
-        public void TestConvertOrderBuilderToOrder()
+        public void ConvertOrderBuilderToOrder()
         {
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             var order = WebServiceRowFormatter<CreateOrderBuilder>.ConvertToOrder(orderBuilder);
@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
         [Test]
-        public void TestCheckIfRowsIncVatForSingleRowExVat()
+        public void AllPricesAreSpecifiedIncVatForSingleRowExVat()
         {
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountExVat(12.23M));
@@ -30,7 +30,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
         [Test]
-        public void TestCheckIfRowsIncVatForSingleRowIncVat()
+        public void AllPricesAreSpecifiedIncVatForSingleRowIncVat()
         {
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountIncVat(12.23M));
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
         [Test]
-        public void TestCheckIfRowsIncVatForMixedRows()
+        public void AllPricesAreSpecifiedIncVatForMixedRows()
         {
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountIncVat(12.23M));

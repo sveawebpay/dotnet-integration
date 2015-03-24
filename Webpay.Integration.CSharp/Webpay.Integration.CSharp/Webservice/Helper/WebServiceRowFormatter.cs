@@ -80,7 +80,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 .And(ConvertToOrder)
                 .And(CheckIfRowsIncVat)
                 .And(FillMissingValues)
-                .And(SumByVat)
+                .And(CalculateTotals)
                 .And(ApplyRelativeDiscounts)
                 .And(ApplyFixedDiscounts)
                 .And(ConvertToWebserviceOrder)
@@ -171,7 +171,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         }
 
 
-        public static Order SumByVat(Order order)
+        public static Order CalculateTotals(Order order)
         {
             order.NewOrderRows.ForEach(row=>order.TotalAmountPerVatRateIncVat[row.GetVatPercent().GetValueOrDefault()]=0);
 

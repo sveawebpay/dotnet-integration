@@ -207,7 +207,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(100)
                                     .SetAmountIncVat(125));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(100));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(125));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(25));
@@ -230,7 +230,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(250));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(375));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(75));
@@ -254,7 +254,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(220));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(345));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(45));
@@ -278,7 +278,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(3)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(220));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(2*100 + 3*200));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(2*125 + 3*220));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(2*25 + 3*20));

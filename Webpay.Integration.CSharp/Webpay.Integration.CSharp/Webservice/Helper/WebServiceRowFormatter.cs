@@ -66,6 +66,9 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 NewOrderRows = new List<OrderRowBuilder>();
                 TotalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
                 WsOrderRequest = new OrderRequest();
+                TotalAmountExVat = 0;
+                TotalAmountIncVat = 0;
+                TotalVatAsAmount = 0;
             }
         }
 
@@ -170,68 +173,18 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public static Order SumByVat(Order order)
         {
-            List<OrderRowBuilder> orderRows = order.Original.GetOrderRows();
+            order.NewOrderRows.ForEach(row=>order.TotalAmountPerVatRateIncVat[row.GetVatPercent().GetValueOrDefault()]=0);
 
-            foreach (OrderRowBuilder existingRow in orderRows)
-            {
-                decimal vatPercent = existingRow.GetVatPercent().GetValueOrDefault();
-                decimal vatPercentAsHundredth = vatPercent / 100;
-
-                decimal amountExVat = existingRow.GetAmountExVat().GetValueOrDefault();
-                decimal amountIncVat = existingRow.GetAmountIncVat().GetValueOrDefault();
-                decimal quantity = existingRow.GetQuantity();
-
-                if (existingRow.GetVatPercent() != null && existingRow.GetAmountExVat() != null)
+            order.NewOrderRows.ForEach(row =>
                 {
-                    order.TotalAmountExVat += amountExVat * quantity;
-                    order.TotalVatAsAmount += vatPercentAsHundredth * amountExVat * quantity;
-                    order.TotalAmountIncVat += (amountExVat + (vatPercentAsHundredth * amountExVat)) * quantity;
+                    order.TotalAmountExVat += row.GetAmountExVat().GetValueOrDefault() * row.GetQuantity();
+                    order.TotalAmountIncVat += row.GetAmountIncVat().GetValueOrDefault() * row.GetQuantity();
+                    order.TotalAmountPerVatRateIncVat[row.GetVatPercent().GetValueOrDefault()] +=
+                        row.GetAmountIncVat().GetValueOrDefault() * row.GetQuantity();
+                });
 
-                    if (order.TotalAmountPerVatRateIncVat.ContainsKey(vatPercent))
-                    {
-                        order.TotalAmountPerVatRateIncVat[vatPercent] +=
-                            (amountExVat * quantity * (1 + vatPercentAsHundredth));
-                    }
-                    else
-                    {
-                        order.TotalAmountPerVatRateIncVat.Add(vatPercent, amountExVat * quantity * (1 + vatPercentAsHundredth));
-                    }
-                }
-                else if (existingRow.GetVatPercent() != null && existingRow.GetAmountIncVat() != null)
-                {
-                    order.TotalAmountIncVat += amountIncVat * quantity;
-                    order.TotalVatAsAmount += (vatPercentAsHundredth / (1 + vatPercentAsHundredth)) * amountIncVat * quantity;
-                    order.TotalAmountExVat += (amountIncVat - ((vatPercentAsHundredth / (1 + vatPercentAsHundredth)) * amountIncVat)) * quantity;
+            order.TotalVatAsAmount = order.TotalAmountIncVat - order.TotalAmountExVat;
 
-                    if (order.TotalAmountPerVatRateIncVat.ContainsKey(vatPercent))
-                    {
-                        order.TotalAmountPerVatRateIncVat[vatPercent] += amountIncVat * quantity;
-                    }
-                    else
-                    {
-                        order.TotalAmountPerVatRateIncVat.Add(vatPercent, amountIncVat * quantity);
-                    }
-                }
-                else
-                {
-                    order.TotalAmountIncVat += amountIncVat * quantity;
-                    order.TotalAmountExVat += amountExVat * quantity;
-                    order.TotalVatAsAmount += (amountIncVat - amountExVat) * quantity;
-
-                    decimal vatRate = (amountIncVat == 0.0M || amountExVat == 0.0M) ? 0 :
-                        ((amountIncVat / amountExVat) - 1) * 100;
-
-                    if (order.TotalAmountPerVatRateIncVat.ContainsKey(vatRate))
-                    {
-                        order.TotalAmountPerVatRateIncVat[vatRate] +=
-                            (amountExVat * quantity * (1 + vatRate / 100));
-                    }
-                    else
-                    {
-                        order.TotalAmountPerVatRateIncVat.Add(vatRate, amountExVat * quantity * (1 + vatRate / 100));
-                    }
-                }
-            }
             return order;
         }
 
@@ -249,9 +202,6 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         {
             return order.NewOrderRows.ConvertAll(NewRowBasedOnExisting);
         }
-
-
-
 
         private void CalculateTotals()
         {

@@ -197,6 +197,96 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
 
+        [Test]
+        public void SumByVatSingleRow()
+        {
+            var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
+            var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(25)
+                                    .SetQuantity(1)
+                                    .SetAmountExVat(100)
+                                    .SetAmountIncVat(125));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            Assert.That(result.TotalAmountExVat, Is.EqualTo(100));
+            Assert.That(result.TotalAmountIncVat, Is.EqualTo(125));
+            Assert.That(result.TotalVatAsAmount, Is.EqualTo(25));
+            Assert.That(result.TotalAmountPerVatRateIncVat[25], Is.EqualTo(125));
+            Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void SumByVatMultipleRowsSameVat()
+        {
+            var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
+            var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(25)
+                                    .SetQuantity(1)
+                                    .SetAmountExVat(100)
+                                    .SetAmountIncVat(125));
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(25)
+                                    .SetQuantity(1)
+                                    .SetAmountExVat(200)
+                                    .SetAmountIncVat(250));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
+            Assert.That(result.TotalAmountIncVat, Is.EqualTo(375));
+            Assert.That(result.TotalVatAsAmount, Is.EqualTo(75));
+            Assert.That(result.TotalAmountPerVatRateIncVat[25], Is.EqualTo(375));
+            Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(1));
+        }
+
+
+        [Test]
+        public void SumByVatMultipleRowsDifferentVat()
+        {
+            var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
+            var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(25)
+                                    .SetQuantity(1)
+                                    .SetAmountExVat(100)
+                                    .SetAmountIncVat(125));
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(10)
+                                    .SetQuantity(1)
+                                    .SetAmountExVat(200)
+                                    .SetAmountIncVat(220));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
+            Assert.That(result.TotalAmountIncVat, Is.EqualTo(345));
+            Assert.That(result.TotalVatAsAmount, Is.EqualTo(45));
+            Assert.That(result.TotalAmountPerVatRateIncVat[25], Is.EqualTo(125));
+            Assert.That(result.TotalAmountPerVatRateIncVat[10], Is.EqualTo(220));
+            Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void SumByVatMultipleRowsDifferentVatDifferentQuantity()
+        {
+            var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
+            var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(25)
+                                    .SetQuantity(2)
+                                    .SetAmountExVat(100)
+                                    .SetAmountIncVat(125));
+            order.NewOrderRows.Add(Item.OrderRow()
+                                    .SetVatPercent(10)
+                                    .SetQuantity(3)
+                                    .SetAmountExVat(200)
+                                    .SetAmountIncVat(220));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.SumByVat(order);
+            Assert.That(result.TotalAmountExVat, Is.EqualTo(2*100 + 3*200));
+            Assert.That(result.TotalAmountIncVat, Is.EqualTo(2*125 + 3*220));
+            Assert.That(result.TotalVatAsAmount, Is.EqualTo(2*25 + 3*20));
+            Assert.That(result.TotalAmountPerVatRateIncVat[25], Is.EqualTo(2 * 125));
+            Assert.That(result.TotalAmountPerVatRateIncVat[10], Is.EqualTo(3 * 220));
+            Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(2));
+        }
+
 
         private void AssertAmountInc(WebServiceRowFormatter<CreateOrderBuilder>.Order result, int item, decimal amount)
         {

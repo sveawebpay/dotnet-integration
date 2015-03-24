@@ -200,7 +200,24 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public static List<OrderRow> ConvertToWebserviceOrder(Order order)
         {
-            return order.NewOrderRows.ConvertAll(NewRowBasedOnExisting);
+            var res =  order.NewOrderRows.ConvertAll(row =>
+                {
+                    var wsRow = new OrderRow
+                        {
+                            NumberOfUnits = row.GetQuantity(),
+                            ArticleNumber = row.GetArticleNumber(),
+                            Description = string.Format("{0}: {1}", row.GetName(), row.GetDescription()),
+                            PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
+                            PricePerUnit = order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault(),
+                            DiscountPercent = 0,
+                            Unit = row.GetUnit(),
+                            VatPercent = row.GetVatPercent().GetValueOrDefault()
+                        };
+                    return wsRow;
+                });
+
+            return res;
+
         }
 
         private void CalculateTotals()

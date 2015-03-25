@@ -1,6 +1,6 @@
 ﻿namespace Webpay.Integration.CSharp.Order.Row
 {
-    public class OrderRowBuilder : IRowBuilder
+    public class OrderRowBuilder : IRowBuilder, IPriced<OrderRowBuilder>
     {
         private string _articleNumber;
         private string _name;

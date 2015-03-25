@@ -79,6 +79,7 @@
     <Compile Include="Order\OrderBuilder.cs" />
     <Compile Include="Order\Row\FixedDiscountBuilder.cs" />
     <Compile Include="Order\Row\InvoiceFeeBuilder.cs" />
+    <Compile Include="Order\Row\IPriced.cs" />
     <Compile Include="Order\Row\IRowBuilder.cs" />
     <Compile Include="Order\Row\Item.cs" />
     <Compile Include="Order\Row\OrderRowBuilder.cs" />

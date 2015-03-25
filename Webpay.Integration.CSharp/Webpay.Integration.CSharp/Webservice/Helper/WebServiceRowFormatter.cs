@@ -57,13 +57,18 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             public Dictionary<decimal, decimal> TotalAmountPerVatRateIncVat { get; private set; }
             public bool AllPricesAreSpecifiedIncVat { get; set; }
             public OrderBuilder<T> Original { get; private set; }
-            public List<OrderRowBuilder> NewOrderRows { get; private set; }
             public OrderRequest WsOrderRequest { get; private set; }
+
+            public List<OrderRowBuilder> NewOrderRows { get; private set; }
+            public List<ShippingFeeBuilder> NewShippingFeeRows { get; private set; }
+            public List<InvoiceFeeBuilder> NewInvoiceFeeRows { get; private set; }
 
             public Order(OrderBuilder<T> original)
             {
                 Original = original;
                 NewOrderRows = new List<OrderRowBuilder>();
+                NewShippingFeeRows = new List<ShippingFeeBuilder>();
+                NewInvoiceFeeRows = new List<InvoiceFeeBuilder>();
                 TotalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
                 WsOrderRequest = new OrderRequest();
                 TotalAmountExVat = 0;
@@ -83,11 +88,55 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 .And(CalculateTotals)
                 .And(ApplyRelativeDiscounts)
                 .And(ApplyFixedDiscounts)
+                .And(AddShippingFees)
+                .And(AddInvoiceFees)
                 .And(ConvertToWebserviceOrder)
                 .Value;
 
             return res;
         }
+
+
+        private static Order AddShippingFees(Order order)
+        {
+            var newRows = order.Original.GetShippingFeeRows().ConvertAll(shippingFeeRow =>
+                {
+                    var newRow = Item
+                        .ShippingFee()
+                        .SetDescription(shippingFeeRow.GetDescription())
+                        .SetName(shippingFeeRow.GetName())
+                        .SetUnit(shippingFeeRow.GetUnit());
+
+                    FillMissingVatAndAmount(shippingFeeRow, newRow);
+
+                    CheckConsistency(newRow);
+
+                    return newRow;
+                });
+            order.NewShippingFeeRows.AddRange(newRows);
+            return order;
+        }
+
+        private static Order AddInvoiceFees(Order order)
+        {
+            var newRows = order.Original.GetInvoiceFeeRows().ConvertAll(shippingFeeRow =>
+            {
+                var newRow = Item
+                    .InvoiceFee()
+                    .SetDescription(shippingFeeRow.GetDescription())
+                    .SetName(shippingFeeRow.GetName())
+                    .SetUnit(shippingFeeRow.GetUnit());
+
+                FillMissingVatAndAmount(shippingFeeRow, newRow);
+
+                CheckConsistency(newRow);
+
+                return newRow;
+            });
+            order.NewInvoiceFeeRows.AddRange(newRows);
+            return order;
+        }
+
 
         public static Order ConvertToOrder(OrderBuilder<T> orderBuilder)
         {
@@ -111,48 +160,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                         .SetName(orderRow.GetName())
                         .SetQuantity(orderRow.GetQuantity())
                         .SetUnit(orderRow.GetUnit());
-                    if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null &&
-                        orderRow.GetVatPercent() != null)
-                    {
-                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
-                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
-                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
-                    }
-                    else if (orderRow.GetAmountIncVat() == 0 && orderRow.GetAmountExVat() > 0 ||
-                             orderRow.GetAmountExVat() == 0 && orderRow.GetAmountIncVat() > 0)
-                    {
-                        throw new SveaWebPayValidationException("Order is inconsistent. Amount excluding and including vat must either both be 0 or both be >0.");
-                    }
-                    else if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null)
-                    {
-                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
-                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
-                        var vat = orderRow.GetAmountExVat() == 0 || orderRow.GetAmountIncVat() == 0
-                                      ? 0
-                                      : (orderRow.GetAmountIncVat() - orderRow.GetAmountExVat()) /
-                                        orderRow.GetAmountExVat();
-                        var vatPercent = MathUtil.BankersRound((vat * 100).GetValueOrDefault());
-                        newRow.SetVatPercent(vatPercent);
-                    }
-                    else if (orderRow.GetVatPercent() != null && orderRow.GetAmountIncVat() != null)
-                    {
-                        newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
-                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
-                        var exVatAmount = orderRow.GetAmountIncVat().GetValueOrDefault()*100/(100 + orderRow.GetVatPercent().GetValueOrDefault());
-                        newRow.SetAmountExVat(exVatAmount);
-                    }
-                    else if (orderRow.GetVatPercent() != null && orderRow.GetAmountExVat() != null)
-                    {
-                        newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
-                        newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
-                        var incVatAmount = orderRow.GetAmountExVat().GetValueOrDefault()*
-                                           (100 + orderRow.GetVatPercent().GetValueOrDefault())/100;
-                        newRow.SetAmountIncVat(incVatAmount);
-                    }
-                    else
-                    {
-                        throw new SveaWebPayValidationException("Order is inconsistent. You need to set at least two of SetAmountIncVat, SetAmountExVat and SetVatPercent. If you set all three, make sure their values are consistent.");
-                    }
+
+                    FillMissingVatAndAmount(orderRow, newRow);
 
                     CheckConsistency(newRow);
 
@@ -162,7 +171,56 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        private static void CheckConsistency(OrderRowBuilder newRow)
+        private static void FillMissingVatAndAmount<TR>(IPriced<TR> orderRow, IPriced<TR> newRow)
+        {
+            if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null &&
+                orderRow.GetVatPercent() != null)
+            {
+                newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
+                newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+            }
+            else if (orderRow.GetAmountIncVat() == 0 && orderRow.GetAmountExVat() > 0 ||
+                     orderRow.GetAmountExVat() == 0 && orderRow.GetAmountIncVat() > 0)
+            {
+                throw new SveaWebPayValidationException(
+                    "Order is inconsistent. Amount excluding and including vat must either both be 0 or both be >0.");
+            }
+            else if (orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() != null)
+            {
+                newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
+                var vat = orderRow.GetAmountExVat() == 0 || orderRow.GetAmountIncVat() == 0
+                              ? 0
+                              : (orderRow.GetAmountIncVat() - orderRow.GetAmountExVat())/
+                                orderRow.GetAmountExVat();
+                var vatPercent = MathUtil.BankersRound((vat*100).GetValueOrDefault());
+                newRow.SetVatPercent(vatPercent);
+            }
+            else if (orderRow.GetVatPercent() != null && orderRow.GetAmountIncVat() != null)
+            {
+                newRow.SetAmountIncVat(orderRow.GetAmountIncVat().GetValueOrDefault());
+                newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+                var exVatAmount = orderRow.GetAmountIncVat().GetValueOrDefault()*100/
+                                  (100 + orderRow.GetVatPercent().GetValueOrDefault());
+                newRow.SetAmountExVat(exVatAmount);
+            }
+            else if (orderRow.GetVatPercent() != null && orderRow.GetAmountExVat() != null)
+            {
+                newRow.SetAmountExVat(orderRow.GetAmountExVat().GetValueOrDefault());
+                newRow.SetVatPercent(orderRow.GetVatPercent().GetValueOrDefault());
+                var incVatAmount = orderRow.GetAmountExVat().GetValueOrDefault()*
+                                   (100 + orderRow.GetVatPercent().GetValueOrDefault())/100;
+                newRow.SetAmountIncVat(incVatAmount);
+            }
+            else
+            {
+                throw new SveaWebPayValidationException(
+                    "Order is inconsistent. You need to set at least two of SetAmountIncVat, SetAmountExVat and SetVatPercent. If you set all three, make sure their values are consistent.");
+            }
+        }
+
+        private static void CheckConsistency<TR>(IPriced<TR> newRow)
         {
             if (newRow.GetAmountIncVat() - newRow.GetAmountExVat()*(100+newRow.GetVatPercent())/100 != 0)
             {
@@ -216,6 +274,39 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     return wsRow;
                 });
 
+            var shippingFees = order.NewShippingFeeRows.ConvertAll(row =>
+            {
+                var wsRow = new OrderRow
+                {
+                    NumberOfUnits = row.GetQuantity(),
+                    ArticleNumber = row.GetArticleNumber(),
+                    Description = string.Format("{0}: {1}", row.GetName(), row.GetDescription()),
+                    PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
+                    PricePerUnit = order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault(),
+                    DiscountPercent = 0,
+                    Unit = row.GetUnit(),
+                    VatPercent = row.GetVatPercent().GetValueOrDefault()
+                };
+                return wsRow;
+            });
+            res.AddRange(shippingFees);
+
+            var invoiceFees = order.NewInvoiceFeeRows.ConvertAll(row =>
+            {
+                var wsRow = new OrderRow
+                {
+                    NumberOfUnits = row.GetQuantity(),
+                    ArticleNumber = row.GetArticleNumber(),
+                    Description = string.Format("{0}: {1}", row.GetName(), row.GetDescription()),
+                    PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
+                    PricePerUnit = order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault(),
+                    DiscountPercent = 0,
+                    Unit = row.GetUnit(),
+                    VatPercent = row.GetVatPercent().GetValueOrDefault()
+                };
+                return wsRow;
+            });
+            res.AddRange(invoiceFees);
             return res;
 
         }

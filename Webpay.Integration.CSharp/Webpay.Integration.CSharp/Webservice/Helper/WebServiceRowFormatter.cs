@@ -62,6 +62,9 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             public List<OrderRowBuilder> NewOrderRows { get; private set; }
             public List<ShippingFeeBuilder> NewShippingFeeRows { get; private set; }
             public List<InvoiceFeeBuilder> NewInvoiceFeeRows { get; private set; }
+            public List<OrderRowBuilder> NewFixedDiscountRows { get; private set; }
+            public List<OrderRowBuilder> NewRelativeDiscountRows { get; private set; }
+
 
             public Order(OrderBuilder<T> original)
             {
@@ -69,6 +72,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 NewOrderRows = new List<OrderRowBuilder>();
                 NewShippingFeeRows = new List<ShippingFeeBuilder>();
                 NewInvoiceFeeRows = new List<InvoiceFeeBuilder>();
+                NewFixedDiscountRows = new List<OrderRowBuilder>();
+                NewRelativeDiscountRows = new List<OrderRowBuilder>();
                 TotalAmountPerVatRateIncVat = new Dictionary<decimal, decimal>();
                 WsOrderRequest = new OrderRequest();
                 TotalAmountExVat = 0;
@@ -87,7 +92,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 .And(FillMissingValues)
                 .And(CalculateTotals)
                 .And(ApplyRelativeDiscounts)
-                .And(ApplyFixedDiscounts)
+                .And(ApplyFixedDiscountsForNoVat)
+                .And(ApplyFixedDiscountsForVat)
                 .And(AddShippingFees)
                 .And(AddInvoiceFees)
                 .And(ConvertToWebserviceOrder)
@@ -246,8 +252,93 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        public static Order ApplyFixedDiscounts(Order order)
+        public static Order ApplyFixedDiscountsForVat(Order order)
         {
+            order.Original
+                 .GetFixedDiscountRows()
+                 .FindAll(discount => discount.GetVatPercent() != null)
+                 .ForEach(discount =>
+                 {
+                     var newRow = Item
+                         .OrderRow()
+                         .SetName(discount.GetName())
+                         .SetDescription(discount.GetDescription())
+                         .SetUnit(discount.GetUnit())
+                         .SetQuantity(discount.GetQuantity());
+
+                     if (discount.GetAmountIncVat() != null)
+                     {
+                         newRow
+                             .SetAmountIncVat(discount.GetAmountIncVat().GetValueOrDefault())
+                             .SetVatPercent(discount.GetVatPercent().GetValueOrDefault());
+                     }
+                     else if (discount.GetAmountExVat() != null)
+                     {
+                         newRow
+                             .SetAmountExVat(discount.GetAmountExVat().GetValueOrDefault())
+                             .SetVatPercent(discount.GetVatPercent().GetValueOrDefault());
+                     }
+                     else
+                     {
+                         throw new SveaWebPayValidationException("A fixed discount cannot only contain vat but must also include the amount including vat, or the amount excluding vat.");
+                     }
+                     order.NewFixedDiscountRows.Add(newRow);
+
+                 });
+
+            return order;
+        }
+
+        public static Order ApplyFixedDiscountsForNoVat(Order order)
+        {
+            order.Original
+                 .GetFixedDiscountRows()
+                 .FindAll(discount => discount.GetVatPercent() == null)
+                 .ForEach(discount =>
+                     {
+                         var discounts =  order.TotalAmountPerVatRateIncVat.Aggregate(new List<OrderRowBuilder>(), (res, vatAndAmount) =>
+                             {
+                                 var byVatVatPercent = vatAndAmount.Key;
+                                 var byVatAmountIncVat = vatAndAmount.Value;
+
+                                 var newRow = Item
+                                     .OrderRow()
+                                     .SetName(discount.GetName())
+                                     .SetDescription(string.Format("{0} @{1}%", discount.GetDescription(), byVatVatPercent))
+                                     .SetUnit(discount.GetUnit())
+                                     .SetQuantity(1);
+
+
+
+                                 if (discount.GetAmountIncVat() != null)
+                                 {
+                                     var discountAmountIncVat = discount.GetAmountIncVat().GetValueOrDefault() * byVatAmountIncVat / order.TotalAmountIncVat;
+                                     newRow
+                                         .SetAmountIncVat(discountAmountIncVat)
+                                         .SetVatPercent(byVatVatPercent)
+                                         .SetAmountExVat(discountAmountIncVat * 100 / (100 + byVatVatPercent));
+                                        
+                                 }
+                                 else if (discount.GetAmountExVat() != null)
+                                 {
+                                     var exVatRatio = (byVatAmountIncVat * 100 / (100 + byVatVatPercent)) / order.TotalAmountExVat;
+
+                                     var discountAmountExVat = discount.GetAmountExVat().GetValueOrDefault() * exVatRatio;
+                                     newRow
+                                         .SetAmountExVat(discountAmountExVat)
+                                         .SetVatPercent(byVatVatPercent);
+                                 }
+                                 else
+                                 {
+                                     throw new SveaWebPayValidationException("A fixed discount the amount including vat, or the amount excluding vat, and optionally vat.");
+                                 }
+                                 res.Add(newRow);
+                                 return res;
+                             });
+                         order.NewFixedDiscountRows.AddRange(discounts);
+
+                 });
+
             return order;
         }
 
@@ -258,7 +349,12 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public static List<OrderRow> ConvertToWebserviceOrder(Order order)
         {
-            var res =  order.NewOrderRows.ConvertAll(row =>
+            var res =  order
+                .NewOrderRows
+                .Concat(order.NewFixedDiscountRows)
+                .Concat(order.NewRelativeDiscountRows)
+                .ToList()
+                .ConvertAll(row =>
                 {
                     var wsRow = new OrderRow
                         {

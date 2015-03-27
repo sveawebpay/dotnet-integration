@@ -24,7 +24,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountExVat(12.23M));
             var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
-            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(order);
+            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(true)(order);
 
             Assert.That(resultOrder.AllPricesAreSpecifiedIncVat, Is.False);
         }
@@ -35,7 +35,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             var orderBuilder = new CreateOrderBuilder(SveaConfig.GetDefaultConfig());
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountIncVat(12.23M));
             var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
-            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(order);
+            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(true)(order);
 
             Assert.That(resultOrder.AllPricesAreSpecifiedIncVat, Is.True);
         }
@@ -47,7 +47,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountIncVat(12.23M));
             orderBuilder.AddOrderRow(Item.OrderRow().SetAmountExVat(12.23M));
             var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
-            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(order);
+            var resultOrder = WebServiceRowFormatter<CreateOrderBuilder>.CheckIfRowsIncVat(true)(order);
 
             Assert.That(resultOrder.AllPricesAreSpecifiedIncVat, Is.False);
         }

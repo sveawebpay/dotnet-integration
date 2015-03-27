@@ -74,11 +74,11 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return new Maybe<OrderBuilder<T>>(_order)
                 .And(ConvertToOrder)
                 .And(CheckIfRowsIncVat(_useIncVatRequestIfPossible))
-                .And(FillMissingValues)
-                .And(CalculateTotals)
+                .And(FillMissingOrderRowValues)
+                .And(CalculateOrderRowTotals)
                 .And(ApplyRelativeDiscounts)
-                .And(ApplyFixedDiscountsForNoVat)
-                .And(ApplyFixedDiscountsForVat)
+                .And(ApplyFixedDiscountsForOrderRowsNotSpecifyingVat)
+                .And(ApplyFixedDiscountsForOrderRowsSpecifyingVat)
                 .And(AddShippingFees)
                 .And(AddInvoiceFees)
                 .And(ConvertToWebserviceOrder)
@@ -109,7 +109,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         private static Order AddInvoiceFees(Order order)
         {
-            var newRows = order.Original.GetInvoiceFeeRows().ConvertAll(shippingFeeRow =>
+            var processedInvoiceFeeRows = order.Original.GetInvoiceFeeRows().ConvertAll(shippingFeeRow =>
             {
                 var newRow = Item
                     .InvoiceFee()
@@ -123,7 +123,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                 return newRow;
             });
-            order.NewInvoiceFeeRows.AddRange(newRows);
+            order.NewInvoiceFeeRows.AddRange(processedInvoiceFeeRows);
             return order;
         }
 
@@ -159,7 +159,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 };
         }
 
-        public static Order FillMissingValues(Order order)
+        public static Order FillMissingOrderRowValues(Order order)
         {
             var newRows = order.Original.GetOrderRows().ConvertAll(orderRow =>
                 {
@@ -239,7 +239,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         }
 
 
-        public static Order CalculateTotals(Order order)
+        public static Order CalculateOrderRowTotals(Order order)
         {
             order.NewOrderRows.ForEach(row=>order.TotalAmountPerVatRateIncVat[row.GetVatPercent().GetValueOrDefault()]=0);
 
@@ -256,7 +256,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        public static Order ApplyFixedDiscountsForVat(Order order)
+        public static Order ApplyFixedDiscountsForOrderRowsSpecifyingVat(Order order)
         {
             order.Original
                  .GetFixedDiscountRows()
@@ -264,7 +264,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                  .ForEach(discount =>
                  {
                      var orderRowBuilder = Item.OrderRow();
-                     var newRow = DiscountToOrderRow(orderRowBuilder, discount);
+                     var newRow = ConvertFixedDiscountToOrderRow(orderRowBuilder, discount);
 
                      if (discount.GetAmountIncVat() != null)
                      {
@@ -291,7 +291,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        public static Order ApplyFixedDiscountsForNoVat(Order order)
+        public static Order ApplyFixedDiscountsForOrderRowsNotSpecifyingVat(Order order)
         {
             order.Original
                  .GetFixedDiscountRows()
@@ -305,7 +305,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                                  var orderRowBuilder = Item.OrderRow();
 
-                                 var newRow = DiscountToOrderRow(orderRowBuilder, discount);
+                                 var newRow = ConvertFixedDiscountToOrderRow(orderRowBuilder, discount);
 
 
 
@@ -344,7 +344,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
             return order;
         }
 
-        private static OrderRowBuilder DiscountToOrderRow(OrderRowBuilder orderRowBuilder, FixedDiscountBuilder discount)
+        private static OrderRowBuilder ConvertFixedDiscountToOrderRow(OrderRowBuilder orderRowBuilder, FixedDiscountBuilder discount)
         {
             var newRow = orderRowBuilder
                 .SetName(discount.GetName())

@@ -62,7 +62,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(200.00M)
                                                                         .SetAmountIncVat(220.00M));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
             AssertVat(result, 0, 25);
             AssertVat(result, 1, 10);
             AssertAmountEx(result, 0, 100M);
@@ -78,7 +78,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(0)
                                                                         .SetAmountIncVat(0));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
             AssertVat(result, 0, 0);
             AssertAmountEx(result, 0, 0);
             AssertAmountInc(result, 0, 0);
@@ -95,7 +95,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(220.00M)
                                                                         .SetVatPercent(10));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
             AssertVat(result, 0, 25);
             AssertVat(result, 1, 10);
             AssertAmountEx(result, 0, 100M);
@@ -112,7 +112,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                         .SetAmountIncVat(125.00M)
                                                                         .SetAmountExVat(100.00M)
                                                                         .SetVatPercent(25));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
             AssertVat(result, 0, 25);
             AssertAmountEx(result, 0, 100M);
             AssertAmountInc(result, 0, 125M);
@@ -128,7 +128,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(200.00M)
                                                                         .SetVatPercent(10));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
             AssertVat(result, 0, 25);
             AssertVat(result, 1, 10);
             AssertAmountEx(result, 0, 100M);
@@ -145,7 +145,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(0)
                                                                         .SetAmountExVat(125.00M));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
         [Test, ExpectedException(typeof(SveaWebPayValidationException))]
@@ -155,7 +155,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(10M)
                                                                         .SetAmountExVat(0));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
         [Test, ExpectedException(typeof(SveaWebPayValidationException))]
@@ -164,7 +164,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountIncVat(10M));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
         [Test, ExpectedException(typeof(SveaWebPayValidationException))]
@@ -173,7 +173,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetAmountExVat(10M));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
         [Test, ExpectedException(typeof(SveaWebPayValidationException))]
@@ -182,7 +182,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                        .AddOrderRow(Item.OrderRow()
                                                                         .SetVatPercent(10));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
         [Test, ExpectedException(typeof(SveaWebPayValidationException))]
@@ -193,7 +193,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                         .SetVatPercent(10)
                                                                         .SetAmountExVat(33)
                                                                         .SetAmountIncVat(110));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
         }
 
 
@@ -207,7 +207,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(100)
                                     .SetAmountIncVat(125));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(100));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(125));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(25));
@@ -230,7 +230,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(250));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(375));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(75));
@@ -254,7 +254,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(1)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(220));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(345));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(45));
@@ -278,7 +278,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                     .SetQuantity(3)
                                     .SetAmountExVat(200)
                                     .SetAmountIncVat(220));
-            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateTotals(order);
+            var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
             Assert.That(result.TotalAmountExVat, Is.EqualTo(2*100 + 3*200));
             Assert.That(result.TotalAmountIncVat, Is.EqualTo(2*125 + 3*220));
             Assert.That(result.TotalVatAsAmount, Is.EqualTo(2*25 + 3*20));

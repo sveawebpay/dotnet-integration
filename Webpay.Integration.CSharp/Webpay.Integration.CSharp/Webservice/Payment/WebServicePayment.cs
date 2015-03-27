@@ -60,11 +60,8 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
 
             var sveaOrder = new CreateOrderEuRequest {Auth = GetPasswordBasedAuthorization()};
 
-            var allPricesAreSpecifiedIncVat = CrOrderBuilder.GetOrderRows().All(orderRow => orderRow.GetAmountIncVat() != null);
-
             var formatter = new WebServiceRowFormatter<CreateOrderBuilder>(CrOrderBuilder);
             List<OrderRow> formattedOrderRows = formatter.FormatRows();
-            formattedOrderRows.ForEach(orderRow => orderRow.PriceIncludingVat = allPricesAreSpecifiedIncVat);
 
             // make order rows and put in CreateOrderInformation
             OrderInfo = new CreateOrderInformation

@@ -318,7 +318,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                                 .PrepareRequest();
 
             Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("1"));
-            Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("FixedDiscount"));
+            Assert.That(request.CreateOrderInformation.OrderRows[1].Description, Is.EqualTo("FixedDiscount (25%)"));
             Assert.That(request.CreateOrderInformation.OrderRows[1].PricePerUnit, Is.EqualTo(-81.2));
             Assert.That(request.CreateOrderInformation.OrderRows[1].NumberOfUnits, Is.EqualTo(1));
             Assert.That(request.CreateOrderInformation.OrderRows[1].Unit, Is.EqualTo(""));

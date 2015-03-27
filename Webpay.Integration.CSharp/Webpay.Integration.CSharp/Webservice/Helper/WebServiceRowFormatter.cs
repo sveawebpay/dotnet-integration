@@ -373,6 +373,34 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public static Order ApplyRelativeDiscounts(Order order)
         {
+            var relativeDiscounts = order.Original.GetRelativeDiscountRows()
+                .Aggregate(new List<OrderRowBuilder>(), (allRelativeDiscounts, row) =>
+                    {
+                        var discounts =
+                            order.TotalAmountPerVatRateIncVat.Aggregate(
+                                new List<OrderRowBuilder>(), (relativeDiscountsByVat, vatAndAmount) =>
+                                    {
+                                        var byVatVatPercent = vatAndAmount.Key;
+                                        var byVatAmountIncVat = vatAndAmount.Value;
+
+                                        relativeDiscountsByVat.Add(Item.OrderRow()
+                                            .SetArticleNumber(row.GetDiscountId())
+                                            .SetDescription(row.GetDescription())
+                                            .SetName(row.GetName())
+                                            .SetDiscountPercent((int)row.GetDiscountPercent())
+                                            .SetQuantity(row.GetQuantity())
+                                            .SetUnit(row.GetUnit())
+                                            .SetAmountIncVat(byVatAmountIncVat* row.GetDiscountPercent() / 100)
+                                            .SetAmountExVat(byVatAmountIncVat * (100 / (100 + byVatVatPercent)) * row.GetDiscountPercent() / 100)
+                                            .SetVatPercent(byVatVatPercent));
+
+                                        return relativeDiscountsByVat;
+
+                                    });
+                        allRelativeDiscounts.AddRange(discounts);
+                        return allRelativeDiscounts;
+                    });
+            order.NewRelativeDiscountRows.AddRange(relativeDiscounts);
             return order;
         }
 

@@ -390,7 +390,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             OrderRow newRow = newRows[1];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(20): TestFormatRelativeDiscountRowsWithSingleVatRatePresent (20%)"));
+            Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(20): TestFormatRelativeDiscountRowsWithSingleVatRatePresent (12%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-20.00M));
             Assert.That(newRow.VatPercent, Is.EqualTo(12));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0)); // not the same thing as in our WebPayItem...

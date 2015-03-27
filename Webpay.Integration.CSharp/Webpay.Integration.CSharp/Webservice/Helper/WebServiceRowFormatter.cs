@@ -16,7 +16,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
     public class WebServiceRowFormatter<T>
     {
         private readonly OrderBuilder<T> _order;
-        private bool _useIncVatRequestIfPossible;
+        private readonly bool _useIncVatRequestIfPossible;
 
         public WebServiceRowFormatter(OrderBuilder<T> order) : this(order, true)
         {
@@ -71,7 +71,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
         public List<OrderRow> FormatRows()
         {
-            List<OrderRow> res = new Maybe<OrderBuilder<T>>(_order)
+            return new Maybe<OrderBuilder<T>>(_order)
                 .And(ConvertToOrder)
                 .And(CheckIfRowsIncVat(_useIncVatRequestIfPossible))
                 .And(FillMissingValues)
@@ -83,14 +83,12 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                 .And(AddInvoiceFees)
                 .And(ConvertToWebserviceOrder)
                 .Value;
-
-            return res;
         }
 
 
         private static Order AddShippingFees(Order order)
         {
-            var newRows = order.Original.GetShippingFeeRows().ConvertAll(shippingFeeRow =>
+            var processedShippingFeeRows = order.Original.GetShippingFeeRows().ConvertAll(shippingFeeRow =>
                 {
                     var newRow = Item
                         .ShippingFee()
@@ -105,7 +103,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                     return newRow;
                 });
-            order.NewShippingFeeRows.AddRange(newRows);
+            order.NewShippingFeeRows.AddRange(processedShippingFeeRows);
             return order;
         }
 

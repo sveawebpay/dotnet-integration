@@ -207,8 +207,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.That(response.CreateOrderResult.CustomerIdentity.FullName, Is.EqualTo("Sneider Boasman"));
             Assert.That(response.CreateOrderResult.CustomerIdentity.Street, Is.EqualTo("Gate"));
             Assert.That(response.CreateOrderResult.CustomerIdentity.CoAddress, Is.Null);
-            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("1102 BARENDRECHT"));
-            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("HG"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.ZipCode, Is.EqualTo("1102 HG"));
+            Assert.That(response.CreateOrderResult.CustomerIdentity.Locality, Is.EqualTo("BARENDRECHT"));
         }
 
         [Test]

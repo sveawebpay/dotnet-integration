@@ -37,9 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -79,6 +76,7 @@
     <Compile Include="Order\OrderBuilder.cs" />
     <Compile Include="Order\Row\FixedDiscountBuilder.cs" />
     <Compile Include="Order\Row\InvoiceFeeBuilder.cs" />
+    <Compile Include="Order\Row\IPriced.cs" />
     <Compile Include="Order\Row\IRowBuilder.cs" />
     <Compile Include="Order\Row\Item.cs" />
     <Compile Include="Order\Row\OrderRowBuilder.cs" />
@@ -121,6 +119,8 @@
     <Compile Include="Webservice\Handleorder\DeliverInvoice.cs" />
     <Compile Include="Webservice\Handleorder\DeliverPaymentPlan.cs" />
     <Compile Include="Webservice\Handleorder\HandleOrder.cs" />
+    <Compile Include="Webservice\Helper\Maybe.cs" />
+    <Compile Include="Webservice\Helper\FuncExtensions.cs" />
     <Compile Include="Webservice\Helper\WebServiceRowFormatter.cs" />
     <Compile Include="Webservice\Payment\InvoicePayment.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanPayment.cs" />

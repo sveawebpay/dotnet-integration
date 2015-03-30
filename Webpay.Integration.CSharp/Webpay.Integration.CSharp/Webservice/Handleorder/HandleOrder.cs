@@ -53,13 +53,18 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         /// <returns>SveaRequest</returns>
         public DeliverOrderEuRequest PrepareRequest()
         {
+            return PrepareRequestInternal(true);
+        }
+
+        private DeliverOrderEuRequest PrepareRequestInternal(bool useIncVatRequestIfPossible)
+        {
             var errors = ValidateOrder();
             if (errors.Length > 0)
             {
                 throw new SveaWebPayValidationException(errors);
             }
 
-            var formatter = new WebServiceRowFormatter<DeliverOrderBuilder>(_order);
+            var formatter = new WebServiceRowFormatter<DeliverOrderBuilder>(_order, useIncVatRequestIfPossible);
 
             DeliverInvoiceDetails deliverInvoiceDetails = null;
             if (_order.GetOrderType() == OrderType.INVOICE)
@@ -111,8 +116,21 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         /// <returns>DeliverOrderResponse</returns>
         public DeliverOrderEuResponse DoRequest()
         {
-            var request = PrepareRequest();
+            var request = PrepareRequestInternal(true);
+            var response = DoRequestInternal(request);
 
+            if (response.ResultCode == 50036)
+            {
+                request = PrepareRequestInternal(false);
+                response = DoRequestInternal(request);
+                
+            }
+            
+            return response;
+        }
+
+        private DeliverOrderEuResponse DoRequestInternal(DeliverOrderEuRequest request)
+        {
             _soapsc = new ServiceSoapClient(new BasicHttpBinding
                 {
                     Name = "ServiceSoap",
@@ -128,7 +146,8 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
                                                                        : PaymentType.PAYMENTPLAN)))
                 ;
 
-            return _soapsc.DeliverOrderEu(request);
+            var deliverOrderEuResponse = _soapsc.DeliverOrderEu(request);
+            return deliverOrderEuResponse;
         }
     }
 }

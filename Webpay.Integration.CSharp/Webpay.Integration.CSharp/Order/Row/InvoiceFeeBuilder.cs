@@ -1,6 +1,6 @@
 ﻿namespace Webpay.Integration.CSharp.Order.Row
 {
-    public class InvoiceFeeBuilder : IRowBuilder
+    public class InvoiceFeeBuilder : IRowBuilder, IPriced<InvoiceFeeBuilder>
     {
         private string _name;
         private string _description;

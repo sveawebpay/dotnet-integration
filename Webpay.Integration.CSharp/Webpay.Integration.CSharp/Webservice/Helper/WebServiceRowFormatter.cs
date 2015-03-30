@@ -137,23 +137,13 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
         {
             return order =>
                 {
-                    Func<IRowBuilder, bool> rowHasAmountIncVat = orderRow => orderRow.GetAmountIncVat() != null;
-                    Func<IRowBuilder, bool> rowHasAmountExVatSpecified =
-                        orderRow => orderRow.GetAmountExVat() != null && orderRow.GetAmountIncVat() == null;
-
-                    var orderAndFeesRows =
-                        order.Original.GetOrderRows()
-                             .Concat<IRowBuilder>(order.Original.GetInvoiceFeeRows())
-                             .Concat(order.Original.GetShippingFeeRows())
-                             .ToList();
+                    Func<IRowBuilder, bool> orderRowHasAmountIncVat = orderRow => orderRow.GetAmountIncVat() != null;
 
                     order.AllPricesAreSpecifiedIncVat =
                         useIncVatIfPossible
                         &&
-                        orderAndFeesRows
-                            .All(rowHasAmountIncVat)
-                        &&
-                        !order.Original.GetFixedDiscountRows().Any(rowHasAmountExVatSpecified)
+                        order.Original.GetOrderRows()
+                            .All(orderRowHasAmountIncVat)
                         ;
                     return order;
                 };
@@ -277,7 +267,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                      {
                          newRow
                              .SetAmountExVat(discount.GetAmountExVat().GetValueOrDefault())
-                             .SetAmountIncVat(discount.GetAmountExVat().GetValueOrDefault() * discount.GetVatPercent().GetValueOrDefault())
+                             .SetAmountIncVat(discount.GetAmountExVat().GetValueOrDefault() * (100 + discount.GetVatPercent().GetValueOrDefault()) / 100)
                              .SetVatPercent(discount.GetVatPercent().GetValueOrDefault());
                      }
                      else
@@ -327,7 +317,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
 
                                      newRow
                                          .SetAmountExVat(discountAmountExVat)
-                                         .SetAmountIncVat(discountAmountExVat * byVatVatPercent)
+                                         .SetAmountIncVat(discountAmountExVat * (100 + byVatVatPercent) / 100)
                                          .SetVatPercent(byVatVatPercent);
                                  }
                                  else

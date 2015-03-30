@@ -90,8 +90,9 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             Assert.That(newRows[0].ArticleNumber, Is.Empty);
             Assert.That(newRows[0].Description, Is.EqualTo("Tester"));
-            Assert.That(newRows[0].PricePerUnit, Is.EqualTo(4.0));
+            Assert.That(newRows[0].PricePerUnit, Is.EqualTo(5.0));
             Assert.That(newRows[0].VatPercent, Is.EqualTo(25.0));
+            Assert.That(newRows[0].PriceIncludingVat, Is.True);
             Assert.That(newRows[0].DiscountPercent, Is.EqualTo(0));
             Assert.That(newRows[0].NumberOfUnits, Is.EqualTo(1));
             Assert.That(newRows[0].Unit, Is.EqualTo("st"));

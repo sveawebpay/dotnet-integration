@@ -138,27 +138,27 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                         .SetName("fixedDiscount: 10e@10%")
                 )
                 ;
-            const bool expectingPricesIncludingVatFalse = false;
+            const bool expectingPricesIncludingVatFalse = true;
 
             CreateOrderEuRequest request = order.UseInvoicePayment().PrepareRequest();
             // all order rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[0].PricePerUnit, 60.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[0].PricePerUnit, 72.00);
             AssertEquals(request.CreateOrderInformation.OrderRows[0].VatPercent, 20);
             AssertEquals(request.CreateOrderInformation.OrderRows[0].PriceIncludingVat, expectingPricesIncludingVatFalse);
-            AssertEquals(request.CreateOrderInformation.OrderRows[1].PricePerUnit, 30.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[1].PricePerUnit, 33.00);
             AssertEquals(request.CreateOrderInformation.OrderRows[1].VatPercent, 10);
             AssertEquals(request.CreateOrderInformation.OrderRows[1].PriceIncludingVat, expectingPricesIncludingVatFalse);
             // all shipping fee rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[2].PricePerUnit, 16.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[2].PricePerUnit, 17.60);
             AssertEquals(request.CreateOrderInformation.OrderRows[2].VatPercent, 10);
             AssertEquals(request.CreateOrderInformation.OrderRows[2].PriceIncludingVat, expectingPricesIncludingVatFalse);
             // all invoice fee rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[3].PricePerUnit, 8.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[3].PricePerUnit, 8.80);
             AssertEquals(request.CreateOrderInformation.OrderRows[3].VatPercent, 10);
             AssertEquals(request.CreateOrderInformation.OrderRows[3].PriceIncludingVat, expectingPricesIncludingVatFalse);
             // all discount rows
             // expected: fixedDiscount: 10exvat @10% = -11.0M0
-            AssertEquals(request.CreateOrderInformation.OrderRows[4].PricePerUnit, -10.0M);
+            AssertEquals(request.CreateOrderInformation.OrderRows[4].PricePerUnit, -11.0M);
             AssertEquals(request.CreateOrderInformation.OrderRows[4].VatPercent, 10);
             AssertEquals(request.CreateOrderInformation.OrderRows[4].PriceIncludingVat, expectingPricesIncludingVatFalse);
             Assert.That(request.CreateOrderInformation.OrderRows.Length, Is.EqualTo(5));
@@ -167,7 +167,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
         }
 
         [Test]
-        public void TestIncvatOrderWithFixedDiscountAsExvatOnlyHasPriceIncludingVatFalse()
+        public void TestIncvatOrderWithFixedDiscountAsExvatOnlyHasPriceIncludingVatTrue()
         {
             CreateOrderBuilder order = CreateOnlyIncvatOrderAndFeeRowsOrder();
             order.
@@ -178,32 +178,32 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                         .SetName("fixedDiscount: 10e")
                 )
                 ;
-            const bool expectPriceIncludingVatFalse = false;
+            const bool expectPriceIncludingVatTrue = true;
 
             CreateOrderEuRequest request = order.UseInvoicePayment().PrepareRequest();
             // all order rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[0].PricePerUnit, 60.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[0].PricePerUnit, 72.00);
             AssertEquals(request.CreateOrderInformation.OrderRows[0].VatPercent, 20);
-            AssertEquals(request.CreateOrderInformation.OrderRows[0].PriceIncludingVat, expectPriceIncludingVatFalse);
-            AssertEquals(request.CreateOrderInformation.OrderRows[1].PricePerUnit, 30.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[0].PriceIncludingVat, expectPriceIncludingVatTrue);
+            AssertEquals(request.CreateOrderInformation.OrderRows[1].PricePerUnit, 33.00);
             AssertEquals(request.CreateOrderInformation.OrderRows[1].VatPercent, 10);
-            AssertEquals(request.CreateOrderInformation.OrderRows[1].PriceIncludingVat, expectPriceIncludingVatFalse);
+            AssertEquals(request.CreateOrderInformation.OrderRows[1].PriceIncludingVat, expectPriceIncludingVatTrue);
             // all shipping fee rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[2].PricePerUnit, 16.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[2].PricePerUnit, 17.60);
             AssertEquals(request.CreateOrderInformation.OrderRows[2].VatPercent, 10);
-            AssertEquals(request.CreateOrderInformation.OrderRows[2].PriceIncludingVat, expectPriceIncludingVatFalse);
+            AssertEquals(request.CreateOrderInformation.OrderRows[2].PriceIncludingVat, expectPriceIncludingVatTrue);
             // all invoice fee rows
-            AssertEquals(request.CreateOrderInformation.OrderRows[3].PricePerUnit, 8.00);
+            AssertEquals(request.CreateOrderInformation.OrderRows[3].PricePerUnit, 8.80);
             AssertEquals(request.CreateOrderInformation.OrderRows[3].VatPercent, 10);
-            AssertEquals(request.CreateOrderInformation.OrderRows[3].PriceIncludingVat, expectPriceIncludingVatFalse);
+            AssertEquals(request.CreateOrderInformation.OrderRows[3].PriceIncludingVat, expectPriceIncludingVatTrue);
             // all discount rows
-            // expected: fixedDiscount: 10 exvat => split across 10*60/(60+30) @20% => 6.66667 and  10*30/(60+30) @10% => 4.44 
-            AssertEquals(request.CreateOrderInformation.OrderRows[4].PricePerUnit, -6.67); //=WS
+            // expected: fixedDiscount: 10 exvat => split across 10*60/(60+30) @20% => 6.6666...7*1.20=8 and  10*30/(60+30) @10% => 3.33333...*1.20 
+            AssertEquals(request.CreateOrderInformation.OrderRows[4].PricePerUnit, -8); //=WS
             AssertEquals(request.CreateOrderInformation.OrderRows[4].VatPercent, 20);
-            AssertEquals(request.CreateOrderInformation.OrderRows[4].PriceIncludingVat, expectPriceIncludingVatFalse);
-            AssertEquals(request.CreateOrderInformation.OrderRows[5].PricePerUnit, -3.33); //=WS
+            AssertEquals(request.CreateOrderInformation.OrderRows[4].PriceIncludingVat, expectPriceIncludingVatTrue);
+            AssertEquals(request.CreateOrderInformation.OrderRows[5].PricePerUnit, -3.67); //=WS
             AssertEquals(request.CreateOrderInformation.OrderRows[5].VatPercent, 10);
-            AssertEquals(request.CreateOrderInformation.OrderRows[5].PriceIncludingVat, expectPriceIncludingVatFalse);
+            AssertEquals(request.CreateOrderInformation.OrderRows[5].PriceIncludingVat, expectPriceIncludingVatTrue);
 
             // See file IntegrationTest/WebService/Payment/FixedDiscountRowsIntegrationTest for service response tests.
         }

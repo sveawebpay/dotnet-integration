@@ -185,7 +185,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
             var secretWord = CrOrderBuilder.GetConfig()
                 .GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
-            var merchantid = CrOrderBuilder.GetConfig()
+            var sentMerchantId = CrOrderBuilder.GetConfig()
                 .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
             var payPageUrl = CrOrderBuilder.GetConfig()
                 .GetEndPoint(PaymentType.HOSTED);
@@ -193,7 +193,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var form = new PaymentForm();
             form.SetXmlMessage(xml);
 
-            form.SetMerchantId(merchantid);
+            form.SetMerchantId(sentMerchantId);
             form.SetSecretWord(secretWord);
 
             form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != CountryCode.NONE
@@ -222,16 +222,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
                 var result = System.Text.Encoding.UTF8.GetString(response);
 
-                var responseDocument = new XmlDocument();
-                responseDocument.LoadXml(result);
-                var messageBase64 = responseDocument.SelectSingleNode("//message").InnerText;
-                var mac = responseDocument.SelectSingleNode("//mac").InnerText;
-                var merchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
+                var hostedResponse = new HostedResponse(result, secretWord, sentMerchantId);
 
-                var expectedMac = HashUtil.CreateHash(messageBase64 + secretWord);
-                if(expectedMac != mac ) throw new System.Exception("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct.");
-
-                var message = Base64Util.DecodeBase64String(messageBase64);
+                var message = hostedResponse.Message;
                 var messageDoc = new XmlDocument();
                 messageDoc.LoadXml(message);
                 paymentId = messageDoc.SelectSingleNode("//id").InnerText;
@@ -240,6 +233,38 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             return new Uri(baseUrl + "/preparedpayment/" + paymentId);
         }
 
+        public class HostedResponse
+        {
+            public string Xml { get; private set; }
+            public string MessageBase64 { get; private set; }
+            public string Mac { get; private set; }
+            public string ReceivedMerchantId { get; private set; }
+            public string Message { get; private set; }
+
+            public HostedResponse(string xml, string originalSecretWord, string expectedMerchantId)
+            {
+                Xml = xml;
+                var responseDocument = new XmlDocument();
+                responseDocument.LoadXml(xml);
+                MessageBase64 = responseDocument.SelectSingleNode("//message").InnerText;
+                Mac = responseDocument.SelectSingleNode("//mac").InnerText;
+                ReceivedMerchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
+
+                var expectedMac = HashUtil.CreateHash(MessageBase64 + originalSecretWord);
+
+                if (ReceivedMerchantId != expectedMerchantId)
+                {
+                    throw new System.Exception(string.Format("The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}", expectedMerchantId, ReceivedMerchantId));
+                }
+
+                if (expectedMac != Mac)
+                {
+                    throw new System.Exception(string.Format("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}", expectedMerchantId, MessageBase64));
+                }
+
+                Message = Base64Util.DecodeBase64String(MessageBase64);
+            }
+        }
 
 
         /// <summary>

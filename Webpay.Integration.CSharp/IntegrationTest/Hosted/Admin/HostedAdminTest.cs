@@ -1,0 +1,124 @@
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Xml;
+using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Helper;
+using Webpay.Integration.CSharp.Order.Create;
+using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Security;
+using Webpay.Integration.CSharp.Util.Testing;
+using Webpay.Integration.CSharp.WebpayWS;
+using Webpay.Integration.CSharp.Webservice.Payment;
+
+namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
+{
+    [TestFixture]
+    public class HostedAdminTest
+    {
+        /// <summary>
+        /// Here or in the othere tests?
+        /// </summary>
+        [Test]
+        public void TestPreparedPaymentRequest()
+        {
+            Uri uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
+                                               .UsePaymentMethod(PaymentMethod.NORDEASE)
+                                               .___SetSimulatorCode_ForTestingOnly("0")
+                                               .SetReturnUrl(
+                                                   "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                                               .PreparePayment("127.0.0.1");
+
+            Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
+        }
+
+        [Test]
+        public void TestAnnulPayment()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Annul(new Annul(
+                    transactionId: 12341234
+                ));
+
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo("12341234"));
+        }
+    }
+
+    public class Annul
+    {
+        public long TransactionId { get; private set; }
+
+        public Annul(long transactionId)
+        {
+            TransactionId = transactionId;
+        }
+    }
+
+    public class WebpayAdmin
+    {
+        public static HostedAdmin Hosted(IConfigurationProvider configurationProvider, string merchantId, CountryCode countryCode)
+        {
+            return new HostedAdmin(configurationProvider, merchantId, countryCode);
+        }
+    }
+
+    public class HostedAdmin
+    {
+        public IConfigurationProvider ConfigurationProvider { get; private set; }
+        public string MerchantId { get; private set; }
+        public CountryCode CountryCode { get; private set; }
+
+        public HostedAdmin(IConfigurationProvider configurationProvider, string merchantId, CountryCode countryCode)
+        {
+            ConfigurationProvider = configurationProvider;
+            MerchantId = merchantId;
+            CountryCode = countryCode;
+        }
+
+        public PreparedHostedAdminRequest Annul(Annul annul)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <annul>
+                <transactionid>{0}</transactionid>
+                </annul>", annul.TransactionId);
+
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider);
+        }
+    }
+
+    public class PreparedHostedAdminRequest
+    {
+        public string Xml { get; private set; }
+        public CountryCode CountryCode { get; private set; }
+        public string MerchantId { get; private set; }
+        public IConfigurationProvider ConfigurationProvider { get; private set; }
+
+        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId, IConfigurationProvider configurationProvider)
+        {
+            Xml = xml;
+            CountryCode = countryCode;
+            MerchantId = merchantId;
+            ConfigurationProvider = configurationProvider;
+        }
+
+        public HostedAdminResponse DoRequest()
+        {
+            return new HostedAdminResponse("", "", "");
+        }
+
+        public HostedAdminRequest Request()
+        {
+            return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode), MerchantId);
+        }
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using Webpay.Integration.CSharp.Util.Security;
 
-namespace Webpay.Integration.CSharp.Hosted.Payment
+namespace Webpay.Integration.CSharp.Hosted.Helper
 {
     public class HostedAdminResponse
     {

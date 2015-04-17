@@ -63,8 +63,8 @@
     <Compile Include="Hosted\Payment\CardPayment.cs" />
     <Compile Include="Hosted\Payment\DirectPayment.cs" />
     <Compile Include="Hosted\Payment\HostedPayment.cs" />
-    <Compile Include="Hosted\Payment\HostedRequest.cs" />
-    <Compile Include="Hosted\Payment\HostedResponse.cs" />
+    <Compile Include="Hosted\Helper\HostedAdminRequest.cs" />
+    <Compile Include="Hosted\Helper\HostedAdminResponse.cs" />
     <Compile Include="Hosted\Payment\PaymentMethodPayment.cs" />
     <Compile Include="Hosted\Payment\PayPagePayment.cs" />
     <Compile Include="Order\IBuilderCommand.cs" />

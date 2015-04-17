@@ -189,31 +189,16 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var payPageUrl = CrOrderBuilder.GetConfig()
                 .GetEndPoint(PaymentType.HOSTED);
 
-            var hostedRequest = new HostedRequest(xml, secretWord, sentMerchantId);
+            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId);
 
             var baseUrl = payPageUrl.Replace("/payment", "");
 
-            string paymentId;
-            using (var client = new WebClient())
-            {
+            var targetAddress = baseUrl + "/rest/preparepayment";
 
-                var response =
-                client.UploadValues(baseUrl+"/rest/preparepayment", new NameValueCollection()
-                {
-                    { "message", hostedRequest.Base64Message },
-                    { "mac", hostedRequest.Mac },
-                    { "merchantid", hostedRequest.MerchantId }
-                });
-
-                var result = System.Text.Encoding.UTF8.GetString(response);
-
-                var hostedResponse = new HostedResponse(result, secretWord, sentMerchantId);
-
-                var message = hostedResponse.Message;
-                var messageDoc = new XmlDocument();
-                messageDoc.LoadXml(message);
-                paymentId = messageDoc.SelectSingleNode("//id").InnerText;
-            }
+            var message = HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest).Message;
+            var messageDoc = new XmlDocument();
+            messageDoc.LoadXml(message);
+            var paymentId = messageDoc.SelectSingleNode("//id").InnerText;
 
             return new Uri(baseUrl + "/preparedpayment/" + paymentId);
         }

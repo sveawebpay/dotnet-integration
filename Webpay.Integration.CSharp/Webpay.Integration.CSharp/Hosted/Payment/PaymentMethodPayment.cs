@@ -11,6 +11,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     public class PaymentMethodPayment : HostedPayment
     {
         private PaymentMethod _paymentMethod;
+        private string _simulatorCode;
 
         public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod)
             : base(createOrderBuilder)
@@ -71,7 +72,14 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             if (_paymentMethod != null)
             {
                 WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod.Value);
+                WriteSimpleElement(xmlw, "simulatorCode", _simulatorCode);
             }
+        }
+
+        public PaymentMethodPayment ___SetSimulatorCode_ForTestingOnly(string forcedResult)
+        {
+            _simulatorCode = forcedResult;
+            return this;
         }
     }
 }

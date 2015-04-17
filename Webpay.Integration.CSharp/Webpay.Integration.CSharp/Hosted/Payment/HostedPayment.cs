@@ -15,7 +15,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     /// <summary>
     /// Description of HostedPayment: Parent to CardPayment, DirectPayment, PayPagePayment 
     /// and PaymentMethodPayment classes. Prepares an order and creates a payment form
-    /// to integrate on web page. Uses XmlBuilder to turn formatted order into xml format.
+    /// to integrate on web page. Uses XmlBuilder to turn formatted order into xmlMessage format.
     /// </summary>
     public abstract class HostedPayment
     {
@@ -190,21 +190,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var payPageUrl = CrOrderBuilder.GetConfig()
                 .GetEndPoint(PaymentType.HOSTED);
 
-            var form = new PaymentForm();
-            form.SetXmlMessage(xml);
-
-            form.SetMerchantId(sentMerchantId);
-            form.SetSecretWord(secretWord);
-
-            form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != CountryCode.NONE
-                                      ? CrOrderBuilder.GetCountryCode()
-                                      : CountryCode.SE);
-
-
-            form.SetPayPageUrl(payPageUrl);
-
-            form.SetForm();
-            form.SetHtmlFields();
+            var hostedRequest = new HostedRequest(xml, secretWord, sentMerchantId);
 
             var baseUrl = payPageUrl.Replace("/payment", "");
 
@@ -215,9 +201,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
                 var response =
                 client.UploadValues(baseUrl+"/rest/preparepayment", new NameValueCollection()
                 {
-                    { "message", form.GetXmlMessageBase64() },
-                    { "mac", form.GetMacSha512() },
-                    { "merchantid", form.GetMerchantId() }
+                    { "message", hostedRequest.Base64Message },
+                    { "mac", hostedRequest.Mac },
+                    { "merchantid", hostedRequest.MerchantId }
                 });
 
                 var result = System.Text.Encoding.UTF8.GetString(response);
@@ -232,40 +218,6 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
             return new Uri(baseUrl + "/preparedpayment/" + paymentId);
         }
-
-        public class HostedResponse
-        {
-            public string Xml { get; private set; }
-            public string MessageBase64 { get; private set; }
-            public string Mac { get; private set; }
-            public string ReceivedMerchantId { get; private set; }
-            public string Message { get; private set; }
-
-            public HostedResponse(string xml, string originalSecretWord, string expectedMerchantId)
-            {
-                Xml = xml;
-                var responseDocument = new XmlDocument();
-                responseDocument.LoadXml(xml);
-                MessageBase64 = responseDocument.SelectSingleNode("//message").InnerText;
-                Mac = responseDocument.SelectSingleNode("//mac").InnerText;
-                ReceivedMerchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
-
-                var expectedMac = HashUtil.CreateHash(MessageBase64 + originalSecretWord);
-
-                if (ReceivedMerchantId != expectedMerchantId)
-                {
-                    throw new System.Exception(string.Format("The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}", expectedMerchantId, ReceivedMerchantId));
-                }
-
-                if (expectedMac != Mac)
-                {
-                    throw new System.Exception(string.Format("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}", expectedMerchantId, MessageBase64));
-                }
-
-                Message = Base64Util.DecodeBase64String(MessageBase64);
-            }
-        }
-
 
         /// <summary>
         /// GetPaymentSpecificXml
@@ -294,6 +246,25 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public string GetIpAddress()
         {
             return IpAddress;
+        }
+    }
+
+    public class HostedRequest
+    {
+        public string XmlMessage { get; private set; }
+        public string SecretWord { get; private set; }
+        public string MerchantId { get; private set; }
+        public string Base64Message { get; private set; }
+        public string Mac { get; private set; }
+
+        public HostedRequest(string xmlMessage, string secretWord, string merchantId)
+        {
+            XmlMessage = xmlMessage;
+            SecretWord = secretWord;
+            MerchantId = merchantId;
+
+            Base64Message = Base64Util.EncodeBase64String(XmlMessage);
+            Mac = HashUtil.CreateHash(Base64Message + secretWord);
         }
     }
 }

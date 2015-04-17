@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
-        public void TestAnnulPayment()
+        public void TestAnnulPaymentRequest()
         {
             var preparedHostedAdminRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
@@ -51,6 +51,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo("12341234"));
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("//statuscode").InnerText, Is.EqualTo("128"));
         }
     }
 
@@ -92,28 +94,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 </annul>", annul.TransactionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider);
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/annul");
         }
     }
 
     public class PreparedHostedAdminRequest
     {
-        public string Xml { get; private set; }
-        public CountryCode CountryCode { get; private set; }
-        public string MerchantId { get; private set; }
-        public IConfigurationProvider ConfigurationProvider { get; private set; }
+        public readonly string Xml;
+        public readonly CountryCode CountryCode;
+        public readonly string MerchantId;
+        public readonly IConfigurationProvider ConfigurationProvider;
+        public readonly string ServicePath;
 
-        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId, IConfigurationProvider configurationProvider)
+        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId, IConfigurationProvider configurationProvider, string servicePath)
         {
             Xml = xml;
             CountryCode = countryCode;
             MerchantId = merchantId;
             ConfigurationProvider = configurationProvider;
+            ServicePath = servicePath;
         }
 
         public HostedAdminResponse DoRequest()
         {
-            return new HostedAdminResponse("", "", "");
+            return HostedAdminRequest.HostedAdminCall(GetEndPointBase(), Request());
+        }
+
+        private string GetEndPointBase()
+        {
+            var endPoint = ConfigurationProvider.GetEndPoint(PaymentType.HOSTED);
+            var baseUrl = endPoint.Replace("/payment", "");
+
+            var targetAddress = baseUrl + "/rest" + ServicePath;
+            return targetAddress;
         }
 
         public HostedAdminRequest Request()

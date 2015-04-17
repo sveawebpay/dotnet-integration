@@ -5,11 +5,12 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
 {
     public class HostedAdminResponse
     {
-        public string Xml { get; private set; }
-        public string MessageBase64 { get; private set; }
-        public string Mac { get; private set; }
-        public string ReceivedMerchantId { get; private set; }
-        public string Message { get; private set; }
+        public readonly string Xml;
+        public readonly string MessageBase64;
+        public readonly string Mac;
+        public readonly string ReceivedMerchantId;
+        public readonly string Message;
+        public readonly XmlDocument MessageDocument;
 
         public HostedAdminResponse(string xml, string originalSecretWord, string expectedMerchantId)
         {
@@ -33,6 +34,9 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             }
 
             Message = Base64Util.DecodeBase64String(MessageBase64);
+
+            MessageDocument = new XmlDocument();
+            MessageDocument.LoadXml(Message);
         }
     }
 }

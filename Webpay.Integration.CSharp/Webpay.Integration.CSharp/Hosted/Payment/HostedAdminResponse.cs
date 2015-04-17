@@ -3,7 +3,7 @@ using Webpay.Integration.CSharp.Util.Security;
 
 namespace Webpay.Integration.CSharp.Hosted.Payment
 {
-    public class HostedResponse
+    public class HostedAdminResponse
     {
         public string Xml { get; private set; }
         public string MessageBase64 { get; private set; }
@@ -11,7 +11,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public string ReceivedMerchantId { get; private set; }
         public string Message { get; private set; }
 
-        public HostedResponse(string xml, string originalSecretWord, string expectedMerchantId)
+        public HostedAdminResponse(string xml, string originalSecretWord, string expectedMerchantId)
         {
             Xml = xml;
             var responseDocument = new XmlDocument();

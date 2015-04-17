@@ -2,7 +2,7 @@
 
 namespace Webpay.Integration.CSharp.Hosted.Payment
 {
-    public class HostedRequest
+    public class HostedAdminRequest
     {
         public string XmlMessage { get; private set; }
         public string SecretWord { get; private set; }
@@ -10,7 +10,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public string Base64Message { get; private set; }
         public string Mac { get; private set; }
 
-        public HostedRequest(string xmlMessage, string secretWord, string merchantId)
+        public HostedAdminRequest(string xmlMessage, string secretWord, string merchantId)
         {
             XmlMessage = xmlMessage;
             SecretWord = secretWord;

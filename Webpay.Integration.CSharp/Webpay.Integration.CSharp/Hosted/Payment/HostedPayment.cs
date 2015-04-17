@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Net;
 using System.Xml;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Security;
 
 namespace Webpay.Integration.CSharp.Hosted.Payment
 {
@@ -25,6 +29,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         protected string CallbackUrl;
         protected ExcludePayments Excluded;
         protected string LanguageCode = Util.Constant.LanguageCode.en.ToString();
+        protected string IpAddress;
 
         public HostedPayment(CreateOrderBuilder createOrderBuilder)
         {
@@ -167,6 +172,77 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         }
 
         /// <summary>
+        /// PreparedPayment contacts the server with the payment request data, and returns a GET URL to that 
+        /// payment. This is convenient for creating an order and then sending the URL e.g. in an email.
+        /// </summary>
+        /// <returns>PaymentLink</returns>
+        public Uri PreparePayment(String ipAddress)
+        {
+            IpAddress = ipAddress;
+            CalculateRequestValues();
+            var xmlBuilder = new HostedXmlBuilder();
+            string xml = xmlBuilder.GetXml(this);
+
+            var secretWord = CrOrderBuilder.GetConfig()
+                .GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var merchantid = CrOrderBuilder.GetConfig()
+                .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var payPageUrl = CrOrderBuilder.GetConfig()
+                .GetEndPoint(PaymentType.HOSTED);
+
+            var form = new PaymentForm();
+            form.SetXmlMessage(xml);
+
+            form.SetMerchantId(merchantid);
+            form.SetSecretWord(secretWord);
+
+            form.SetSubmitMessage(CrOrderBuilder.GetCountryCode() != CountryCode.NONE
+                                      ? CrOrderBuilder.GetCountryCode()
+                                      : CountryCode.SE);
+
+
+            form.SetPayPageUrl(payPageUrl);
+
+            form.SetForm();
+            form.SetHtmlFields();
+
+            var baseUrl = payPageUrl.Replace("/payment", "");
+
+            string paymentId;
+            using (var client = new WebClient())
+            {
+
+                var response =
+                client.UploadValues(baseUrl+"/rest/preparepayment", new NameValueCollection()
+                {
+                    { "message", form.GetXmlMessageBase64() },
+                    { "mac", form.GetMacSha512() },
+                    { "merchantid", form.GetMerchantId() }
+                });
+
+                var result = System.Text.Encoding.UTF8.GetString(response);
+
+                var responseDocument = new XmlDocument();
+                responseDocument.LoadXml(result);
+                var messageBase64 = responseDocument.SelectSingleNode("//message").InnerText;
+                var mac = responseDocument.SelectSingleNode("//mac").InnerText;
+                var merchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
+
+                var expectedMac = HashUtil.CreateHash(messageBase64 + secretWord);
+                if(expectedMac != mac ) throw new System.Exception("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct.");
+
+                var message = Base64Util.DecodeBase64String(messageBase64);
+                var messageDoc = new XmlDocument();
+                messageDoc.LoadXml(message);
+                paymentId = messageDoc.SelectSingleNode("//id").InnerText;
+            }
+
+            return new Uri(baseUrl + "/preparedpayment/" + paymentId);
+        }
+
+
+
+        /// <summary>
         /// GetPaymentSpecificXml
         /// </summary>
         /// <param name="xmlw"></param>
@@ -188,6 +264,11 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             xmlw.WriteStartElement(name);
             xmlw.WriteChars(value.ToCharArray(), 0, value.ToCharArray().Length);
             xmlw.WriteEndElement();
+        }
+
+        public string GetIpAddress()
+        {
+            return IpAddress;
         }
     }
 }

@@ -56,5 +56,6 @@ namespace Webpay.Integration.CSharp.Config
         /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
         /// <returns>end point url</returns>
         string GetEndPoint(PaymentType type);
+
     }
 }

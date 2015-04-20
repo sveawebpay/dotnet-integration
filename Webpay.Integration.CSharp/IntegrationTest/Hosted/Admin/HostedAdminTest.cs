@@ -95,20 +95,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
-        public void TestGetPaymentMethods()
-        {
-            var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
-                .GetPaymentMethods(new GetPaymentMethods(
-                    merchantId: 1130
-                ));
-
-            var hostedAdminRequest = preparedHostedAdminRequest.Request();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
-        }
-
-
-        [Test]
         public void TestConfirm()
         {
             var preparedHostedAdminRequest = WebpayAdmin
@@ -123,6 +109,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
         }
 
+        [Test]
+        public void TestGetPaymentMethods()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .GetPaymentMethods(new GetPaymentMethods(
+                    merchantId: 1130
+                ));
+
+            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
+                Is.EqualTo("<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>"));
+
+        }
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)
         {

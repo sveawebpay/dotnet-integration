@@ -171,8 +171,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 .UsePaymentMethod(paymentMethod)
-                .CardPayment()
-                .SetRecurMode(recurringPayment)
+                .SetSubscriptionType(recurringPayment)
+                .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
                     "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");

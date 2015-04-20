@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -12,6 +13,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     {
         private PaymentMethod _paymentMethod;
         private string _simulatorCode;
+        private RecurringPayment _recurring;
 
         public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod)
             : base(createOrderBuilder)
@@ -72,8 +74,21 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             if (_paymentMethod != null)
             {
                 WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod.Value);
+            }
+            if (_recurring != null)
+            {
+                WriteSimpleElement(xmlw, "subscriptiontype", _recurring.Value);
+            }
+            if (_simulatorCode != null)
+            {
                 WriteSimpleElement(xmlw, "simulatorCode", _simulatorCode);
             }
+        }
+
+        public PaymentMethodPayment SetSubscriptionType(RecurringPayment recurring)
+        {
+            _recurring = recurring;
+            return this;
         }
 
         public PaymentMethodPayment ___SetSimulatorCode_ForTestingOnly(string forcedResult)

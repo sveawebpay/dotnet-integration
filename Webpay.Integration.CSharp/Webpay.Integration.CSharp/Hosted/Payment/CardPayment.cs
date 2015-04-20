@@ -11,8 +11,6 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     /// </summary>
     public class CardPayment : HostedPayment
     {
-        private RecurringPayment _recurring;
-
         public CardPayment(CreateOrderBuilder orderBuilder) : base(orderBuilder)
         {
         }
@@ -77,14 +75,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
         public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
-            WriteSimpleElement(xmlw, "subscriptiontype", _recurring.Value);
         }
 
-        public CardPayment SetRecurMode(RecurringPayment recurring)
-        {
-            _recurring = recurring;
-
-            return this;
-        }
     }
 }

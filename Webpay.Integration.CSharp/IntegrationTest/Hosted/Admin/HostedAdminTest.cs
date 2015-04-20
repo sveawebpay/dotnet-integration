@@ -19,46 +19,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
     [TestFixture]
     public class HostedAdminTest
     {
-        /// <summary>
-        /// Here or in the othere tests?
-        /// </summary>
         [Test]
         public void TestPreparedPaymentRequest()
         {
             Uri uri = PrepareRegularPayment(PaymentMethod.NORDEASE);
 
             Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
-        }
-
-        private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)
-        {
-            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                .UsePaymentMethod(paymentMethod)
-                .___SetSimulatorCode_ForTestingOnly("0")
-                .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
-                .PreparePayment("127.0.0.1");
-        }
-
-        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, RecurringPayment recurringPayment)
-        {
-            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                .UsePaymentMethod(paymentMethod)
-                .CardPayment()
-                .SetRecurMode(recurringPayment)
-                .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
-                .PreparePayment("127.0.0.1");
         }
 
         [Test, Ignore]
@@ -141,6 +107,37 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminRequest = preparedHostedAdminRequest.Request();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
+        }
+
+        private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .___SetSimulatorCode_ForTestingOnly("0")
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
+        }
+
+        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, RecurringPayment recurringPayment)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .CardPayment()
+                .SetRecurMode(recurringPayment)
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
         }
 
         private PaymentResponse MakePreparedPayment(Uri preparePayment)

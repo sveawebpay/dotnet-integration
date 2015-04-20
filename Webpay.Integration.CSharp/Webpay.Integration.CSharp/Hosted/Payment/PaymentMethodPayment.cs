@@ -13,7 +13,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     {
         private PaymentMethod _paymentMethod;
         private string _simulatorCode;
-        private RecurringPayment _recurring;
+        private SubscriptionType _subscriptionType;
 
         public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod)
             : base(createOrderBuilder)
@@ -75,9 +75,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             {
                 WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod.Value);
             }
-            if (_recurring != null)
+            if (_subscriptionType != null)
             {
-                WriteSimpleElement(xmlw, "subscriptiontype", _recurring.Value);
+                WriteSimpleElement(xmlw, "subscriptiontype", _subscriptionType.Value);
             }
             if (_simulatorCode != null)
             {
@@ -85,9 +85,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             }
         }
 
-        public PaymentMethodPayment SetSubscriptionType(RecurringPayment recurring)
+        public PaymentMethodPayment SetSubscriptionType(SubscriptionType subscriptionType)
         {
-            _recurring = recurring;
+            _subscriptionType = subscriptionType;
             return this;
         }
 

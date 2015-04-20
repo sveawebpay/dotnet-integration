@@ -30,13 +30,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test, Ignore]
         public void TestGetRecurringPaymentUrl()
         {
-            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, RecurringPayment.RECURRING);
+            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRING);
         }
 
         [Test, Ignore]
         public void TestGetRecurringCapturePaymentUrl()
         {
-            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, RecurringPayment.RECURRINGCAPTURE);
+            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRINGCAPTURE);
         }
 
         [Test, Ignore]
@@ -162,7 +162,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .PreparePayment("127.0.0.1");
         }
 
-        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, RecurringPayment recurringPayment)
+        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, SubscriptionType subscriptionType)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
@@ -171,7 +171,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 .UsePaymentMethod(paymentMethod)
-                .SetSubscriptionType(recurringPayment)
+                .SetSubscriptionType(subscriptionType)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
                     "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")

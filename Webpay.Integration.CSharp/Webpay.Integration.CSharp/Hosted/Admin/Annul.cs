@@ -1,4 +1,4 @@
-namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
+namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class Annul
     {

@@ -2,7 +2,7 @@ using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
+namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class PreparedHostedAdminRequest
     {

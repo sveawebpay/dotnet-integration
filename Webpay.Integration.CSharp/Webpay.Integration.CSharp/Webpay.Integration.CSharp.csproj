@@ -55,6 +55,13 @@
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
+    <Compile Include="Hosted\Admin\Annul.cs" />
+    <Compile Include="Hosted\Admin\CancelRecurSubscription.cs" />
+    <Compile Include="Hosted\Admin\Confirm.cs" />
+    <Compile Include="Hosted\Admin\HostedAdmin.cs" />
+    <Compile Include="Hosted\Admin\PaymentResponse.cs" />
+    <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />
+    <Compile Include="Hosted\Admin\WebpayAdmin.cs" />
     <Compile Include="Hosted\Helper\ExcludePayments.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatter.cs" />
     <Compile Include="Hosted\Helper\HostedXmlBuilder.cs" />

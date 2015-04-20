@@ -46,7 +46,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .PreparePayment("127.0.0.1");
         }
 
-        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod)
+        private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, RecurringPayment recurringPayment)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
@@ -56,7 +56,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 .UsePaymentMethod(paymentMethod)
                 .CardPayment()
-                .SetRecurMode(RecurringPayment.RECURRING)
+                .SetRecurMode(recurringPayment)
                 .SetReturnUrl(
                     "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
@@ -65,11 +65,17 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test, Ignore]
         public void TestGetRecurringPaymentUrl()
         {
-            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT);
+            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, RecurringPayment.RECURRING);
         }
 
         [Test, Ignore]
-        public void TestSemiManualCancelRecur()
+        public void TestGetRecurringCapturePaymentUrl()
+        {
+            var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, RecurringPayment.RECURRINGCAPTURE);
+        }
+
+        [Test, Ignore]
+        public void TestSemiManualCancelRecurSubscription()
         {
             var preparedHostedAdminRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
@@ -78,6 +84,19 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ))
                 .DoRequest();
         }
+
+        [Test, Ignore]
+        public void TestSemiManualConfirm()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Confirm(new Confirm(
+                    transactionId: 598683,
+                    captureDate: DateTime.Now
+                ))
+                .DoRequest();
+        }
+
 
         [Test]
         public void TestAnnul()
@@ -110,6 +129,21 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
         }
 
+        [Test]
+        public void TestConfirm()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Confirm(new Confirm(
+                    transactionId: 12341234,
+                    captureDate: new DateTime(2015, 05, 22)
+                ));
+
+            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
+        }
+
         private PaymentResponse MakePreparedPayment(Uri preparePayment)
         {
             var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
@@ -122,6 +156,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var mac = nameValueCollection["mac"];
 
             return new PaymentResponse(messageBase64, mac, merchantId);
+        }
+    }
+
+    public class Confirm
+    {
+        public DateTime CaptureDate { get; private set; }
+        public int TransactionId { get; private set; }
+
+        public Confirm(int transactionId, DateTime captureDate)
+        {
+            TransactionId = transactionId;
+            CaptureDate = captureDate;
         }
     }
 
@@ -213,6 +259,17 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 </cancelrecursubscription>", cancelRecurSubscription.SubscriptionId);
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/cancelrecursubscription");
+        }
+
+        public PreparedHostedAdminRequest Confirm(Confirm confirm)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <confirm>
+                <transactionid>{0}</transactionid>
+                <capturedate>{1}</capturedate>
+                </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd") );
+
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
         }
     }
 

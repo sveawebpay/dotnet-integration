@@ -74,7 +74,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     transactionId: payment.TransactionId
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
@@ -90,7 +90,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     subscriptionId: "12341234"
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
         }
 
@@ -104,7 +104,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     captureDate: new DateTime(2015, 05, 22)
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
         }
@@ -118,7 +118,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     merchantId: 1130
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
@@ -137,7 +137,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     date: new DateTime(2015, 04, 17)
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
@@ -160,7 +160,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     amountToLower: 666
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/amounttolower").InnerText, Is.EqualTo("666"));
 

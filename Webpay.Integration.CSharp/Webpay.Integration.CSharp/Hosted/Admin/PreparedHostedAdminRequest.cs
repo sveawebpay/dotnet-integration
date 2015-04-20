@@ -23,7 +23,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedAdminResponse DoRequest()
         {
-            return HostedAdminRequest.HostedAdminCall(GetEndPointBase(), Request());
+            return HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
         }
 
         private string GetEndPointBase()
@@ -35,7 +35,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             return targetAddress;
         }
 
-        public HostedAdminRequest Request()
+        public HostedAdminRequest PrepareRequest()
         {
             return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode), MerchantId);
         }

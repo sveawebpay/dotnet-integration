@@ -90,6 +90,7 @@
     <Compile Include="Order\Validator\IOrderValidator.cs" />
     <Compile Include="Order\Validator\OrderValidator.cs" />
     <Compile Include="Order\Validator\WebServiceOrderValidator.cs" />
+    <Compile Include="Hosted\Helper\RecurringPayment.cs" />
     <Compile Include="Response\Hosted\SveaResponse.cs" />
     <Compile Include="Response\Response.cs" />
     <Compile Include="Service References\WebpayWS\Reference.cs">

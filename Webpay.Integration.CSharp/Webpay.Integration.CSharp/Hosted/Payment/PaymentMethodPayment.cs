@@ -81,5 +81,10 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             _simulatorCode = forcedResult;
             return this;
         }
+
+        public CardPayment CardPayment()
+        {
+            return new CardPayment(CrOrderBuilder);
+        }
     }
 }

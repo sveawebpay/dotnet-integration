@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -25,35 +26,80 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestPreparedPaymentRequest()
         {
-            Uri uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
-                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                               .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
-                                               .SetCurrency(TestingTool.DefaultTestCurrency)
-                                               .UsePaymentMethod(PaymentMethod.NORDEASE)
-                                               .___SetSimulatorCode_ForTestingOnly("0")
-                                               .SetReturnUrl(
-                                                   "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
-                                               .PreparePayment("127.0.0.1");
+            Uri uri = PreparePayment(PaymentMethod.NORDEASE);
 
             Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
+        }
+
+        private static Uri PreparePayment(PaymentMethod paymentMethod)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .___SetSimulatorCode_ForTestingOnly("0")
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
         }
 
         [Test]
         public void TestAnnulPaymentRequest()
         {
+            var payment = MakePreparedPayment(PreparePayment(PaymentMethod.KORTCERT));
+
             var preparedHostedAdminRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
                 .Annul(new Annul(
-                    transactionId: 12341234
+                    transactionId: payment.TransactionId
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("//statuscode").InnerText, Is.EqualTo("128"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("//statuscode").InnerText, Is.EqualTo("0"));
         }
+
+        private PaymentResponse MakePreparedPayment(Uri preparePayment)
+        {
+            var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
+            webRequest.AllowAutoRedirect = false;
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var location = new Uri(webResponse.Headers["Location"]);
+            var nameValueCollection = HttpUtility.ParseQueryString(location.Query);
+            var messageBase64 = nameValueCollection["response"];
+            var merchantId = nameValueCollection["merchantid"];
+            var mac = nameValueCollection["mac"];
+
+            return new PaymentResponse(messageBase64, mac, merchantId);
+        }
+    }
+
+    public class PaymentResponse
+    {
+        public string MerchantId { get; private set; }
+        public string Mac { get; private set; }
+        public string MessageBase64 { get; private set; }
+        public string Message { get; private set; }
+        public XmlDocument MessageXmlDoc { get; private set; }
+        public long TransactionId { get; private set; }
+
+        public PaymentResponse(string messageBase64, string mac, string merchantId)
+        {
+            Mac = mac;
+            MessageBase64 = messageBase64;
+            MerchantId = merchantId;
+
+            Message = Base64Util.DecodeBase64String(messageBase64);
+            MessageXmlDoc = new XmlDocument();
+            MessageXmlDoc.LoadXml(Message);
+
+            TransactionId = long.Parse(MessageXmlDoc.SelectSingleNode("//transaction").Attributes["id"].Value);
+        }
+
     }
 
     public class Annul

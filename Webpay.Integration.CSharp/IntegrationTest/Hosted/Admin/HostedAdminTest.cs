@@ -95,6 +95,20 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestGetPaymentMethods()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .GetPaymentMethods(new GetPaymentMethods(
+                    merchantId: 1130
+                ));
+
+            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
+        }
+
+
+        [Test]
         public void TestConfirm()
         {
             var preparedHostedAdminRequest = WebpayAdmin
@@ -108,6 +122,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
         }
+
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)
         {

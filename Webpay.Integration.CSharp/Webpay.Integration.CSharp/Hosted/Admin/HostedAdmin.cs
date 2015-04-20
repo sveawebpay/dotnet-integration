@@ -1,4 +1,5 @@
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
@@ -45,6 +46,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd") );
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
+        }
+
+        public PreparedHostedAdminRequest GetPaymentMethods(GetPaymentMethods getPaymentMethods)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <getpaymentmethods>
+                <merchantid>{0}</merchantid>
+                </getpaymentmethods>", getPaymentMethods.MerchantId);
+
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getpaymentmethods");
+            throw new System.NotImplementedException();
         }
     }
 }

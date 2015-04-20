@@ -66,5 +66,15 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getreconciliationreport");
         }
+
+        public PreparedHostedAdminRequest LowerAmount(LowerAmount lowerAmount)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <loweramount>
+                <transactionid>{0}</transactionid>
+                <amounttolower>{1}</amounttolower>
+                </loweramount>", lowerAmount.TransactionId, lowerAmount.AmountToLower);
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
+        }
     }
 }

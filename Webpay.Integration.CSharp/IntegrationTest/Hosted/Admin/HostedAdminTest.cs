@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestPreparedPaymentRequest()
         {
-            Uri uri = PrepareRegularPayment(PaymentMethod.NORDEASE);
+            Uri uri = PrepareRegularPayment(PaymentMethod.NORDEASE, CreateCustomerRefNo());
 
             Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
         }
@@ -66,7 +66,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestAnnul()
         {
-            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT));
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, CreateCustomerRefNo()));
 
             var preparedHostedAdminRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
@@ -147,19 +147,47 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 Is.StringStarting("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
         }
 
-        private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)
+        [Test]
+        public void TestLowerAmount()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .LowerAmount(new LowerAmount(
+                    transactionId: payment.TransactionId,
+                    amountToLower: 666
+                ));
+
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/amounttolower").InnerText, Is.EqualTo("666"));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+        }
+
+
+        private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                 .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
+                .SetClientOrderNumber(createCustomerRefNo)
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
                     "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
+        }
+
+        private static string CreateCustomerRefNo()
+        {
+            return "1" + Guid.NewGuid().ToString().Replace("-", "");
         }
 
         private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, SubscriptionType subscriptionType)

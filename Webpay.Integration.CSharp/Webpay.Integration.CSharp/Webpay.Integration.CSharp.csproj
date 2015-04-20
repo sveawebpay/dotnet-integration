@@ -61,6 +61,7 @@
     <Compile Include="Hosted\Admin\GetPaymentMethods.cs" />
     <Compile Include="Hosted\Admin\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\HostedAdmin.cs" />
+    <Compile Include="Hosted\Admin\LowerAmount.cs" />
     <Compile Include="Hosted\Admin\PaymentResponse.cs" />
     <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />
     <Compile Include="Hosted\Admin\WebpayAdmin.cs" />

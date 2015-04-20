@@ -59,6 +59,7 @@
     <Compile Include="Hosted\Admin\CancelRecurSubscription.cs" />
     <Compile Include="Hosted\Admin\Confirm.cs" />
     <Compile Include="Hosted\Admin\GetPaymentMethods.cs" />
+    <Compile Include="Hosted\Admin\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\HostedAdmin.cs" />
     <Compile Include="Hosted\Admin\PaymentResponse.cs" />
     <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />

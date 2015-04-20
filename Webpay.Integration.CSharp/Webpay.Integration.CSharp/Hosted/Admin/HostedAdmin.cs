@@ -55,7 +55,16 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 </getpaymentmethods>", getPaymentMethods.MerchantId);
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getpaymentmethods");
-            throw new System.NotImplementedException();
+        }
+
+        public PreparedHostedAdminRequest GetReconciliationReport(GetReconciliationReport getReconciliationReport)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <getreconciliationreport>
+                <date>{0}</date>
+                </getreconciliationreport>", getReconciliationReport.Date.ToString("yyyy-MM-dd"));
+
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getreconciliationreport");
         }
     }
 }

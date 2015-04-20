@@ -126,7 +126,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
                 Is.EqualTo("<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>"));
+        }
 
+        [Test]
+        public void TestGetReconciliationReport()
+        {
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .GetReconciliationReport(new GetReconciliationReport(
+                    date: new DateTime(2015, 04, 17)
+                ));
+
+            var hostedAdminRequest = preparedHostedAdminRequest.Request();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/reconciliation").InnerXml,
+                Is.StringStarting("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
         }
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod)

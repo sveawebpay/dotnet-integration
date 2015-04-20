@@ -29,7 +29,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                               .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
+                                               .SetClientOrderNumber("1" + Guid.NewGuid().ToString().Replace("-", ""))
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePaymentMethod(PaymentMethod.NORDEASE)
                                                .___SetSimulatorCode_ForTestingOnly("0")

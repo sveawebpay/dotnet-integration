@@ -213,6 +213,27 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
         }
 
+        [Test]
+        public void TestQueryCustomerRefNoDirectPayment()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+            var now = DateTime.Now;
+
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Query(new QueryByCustomerRefNo(
+                    customerRefNo: customerRefNo
+                ));
+
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+        }
+
 
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)

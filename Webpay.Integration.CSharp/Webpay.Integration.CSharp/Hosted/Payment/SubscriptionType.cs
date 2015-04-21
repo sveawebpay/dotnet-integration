@@ -1,4 +1,4 @@
-namespace Webpay.Integration.CSharp.Hosted.Helper
+namespace Webpay.Integration.CSharp.Hosted.Payment
 {
     public class SubscriptionType
     {

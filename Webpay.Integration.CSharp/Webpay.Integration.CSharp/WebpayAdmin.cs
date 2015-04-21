@@ -14,7 +14,7 @@ namespace Webpay.Integration.CSharp
         /// Provides the Admin API for the so called Hosted services, meaning the API that integrates
         /// administration for bank, card, and similar payment services.
         /// </summary>
-        public static HostedAdmin Hosted(IConfigurationProvider configurationProvider, string merchantId, CountryCode countryCode)
+        public static HostedAdmin Hosted(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {
             return new HostedAdmin(configurationProvider, countryCode);
         }

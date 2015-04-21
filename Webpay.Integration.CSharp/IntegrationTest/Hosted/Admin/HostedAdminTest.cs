@@ -39,7 +39,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestSemiManualCancelRecurSubscription()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
                     subscriptionId: "3352"
                 ))
@@ -50,7 +50,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestSemiManualConfirm()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 598683,
                     captureDate: DateTime.Now
@@ -65,7 +65,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, CreateCustomerRefNo()));
 
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Annul(new Annul(
                     transactionId: payment.TransactionId
                 ));
@@ -81,7 +81,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestCancelRecurSubscription()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
                     subscriptionId: "12341234"
                 ));
@@ -94,7 +94,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestConfirm()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 12341234,
                     captureDate: new DateTime(2015, 05, 22)
@@ -109,7 +109,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestGetPaymentMethods()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetPaymentMethods(new GetPaymentMethods(
                     merchantId: 1130
                 ));
@@ -128,7 +128,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestGetReconciliationReport()
         {
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetReconciliationReport(new GetReconciliationReport(
                     date: new DateTime(2015, 04, 17)
                 ));
@@ -150,7 +150,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
 
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmount(new LowerAmount(
                     transactionId: payment.TransactionId,
                     amountToLower: 666
@@ -175,7 +175,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var now = DateTime.Now;
 
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByTransactionId(
                     transactionId: payment.TransactionId
                 ));
@@ -217,7 +217,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var now = DateTime.Now;
 
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByCustomerRefNo(
                     customerRefNo: customerRefNo
                 ));
@@ -237,7 +237,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             const string subscriptionId = "The subscription id";
             const long amount = 66600L;
             var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Recur(new Recur(
                     customerRefNo: customerRefNo,
                     subscriptionId: subscriptionId,

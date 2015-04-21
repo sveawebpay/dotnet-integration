@@ -1,5 +1,4 @@
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
@@ -78,7 +77,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
         }
 
-        public PreparedHostedAdminRequest Query(Query query)
+        public PreparedHostedAdminRequest Query(QueryByTransactionId query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <query>

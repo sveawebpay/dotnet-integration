@@ -1,4 +1,4 @@
-namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
+namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class QueryByCustomerRefNo
     {
@@ -7,6 +7,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public QueryByCustomerRefNo(string customerRefNo)
         {
             CustomerRefNo = customerRefNo;
+        }
+    }
+
+    /// <summary>
+    /// Convenience class if you use ClientOrderNumber instead of CustomerRefNo in your code
+    /// </summary>
+    public class QueryByClientOrderNumber : QueryByCustomerRefNo
+    {
+        public QueryByClientOrderNumber(string clientOrderNumber) : base(clientOrderNumber)
+        {
         }
     }
 }

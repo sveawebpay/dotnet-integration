@@ -180,7 +180,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var preparedHostedAdminRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
-                .Query(new Query(
+                .Query(new QueryByTransactionId(
                     transactionId: payment.TransactionId
                 ));
 

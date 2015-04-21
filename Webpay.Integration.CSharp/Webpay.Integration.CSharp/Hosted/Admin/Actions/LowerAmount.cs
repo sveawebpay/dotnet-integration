@@ -1,4 +1,4 @@
-namespace Webpay.Integration.CSharp.Hosted.Admin
+namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class LowerAmount
     {

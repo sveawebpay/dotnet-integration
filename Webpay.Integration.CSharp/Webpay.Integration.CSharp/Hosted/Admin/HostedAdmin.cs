@@ -1,4 +1,5 @@
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin

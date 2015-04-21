@@ -1,6 +1,6 @@
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin
+namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class Recur
     {

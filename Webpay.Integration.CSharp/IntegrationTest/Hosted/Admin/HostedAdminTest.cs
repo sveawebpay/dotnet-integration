@@ -170,6 +170,51 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
 
+
+        [Test]
+        public void TestQueryTransactionIdDirectPayment()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+            var now = DateTime.Now;
+
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Query(new Query(
+                    transactionId: payment.TransactionId
+                ));
+
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1130"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/status").InnerText, Is.EqualTo("SUCCESS"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/amount").InnerText, Is.EqualTo("25000"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/currency").InnerText, Is.EqualTo("SEK"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/vat").InnerText, Is.EqualTo("5000"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/capturedamount").InnerText, Is.EqualTo("25000"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/authorizedamount").InnerText, Is.EqualTo("25000"));
+
+            var created = DateTime.Parse(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/created").InnerText);
+            Assert.That(created.Year, Is.EqualTo(now.Year));
+            Assert.That(created.Month, Is.EqualTo(now.Month));
+            Assert.That(created.Day, Is.EqualTo(now.Day));
+
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/creditstatus").InnerText, Is.EqualTo("CREDNONE"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/creditedamount").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/merchantresponsecode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/paymentmethod").InnerText, Is.EqualTo("DBNORDEASE"));
+
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customer/firstname").InnerXml, Is.EqualTo("TestCompagniet"));
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customer/ssn").InnerXml, Is.EqualTo("2345234"));
+
+        }
+
+
+
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

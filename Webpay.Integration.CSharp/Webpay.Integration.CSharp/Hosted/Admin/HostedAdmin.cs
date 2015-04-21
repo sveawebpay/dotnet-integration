@@ -97,5 +97,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/querycustomerrefno");
         }
+
+        public PreparedHostedAdminRequest Recur(Recur recur)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <recur>
+                <customerrefno>{0}</customerrefno>
+                <subscriptionid>{1}</subscriptionid>
+                <currency>{2}</currency>
+                <amount>{3}</amount>
+                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount);
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
+        }
     }
 }

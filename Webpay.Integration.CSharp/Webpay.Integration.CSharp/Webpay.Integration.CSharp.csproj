@@ -66,6 +66,7 @@
     <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />
     <Compile Include="Hosted\Admin\QueryByTransactionId.cs" />
     <Compile Include="Hosted\Admin\QueryByCustomerRefNo.cs" />
+    <Compile Include="Hosted\Admin\Recur.cs" />
     <Compile Include="Hosted\Admin\WebpayAdmin.cs" />
     <Compile Include="Hosted\Helper\ExcludePayments.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatter.cs" />

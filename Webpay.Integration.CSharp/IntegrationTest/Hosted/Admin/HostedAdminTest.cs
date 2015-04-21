@@ -234,7 +234,32 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         }
 
+        [Test]
+        public void TestRecur()
+        {
+            const string customerRefNo = "Customer reference number or client order number";
+            const string subscriptionId = "The subscription id";
+            const long amount = 66600L;
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), "1130", CountryCode.SE)
+                .Recur(new Recur(
+                    customerRefNo: customerRefNo,
+                    subscriptionId: subscriptionId,
+                    currency: Currency.SEK,
+                    amount: amount 
+                ));
 
+            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/currency").InnerText, Is.EqualTo(Currency.SEK.ToString()));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
+
+            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+
+            //Call to non-existing subscription
+            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322")); 
+        }
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {

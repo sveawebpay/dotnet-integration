@@ -1,7 +1,7 @@
 using System.Xml;
 using Webpay.Integration.CSharp.Util.Security;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin
+namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
     public class PaymentResponse
     {

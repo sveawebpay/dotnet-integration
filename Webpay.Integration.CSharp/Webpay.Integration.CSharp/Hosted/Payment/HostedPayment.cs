@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Xml;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Validator;

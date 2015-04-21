@@ -16,7 +16,7 @@ namespace Webpay.Integration.CSharp
         /// </summary>
         public static HostedAdmin Hosted(IConfigurationProvider configurationProvider, string merchantId, CountryCode countryCode)
         {
-            return new HostedAdmin(configurationProvider, merchantId, countryCode);
+            return new HostedAdmin(configurationProvider, countryCode);
         }
     }
 }

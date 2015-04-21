@@ -10,10 +10,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public string MerchantId { get; private set; }
         public CountryCode CountryCode { get; private set; }
 
-        public HostedAdmin(IConfigurationProvider configurationProvider, string merchantId, CountryCode countryCode)
+        public HostedAdmin(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {
             ConfigurationProvider = configurationProvider;
-            MerchantId = merchantId;
+            MerchantId = configurationProvider.GetMerchantId(PaymentType.HOSTED, countryCode);
             CountryCode = countryCode;
         }
 

@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.IO;
 using System.Net;
-using System.Text;
 using System.Web;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Helper;
-using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
-using Webpay.Integration.CSharp.WebpayWS;
-using Webpay.Integration.CSharp.Webservice.Payment;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {

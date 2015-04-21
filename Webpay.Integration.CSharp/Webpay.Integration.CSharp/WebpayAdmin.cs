@@ -1,7 +1,8 @@
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin
+namespace Webpay.Integration.CSharp
 {
     /// <summary>
     /// Admin root. If you are looking for invoice and paymentplan administrative functionality,

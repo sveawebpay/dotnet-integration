@@ -202,6 +202,24 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestConfirmResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            ConfirmResponse response = Confirm.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.Null);
+            Assert.That(response.CustomerRefNo, Is.Null);
+            Assert.That(response.ClientOrderNumber, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+        }
+
+        [Test]
         public void TestGetPaymentMethods()
         {
             var preparedHostedAdminRequest = WebpayAdmin
@@ -218,6 +236,45 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
                 Is.EqualTo("<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>"));
+        }
+
+
+        [Test]
+        public void TestGetPaymentMethodsResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>0</statuscode>
+                    <paymentmethods>
+                        <paymentmethod>BANKAXESS</paymentmethod>
+                        <paymentmethod>DBNORDEASE</paymentmethod>
+                    </paymentmethods>
+                </response>");
+            GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+            Assert.That(response.PaymentMethods.Count, Is.EqualTo(2));
+            Assert.That(response.PaymentMethods[0], Is.EqualTo("BANKAXESS"));
+            Assert.That(response.PaymentMethods[1], Is.EqualTo("DBNORDEASE"));
+        }
+
+        [Test]
+        public void TestGetPaymentMethodsResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+            Assert.That(response.PaymentMethods.Count, Is.EqualTo(0));
         }
 
         [Test]

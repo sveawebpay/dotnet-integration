@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Web;
 using System.Xml;
@@ -296,6 +297,40 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 Is.StringStarting("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
         }
 
+
+        [Test]
+        public void TestGetReconciliationReportResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>0</statuscode>
+                    <reconciliation>
+                        <reconciliationtransaction>
+                            <transactionid>598268</transactionid>
+                            <customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno>
+                            <paymentmethod>KORTCERT</paymentmethod>
+                            <amount>28420</amount>
+                            <currency>SEK</currency>
+                            <time>2015-04-17 00:15:22 CEST</time>
+                        </reconciliationtransaction>
+                    </reconciliation>
+                </response>");
+            GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+            Assert.That(response.ReconciliationTransactions.Count, Is.EqualTo(1));
+            Assert.That(response.ReconciliationTransactions[0].TransactionId, Is.EqualTo(598268));
+            Assert.That(response.ReconciliationTransactions[0].CustomerRefNo, Is.EqualTo("ti-3-183-Nakkilankatu-A3"));
+            Assert.That(response.ReconciliationTransactions[0].PaymentMethod, Is.EqualTo("KORTCERT"));
+            Assert.That(response.ReconciliationTransactions[0].Amount, Is.EqualTo(284.20M));
+            Assert.That(response.ReconciliationTransactions[0].Currency, Is.EqualTo("SEK"));
+            Assert.That(response.ReconciliationTransactions[0].Time, Is.EqualTo(new DateTime(2015, 04, 17, 0, 15, 22, DateTimeKind.Unspecified)));
+        }
+
+
         [Test]
         public void TestLowerAmount()
         {
@@ -460,6 +495,5 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             return new PaymentResponse(messageBase64, mac, merchantId);
         }
     }
-
 
 }

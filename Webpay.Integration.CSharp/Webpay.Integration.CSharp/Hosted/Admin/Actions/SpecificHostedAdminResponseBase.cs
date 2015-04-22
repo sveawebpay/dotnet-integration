@@ -10,7 +10,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public bool Accepted { get; private set; }
         public string ErrorMessage { get; private set; }
 
-        protected SpecificHostedAdminResponseBase(XmlDocument response)
+        protected SpecificHostedAdminResponseBase(XmlNode response)
         {
             StatusCode = TextInt(response, "/response/statuscode").GetValueOrDefault(101);
             Accepted = StatusCode == 0;
@@ -18,7 +18,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             ErrorMessage = errorMessage.Item2;
         }
 
-        protected static int? AttributeInt(XmlDocument response, string element, string attribute)
+        protected static int? AttributeInt(XmlNode response, string element, string attribute)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             }
         }
 
-        protected static int? TextInt(XmlDocument response, string element)
+        protected static int? TextInt(XmlNode response, string element)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             }
         }
 
-        protected static string TextString(XmlDocument response, string element)
+        protected static string TextString(XmlNode response, string element)
         {
             try
             {

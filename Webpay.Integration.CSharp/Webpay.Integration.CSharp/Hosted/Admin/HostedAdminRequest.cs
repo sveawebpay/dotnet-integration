@@ -7,6 +7,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class HostedAdminRequest
     {
+        public readonly string EndPointBase;
         public readonly string Message;
         public readonly string SecretWord;
         public readonly string MerchantId;
@@ -14,8 +15,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public readonly string Mac;
         public readonly XmlDocument MessageXmlDocument;
 
-        public HostedAdminRequest(string message, string secretWord, string merchantId)
+        public HostedAdminRequest(string message, string secretWord, string merchantId, string endPointBase)
         {
+            EndPointBase = endPointBase;
             Message = message;
             SecretWord = secretWord;
             MerchantId = merchantId;
@@ -25,6 +27,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
             MessageXmlDocument = new XmlDocument();
             MessageXmlDocument.LoadXml(message);
+        }
+
+        public HostedAdminResponse DoRequest()
+        {
+            return HostedAdminCall(EndPointBase, this);
         }
 
         public static HostedAdminResponse HostedAdminCall(string targetAddress, HostedAdminRequest hostedRequest)

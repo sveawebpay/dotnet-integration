@@ -37,7 +37,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedAdminRequest PrepareRequest()
         {
-            return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode), MerchantId);
+            return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode), MerchantId, GetEndPointBase());
         }
     }
 }

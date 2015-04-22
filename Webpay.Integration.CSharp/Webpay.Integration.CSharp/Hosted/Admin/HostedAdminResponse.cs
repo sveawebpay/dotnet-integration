@@ -1,9 +1,11 @@
-﻿using System.Xml;
+﻿using System;
+using System.Linq;
+using System.Xml;
 using Webpay.Integration.CSharp.Util.Security;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
 {
-    public class HostedAdminResponse
+    public partial class HostedAdminResponse
     {
         public readonly string WebserviceResponseXml;
         public readonly string MessageBase64Encoded;
@@ -38,5 +40,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             MessageXmlDocument = new XmlDocument();
             MessageXmlDocument.LoadXml(Message);
         }
+
+        /// <summary>
+        /// Create a specific object using a function
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="funcToObject"></param>
+        /// <returns></returns>
+        public T To<T>(Func<XmlDocument, T> funcToObject)
+        {
+            return funcToObject(MessageXmlDocument);
+        }
+   
     }
 }

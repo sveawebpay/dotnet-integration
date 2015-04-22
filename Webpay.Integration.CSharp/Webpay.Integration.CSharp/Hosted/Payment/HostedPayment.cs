@@ -190,9 +190,9 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var payPageUrl = CrOrderBuilder.GetConfig()
                 .GetEndPoint(PaymentType.HOSTED);
 
-            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId);
-
             var baseUrl = payPageUrl.Replace("/payment", "");
+
+            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, baseUrl);
 
             var targetAddress = baseUrl + "/rest/preparepayment";
 

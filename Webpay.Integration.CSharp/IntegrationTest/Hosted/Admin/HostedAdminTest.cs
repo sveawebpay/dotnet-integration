@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Web;
+using System.Xml;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
@@ -75,7 +76,49 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+
+            AnnulResponse response = hostedAdminResponse.To(Annul.Response);
         }
+
+        [Test]
+        public void TestAnnulResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <transaction id=""598972"">
+                    <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                    </transaction><statuscode>0</statuscode>
+                </response>");
+            AnnulResponse response = Annul.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.EqualTo(598972));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+        }
+
+        [Test]
+        public void TestAnnulResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            AnnulResponse response = Annul.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.Null);
+            Assert.That(response.CustomerRefNo, Is.Null);
+            Assert.That(response.ClientOrderNumber, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+        }
+
+
 
         [Test]
         public void TestCancelRecurSubscription()
@@ -89,6 +132,23 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
         }
+
+        [Test]
+        public void TestCancelRecurSubscriptionResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>0</statuscode>
+                </response>");
+            CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+        }
+
+
 
         [Test]
         public void TestConfirm()
@@ -307,4 +367,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             return new PaymentResponse(messageBase64, mac, merchantId);
         }
     }
+
+
 }

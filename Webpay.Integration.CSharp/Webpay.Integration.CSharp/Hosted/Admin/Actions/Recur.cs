@@ -4,10 +4,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class Recur
     {
-        public string CustomerRefNo { get; private set ; }
-        public string SubscriptionId { get; private set; }
-        public Currency Currency { get; private set; }
-        public long Amount { get; private set; }
+        public readonly string CustomerRefNo;
+        public readonly string SubscriptionId;
+        public readonly Currency Currency;
+        public readonly long Amount;
 
         public Recur(string customerRefNo, string subscriptionId, Currency currency, long amount)
         {

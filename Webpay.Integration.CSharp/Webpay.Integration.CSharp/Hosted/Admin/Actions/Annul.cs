@@ -2,7 +2,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class Annul
     {
-        public long TransactionId { get; private set; }
+        public readonly long TransactionId;
 
         public Annul(long transactionId)
         {

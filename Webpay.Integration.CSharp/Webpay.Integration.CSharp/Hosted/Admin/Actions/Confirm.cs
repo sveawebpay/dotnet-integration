@@ -4,8 +4,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class Confirm
     {
-        public DateTime CaptureDate { get; private set; }
-        public int TransactionId { get; private set; }
+        public readonly DateTime CaptureDate;
+        public readonly int TransactionId;
 
         public Confirm(int transactionId, DateTime captureDate)
         {

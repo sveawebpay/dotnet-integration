@@ -2,7 +2,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class GetPaymentMethods
     {
-        public int MerchantId { get; private set; }
+        public readonly int MerchantId;
 
         public GetPaymentMethods(int merchantId)
         {

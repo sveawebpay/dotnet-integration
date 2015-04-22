@@ -4,7 +4,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class GetReconciliationReport
     {
-        public DateTime Date { get; private set; }
+        public readonly DateTime Date;
 
         public GetReconciliationReport(DateTime date)
         {

@@ -7,12 +7,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class HostedAdminRequest
     {
-        public string Message { get; private set; }
-        public string SecretWord { get; private set; }
-        public string MerchantId { get; private set; }
-        public string MessageBase64Encoded { get; private set; }
-        public string Mac { get; private set; }
-        public XmlDocument MessageXmlDocument { get; private set; }
+        public readonly string Message;
+        public readonly string SecretWord;
+        public readonly string MerchantId;
+        public readonly string MessageBase64Encoded;
+        public readonly string Mac;
+        public readonly XmlDocument MessageXmlDocument;
 
         public HostedAdminRequest(string message, string secretWord, string merchantId)
         {

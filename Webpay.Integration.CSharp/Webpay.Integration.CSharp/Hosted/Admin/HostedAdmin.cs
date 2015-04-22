@@ -6,9 +6,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class HostedAdmin
     {
-        public IConfigurationProvider ConfigurationProvider { get; private set; }
-        public string MerchantId { get; private set; }
-        public CountryCode CountryCode { get; private set; }
+        public readonly IConfigurationProvider ConfigurationProvider;
+        public readonly string MerchantId;
+        public readonly CountryCode CountryCode;
 
         public HostedAdmin(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {

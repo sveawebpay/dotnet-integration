@@ -71,10 +71,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
         }
 
         [Test]
@@ -101,8 +101,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
         }
 
         [Test]
@@ -115,12 +115,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
                 Is.EqualTo("<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>"));
         }
 
@@ -134,12 +134,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/reconciliation").InnerXml,
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/reconciliation").InnerXml,
                 Is.StringStarting("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
         }
 
@@ -157,12 +157,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/loweramount/amounttolower").InnerText, Is.EqualTo("666"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/amounttolower").InnerText, Is.EqualTo("666"));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         }
 
 
@@ -181,31 +181,31 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1130"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/status").InnerText, Is.EqualTo("SUCCESS"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/amount").InnerText, Is.EqualTo("25000"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/currency").InnerText, Is.EqualTo("SEK"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/vat").InnerText, Is.EqualTo("5000"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/capturedamount").InnerText, Is.EqualTo("25000"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/authorizedamount").InnerText, Is.EqualTo("25000"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1130"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/status").InnerText, Is.EqualTo("SUCCESS"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/amount").InnerText, Is.EqualTo("25000"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/currency").InnerText, Is.EqualTo("SEK"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/vat").InnerText, Is.EqualTo("5000"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/capturedamount").InnerText, Is.EqualTo("25000"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/authorizedamount").InnerText, Is.EqualTo("25000"));
 
-            var created = DateTime.Parse(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/created").InnerText);
+            var created = DateTime.Parse(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/created").InnerText);
             Assert.That(created.Year, Is.EqualTo(now.Year));
             Assert.That(created.Month, Is.EqualTo(now.Month));
             Assert.That(created.Day, Is.EqualTo(now.Day));
 
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/creditstatus").InnerText, Is.EqualTo("CREDNONE"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/creditedamount").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/merchantresponsecode").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/paymentmethod").InnerText, Is.EqualTo("DBNORDEASE"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/creditstatus").InnerText, Is.EqualTo("CREDNONE"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/creditedamount").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantresponsecode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/paymentmethod").InnerText, Is.EqualTo("DBNORDEASE"));
 
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customer/firstname").InnerXml, Is.EqualTo("TestCompagniet"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customer/ssn").InnerXml, Is.EqualTo("2345234"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customer/firstname").InnerXml, Is.EqualTo("TestCompagniet"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customer/ssn").InnerXml, Is.EqualTo("2345234"));
 
         }
 
@@ -223,11 +223,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         }
 
         [Test]
@@ -246,15 +246,15 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/currency").InnerText, Is.EqualTo(Currency.SEK.ToString()));
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
-            Assert.That(hostedAdminRequest.XmlDoc.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/currency").InnerText, Is.EqualTo(Currency.SEK.ToString()));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
 
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
 
             //Call to non-existing subscription
-            Assert.That(hostedAdminResponse.MessageDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322")); 
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322")); 
         }
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)

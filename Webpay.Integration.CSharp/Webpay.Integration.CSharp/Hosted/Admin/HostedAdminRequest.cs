@@ -7,24 +7,24 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class HostedAdminRequest
     {
-        public string XmlMessage { get; private set; }
+        public string Message { get; private set; }
         public string SecretWord { get; private set; }
         public string MerchantId { get; private set; }
-        public string Base64Message { get; private set; }
+        public string MessageBase64Encoded { get; private set; }
         public string Mac { get; private set; }
-        public XmlDocument XmlDoc { get; private set; }
+        public XmlDocument MessageXmlDocument { get; private set; }
 
-        public HostedAdminRequest(string xmlMessage, string secretWord, string merchantId)
+        public HostedAdminRequest(string message, string secretWord, string merchantId)
         {
-            XmlMessage = xmlMessage;
+            Message = message;
             SecretWord = secretWord;
             MerchantId = merchantId;
 
-            Base64Message = Base64Util.EncodeBase64String(XmlMessage);
-            Mac = HashUtil.CreateHash(Base64Message + secretWord);
+            MessageBase64Encoded = Base64Util.EncodeBase64String(Message);
+            Mac = HashUtil.CreateHash(MessageBase64Encoded + secretWord);
 
-            XmlDoc = new XmlDocument();
-            XmlDoc.LoadXml(xmlMessage);
+            MessageXmlDocument = new XmlDocument();
+            MessageXmlDocument.LoadXml(message);
         }
 
         public static HostedAdminResponse HostedAdminCall(string targetAddress, HostedAdminRequest hostedRequest)
@@ -34,7 +34,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 var response =
                     client.UploadValues(targetAddress, new NameValueCollection()
                     {
-                        {"message", hostedRequest.Base64Message},
+                        {"message", hostedRequest.MessageBase64Encoded},
                         {"mac", hostedRequest.Mac},
                         {"merchantid", hostedRequest.MerchantId}
                     });

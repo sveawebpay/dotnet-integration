@@ -5,38 +5,38 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class HostedAdminResponse
     {
-        public readonly string Xml;
-        public readonly string MessageBase64;
+        public readonly string WebserviceResponseXml;
+        public readonly string MessageBase64Encoded;
         public readonly string Mac;
-        public readonly string ReceivedMerchantId;
+        public readonly string MerchantId;
         public readonly string Message;
-        public readonly XmlDocument MessageDocument;
+        public readonly XmlDocument MessageXmlDocument;
 
-        public HostedAdminResponse(string xml, string originalSecretWord, string expectedMerchantId)
+        public HostedAdminResponse(string webserviceResponseXml, string originalSecretWord, string expectedMerchantId)
         {
-            Xml = xml;
+            WebserviceResponseXml = webserviceResponseXml;
             var responseDocument = new XmlDocument();
-            responseDocument.LoadXml(xml);
-            MessageBase64 = responseDocument.SelectSingleNode("//message").InnerText;
+            responseDocument.LoadXml(webserviceResponseXml);
+            MessageBase64Encoded = responseDocument.SelectSingleNode("//message").InnerText;
             Mac = responseDocument.SelectSingleNode("//mac").InnerText;
-            ReceivedMerchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
+            MerchantId = responseDocument.SelectSingleNode("//merchantid").InnerText;
 
-            var expectedMac = HashUtil.CreateHash(MessageBase64 + originalSecretWord);
+            var expectedMac = HashUtil.CreateHash(MessageBase64Encoded + originalSecretWord);
 
-            if (ReceivedMerchantId != expectedMerchantId)
+            if (MerchantId != expectedMerchantId)
             {
-                throw new System.Exception(string.Format("The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}", expectedMerchantId, ReceivedMerchantId));
+                throw new System.Exception(string.Format("The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}", expectedMerchantId, MerchantId));
             }
 
-            if (expectedMac != Mac)
+            if (Mac != expectedMac)
             {
-                throw new System.Exception(string.Format("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}", expectedMerchantId, MessageBase64));
+                throw new System.Exception(string.Format("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}", expectedMerchantId, MessageBase64Encoded));
             }
 
-            Message = Base64Util.DecodeBase64String(MessageBase64);
+            Message = Base64Util.DecodeBase64String(MessageBase64Encoded);
 
-            MessageDocument = new XmlDocument();
-            MessageDocument.LoadXml(Message);
+            MessageXmlDocument = new XmlDocument();
+            MessageXmlDocument.LoadXml(Message);
         }
     }
 }

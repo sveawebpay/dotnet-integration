@@ -148,6 +148,21 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.ErrorMessage, Is.Empty);
         }
 
+        [Test]
+        public void TestCancelRecurSubscriptionResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>101</statuscode>
+                </response>");
+            CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(101));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Invalid XML."));
+        }
+
 
 
         [Test]
@@ -163,6 +178,27 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
+        }
+
+        [Test]
+        public void TestConfirmResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <transaction id=""598972"">
+                        <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                    </transaction>
+                    <statuscode>0</statuscode>
+                </response>");
+            ConfirmResponse response = Confirm.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.EqualTo(598972));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
         }
 
         [Test]

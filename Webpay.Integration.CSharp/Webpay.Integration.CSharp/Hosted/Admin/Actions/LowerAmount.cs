@@ -1,3 +1,5 @@
+using System.Xml;
+
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class LowerAmount
@@ -9,6 +11,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         {
             TransactionId = transactionId;
             AmountToLower = amountToLower;
+        }
+
+        public static LowerAmountResponse Response(XmlDocument responseXml)
+        {
+            return new LowerAmountResponse(responseXml);
+        }
+    }
+
+    public class LowerAmountResponse : CustomerRefNoResponseBase
+    {
+        public LowerAmountResponse(XmlDocument response) : base(response)
+        {
         }
     }
 }

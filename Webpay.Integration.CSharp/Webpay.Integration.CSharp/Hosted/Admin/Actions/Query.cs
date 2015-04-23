@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class Query
+    public abstract class Query
     {
         public static QueryResponse Response(XmlDocument responseXml)
         {

@@ -358,6 +358,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     transactionId: payment.TransactionId,
                     amountToLower: 666
                     ))
+                .PrepareRequest()
                 .DoRequest()
                 .To(LowerAmount.Response);
         }
@@ -714,6 +715,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.StatusCode, Is.EqualTo(107));
             Assert.That(response.Accepted, Is.False);
             Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+        }
+
+        [Test]
+        [ExpectedException(typeof(System.Exception), ExpectedMessage = "The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:1131 Actual:1130")]
+        public void TestHostedAdminResponseBadMerchant()
+        {
+            new HostedAdminResponse(
+                    @"<?xml version='1.0' encoding='UTF-8'?><response><message>PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+</message><merchantid>1130</merchantid><mac>db277097f6c30f08ae1cc463d755bce42b89564ee6bec8ba0fdf9ec25036bd68d9f92b9db4ff348ced0b2a530e3ecee913941301236098477fc1b87843ba44fc</mac></response>",
+                    "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3",
+                    "1131"
+                );
+        }
+
+        [Test]
+        [ExpectedException(typeof(System.Exception), ExpectedMessage = "SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:1130 Message:\nPD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+")]
+        public void TestHostedAdminResponseBadMacInMessage()
+        {
+            new HostedAdminResponse(
+                    @"<?xml version='1.0' encoding='UTF-8'?><response><message>PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+</message><merchantid>1130</merchantid><mac>aba77097f6c30f08ae1cc463d755bce42b89564ee6bec8ba0fdf9ec25036bd68d9f92b9db4ff348ced0b2a530e3ecee913941301236098477fc1b87843ba44fc</mac></response>",
+                    "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3",
+                    "1130"
+                );
+        }
+
+        [Test]
+        [ExpectedException(typeof(System.Exception), ExpectedMessage = "SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:1130 Message:\nPD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+")]
+        public void TestHostedAdminResponseCorrectMacInMessageButWrongSecretWord()
+        {
+            new HostedAdminResponse(
+                    @"<?xml version='1.0' encoding='UTF-8'?><response><message>PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+</message><merchantid>1130</merchantid><mac>db277097f6c30f08ae1cc463d755bce42b89564ee6bec8ba0fdf9ec25036bd68d9f92b9db4ff348ced0b2a530e3ecee913941301236098477fc1b87843ba44fc</mac></response>",
+                    "abacece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3",
+                    "1130"
+                );
         }
 
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)

@@ -31,6 +31,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             }
         }
 
+        protected static string AttributeString(XmlNode response, string element, string attribute)
+        {
+            try
+            {
+                return response.SelectSingleNode(element).Attributes[attribute].Value;
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+        }
+
         protected static int? TextInt(XmlNode response, string element)
         {
             try
@@ -42,6 +54,20 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 return null;
             }
         }
+
+        protected static decimal? TextDecimal(XmlNode response, string element)
+        {
+            try
+            {
+                return Convert.ToDecimal(response.SelectSingleNode(element).InnerText);
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+        }
+
+
 
         protected static string TextString(XmlNode response, string element)
         {
@@ -55,9 +81,14 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             }
         }
 
+        public static decimal? MinorCurrencyToDecimalAmount(int? amountMinor)
+        {
+            return amountMinor.HasValue ? MathUtil.BankersRound(((decimal)amountMinor) / 100) : (decimal?) null;
+        }
+
         public static decimal MinorCurrencyToDecimalAmount(int amountMinor)
         {
-            return MathUtil.BankersRound(((decimal) amountMinor)/100);
+            return MathUtil.BankersRound(((decimal)amountMinor) / 100);
         }
     }
 }

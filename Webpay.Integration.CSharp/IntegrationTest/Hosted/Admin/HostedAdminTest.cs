@@ -471,25 +471,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                         <creditedamount>0</creditedamount>
                         <merchantresponsecode>0</merchantresponsecode>
                         <paymentmethod>DBNORDEASE</paymentmethod>
-                        <callbackurl/>
-                        <subscriptionid/>
-                        <subscriptiontype/>
+                        <callbackurl>https://hej.hopp</callbackurl>
+                        <subscriptionid>subid</subscriptionid>
+                        <subscriptiontype>subtype</subscriptiontype>
                         <customer id=""22513"">
-                            <firstname>TestCompagniet</firstname>
-                            <lastname/>
-                            <initials/>
-                            <email/>
-                            <ssn>2345234</ssn>
-                            <address/>
-                            <address2/>
-                            <city/>
+                            <firstname>Testa</firstname>
+                            <lastname>Testson</lastname>
+                            <initials>TT</initials>
+                            <fullname>Testa T Testson</fullname>
+                            <email>testson@sveaekonomi.se</email>
+                            <ssn>460509-2222</ssn>
+                            <address>Testgatan 666</address>
+                            <address2>c/o Quality Man</address2>
+                            <city>Testholm</city>
                             <country>SE</country>
-                            <zip/>
-                            <phone/>
-                            <vatnumber/>
-                            <housenumber/>
-                            <companyname/>
-                            <fullname/>
+                            <zip>123 45</zip>
+                            <phone>012345566789</phone>
+                            <vatnumber>123456-7890</vatnumber>
+                            <housenumber>69</housenumber>
+                            <companyname>TestCompagniet</companyname>
                         </customer>
                         <orderrows>
                             <row>
@@ -508,50 +508,50 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 </response>");
             QueryResponse response = QueryByTransactionId.Response(responseXml);
 
-            Assert.That(response.TransactionId, Is.EqualTo(598972));
-            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.MerchantId, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Status, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Amount, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Currency, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Vat, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.CapturedAmount, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.AuthorizedAmount, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Created, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.CreditStatus, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.CreditedAmount, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.MerchantResponseCode, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.PaymentMethod, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.CallbackUrl, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.SubscriptionId, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.SubscriptionType, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Id, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.FirstName, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.LastName, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Initials, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.FullName, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Email, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Ssn, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Address, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Address2, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.City, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Country, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Zip, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.Phone, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.VatNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.HouseNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.Customer.CompanyName, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Id, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Prod, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Amount, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Vat, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Description, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Quantity, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Sku, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-            Assert.That(response.Transaction.OrderRows[0].Unit, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.TransactionId, Is.EqualTo(599086));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
+            Assert.That(response.Transaction.CustomerRefNo, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
+            Assert.That(response.Transaction.ClientOrderNumber, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
+            Assert.That(response.Transaction.MerchantId, Is.EqualTo(1130));
+            Assert.That(response.Transaction.Status, Is.EqualTo("SUCCESS"));
+            Assert.That(response.Transaction.Amount, Is.EqualTo(250.00M));
+            Assert.That(response.Transaction.Currency, Is.EqualTo("SEK"));
+            Assert.That(response.Transaction.Vat, Is.EqualTo(50.00M));
+            Assert.That(response.Transaction.CapturedAmount, Is.EqualTo(250.00M));
+            Assert.That(response.Transaction.AuthorizedAmount, Is.EqualTo(250.00M));
+            Assert.That(response.Transaction.Created, Is.EqualTo(new DateTime(2015, 04, 23, 10, 51, 06, 977)));
+            Assert.That(response.Transaction.CreditStatus, Is.EqualTo("CREDNONE"));
+            Assert.That(response.Transaction.CreditedAmount, Is.EqualTo(0.00M));
+            Assert.That(response.Transaction.MerchantResponseCode, Is.EqualTo(0));
+            Assert.That(response.Transaction.PaymentMethod, Is.EqualTo("DBNORDEASE"));
+            Assert.That(response.Transaction.CallbackUrl, Is.EqualTo("https://hej.hopp"));
+            Assert.That(response.Transaction.SubscriptionId, Is.EqualTo("subid"));
+            Assert.That(response.Transaction.SubscriptionType, Is.EqualTo("subtype"));
+            Assert.That(response.Transaction.Customer.Id, Is.EqualTo("22513"));
+            Assert.That(response.Transaction.Customer.FirstName, Is.EqualTo("Testa"));
+            Assert.That(response.Transaction.Customer.LastName, Is.EqualTo("Testson"));
+            Assert.That(response.Transaction.Customer.Initials, Is.EqualTo("TT"));
+            Assert.That(response.Transaction.Customer.FullName, Is.EqualTo("Testa T Testson"));
+            Assert.That(response.Transaction.Customer.Email, Is.EqualTo("testson@sveaekonomi.se"));
+            Assert.That(response.Transaction.Customer.Ssn, Is.EqualTo("460509-2222"));
+            Assert.That(response.Transaction.Customer.Address, Is.EqualTo("Testgatan 666"));
+            Assert.That(response.Transaction.Customer.Address2, Is.EqualTo("c/o Quality Man"));
+            Assert.That(response.Transaction.Customer.City, Is.EqualTo("Testholm"));
+            Assert.That(response.Transaction.Customer.Country, Is.EqualTo("SE"));
+            Assert.That(response.Transaction.Customer.Zip, Is.EqualTo("123 45"));
+            Assert.That(response.Transaction.Customer.Phone, Is.EqualTo("012345566789"));
+            Assert.That(response.Transaction.Customer.VatNumber, Is.EqualTo("123456-7890"));
+            Assert.That(response.Transaction.Customer.HouseNumber, Is.EqualTo("69"));
+            Assert.That(response.Transaction.Customer.CompanyName, Is.EqualTo("TestCompagniet"));
+            Assert.That(response.Transaction.OrderRows[0].Id, Is.EqualTo("72750"));
+            Assert.That(response.Transaction.OrderRows[0].Name, Is.EqualTo("Prod"));
+            Assert.That(response.Transaction.OrderRows[0].Amount, Is.EqualTo(125.00M));
+            Assert.That(response.Transaction.OrderRows[0].Vat, Is.EqualTo(25.00M));
+            Assert.That(response.Transaction.OrderRows[0].Description, Is.EqualTo("Specification"));
+            Assert.That(response.Transaction.OrderRows[0].Quantity, Is.EqualTo(2));
+            Assert.That(response.Transaction.OrderRows[0].Sku, Is.EqualTo("1"));
+            Assert.That(response.Transaction.OrderRows[0].Unit, Is.EqualTo("st"));
 
             Assert.That(response.StatusCode, Is.EqualTo(0));
             Assert.That(response.Accepted, Is.True);

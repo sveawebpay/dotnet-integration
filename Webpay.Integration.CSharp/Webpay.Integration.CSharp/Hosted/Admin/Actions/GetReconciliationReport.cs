@@ -43,7 +43,6 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                     MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value),
                     TextString(xmlNode, "./currency"),
                     DateTime.Parse(TextString(xmlNode, "./time").Replace("CEST", "+02"))
-                    
                 ));
             }
         }

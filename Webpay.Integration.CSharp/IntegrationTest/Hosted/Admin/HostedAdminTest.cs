@@ -513,7 +513,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     </transaction>
                     <statuscode>0</statuscode>
                 </response>");
-            QueryResponse response = QueryByTransactionId.Response(responseXml);
+            QueryResponse response = Query.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(599086));
             Assert.That(response.CustomerRefNo, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
@@ -579,7 +579,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 <response>
                     <statuscode>107</statuscode>
                 </response>");
-            QueryResponse response = QueryByTransactionId.Response(responseXml);
+            QueryResponse response = Query.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
             Assert.That(response.CustomerRefNo, Is.Null);

@@ -1,6 +1,6 @@
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class QueryByCustomerRefNo
+    public class QueryByCustomerRefNo : Query
     {
         public readonly string CustomerRefNo;
 

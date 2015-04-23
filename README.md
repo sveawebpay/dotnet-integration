@@ -32,9 +32,9 @@ There are two main parts of the Svea API; the payment API and the admin API. Fir
 Then there is the admin API. The invoice and part payment services have a very competent SOAP interface and for .NET it 
 is recommended to use this interface to administer these payments. The service/WSDL is available at 
 
-```https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc?wsdl```
+https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc?wsdl
 
-For the other payments, this package contains a similar interface for administration, as described in [11. Admin functionality](https://github.com/sveawebpay/dotnet-integration/tree/master#11-admin-functionality)
+For the other payments, this package contains a similar interface for administration, as described in *11. Admin functionality*
 
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -54,7 +54,7 @@ This will build the dll and place it in bin/release sub-folder of the project.
 The Configuration needed to be set differs of how many different payment methods and countries you have in the same installation. 
 The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is created, use SveaConfig.GetDefaultConfig().
 
-**To configure Svea authorization:**
+*To configure Svea authorization:*
 Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods 
 return the authorization values asked for. 
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
@@ -62,6 +62,7 @@ Later when starting a WebpayConnection action in your integration file, put an i
 *NOTE:* This solution may change in future updates! 
 
 Step 1:
+
 ```csharp
 
 using Webpay.Integration.CSharp.Config;

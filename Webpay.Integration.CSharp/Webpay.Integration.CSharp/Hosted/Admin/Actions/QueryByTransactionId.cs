@@ -26,60 +26,70 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public QueryResponse(XmlDocument response)
             : base(response)
         {
-            TransactionCustomer customer = new TransactionCustomer(
-                    AttributeString(response, "/response/transaction/customer", "id"),
-                    TextString(response, "/response/transaction/customer/firstname"),
-                    TextString(response, "/response/transaction/customer/lastname"),
-                    TextString(response, "/response/transaction/customer/initials"),
-                    TextString(response, "/response/transaction/customer/fullname"),
-                    TextString(response, "/response/transaction/customer/email"),
-                    TextString(response, "/response/transaction/customer/ssn"),
-                    TextString(response, "/response/transaction/customer/address"),
-                    TextString(response, "/response/transaction/customer/address2"),
-                    TextString(response, "/response/transaction/customer/city"),
-                    TextString(response, "/response/transaction/customer/country"),
-                    TextString(response, "/response/transaction/customer/zip"),
-                    TextString(response, "/response/transaction/customer/phone"),
-                    TextString(response, "/response/transaction/customer/vatnumber"),
-                    TextString(response, "/response/transaction/customer/housenumber"),
-                    TextString(response, "/response/transaction/customer/companyname")
-            );
-
-            Transaction = new Transaction(
-                    TextString(response, "/response/transaction/customerrefno"),
-                    TextInt(response, "/response/transaction/merchantid").Value,
-                    TextString(response, "/response/transaction/status"),
-                    MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/amount").Value),
-                    TextString(response, "/response/transaction/currency"),
-                    MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/vat")),
-                    MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/capturedamount")),
-                    MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/authorizedamount")),
-                    DateTime.Parse(TextString(response, "/response/transaction/created")),
-                    TextString(response, "/response/transaction/creditstatus"),
-                    MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/creditedamount")),
-                    TextInt(response, "/response/transaction/merchantresponsecode"),
-                    TextString(response, "/response/transaction/paymentmethod"),
-                    TextString(response, "/response/transaction/callbackurl"),
-                    TextString(response, "/response/transaction/subscriptionid"),
-                    TextString(response, "/response/transaction/subscriptiontype"),
-                    customer
+            if (response.SelectSingleNode("/response/transaction") != null)
+            {
+                TransactionCustomer customer = new TransactionCustomer(
+                        AttributeString(response, "/response/transaction/customer", "id"),
+                        TextString(response, "/response/transaction/customer/firstname"),
+                        TextString(response, "/response/transaction/customer/lastname"),
+                        TextString(response, "/response/transaction/customer/initials"),
+                        TextString(response, "/response/transaction/customer/fullname"),
+                        TextString(response, "/response/transaction/customer/email"),
+                        TextString(response, "/response/transaction/customer/ssn"),
+                        TextString(response, "/response/transaction/customer/address"),
+                        TextString(response, "/response/transaction/customer/address2"),
+                        TextString(response, "/response/transaction/customer/city"),
+                        TextString(response, "/response/transaction/customer/country"),
+                        TextString(response, "/response/transaction/customer/zip"),
+                        TextString(response, "/response/transaction/customer/phone"),
+                        TextString(response, "/response/transaction/customer/vatnumber"),
+                        TextString(response, "/response/transaction/customer/housenumber"),
+                        TextString(response, "/response/transaction/customer/companyname")
                 );
 
-            var enumerator = response.SelectNodes("/response/transaction/orderrows/row").GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var xmlNode = (XmlNode)enumerator.Current;
+                Transaction = new Transaction(
+                        TextString(response, "/response/transaction/customerrefno"),
+                        TextInt(response, "/response/transaction/merchantid").Value,
+                        TextString(response, "/response/transaction/status"),
+                        MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/amount").Value),
+                        TextString(response, "/response/transaction/currency"),
+                        MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/vat")),
+                        MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/capturedamount")),
+                        MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/authorizedamount")),
+                        DateTime.Parse(TextString(response, "/response/transaction/created")),
+                        TextString(response, "/response/transaction/creditstatus"),
+                        MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/creditedamount")),
+                        TextInt(response, "/response/transaction/merchantresponsecode"),
+                        TextString(response, "/response/transaction/paymentmethod"),
+                        TextString(response, "/response/transaction/callbackurl"),
+                        TextString(response, "/response/transaction/subscriptionid"),
+                        TextString(response, "/response/transaction/subscriptiontype"),
+                        TextString(response, "/response/transaction/eci"),
+                        TextString(response, "/response/transaction/mdstatus"),
+                        TextString(response, "/response/transaction/expiryyear"),
+                        TextString(response, "/response/transaction/expirymonth"),
+                        TextString(response, "/response/transaction/ch_name"),
+                        TextString(response, "/response/transaction/authcode"),
+                        customer
+                    );
 
-                Transaction.OrderRows.Add(new TransactionOrderRow(
-                        TextString(xmlNode, "./id"),
-                        TextString(xmlNode, "./name"),
-                        MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value),
-                        MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./vat")),
-                        TextString(xmlNode, "./description"),
-                        TextDecimal(xmlNode, "./quantity").GetValueOrDefault(1),
-                        TextString(xmlNode, "./sku"),
-                        TextString(xmlNode, "./unit")
-                    ));
+                var enumerator = response.SelectNodes("/response/transaction/orderrows/row").GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    var xmlNode = (XmlNode)enumerator.Current;
+
+                    Transaction.OrderRows.Add(new TransactionOrderRow(
+                            TextString(xmlNode, "./id"),
+                            TextString(xmlNode, "./name"),
+                            MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value),
+                            MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./vat")),
+                            TextString(xmlNode, "./description"),
+                            TextDecimal(xmlNode, "./quantity").GetValueOrDefault(1),
+                            TextString(xmlNode, "./sku"),
+                            TextString(xmlNode, "./unit")
+                        ));
+                }
+
             }
         }
 
@@ -105,10 +115,16 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string SubscriptionId;
         public readonly string SubscriptionType;
         public readonly TransactionCustomer Customer;
+        public readonly string Eci;
+        public readonly string MdStatus;
+        public readonly string ExpiryYear;
+        public readonly string ExpiryMonth;
+        public readonly string ChName;
+        public readonly string AuthCode;
 
         public readonly IList<TransactionOrderRow> OrderRows;
 
-        public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string callbackUrl, string subscriptionId, string subscriptionType, TransactionCustomer customer)
+        public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string callbackUrl, string subscriptionId, string subscriptionType, string eci, string mdStatus, string expiryYear, string expiryMonth, string chName, string authCode, TransactionCustomer customer)
         {
             CustomerRefNo = customerRefNo;
             ClientOrderNumber = CustomerRefNo;
@@ -128,6 +144,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             SubscriptionId = subscriptionId;
             SubscriptionType = subscriptionType;
             Customer = customer;
+            Eci = eci;
+            MdStatus = mdStatus;
+            ExpiryYear = expiryYear;
+            ExpiryMonth = expiryMonth;
+            ChName = chName;
+            AuthCode = authCode;
 
             OrderRows = new List<TransactionOrderRow>();
         }

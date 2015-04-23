@@ -474,6 +474,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                         <callbackurl>https://hej.hopp</callbackurl>
                         <subscriptionid>subid</subscriptionid>
                         <subscriptiontype>subtype</subscriptiontype>
+                        <capturedate>2015-04-23 10:51:06.977</capturedate>
+                        <eci>eci</eci>
+                        <mdstatus>mdstatus</mdstatus>
+                        <expiryyear>2015</expiryyear>
+                        <expirymonth>09</expirymonth>
+                        <ch_name>ch_name</ch_name>
+                        <authcode>authcode</authcode>
                         <customer id=""22513"">
                             <firstname>Testa</firstname>
                             <lastname>Testson</lastname>
@@ -528,6 +535,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.Transaction.CallbackUrl, Is.EqualTo("https://hej.hopp"));
             Assert.That(response.Transaction.SubscriptionId, Is.EqualTo("subid"));
             Assert.That(response.Transaction.SubscriptionType, Is.EqualTo("subtype"));
+            Assert.That(response.Transaction.Eci, Is.EqualTo("eci"));
+            Assert.That(response.Transaction.MdStatus, Is.EqualTo("mdstatus"));
+            Assert.That(response.Transaction.ExpiryYear, Is.EqualTo("2015"));
+            Assert.That(response.Transaction.ExpiryMonth, Is.EqualTo("09"));
+            Assert.That(response.Transaction.ChName, Is.EqualTo("ch_name"));
+            Assert.That(response.Transaction.AuthCode, Is.EqualTo("authcode"));
             Assert.That(response.Transaction.Customer.Id, Is.EqualTo("22513"));
             Assert.That(response.Transaction.Customer.FirstName, Is.EqualTo("Testa"));
             Assert.That(response.Transaction.Customer.LastName, Is.EqualTo("Testson"));
@@ -557,6 +570,26 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.Accepted, Is.True);
             Assert.That(response.ErrorMessage, Is.Empty);
         }
+
+        [Test]
+        public void TestQueryResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            QueryResponse response = QueryByTransactionId.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.Null);
+            Assert.That(response.CustomerRefNo, Is.Null);
+            Assert.That(response.ClientOrderNumber, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+            Assert.That(response.Transaction, Is.Null);
+        }
+
 
         [Test]
         public void TestQueryCustomerRefNoDirectPayment()

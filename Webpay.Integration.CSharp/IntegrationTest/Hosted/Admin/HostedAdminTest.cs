@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
+using System.ServiceModel.Configuration;
 using System.Web;
 using System.Xml;
 using NUnit.Framework;
@@ -295,6 +296,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/reconciliation").InnerXml,
                 Is.StringStarting("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
+
+            Assert.That(hostedAdminResponse.To(GetReconciliationReport.Response).ReconciliationTransactions[0].Amount, Is.EqualTo(284.20M));
         }
 
 
@@ -330,6 +333,21 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.ReconciliationTransactions[0].Time, Is.EqualTo(new DateTime(2015, 04, 17, 0, 15, 22, DateTimeKind.Unspecified)));
         }
 
+        [Test]
+        public void TestGetReconciliationReportResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
+
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+            Assert.That(response.ReconciliationTransactions.Count, Is.EqualTo(0));
+        }
 
         [Test]
         public void TestLowerAmount()

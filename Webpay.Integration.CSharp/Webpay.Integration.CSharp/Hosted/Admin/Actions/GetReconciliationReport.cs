@@ -36,9 +36,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             {
                 var xmlNode = (XmlNode) enumerator.Current;
 
-                var dateTime = TextString(xmlNode, "./time");
-
-            ReconciliationTransactions.Add(new ReconciliationTransaction(
+                ReconciliationTransactions.Add(new ReconciliationTransaction(
                     TextInt(xmlNode, "./transactionid").Value,
                     TextString(xmlNode, "./customerrefno"),
                     TextString(xmlNode, "./paymentmethod"),

@@ -62,6 +62,7 @@
     <Compile Include="Hosted\Admin\Actions\GetPaymentMethods.cs" />
     <Compile Include="Hosted\Admin\Actions\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\Actions\SpecificHostedAdminResponseBase.cs" />
+    <Compile Include="Hosted\Admin\Actions\TransactionIdResponseBase.cs" />
     <Compile Include="Hosted\Admin\HostedAdmin.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerAmount.cs" />
     <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />

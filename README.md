@@ -159,10 +159,14 @@ Step 2: Put an instance of your configuration object as a parameter to the reque
 ## 4. CreateOrder                                                            
 Creates an order and performs payment for all payment forms. Invoice and payment plan will perform 
 a synchronous payment and return a response. 
+
 Other hosted payments, like card, direct bank and payments from the *PayPage*
 on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
-For every new payment type implementation, you follow the steps from the beginning and chose your payment type preffered in the end:
-Build order -> choose payment type -> DoRequest/GetPaymentForm
+
+If you want to prepare a payment and send a link to the user for the payment. In this case a hosted payment will be used.
+
+For every new payment type implementation, you follow the steps from the beginning and chose your payment type preferred in the end:
+Build order -> choose payment type -> DoRequest/GetPaymentForm/PreparePayment
 
 ```csharp
 CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See Configuration chapt.3
@@ -192,18 +196,27 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 .UsePayPageCardOnly() 
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
+
 //Continue as a direct bank payment		
 .UsePayPageDirectBankOnly()
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as a PayPage payment
 .UsePayPage()
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as a PayPage payment
 .UsePaymentMethod(PaymentMethod.DBSEBSE) //see APPENDIX for Constants
 	...
-	.GetPaymentForm();
+	.GetPaymentForm() 
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as an invoice payment
 .UseInvoicePayment()
 	...
@@ -213,6 +226,9 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 	...
 	.DoRequest();
 ```
+
+The `.PreparePayment()`-method will return a `Uri` for the customer to use to complete the payment of the order.
+
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 	
@@ -882,9 +898,9 @@ Params:
 
 ## 11. Admin functionlity
 
-The admin functionality in this package refers to the card and bank payment services. For administration of invoice and payment plan payments, se [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction) for more details.
+The admin functionality in this package refers to the hosted payment services. For administration of invoice and payment plan payments, se [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction) for more details.
 
-This is an example for querying a payment by your reference (known as customerRefNo or clientOrderNumber) to explain the basic principles of making admin requests.
+All functionality is accessed via `WebpayAdmin.Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)`. Next is an example for querying a payment by your reference (known as `customerRefNo` or `clientOrderNumber`) to explain the basic principles of making admin requests.
 
 ```
 var response = WebpayAdmin
@@ -895,7 +911,7 @@ var response = WebpayAdmin
     .DoRequest()
 ```
 
-Making this call returns a HostedAdminResponse instance with the following properties:
+Making calls like this returns a HostedAdminResponse instance with the following properties:
 
 ```
     public class HostedAdminResponse
@@ -944,15 +960,15 @@ It is also possible to convert the request to a specific response object for eac
 LowerAmountResponse lowerAmountResponse = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmount(new LowerAmount(
-                    transactionId: payment.TransactionId,
+                    transactionId: 566778,
                     amountToLower: 666
                     ))
                 .DoRequest()
                 .To(LowerAmount.Response);
 ```
-The response objects contain all the properties from the XML response. Use the object browser in your IDE or have a look at the Technical Specification for details, or just browse the code here on GitHub.
+The response objects contain all the properties from the XML response. Use the object browser in your IDE, or have a look at the Technical Specification for details, or just browse the code here on GitHub.
 
-Each of the parameter objects above have a `.Response(...)` function that creates a corresponding response object, just like for `LowerAmount` above.
+Each of the parameter objects above have a `.Response(...)` function that creates a corresponding response object, just like for `LowerAmount` above. The exception is for the three `QueryBy...` above, where the `.Response`-function is available at the base class `Query`.
 
 If you'd like to create some other object from the XML, just provide your own `Func<XmlDocument, T>` to the `.To(...)` method, where T is your return type.
 

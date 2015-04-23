@@ -16,11 +16,4 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             return new AnnulResponse(response);
         }
     }
-
-    public class AnnulResponse : CustomerRefNoResponseBase
-    {
-        public AnnulResponse(XmlDocument response) : base(response)
-        {
-        }
-    }
 }

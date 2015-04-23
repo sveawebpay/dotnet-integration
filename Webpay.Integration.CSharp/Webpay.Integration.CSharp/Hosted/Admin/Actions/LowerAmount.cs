@@ -18,11 +18,4 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             return new LowerAmountResponse(responseXml);
         }
     }
-
-    public class LowerAmountResponse : CustomerRefNoResponseBase
-    {
-        public LowerAmountResponse(XmlDocument response) : base(response)
-        {
-        }
-    }
 }

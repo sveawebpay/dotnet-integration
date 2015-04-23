@@ -16,11 +16,4 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             return new CancelRecurSubscriptionResponse(responseXml);
         }
     }
-
-    public class CancelRecurSubscriptionResponse : SpecificHostedAdminResponseBase
-    {
-        public CancelRecurSubscriptionResponse(XmlDocument response) : base(response)
-        {
-        }
-    }
 }

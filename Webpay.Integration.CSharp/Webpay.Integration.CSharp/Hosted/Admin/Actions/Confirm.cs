@@ -19,12 +19,4 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             return new ConfirmResponse(responseXml);
         }
     }
-
-    public class ConfirmResponse : CustomerRefNoResponseBase
-    {
-        public ConfirmResponse(XmlDocument response)
-            : base(response)
-        {
-        }
-    }
 }

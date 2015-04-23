@@ -58,6 +58,7 @@
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\CancelRecurSubscription.cs" />
     <Compile Include="Hosted\Admin\Actions\Confirm.cs" />
+    <Compile Include="Hosted\Admin\Actions\CustomerRefNoResponseBase.cs" />
     <Compile Include="Hosted\Admin\Actions\GetPaymentMethods.cs" />
     <Compile Include="Hosted\Admin\Actions\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\Actions\SpecificHostedAdminResponseBase.cs" />

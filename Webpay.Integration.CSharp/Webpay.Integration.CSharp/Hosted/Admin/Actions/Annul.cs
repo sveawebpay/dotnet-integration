@@ -17,17 +17,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
     }
 
-    public class AnnulResponse : SpecificHostedAdminResponseBase
+    public class AnnulResponse : CustomerRefNoResponseBase
     {
-        public readonly string ClientOrderNumber;
-        public readonly string CustomerRefNo;
-        public readonly int? TransactionId;
-
         public AnnulResponse(XmlDocument response) : base(response)
         {
-            TransactionId = AttributeInt(response, "/response/transaction", "id");
-            CustomerRefNo = TextString(response, "/response/transaction/customerrefno");
-            ClientOrderNumber = CustomerRefNo;
         }
     }
 }

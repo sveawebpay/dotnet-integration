@@ -639,6 +639,67 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322")); 
         }
 
+
+        [Test]
+        public void TestRecurResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <transaction id=""598972"">
+                        <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                        <paymentmethod>KORTCERT</paymentmethod>
+                        <merchantid>1130</merchantid>
+                        <amount>66600</amount>
+                        <currency>SEK</currency>
+                        <cardtype>VISA</cardtype>
+                        <maskedcardno>12345***********1234</maskedcardno>
+                        <expirymonth>07</expirymonth>
+                        <expiryyear>2099</expiryyear>
+                        <authcode>authcode</authcode>
+                        <subscriptionid>subscriptionid</subscriptionid>
+                    </transaction>
+                    <statuscode>0</statuscode>
+                </response>");
+            RecurResponse response = Recur.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.EqualTo(598972));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.PaymentMethod, Is.EqualTo("KORTCERT"));
+            Assert.That(response.MerchantId, Is.EqualTo(1130));
+            Assert.That(response.Amount, Is.EqualTo(666.00M));
+            Assert.That(response.Currency, Is.EqualTo("SEK"));
+            Assert.That(response.CardType, Is.EqualTo("VISA"));
+            Assert.That(response.MaskedCardNo, Is.EqualTo("12345***********1234"));
+            Assert.That(response.ExpiryMonth, Is.EqualTo("07"));
+            Assert.That(response.ExpiryYear, Is.EqualTo("2099"));
+            Assert.That(response.AuthCode, Is.EqualTo("authcode"));
+            Assert.That(response.SubscriptionId, Is.EqualTo("subscriptionid"));
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+        }
+
+
+        [Test]
+        public void TestRecurResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                <response>
+                    <statuscode>107</statuscode>
+                </response>");
+            RecurResponse response = Recur.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.Null);
+            Assert.That(response.CustomerRefNo, Is.Null);
+            Assert.That(response.ClientOrderNumber, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+        }
+
         private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

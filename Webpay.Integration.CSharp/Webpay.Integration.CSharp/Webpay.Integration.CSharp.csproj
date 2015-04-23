@@ -71,6 +71,7 @@
     <Compile Include="Hosted\Admin\Actions\QueryByClientOrderNumber.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\ReconciliationTransaction.cs" />
+    <Compile Include="Hosted\Admin\Actions\RecurResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\SpecificHostedAdminResponseBase.cs" />
     <Compile Include="Hosted\Admin\Actions\TransactionIdResponseBase.cs" />
     <Compile Include="Hosted\Admin\HostedAdmin.cs" />

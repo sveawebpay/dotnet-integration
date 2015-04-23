@@ -1,3 +1,4 @@
+using System.Xml;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
@@ -15,6 +16,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             SubscriptionId = subscriptionId;
             Currency = currency;
             Amount = amount;
+        }
+
+        public static RecurResponse Response(XmlDocument responseXml)
+        {
+            return new RecurResponse(responseXml);
         }
     }
 }

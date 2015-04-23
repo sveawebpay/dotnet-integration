@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Response.Hosted;
+using Webpay.Integration.CSharp.Util.Calculation;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
@@ -52,6 +53,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             {
                 return null;
             }
+        }
+
+        public static decimal MinorCurrencyToDecimalAmount(int amountMinor)
+        {
+            return MathUtil.BankersRound(((decimal)amountMinor)/100);
         }
     }
 }

@@ -39,18 +39,13 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 ReconciliationTransactions.Add(new ReconciliationTransaction(
                     TextInt(xmlNode, "./transactionid").Value,
                     TextString(xmlNode, "./customerrefno"),
-                    TextString(xmlNode, "./paymentmethod"),
-                    ToAmount(TextInt(xmlNode, "./amount").Value),
+                    TextString(xmlNode, "./paymentmethod"), 
+                    MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value),
                     TextString(xmlNode, "./currency"),
                     DateTime.Parse(TextString(xmlNode, "./time").Replace("CEST", "+02"))
                     
                 ));
             }
-        }
-
-        private static decimal ToAmount(int amountMinor)
-        {
-            return MathUtil.BankersRound(((decimal)amountMinor)/100);
         }
     }
 

@@ -895,7 +895,7 @@ var response = WebpayAdmin
     .DoRequest()
 ```
 
-Making this call returns a HostedAdminResponse instance with the following properties
+Making this call returns a HostedAdminResponse instance with the following properties:
 
 ```
     public class HostedAdminResponse
@@ -914,8 +914,7 @@ Making this call returns a HostedAdminResponse instance with the following prope
 The `.Query(...)` method above is one example of the admin methods. All of them are:
 
 
-
-| Admin methods                    | Corresponding parameter objects                                                       |
+| Admin method                     | Corresponding parameter object                                                        |
 |----------------------------------|---------------------------------------------------------------------------------------|
 | Annul                            | new Annul(long transactionId)                                                         | 
 | CancelRecurSubscription          | new CancelRecurSubscription(string subscriptionId)                                    |  
@@ -928,6 +927,7 @@ The `.Query(...)` method above is one example of the admin methods. All of them 
 | Query                            | new QueryByClientOrderNumber(string clientOrderNumber)                                |
 | Recur                            | new Recur(string customerRefNo, string subscriptionId, Currency currency, long amount)|
 
+
 The most general way to handle the response is to use the `XmlDocument` in the `MessageDocument` property using XPath queries.
 
 An example of this is:
@@ -938,8 +938,23 @@ var statuscode = response.MessageDocument.SelectSingleNode("/response/statuscode
 
 The XML in the response is defined in the Technical Specification.
 
+It is also possible to convert the request to a specific response object for each admin method, for instance:
 
+```
+LowerAmountResponse lowerAmountResponse = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .LowerAmount(new LowerAmount(
+                    transactionId: payment.TransactionId,
+                    amountToLower: 666
+                    ))
+                .DoRequest()
+                .To(LowerAmount.Response);
+```
+The response objects contain all the properties from the XML response. Use the object browser in your IDE or have a look at the Technical Specification for details, or just browse the code here on GitHub.
 
+Each of the parameter objects above have a `.Response(...)` function that creates a corresponding response object, just like for `LowerAmount` above.
+
+If you'd like to create some other object from the XML, just provide your own `Func<XmlDocument, T>` to the `.To(...)` method, where T is your return type.
 
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

@@ -347,6 +347,22 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestLowerAmountCompleteFlow()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+
+            LowerAmountResponse lowerAmountResponse = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .LowerAmount(new LowerAmount(
+                    transactionId: payment.TransactionId,
+                    amountToLower: 666
+                    ))
+                .DoRequest()
+                .To(LowerAmount.Response);
+        }
+
+        [Test]
         public void TestLowerAmount()
         {
             var customerRefNo = CreateCustomerRefNo();

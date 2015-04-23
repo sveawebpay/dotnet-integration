@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Xml;
 using Webpay.Integration.CSharp.Util.Security;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
 {
-    public partial class HostedAdminResponse
+    public class HostedAdminResponse
     {
-        public readonly string WebserviceResponseXml;
-        public readonly string MessageBase64Encoded;
         public readonly string Mac;
         public readonly string MerchantId;
         public readonly string Message;
+        public readonly string MessageBase64Encoded;
         public readonly XmlDocument MessageXmlDocument;
+        public readonly string WebserviceResponseXml;
 
         public HostedAdminResponse(string webserviceResponseXml, string originalSecretWord, string expectedMerchantId)
         {
@@ -27,12 +26,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
             if (MerchantId != expectedMerchantId)
             {
-                throw new System.Exception(string.Format("The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}", expectedMerchantId, MerchantId));
+                throw new System.Exception(
+                    string.Format(
+                        "The merchantId in the response from the server is not the expected. This could mean that someone has tamepered with the message. Expected:{0} Actual:{1}",
+                        expectedMerchantId, MerchantId));
             }
 
             if (Mac != expectedMac)
             {
-                throw new System.Exception(string.Format("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}", expectedMerchantId, MessageBase64Encoded));
+                throw new System.Exception(
+                    string.Format(
+                        "SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:{0} Message:\n{1}",
+                        expectedMerchantId, MessageBase64Encoded));
             }
 
             Message = Base64Util.DecodeBase64String(MessageBase64Encoded);
@@ -42,7 +47,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         }
 
         /// <summary>
-        /// Create a specific object using a function
+        ///     Create a specific object using a function
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="funcToObject"></param>
@@ -51,6 +56,5 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         {
             return funcToObject(MessageXmlDocument);
         }
-   
     }
 }

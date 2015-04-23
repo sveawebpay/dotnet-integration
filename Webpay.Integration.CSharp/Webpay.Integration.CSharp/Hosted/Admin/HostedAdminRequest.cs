@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Net;
+using System.Text;
 using System.Xml;
 using Webpay.Integration.CSharp.Util.Security;
 
@@ -8,12 +9,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
     public class HostedAdminRequest
     {
         public readonly string EndPointBase;
-        public readonly string Message;
-        public readonly string SecretWord;
-        public readonly string MerchantId;
-        public readonly string MessageBase64Encoded;
         public readonly string Mac;
+        public readonly string MerchantId;
+        public readonly string Message;
+        public readonly string MessageBase64Encoded;
         public readonly XmlDocument MessageXmlDocument;
+        public readonly string SecretWord;
 
         public HostedAdminRequest(string message, string secretWord, string merchantId, string endPointBase)
         {
@@ -39,14 +40,14 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             using (var client = new WebClient())
             {
                 var response =
-                    client.UploadValues(targetAddress, new NameValueCollection()
+                    client.UploadValues(targetAddress, new NameValueCollection
                     {
                         {"message", hostedRequest.MessageBase64Encoded},
                         {"mac", hostedRequest.Mac},
                         {"merchantid", hostedRequest.MerchantId}
                     });
 
-                var result = System.Text.Encoding.UTF8.GetString(response);
+                var result = Encoding.UTF8.GetString(response);
 
                 var hostedResponse = new HostedAdminResponse(result, hostedRequest.SecretWord, hostedRequest.MerchantId);
 

@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using Webpay.Integration.CSharp.Util.Calculation;
-using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
@@ -39,25 +36,26 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 ReconciliationTransactions.Add(new ReconciliationTransaction(
                     TextInt(xmlNode, "./transactionid").Value,
                     TextString(xmlNode, "./customerrefno"),
-                    TextString(xmlNode, "./paymentmethod"), 
+                    TextString(xmlNode, "./paymentmethod"),
                     MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value),
                     TextString(xmlNode, "./currency"),
                     DateTime.Parse(TextString(xmlNode, "./time").Replace("CEST", "+02"))
-                ));
+                    ));
             }
         }
     }
 
     public class ReconciliationTransaction
     {
-        public readonly int TransactionId;
-        public readonly string CustomerRefNo;
-        public readonly string PaymentMethod;
         public readonly decimal Amount;
         public readonly string Currency;
+        public readonly string CustomerRefNo;
+        public readonly string PaymentMethod;
         public readonly DateTime Time;
+        public readonly int TransactionId;
 
-        public ReconciliationTransaction(int transactionId, string customerRefNo, string paymentMethod, decimal amount, string currency, DateTime time)
+        public ReconciliationTransaction(int transactionId, string customerRefNo, string paymentMethod, decimal amount,
+            string currency, DateTime time)
         {
             TransactionId = transactionId;
             CustomerRefNo = customerRefNo;

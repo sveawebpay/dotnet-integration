@@ -19,9 +19,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 
     public class AnnulResponse : SpecificHostedAdminResponseBase
     {
-        public readonly int? TransactionId;
-        public readonly string CustomerRefNo;
         public readonly string ClientOrderNumber;
+        public readonly string CustomerRefNo;
+        public readonly int? TransactionId;
 
         public AnnulResponse(XmlDocument response) : base(response)
         {

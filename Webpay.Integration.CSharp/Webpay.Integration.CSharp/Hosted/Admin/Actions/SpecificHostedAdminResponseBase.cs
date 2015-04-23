@@ -7,10 +7,6 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public abstract class SpecificHostedAdminResponseBase
     {
-        public int StatusCode { get; private set; }
-        public bool Accepted { get; private set; }
-        public string ErrorMessage { get; private set; }
-
         protected SpecificHostedAdminResponseBase(XmlNode response)
         {
             StatusCode = TextInt(response, "/response/statuscode").GetValueOrDefault(101);
@@ -18,6 +14,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             var errorMessage = SveaResponse.StatusCodeToMessage(StatusCode);
             ErrorMessage = errorMessage.Item2;
         }
+
+        public int StatusCode { get; private set; }
+        public bool Accepted { get; private set; }
+        public string ErrorMessage { get; private set; }
 
         protected static int? AttributeInt(XmlNode response, string element, string attribute)
         {
@@ -57,7 +57,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 
         public static decimal MinorCurrencyToDecimalAmount(int amountMinor)
         {
-            return MathUtil.BankersRound(((decimal)amountMinor)/100);
+            return MathUtil.BankersRound(((decimal) amountMinor)/100);
         }
     }
 }

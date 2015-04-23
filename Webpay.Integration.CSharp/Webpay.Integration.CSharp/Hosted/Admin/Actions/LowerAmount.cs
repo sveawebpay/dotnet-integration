@@ -2,8 +2,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class LowerAmount
     {
-        public readonly long TransactionId;
         public readonly long AmountToLower;
+        public readonly long TransactionId;
 
         public LowerAmount(long transactionId, long amountToLower)
         {

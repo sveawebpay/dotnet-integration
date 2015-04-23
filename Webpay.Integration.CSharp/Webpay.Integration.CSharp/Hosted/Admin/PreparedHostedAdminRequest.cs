@@ -1,18 +1,18 @@
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
 {
     public class PreparedHostedAdminRequest
     {
-        public readonly string Xml;
+        public readonly IConfigurationProvider ConfigurationProvider;
         public readonly CountryCode CountryCode;
         public readonly string MerchantId;
-        public readonly IConfigurationProvider ConfigurationProvider;
         public readonly string ServicePath;
+        public readonly string Xml;
 
-        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId, IConfigurationProvider configurationProvider, string servicePath)
+        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId,
+            IConfigurationProvider configurationProvider, string servicePath)
         {
             Xml = xml;
             CountryCode = countryCode;
@@ -37,7 +37,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedAdminRequest PrepareRequest()
         {
-            return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode), MerchantId, GetEndPointBase());
+            return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode),
+                MerchantId, GetEndPointBase());
         }
     }
 }

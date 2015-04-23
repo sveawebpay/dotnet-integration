@@ -7,8 +7,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
     public class HostedAdmin
     {
         public readonly IConfigurationProvider ConfigurationProvider;
-        public readonly string MerchantId;
         public readonly CountryCode CountryCode;
+        public readonly string MerchantId;
 
         public HostedAdmin(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {
@@ -34,7 +34,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <subscriptionid>{0}</subscriptionid>
                 </cancelrecursubscription>", cancelRecurSubscription.SubscriptionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/cancelrecursubscription");
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+                "/cancelrecursubscription");
         }
 
         public PreparedHostedAdminRequest Confirm(Confirm confirm)
@@ -43,7 +44,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <confirm>
                 <transactionid>{0}</transactionid>
                 <capturedate>{1}</capturedate>
-                </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd") );
+                </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd"));
 
             return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
         }
@@ -55,7 +56,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <merchantid>{0}</merchantid>
                 </getpaymentmethods>", getPaymentMethods.MerchantId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getpaymentmethods");
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+                "/getpaymentmethods");
         }
 
         public PreparedHostedAdminRequest GetReconciliationReport(GetReconciliationReport getReconciliationReport)
@@ -65,7 +67,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <date>{0}</date>
                 </getreconciliationreport>", getReconciliationReport.Date.ToString("yyyy-MM-dd"));
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/getreconciliationreport");
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+                "/getreconciliationreport");
         }
 
         public PreparedHostedAdminRequest LowerAmount(LowerAmount lowerAmount)
@@ -85,8 +88,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 </query>", query.TransactionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/querytransactionid");
-
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+                "/querytransactionid");
         }
 
         public PreparedHostedAdminRequest Query(QueryByCustomerRefNo query)
@@ -96,7 +99,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <customerrefno>{0}</customerrefno>
                 </query>", query.CustomerRefNo);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/querycustomerrefno");
+            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+                "/querycustomerrefno");
         }
 
         public PreparedHostedAdminRequest Recur(Recur recur)

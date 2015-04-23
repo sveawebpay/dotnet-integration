@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Net;
 using System.Xml;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Validator;
@@ -11,7 +15,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     /// <summary>
     /// Description of HostedPayment: Parent to CardPayment, DirectPayment, PayPagePayment 
     /// and PaymentMethodPayment classes. Prepares an order and creates a payment form
-    /// to integrate on web page. Uses XmlBuilder to turn formatted order into xml format.
+    /// to integrate on web page. Uses XmlBuilder to turn formatted order into xmlMessage format.
     /// </summary>
     public abstract class HostedPayment
     {
@@ -25,6 +29,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         protected string CallbackUrl;
         protected ExcludePayments Excluded;
         protected string LanguageCode = Util.Constant.LanguageCode.en.ToString();
+        protected string IpAddress;
 
         public HostedPayment(CreateOrderBuilder createOrderBuilder)
         {
@@ -167,6 +172,39 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         }
 
         /// <summary>
+        /// PreparedPayment contacts the server with the payment request data, and returns a GET URL to that 
+        /// payment. This is convenient for creating an order and then sending the URL e.g. in an email.
+        /// </summary>
+        /// <returns>PaymentLink</returns>
+        public Uri PreparePayment(String ipAddress)
+        {
+            IpAddress = ipAddress;
+            CalculateRequestValues();
+            var xmlBuilder = new HostedXmlBuilder();
+            string xml = xmlBuilder.GetXml(this);
+
+            var secretWord = CrOrderBuilder.GetConfig()
+                .GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var sentMerchantId = CrOrderBuilder.GetConfig()
+                .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var payPageUrl = CrOrderBuilder.GetConfig()
+                .GetEndPoint(PaymentType.HOSTED);
+
+            var baseUrl = payPageUrl.Replace("/payment", "");
+
+            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, baseUrl);
+
+            var targetAddress = baseUrl + "/rest/preparepayment";
+
+            var message = HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest).Message;
+            var messageDoc = new XmlDocument();
+            messageDoc.LoadXml(message);
+            var paymentId = messageDoc.SelectSingleNode("//id").InnerText;
+
+            return new Uri(baseUrl + "/preparedpayment/" + paymentId);
+        }
+
+        /// <summary>
         /// GetPaymentSpecificXml
         /// </summary>
         /// <param name="xmlw"></param>
@@ -188,6 +226,11 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             xmlw.WriteStartElement(name);
             xmlw.WriteChars(value.ToCharArray(), 0, value.ToCharArray().Length);
             xmlw.WriteEndElement();
+        }
+
+        public string GetIpAddress()
+        {
+            return IpAddress;
         }
     }
 }

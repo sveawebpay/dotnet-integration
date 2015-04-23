@@ -55,6 +55,26 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
             Assert.That(postResponse.Item2.StartsWith(ExpectedResponseStart));
         }
 
+        [Test]
+        public void TestPreparedPaymentRequest()
+        {
+            Uri uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                               .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
+                                               .SetCurrency(TestingTool.DefaultTestCurrency)
+                                               .UsePayPageCardOnly()
+                                               .SetReturnUrl(
+                                                   "https://test.sveaekonomi.se/webpay/admin/merchantresponsetest.xhtml")
+                                               .PreparePayment("127.0.0.1");
+
+            Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
+        }
+
+        /*
+         <currency>SEK</currency><amount>500</amount><vat>100</vat><customerrefno>test_1429280602870</customerrefno><returnurl>https://dev.sveaekonomi.se/webpay-admin/admin/merchantresponsetest.xhtml</returnurl><paymentmethod>DBNORDEASE</paymentmethod><simulatorcode>0</simulatorcode>
+         */
         private static Tuple<string, string> PostRequest(PaymentForm form)
         {
             CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());

@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Config\ConfigurationProviderTest.cs" />
     <Compile Include="Config\ConfigurationProviderTestData.cs" />
+    <Compile Include="Hosted\Admin\HostedAdminTest.cs" />
+    <Compile Include="Hosted\Admin\PaymentResponse.cs" />
     <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Webservice\CreateOrder\CreateOrderTest.cs" />

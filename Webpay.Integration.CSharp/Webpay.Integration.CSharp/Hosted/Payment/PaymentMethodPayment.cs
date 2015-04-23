@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -11,6 +12,8 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
     public class PaymentMethodPayment : HostedPayment
     {
         private PaymentMethod _paymentMethod;
+        private string _simulatorCode;
+        private SubscriptionType _subscriptionType;
 
         public PaymentMethodPayment(CreateOrderBuilder createOrderBuilder, PaymentMethod paymentMethod)
             : base(createOrderBuilder)
@@ -72,6 +75,26 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             {
                 WriteSimpleElement(xmlw, "paymentmethod", _paymentMethod.Value);
             }
+            if (_subscriptionType != null)
+            {
+                WriteSimpleElement(xmlw, "subscriptiontype", _subscriptionType.Value);
+            }
+            if (_simulatorCode != null)
+            {
+                WriteSimpleElement(xmlw, "simulatorCode", _simulatorCode);
+            }
+        }
+
+        public PaymentMethodPayment SetSubscriptionType(SubscriptionType subscriptionType)
+        {
+            _subscriptionType = subscriptionType;
+            return this;
+        }
+
+        public PaymentMethodPayment ___SetSimulatorCode_ForTestingOnly(string forcedResult)
+        {
+            _simulatorCode = forcedResult;
+            return this;
         }
     }
 }

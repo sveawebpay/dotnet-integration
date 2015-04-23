@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -75,5 +76,6 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public override void WritePaymentSpecificXml(XmlWriter xmlw)
         {
         }
+
     }
 }

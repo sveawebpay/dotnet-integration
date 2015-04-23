@@ -18,15 +18,24 @@
 * [8. Credit Invoice](https://github.com/sveawebpay/dotnet-integration/tree/master#8-credit-invoice)
 * [9. CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#9-closeorder)
 * [10. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#10-response-handler)
+* [11. Admin functionality](https://github.com/sveawebpay/dotnet-integration/tree/master#11-admin-functionality)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
 ## 1. Introduction                                                             
 This integration package is built for developers to simplify the integration of Svea WebPay services. 
-Using this package will make your implementation sustainable and unaffected by changes
+Using this package will make your implementation more sustainable and less affected by changes
 in our payment system. Just make sure to update the package regularly.
 
-The API is built as a *Fluent API*, ie. you can use *method chaining* when implementing it in your code.
+There are two main parts of the Svea API; the payment API and the admin API. First the is the payment API for making payments using card-, bank-, invoice- or payment plan payments and more. This API is built as a *Fluent API*, ie. you use *method chaining* when implementing it in your code.
+
+Then there is the admin API. The invoice and part payment services have a very competent SOAP interface and for .NET it 
+is recommended to use this interface to administer these payments. The service/WSDL is available at 
+
+```https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc?wsdl```
+
+For the other payments, this package contains a similar interface for administration, as described in [11. Admin functionality](https://github.com/sveawebpay/dotnet-integration/tree/master#11-admin-functionality)
+
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
@@ -150,10 +159,14 @@ Step 2: Put an instance of your configuration object as a parameter to the reque
 ## 4. CreateOrder                                                            
 Creates an order and performs payment for all payment forms. Invoice and payment plan will perform 
 a synchronous payment and return a response. 
+
 Other hosted payments, like card, direct bank and payments from the *PayPage*
 on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
-For every new payment type implementation, you follow the steps from the beginning and chose your payment type preffered in the end:
-Build order -> choose payment type -> DoRequest/GetPaymentForm
+
+If you want to prepare a payment and send a link to the user for the payment. In this case a hosted payment will be used.
+
+For every new payment type implementation, you follow the steps from the beginning and chose your payment type preferred in the end:
+Build order -> choose payment type -> DoRequest/GetPaymentForm/PreparePayment
 
 ```csharp
 CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See Configuration chapt.3
@@ -183,18 +196,27 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 .UsePayPageCardOnly() 
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
+
 //Continue as a direct bank payment		
 .UsePayPageDirectBankOnly()
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as a PayPage payment
 .UsePayPage()
 	...
 	.GetPaymentForm();
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as a PayPage payment
 .UsePaymentMethod(PaymentMethod.DBSEBSE) //see APPENDIX for Constants
 	...
-	.GetPaymentForm();
+	.GetPaymentForm() 
+    or 
+    .PreparePayment("234.214.2.23") 
 //Continue as an invoice payment
 .UseInvoicePayment()
 	...
@@ -204,6 +226,9 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 	...
 	.DoRequest();
 ```
+
+The `.PreparePayment()`-method will return a `Uri` for the customer to use to complete the payment of the order.
+
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 	
@@ -868,6 +893,85 @@ Params:
 ```csharp
 	var respObject = new SveaResponse(responseXmlBase64); 
 ```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+## 11. Admin functionlity
+
+The admin functionality in this package refers to the hosted payment services. For administration of invoice and payment plan payments, se [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction) for more details.
+
+All functionality is accessed via `WebpayAdmin.Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)`. Next is an example for querying a payment by your reference (known as `customerRefNo` or `clientOrderNumber`) to explain the basic principles of making admin requests.
+
+```
+var response = WebpayAdmin
+    .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+    .Query(new QueryByCustomerRefNo(
+        customerRefNo: customerRefNo
+    ))
+    .DoRequest()
+```
+
+Making calls like this returns a HostedAdminResponse instance with the following properties:
+
+```
+    public class HostedAdminResponse
+    {
+        public readonly string Xml;
+        public readonly string MessageBase64;
+        public readonly string Mac;
+        public readonly string ReceivedMerchantId;
+        public readonly string Message;
+        public readonly XmlDocument MessageDocument;
+        
+        ...
+    }
+```
+
+The `.Query(...)` method above is one example of the admin methods. All of them are:
+
+
+| Admin method                     | Corresponding parameter object                                                        |
+|----------------------------------|---------------------------------------------------------------------------------------|
+| Annul                            | new Annul(long transactionId)                                                         | 
+| CancelRecurSubscription          | new CancelRecurSubscription(string subscriptionId)                                    |  
+| Confirm                          | new Confirm(int transactionId, DateTime captureDate)                                  |
+| GetPaymentMethods                | new GetPaymentMethods(int merchantId)                                                 |
+| GetReconciliationReport          | new GetReconciliationReport(DateTime date)                                            |
+| LowerAmount                      | new LowerAmount(long transactionId, long amountToLower)                               |
+| Query                            | new QueryByTransactionId(long transactionId)                                          |
+| Query                            | new QueryByCustomerRefNo(string customerRefNo)                                        |
+| Query                            | new QueryByClientOrderNumber(string clientOrderNumber)                                |
+| Recur                            | new Recur(string customerRefNo, string subscriptionId, Currency currency, long amount)|
+
+
+The most general way to handle the response is to use the `XmlDocument` in the `MessageDocument` property using XPath queries.
+
+An example of this is:
+
+```
+var statuscode = response.MessageDocument.SelectSingleNode("/response/statuscode").InnerText
+```
+
+The XML in the response is defined in the Technical Specification.
+
+It is also possible to convert the request to a specific response object for each admin method, for instance:
+
+```
+LowerAmountResponse lowerAmountResponse = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .LowerAmount(new LowerAmount(
+                    transactionId: 566778,
+                    amountToLower: 666
+                    ))
+                .DoRequest()
+                .To(LowerAmount.Response);
+```
+The response objects contain all the properties from the XML response. Use the object browser in your IDE, or have a look at the Technical Specification for details, or just browse the code here on GitHub.
+
+Each of the parameter objects above have a `.Response(...)` function that creates a corresponding response object, just like for `LowerAmount` above. The exception is for the three `QueryBy...` above, where the `.Response`-function is available at the base class `Query`.
+
+If you'd like to create some other object from the XML, just provide your own `Func<XmlDocument, T>` to the `.To(...)` method, where T is your return type.
+
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 

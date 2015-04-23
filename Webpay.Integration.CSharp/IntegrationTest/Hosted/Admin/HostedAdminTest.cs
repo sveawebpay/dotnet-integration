@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Globalization;
 using System.Net;
-using System.ServiceModel.Configuration;
 using System.Web;
 using System.Xml;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
-using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Hosted.Payment;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;

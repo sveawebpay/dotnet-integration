@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Xml;
 using Webpay.Integration.CSharp.Response.Hosted;
 using Webpay.Integration.CSharp.Util.Calculation;
@@ -57,14 +58,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 
         protected static decimal? TextDecimal(XmlNode response, string element)
         {
-            try
-            {
-                return Convert.ToDecimal(response.SelectSingleNode(element).InnerText);
-            }
-            catch (System.Exception)
-            {
-                return null;
-            }
+            decimal parsedDecimal;
+
+            return Decimal.TryParse(response.SelectSingleNode(element).InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out parsedDecimal)
+                ? parsedDecimal
+                : (decimal?)null;
         }
 
 

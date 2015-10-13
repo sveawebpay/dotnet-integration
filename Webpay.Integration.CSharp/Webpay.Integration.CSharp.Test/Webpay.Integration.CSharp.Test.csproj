@@ -86,6 +86,7 @@
     <Compile Include="Webservice\Helper\WebserviceRowFormatterTest.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanTest.cs" />
     <Compile Include="Webservice\Payment\InvoicePaymentTest.cs" />
+    <Compile Include="Webservice\WebPayUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -21,8 +21,8 @@
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
-## 1. Introduction                                                             
-This integration package is built for developers to simplify the integration of Svea WebPay services. 
+## 1. Introduction
+This integration package is built for developers to simplify the integration of Svea WebPay services.
 Using this package will make your implementation sustainable and unaffected by changes
 in our payment system. Just make sure to update the package regularly.
 
@@ -30,7 +30,7 @@ The API is built as a *Fluent API*, ie. you can use *method chaining* when imple
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 2. Build                                                             
+## 2. Build
 
 To build the dll file, load up the project in Visual studio.
 Choose 'Release' as your solution configuration and press F6.
@@ -40,17 +40,17 @@ This will build the dll and place it in bin/release sub-folder of the project.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 3. Configuration 
+## 3. Configuration
 
-The Configuration needed to be set differs of how many different payment methods and countries you have in the same installation. 
+The Configuration needed to be set differs of how many different payment methods and countries you have in the same installation.
 The authorization values are recieved from Svea Ekonomi when creating an account. If no configuration is created, use SveaConfig.GetDefaultConfig().
 
 **To configure Svea authorization:**
-Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods 
-return the authorization values asked for. 
+Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods
+return the authorization values asked for.
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
 
-*NOTE:* This solution may change in future updates! 
+*NOTE:* This solution may change in future updates!
 
 Step 1:
 ```csharp
@@ -142,14 +142,14 @@ Step 2: Put an instance of your configuration object as a parameter to the reque
 		//Create your CreateOrder object with selected and continue building your order. Se next steps.
 		private CreateOrderEuResponse response = WebpayConnection.CreateOrder(confTest);
 	.....
-	
+
 ```
-  
+
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 4. CreateOrder                                                            
-Creates an order and performs payment for all payment forms. Invoice and payment plan will perform 
-a synchronous payment and return a response. 
+## 4. CreateOrder
+Creates an order and performs payment for all payment forms. Invoice and payment plan will perform
+a synchronous payment and return a response.
 Other hosted payments, like card, direct bank and payments from the *PayPage*
 on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
 For every new payment type implementation, you follow the steps from the beginning and chose your payment type preffered in the end:
@@ -180,10 +180,10 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 
 //Continue by choosing one of the following paths
 //Continue as a card payment
-.UsePayPageCardOnly() 
+.UsePayPageCardOnly()
 	...
 	.GetPaymentForm();
-//Continue as a direct bank payment		
+//Continue as a direct bank payment
 .UsePayPageDirectBankOnly()
 	...
 	.GetPaymentForm();
@@ -206,8 +206,8 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-	
-### 4.1 Specify order                                                        
+
+### 4.1 Specify order
 Continue by adding values for products and other. You can add order row, fee and discount. Chose the right Item object as parameter.
 You can use the *add* functions with an Item object or a List of Item objects as parameters. See types of Item objects in examples in 4.1.2 - 4.1.5 and 4.3.1 - 4.3.2.
 
@@ -221,12 +221,12 @@ orderRows.Add(Item.OrderRow(). ...)
 ...
 CreateOrder.AddOrderRows(orderRows);
 ```
-	
+
 #### 4.1.1 OrderRow
 All products and other items. It?s required to have a minimum of one order row.
 **The price can be set in a combination by using a minimum of two out of three functions: SetAmountExVat(), SetAmountIncVat() and SetVatPercent().**
 ```csharp
-.AddOrderRow(Item.OrderRow()     
+.AddOrderRow(Item.OrderRow()
 	.SetQuantity(2)                        //Required
 	.SetAmountExVat(100.00M)               //Optional, see info above
 	.SetAmountIncVat(125.00M)              //Optional, see info above
@@ -234,8 +234,8 @@ All products and other items. It?s required to have a minimum of one order row.
 	.SetArticleNumber("1")                 //Optional
 	.SetDescription("Specification")       //Optional
 	.SetName("Prod")                       //Optional
-	.SetUnit("st")                         //Optional              
-	.SetDiscountPercent(0))                //Optional    
+	.SetUnit("st")                         //Optional
+	.SetDiscountPercent(0))                //Optional
 ```
 
 #### 4.1.2 ShippingFee
@@ -248,7 +248,7 @@ All products and other items. It?s required to have a minimum of one order row.
 	.SetShippingId("33")                   //Optional
 	.SetName("shipping")                   //Optional
 	.SetDescription("Specification")       //Optional
-	.SetUnit("st")                         //Optional             
+	.SetUnit("st")                         //Optional
 	.SetDiscountPercent(0))                //Optional
 ```
 #### 4.1.3 InvoiceFee
@@ -259,34 +259,34 @@ All products and other items. It?s required to have a minimum of one order row.
 	.SetAmountIncVat(62.50M)                //Optional, see info above
 	.SetVatPercent(25.00M)       	       //Optional, see info above
 	.SetName("Svea fee")                   //Optional
-	.SetDescription("Fee for invoice")     //Optional		
+	.SetDescription("Fee for invoice")     //Optional
 	.SetUnit("st")                         //Optional
-	.SetDiscountPercent(0))                //Optional    
+	.SetDiscountPercent(0))                //Optional
 ```
 #### 4.1.4 Fixed Discount
 When discount or coupon is a fixed amount on total product amount.
 ```csharp
-.AddDiscount(Item.FixedDiscount()                
+.AddDiscount(Item.FixedDiscount()
 	.SetAmountIncVat(100.00M)               //Required
-	.SetDiscountId("1")                    //Optional        
+	.SetDiscountId("1")                    //Optional
 	.SetUnit("st")                         //Optional
 	.SetDescription("FixedDiscount")       //Optional
-	.SetName("Fixed"))                     //Optional    
+	.SetName("Fixed"))                     //Optional
 ```
 #### 4.1.5 Relative Discount
 When discount or coupon is a percentage on total product amount.
 ```csharp
 .AddDiscount(Item.RelativeDiscount()
 	.SetDiscountPercent(50)                //Required
-	.SetDiscountId("1")                    //Optional      
+	.SetDiscountId("1")                    //Optional
 	.SetUnit("st")                         //Optional
 	.SetName("Relative")                   //Optional
-	.SetDescription("RelativeDiscount"))   //Optional    
+	.SetDescription("RelativeDiscount"))   //Optional
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 4.2 Customer Identity   
-Customer identity is required for invoice and payment plan orders. Required values varies 
+### 4.2 Customer Identity
+Customer identity is required for invoice and payment plan orders. Required values varies
 depending on country and customer type. For SE, NO, DK and FI national id number is required. Email and ip address are desirable.
 
 ####4.2.1 Options for individual customers
@@ -311,24 +311,24 @@ depending on country and customer type. For SE, NO, DK and FI national id number
     .SetNationalIdNumber("2345234")			//Required for company customers in SE, NO, DK, FI
     .SetVatNumber("NL2345234")				//Required for NL and DE
     .SetCompanyName("TestCompagniet")) 		//Required for Eu countries like NL and DE
-	.SetAddressSelector("7fd7768")          //Optional. Recieved from getAddresses		
+	.SetAddressSelector("7fd7768")          //Optional. Recieved from getAddresses
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-###4.3 Other values  
+###4.3 Other values
 ```csharp
 .SetCountryCode(CountryCode.SE)         	//Required
 .SetCurrency(Currency.SEK)                     	//Required for card payment, direct payment and PayPage payment.
-.SetClientOrderNumber("33")           		//Required for card payment, direct payment, PaymentMethod payment and PayPage payments. Must be uniqe.
-.SetOrderDate(new DateTime(2012, 12, 12))   //Required for synchronous payments
-.SetCustomerReference("ref33")             	//Optional
+.SetClientOrderNumber("33")           		//Required for card payment, direct payment, Unique String(65). Optional for Invoice and Payment plan String(32).
+.SetOrderDate(new DateTime(2012, 12, 12))       //Required for synchronous payments
+.SetCustomerReference("ref33")             	//Optional for invoice and payment plan String(32), ignored for card & direct bank orders.
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-###4.4 Choose payment 
+###4.4 Choose payment
 End process by choosing the payment method you desire.
 
-Invoice and payment plan will perform a synchronous payment and return an object as response. 
+Invoice and payment plan will perform a synchronous payment and return an object as response.
 
 Other payments(card, direct bank and payments from the *PayPage*) on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
 
@@ -344,14 +344,14 @@ Invoice and/or payment plan payments.
 
 Card and/or direct bank payments
 >Go by *PayPage* by using [`.UsePayPageCardOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#451-paypage-with-card-payment-options)
->and [`.UsePayPageDirectBankOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#452-paypage-with-direct-bank-payment-options). 
+>and [`.UsePayPageDirectBankOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#452-paypage-with-direct-bank-payment-options).
 >If you only for example only have one specific bank payment, go direct to that specific bank payment by using
 >[`.UsePaymentMethod(PaymentMethod)`](https://github.com/sveawebpay/dotnet-integration/tree/master#454-PaymentMethod-specified)
 
 Using all payments.
->The most effective way is to use [`.UseInvoicePayment()`](https://github.com/sveawebpay/dotnet-integration/tree/master#455-invoicepayment) 
+>The most effective way is to use [`.UseInvoicePayment()`](https://github.com/sveawebpay/dotnet-integration/tree/master#455-invoicepayment)
 >and [`.UsePaymentPlanPayment(...)`](https://github.com/sveawebpay/dotnet-integration/tree/master#456-paymentplanpayment) for the synchronous payments,
->and use the *PayPage* for the asynchronous requests by using [`.UsePayPageCardOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#451-paypage-with-card-payment-options) 
+>and use the *PayPage* for the asynchronous requests by using [`.UsePayPageCardOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#451-paypage-with-card-payment-options)
 >and [`.UsePayPageDirectBankOnly()`](https://github.com/sveawebpay/dotnet-integration/tree/master#452-paypage-with-direct-bank-payment-options).
 
 Using more than one payment and want them gathered on one place.
@@ -361,7 +361,7 @@ Note that Invoice and Payment plan payments will return an asynchronous response
 
 
 #### Asynchronous payments - Hosted solutions
-Build order and recieve a *PaymentForm* object. Send the *PaymentForm* parameters: *merchantid*, *xmlMessageBase64* and *mac* by POST with *url*. The *PaymentForm* object also contains a complete html form as string 
+Build order and recieve a *PaymentForm* object. Send the *PaymentForm* parameters: *merchantid*, *xmlMessageBase64* and *mac* by POST with *url*. The *PaymentForm* object also contains a complete html form as string
 and the html form element as array.
 
 ```html
@@ -396,7 +396,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.SetAmountExVat(100.00M)
 	.SetVatPercent(25.00M)
 	.SetDiscountPercent(0))
-		
+
 .SetCountryCode(CountryCode.SE)							//Required
 .SetClientOrderNumber("33")
 .SetOrderDate(new DateTime(2012, 12, 12))
@@ -414,19 +414,19 @@ Function GetPaymentForm() returns object type *PaymentForm* with accessible memb
 
 | Value                 | Returns    | Description                               |
 |-----------------------|----------- |-------------------------------------------|
-| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.| 
+| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.|
 | GetXmlMessage()       | string     | Payment information in XML-format.        |
 | GetMerchantId()       | string     | Authorization                             |
 | GetSecretWord()       | string     | Authorization                             |
 | GetMacSha512()        | string     | Message authentication code.              |
-| GetUrl()				| string     | Url to preselected server, test or production.|     
+| GetUrl()				| string     | Url to preselected server, test or production.|
 | GetCompleteForm()		| string     | A complete Html form with method= "post" with submit button to include in your code. |
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
-            
+
 
 ####4.4.2 PayPage with direct bank payment options
 *PayPage* with available direct bank payments only.
-                
+
 #####4.4.2.1 Request
 
 ```csharp
@@ -440,35 +440,35 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.SetAmountExVat(100.00M)
 	.SetVatPercent(25.00M)
 	.SetDiscountPercent(0))
-		
+
 .SetCountryCode(CountryCode.SE)						   //Required
 .SetCustomerReference("ref33")
 .SetOrderDate(new DateTime(2012, 12, 12))
 .SetCurrency(Currency.SEK)
-.UsePayPageDirectBankOnly()	
-	.SetReturnUrl("http://myurl.se")                   //Required		
+.UsePayPageDirectBankOnly()
+	.SetReturnUrl("http://myurl.se")                   //Required
 	.SetCancelUrl("http://myurl.se")                   //Optional
 	.GetPaymentForm();
 ```
 #####4.4.2.2 Return
 Returns object type PaymentForm:
-           
+
 | Value                 | Returns    | Description                               |
 |-----------------------|----------- |-------------------------------------------|
-| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.| 
+| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.|
 | GetXmlMessage()       | string     | Payment information in XML-format.        |
 | GetMerchantId()       | string     | Authorization                             |
 | GetSecretWord()       | string     | Authorization                             |
-| GetMacSha512()        | string     | Message authentication code.              |   
-| GetUrl()				| string     | Url to preselected server, test or production.|   
+| GetMacSha512()        | string     | Message authentication code.              |
+| GetUrl()				| string     | Url to preselected server, test or production.|
 | GetCompleteForm()		| string     | A complete Html form with method= "post" with submit button to include in your code. |
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
- 
- 
+
+
 ####4.4.3 PayPagePayment
 *PayPage* with all available payments. You can also custom the *PayPage* by using one of the methods for *PayPagePayments*:
 SetPaymentMethod, IncludePaymentMethod, ExcludeCardPaymentMethod or ExcludeDirectPaymentMethod.
-                
+
 #####4.4.3.1 Request
 ```csharp
 PaymentForm form = WebpayConnection.CreateOrder()
@@ -480,22 +480,22 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.SetUnit("st")
 	.SetAmountExVat(100.00M)
 	.SetVatPercent(25.00M)
-	.SetDiscountPercent(0))   
-	
+	.SetDiscountPercent(0))
+
 .SetCountryCode(CountryCode.SE)							//Required
 .SetCustomerReference("ref33")
 .SetOrderDate(new DateTime(2012, 12, 12))
 .SetCurrency(Currency.SEK)
 .UsePayPage()
-	.SetReturnUrl("http://myurl.se")                   	//Required	
+	.SetReturnUrl("http://myurl.se")                   	//Required
 	.SetCancelUrl("http://myurl.se")                   	//Optional
 	.SetPayPageLanguageCode(LanguageCode.sv)					//Optional, English is default. LanguageCode, see APPENDIX
 	.GetPaymentForm();
-```               
+```
 
 ######4.4.3.1.1 Exclude specific payment methods
 Optional if you want to include specific payment methods for *PayPage*.
-```csharp   
+```csharp
 .UsePayPage()
 	.SetReturnUrl("http://myurl.se")                                            //Required
 	.SetCancelUrl("http://myurl.se")                                            //Optional
@@ -508,7 +508,7 @@ Optional if you want to include specific payment methods for *PayPage*.
 ```
 ######4.4.3.1.2 Include specific payment methods
 Optional if you want to include specific payment methods for *PayPage*.
-```csharp   
+```csharp
 .UsePayPage()
 	.SetReturnUrl("http://myurl.se")                                            //Required
 	.IncludePaymentMethod(new List<PaymentMethod>								//Optional
@@ -530,7 +530,7 @@ Optional if you want to exclude all card payment methods from *PayPage*.
 
 ######4.4.3.1.4 Exclude Direct payments
 Optional if you want to exclude all direct bank payments methods from *PayPage*.
-```csharp  
+```csharp
 .UsePayPage()
     .SetReturnUrl("http://myurl.se")                   //Required
     .ExcludeDirectPaymentMethod()                     //Optional
@@ -538,18 +538,18 @@ Optional if you want to exclude all direct bank payments methods from *PayPage*.
 ```
 #####4.4.3.6 Return
 Returns object type *PaymentForm*:
-                
+
 | Value                 | Returns    | Description                               |
 |-----------------------|----------- |-------------------------------------------|
-| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.| 
+| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.|
 | GetXmlMessage()       | string     | Payment information in XML-format.        |
 | GetMerchantId()       | string     | Authorization                             |
 | GetSecretWord()       | string     | Authorization                             |
-| GetMacSha512()        | string     | Message authentication code.              |  
-| GetUrl()				| string     | Url to preselected server, test or production.|    
+| GetMacSha512()        | string     | Message authentication code.              |
+| GetUrl()				| string     | Url to preselected server, test or production.|
 | GetCompleteForm()		| string     | A complete Html form with method= "post" with submit button to include in your code. |
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
- 
+
 
 #### 4.4.4 PaymentMethod specified
 Go direct to specified payment method without the step *PayPage*.
@@ -566,8 +566,8 @@ PaymentForm form = WebpayConnection.CreateOrder()
 	.SetUnit("st")
 	.SetAmountExVat(100.00M)
 	.SetVatPercent(25)
-	.SetDiscountPercent(0))                  
-		
+	.SetDiscountPercent(0))
+
 .SetCountryCode(CountryCode.SE)							//Required
 .SetClientOrderNumber("33")
 .SetOrderDate(new DateTime(2012, 12, 12))
@@ -584,18 +584,18 @@ Function GetPaymentForm() returns Object type PaymentForm with accessible member
 
 | Value                 | Returns    | Description                               |
 |-----------------------|----------- |-------------------------------------------|
-| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.| 
+| GetXmlMessageBase64() | string     | Payment information in XML-format, Base64 encoded.|
 | GetXmlMessage()       | string     | Payment information in XML-format.        |
 | GetMerchantId()       | string     | Authorization                             |
 | GetSecretWord()       | string     | Authorization                             |
-| GetMacSha512()        | string     | Message authentication code.              |    
-| GetUrl()				| string     | Url to preselected server, test or production.|  
+| GetMacSha512()        | string     | Message authentication code.              |
+| GetUrl()				| string     | Url to preselected server, test or production.|
 | GetCompleteForm()		| string     | A complete Html form with method= "post" with submit button to include in your code. |
 | GetFormHtmlFields()   | Dictionary<string, string>   | Map with html tags as keys with of Html form fields to include. |
-            
+
 
 #### Synchronous solutions - Invoice and PaymentPlan
-       
+
 #### 4.4.5 InvoicePayment
 Perform an invoice payment. This payment form will perform a synchronous payment and return a response.
 Returns *CreateOrderEuResponse* object. Set your store authorization here.
@@ -633,25 +633,25 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder()
 	.SetUnit("st")
 	.SetAmountExVat(100.00M)
 	.SetVatPercent(25.00M)
-	.SetDiscountPercent(0))   
-	
+	.SetDiscountPercent(0))
+
 .SetCountryCode(CountryCode.SE)						//Required
 .SetCustomerReference("ref33")
 .SetOrderDate(new DateTime(2012, 12, 12))
 .SetCurrency(Currency.SEK)
 .UsePaymentPlanPayment(1234L, false)              	//Parameter1: campaign code recieved from getPaymentPlanParams
-													//Paremeter2: True if Automatic autogiro form will be sent with the first notification		   
+													//Paremeter2: True if Automatic autogiro form will be sent with the first notification
    .DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 5. GetPaymentPlanParams   
+## 5. GetPaymentPlanParams
 Use this function to retrieve campaign codes for possible payment plan options. Use prior to create payment plan payment.
 Returns *PaymentPlanParamsResponse* object. Set your store authorization here.
 
 ```csharp
-GetPaymentPlanParamsEuResponse response = WebpayConnection.GetPaymentPlanParams()	
-	.SetCountryCode(CountryCode.SE)					//Required	
+GetPaymentPlanParamsEuResponse response = WebpayConnection.GetPaymentPlanParams()
+	.SetCountryCode(CountryCode.SE)					//Required
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -664,14 +664,14 @@ Use this function to calculate the prices per month of the payment plan campaign
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 6. GetAddresses 
-Returns *getAddressesResponse* object with an *AddressSelector* for the associated addresses for a specific security number. 
+## 6. GetAddresses
+Returns *getAddressesResponse* object with an *AddressSelector* for the associated addresses for a specific security number.
 Can be used when creating an order. Only applicable for SE, NO and DK. In Norway, only getAddresses of companies is supported.
 Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 6.1 Order type 
+### 6.1 Order type
 ```csharp
     .SetOrderTypeInvoice()         //Required if this is an invoice order
 or
@@ -679,7 +679,7 @@ or
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 6.2 Customer type 
+### 6.2 Customer type
 ```csharp
     .SetIndividual("194605092222") //Required if this is an individual customer
 or
@@ -687,18 +687,18 @@ or
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 6.3                                                                      	
+### 6.3
 ```csharp
-GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see more about Configuration chapt.3       	
+GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see more about Configuration chapt.3
 	.SetCountryCode(CountryCode.SE)                                 //Required
-	.SetOrderTypeInvoice()                                          //See 6.1   	
+	.SetOrderTypeInvoice()                                          //See 6.1
 	.SetIndividual("194605092222")                                  //See 6.2
-    .SetZipCode("9999")                                             //Required	
+    .SetZipCode("9999")                                             //Required
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 7. DeliverOrder                                                           
+## 7. DeliverOrder
 Use the WebpayConnection.DeliverOrder request to deliver to the customer invoices for fulfilled orders.
 Svea will invoice the customer upon receiving the DeliverOrder request.
 A DeliverOrder request may also be used to partly deliver an order on Invoice orders.
@@ -775,8 +775,8 @@ All products and other items. It is required to have a minimum of one row.
 	.SetVatPercent(25.00M)              //Required
 	.SetShippingId("33")               	//Optional
 	.SetName("shipping")               	//Optional
-	.SetDescription("Specification")   	//Optional        
-	.SetUnit("st")                     	//Optional        
+	.SetDescription("Specification")   	//Optional
+	.SetUnit("st")                     	//Optional
 	.SetDiscountPercent(0))
 ```
 #### 7.1.3 InvoiceFee
@@ -785,21 +785,21 @@ All products and other items. It is required to have a minimum of one row.
 	.SetAmountExVat(50)            		//Required
 	.SetVatPercent(25.00M)          	//Required
 	.SetName("Svea fee")           		//Optional
-	.SetDescription("invoice fee") 		//Optional       
+	.SetDescription("invoice fee") 		//Optional
 	.SetUnit("st")                 		//Optional
 	.SetDiscountPercent(0))        		//Optional
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 7.2 Other values  
-Required is the order id received when creating the order. Required for invoice orders are *InvoiceDistributionType*. 
+### 7.2 Other values
+Required is the order id received when creating the order. Required for invoice orders are *InvoiceDistributionType*.
 If invoice order is credit invoice use setCreditInvoice(invoiceId) and setNumberOfCreditDays(creditDaysAsInt)
 ```csharp
     .SetOrderId(orderId)                   								//Required. Received when creating order.
 	.SetCountryCode(CountryCode.SE)		   								//Required
     .SetNumberOfCreditDays(1)              								//Use for invoice orders.
     .SetInvoiceDistributionType(InvoiceDistributionType.Post)  			//Use for invoice orders. DISTRIBUTIONTYPE see APPENDIX
-    .SetCreditInvoice()                    								//Use for invoice orders, if this should be a credit invoice.   
+    .SetCreditInvoice()                    								//Use for invoice orders, if this should be a credit invoice.
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -832,13 +832,13 @@ you will recieve an *InvoiceId* in the Response. To credit the invoice you follo
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 9. CloseOrder                                                             
-Use when you want to cancel an undelivered order. Valid only for invoice and payment plan orders. 
+## 9. CloseOrder
+Use when you want to cancel an undelivered order. Valid only for invoice and payment plan orders.
 Required is the order id received when creating the order. Set your store authorization here.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### 9.1 Close by payment type                                                
+### 9.1 Close by payment type
 ```csharp
     .CloseInvoiceOrder()
 or
@@ -848,41 +848,41 @@ or
 ```csharp
 CloseOrderEuResponse response =  WebpayConnection.CloseOrder()
 	.SetOrderId(orderId)						//Required, received when creating an order.
-	.SetCountryCode(CountryCode.SE)			//Required	
-	.CloseInvoiceOrder()		
+	.SetCountryCode(CountryCode.SE)			//Required
+	.CloseInvoiceOrder()
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## 10. Response handler                                                       
+## 10. Response handler
 All synchronous responses are handled through *SveaResponse* and structured into objects.
 Asynchronous responses recieved after sending the values *merchantid* and *xmlMessageBase64* to
 hosted solutions can also be processed through the *SveaResponse* class.
 
-The response from server will be sent to the *returnUrl* with POST or GET. The response contains the parameters: 
+The response from server will be sent to the *returnUrl* with POST or GET. The response contains the parameters:
 *response* and *merchantid*.
 Class *SveaResponse* will return an object structured similar to the synchronous answer.
 
-Params: 
+Params:
 * The POST or GET message Base64 encoded
 ```csharp
-	var respObject = new SveaResponse(responseXmlBase64); 
+	var respObject = new SveaResponse(responseXmlBase64);
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-## APPENDIX 
+## APPENDIX
 
 ### PaymentMethods
-Enumeration, used in *UsePaymentMethod(PaymentMethod PaymentMethod)*, *.UsePayPage()*, 
-*.IncludePaymentMethod(Collection<PaymentMethod> PaymentMethods)*, *.IncludePaymentMethod()*, 
+Enumeration, used in *UsePaymentMethod(PaymentMethod PaymentMethod)*, *.UsePayPage()*,
+*.IncludePaymentMethod(Collection<PaymentMethod> PaymentMethods)*, *.IncludePaymentMethod()*,
 *.ExcludePaymentMethods(Collection<PaymentMethod> PaymentMethods)*,
 *.ExcludeDirectPaymentMethod()* and *.ExcludeCardPaymentMethod()*.
 
 | Payment method                   | Description                                   |
 |----------------------------------|-----------------------------------------------|
-| PaymentMethod.BANKAXESS	       | Direct bank payment, Norway.       		   | 
-| PaymentMethod.NORDEA_SE	       | Direct bank payment, Nordea, Sweden.          | 
+| PaymentMethod.BANKAXESS	       | Direct bank payment, Norway.       		   |
+| PaymentMethod.NORDEA_SE	       | Direct bank payment, Nordea, Sweden.          |
 | PaymentMethod.SEB_SE	           | Direct bank payment, private, SEB, Sweden.    |
 | PaymentMethod.SEBFTG_SE 	       | Direct bank payment, company, SEB, Sweden.    |
 | PaymentMethod.SHB_SE	           | Direct bank payment, Handelsbanken, Sweden.   |
@@ -897,7 +897,7 @@ Enumeration, used in *UsePaymentMethod(PaymentMethod PaymentMethod)*, *.UsePayPa
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ### CountryCode
-Enumeration, used in .SetCountryCode(...). Using ISO 3166-1 standard. 
+Enumeration, used in .SetCountryCode(...). Using ISO 3166-1 standard.
 
 | CountryCode						| Country					|
 |-----------------------------------|---------------------------|
@@ -911,7 +911,7 @@ Enumeration, used in .SetCountryCode(...). Using ISO 3166-1 standard.
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ### LanguageCode
-Enumeration, used in .SetPayPageLanguage(...). Using ISO 639-1 standard. 
+Enumeration, used in .SetPayPageLanguage(...). Using ISO 639-1 standard.
 
 | LanguageCode						| Language name				|
 |-----------------------------------|---------------------------|
@@ -928,7 +928,7 @@ Enumeration, used in .SetPayPageLanguage(...). Using ISO 639-1 standard.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### Currency 
+### Currency
 Enumeration, used in .SetCurrency(...). Using ISO 4217 standard.
 
 | CurrencyCode						| Currency name				|
@@ -940,7 +940,7 @@ Enumeration, used in .SetCurrency(...). Using ISO 4217 standard.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
-### Invoice Distribution Type 
+### Invoice Distribution Type
 Enumeration, used in .SetInvoiceDistributionType(...).
 
 | DistributionType					| Description				|

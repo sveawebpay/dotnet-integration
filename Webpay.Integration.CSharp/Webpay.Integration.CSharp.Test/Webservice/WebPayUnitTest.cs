@@ -7,7 +7,8 @@ namespace Webpay.Integration.CSharp.Test.Webservice
     [TestFixture]
     public class WebpayUnitTest
     {
-        // REQUEST AND RESPONSE CLASSES
+        // WebPay Request and Response Classes
+        //
         // createOrder - useInvoicePayment => request class
         [Test] static void createOrder_useInvoicePayment_returns_InvoicePayment_request()
         {
@@ -30,11 +31,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice
         // createOrder - usePayPageCardOnly
         // createOrder - usePayPageDirectBankOnly
 
-        // deliverOrder - deliverInvoiceOrder
-
-        // test_deliverOrder_deliverInvoicePayment_with_orderrows_return_HandleOrder
-
-        // VALIDATION
         // validation - createOrder - addOrderRow required
         // validation - createOrder - addFee optional
         // validation - createOrder - addDiscount optional
@@ -125,5 +121,101 @@ namespace Webpay.Integration.CSharp.Test.Webservice
         // validation - createOrder - sums - above w/relativeDiscount - hosted - priceIncludingVat false
         // validation - createOrder - sums - above w/relativeDiscount - hosted - priceIncludingVat true
 
+        // deliverOrder - deliverInvoiceOrder - with orderRows => request class A
+        // deliverOrder - deliverInvoiceOrder - with orderRows - doRequest => response class A        
+        // deliverOrder - deliverInvoiceOrder - with orderRows - setCreditInvoice - doRequest => response class ?      
+        // deliverOrder - deliverInvoiceOrder - without orderRows => request class B
+        // deliverOrder - deliverInvoiceOrder - without orderRows - doRequest => response class B        
+
+        // deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?
+        // deliverOrder - deliverPaymentPlanOrder - without orderRows => request class A
+        // deliverOrder - deliverPaymentPlanOrder - without orderRows - doRequest => response class A
+
+        // deliverOrder - deliverCardOrder -- with orderRows -- TODO check not allowed!
+        // deliverOrder - deliverCardOrder -- without orderRows -- request class A
+        // deliverOrder - deliverCardOrder -- without orderRows - doRequest => response class A
+        // deliverOrder - TODO deliver other payment method orders? -- document if should use confirmTransaction et al instead?
+
+        // getAddresses - getIndividualAddresses - doRequest => response object, use getIndividualCustomers to get a list of IndividualCustomer
+        // getAddresses - getCompanyAddresses - doRequest => response object, use getCompanyCustomers to get a list of CompanyCustomer
+        // getAddresses - deprecated legacy methods - doRequest => response object, use deprecated getXXX() to get individual attributes
+
+        // getPaymentPlanParams - SE - doRequest
+        // getPaymentPlanParams - NO - doRequest
+        // getPaymentPlanParams - FI - doRequest
+        // getPaymentPlanParams - DK - doRequest
+        // getPaymentPlanParams - DE - doRequest
+        // getPaymentPlanParams - NE - doRequest
+
+        // paymentPlanPricePerMonth - verify deprecated
+        // Helper.paymentPlanPricePerMonth - verify exists
+        // Helper.paymentPlanPricePerMonth - sums - verify sums
+
+        // WebPayAdmin Request and Response Classes
+        //
+        // WebPayAdmin.cancelOrder() -------------------------------------------------------------------------------------	
+        // cancelOrder validators
+        // invoice
+        //test_validates_all_required_methods_for_cancelOrder_cancelInvoiceOrder
+        //test_missing_required_method_for_cancelOrder_cancelInvoiceOrder_setOrderId
+        //test_missing_required_method_for_cancelOrder_cancelInvoiceOrder_setCountryCode
+        // paymentplan
+        //test_validates_all_required_methods_for_cancelOrder_cancelPaymentPlanOrder
+        //test_missing_required_method_for_cancelOrder_cancelPaymentPlanOrder_setOrderId
+        //test_missing_required_method_for_cancelOrder_cancelPaymentPlanOrder_setCountryCode
+        // card
+        //test_validates_all_required_methods_for_cancelOrder_cancelCardOrder
+        //test_missing_required_method_for_cancelOrder_cancelCardOrder_setOrderId
+        //test_missing_required_method_for_cancelOrder_cancelCardOrder_setCountryCode
+
+        // WebPayAdmin.queryOrder() --------------------------------------------------------------------------------------------	
+    	// .queryInvoiceOrder => AdminService/GetOrdersRequest
+        //test_queryOrder_queryInvoiceOrder_returns_GetOrdersRequest
+        // .queryPaymentPlanOrder => AdminService/GetOrdersRequest
+        // TODO
+        // .queryDirectBankOrder => HostedService/QueryTransactionRequest
+        // TODO
+        // .queryCardOrder => HostedService/QueryTransactionRequest
+        //test_queryOrder_queryCardOrder_returns_QueryTransactionRequest
+
+        // builder object validation
+        // directbank
+        // TODO public void test_validates_all_required_methods_for_queryOrder_queryDirectBankOrder() {
+        // card
+        //test_validates_all_required_methods_for_queryOrder_queryCardOrder    
+        //test_queryOrder_validates_missing_required_method_for_queryCardOrder_setOrderId
+        //test_queryOrder_validates_missing_required_method_for_queryCardOrder_setCountryCode
+
+        // WebPayAdmin.deliverOrderRows() --------------------------------------------------------------------------------------------	
+	    // returned request class
+	    // TODO other methods
+	    // .deliverCardOrderRows => HostedService/ConfirmTransactionRequest
+        //test_deliverOrderRows_deliverCardOrderRows_returns_ConfirmTransactionResponse
+        // builder object validation
+        // TODO other methods
+        // .deliverCardOrderRows validation
+        //test_validates_all_required_methods_for_deliverOrderRows_deliverCardOrderRows
+        //test_deliverOrderRows_validates_missing_required_method_for_deliverCardOrderRows
+
+        // WebPayAdmin.cancelOrderRows() --------------------------------------------------------------------------------------------	
+        // returned request class
+        // TODO other methods
+        // .cancelCardOrderRows => HostedService/AnnulTransactionRequest
+        //test_cancelOrderRows_cancelCardOrderRows_returns_LowerTransactionResponse
+        // builder object validation
+        // TODO other methods
+	    // .cancelCardOrderRow validation
+        //test_validates_all_required_methods_for_cancelOrderRows_cancelCardOrderRows
+        //test_cancelOrderRows_validates_missing_required_method_for_cancelCardOrderRows
+
+	    // WebPayAdmin.creditOrderRows() --------------------------------------------------------------------------------------------	
+	    // returned request class
+	    // TODO other methods
+	    // .creditCardOrderRows => HostedService/CreditTransactionRequest
+        //test_creditOrderRows_creditCardOrderRows_returns_LowerTransactionResponse
+
+
+
+    
     }
 }

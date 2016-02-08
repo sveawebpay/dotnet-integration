@@ -1,5 +1,10 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
+using Webpay.Integration.CSharp.WebpayWS;
+using Webpay.Integration.CSharp.Util.Constant;
+using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.Test.Webservice
 {
@@ -122,9 +127,25 @@ namespace Webpay.Integration.CSharp.Test.Webservice
 		// validation - createOrder - sums - above w/relativeDiscount - hosted - priceIncludingVat true
 
 		// deliverOrder - deliverInvoiceOrder - with orderRows => request class A
+		[Test]
+		public void test_deliverOrder_deliverInvoiceOrder_with_order_rows_goes_against_DeliverOrderEU()
+		{
+			var fakeSveaOrderId = 987654;
+			DeliverOrderEuRequest request = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+				.AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+				.SetOrderId(fakeSveaOrderId)
+				.SetCountryCode(CountryCode.SE)
+				.SetInvoiceDistributionType(InvoiceDistributionType.POST)
+				.DeliverInvoiceOrder()
+					.PrepareRequest()
+			;
+			Assert.IsInstanceOf<DeliverOrderEuRequest>(request);
+		}
 		// deliverOrder - deliverInvoiceOrder - with orderRows - doRequest => response class A        
 		// deliverOrder - deliverInvoiceOrder - with orderRows - setCreditInvoice - doRequest => response class ?      
+
 		// deliverOrder - deliverInvoiceOrder - without orderRows => request class B
+
 		// deliverOrder - deliverInvoiceOrder - without orderRows - doRequest => response class B        
 
 		// deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?
@@ -216,6 +237,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice
 
 
 
-	
+
 	}
 }

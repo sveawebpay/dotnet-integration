@@ -233,8 +233,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
-            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml, 
-                Is.EqualTo("<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>"));
+            var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
+            var expectedPaymentmethodsXml =
+                "<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEACARDPAY</paymentmethod><paymentmethod>SVEAINVOICEEU_SE</paymentmethod><paymentmethod>SVEASPLITEU_SE</paymentmethod>";
+
+            Assert.That(actualPaymentmethodsXml, Is.EqualTo(expectedPaymentmethodsXml));
         }
 
 

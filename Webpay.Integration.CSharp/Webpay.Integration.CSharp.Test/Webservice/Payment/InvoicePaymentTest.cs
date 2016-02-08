@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
                                                            .PrepareRequest();
 
             //CustomerIdentity            
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo("194605092222"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo(TestingTool.DefaultTestIndividualNationalIdNumber));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.CountryCode, Is.EqualTo(CountryCode.SE.ToString().ToUpper()));
             Assert.That(request.CreateOrderInformation.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
         }

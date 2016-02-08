@@ -29,7 +29,7 @@ namespace Webpay.Integration.CSharp.Test.Order
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo("164608142222"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo("194608142222"));
             Assert.That(request.CreateOrderInformation.OrderRows[0].ArticleNumber, Is.EqualTo("1"));
             Assert.That(request.CreateOrderInformation.OrderRows[1].ArticleNumber, Is.EqualTo("2"));
         }
@@ -47,7 +47,7 @@ namespace Webpay.Integration.CSharp.Test.Order
                                                            .UseInvoicePayment()
                                                            .PrepareRequest();
 
-            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo("164608142222"));
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.NationalIdNumber, Is.EqualTo("194608142222"));
         }
     }
 }

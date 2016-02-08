@@ -39,9 +39,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
         {
             GetPaymentPlanParamsEuResponse paymentPlanParams = GetParamsForTesting();
 
-            List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(200.0M, paymentPlanParams);
+            List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(99.0M, paymentPlanParams);
 
-            Assert.IsTrue(result.Count == 0);
+            Assert.That(result.Count == 0, Is.True);
         }
     }
 }

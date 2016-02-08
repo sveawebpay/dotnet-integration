@@ -114,7 +114,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             _xml = _xmlBuilder.GetXml(payment);
 
             const string expectedString = 
-                "<customer><ssn>164608142222</ssn><firstname>Tess, T Persson</firstname>" +
+                "<customer><ssn>194608142222</ssn><firstname>Tess, T Persson</firstname>" +
                 "<phone>0811111111</phone><email>test@svea.com</email>" +
                 "<address>Testgatan</address><housenumber>1</housenumber>" +
                 "<address2>c/o Eriksson, Erik</address2><zip>99999</zip>" +

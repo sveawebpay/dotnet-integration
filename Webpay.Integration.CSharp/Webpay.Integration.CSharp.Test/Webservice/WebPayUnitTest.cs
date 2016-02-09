@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Test.AdminService;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
-using Webpay.Integration.CSharp.Util.Constant;
 using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.Test.Webservice

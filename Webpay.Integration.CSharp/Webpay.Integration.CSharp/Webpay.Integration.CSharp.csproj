@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />

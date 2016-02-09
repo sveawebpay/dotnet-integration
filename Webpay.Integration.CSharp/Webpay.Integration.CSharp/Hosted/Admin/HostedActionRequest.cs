@@ -3,7 +3,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
 {
-    public class PreparedHostedAdminRequest
+    public class HostedActionRequest
     {
         public readonly IConfigurationProvider ConfigurationProvider;
         public readonly CountryCode CountryCode;
@@ -11,7 +11,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public readonly string ServicePath;
         public readonly string Xml;
 
-        public PreparedHostedAdminRequest(string xml, CountryCode countryCode, string merchantId,
+        public HostedActionRequest(string xml, CountryCode countryCode, string merchantId,
             IConfigurationProvider configurationProvider, string servicePath)
         {
             Xml = xml;

@@ -61,7 +61,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="Webservice\Helper\ConverterTest.cs" />
     <Compile Include="Webservice\Payment\FixedDiscountRowsTest.cs" />
     <Compile Include="Hosted\Helper\PaymentFormTest.cs" />
@@ -97,6 +96,9 @@
       <Project>{7f1e3f74-6c5a-45ea-bfa6-28133010a136}</Project>
       <Name>Webpay.Integration.CSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AdminService\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

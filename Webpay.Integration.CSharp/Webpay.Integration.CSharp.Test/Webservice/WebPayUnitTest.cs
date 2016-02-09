@@ -1,6 +1,9 @@
-﻿using NUnit.Framework;
+﻿using System.Runtime.InteropServices;
+using NUnit.Framework;
 using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -161,17 +164,28 @@ namespace Webpay.Integration.CSharp.Test.Webservice
                 .DeliverInvoiceOrder()
                     .PrepareRequest()
             );
-            Assert.That(ex.Message, Is.EqualTo("MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...)."));            
+            Assert.That(ex.Message, Is.EqualTo("MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...)."));
             //Assert.IsInstanceOf<DeliverOrdersRequest>(request);   // not implemented
         }
-        
-        // deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?
+
+        // deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?        
         // deliverOrder - deliverPaymentPlanOrder - without orderRows => request class A
         // deliverOrder - deliverPaymentPlanOrder - without orderRows - doRequest => response class A
 
-        // deliverOrder - deliverCardOrder -- with orderRows -- TODO check not allowed!
-        // deliverOrder - deliverCardOrder -- without orderRows -- request class A
-        // deliverOrder - deliverCardOrder -- without orderRows - doRequest => response class A
+        // deliverOrder - deliverCardOrder
+        [Test]
+        public void test_deliverOrder_deliverCardOrder_with_order_rows_returns_HostedAdminRequest()
+        {
+            var fakeSveaOrderId = 987654;
+            HostedActionRequest request = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .SetOrderId(fakeSveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .DeliverCardOrder()
+            ;
+            Assert.IsInstanceOf<HostedActionRequest>(request);
+        }
+        
         // deliverOrder - TODO deliver other payment method orders? -- document if should use confirmTransaction et al instead?
 
         // getAddresses - getIndividualAddresses - doRequest => response object, use getIndividualCustomers to get a list of IndividualCustomer

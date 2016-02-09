@@ -148,19 +148,21 @@ namespace Webpay.Integration.CSharp.Test.Webservice
 
         // deliverOrder - deliverInvoiceOrder - without orderRows - doRequest => response class B   
         [Test]
-        [Ignore("acceptance test for extend_WebPay.DeliverOrder invoice")]
-        public void test_deliverOrder_deliverInvoiceOrder_without_order_rows_goes_against_adminservice_DeliverOrders()
+        public void test_deliverOrder_deliverInvoiceOrder_without_order_rows_throws_validation_exception()
         {
             var fakeSveaOrderId = 987654;
-            DeliverOrderEuRequest request = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+
+            var ex = Assert.Throws<Webpay.Integration.CSharp.Exception.SveaWebPayValidationException>(() =>             
+                WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 //.AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .SetOrderId(fakeSveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 .SetInvoiceDistributionType(InvoiceDistributionType.POST)
                 .DeliverInvoiceOrder()
                     .PrepareRequest()
-            ;
-            Assert.IsInstanceOf<DeliverOrdersRequest>(request);
+            );
+            Assert.That(ex.Message, Is.EqualTo("MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...)."));            
+            //Assert.IsInstanceOf<DeliverOrdersRequest>(request);   // not implemented
         }
         
         // deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?

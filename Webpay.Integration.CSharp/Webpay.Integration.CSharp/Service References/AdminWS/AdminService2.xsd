@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" />
+  <xs:import schemaLocation="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="AccountCreditDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CampaignCode" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountCreditDetails" nillable="true" type="tns:AccountCreditDetails" />
+  <xs:complexType name="SearchAccountCreditSorting">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SortAccountCreditProperty" type="tns:SortAccountCreditProperty" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="SortDirection" type="q1:SortDirection" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchAccountCreditSorting" nillable="true" type="tns:SearchAccountCreditSorting" />
+  <xs:simpleType name="SortAccountCreditProperty">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Amount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreationDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ContractNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClientId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClientAccountCreditId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortAccountCreditProperty" nillable="true" type="tns:SortAccountCreditProperty" />
+  <xs:complexType name="ArrayOfGetAccountCreditInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GetAccountCreditInformation" nillable="true" type="tns:GetAccountCreditInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGetAccountCreditInformation" nillable="true" type="tns:ArrayOfGetAccountCreditInformation" />
+  <xs:complexType name="GetAccountCreditInformation">
+    <xs:sequence>
+      <xs:element name="ClientAccountCreditId" type="xs:long" />
+      <xs:element name="ClientId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAccountCreditInformation" nillable="true" type="tns:GetAccountCreditInformation" />
+</xs:schema>

@@ -60,6 +60,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="WebpayConnectionUnitTest.cs" />
     <Compile Include="Webservice\Helper\ConverterTest.cs" />
     <Compile Include="Webservice\Payment\FixedDiscountRowsTest.cs" />
     <Compile Include="Hosted\Helper\PaymentFormTest.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Webservice\Helper\WebserviceRowFormatterTest.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanTest.cs" />
     <Compile Include="Webservice\Payment\InvoicePaymentTest.cs" />
-    <Compile Include="Webservice\WebPayUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

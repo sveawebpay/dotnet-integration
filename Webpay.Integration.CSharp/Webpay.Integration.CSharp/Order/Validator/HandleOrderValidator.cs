@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
                     ValidateOrderType(order),
                     ValidateOrderId(order),
                     ValidateInvoiceDetails(order),
-                    ValidateOrderRows(order),
+                    ((order.GetOrderType() == OrderType.INVOICE) || (order.GetOrderType() == OrderType.PAYMENTPLAN)) ? ValidateOrderRows(order) : ""
                 };
 
             foreach (var line in list.Where(line => !string.IsNullOrWhiteSpace(line)))

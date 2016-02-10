@@ -2,7 +2,7 @@
 
 namespace Webpay.Integration.CSharp.Config
 {
-    internal class SveaTestConfigurationProvider : IConfigurationProvider
+    public class SveaTestConfigurationProvider : IConfigurationProvider
     {
         public string GetUsername(PaymentType type, CountryCode country)
         {
@@ -134,5 +134,6 @@ namespace Webpay.Integration.CSharp.Config
         {
             return type == PaymentType.HOSTED ? SveaConfig.GetTestPayPageUrl() : SveaConfig.GetTestWebserviceUrl();
         }
+        
     }
 }

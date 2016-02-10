@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Hosted\Admin\Actions\TransactionIdResponseBase.cs" />
     <Compile Include="Hosted\Admin\HostedAdmin.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerAmount.cs" />
-    <Compile Include="Hosted\Admin\PreparedHostedAdminRequest.cs" />
+    <Compile Include="Hosted\Admin\HostedActionRequest.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByTransactionId.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />

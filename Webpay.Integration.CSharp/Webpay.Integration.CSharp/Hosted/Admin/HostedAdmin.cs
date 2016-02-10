@@ -17,28 +17,28 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             CountryCode = countryCode;
         }
 
-        public PreparedHostedAdminRequest Annul(Annul annul)
+        public HostedActionRequest Annul(Annul annul)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <annul>
                 <transactionid>{0}</transactionid>
                 </annul>", annul.TransactionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/annul");
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/annul");
         }
 
-        public PreparedHostedAdminRequest CancelRecurSubscription(CancelRecurSubscription cancelRecurSubscription)
+        public HostedActionRequest CancelRecurSubscription(CancelRecurSubscription cancelRecurSubscription)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <cancelrecursubscription>
                 <subscriptionid>{0}</subscriptionid>
                 </cancelrecursubscription>", cancelRecurSubscription.SubscriptionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
                 "/cancelrecursubscription");
         }
 
-        public PreparedHostedAdminRequest Confirm(Confirm confirm)
+        public HostedActionRequest Confirm(Confirm confirm)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <confirm>
@@ -46,64 +46,64 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <capturedate>{1}</capturedate>
                 </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd"));
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
         }
 
-        public PreparedHostedAdminRequest GetPaymentMethods(GetPaymentMethods getPaymentMethods)
+        public HostedActionRequest GetPaymentMethods(GetPaymentMethods getPaymentMethods)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <getpaymentmethods>
                 <merchantid>{0}</merchantid>
                 </getpaymentmethods>", getPaymentMethods.MerchantId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
                 "/getpaymentmethods");
         }
 
-        public PreparedHostedAdminRequest GetReconciliationReport(GetReconciliationReport getReconciliationReport)
+        public HostedActionRequest GetReconciliationReport(GetReconciliationReport getReconciliationReport)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <getreconciliationreport>
                 <date>{0}</date>
                 </getreconciliationreport>", getReconciliationReport.Date.ToString("yyyy-MM-dd"));
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
                 "/getreconciliationreport");
         }
 
-        public PreparedHostedAdminRequest LowerAmount(LowerAmount lowerAmount)
+        public HostedActionRequest LowerAmount(LowerAmount lowerAmount)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <loweramount>
                 <transactionid>{0}</transactionid>
                 <amounttolower>{1}</amounttolower>
                 </loweramount>", lowerAmount.TransactionId, lowerAmount.AmountToLower);
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
         }
 
-        public PreparedHostedAdminRequest Query(QueryByTransactionId query)
+        public HostedActionRequest Query(QueryByTransactionId query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <query>
                 <transactionid>{0}</transactionid>
                 </query>", query.TransactionId);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
                 "/querytransactionid");
         }
 
-        public PreparedHostedAdminRequest Query(QueryByCustomerRefNo query)
+        public HostedActionRequest Query(QueryByCustomerRefNo query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <query>
                 <customerrefno>{0}</customerrefno>
                 </query>", query.CustomerRefNo);
 
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
                 "/querycustomerrefno");
         }
 
-        public PreparedHostedAdminRequest Recur(Recur recur)
+        public HostedActionRequest Recur(Recur recur)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <recur>
@@ -112,7 +112,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <currency>{2}</currency>
                 <amount>{3}</amount>
                 </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount);
-            return new PreparedHostedAdminRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -17,10 +21,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         private InvoiceDistributionType _distributionType;
         private long? _invoiceIdToCredit;
         private int _numberOfCreditDays;
+        private DateTime? _captureDate;
 
         public DeliverOrderBuilder(IConfigurationProvider config)
         {
             Config = config;
+            _captureDate = null;
         }
 
         public HandleOrderValidator GetValidator()
@@ -112,6 +118,8 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new HandleOrder(this);
         }
 
+
+
         public override DeliverOrderBuilder SetFixedDiscountRows(List<FixedDiscountBuilder> fixedDiscountRows)
         {
             FixedDiscountRows = fixedDiscountRows;
@@ -171,6 +179,27 @@ namespace Webpay.Integration.CSharp.Order.Handle
                 InvoiceFeeRows.Add(itemFee as InvoiceFeeBuilder);
             }
             return this;
+        }
+
+
+        public DeliverOrderBuilder SetCaptureDate(DateTime captureDate)
+        {
+            _captureDate = captureDate;
+            return this;
+        }
+
+        public HostedActionRequest DeliverCardOrder()
+        {
+            // no validation for this release, we fall back on the service error messages
+
+            var action = new Confirm(
+                this.GetOrderId(),
+                this._captureDate ?? DateTime.Now // if no captureDate given, use today
+            );
+
+            var request = new HostedAdmin(this.Config, this.CountryCode);
+
+            return request.Confirm( action );
         }
     }
 }

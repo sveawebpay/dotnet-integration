@@ -6,9 +6,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     public class Confirm
     {
         public readonly DateTime CaptureDate;
-        public readonly int TransactionId;
+        public readonly long TransactionId;
 
-        public Confirm(int transactionId, DateTime captureDate)
+        public Confirm(long transactionId, DateTime captureDate)
         {
             TransactionId = transactionId;
             CaptureDate = captureDate;

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Webpay.Integration.CSharp;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
@@ -39,6 +41,19 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             PayType = PaymentType.INVOICE;
             return new AdminService.GetOrdersRequest(this);
+        }
+
+        public HostedActionRequest QueryCardOrder()
+        {
+            // should validate this.GetOrderId() existence here
+
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Query(new QueryByTransactionId(
+                    transactionId: this.GetOrderId()
+                    ));
+
+            return preparedHostedAdminRequest;
         }
     }
 }

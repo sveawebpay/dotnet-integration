@@ -42,7 +42,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var testendpoint = "https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc";
             
             var endpoint = testendpoint; //TODO extend this to pick up configured adminservice_endpoint! _builder.GetConfig().GetEndPoint(_builder.PayType);
-            var adminWS = new AdminServiceClient("WcfAdminSoapService");
+            var adminWS = new AdminServiceClient("WcfAdminSoapService", testendpoint + "/secure");
             var response = adminWS.GetOrders(request);
 
             return response;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
@@ -9,7 +10,9 @@ using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.AdminWS;
-
+using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 namespace Webpay.Integration.CSharp.IntegrationTest
 {
     [TestFixture]
@@ -19,7 +22,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
         // .queryInvoiceOrder
         [Test]
-        //[Ignore("target acceptance test for queryInvoiceOrder")]
         public void test_queryOrder_queryInvoiceOrder()
         {
             // create order
@@ -55,7 +57,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         // .queryCardOrder (uses webdriver)
         //@Test
         //public void test_queryOrder_queryCardOrder()
+        [Test]
+        public void test_queryOrder_queryCardOrder()
+        {
+            // create card order
+            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
 
+            // query order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+            ;
+            Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+
+            Assert.That(answer.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
+            Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+        }
         // directbank
         //@Test
         //public void test_queryOrder_queryDirectBankOrder()

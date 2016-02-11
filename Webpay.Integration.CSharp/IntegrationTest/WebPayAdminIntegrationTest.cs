@@ -93,7 +93,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
             var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -107,7 +107,24 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
         }
         // directbank
-        //@Test
-        //public void test_queryOrder_queryDirectBankOrder()
+        [Test]
+        public void test_queryOrder_queryDirectBankOrder()
+        {
+            // create card order
+            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+
+            // query order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+            ;
+            Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
+
+            Assert.That(answer.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
+            Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+        }
     }
 }

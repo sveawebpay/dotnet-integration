@@ -61,5 +61,18 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
             return preparedHostedAdminRequest;
         }
+
+        public HostedActionRequest QueryDirectBankOrder()
+        {
+            // should validate this.GetOrderId() existence here
+
+            var preparedHostedAdminRequest = WebpayAdmin
+                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Query(new QueryByTransactionId(
+                    transactionId: this.GetOrderId()
+                    ));
+
+            return preparedHostedAdminRequest;
+        }
     }
 }

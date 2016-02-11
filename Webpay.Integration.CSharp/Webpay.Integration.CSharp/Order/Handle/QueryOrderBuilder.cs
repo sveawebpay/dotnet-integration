@@ -13,7 +13,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
     public class QueryOrderBuilder : Builder<QueryOrderBuilder>
     {
         private long _orderId;
-        public PaymentType PayType { get; set; }
+        public PaymentType OrderType { get; set; }
 
         public QueryOrderBuilder(IConfigurationProvider config)
         {
@@ -45,13 +45,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public AdminService.GetOrdersRequest QueryInvoiceOrder()
         {
-            PayType = PaymentType.INVOICE;
+            OrderType = PaymentType.INVOICE;
             return new AdminService.GetOrdersRequest(this);
         }
 
         public AdminService.GetOrdersRequest QueryPaymentPlanOrder()
         {
-            PayType = PaymentType.PAYMENTPLAN;
+            OrderType = PaymentType.PAYMENTPLAN;
             return new AdminService.GetOrdersRequest(this);
         }
 

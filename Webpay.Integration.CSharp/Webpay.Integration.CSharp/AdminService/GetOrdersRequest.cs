@@ -19,8 +19,8 @@ namespace Webpay.Integration.CSharp.AdminService
         {
             var auth = new Webpay.Integration.CSharp.AdminWS.Authentication()
             {
-                Password = _builder.GetConfig().GetPassword(_builder.PayType,_builder.GetCountryCode()),
-                Username = _builder.GetConfig().GetUsername(_builder.PayType,_builder.GetCountryCode())                
+                Password = _builder.GetConfig().GetPassword(_builder.OrderType,_builder.GetCountryCode()),
+                Username = _builder.GetConfig().GetUsername(_builder.OrderType,_builder.GetCountryCode())                
             };
 
             var request = new Webpay.Integration.CSharp.AdminWS.GetOrdersRequest()
@@ -32,17 +32,14 @@ namespace Webpay.Integration.CSharp.AdminService
                     {
                         SveaOrderId = _builder.GetOrderId(),
                         OrderType = OrderType.Invoice,
-                        ClientId = _builder.GetConfig().GetClientNumber(_builder.PayType, _builder.GetCountryCode())
+                        ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode())
                     }
                 }
             };
 
             // make request to correct endpoint, return response object
-            var prodendpoint = "https://partnerweb.sveaekonomi.se/WebPayAdminService/AdminService.svc";
-            var testendpoint = "https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc";
-            
-            var endpoint = testendpoint; //TODO extend this to pick up configured adminservice_endpoint! _builder.GetConfig().GetEndPoint(_builder.PayType);
-            var adminWS = new AdminServiceClient("WcfAdminSoapService", testendpoint + "/secure");
+            var endpoint = _builder.GetConfig().GetEndPoint(PaymentType.ADMIN_TYPE);
+            var adminWS = new AdminServiceClient("WcfAdminSoapService", endpoint);
             var response = adminWS.GetOrders(request);
 
             return response;

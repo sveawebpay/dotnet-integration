@@ -1,4 +1,6 @@
-﻿using Webpay.Integration.CSharp.Util.Constant;
+﻿using System.Collections;
+using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Config
 {
@@ -132,7 +134,24 @@ namespace Webpay.Integration.CSharp.Config
 
         public string GetEndPoint(PaymentType type)
         {
-            return type == PaymentType.HOSTED ? SveaConfig.GetTestPayPageUrl() : SveaConfig.GetTestWebserviceUrl();
+            switch (type)
+            {
+                case PaymentType.HOSTED:
+                    return SveaConfig.GetTestPayPageUrl();
+                    break;
+
+                case PaymentType.INVOICE:
+                case PaymentType.PAYMENTPLAN:
+                    return SveaConfig.GetTestWebserviceUrl();
+                    break;
+
+                case PaymentType.ADMIN_TYPE:
+                    return SveaConfig.GetTestAdminServiceUrl();
+                    break;
+
+                default:
+                    throw new SveaWebPayException("Unknown PaymentType");
+            }
         }
         
     }

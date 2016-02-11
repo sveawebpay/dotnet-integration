@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
         // .queryInvoiceOrder
         [Test]
-        [Ignore("target acceptance test for queryInvoiceOrder")]
+        //[Ignore("target acceptance test for queryInvoiceOrder")]
         public void test_queryOrder_queryInvoiceOrder()
         {
             // create order
@@ -38,14 +38,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // query order
-            //Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-            //    .SetOrderId(order.CreateOrderResult.SveaOrderId)
-            //    .SetCountryCode(CountryCode.SE)
-            //;
-            //Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+            ;
+            Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
 
-            ////Assert.IsTrue(answer.Accepted);
-            //Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderNr));
+            //Assert.IsTrue(answer.Accepted);
+            Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
 
         // .queryPaymentPlanOrder

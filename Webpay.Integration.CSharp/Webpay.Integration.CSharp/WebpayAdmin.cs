@@ -36,7 +36,7 @@ namespace Webpay.Integration.CSharp
         /// </summary>
         public static QueryOrderBuilder QueryOrder(IConfigurationProvider configurationProvider)
         {
-            return new QueryOrderBuilder();
+            return new QueryOrderBuilder(configurationProvider);
         }
     }
 }

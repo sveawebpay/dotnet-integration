@@ -5,21 +5,13 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order
 {
-    public abstract class OrderBuilder<T>
+    public abstract class OrderBuilder<T> : Builder<T>
     {
         protected List<OrderRowBuilder> OrderRows = new List<OrderRowBuilder>();
         protected List<InvoiceFeeBuilder> InvoiceFeeRows = new List<InvoiceFeeBuilder>();
         protected List<ShippingFeeBuilder> ShippingFeeRows = new List<ShippingFeeBuilder>();
         protected List<FixedDiscountBuilder> FixedDiscountRows = new List<FixedDiscountBuilder>();
         protected List<RelativeDiscountBuilder> RelativeDiscountRows = new List<RelativeDiscountBuilder>();
-
-        protected IConfigurationProvider Config;
-        protected CountryCode CountryCode;
-
-        public IConfigurationProvider GetConfig()
-        {
-            return Config;
-        }
 
         public List<OrderRowBuilder> GetOrderRows()
         {
@@ -56,20 +48,13 @@ namespace Webpay.Integration.CSharp.Order
             return RelativeDiscountRows;
         }
 
-        public CountryCode GetCountryCode()
-        {
-            return CountryCode;
-        }
-
         public abstract T SetFixedDiscountRows(List<FixedDiscountBuilder> fixedDiscountRows);
 
         public abstract T SetRelativeDiscountRows(List<RelativeDiscountBuilder> relativeDiscountRows);
 
-        public abstract T Run(IBuilderCommand<T> runner);
+        //public abstract T Run(IBuilderCommand<T> runner);
 
         public abstract T AddOrderRow(OrderRowBuilder itemOrderRow);
-
-        public abstract T SetCountryCode(CountryCode countryCode);
 
         public abstract T AddOrderRows(IEnumerable<OrderRowBuilder> itemOrderRow);
 

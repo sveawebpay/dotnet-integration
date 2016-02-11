@@ -95,10 +95,10 @@ namespace Webpay.Integration.CSharp.Order.Create
             return this;
         }
 
-        public override CreateOrderBuilder Run(IBuilderCommand<CreateOrderBuilder> runner)
-        {
-            return runner.Run(this);
-        }
+        //public override CreateOrderBuilder Run(IBuilderCommand<CreateOrderBuilder> runner)
+        //{
+        //    return runner.Run(this);
+        //}
 
         public override CreateOrderBuilder AddOrderRow(OrderRowBuilder itemOrderRow)
         {
@@ -356,9 +356,5 @@ namespace Webpay.Integration.CSharp.Order.Create
             return this;
         }
 
-        public CreateOrderBuilder Run(ICreateBuilderCommand runner)
-        {
-            return runner.Run(this);
-        }
     }
 }

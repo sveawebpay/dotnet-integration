@@ -132,11 +132,6 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public override DeliverOrderBuilder Run(IBuilderCommand<DeliverOrderBuilder> runner)
-        {
-            return runner.Run(this);
-        }
-
         public override DeliverOrderBuilder AddOrderRow(OrderRowBuilder itemOrderRow)
         {
             OrderRows.Add(itemOrderRow);

@@ -81,6 +81,8 @@
     <Compile Include="Hosted\Admin\Actions\QueryByTransactionId.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
+    <Compile Include="Order\Builder.cs" />
+    <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,11 +101,9 @@
     <Compile Include="Hosted\Admin\HostedAdminResponse.cs" />
     <Compile Include="Hosted\Payment\PaymentMethodPayment.cs" />
     <Compile Include="Hosted\Payment\PayPagePayment.cs" />
-    <Compile Include="Order\IBuilderCommand.cs" />
     <Compile Include="Order\Create\CreateOrderBuilder.cs" />
     <Compile Include="Order\Handle\CloseOrderBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderBuilder.cs" />
-    <Compile Include="Order\ICreateBuilderCommand.cs" />
     <Compile Include="Order\Identity\CompanyCustomer.cs" />
     <Compile Include="Order\Identity\Customer.cs" />
     <Compile Include="Order\Identity\IndividualCustomer.cs" />

@@ -46,7 +46,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             ;
             Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
 
-            //Assert.IsTrue(answer.Accepted);
+            Assert.IsTrue(answer.Accepted);
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
 

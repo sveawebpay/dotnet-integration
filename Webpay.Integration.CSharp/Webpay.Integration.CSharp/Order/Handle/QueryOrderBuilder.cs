@@ -43,6 +43,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.GetOrdersRequest(this);
         }
 
+        public AdminService.GetOrdersRequest QueryPaymentPlanOrder()
+        {
+            PayType = PaymentType.PAYMENTPLAN;
+            return new AdminService.GetOrdersRequest(this);
+        }
+
         public HostedActionRequest QueryCardOrder()
         {
             // should validate this.GetOrderId() existence here

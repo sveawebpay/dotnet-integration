@@ -45,7 +45,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                             .ExcludePaymentMethod();
             payPagePayment.IncludePaymentMethod();
 
-            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(23));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(24));
             Assert.That(payPagePayment.GetIncludedPaymentMethod().Count, Is.EqualTo(0));
         }
 
@@ -134,9 +134,10 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                             .UsePayPage()
                                                             .ExcludeCardPaymentMethod();
 
-            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(2));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(3));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[0], Is.EqualTo(PaymentMethod.KORTCERT.Value));
-            Assert.That(payPagePayment.GetExcludedPaymentMethod()[1], Is.EqualTo(PaymentMethod.SKRILL.Value));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod()[1], Is.EqualTo(PaymentMethod.SVEACARDPAY.Value));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod()[2], Is.EqualTo(PaymentMethod.SKRILL.Value));
         }
 
         [Test]
@@ -184,14 +185,15 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                             .UsePayPage()
                                                             .IncludePaymentMethod(includedPaymentMethod);
 
-            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(14));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(15));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[0], Is.EqualTo("SVEAINVOICESE"));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[1], Is.EqualTo("SVEASPLITSE"));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[2], Is.EqualTo("SVEAINVOICEEU_DE"));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[3], Is.EqualTo("SVEASPLITEU_DE"));
             Assert.That(payPagePayment.GetExcludedPaymentMethod()[4], Is.EqualTo("SVEAINVOICEEU_DK"));
-            Assert.That(payPagePayment.GetExcludedPaymentMethod()[12], Is.EqualTo("PAYPAL"));
-            Assert.That(payPagePayment.GetExcludedPaymentMethod()[13], Is.EqualTo("BANKAXESS"));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod()[12], Is.EqualTo("SVEACARDPAY"));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod()[13], Is.EqualTo("PAYPAL"));
+            Assert.That(payPagePayment.GetExcludedPaymentMethod()[14], Is.EqualTo("BANKAXESS"));
         }
 
         [Test]

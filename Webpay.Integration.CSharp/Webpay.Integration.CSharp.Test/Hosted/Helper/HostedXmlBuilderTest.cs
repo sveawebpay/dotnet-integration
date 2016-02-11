@@ -214,10 +214,10 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
 
             const string expectedString = 
                 "<excludepaymentMethods><exclude>BANKAXESS</exclude>" +
-                "<exclude>PAYPAL</exclude><exclude>KORTCERT</exclude" +
-                "><exclude>SKRILL</exclude><exclude>SVEAINVOICESE</exclude>" +
-                "<exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude>" +
-                "<exclude>SVEASPLITEU_SE</exclude>" +
+                "<exclude>PAYPAL</exclude><exclude>KORTCERT</exclude>" +
+                "<exclude>SVEACARDPAY</exclude><exclude>SKRILL</exclude>" +
+                "<exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude>" +
+                "<exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude>" +
                 "<exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude>" +
                 "<exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude>" +
                 "<exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude>" +

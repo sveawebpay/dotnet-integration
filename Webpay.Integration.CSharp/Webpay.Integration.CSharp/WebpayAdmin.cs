@@ -24,14 +24,14 @@ namespace Webpay.Integration.CSharp
         /// ...
         ///  QueryOrderBuilder request = WebPayAdmin.QueryOrder(config)
         ///   .SetOrderId()              // required
-        ///???   .SetTransactionId()        // optional, card or direct bank only, alias for setOrderId
+        ///   .SetTransactionId()        // optional, card or direct bank only, alias for setOrderId
         ///   .SetCountryCode()          // required
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
         ///  response = request.QueryPaymentPlanOrder().DoRequest();     // returns AdminWS.GetOrdersResponse
-        ///???  response = request.QueryCardOrder().DoRequest();            // returns QueryTransactionResponse
-        ///???  response = request.QueryDirectBankOrder().DoRequest();      // returns QueryTransactionResponse
+        ///  response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.HostedAdminResponse
+        ///  response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.HostedAdminResponse
         ///  ...
         /// </summary>
         public static QueryOrderBuilder QueryOrder(IConfigurationProvider configurationProvider)

@@ -117,7 +117,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-                .SetOrderId(payment.TransactionId)
+                .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
             ;
             Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();

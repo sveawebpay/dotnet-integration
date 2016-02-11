@@ -32,7 +32,7 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         public CreateOrderBuilder(IConfigurationProvider config)
         {
-            Config = config;
+            _config = config;
         }
 
         public OrderValidator GetValidator()
@@ -95,11 +95,6 @@ namespace Webpay.Integration.CSharp.Order.Create
             return this;
         }
 
-        //public override CreateOrderBuilder Run(IBuilderCommand<CreateOrderBuilder> runner)
-        //{
-        //    return runner.Run(this);
-        //}
-
         public override CreateOrderBuilder AddOrderRow(OrderRowBuilder itemOrderRow)
         {
             OrderRows.Add(itemOrderRow);
@@ -108,12 +103,12 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         public override CreateOrderBuilder SetCountryCode(CountryCode countryCode)
         {
-            CountryCode = countryCode;
+            _countryCode = countryCode;
             if (CustomerId != null)
             {
                 CustomerId.CountryCode = countryCode.ToString().ToUpper();
 
-                if (CountryCode == CountryCode.SE && CustomerId.CustomerType == CustomerType.Company)
+                if (_countryCode == CountryCode.SE && CustomerId.CustomerType == CustomerType.Company)
                 {
                     CustomerId.NationalIdNumber = CustomerId.CompanyIdentity.CompanyVatNumber ??
                                                   CustomerId.NationalIdNumber;
@@ -283,7 +278,7 @@ namespace Webpay.Integration.CSharp.Order.Create
             CustomerId = customerIdentity;
             if (_hasSetCountryCode)
             {
-                CustomerId.CountryCode = CountryCode.ToString().ToUpper();
+                CustomerId.CountryCode = _countryCode.ToString().ToUpper();
             }
             return this;
         }

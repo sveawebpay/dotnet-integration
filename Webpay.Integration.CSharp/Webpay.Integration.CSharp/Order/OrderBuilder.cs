@@ -52,8 +52,6 @@ namespace Webpay.Integration.CSharp.Order
 
         public abstract T SetRelativeDiscountRows(List<RelativeDiscountBuilder> relativeDiscountRows);
 
-        //public abstract T Run(IBuilderCommand<T> runner);
-
         public abstract T AddOrderRow(OrderRowBuilder itemOrderRow);
 
         public abstract T AddOrderRows(IEnumerable<OrderRowBuilder> itemOrderRow);

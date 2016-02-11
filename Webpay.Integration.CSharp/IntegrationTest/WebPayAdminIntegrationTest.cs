@@ -38,7 +38,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // query order
-            //Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebPayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+            //Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             //    .SetOrderId(order.CreateOrderResult.SveaOrderId)
             //    .SetCountryCode(CountryCode.SE)
             //;

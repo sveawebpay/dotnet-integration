@@ -25,7 +25,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public DeliverOrderBuilder(IConfigurationProvider config)
         {
-            Config = config;
+            _config = config;
             _captureDate = null;
         }
 
@@ -140,7 +140,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public override DeliverOrderBuilder SetCountryCode(CountryCode countryCode)
         {
-            CountryCode = countryCode;
+            _countryCode = countryCode;
             return this;
         }
 
@@ -192,7 +192,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
                 this._captureDate ?? DateTime.Now // if no captureDate given, use today
             );
 
-            var request = new HostedAdmin(this.Config, this.CountryCode);
+            var request = new HostedAdmin(this._config, this._countryCode);
 
             return request.Confirm( action );
         }

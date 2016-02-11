@@ -5,19 +5,18 @@ namespace Webpay.Integration.CSharp.Order
 {
     public abstract class Builder<T>
     {
-        protected IConfigurationProvider Config;
-        protected CountryCode CountryCode;
+        protected IConfigurationProvider _config;
+        protected CountryCode _countryCode;
 
         public IConfigurationProvider GetConfig()
         {
-            return Config;
+            return _config;
         }
 
         public CountryCode GetCountryCode()
         {
-            return CountryCode;
+            return _countryCode;
         }
-
         public abstract T SetCountryCode(CountryCode countryCode);
     }
 }

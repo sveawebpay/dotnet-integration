@@ -4,7 +4,7 @@ namespace Webpay.Integration.CSharp.AdminWS
 {
 
 
-    public partial class GetOrdersResponse : BasicResponse
+    public partial class BasicResponse
     {
         public bool Accepted { get; set; }
 

@@ -18,6 +18,22 @@ namespace Webpay.Integration.CSharp.IntegrationTest
     [TestFixture]
     public class WebpayAdminIntegrationTest
     {
+        private static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRows()
+        {
+            CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency);
+            Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            Assert.IsTrue(order.Accepted);
+            return order;
+        }
 
         /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
         // .queryInvoiceOrder
@@ -25,8 +41,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void test_queryOrder_queryInvoiceOrder()
         {
             // create order
-            Webpay.Integration.CSharp.Order.Create.CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.WebpayConnection.CreateOrder(
-                SveaConfig.GetDefaultConfig())
+            Webpay.Integration.CSharp.Order.Create.CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 .AddCustomerDetails(Item.IndividualCustomer()
@@ -40,7 +56,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
             ;
@@ -54,12 +71,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         [Test]
         public void test_queryOrder_queryPaymentPlanOrder()
         {
+            // get campaigns
             var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .DoRequest();
 
-            Webpay.Integration.CSharp.Order.Create.CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp
-                .WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            // create order
+            Webpay.Integration.CSharp.Order.Create.CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                 .AddCustomerDetails(Item.IndividualCustomer()
                     .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -73,20 +92,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp
-                .WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 ;
             Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
 
-            //Assert.IsTrue(answer.Accepted);
+            Assert.IsTrue(answer.Accepted);
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
         
         // .queryCardOrder
-        //@Test
-        //public void test_queryOrder_queryCardOrder()
         [Test]
         public void test_queryOrder_queryCardOrder()
         {
@@ -96,7 +113,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
 
             // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
             ;
@@ -106,7 +124,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
             Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
         }
-        // directbank
+        // .queryDirectBankOrder
         [Test]
         public void test_queryOrder_queryDirectBankOrder()
         {
@@ -116,7 +134,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
 
             // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
             ;
@@ -126,5 +145,58 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
             Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
         }
-    }
+
+
+        // / WebPayAdmin.deliverOrderRows()
+        // ---------------------------------------------------------------------------------
+        // .deliverInvoiceOrderRows
+        [Test]
+        public void test_deliverOrderRows_deliverInvoiceOrderRows()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver first order row and assert the response
+            Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
+                WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.getOrderId())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetInvoiceDistributionType(InvoiceDistributionType.Post)
+                .SetRowToDeliver(1)
+                ;
+
+            Webpay.Integration.CSharp.WebpayWS.DeliveryResponse delivery = builder.DeliverInvoiceOrderRows().doRequest();
+            Assert.IsTrue(delivery.Accepted);
+        }
+
+        //// .deliverCardOrderRows (uses webdriver)
+        //@Test
+        //public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
+        //{
+
+        //    HostedPaymentResponse order = TestingTool
+        //            .createCardTestOrder("test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows");
+        //    assertTrue(order.isOrderAccepted());
+
+        //    QueryOrderBuilder queryOrderBuilder = WebPayAdmin
+        //            .queryOrder(SveaConfig.getDefaultConfig())
+        //            .setTransactionId(order.getTransactionId())
+        //            .setCountryCode(COUNTRYCODE.SE);
+        //    QueryTransactionResponse queryResponse = queryOrderBuilder
+        //            .queryCardOrder().doRequest();
+        //    assertTrue(queryResponse.isOrderAccepted());
+        //    assertEquals((Integer)1, queryResponse.getNumberedOrderRows().get(0)
+        //            .getRowNumber());
+
+        //    DeliverOrderRowsBuilder deliverRequest = WebPayAdmin
+        //            .deliverOrderRows(SveaConfig.getDefaultConfig())
+        //            .setTransactionId(queryResponse.getTransactionId())
+        //            .setCountryCode(COUNTRYCODE.SE).setRowToDeliver(1)
+        //            .addNumberedOrderRows(queryResponse.getNumberedOrderRows());
+        //    ConfirmTransactionResponse response = deliverRequest
+        //            .deliverCardOrderRows().doRequest();
+        //    assertTrue(response.isOrderAccepted());
+        //}
+
 }
+    }

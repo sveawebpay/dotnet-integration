@@ -23,9 +23,9 @@ namespace Webpay.Integration.CSharp
         /// <summary>
         /// ...
         ///  QueryOrderBuilder request = WebPayAdmin.QueryOrder(config)
-        ///   .SetOrderId()              // required
-        ///   .SetTransactionId()        // optional, card or direct bank only, alias for setOrderId
-        ///   .SetCountryCode()          // required
+        ///   .SetOrderId()                 // required
+        ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        ///   .SetCountryCode()             // required
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
@@ -37,6 +37,26 @@ namespace Webpay.Integration.CSharp
         public static QueryOrderBuilder QueryOrder(IConfigurationProvider configurationProvider)
         {
             return new QueryOrderBuilder(configurationProvider);
+        }
+
+        /// <summary>
+        /// ...
+        ///  DeliverOrderRowsBuilder request = WebPayAdmin.DeliverOrderRows(config)
+        ///   .SetOrderId()                 // required
+        ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        ///   .SetCountryCode()             // required
+        ///   .SetInvoiceDistributionType() // required, invoice only
+        ///   .SetRowToDeliver()            // required, index of original order rows you wish to deliver
+        ///   .AddNumberedOrderRow()        // required for card orders, should match original row indexes
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///???  response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
+        ///???  response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.HostedAdminResponse
+        ///  ...
+        /// </summary>
+        public static DeliverOrderRowsBuilder DeliverOrderRows(IConfigurationProvider configurationProvider)
+        {
+            return new DeliverOrderRowsBuilder(configurationProvider);
         }
     }
 }

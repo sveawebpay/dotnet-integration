@@ -13,6 +13,7 @@ using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
+
 namespace Webpay.Integration.CSharp.IntegrationTest
 {
     [TestFixture]
@@ -151,7 +152,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         // ---------------------------------------------------------------------------------
         // .deliverInvoiceOrderRows
         [Test]
-        public void test_deliverOrderRows_deliverInvoiceOrderRows()
+        public void test_deliverOrderRows_deliverInvoiceOrderRows_with_setRowToDeliver()
         {
             // create order
             var order = CreateInvoiceOrderWithTwoOrderRows();
@@ -159,13 +160,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // deliver first order row and assert the response
             Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
                 WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
-                .SetOrderId(order.getOrderId())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetInvoiceDistributionType(InvoiceDistributionType.Post)
+                .SetInvoiceDistributionType(DistributionType.POST)   // TODO harmonise InvoiceDistributionType w/AdminWS?!
                 .SetRowToDeliver(1)
                 ;
 
-            Webpay.Integration.CSharp.WebpayWS.DeliveryResponse delivery = builder.DeliverInvoiceOrderRows().doRequest();
+            Webpay.Integration.CSharp.AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrderRows().DoRequest();
             Assert.IsTrue(delivery.Accepted);
         }
 

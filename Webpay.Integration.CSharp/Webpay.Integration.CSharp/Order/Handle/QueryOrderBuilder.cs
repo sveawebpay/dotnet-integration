@@ -15,9 +15,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
         private long _orderId;
         public PaymentType OrderType { get; set; }
 
-        public QueryOrderBuilder(IConfigurationProvider config)
+        public QueryOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            _config = config;
+            // intentionally left blank
         }
 
         public QueryOrderBuilder SetOrderId(long orderId)

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
+    <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
+    <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -133,7 +135,7 @@
     </Compile>
     <Compile Include="Util\Constant\CountryCode.cs" />
     <Compile Include="Util\Constant\Currency.cs" />
-    <Compile Include="Util\Constant\InvoiceDistributionType.cs" />
+    <Compile Include="Util\Constant\DistributionType.cs" />
     <Compile Include="Util\Constant\InvoiceType.cs" />
     <Compile Include="Util\Constant\LanguageCode.cs" />
     <Compile Include="Util\Constant\OrderType.cs" />

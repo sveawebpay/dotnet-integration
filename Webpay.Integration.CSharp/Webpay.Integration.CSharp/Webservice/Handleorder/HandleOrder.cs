@@ -96,9 +96,9 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
         }
 
         private static InvoiceDistributionType ConvertInvoiceDistributionType(
-            Util.Constant.InvoiceDistributionType getInvoiceDistributionType)
+            Util.Constant.DistributionType getDistributionType)
         {
-            return getInvoiceDistributionType == Util.Constant.InvoiceDistributionType.EMAIL
+            return getDistributionType == Util.Constant.DistributionType.EMAIL
                        ? InvoiceDistributionType.Email
                        : InvoiceDistributionType.Post;
         }

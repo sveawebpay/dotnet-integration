@@ -1,6 +1,6 @@
 ﻿namespace Webpay.Integration.CSharp.Util.Constant
 {
-    public enum InvoiceDistributionType
+    public enum DistributionType
     {
         NONE = 0,
         POST = 1,

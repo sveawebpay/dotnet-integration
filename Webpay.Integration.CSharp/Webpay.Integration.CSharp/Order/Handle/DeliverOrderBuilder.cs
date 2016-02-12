@@ -18,14 +18,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         private long _orderId;
         private OrderType _orderType = OrderType.NONE;
-        private InvoiceDistributionType _distributionType;
+        private DistributionType _distributionType;
         private long? _invoiceIdToCredit;
         private int _numberOfCreditDays;
         private DateTime? _captureDate;
 
-        public DeliverOrderBuilder(IConfigurationProvider config)
+        public DeliverOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            _config = config;
             _captureDate = null;
         }
 
@@ -61,12 +60,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
             _orderType = orderType;
         }
 
-        public InvoiceDistributionType GetInvoiceDistributionType()
+        public DistributionType GetInvoiceDistributionType()
         {
             return _distributionType;
         }
 
-        public DeliverOrderBuilder SetInvoiceDistributionType(InvoiceDistributionType type)
+        public DeliverOrderBuilder SetInvoiceDistributionType(DistributionType type)
         {
             _distributionType = type;
             return this;

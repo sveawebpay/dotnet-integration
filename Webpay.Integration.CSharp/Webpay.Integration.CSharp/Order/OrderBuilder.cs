@@ -13,6 +13,11 @@ namespace Webpay.Integration.CSharp.Order
         protected List<FixedDiscountBuilder> FixedDiscountRows = new List<FixedDiscountBuilder>();
         protected List<RelativeDiscountBuilder> RelativeDiscountRows = new List<RelativeDiscountBuilder>();
 
+        protected OrderBuilder(IConfigurationProvider config) : base(config)
+        {
+            // intentionally left blank
+        }
+
         public List<OrderRowBuilder> GetOrderRows()
         {
             return OrderRows;

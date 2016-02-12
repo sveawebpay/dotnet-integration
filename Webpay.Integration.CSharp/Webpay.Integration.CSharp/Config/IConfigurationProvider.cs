@@ -53,7 +53,7 @@ namespace Webpay.Integration.CSharp.Config
         /// <summary>
         /// Constants for the end point url found in the class SveaConfig
         /// </summary>
-        /// <param name="type"> eg. HOSTED, INVOICE or PAYMENTPLAN</param>
+        /// <param name="type"> eg. HOSTED, INVOICE, PAYMENTPLAN or ADMIN_TYPE</param>
         /// <returns>end point url</returns>
         string GetEndPoint(PaymentType type);
 

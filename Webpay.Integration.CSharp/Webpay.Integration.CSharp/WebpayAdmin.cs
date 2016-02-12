@@ -1,5 +1,6 @@
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp
@@ -17,6 +18,25 @@ namespace Webpay.Integration.CSharp
         public static HostedAdmin Hosted(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {
             return new HostedAdmin(configurationProvider, countryCode);
+        }
+
+        /// <summary>
+        /// ...
+        ///  QueryOrderBuilder request = WebPayAdmin.QueryOrder(config)
+        ///   .SetOrderId()              // required
+        ///   .SetTransactionId()        // optional, card or direct bank only, alias for setOrderId
+        ///   .SetCountryCode()          // required
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
+        ///  response = request.QueryPaymentPlanOrder().DoRequest();     // returns AdminWS.GetOrdersResponse
+        ///  response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.HostedAdminResponse
+        ///  response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.HostedAdminResponse
+        ///  ...
+        /// </summary>
+        public static QueryOrderBuilder QueryOrder(IConfigurationProvider configurationProvider)
+        {
+            return new QueryOrderBuilder(configurationProvider);
         }
     }
 }

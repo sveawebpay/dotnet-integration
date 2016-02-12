@@ -753,7 +753,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 );
         }
 
-        private static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
+        internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
@@ -768,7 +768,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .PreparePayment("127.0.0.1");
         }
 
-        private static string CreateCustomerRefNo()
+        internal static string CreateCustomerRefNo()
         {
             return "1" + Guid.NewGuid().ToString().Replace("-", "");
         }
@@ -789,7 +789,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .PreparePayment("127.0.0.1");
         }
 
-        private PaymentResponse MakePreparedPayment(Uri preparePayment)
+        internal static PaymentResponse MakePreparedPayment(Uri preparePayment)
         {
             var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
             webRequest.AllowAutoRedirect = false;

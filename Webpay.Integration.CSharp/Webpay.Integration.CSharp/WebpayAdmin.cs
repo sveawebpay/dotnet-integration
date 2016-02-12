@@ -45,7 +45,7 @@ namespace Webpay.Integration.CSharp
         ///   .SetOrderId()                 // required
         ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
         ///   .SetCountryCode()             // required
-        ///   .SetInvoiceDistributionType() // required, invoice only
+        ///   .SetInvoiceDistributionType() // required for invoice only
         ///   .SetRowToDeliver()            // required, index of original order rows you wish to deliver
         ///   .AddNumberedOrderRow()        // required for card orders, should match original row indexes
         ///  ;

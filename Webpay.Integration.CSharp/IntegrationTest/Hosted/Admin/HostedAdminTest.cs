@@ -756,7 +756,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetClientOrderNumber(createCustomerRefNo)

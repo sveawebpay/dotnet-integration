@@ -86,12 +86,14 @@
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
+    <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\AdminWS\BasicResponse.cs" />
+    <Compile Include="Util\Constant\OrderRowStatus.cs" />
     <Compile Include="WebpayAdmin.cs" />
     <Compile Include="Hosted\Helper\ExcludePayments.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatter.cs" />

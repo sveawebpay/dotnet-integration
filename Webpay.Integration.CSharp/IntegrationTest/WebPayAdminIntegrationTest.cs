@@ -125,14 +125,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
-            Assert.That(answer.Transaction.OrderRows.First().Id, Is.Not.Null);                        
-            Assert.That(answer.Transaction.OrderRows.First().Name, Is.EqualTo("Prod"));                     //SetName
-            Assert.That(answer.Transaction.OrderRows.First().Amount, Is.EqualTo(125M));
-            Assert.That(answer.Transaction.OrderRows.First().Vat, Is.EqualTo(25M));
-            Assert.That(answer.Transaction.OrderRows.First().Description, Is.EqualTo("Specification"));     //SetDescription
-            Assert.That(answer.Transaction.OrderRows.First().Quantity, Is.EqualTo(2));                      //SetQuantity
-            Assert.That(answer.Transaction.OrderRows.First().Sku, Is.EqualTo("1"));                         //SetArticleNumber
-            Assert.That(answer.Transaction.OrderRows.First().Unit, Is.EqualTo("st"));                       //SetUnit
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetName(), Is.EqualTo("Prod"));                     //SetName
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetAmountExVat(), Is.EqualTo(100M));
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetVatPercent(), Is.EqualTo(25));
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetAmountIncVat(), Is.EqualTo(125M));
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetDescription(), Is.EqualTo("Specification"));     //SetDescription
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetQuantity(), Is.EqualTo(2));                      //SetQuantity
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetArticleNumber(), Is.EqualTo("1"));               //SetArticleNumber
+            Assert.That(answer.Transaction.NumberedOrderRows.First().GetUnit(), Is.EqualTo("st"));                       //SetUnit
         }
 
         // .queryDirectBankOrder

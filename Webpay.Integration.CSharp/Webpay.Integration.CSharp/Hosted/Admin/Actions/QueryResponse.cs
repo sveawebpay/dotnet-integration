@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using Webpay.Integration.CSharp.AdminWS;
+using Webpay.Integration.CSharp.Order.Row;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
@@ -59,6 +61,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                     );
 
                 var enumerator = response.SelectNodes("/response/transaction/orderrows/row").GetEnumerator();
+                var rowNumber = 1;
                 while (enumerator.MoveNext())
                 {
                     var xmlNode = (XmlNode)enumerator.Current;
@@ -73,6 +76,29 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                         TextString(xmlNode, "./sku"),
                         TextString(xmlNode, "./unit")
                         ));
+
+                    Decimal row_amount = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value);
+                    Decimal row_vat = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./vat")) ?? 0M;
+                    Decimal row_amountExVat = (row_amount - row_vat);
+                    Decimal row_vatPercent = (row_vat / (row_amountExVat)) *100;
+
+                    var numberedOrderRow = new NumberedOrderRowBuilder()
+                        .SetRowNumber( rowNumber++ )
+                        .SetCreditInvoiceId(null)
+                        .SetInvoiceId(null)
+                        .SetStatus(null)
+                        .SetArticleNumber(TextString(xmlNode, "./sku"))
+                        .SetName(TextString(xmlNode, "./name"))
+                        .SetDescription(TextString(xmlNode, "./description"))
+                        .SetAmountExVat(row_amountExVat)
+                        .SetAmountIncVat(row_amount)
+                        .SetVatPercent(row_vatPercent)
+                        .SetQuantity(TextDecimal(xmlNode, "./quantity").GetValueOrDefault(1))
+                        .SetUnit(TextString(xmlNode, "./unit"))
+                        .SetVatDiscount(0)
+                        .SetDiscountPercent(0)
+                    ;
+                    Transaction.NumberedOrderRows.Add(numberedOrderRow);
                 }
 
             }
@@ -106,7 +132,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string ChName;
         public readonly string AuthCode;
 
-        public readonly IList<TransactionOrderRow> OrderRows;
+        public readonly IList<TransactionOrderRow> OrderRows; // TODO set to private
+        public readonly IList<NumberedOrderRowBuilder> NumberedOrderRows; 
 
         public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string callbackUrl, string subscriptionId, string subscriptionType, string eci, string mdStatus, string expiryYear, string expiryMonth, string chName, string authCode, TransactionCustomer customer)
         {
@@ -136,6 +163,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             AuthCode = authCode;
 
             OrderRows = new List<TransactionOrderRow>();
+            NumberedOrderRows = new List<NumberedOrderRowBuilder>();
         }
 
 
@@ -204,6 +232,4 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string HouseNumber;
         public readonly string CompanyName;
     }
-
-
 }

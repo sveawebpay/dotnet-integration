@@ -27,18 +27,41 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public T DoRequest<T>()
         {
-            if( typeof(T) == typeof(QueryResponse) )
+            //Annul
+            if (typeof(T) == typeof(AnnulResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(Annul.Response);
+            }
+            //CancelRecurSubscription
+            //Confirm
+            if (typeof(T) == typeof(ConfirmResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(Confirm.Response);
+            }
+            //GetPaymentMethods
+            //GetReconciliationReport
+            //LowerAmount
+            //Query
+            if ( typeof(T) == typeof(QueryResponse) )
             {
                 var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
                 return (T) (object) hostedAdminResponse.To(Query.Response);
             }
-
-            if (typeof(T) == typeof(QueryResponse))
+            //Recur
+            if (typeof(T) == typeof(RecurResponse))
             {
                 var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-                return (T)(object)hostedAdminResponse.To(Query.Response);
+                return (T)(object)hostedAdminResponse.To(Recur.Response);
             }
-
+            //Raw HostedAdminResponse
+            if (typeof(T) == typeof(HostedAdminResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse;
+            }
+            //default catch-all
             throw new SveaWebPayException("unknown request type");
         }
 

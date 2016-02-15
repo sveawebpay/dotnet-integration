@@ -121,35 +121,45 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            //Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
 
-            // TODO Assert.IsTrue(answer.Accepted);
-            var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
-            Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+            Assert.IsTrue(answer.Accepted);
+            //var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
+            //Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+            Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
+            Assert.That(answer.Transaction.OrderRows.First().Id, Is.Not.Null);                        
+            Assert.That(answer.Transaction.OrderRows.First().Name, Is.EqualTo("Prod"));                     //SetName
+            Assert.That(answer.Transaction.OrderRows.First().Amount, Is.EqualTo(125M));
+            Assert.That(answer.Transaction.OrderRows.First().Vat, Is.EqualTo(25M));
+            Assert.That(answer.Transaction.OrderRows.First().Description, Is.EqualTo("Specification"));     //SetDescription
+            Assert.That(answer.Transaction.OrderRows.First().Quantity, Is.EqualTo(2));                      //SetQuantity
+            Assert.That(answer.Transaction.OrderRows.First().Sku, Is.EqualTo("1"));                         //SetArticleNumber
+            Assert.That(answer.Transaction.OrderRows.First().Unit, Is.EqualTo("st"));                       //SetUnit
         }
 
         // .queryDirectBankOrder
-        [Test]
-        public void test_queryOrder_queryDirectBankOrder()
-        {
-            // create card order
-            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+        //[Test]
+        //public void test_queryOrder_queryDirectBankOrder()
+        //{
+        //    // create card order
+        //    // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+        //    var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+        //    var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
 
-            // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
-                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-                .SetTransactionId(payment.TransactionId)
-                .SetCountryCode(CountryCode.SE)
-                ;
-            Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
+        //    // query order
+        //    Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+        //        WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+        //        .SetTransactionId(payment.TransactionId)
+        //        .SetCountryCode(CountryCode.SE)
+        //        ;
+        //    Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
 
-           // TODO  Assert.IsTrue(answer.Accepted);
-            var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
-            Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+        //    // TODO  Assert.IsTrue(answer.Accepted);
+        //    var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
+        //    Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
 
-        }
+        //}
 
 
         // / WebPayAdmin.deliverOrderRows()
@@ -173,40 +183,40 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(delivery.Accepted);
         }
 
-        // .deliverCardOrderRows
-        [Test, Ignore]
-        public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
-        {
-            // create card order
-            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY,customerRefNo));
+        //// .deliverCardOrderRows
+        //[Test, Ignore]
+        //public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
+        //{
+        //    // create card order
+        //    // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+        //    var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+        //    var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY,customerRefNo));
 
-            // query order
-            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
-                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-                .SetTransactionId(payment.TransactionId)
-                .SetCountryCode(CountryCode.SE)
-                ;
-            Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-            // TODO Assert.IsTrue(answer.Accepted);
-            var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
-            Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+        //    // query order
+        //    Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+        //        WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+        //        .SetTransactionId(payment.TransactionId)
+        //        .SetCountryCode(CountryCode.SE)
+        //        ;
+        //    Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
+        //    // TODO Assert.IsTrue(answer.Accepted);
+        //    var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
+        //    Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
 
-            // deliver all order rows
-            Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
-                WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
-                .SetTransactionId(Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value))
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetRowToDeliver(1)
-                .SetRowToDeliver(2)
-                // TODO .AddNumberedOrderRows(answer.GetNumberedOrderRows())
-                ;
+        //    // deliver all order rows
+        //    Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
+        //        WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+        //        .SetTransactionId(Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value))
+        //        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+        //        .SetRowToDeliver(1)
+        //        .SetRowToDeliver(2)
+        //        // TODO .AddNumberedOrderRows(answer.GetNumberedOrderRows())
+        //        ;
 
-            // TODO Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse delivery = builder.DeliverCardOrder().DoRequest();
-            // TODO Assert.IsTrue(delivery.Accepted);
-            // check that amount is correct for entire order
-        }
+        //    // TODO Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse delivery = builder.DeliverCardOrder().DoRequest();
+        //    // TODO Assert.IsTrue(delivery.Accepted);
+        //    // check that amount is correct for entire order
+        //}
 
         //public void test_deliverOrderRows_deliverCardOrderRows_deliver_first_of_two_rows()
         // check that amount is correct for entire order

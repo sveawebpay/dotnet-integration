@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Webpay.Integration.CSharp;
+using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
@@ -55,17 +56,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.GetOrdersRequest(this);
         }
 
-        public HostedActionRequest QueryCardOrder()
+        public QueryTransactionRequest QueryCardOrder()
         {
-            // should validate this.GetOrderId() existence here
-
-            var hostedActionRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-                .Query(new QueryByTransactionId(
-                    transactionId: this.GetOrderId()
-                    ));
-
-            return hostedActionRequest;
+            return new AdminService.QueryTransactionRequest(this);
         }
 
         public HostedActionRequest QueryDirectBankOrder()

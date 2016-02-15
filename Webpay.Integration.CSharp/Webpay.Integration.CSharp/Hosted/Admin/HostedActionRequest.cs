@@ -1,4 +1,8 @@
+using System.CodeDom;
+using System.Collections;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
@@ -21,9 +25,21 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             ServicePath = servicePath;
         }
 
-        public HostedAdminResponse DoRequest()
+        public T DoRequest<T>()
         {
-            return HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+            if( typeof(T) == typeof(QueryResponse) )
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T) (object) hostedAdminResponse.To(Query.Response);
+            }
+
+            if (typeof(T) == typeof(QueryResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(Query.Response);
+            }
+
+            throw new SveaWebPayException("unknown request type");
         }
 
         private string GetEndPointBase()

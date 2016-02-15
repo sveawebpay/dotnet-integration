@@ -25,6 +25,5 @@ namespace Webpay.Integration.CSharp.AdminService
 
             return hostedActionRequest.DoRequest<QueryResponse>();
         }
-
     }
 }

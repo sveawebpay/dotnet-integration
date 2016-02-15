@@ -30,8 +30,8 @@ namespace Webpay.Integration.CSharp
         ///  // then select the corresponding request class and send request
         ///  response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
         ///  response = request.QueryPaymentPlanOrder().DoRequest();     // returns AdminWS.GetOrdersResponse
-        ///  response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.HostedAdminResponse
-        ///  response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.HostedAdminResponse
+        ///  response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.Actions.QueryResponse
+        ///  response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.Actions.QueryResponse
         ///  ...
         /// </summary>
         public static QueryOrderBuilder QueryOrder(IConfigurationProvider configurationProvider)
@@ -50,8 +50,8 @@ namespace Webpay.Integration.CSharp
         ///   .AddNumberedOrderRow()        // required for card orders, should match original row indexes
         ///  ;
         ///  // then select the corresponding request class and send request
-        ///???  response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
-        ///???  response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.HostedAdminResponse
+        ///  response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
+        ///???  response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.Actions.ConfirmResponse
         ///  ...
         /// </summary>
         public static DeliverOrderRowsBuilder DeliverOrderRows(IConfigurationProvider configurationProvider)

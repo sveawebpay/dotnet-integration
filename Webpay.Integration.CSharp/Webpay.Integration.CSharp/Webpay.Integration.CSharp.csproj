@@ -85,6 +85,7 @@
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
+    <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="WebpayConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AdminService\GetOrdersRequest.cs" />
+    <Compile Include="AdminService\CancelOrderRequest.cs" />
     <Compile Include="Webservice\Getaddresses\GetAddresses.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\GetPaymentPlanParams.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\PaymentPlanPricePerMonth.cs" />

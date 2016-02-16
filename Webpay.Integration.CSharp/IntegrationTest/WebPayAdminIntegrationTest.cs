@@ -179,7 +179,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(delivery.Accepted);
         }
 
-        //// .deliverCardOrderRows
+        // .deliverCardOrderRows
         [Test]
         public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
         {
@@ -197,11 +197,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M));    //r1, r2: 100.00ex@25*2 => 500.00
 
             // deliver all order rows
             Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
                 WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
-                .SetTransactionId(answer.TransactionId)
+                .SetTransactionId((long)answer.TransactionId) // we've checked that answer was accepted, i.e. transactionId exists
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetRowToDeliver(1)
                 .SetRowToDeliver(2)
@@ -210,10 +211,60 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             Webpay.Integration.CSharp.Hosted.Admin.Actions.ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
             Assert.IsTrue(delivery.Accepted);
-            // TODO check that amount is correct for entire order
+
+            // query updated order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M));   //r1, r2: 100.00ex@25*2 => 500.00
         }
 
         //public void test_deliverOrderRows_deliverCardOrderRows_deliver_first_of_two_rows()
-        // check that amount is correct for entire order
+        [Test]
+        public void test_deliverOrderRows_deliverCardOrderRows_deliver_first_of_two_rows()
+        {
+            // create card order
+            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
+
+            // query order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M));    //r1, r2: 100.00ex@25*2 => 500.00
+
+            // deliver all order rows
+            Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
+                WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetTransactionId((long)answer.TransactionId)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetRowToDeliver(1)
+                .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
+                ;
+
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
+            Assert.IsTrue(delivery.Accepted);
+
+            // query updated order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00));   //r1, 100.00ex@25*2 => 500.00
+        }
     }
 }

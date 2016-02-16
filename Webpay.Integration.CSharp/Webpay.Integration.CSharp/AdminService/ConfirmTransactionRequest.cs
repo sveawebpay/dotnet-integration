@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Xml;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Handle;
@@ -22,27 +24,45 @@ namespace Webpay.Integration.CSharp.AdminService
 
             // calculate original order rows total, incvat row sum over numberedOrderRows
             var originalOrderTotal = 0M;
-            foreach(NumberedOrderRowBuilder OriginalRow in _builder._numberedOrderRows)
+            foreach(NumberedOrderRowBuilder originalRow in _builder._numberedOrderRows)
             {
-                originalOrderTotal += OriginalRow.GetAmountExVat()??0 * (1 + OriginalRow.GetVatPercent()??0/100M)* OriginalRow.GetQuantity();
+
+                originalOrderTotal += (originalRow.GetAmountExVat()??0) * (1 + (originalRow.GetVatPercent()??0) / 100M) * originalRow.GetQuantity();
             }
 
             // calculate delivered order rows total, incvat row sum over deliveredOrderRows
-        	var deliveredOrderTotal = 0M;
+            var deliveredOrderTotal = 0M;
             foreach (int rowIndex in _builder._rowIndexesToDeliver)
             {
                 var deliveredRow = _builder._numberedOrderRows[(rowIndex - 1)]; // -1 as NumberedOrderRows is one-indexed
-                deliveredOrderTotal += deliveredRow.GetAmountExVat()??0 * (1+deliveredRow.GetVatPercent()??0/100M) * deliveredRow.GetQuantity();
+                deliveredOrderTotal += (deliveredRow.GetAmountExVat()??0) * (1 + (deliveredRow.GetVatPercent()??0) / 100M) * deliveredRow.GetQuantity();
             }
 
             var amountToLowerOrderBy = originalOrderTotal - deliveredOrderTotal;
 
             if (amountToLowerOrderBy > 0M)
             {
-                // first lower, then confirm!
-                throw new NotImplementedException();
-            }
+                // first loweramount, then confirm!
+                var lowerAmountRequest = WebpayAdmin
+                    .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                    .LowerAmount(new LowerAmount(
+                        transactionId: _builder.GetOrderId(),
+                        amountToLower: Decimal.ToInt64(amountToLowerOrderBy *100)    // centessimal
+                        ));
 
+                var lowerAmountResponse = lowerAmountRequest.DoRequest<LowerAmountResponse>();
+
+                // if error lowering amount, return a dummy ConfirmRespose response w/status code 100 INTERNAL_ERROR
+                if (!lowerAmountResponse.Accepted)
+                {
+                    var dummyInternalErrorResponseXml = new XmlDocument();
+                    dummyInternalErrorResponseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <statuscode>100</statuscode>
+                        </response>");
+                    return Confirm.Response(dummyInternalErrorResponseXml);
+                }
+            }
             var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(

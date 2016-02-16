@@ -43,6 +43,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             //GetPaymentMethods
             //GetReconciliationReport
             //LowerAmount
+            if (typeof(T) == typeof(LowerAmountResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(LowerAmount.Response);
+            }
             //Query
             if ( typeof(T) == typeof(QueryResponse) )
             {

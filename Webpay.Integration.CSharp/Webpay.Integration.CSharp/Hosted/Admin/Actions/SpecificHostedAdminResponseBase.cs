@@ -21,7 +21,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public bool Accepted { get; private set; }
         public string ErrorMessage { get; private set; }
 
-        protected static long AttributeLong(XmlNode response, string element, string attribute)
+        protected static long? AttributeLong(XmlNode response, string element, string attribute)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             }
             catch (System.Exception)
             {
-                throw new SveaWebPayException("Unable to convert attribute to long.");
+                return null;
             }
         }
 

@@ -40,5 +40,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
             OrderType = PaymentType.INVOICE;
             return new AdminService.CancelOrderRequest(this);
         }
+
+        public AdminService.CancelOrderRequest CancelPaymentPlanOrder()
+        {
+            OrderType = PaymentType.PAYMENTPLAN;
+            return new AdminService.CancelOrderRequest(this);
+        }
     }
 }

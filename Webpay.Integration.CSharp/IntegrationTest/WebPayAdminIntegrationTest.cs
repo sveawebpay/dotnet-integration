@@ -285,8 +285,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var order = CreateInvoiceOrderWithTwoOrderRows();
             Assert.IsTrue(order.Accepted);
 
-            //Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-
             // do cancelOrder request and assert the response
             CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId) 
@@ -297,8 +295,37 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         // .cancelPaymentPlanOrder
-        //public void test_cancelOrder_cancelPaymentPlanOrder()
+        [Test]
+        public void test_cancelOrder_cancelPaymentPlanOrder()
+        {
+            // get campaigns
+            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .DoRequest();
 
+            // create order
+            Webpay.Integration.CSharp.Order.Create.CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.
+                WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            Webpay.Integration.CSharp.WebpayWS.CreateOrderEuResponse order =
+                createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            Assert.IsTrue(order.Accepted);
+
+            // do cancelOrder request and assert the response
+            CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+            ;
+            AdminWS.CancelOrderResponse cancellation = cancelOrderBuilder.CancelPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(cancellation.Accepted);
+        }
         // .cancelCardOrder (uses webdriver)
         //public void test_cancelOrder_cancelCardOrder()
     }

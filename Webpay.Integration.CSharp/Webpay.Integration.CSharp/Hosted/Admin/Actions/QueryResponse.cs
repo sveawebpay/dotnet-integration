@@ -60,7 +60,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                     );
 
                 var enumerator = response.SelectNodes("/response/transaction/orderrows/row").GetEnumerator();
-                var rowNumber = 1;
+                var rowNumber = 1;  // NumberedOrderRows are 1-indexed
                 while (enumerator.MoveNext())
                 {
                     var xmlNode = (XmlNode)enumerator.Current;

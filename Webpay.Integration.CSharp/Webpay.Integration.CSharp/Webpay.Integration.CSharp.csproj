@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="AdminService\QueryTransactionRequest.cs" />

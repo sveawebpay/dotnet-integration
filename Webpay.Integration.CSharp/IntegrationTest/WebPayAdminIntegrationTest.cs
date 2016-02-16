@@ -180,7 +180,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         //// .deliverCardOrderRows
-        [Test, Ignore]
+        [Test]
         public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
         {
             // create card order

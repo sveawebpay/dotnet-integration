@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -15,9 +16,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal List<long> _rowIndexesToDeliver { get; set; }
         internal List<NumberedOrderRowBuilder> _numberedOrderRows { get; set; }
 
+        internal DateTime? _captureDate;
 
         public DeliverOrderRowsBuilder(IConfigurationProvider config) : base(config)
-        {            
+        {
+            this._captureDate = null;
             this._rowIndexesToDeliver = new List<long>();
             this._numberedOrderRows = new List<NumberedOrderRowBuilder>();
         }
@@ -68,6 +71,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             this._numberedOrderRows.AddRange(numberedOrderRows);
             return this;
+        }
+
+        public AdminService.ConfirmTransactionRequest DeliverCardOrderRows()
+        {
+            return new AdminService.ConfirmTransactionRequest(this);
         }
     }
 }

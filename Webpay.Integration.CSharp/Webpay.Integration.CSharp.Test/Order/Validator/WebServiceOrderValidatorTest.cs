@@ -7,7 +7,6 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.Test.Order.Validator
 {
@@ -78,8 +77,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                                                                        .CreateExVatBasedOrderRow())
                                                                                                .SetNumberOfCreditDays(1)
                                                                                                .SetOrderId(2345L)
-                                                                                               .SetInvoiceDistributionType
-                                                                                   (InvoiceDistributionType.POST)
+                                                                                               .SetInvoiceDistributionType(DistributionType.POST)
                                                                                                .DeliverInvoiceOrder()
                                                                                                .PrepareRequest());
 
@@ -393,7 +391,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                              WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                                                              .SetNumberOfCreditDays(1)
-                                                                             .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                                             .SetInvoiceDistributionType(DistributionType.POST)
                                                                              .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                              .DeliverInvoiceOrder()
                                                                              .PrepareRequest());
@@ -430,7 +428,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                 () => WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                       .SetNumberOfCreditDays(1)
                                       .SetOrderId(2345L)
-                                      .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                      .SetInvoiceDistributionType(DistributionType.POST)
                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                       .DeliverInvoiceOrder()
                                       .PrepareRequest());

@@ -8,6 +8,11 @@ namespace Webpay.Integration.CSharp.Order
         protected IConfigurationProvider _config;
         protected CountryCode _countryCode;
 
+        protected Builder(IConfigurationProvider config)
+        {
+            _config = config;
+        } 
+
         public IConfigurationProvider GetConfig()
         {
             return _config;

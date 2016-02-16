@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Webpay.Integration.CSharp;
+using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
@@ -15,9 +16,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
         private long _orderId;
         public PaymentType OrderType { get; set; }
 
-        public QueryOrderBuilder(IConfigurationProvider config)
+        public QueryOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            _config = config;
+            // intentionally left blank
         }
 
         public QueryOrderBuilder SetOrderId(long orderId)
@@ -55,30 +56,14 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.GetOrdersRequest(this);
         }
 
-        public HostedActionRequest QueryCardOrder()
+        public QueryTransactionRequest QueryCardOrder()
         {
-            // should validate this.GetOrderId() existence here
-
-            var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-                .Query(new QueryByTransactionId(
-                    transactionId: this.GetOrderId()
-                    ));
-
-            return preparedHostedAdminRequest;
+            return new AdminService.QueryTransactionRequest(this);
         }
 
-        public HostedActionRequest QueryDirectBankOrder()
+        public QueryTransactionRequest QueryDirectBankOrder()
         {
-            // should validate this.GetOrderId() existence here
-
-            var preparedHostedAdminRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-                .Query(new QueryByTransactionId(
-                    transactionId: this.GetOrderId()
-                    ));
-
-            return preparedHostedAdminRequest;
+            return new AdminService.QueryTransactionRequest(this);
         }
     }
 }

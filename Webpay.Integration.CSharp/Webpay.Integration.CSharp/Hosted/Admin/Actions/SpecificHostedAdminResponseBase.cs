@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Xml;
+using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Response.Hosted;
 using Webpay.Integration.CSharp.Util.Calculation;
 
@@ -20,11 +21,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public bool Accepted { get; private set; }
         public string ErrorMessage { get; private set; }
 
-        protected static int? AttributeInt(XmlNode response, string element, string attribute)
+        protected static long? AttributeLong(XmlNode response, string element, string attribute)
         {
             try
             {
-                return Convert.ToInt32(response.SelectSingleNode(element).Attributes[attribute].Value);
+                return Convert.ToInt64(response.SelectSingleNode(element).Attributes[attribute].Value);
             }
             catch (System.Exception)
             {

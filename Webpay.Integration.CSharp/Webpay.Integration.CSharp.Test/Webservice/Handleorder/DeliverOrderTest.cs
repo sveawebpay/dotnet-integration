@@ -6,7 +6,6 @@ using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 using OrderType = Webpay.Integration.CSharp.WebpayWS.OrderType;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
@@ -40,7 +39,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Handleorder
                     .AddFee(TestingTool.CreateExVatBasedShippingFee())
                     .AddDiscount(Item.FixedDiscount()
                         .SetAmountIncVat(10))
-                    .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                    .SetInvoiceDistributionType(DistributionType.POST)
                     .SetOrderId(54086L)
                     .SetNumberOfCreditDays(1)
                     .SetCreditInvoice(117L)

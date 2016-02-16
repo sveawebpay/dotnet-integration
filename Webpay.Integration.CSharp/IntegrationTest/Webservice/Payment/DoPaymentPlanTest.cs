@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 {
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
-                                                              .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                              .SetInvoiceDistributionType(DistributionType.POST)
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .DeliverPaymentPlanOrder()
                                                               .DoRequest();

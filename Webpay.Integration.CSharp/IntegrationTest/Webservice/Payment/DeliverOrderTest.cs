@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 {
@@ -17,7 +17,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                 WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                 .SetOrderId(54086L)
-                                .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                .SetInvoiceDistributionType(DistributionType.POST)
                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                 .DeliverInvoiceOrder()
                                 .DoRequest();
@@ -34,7 +34,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
-                                                              .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                              .SetInvoiceDistributionType(DistributionType.POST)
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .DeliverInvoiceOrder()
                                                               .DoRequest();
@@ -55,7 +55,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
-                                                              .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                              .SetInvoiceDistributionType(DistributionType.POST)
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .DeliverInvoiceOrder()
                                                               .DoRequest();
@@ -78,7 +78,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                               .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
                                                               .SetOrderId(orderId)
                                                               .SetNumberOfCreditDays(1)
-                                                              .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                                                              .SetInvoiceDistributionType(DistributionType.POST)
                                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                               .DeliverInvoiceOrder()
                                                               .DoRequest();
@@ -119,7 +119,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                                                                  .SveaOrderId)
                                                                           .SetNumberOfCreditDays(1)
                                                                           .SetInvoiceDistributionType(
-                                                                              InvoiceDistributionType.POST)
+                                                                              DistributionType.POST)
                                                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                           .DeliverPaymentPlanOrder()
                                                                           .DoRequest();

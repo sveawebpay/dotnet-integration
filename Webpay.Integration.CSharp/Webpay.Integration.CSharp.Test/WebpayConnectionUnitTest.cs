@@ -4,7 +4,6 @@ using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.WebpayWS;
-using InvoiceDistributionType = Webpay.Integration.CSharp.Util.Constant.InvoiceDistributionType;
 
 namespace Webpay.Integration.CSharp.Test
 {
@@ -135,7 +134,7 @@ namespace Webpay.Integration.CSharp.Test
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .SetOrderId(fakeSveaOrderId)
                 .SetCountryCode(CountryCode.SE)
-                .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                .SetInvoiceDistributionType(DistributionType.POST)
                 .DeliverInvoiceOrder()
                     .PrepareRequest()
             ;
@@ -157,7 +156,7 @@ namespace Webpay.Integration.CSharp.Test
                 //.AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .SetOrderId(fakeSveaOrderId)
                 .SetCountryCode(CountryCode.SE)
-                .SetInvoiceDistributionType(InvoiceDistributionType.POST)
+                .SetInvoiceDistributionType(DistributionType.POST)
                 .DeliverInvoiceOrder()
                     .PrepareRequest()
             );

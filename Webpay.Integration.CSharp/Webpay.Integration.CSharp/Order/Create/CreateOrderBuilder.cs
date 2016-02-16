@@ -30,9 +30,9 @@ namespace Webpay.Integration.CSharp.Order.Create
 
         protected CustomerIdentity CustomerId;
 
-        public CreateOrderBuilder(IConfigurationProvider config)
+        public CreateOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            _config = config;
+            // this space intentionally left blank
         }
 
         public OrderValidator GetValidator()

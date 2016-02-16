@@ -38,45 +38,41 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test, Ignore]
         public void TestSemiManualCancelRecurSubscription()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
                     subscriptionId: "3352"
                 ))
-                .DoRequest();
+                .DoRequest<RecurResponse>();
         }
 
         [Test, Ignore]
         public void TestSemiManualConfirm()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 598683,
                     captureDate: DateTime.Now
                 ))
-                .DoRequest();
+                .DoRequest<ConfirmResponse>();
         }
-
 
         [Test]
         public void TestAnnul()
         {
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, CreateCustomerRefNo()));
 
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Annul(new Annul(
                     transactionId: payment.TransactionId
                 ));
+            AnnulResponse response = hostedActionRequest.DoRequest<AnnulResponse>();
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/annul/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
-
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
-            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
-
-            AnnulResponse response = hostedAdminResponse.To(Annul.Response);
+            Assert.IsTrue(response.Accepted);
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.TransactionId, Is.EqualTo(payment.TransactionId));
         }
 
         [Test]
@@ -84,11 +80,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <transaction id=""598972"">
-                    <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
-                    </transaction><statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <transaction id=""598972"">
+                            <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction><statuscode>0</statuscode>
+                        </response>");
             AnnulResponse response = Annul.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(598972));
@@ -104,9 +100,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             AnnulResponse response = Annul.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
@@ -122,13 +118,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestCancelRecurSubscription()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
                     subscriptionId: "12341234"
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/cancelrecursubscription/subscriptionid").InnerText, Is.EqualTo("12341234"));
         }
 
@@ -137,9 +133,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>0</statuscode>
+                        </response>");
             CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(0));
@@ -152,9 +148,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>101</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>101</statuscode>
+                        </response>");
             CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(101));
@@ -162,19 +158,17 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.ErrorMessage, Is.EqualTo("Invalid XML."));
         }
 
-
-
         [Test]
         public void TestConfirm()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 12341234,
                     captureDate: new DateTime(2015, 05, 22)
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirm/capturedate").InnerText, Is.EqualTo("2015-05-22"));
         }
@@ -184,12 +178,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <transaction id=""598972"">
-                        <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
-                    </transaction>
-                    <statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
             ConfirmResponse response = Confirm.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(598972));
@@ -205,9 +199,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             ConfirmResponse response = Confirm.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
@@ -221,16 +215,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestGetPaymentMethods()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetPaymentMethods(new GetPaymentMethods(
                     merchantId: 1130
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
             var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
@@ -246,13 +240,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>0</statuscode>
-                    <paymentmethods>
-                        <paymentmethod>BANKAXESS</paymentmethod>
-                        <paymentmethod>DBNORDEASE</paymentmethod>
-                    </paymentmethods>
-                </response>");
+                        <response>
+                            <statuscode>0</statuscode>
+                            <paymentmethods>
+                                <paymentmethod>BANKAXESS</paymentmethod>
+                                <paymentmethod>DBNORDEASE</paymentmethod>
+                            </paymentmethods>
+                        </response>");
             GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(0));
@@ -268,9 +262,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(107));
@@ -282,16 +276,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestGetReconciliationReport()
         {
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetReconciliationReport(new GetReconciliationReport(
                     date: new DateTime(2015, 04, 17)
                 ));
 
-            var hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/reconciliation").InnerXml,
@@ -306,19 +300,19 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>0</statuscode>
-                    <reconciliation>
-                        <reconciliationtransaction>
-                            <transactionid>598268</transactionid>
-                            <customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno>
-                            <paymentmethod>KORTCERT</paymentmethod>
-                            <amount>28420</amount>
-                            <currency>SEK</currency>
-                            <time>2015-04-17 00:15:22 CEST</time>
-                        </reconciliationtransaction>
-                    </reconciliation>
-                </response>");
+                        <response>
+                            <statuscode>0</statuscode>
+                            <reconciliation>
+                                <reconciliationtransaction>
+                                    <transactionid>598268</transactionid>
+                                    <customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno>
+                                    <paymentmethod>KORTCERT</paymentmethod>
+                                    <amount>28420</amount>
+                                    <currency>SEK</currency>
+                                    <time>2015-04-17 00:15:22 CEST</time>
+                                </reconciliationtransaction>
+                            </reconciliation>
+                        </response>");
             GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(0));
@@ -338,9 +332,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
 
             Assert.That(response.StatusCode, Is.EqualTo(107));
@@ -372,18 +366,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var customerRefNo = CreateCustomerRefNo();
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
 
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmount(new LowerAmount(
                     transactionId: payment.TransactionId,
                     amountToLower: 666
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/amounttolower").InnerText, Is.EqualTo("666"));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         }
@@ -394,12 +388,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <transaction id=""598972"">
-                        <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
-                    </transaction>
-                    <statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
             LowerAmountResponse response = LowerAmount.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(598972));
@@ -415,9 +409,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             LowerAmountResponse response = LowerAmount.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
@@ -435,16 +429,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
             var now = DateTime.Now;
 
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByTransactionId(
                     transactionId: payment.TransactionId
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1130"));
@@ -476,63 +470,63 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <transaction id=""599086"">
-                        <customerrefno>19aa8f62d9cb44eb6851ff3650873b2ac</customerrefno>
-                        <merchantid>1130</merchantid>
-                        <status>SUCCESS</status>
-                        <amount>25000</amount>
-                        <currency>SEK</currency>
-                        <vat>5000</vat>
-                        <capturedamount>25000</capturedamount>
-                        <authorizedamount>25000</authorizedamount>
-                        <created>2015-04-23 10:51:06.977</created>
-                        <creditstatus>CREDNONE</creditstatus>
-                        <creditedamount>0</creditedamount>
-                        <merchantresponsecode>0</merchantresponsecode>
-                        <paymentmethod>DBNORDEASE</paymentmethod>
-                        <callbackurl>https://hej.hopp</callbackurl>
-                        <subscriptionid>subid</subscriptionid>
-                        <subscriptiontype>subtype</subscriptiontype>
-                        <capturedate>2015-04-23 10:51:06.977</capturedate>
-                        <eci>eci</eci>
-                        <mdstatus>mdstatus</mdstatus>
-                        <expiryyear>2015</expiryyear>
-                        <expirymonth>09</expirymonth>
-                        <ch_name>ch_name</ch_name>
-                        <authcode>authcode</authcode>
-                        <customer id=""22513"">
-                            <firstname>Testa</firstname>
-                            <lastname>Testson</lastname>
-                            <initials>TT</initials>
-                            <fullname>Testa T Testson</fullname>
-                            <email>testson@sveaekonomi.se</email>
-                            <ssn>460509-2222</ssn>
-                            <address>Testgatan 666</address>
-                            <address2>c/o Quality Man</address2>
-                            <city>Testholm</city>
-                            <country>SE</country>
-                            <zip>123 45</zip>
-                            <phone>012345566789</phone>
-                            <vatnumber>123456-7890</vatnumber>
-                            <housenumber>69</housenumber>
-                            <companyname>TestCompagniet</companyname>
-                        </customer>
-                        <orderrows>
-                            <row>
-                                <id>72750</id>
-                                <name>Prod</name>
-                                <amount>12500</amount>
-                                <vat>2500</vat>
-                                <description>Specification</description>
-                                <quantity>2.0</quantity>
-                                <sku>1</sku>
-                                <unit>st</unit>
-                            </row>
-                        </orderrows>
-                    </transaction>
-                    <statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <transaction id=""599086"">
+                                <customerrefno>19aa8f62d9cb44eb6851ff3650873b2ac</customerrefno>
+                                <merchantid>1130</merchantid>
+                                <status>SUCCESS</status>
+                                <amount>25000</amount>
+                                <currency>SEK</currency>
+                                <vat>5000</vat>
+                                <capturedamount>25000</capturedamount>
+                                <authorizedamount>25000</authorizedamount>
+                                <created>2015-04-23 10:51:06.977</created>
+                                <creditstatus>CREDNONE</creditstatus>
+                                <creditedamount>0</creditedamount>
+                                <merchantresponsecode>0</merchantresponsecode>
+                                <paymentmethod>DBNORDEASE</paymentmethod>
+                                <callbackurl>https://hej.hopp</callbackurl>
+                                <subscriptionid>subid</subscriptionid>
+                                <subscriptiontype>subtype</subscriptiontype>
+                                <capturedate>2015-04-23 10:51:06.977</capturedate>
+                                <eci>eci</eci>
+                                <mdstatus>mdstatus</mdstatus>
+                                <expiryyear>2015</expiryyear>
+                                <expirymonth>09</expirymonth>
+                                <ch_name>ch_name</ch_name>
+                                <authcode>authcode</authcode>
+                                <customer id=""22513"">
+                                    <firstname>Testa</firstname>
+                                    <lastname>Testson</lastname>
+                                    <initials>TT</initials>
+                                    <fullname>Testa T Testson</fullname>
+                                    <email>testson@sveaekonomi.se</email>
+                                    <ssn>460509-2222</ssn>
+                                    <address>Testgatan 666</address>
+                                    <address2>c/o Quality Man</address2>
+                                    <city>Testholm</city>
+                                    <country>SE</country>
+                                    <zip>123 45</zip>
+                                    <phone>012345566789</phone>
+                                    <vatnumber>123456-7890</vatnumber>
+                                    <housenumber>69</housenumber>
+                                    <companyname>TestCompagniet</companyname>
+                                </customer>
+                                <orderrows>
+                                    <row>
+                                        <id>72750</id>
+                                        <name>Prod</name>
+                                        <amount>12500</amount>
+                                        <vat>2500</vat>
+                                        <description>Specification</description>
+                                        <quantity>2.0</quantity>
+                                        <sku>1</sku>
+                                        <unit>st</unit>
+                                    </row>
+                                </orderrows>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
             QueryResponse response = Query.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(599086));
@@ -589,6 +583,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.StatusCode, Is.EqualTo(0));
             Assert.That(response.Accepted, Is.True);
             Assert.That(response.ErrorMessage, Is.Empty);
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetName(), Is.EqualTo("Prod"));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetAmountExVat(), Is.EqualTo(100.00M));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetAmountIncVat(), Is.EqualTo(125.00M));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetVatPercent(), Is.EqualTo(25.00M));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetDescription, Is.EqualTo("Specification"));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetQuantity, Is.EqualTo(2));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetArticleNumber(), Is.EqualTo("1"));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetUnit, Is.EqualTo("st"));
         }
 
         [Test]
@@ -596,9 +598,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             QueryResponse response = Query.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
@@ -618,16 +620,16 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
             var now = DateTime.Now;
 
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByCustomerRefNo(
                     customerRefNo: customerRefNo
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         }
@@ -638,25 +640,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             const string customerRefNo = "Customer reference number or client order number";
             const string subscriptionId = "The subscription id";
             const long amount = 66600L;
-            var preparedHostedAdminRequest = WebpayAdmin
+            var hostedActionRequest = WebpayAdmin
                 .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Recur(new Recur(
                     customerRefNo: customerRefNo,
                     subscriptionId: subscriptionId,
                     currency: Currency.SEK,
-                    amount: amount 
+                    amount: amount
                 ));
 
-            HostedAdminRequest hostedAdminRequest = preparedHostedAdminRequest.PrepareRequest();
+            HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/currency").InnerText, Is.EqualTo(Currency.SEK.ToString()));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
 
-            var hostedAdminResponse = preparedHostedAdminRequest.DoRequest();
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
 
             //Call to non-existing subscription
-            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322")); 
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322"));
         }
 
 
@@ -665,22 +667,22 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <transaction id=""598972"">
-                        <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
-                        <paymentmethod>KORTCERT</paymentmethod>
-                        <merchantid>1130</merchantid>
-                        <amount>66600</amount>
-                        <currency>SEK</currency>
-                        <cardtype>VISA</cardtype>
-                        <maskedcardno>12345***********1234</maskedcardno>
-                        <expirymonth>07</expirymonth>
-                        <expiryyear>2099</expiryyear>
-                        <authcode>authcode</authcode>
-                        <subscriptionid>subscriptionid</subscriptionid>
-                    </transaction>
-                    <statuscode>0</statuscode>
-                </response>");
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                                <paymentmethod>KORTCERT</paymentmethod>
+                                <merchantid>1130</merchantid>
+                                <amount>66600</amount>
+                                <currency>SEK</currency>
+                                <cardtype>VISA</cardtype>
+                                <maskedcardno>12345***********1234</maskedcardno>
+                                <expirymonth>07</expirymonth>
+                                <expiryyear>2099</expiryyear>
+                                <authcode>authcode</authcode>
+                                <subscriptionid>subscriptionid</subscriptionid>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
             RecurResponse response = Recur.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.EqualTo(598972));
@@ -707,9 +709,9 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var responseXml = new XmlDocument();
             responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                <response>
-                    <statuscode>107</statuscode>
-                </response>");
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
             RecurResponse response = Recur.Response(responseXml);
 
             Assert.That(response.TransactionId, Is.Null);
@@ -756,7 +758,22 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber(createCustomerRefNo)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .___SetSimulatorCode_ForTestingOnly("0")
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
+        }
+        internal static Uri PrepareRegularPaymentWithTwoRows(PaymentMethod paymentMethod, string createCustomerRefNo)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetClientOrderNumber(createCustomerRefNo)

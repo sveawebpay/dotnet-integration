@@ -180,39 +180,38 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         //// .deliverCardOrderRows
-        //[Test, Ignore]
-        //public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
-        //{
-        //    // create card order
-        //    // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-        //    var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        //    var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY,customerRefNo));
+        [Test, Ignore]
+        public void test_deliverOrderRows_deliverCardOrderRows_deliver_all_rows()
+        {
+            // create card order
+            // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
+            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
 
-        //    // query order
-        //    Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
-        //        WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-        //        .SetTransactionId(payment.TransactionId)
-        //        .SetCountryCode(CountryCode.SE)
-        //        ;
-        //    Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-        //    // TODO Assert.IsTrue(answer.Accepted);
-        //    var transactionid = Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value);
-        //    Assert.That(transactionid, Is.EqualTo(payment.TransactionId));
+            // query order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
 
-        //    // deliver all order rows
-        //    Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
-        //        WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
-        //        .SetTransactionId(Convert.ToInt64(answer.MessageXmlDocument.SelectSingleNode("/response/transaction").Attributes["id"].Value))
-        //        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-        //        .SetRowToDeliver(1)
-        //        .SetRowToDeliver(2)
-        //        // TODO .AddNumberedOrderRows(answer.GetNumberedOrderRows())
-        //        ;
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
 
-        //    // TODO Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse delivery = builder.DeliverCardOrder().DoRequest();
-        //    // TODO Assert.IsTrue(delivery.Accepted);
-        //    // check that amount is correct for entire order
-        //}
+            // deliver all order rows
+            Webpay.Integration.CSharp.Order.Handle.DeliverOrderRowsBuilder builder = Webpay.Integration.CSharp.
+                WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(answer.TransactionId)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
+                ;
+
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
+            Assert.IsTrue(delivery.Accepted);
+            // TODO check that amount is correct for entire order
+        }
 
         //public void test_deliverOrderRows_deliverCardOrderRows_deliver_first_of_two_rows()
         // check that amount is correct for entire order

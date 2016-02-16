@@ -10,8 +10,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly Transaction Transaction;
 
-        public QueryResponse(XmlDocument response)
-            : base(response)
+        public QueryResponse(XmlDocument response) : base(response)
         {
             if (response.SelectSingleNode("/response/transaction") != null)
             {

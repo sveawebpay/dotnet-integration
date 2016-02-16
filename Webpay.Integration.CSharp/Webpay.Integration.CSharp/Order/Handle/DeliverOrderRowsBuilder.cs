@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
@@ -12,11 +13,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         internal DistributionType _distributionType { get; set; }
         internal List<long> _rowIndexesToDeliver { get; set; }
+        internal List<NumberedOrderRowBuilder> _numberedOrderRows { get; set; }
 
 
         public DeliverOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {            
             this._rowIndexesToDeliver = new List<long>();
+            this._numberedOrderRows = new List<NumberedOrderRowBuilder>();
         }
 
 
@@ -59,6 +62,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             OrderType = PaymentType.INVOICE;
             return new AdminService.DeliverOrderRowsRequest(this);
+        }
+
+        public DeliverOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
+        {
+            this._numberedOrderRows.AddRange(numberedOrderRows);
+            return this;
         }
     }
 }

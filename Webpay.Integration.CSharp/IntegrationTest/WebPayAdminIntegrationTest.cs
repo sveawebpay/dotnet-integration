@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
-using Webpay.Integration.CSharp;
 using Webpay.Integration.CSharp.Order.Create;
-using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
-using Webpay.Integration.CSharp.AdminWS;
-using Webpay.Integration.CSharp.Hosted.Admin;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 
 namespace Webpay.Integration.CSharp.IntegrationTest
@@ -66,8 +59,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer =
-                queryOrderBuilder.QueryInvoiceOrder().DoRequest();
+            Webpay.Integration.CSharp.AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
 
             Assert.IsTrue(answer.Accepted);
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));

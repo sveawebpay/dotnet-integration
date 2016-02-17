@@ -21,7 +21,6 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        [Obsolete("Use SetOrderId() instead")]
         public QueryOrderBuilder SetTransactionId(long orderId)
         {
             return this.SetOrderId(orderId);

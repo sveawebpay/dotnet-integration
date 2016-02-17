@@ -1,4 +1,6 @@
-﻿using Webpay.Integration.CSharp.Config;
+﻿using Webpay.Integration.CSharp.AdminService;
+using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
@@ -45,6 +47,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             OrderType = PaymentType.PAYMENTPLAN;
             return new AdminService.CancelOrderRequest(this);
+        }
+
+        public AnnulTransactionRequest CancelCardOrder()
+        {
+            return new AdminService.AnnulTransactionRequest(this);
         }
     }
 }

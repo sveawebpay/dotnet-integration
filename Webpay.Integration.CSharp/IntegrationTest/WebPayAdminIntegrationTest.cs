@@ -349,8 +349,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer =
                 queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
-            Assert.That(answer.Transaction.Status == "ANNULLED" ); // TODO make enum w/Transaction statuses
+            Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED")); // TODO make enum w/Transaction statuses
         }
-
     }
 }

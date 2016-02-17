@@ -36,11 +36,8 @@
 * [6. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
 * [7. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#7-webpayadmin-entrypoint-method-reference)
 * [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
+* [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmin-deliverorderrows)
+* [7.3 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#73-webpayadmin-cancelorder)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
@@ -841,16 +838,16 @@ It contains entrypoint methods used to define order contents, send order request
 The WebpayAdmin.QueryOrder entrypoint method is used to get information about an order.
 
 ```csharp
-    QueryOrderBuilder response =  WebpayAdmin.QueryOrder()
-	 .SetOrderId(CreateOrderResult.SveaOrderId)             //Required. See CreateOrder response
-         .SetCountryCode(CountryCode.SE)
-            ;
-
- // then select the corresponding request class and send request
-    CloseOrderEuResponse response = response.QueryInvoiceOrder().DoRequest();
-    CloseOrderEuResponse response = response.QueryPaymentPlanOrder.DoRequest();
-    CloseOrderEuResponse response = response.QueryCardOrder().DoRequest();
-    CloseOrderEuResponse response = response.QueryDirectBankOrder().DoRequest();
+  QueryOrderBuilder request = WebpayAdmin.QueryOrder(config)
+        .SetOrderId()                 // required
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        ;
+        // then select the corresponding request class and send request
+        response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
+        response = request.QueryPaymentPlanOrder().DoRequest();     // returns AdminWS.GetOrdersResponse
+        response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.Actions.QueryResponse
+        response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.Actions.QueryResponse
 
 ```
 
@@ -871,18 +868,41 @@ For card orders, use AddNumberedOrderRow() or AddNumberedOrderRows() to pass in 
 
 
 ```csharp
-   DeliverOrderRowsBuilder builder = WebpayAdmin.DeliverOrderRows()
-                .SetOrderId()
-                .SetCountryCode()
-                .SetInvoiceDistributionType(DistributionType.POST) // TODO harmonise InvoiceDistributionType w/AdminWS?!
-                .SetRowToDeliver()
-                AddNumberedOrderRows()
-                AddNumberedOrderRows()
-                ;
+  DeliverOrderRowsBuilder request = WebpayAdmin.DeliverOrderRows(config)
+        .SetOrderId()                 // required
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        .SetInvoiceDistributionType() // required for invoice only
+        .SetRowToDeliver()            // required, index of original order rows you wish to deliver
+        .AddNumberedOrderRow()        // required for card orders, should match original row indexes
+        ;
+        // then select the corresponding request class and send request
+        response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
+        response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.Actions.ConfirmResponse
 
- // then select the corresponding request class and send request
-    DeliveryResponse response = response.DeliverInvoiceOrderRows().DoRequest();
-    DeliveryResponse response = response.DeliverCardOrderRows.DoRequest();
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+### 7.3 WebpayAdmin.CancelOrder
+The  WebpayAdmin.CancelOrder() entrypoint method is used to cancel an order with Svea,
+that has not yet been delivered (invoice, payment plan) or confirmed (card).
+
+Supports Invoice, Payment Plan and Card orders.
+
+Get an instance using the WebpayAdmin.CancelOrder entrypoint, then provide more information about the order and send
+the request using the CancelOrderBuilder methods:
+
+```csharp
+    CancelOrderBuilder request = WebpayAdmin.CancelOrder(config)
+        .SetOrderId()                 // required, use SveaOrderId recieved with createOrder response
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        ;
+        // then select the corresponding request class and send request
+        response = request.CancelInvoiceOrder().DoRequest();       // returns AdminWS.CancelOrderResponse
+        response = request.CancelPaymentPlanOrder().DoRequest();   // returns AdminWS.CancelOrderResponse
+        response = request.CancelCardOrder().DoRequest();          // returns Hosted.Admin.Actions.AnnulResponse
 
 ```
 

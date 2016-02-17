@@ -40,6 +40,28 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             return order;
         }
 
+        private static CreateOrderEuResponse CreatePaymentPlanOrderWithTwoOrderRows()
+        {
+            // get campaigns
+            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .DoRequest();
+
+            // create order
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            Assert.IsTrue(order.Accepted);
+            return order;
+        }
+
         /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
         // .queryInvoiceOrder
         [Test]
@@ -63,22 +85,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         [Test]
         public void Test_QueryOrder_QueryPaymentPlanOrder()
         {
-            // get campaigns
-            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .DoRequest();
-
             // create order
-            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
-                .AddCustomerDetails(Item.IndividualCustomer()
-                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderDate(TestingTool.DefaultTestDate)
-                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                ;
-            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            var order = CreatePaymentPlanOrderWithTwoOrderRows();
             Assert.IsTrue(order.Accepted);
 
             // query order
@@ -311,5 +319,59 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED")); // TODO make enum w/Transaction statuses
         }
+
+        // / WebpayAdmin.CreditAmount()
+        // --------------------------------------------------------------------------------------
+        // .CreditPaymentPlanAmount
+        [Test, Ignore]  // TODO remove when deployed service fixed
+        public void Test_CreditAmount_CreditPaymentPlanAmount()
+        {
+            // create order
+            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.IsTrue(order.Accepted);
+
+            // deliver paymentplan
+            var contract = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .DeliverPaymentPlanOrder().DoRequest()
+                ;
+            Assert.IsTrue(contract.Accepted);
+
+            // credit amount
+            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+                .SetContractNumber(contract.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber)
+                .SetCountryCode(CountryCode.SE)
+                .SetDescription("test of credit amount")
+                .SetAmountIncVat(100.00M)
+                ;
+            AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
+            Assert.IsTrue(response.Accepted);            
+        }
+
+        [Test]
+        public void Test_CreditAmount_CreditPaymentPlanAmount_CreditUndeliveredPaymentPlanFails()
+        {
+            // create order
+            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.IsTrue(order.Accepted);
+
+            // credit amount
+            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+                .SetContractNumber(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .SetDescription("test of credit amount")
+                .SetAmountIncVat(100.00M)
+                ;
+            AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
+            Assert.IsFalse(response.Accepted);
+            Assert.That(response.ResultCode, Is.EqualTo(27006));
+            Assert.That(response.ErrorMessage, Is.EqualTo("No paymentplan exists with the provided id."));
+
+        }
+
+        // .CreditCardAmount
+        // .CreditDirectBankAmount
+
     }
 }

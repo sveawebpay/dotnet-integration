@@ -76,6 +76,27 @@ namespace Webpay.Integration.CSharp
         {
             return new CancelOrderBuilder(configurationProvider);
         }
+
+
+        /// <summary>
+        ///  ...
+        ///  CreditAmountBuilder request = WebpayAdmin.CreditAmount(config)
+        ///   .SetContractNumber()          // required for payment plan only, use SveaOrderId recieved with createOrder response
+        ///   .SetTransactionId()           // required for card or direct bank only
+        ///   .SetCountryCode()             // required for payment plan only
+        ///   .SetDescription()             // optional for payment plan only, description to print on resulting cancellation rows
+        ///   .SetAmountIncVat()            // required, amount to credit
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
+        ///  ??? response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
+        ///  ??? response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
+        ///  ...
+        /// </summary>
+        public static CreditAmountBuilder CreditAmount(IConfigurationProvider configurationProvider)
+        {
+            return new CreditAmountBuilder(configurationProvider);
+        }
     }
 }
  

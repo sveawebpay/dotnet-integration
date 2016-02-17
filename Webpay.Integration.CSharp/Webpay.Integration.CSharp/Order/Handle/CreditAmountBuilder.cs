@@ -65,5 +65,10 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             return new AdminService.CreditTransactionRequest(this);
         }
+
+        public AdminService.CreditTransactionRequest CreditDirectBankAmount()
+        {
+            return new AdminService.CreditTransactionRequest(this);
+        }
     }
 }

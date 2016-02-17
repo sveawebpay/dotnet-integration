@@ -379,18 +379,77 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // capture on an order via the webservice
             var capturedTransactionId = 590775L;
 
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+
+            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            var before = answer.Transaction.CreditedAmount;
+
             // credit amount
+            var amountToCredit = 1.00M;
             CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
-                .SetAmountIncVat(1.00M)
+                .SetAmountIncVat(amountToCredit)
                 ;
             CSharp.Hosted.Admin.Actions.CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
             Assert.IsTrue(response.Accepted);
+
+            // query updated order
+            QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
+            Assert.That(after, Is.EqualTo(before + amountToCredit));
         }
 
         // .CreditDirectBankAmount
+        [Test]
+        public void Test_CreditAmount_CreditDirectBankAmount()
+        {
+            // create order
+            // use an existing captured order (status SUCCESS), as we can't do a
+            // capture on an order via the webservice
+            var capturedTransactionId = 590801L;
 
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+
+            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            var before = answer.Transaction.CreditedAmount;
+
+            // credit amount
+            var amountToCredit = 1.00M;
+            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+                .SetContractNumber(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                .SetDescription("test of credit amount")
+                .SetAmountIncVat(amountToCredit)
+                ;
+            CSharp.Hosted.Admin.Actions.CreditResponse response = creditAmountBuilder.CreditDirectBankAmount().DoRequest();
+            Assert.IsTrue(response.Accepted);
+
+            // query updated order
+            QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
+            Assert.That(after, Is.EqualTo(before + amountToCredit));
+        }
     }
 }

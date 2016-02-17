@@ -90,7 +90,7 @@ namespace Webpay.Integration.CSharp
         ///  // then select the corresponding request class and send request
         ///  response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
         ///  response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
-        ///  ??? response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
+        ///  response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
         ///  ...
         /// </summary>
         public static CreditAmountBuilder CreditAmount(IConfigurationProvider configurationProvider)

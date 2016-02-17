@@ -67,9 +67,9 @@ namespace Webpay.Integration.CSharp
         ///   .SetCountryCode()             // required
         ///  ;
         ///  // then select the corresponding request class and send request
-        ///???  response = request.CancelInvoiceOrder().DoRequest();           // returns AdminWS.CancelOrderResponse
-        ///???  response = request.CancelPaymentPlanOrder().DoRequest();	   // returns AdminWS.CancelOrderResponse
-        ///  response = request.CancelCardOrder().DoRequest();              // returns Hosted.Admin.Actions.AnnulResponse
+        ///  response = request.CancelInvoiceOrder().DoRequest();       // returns AdminWS.CancelOrderResponse
+        ///  response = request.CancelPaymentPlanOrder().DoRequest();   // returns AdminWS.CancelOrderResponse
+        ///  response = request.CancelCardOrder().DoRequest();          // returns Hosted.Admin.Actions.AnnulResponse
         ///  ...
         /// </summary>
         public static CancelOrderBuilder CancelOrder(IConfigurationProvider configurationProvider)

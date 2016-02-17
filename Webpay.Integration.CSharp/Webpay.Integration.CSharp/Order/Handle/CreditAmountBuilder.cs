@@ -61,9 +61,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.CreditAmountRequest(this);
         }
 
-        //public AnnulTransactionRequest CancelCardOrder()
-        //{
-        //    return new AdminService.AnnulTransactionRequest(this);
-        //}
+        public AdminService.CreditTransactionRequest CreditCardAmount()
+        {
+            return new AdminService.CreditTransactionRequest(this);
+        }
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="AdminService\AnnulTransactionRequest.cs" />
+    <Compile Include="AdminService\CreditTransactionRequest.cs" />
     <Compile Include="AdminService\QueryTransactionRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
+    <Compile Include="Hosted\Admin\Actions\CreditResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\AnnulResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\CancelRecurSubscription.cs" />
     <Compile Include="Hosted\Admin\Actions\CancelRecurSubscriptionResponse.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Hosted\Admin\Actions\GetPaymentMethodsResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\Actions\GetReconciliationReportResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerAmountResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Query.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByClientOrderNumber.cs" />

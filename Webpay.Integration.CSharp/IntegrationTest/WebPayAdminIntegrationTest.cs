@@ -323,7 +323,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         // / WebpayAdmin.CreditAmount()
         // --------------------------------------------------------------------------------------
         // .CreditPaymentPlanAmount
-        [Test, Ignore]  // TODO remove when deployed service fixed
+        [Test]
         public void Test_CreditAmount_CreditPaymentPlanAmount()
         {
             // create order
@@ -371,6 +371,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         // .CreditCardAmount
+        [Test]
+        public void Test_CreditAmount_CreditCardAmount()
+        {
+            // create order
+            // use an existing captured order (status SUCCESS), as we can't do a
+            // capture on an order via the webservice
+            var capturedTransactionId = 590775L;
+
+            // credit amount
+            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+                .SetContractNumber(capturedTransactionId)
+                .SetCountryCode(CountryCode.SE)
+                .SetDescription("test of credit amount")
+                .SetAmountIncVat(1.00M)
+                ;
+            CSharp.Hosted.Admin.Actions.CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
+            Assert.IsTrue(response.Accepted);
+        }
+
         // .CreditDirectBankAmount
 
     }

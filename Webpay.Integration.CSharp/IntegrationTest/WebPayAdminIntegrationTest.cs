@@ -15,6 +15,15 @@ namespace Webpay.Integration.CSharp.IntegrationTest
     [TestFixture]
     public class WebpayAdminIntegrationTest
     {
+        private static PaymentResponse CreateCardOrderWithTwoOrderRows()
+        {
+            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
+            var payment =
+                HostedAdminTest.MakePreparedPayment(
+                    HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
+            return payment;
+        }
+
         private static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRows()
         {
             CreateOrderBuilder createOrderBuilder = Webpay.Integration.CSharp.
@@ -99,10 +108,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment =
-                HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.SVEACARDPAY,
-                    customerRefNo));
+            var payment = CreateCardOrderWithTwoOrderRows();
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
@@ -133,10 +139,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment =
-                HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPayment(PaymentMethod.NORDEASE,
-                    customerRefNo));
+            var payment = CreateCardOrderWithTwoOrderRows();
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
@@ -180,10 +183,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment =
-                HostedAdminTest.MakePreparedPayment(
-                    HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
+            var payment = CreateCardOrderWithTwoOrderRows();
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
@@ -232,10 +232,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-            var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment =
-                HostedAdminTest.MakePreparedPayment(
-                    HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
+            var payment = CreateCardOrderWithTwoOrderRows();
 
             // query order
             Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
@@ -327,6 +324,33 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(cancellation.Accepted);
         }
         // .cancelCardOrder (uses webdriver)
+
         //public void test_cancelOrder_cancelCardOrder()
+        [Test]
+        public void test_cancelOrder_cancelCardOrder()
+        {
+            // create order
+            var payment = CreateCardOrderWithTwoOrderRows();
+
+            // do cancelOrder request and assert the response
+            CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+            ;
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.AnnulResponse cancellation = cancelOrderBuilder.CancelCardOrder().DoRequest();
+            Assert.IsTrue(cancellation.Accepted);
+
+            // query updated order
+            Webpay.Integration.CSharp.Order.Handle.QueryOrderBuilder queryOrderBuilder = Webpay.Integration.CSharp.
+                WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            Webpay.Integration.CSharp.Hosted.Admin.Actions.QueryResponse answer =
+                queryOrderBuilder.QueryCardOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Transaction.Status == "ANNULLED" ); // TODO make enum w/Transaction statuses
+        }
+
     }
 }

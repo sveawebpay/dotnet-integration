@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
@@ -33,7 +34,9 @@ namespace Webpay.Integration.CSharp
         /// Start building request to close order.
         /// </summary>
         /// <param name="config"></param>
+        /// <remarks>Deprecated</remarks>
         /// <returns>CloseOrderBuilder</returns>
+        [Obsolete("Use WebpayAdmin.CancelOrder() instead")]
         public static CloseOrderBuilder CloseOrder(IConfigurationProvider config = null)
         {
             if (config == null)

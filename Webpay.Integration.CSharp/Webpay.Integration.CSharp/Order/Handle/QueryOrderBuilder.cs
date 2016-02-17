@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Webpay.Integration.CSharp;
 using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Admin;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle

@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp
 
         /// <summary>
         /// ...
-        ///  QueryOrderBuilder request = WebPayAdmin.QueryOrder(config)
+        ///  QueryOrderBuilder request = WebpayAdmin.QueryOrder(config)
         ///   .SetOrderId()                 // required
         ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
         ///   .SetCountryCode()             // required
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp
 
         /// <summary>
         /// ...
-        ///  DeliverOrderRowsBuilder request = WebPayAdmin.DeliverOrderRows(config)
+        ///  DeliverOrderRowsBuilder request = WebpayAdmin.DeliverOrderRows(config)
         ///   .SetOrderId()                 // required
         ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
         ///   .SetCountryCode()             // required
@@ -51,12 +51,32 @@ namespace Webpay.Integration.CSharp
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
-        ///???  response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.Actions.ConfirmResponse
+        ///  response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.Actions.ConfirmResponse
         ///  ...
         /// </summary>
         public static DeliverOrderRowsBuilder DeliverOrderRows(IConfigurationProvider configurationProvider)
         {
             return new DeliverOrderRowsBuilder(configurationProvider);
         }
+
+        /// <summary>
+        ///  ...
+        ///  CancelOrderBuilder request = WebpayAdmin.CancelOrder(config)
+        ///   .SetOrderId()                 // required, use SveaOrderId recieved with createOrder response
+        ///   .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        ///   .SetCountryCode()             // required
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.CancelInvoiceOrder().DoRequest();       // returns AdminWS.CancelOrderResponse
+        ///  response = request.CancelPaymentPlanOrder().DoRequest();   // returns AdminWS.CancelOrderResponse
+        ///  response = request.CancelCardOrder().DoRequest();          // returns Hosted.Admin.Actions.AnnulResponse
+        ///  ...
+        /// </summary>
+        public static CancelOrderBuilder CancelOrder(IConfigurationProvider configurationProvider)
+        {
+            return new CancelOrderBuilder(configurationProvider);
+        }
     }
 }
+ 
+ 

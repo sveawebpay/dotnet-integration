@@ -245,6 +245,42 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00M)); //r1, 100.00ex@25*2 => 250.00
         }
 
+
+        // / WebpayAdmin.CreditOrderRows()
+        // ---------------------------------------------------------------------------------
+        // .CreditInvoiceOrderRows
+        [Test]
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_Credit_All_Rows()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver order
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                ;
+            AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+           // credit order rows
+           CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .SetRowToCredit(1)
+                .SetRowToCredit(2)
+            ;
+            AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(creditResponse.Accepted);
+        }
+
+        // .CreditPaymentPlanOrderRows
+
+
         // / WebPayAdmin.cancelOrder()
         // --------------------------------------------------------------------------------------
         // .cancelInvoiceOrder

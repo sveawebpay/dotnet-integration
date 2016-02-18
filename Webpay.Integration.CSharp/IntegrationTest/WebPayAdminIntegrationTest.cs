@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
@@ -279,6 +280,122 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         [Test]
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRow()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver order
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                ;
+            AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            var newExVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountExVat(8.0M)
+                .SetVatPercent(25)
+                .SetQuantity(1M)
+            ;
+            var newCreditOrderRows = new List<OrderRowBuilder>();
+            newCreditOrderRows.Add(newExVatCreditOrderRow);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRow(newCreditOrderRows)
+            ;
+            AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(creditResponse.Accepted);
+        }
+
+        [Test]
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRowAndMismatchedVatFlagSettingsFails()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver order
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                ;
+            AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            var newIncVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountIncVat(10.0M)
+                .SetVatPercent(25)
+                .SetQuantity(1M)
+            ;
+            var newCreditOrderRows = new List<OrderRowBuilder>();
+            newCreditOrderRows.Add(newIncVatCreditOrderRow);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRow( newCreditOrderRows )
+            ;
+            AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(creditResponse.ResultCode, Is.EqualTo(50036));
+            Assert.That(creditResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
+        }
+
+        [Test]
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRowSpecifiedExVatAndIncVatSentAsIncVat()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver order
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                ;
+            AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            var newExVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountIncVat(10M)
+                .SetAmountExVat(8.0M)
+                //.SetVatPercent(25)
+                .SetQuantity(1M)
+            ;
+            var newCreditOrderRows = new List<OrderRowBuilder>();
+            newCreditOrderRows.Add(newExVatCreditOrderRow);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRow(newCreditOrderRows)
+            ;
+            AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(creditResponse.ResultCode, Is.EqualTo(50036));
+            Assert.That(creditResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
+        }
+
+        [Test]
         public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUndeliveredRowFails()
         {
             // create order
@@ -307,8 +424,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsFalse(creditResponse.Accepted);
             Assert.That(creditResponse.ResultCode, Is.EqualTo(20010));
             Assert.That(creditResponse.ErrorMessage, Is.EqualTo("All rows must belong to the invoice"));
-
-
         }
 
         // .CreditPaymentPlanOrderRows

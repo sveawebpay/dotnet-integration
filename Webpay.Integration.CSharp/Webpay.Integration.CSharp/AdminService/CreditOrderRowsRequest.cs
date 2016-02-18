@@ -91,7 +91,7 @@ namespace Webpay.Integration.CSharp.AdminService
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
                 RowNumbers = _builder.RowIndexesToCredit.ToArray(),
                 InvoiceDistributionType = ConvertDistributionTypeToInvoiceDistributionType(_builder.DistributionType),
-                NewCreditInvoiceRows = _builder.NewCreditInvoiceRows.Select( x => ConvertOrderRowBuilderToAdminWSOrderRow(x) ).ToArray()
+                NewCreditInvoiceRows = _builder.NewCreditOrderRows.Select( x => ConvertOrderRowBuilderToAdminWSOrderRow(x) ).ToArray()
             };
 
             // make request to correct endpoint, return response object

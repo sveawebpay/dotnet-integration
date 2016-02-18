@@ -38,6 +38,7 @@
 * [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
 * [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmin-deliverorderrows)
 * [7.3 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#73-webpayadmin-cancelorder)
+* [7.4 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#74-webpayadmin-creditamount)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
@@ -831,7 +832,7 @@ Params:
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ## 7. WebpayAdmin entrypoint method reference
-The WebpayConnection class methods contains the functions needed to handle orders for Webservice payments as well as hosted payments.
+The WebpayAdmin class methods contains the functions needed to handle orders for Webservice payments as well as hosted payments.
 It contains entrypoint methods used to define order contents, send order requests, as well as various support methods needed to do this.
 
 ### 7.1 WebpayAdmin.QueryOrder
@@ -903,6 +904,32 @@ the request using the CancelOrderBuilder methods:
         response = request.CancelInvoiceOrder().DoRequest();       // returns AdminWS.CancelOrderResponse
         response = request.CancelPaymentPlanOrder().DoRequest();   // returns AdminWS.CancelOrderResponse
         response = request.CancelCardOrder().DoRequest();          // returns Hosted.Admin.Actions.AnnulResponse
+
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+### 7.4 WebpayAdmin.CreditAmount
+The WebpayAdmin.CreditAmount entrypoint method is used to credit an amount in an order after it has been delivered. Supports PaymentPlan,
+card and direct bank.
+The amount is cancelled from a Payment Plan.
+The amount is credited from a card och bank transaction that have reached the status SUCCESS, meaning it has to be confirmed and captured.
+
+Get an order builder instance using the WebpayAdmin.CreditAmount entrypoint, then provide more information about the transaction and
+send the request using the CreditAmountBuilder methods:
+
+```csharp
+    CreditAmountBuilder request = WebpayAdmin.CreditAmount(config)
+        .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
+        .SetTransactionId()           // required for card or direct bank only
+        .SetCountryCode()             // required for payment plan only
+        .SetDescription()             // optional for payment plan only, description to print on resulting cancellation rows
+        .SetAmountIncVat()            // required, amount to credit
+        ;
+       // then select the corresponding request class and send request
+       response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
+       response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
+       response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
 
 ```
 

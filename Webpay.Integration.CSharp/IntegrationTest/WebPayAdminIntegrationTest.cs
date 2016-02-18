@@ -278,6 +278,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(creditResponse.Accepted);
         }
 
+        [Test]
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUndeliveredRowFails()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            // deliver order
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                //.SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                ;
+            AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                 .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                 .SetInvoiceDistributionType(DistributionType.POST)
+                 .SetCountryCode(CountryCode.SE)
+                 .SetRowToCredit(1)
+                 .SetRowToCredit(2)
+             ;
+            AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(creditResponse.ResultCode, Is.EqualTo(20010));
+            Assert.That(creditResponse.ErrorMessage, Is.EqualTo("All rows must belong to the invoice"));
+
+
+        }
+
         // .CreditPaymentPlanOrderRows
 
 

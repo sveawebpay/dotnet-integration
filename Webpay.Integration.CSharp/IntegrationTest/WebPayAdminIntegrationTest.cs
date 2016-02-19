@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -41,7 +42,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             return order;
         }
 
-        private static CreateOrderEuResponse CreatePaymentPlanOrderWithTwoOrderRows()
+        private static CreateOrderEuResponse CreatePaymentPlanOrderWithOneOrderRow()
         {
             // get campaigns
             var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
@@ -87,7 +88,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_QueryOrder_QueryPaymentPlanOrder()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
             Assert.IsTrue(order.Accepted);
 
             // query order
@@ -251,7 +252,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         // ---------------------------------------------------------------------------------
         // .CreditInvoiceOrderRows
         [Test]
-        public void Test_CreditOrderRows_CreditInvoiceOrderRows_Credit_All_Rows()
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingSetRowToCredit()
         {
             // create order
             var order = CreateInvoiceOrderWithTwoOrderRows();
@@ -280,7 +281,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         [Test]
-        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRow()
+        public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddCreditOrderRow()
         {
             // create order
             var order = CreateInvoiceOrderWithTwoOrderRows();
@@ -310,7 +311,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
                 .SetInvoiceDistributionType(DistributionType.POST)
                 .SetCountryCode(CountryCode.SE)
-                .AddCreditOrderRow(newCreditOrderRows)
+                .AddCreditOrderRows(newCreditOrderRows)
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
             Assert.IsTrue(creditResponse.Accepted);
@@ -347,7 +348,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
                 .SetInvoiceDistributionType(DistributionType.POST)
                 .SetCountryCode(CountryCode.SE)
-                .AddCreditOrderRow( newCreditOrderRows )
+                .AddCreditOrderRows( newCreditOrderRows )
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
             Assert.IsFalse(creditResponse.Accepted);
@@ -387,7 +388,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
                 .SetInvoiceDistributionType(DistributionType.POST)
                 .SetCountryCode(CountryCode.SE)
-                .AddCreditOrderRow(newCreditOrderRows)
+                .AddCreditOrderRows(newCreditOrderRows)
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
             Assert.IsFalse(creditResponse.Accepted);
@@ -427,7 +428,68 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         // .CreditPaymentPlanOrderRows
+        [Test]
+        public void Test_CreditOrderRows_CreditPaymentPlanOrderRows_Credit_UsingSetRowToCredit()
+        {
+            // create order
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
+            Assert.IsTrue(order.Accepted);
 
+            // TODO copy create-deliver to WebpayConnectionIntegrationTest
+            // deliver order
+            var deliverBuilder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                ;
+            var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                 .SetContractNumber(deliverResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber)
+                 .SetCountryCode(CountryCode.SE)
+                 .SetRowToCredit(1)
+             ;
+            AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
+            Assert.IsTrue(creditResponse.Accepted);
+        }
+
+        [Test]
+        public void Test_CreditOrderRows_CreditPaymentPlanOrderRows_UsingAddCreditOrderRow()
+        {
+            // create order
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
+            Assert.IsTrue(order.Accepted);
+
+            // TODO copy create-deliver to WebpayConnectionIntegrationTest
+            // deliver order
+            var deliverBuilder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                ;
+            var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(deliverResponse.Accepted);
+
+            var newExVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountExVat(8.0M)
+                .SetVatPercent(25)
+                .SetQuantity(1M)
+            ;
+            var newCreditOrderRows = new List<OrderRowBuilder>();
+            newCreditOrderRows.Add(newExVatCreditOrderRow);
+
+            // credit order rows
+            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                 .SetContractNumber(deliverResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber)
+                 .SetCountryCode(CountryCode.SE)
+                 .AddCreditOrderRows(newCreditOrderRows)
+             ;
+            AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
+            Assert.IsTrue(creditResponse.Accepted);
+        }
 
         // / WebPayAdmin.cancelOrder()
         // --------------------------------------------------------------------------------------
@@ -452,24 +514,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         [Test]
         public void Test_CancelOrder_CancelPaymentPlanOrder()
         {
-            // get campaigns
-            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .DoRequest();
-
             // create order
-            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
-                .AddCustomerDetails(Item.IndividualCustomer()
-                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderDate(TestingTool.DefaultTestDate)
-                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                ;
-            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
             Assert.IsTrue(order.Accepted);
-
+           
             // do cancelOrder request and assert the response
             CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
@@ -511,7 +559,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_CreditAmount_CreditPaymentPlanAmount()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
             Assert.IsTrue(order.Accepted);
 
             // deliver paymentplan
@@ -537,7 +585,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_CreditAmount_CreditPaymentPlanAmount_CreditUndeliveredPaymentPlanFails()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = CreatePaymentPlanOrderWithOneOrderRow();
             Assert.IsTrue(order.Accepted);
 
             // credit amount

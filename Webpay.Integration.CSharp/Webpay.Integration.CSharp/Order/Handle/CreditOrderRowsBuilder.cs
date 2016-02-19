@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Webpay.Integration.CSharp.AdminService;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Row;
@@ -9,7 +10,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 {
     public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
     {
-        internal long InvoiceId { get; private set; }
+        internal long Id { get; private set; }
         internal PaymentType OrderType { get; set; }
         internal DistributionType DistributionType { get; private set; }
         internal List<long> RowIndexesToCredit { get; }
@@ -23,7 +24,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public CreditOrderRowsBuilder SetInvoiceId(long invoiceId)
         {
-            InvoiceId = invoiceId;
+            Id = invoiceId;
+            return this;
+        }
+
+        public CreditOrderRowsBuilder SetContractNumber(long contractNumber)
+        {
+            Id = contractNumber;
             return this;
         }
 
@@ -45,16 +52,22 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public AdminService.CreditOrderRowsRequest CreditInvoiceOrderRows()
-        {
-            OrderType = PaymentType.INVOICE;
-            return new AdminService.CreditOrderRowsRequest(this);
-        }
-
-        public CreditOrderRowsBuilder AddCreditOrderRow(IList<OrderRowBuilder> newCreditOrderRows)
+        public CreditOrderRowsBuilder AddCreditOrderRows(IList<OrderRowBuilder> newCreditOrderRows)
         {
             NewCreditOrderRows.AddRange(newCreditOrderRows);
             return this;
+        }
+
+        public AdminService.CreditInvoiceOrderRowsRequest CreditInvoiceOrderRows()
+        {
+            OrderType = PaymentType.INVOICE;
+            return new AdminService.CreditInvoiceOrderRowsRequest(this);
+        }
+
+        public AdminService.CreditPaymentPlanOrderRowsRequest CreditPaymentPlanOrderRows()
+        {
+            OrderType = PaymentType.PAYMENTPLAN;
+            return new AdminService.CreditPaymentPlanOrderRowsRequest(this);
         }
     }
 }

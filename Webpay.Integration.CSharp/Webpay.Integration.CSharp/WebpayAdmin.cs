@@ -68,12 +68,11 @@ namespace Webpay.Integration.CSharp
         ///   .SetCountryCode()             // required
         ///   .AddCreditOrderRow()          // optional, use to specify a new credit row, i.e. for amounts not present in the original order
         ///   .SetRowToCredit()             // optional, index of original order rows you wish to deliver
-        /// ??? fler?
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.CreditInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
         ///  ???response = request.CreditPaymentPlanOrderRows().DoRequest();    // returns AdminWS.xxx
-        ///  ...
+        /// ...
         /// </summary>
         public static CreditOrderRowsBuilder CreditOrderRows(IConfigurationProvider configurationProvider)
         {

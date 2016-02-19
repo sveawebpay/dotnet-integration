@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Exception;
@@ -10,11 +12,11 @@ using OrderType = Webpay.Integration.CSharp.AdminWS.OrderType;
 
 namespace Webpay.Integration.CSharp.AdminService
 {
-    public class CreditOrderRowsRequest
+    public class CreditPaymentPlanOrderRowsRequest
     {
         private CreditOrderRowsBuilder _builder;
 
-        public CreditOrderRowsRequest(CreditOrderRowsBuilder builder)
+        public CreditPaymentPlanOrderRowsRequest(CreditOrderRowsBuilder builder)
         {
             _builder = builder;
         }
@@ -56,7 +58,7 @@ namespace Webpay.Integration.CSharp.AdminService
         //    }
         //}
 
-        private AdminWS.OrderRow ConvertOrderRowBuilderToAdminWSOrderRow(OrderRowBuilder orb)
+        private AdminWS.OrderRow ConvertOrderRowBuilderToAdminWSCancellationRow(OrderRowBuilder orb)
         {
             var or = new AdminWS.OrderRow()
             {
@@ -71,12 +73,10 @@ namespace Webpay.Integration.CSharp.AdminService
                 PricePerUnit = (decimal)(orb.GetAmountIncVat() ?? orb.GetAmountExVat()),
                 VatPercent = (decimal)(orb.GetVatPercent() ?? (((orb.GetAmountIncVat()/orb.GetAmountExVat()) - 1M)*100M))
             };
-
-
             return or;
         }
 
-        public Webpay.Integration.CSharp.AdminWS.DeliveryResponse DoRequest()
+        public Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse DoRequest()
         {
             var auth = new AdminWS.Authentication()
             {
@@ -84,20 +84,53 @@ namespace Webpay.Integration.CSharp.AdminService
                 Username = _builder.GetConfig().GetUsername(_builder.OrderType,_builder.GetCountryCode())                
             };
 
-            var request = new AdminWS.CreditInvoiceRequest
+            var cancellationRows = new List<AdminWS.CancellationRow>();
+            foreach (var rowIndex in _builder.RowIndexesToCredit)
+            {
+                var cancellationRow = new AdminWS.CancellationRow()
+                {
+                    AmountInclVat = 0M,
+                    VatPercent = 0M,
+                    Description = null,
+                    RowNumber = (int)rowIndex
+                };
+                cancellationRows.Add(cancellationRow);
+            }
+            foreach (var ncr in _builder.NewCreditOrderRows)
+            {
+                // calculate amountIncVat from 2 out of 3 of incVat, exVat and vat% 
+                var vatPercent = (decimal)(ncr.GetVatPercent() ?? (((ncr.GetAmountIncVat() / ncr.GetAmountExVat()) - 1M) * 100M));
+                var amountIncVat = (decimal)(ncr.GetAmountIncVat() ?? (ncr.GetAmountExVat()*(1 + vatPercent/100M)));
+
+                // "<name>", "<description>" or if both, "<name>: <description>"
+                var rowNameAndDescription = String.Format("{0}{1}{2}",
+                    ncr.GetName() ?? "",
+                    (ncr.GetName() == null) ? "" : ((ncr.GetDescription() == null) ? "" : ": "),
+                    ncr.GetDescription());
+
+                var cancellationRow = new AdminWS.CancellationRow()
+                {
+                    AmountInclVat = amountIncVat,
+                    VatPercent = vatPercent,
+                    Description = rowNameAndDescription,
+                    RowNumber = null
+                };
+                cancellationRows.Add(cancellationRow);
+            }
+
+
+            var request = new AdminWS.CancelPaymentPlanRowsRequest()
             {
                 Authentication = auth,
-                InvoiceId = _builder.InvoiceId,
+                ContractNumber = _builder.Id,
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
-                RowNumbers = _builder.RowIndexesToCredit.ToArray(),
-                InvoiceDistributionType = ConvertDistributionTypeToInvoiceDistributionType(_builder.DistributionType),
-                NewCreditInvoiceRows = _builder.NewCreditOrderRows.Select( x => ConvertOrderRowBuilderToAdminWSOrderRow(x) ).ToArray()
+                CancellationRows = cancellationRows.ToArray()
             };
 
             // make request to correct endpoint, return response object
             var endpoint = _builder.GetConfig().GetEndPoint(PaymentType.ADMIN_TYPE);
             var adminWS = new AdminServiceClient("WcfAdminSoapService", endpoint);
-            var response = adminWS.CreditInvoiceRows(request);
+            var response = adminWS.CancelPaymentPlanRows(request);
 
             return response;
         }

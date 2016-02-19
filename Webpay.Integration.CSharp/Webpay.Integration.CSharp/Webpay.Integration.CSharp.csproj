@@ -51,7 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
-    <Compile Include="AdminService\CreditOrderRowsRequest.cs" />
+    <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
+    <Compile Include="AdminService\CreditInvoiceOrderRowsRequest.cs" />
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="AdminService\AnnulTransactionRequest.cs" />

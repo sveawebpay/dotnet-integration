@@ -36,11 +36,8 @@
 * [6. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
 * [7. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#7-webpayadmin-entrypoint-method-reference)
 * [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
+* [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmin-deliverorderrows)
+* [7.3 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#73-webpayadmin-cancelorder)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
@@ -837,20 +834,75 @@ Params:
 The WebpayConnection class methods contains the functions needed to handle orders for Webservice payments as well as hosted payments.
 It contains entrypoint methods used to define order contents, send order requests, as well as various support methods needed to do this.
 
-###7.1 WebpayAdmin.QueryOrder
+### 7.1 WebpayAdmin.QueryOrder
 The WebpayAdmin.QueryOrder entrypoint method is used to get information about an order.
 
 ```csharp
-CloseOrderEuResponse response =  WebpayAdmin.QueryOrder()
-	 .SetOrderId(CreateOrderResult.SveaOrderId)             //Required. See CreateOrder response
-         .SetCountryCode(CountryCode.SE)
-            ;
+  QueryOrderBuilder request = WebpayAdmin.QueryOrder(config)
+        .SetOrderId()                 // required
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        ;
+        // then select the corresponding request class and send request
+        response = request.QueryInvoiceOrder().DoRequest();         // returns AdminWS.GetOrdersResponse
+        response = request.QueryPaymentPlanOrder().DoRequest();     // returns AdminWS.GetOrdersResponse
+        response = request.QueryCardOrder().DoRequest();            // returns Hosted.Admin.Actions.QueryResponse
+        response = request.QueryDirectBankOrder().DoRequest();      // returns Hosted.Admin.Actions.QueryResponse
 
- // then select the corresponding request class and send request
-    var response = response.QueryInvoiceOrder().DoRequest();
-    var response = response.QueryPaymentPlanOrder.DoRequest();
-    var response = response.QueryCardOrder().DoRequest();
-    varresponse = response.QueryDirectBankOrder().DoRequest();
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+### 7.2 WebpayAdmin.DeliverOrderRows
+The WebpayAdmin.DeliverOrderRows entrypoint method is used to deliver individual order rows. Supports invoice and card orders.
+
+For Invoice orders, the order row status is updated at Svea following each successful request.
+
+For card orders, an order can only be delivered once, and any non-delivered order rows will be cancelled (i.e. the order amount will be lowered by the sum of the non-delivered order rows). A delivered card order has status CONFIRMED at Svea.
+
+Get an order builder instance using the WebpayAdmin.DeliverOrderRows() entrypoint, then provide more information about the transaction and send the request using the DeliverOrderRowsBuilder methods:
+
+Use SetRowToDeliver() or SetRowsToDeliver() to specify the order row(s) to deliver. The order row indexes should correspond to those returned by i.e. WebpayAdmin.QueryOrder();
+
+For card orders, use AddNumberedOrderRow() or AddNumberedOrderRows() to pass in a copy of the original order rows. The original order rows can be retrieved using WebpayAdmin.QueryOrder; the numberedOrderRows attribute contains the serverside order rows w/indexes. Note that if a card order has been modified (i.e. rows cancelled or credited) after the initial order creation, the returned order rows will not be accurate.
+
+
+```csharp
+  DeliverOrderRowsBuilder request = WebpayAdmin.DeliverOrderRows(config)
+        .SetOrderId()                 // required
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        .SetInvoiceDistributionType() // required for invoice only
+        .SetRowToDeliver()            // required, index of original order rows you wish to deliver
+        .AddNumberedOrderRow()        // required for card orders, should match original row indexes
+        ;
+        // then select the corresponding request class and send request
+        response = request.DeliverInvoiceOrderRows().DoRequest();   // returns AdminWS.DeliverOrderRowsResponse
+        response = request.DeliverCardOrder().DoRequest();          // returns Hosted.Admin.Actions.ConfirmResponse
+
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+### 7.3 WebpayAdmin.CancelOrder
+The  WebpayAdmin.CancelOrder() entrypoint method is used to cancel an order with Svea,
+that has not yet been delivered (invoice, payment plan) or confirmed (card).
+
+Supports Invoice, Payment Plan and Card orders.
+
+Get an instance using the WebpayAdmin.CancelOrder entrypoint, then provide more information about the order and send
+the request using the CancelOrderBuilder methods:
+
+```csharp
+    CancelOrderBuilder request = WebpayAdmin.CancelOrder(config)
+        .SetOrderId()                 // required, use SveaOrderId recieved with createOrder response
+        .SetTransactionId()           // optional, card or direct bank only, alias for SetOrderId
+        .SetCountryCode()             // required
+        ;
+        // then select the corresponding request class and send request
+        response = request.CancelInvoiceOrder().DoRequest();       // returns AdminWS.CancelOrderResponse
+        response = request.CancelPaymentPlanOrder().DoRequest();   // returns AdminWS.CancelOrderResponse
+        response = request.CancelCardOrder().DoRequest();          // returns Hosted.Admin.Actions.AnnulResponse
 
 ```
 

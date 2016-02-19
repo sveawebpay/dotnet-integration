@@ -60,6 +60,26 @@ namespace Webpay.Integration.CSharp
         }
 
         /// <summary>
+        /// ...
+        ///  CreditOrderRowsBuilder request = WebpayAdmin.CreditOrderRows(config)
+        ///   .SetInvoiceId()               // required for invoice only, use invoice number recieved with deliverOrder response
+        ///   .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
+        ///   .SetInvoiceDistributionType() // required for invoice only
+        ///   .SetCountryCode()             // required
+        ///   .AddCreditOrderRow()          // optional, use to specify a new credit row, i.e. for amounts not present in the original order
+        ///   .SetRowToCredit()             // optional, index of original order rows you wish to deliver
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.CreditInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
+        ///  ???response = request.CreditPaymentPlanOrderRows().DoRequest();    // returns AdminWS.xxx
+        /// ...
+        /// </summary>
+        public static CreditOrderRowsBuilder CreditOrderRows(IConfigurationProvider configurationProvider)
+        {
+            return new CreditOrderRowsBuilder(configurationProvider);
+        }
+
+        /// <summary>
         ///  ...
         ///  CancelOrderBuilder request = WebpayAdmin.CancelOrder(config)
         ///   .SetOrderId()                 // required, use SveaOrderId recieved with createOrder response
@@ -81,7 +101,7 @@ namespace Webpay.Integration.CSharp
         /// <summary>
         ///  ...
         ///  CreditAmountBuilder request = WebpayAdmin.CreditAmount(config)
-        ///   .SetContractNumber()          // required for payment plan only, use SveaOrderId recieved with createOrder response
+        ///   .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
         ///   .SetTransactionId()           // required for card or direct bank only
         ///   .SetCountryCode()             // required for payment plan only
         ///   .SetDescription()             // optional for payment plan only, description to print on resulting cancellation rows

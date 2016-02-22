@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order.Handle;
@@ -43,8 +44,7 @@ namespace Webpay.Integration.CSharp.AdminService
             if (amountToLowerOrderBy > 0M)
             {
                 // first loweramount, then confirm!
-                var lowerAmountRequest = WebpayAdmin
-                    .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                var lowerAmountRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                     .LowerAmount(new LowerAmount(
                         transactionId: _builder.GetOrderId(),
                         amountToLower: Decimal.ToInt64(amountToLowerOrderBy *100)    // centessimal
@@ -63,8 +63,7 @@ namespace Webpay.Integration.CSharp.AdminService
                     return Confirm.Response(dummyInternalErrorResponseXml);
                 }
             }
-            var hostedActionRequest = WebpayAdmin
-                .Hosted(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: _builder.GetOrderId(),
                     captureDate: _builder._captureDate ?? DateTime.Now  // if no captureDate set, use today's date as default.

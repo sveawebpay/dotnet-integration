@@ -1,5 +1,6 @@
 ﻿using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -7,7 +8,7 @@ namespace Webpay.Integration.CSharp.AdminService
 {
     public class QueryTransactionRequest
     {
-        QueryOrderBuilder _builder;
+        readonly QueryOrderBuilder _builder;
 
         public QueryTransactionRequest(QueryOrderBuilder builder) {
             _builder = builder;

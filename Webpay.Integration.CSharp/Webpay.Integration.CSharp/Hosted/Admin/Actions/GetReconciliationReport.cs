@@ -1,5 +1,6 @@
 using System;
 using System.Xml;
+using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {

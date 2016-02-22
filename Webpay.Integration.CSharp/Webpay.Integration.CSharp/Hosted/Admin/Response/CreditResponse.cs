@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
+namespace Webpay.Integration.CSharp.Hosted.Admin.Response
 {
     public class CreditResponse : CustomerRefNoResponseBase
     {

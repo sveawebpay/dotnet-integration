@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
+namespace Webpay.Integration.CSharp.Hosted.Admin.Response
 {
     public class RecurResponse : CustomerRefNoResponseBase
     {
@@ -15,8 +15,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string AuthCode;
         public readonly string SubscriptionId;
 
-        public RecurResponse(XmlDocument response)
-            : base(response)
+        public RecurResponse(XmlDocument response) : base(response)
         {
             PaymentMethod = TextString(response, "/response/transaction/paymentmethod");
             MerchantId = TextInt(response, "/response/transaction/merchantid");

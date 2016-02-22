@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Order.Row;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
+namespace Webpay.Integration.CSharp.Hosted.Admin.Response
 {
     public class QueryResponse : CustomerRefNoResponseBase
     {
@@ -76,10 +75,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                         TextString(xmlNode, "./unit")
                         ));
 
-                    Decimal row_amount = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value);
-                    Decimal row_vat = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./vat")) ?? 0M;
-                    Decimal row_amountExVat = (row_amount - row_vat);
-                    Decimal row_vatPercent = (row_vat / (row_amountExVat)) *100;
+                    decimal row_amount = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./amount").Value);
+                    decimal row_vat = MinorCurrencyToDecimalAmount(TextInt(xmlNode, "./vat")) ?? 0M;
+                    decimal row_amountExVat = (row_amount - row_vat);
+                    decimal row_vatPercent = (row_vat / (row_amountExVat)) *100;
 
                     var numberedOrderRow = new NumberedOrderRowBuilder()
                         .SetRowNumber( rowNumber++ )

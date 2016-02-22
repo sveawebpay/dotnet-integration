@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.Order.Create;
@@ -113,7 +114,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
             Assert.That(answer.Transaction.NumberedOrderRows.First().GetName(), Is.EqualTo("Prod")); //SetName
@@ -142,7 +143,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             //Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
         }
@@ -182,7 +183,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
 
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
@@ -196,7 +197,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
 
-            CSharp.Hosted.Admin.Actions.ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
+            ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
             Assert.IsTrue(delivery.Accepted);
 
             // query updated order
@@ -204,7 +205,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
         }
@@ -222,7 +223,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
@@ -233,7 +234,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetRowToDeliver(1)
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
-            CSharp.Hosted.Admin.Actions.ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
+            ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
             Assert.IsTrue(delivery.Accepted);
 
             // query updated order
@@ -241,7 +242,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00M)); //r1, 100.00ex@25*2 => 250.00
         }
@@ -538,7 +539,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
             ;
-            CSharp.Hosted.Admin.Actions.AnnulResponse cancellation = cancelOrderBuilder.CancelCardOrder().DoRequest();
+            AnnulResponse cancellation = cancelOrderBuilder.CancelCardOrder().DoRequest();
             Assert.IsTrue(cancellation.Accepted);
 
             // query updated order
@@ -546,7 +547,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED")); // TODO make enum w/Transaction statuses
         }
@@ -616,7 +617,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
 
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             var before = answer.Transaction.CreditedAmount;
 
@@ -628,7 +629,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(amountToCredit)
                 ;
-            CSharp.Hosted.Admin.Actions.CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
+            CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
             Assert.IsTrue(response.Accepted);
 
             // query updated order
@@ -636,7 +637,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
             Assert.That(after, Is.EqualTo(before + amountToCredit));
@@ -657,7 +658,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
 
-            CSharp.Hosted.Admin.Actions.QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
             var before = answer.Transaction.CreditedAmount;
 
@@ -669,7 +670,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(amountToCredit)
                 ;
-            CSharp.Hosted.Admin.Actions.CreditResponse response = creditAmountBuilder.CreditDirectBankAmount().DoRequest();
+            CreditResponse response = creditAmountBuilder.CreditDirectBankAmount().DoRequest();
             Assert.IsTrue(response.Accepted);
 
             // query updated order
@@ -677,7 +678,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetTransactionId(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 ;
-            CSharp.Hosted.Admin.Actions.QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+            QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
             Assert.That(after, Is.EqualTo(before + amountToCredit));

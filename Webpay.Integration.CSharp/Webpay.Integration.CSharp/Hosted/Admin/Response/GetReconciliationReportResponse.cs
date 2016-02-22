@@ -1,15 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Xml;
+using System.Collections.Generic;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 
-namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
+namespace Webpay.Integration.CSharp.Hosted.Admin.Response
 {
     public class GetReconciliationReportResponse : SpecificHostedAdminResponseBase
     {
         public readonly IList<ReconciliationTransaction> ReconciliationTransactions;
 
-        public GetReconciliationReportResponse(XmlDocument response)
-            : base(response)
+        public GetReconciliationReportResponse(XmlDocument response) : base(response)
         {
             ReconciliationTransactions = new List<ReconciliationTransaction>();
 

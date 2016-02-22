@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Webpay.Integration.CSharp.AdminService;
+﻿using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -13,8 +10,8 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal long Id { get; private set; }
         internal PaymentType OrderType { get; set; }
         internal DistributionType DistributionType { get; private set; }
-        internal List<long> RowIndexesToCredit { get; }
-        internal List<OrderRowBuilder> NewCreditOrderRows { get; }
+        internal List<long> RowIndexesToCredit { get; private set; } // keep private set; for non-C# 6 compatibility
+        internal List<OrderRowBuilder> NewCreditOrderRows { get; private set; } // keep private set; for non-C# 6 compatibility
 
         public CreditOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {

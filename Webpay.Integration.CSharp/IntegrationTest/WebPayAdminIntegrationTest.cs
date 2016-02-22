@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -603,7 +602,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         }
 
         // .CreditCardAmount
-        [Test, Ignore]
+        [Test]
         public void Test_CreditAmount_CreditCardAmount()
         {
             // create order

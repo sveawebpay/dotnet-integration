@@ -10,15 +10,14 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal long Id { get; private set; }
         internal PaymentType OrderType { get; set; }
         //internal DateTime? CaptureDate { get; private set; }
-        //internal DistributionType DistributionType { get; private set; }
-        internal List<long> RowIndexesToDeliver { get; private set; }
-        internal List<NumberedOrderRowBuilder> NumberedOrderRows { get; private set; }
+        internal List<long> RowIndexesToCancel { get; private set; }
+        //internal List<NumberedOrderRowBuilder> NumberedOrderRows { get; private set; }
 
         public CancelOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {
             //this.CaptureDate = null;
-            this.RowIndexesToDeliver = new List<long>();
-            this.NumberedOrderRows = new List<NumberedOrderRowBuilder>();
+            this.RowIndexesToCancel = new List<long>();
+            //this.NumberedOrderRows = new List<NumberedOrderRowBuilder>();
         }
 
         public CancelOrderRowsBuilder SetOrderId(long orderId)
@@ -38,23 +37,17 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        //public CancelOrderRowsBuilder SetInvoiceDistributionType(DistributionType distributionType)
+        public CancelOrderRowsBuilder SetRowToCancel(long rowIndexToDeliver)
+        {
+            RowIndexesToCancel.Add(rowIndexToDeliver);
+            return this;
+        }
+
+        //public CancelOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
         //{
-        //    DistributionType = distributionType;
+        //    NumberedOrderRows.AddRange(numberedOrderRows);
         //    return this;
         //}
-
-        public CancelOrderRowsBuilder SetRowToDeliver(long rowIndexToDeliver)
-        {
-            RowIndexesToDeliver.Add(rowIndexToDeliver);
-            return this;
-        }
-
-        public CancelOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
-        {
-            NumberedOrderRows.AddRange(numberedOrderRows);
-            return this;
-        }
 
         public AdminService.CancelOrderRowsRequest CancelInvoiceOrderRows()
         {

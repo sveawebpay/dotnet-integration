@@ -65,6 +65,7 @@
     <Compile Include="Hosted\Admin\PaymentResponse.cs" />
     <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebpayConnectionIntegrationTest.cs" />
     <Compile Include="WebpayAdminIntegrationTest.cs" />
     <Compile Include="Webservice\CreateOrder\CreateOrderTest.cs" />
     <Compile Include="Webservice\GetAddress\GetAddressesTest.cs" />

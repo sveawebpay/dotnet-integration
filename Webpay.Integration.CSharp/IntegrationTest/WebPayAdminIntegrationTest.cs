@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
@@ -104,6 +105,105 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
         }
+
+
+        ///  DeliverOrdersBuilder request = WebpayAdmin.DeliverOrders(config)
+        ///   .SetOrderId()                 // optional, order id to deliver
+        ///   .SetOrderIds()                // optional, note that order ids must all be of the same type (invoice, part payment) 
+        ///   .SetCountryCode()             // required
+        ///   .SetInvoiceDistributionType() // required for invoice only, will apply to all invoice orders
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.DeliverInvoiceOrders().DoRequest();     // returns AdminWS.DeliveryResponse
+        ///  response = request.DeliverPaymentPlanOrders().DoRequest();  // returns AdminWS.DeliveryResponse
+
+        // / WebPayAdmin.deliverOrder()
+        // ---------------------------------------------------------------------------------
+        // .deliverInvoiceOrder
+        [Test]
+        public void Test_DeliverOrders_DeliverInvoiceOrderRows_SetOrderIdAndSingleOrder()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+
+            DeliverOrdersBuilder builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                //.SetOrderIds()                
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                ;
+            AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
+            Assert.IsTrue(delivery.Accepted);
+
+            Assert.NotNull(delivery.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber);
+
+            var referenceNumber = from dr in delivery.OrdersDelivered
+                where dr.SveaOrderId.Equals(order.CreateOrderResult.SveaOrderId)
+                select dr.DeliveryReferenceNumber;
+            Assert.NotNull(referenceNumber);
+
+            Assert.NotNull( delivery.OrdersDelivered.Single(od => od.SveaOrderId == order.CreateOrderResult.SveaOrderId).DeliveryReferenceNumber );
+        }
+
+        [Test]
+        public void Test_DeliverOrders_DeliverInvoiceOrderRows_WithSetOrderIdsAndMultipleOrders()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+            var orderTwo = CreateInvoiceOrderWithTwoOrderRows();
+            var orderIdsToDeliver = new List<long>
+            {
+                order.CreateOrderResult.SveaOrderId,
+                orderTwo.CreateOrderResult.SveaOrderId
+            };
+
+            DeliverOrdersBuilder builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
+                //.SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetOrderIds(orderIdsToDeliver)                
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                ;
+            AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
+            Assert.IsTrue(delivery.Accepted);
+
+            var referenceNumbers = from od in delivery.OrdersDelivered
+                                  where orderIdsToDeliver.Contains(od.SveaOrderId)
+                                  select od.DeliveryReferenceNumber;
+            Assert.That(referenceNumbers.Count(), Is.EqualTo(2));
+
+            Assert.That(delivery.OrdersDelivered.Select( od => orderIdsToDeliver.Contains(od.SveaOrderId) ).Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Test_DeliverOrders_DeliverInvoiceOrderRows_WithMixedSetOrderIdxAndMultipleOrders()
+        {
+            // create order
+            var order = CreateInvoiceOrderWithTwoOrderRows();
+            var orderTwo = CreateInvoiceOrderWithTwoOrderRows();
+            var orderThree = CreateInvoiceOrderWithTwoOrderRows();
+            var orderIdsToDeliver = new List<long>
+            {
+                order.CreateOrderResult.SveaOrderId,
+                orderTwo.CreateOrderResult.SveaOrderId,
+            };
+
+            DeliverOrdersBuilder builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
+                .SetOrderIds(orderIdsToDeliver)
+                .SetOrderId(orderThree.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                ;
+            AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
+            Assert.IsTrue(delivery.Accepted);
+
+            var referenceNumbers = from od in delivery.OrdersDelivered
+                                   where orderIdsToDeliver.Contains(od.SveaOrderId) || od.SveaOrderId == orderThree.CreateOrderResult.SveaOrderId
+                                   select od.DeliveryReferenceNumber;
+            Assert.That(referenceNumbers.Count(), Is.EqualTo(3));
+
+            Assert.That(delivery.OrdersDelivered.Select(od => orderIdsToDeliver.Contains(od.SveaOrderId) || od.SveaOrderId == orderThree.CreateOrderResult.SveaOrderId).Count, Is.EqualTo(3));
+        }
+
 
 
         // / WebPayAdmin.deliverOrderRows()

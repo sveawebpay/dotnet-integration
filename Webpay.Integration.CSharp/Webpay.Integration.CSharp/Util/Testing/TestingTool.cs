@@ -1,8 +1,11 @@
 ﻿using System;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Identity;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.WebpayWS;
 
 namespace Webpay.Integration.CSharp.Util.Testing
 {
@@ -37,10 +40,10 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetVatDiscount(0);
         }
 
-        public static OrderRowBuilder CreatePaymentPlanOrderRow()
+        public static OrderRowBuilder CreatePaymentPlanOrderRow(string articleNumber = "1")
         {
             return Item.OrderRow()
-                       .SetArticleNumber("1")
+                       .SetArticleNumber(articleNumber)
                        .SetName("Prod")
                        .SetDescription("Specification")
                        .SetAmountExVat(1000.00M)
@@ -354,6 +357,66 @@ namespace Webpay.Integration.CSharp.Util.Testing
             }
 
             return cCustomer;
+        }
+
+
+        public static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRows()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            return order;
+        }
+
+        public static CreateOrderEuResponse CreatePaymentPlanOrderWithOneOrderRow()
+        {
+            // get campaigns
+            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .DoRequest();
+
+            // create order
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            return order;
+        }
+
+        public static CreateOrderEuResponse CreatePaymentPlanOrderWithTwoOrderRows()
+        {
+            // get campaigns
+            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .DoRequest();
+
+            // create order
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+            return order;
         }
     }
 }

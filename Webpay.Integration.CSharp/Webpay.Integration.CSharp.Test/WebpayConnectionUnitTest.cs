@@ -143,9 +143,7 @@ namespace Webpay.Integration.CSharp.Test
         // deliverOrder - deliverInvoiceOrder - with orderRows - doRequest => response class A        
         // deliverOrder - deliverInvoiceOrder - with orderRows - setCreditInvoice - doRequest => response class ?      
 
-        // deliverOrder - deliverInvoiceOrder - without orderRows => request class B
-
-        // deliverOrder - deliverInvoiceOrder - without orderRows - doRequest => response class B   
+        // deliverOrder - deliverInvoiceOrder - without orderRows => throws "MISSING VALUE..."
         [Test]
         public void test_deliverOrder_deliverInvoiceOrder_without_order_rows_throws_validation_exception()
         {
@@ -165,8 +163,7 @@ namespace Webpay.Integration.CSharp.Test
         }
 
         // deliverOrder - deliverPaymentPlanOrder - with orderRows -- TODO test and define/document behaviour for paymentplan orders, existing docs based on invoice?        
-        // deliverOrder - deliverPaymentPlanOrder - without orderRows => request class A
-        // deliverOrder - deliverPaymentPlanOrder - without orderRows - doRequest => response class A
+        // deliverOrder - deliverPaymentPlanOrder - without orderRows => throws "MISSING VALUE..."
 
         // deliverOrder - deliverCardOrder
         [Test]

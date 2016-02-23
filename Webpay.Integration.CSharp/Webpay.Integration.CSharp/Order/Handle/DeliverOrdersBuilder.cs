@@ -47,6 +47,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AdminService.DeliverOrdersRequest DeliverPaymentPlanOrders()
         {
             OrderType = PaymentType.PAYMENTPLAN;
+            DistributionType = DistributionType.POST;   // always use Post for payment plan orders
             return new AdminService.DeliverOrdersRequest(this);
         }
     }

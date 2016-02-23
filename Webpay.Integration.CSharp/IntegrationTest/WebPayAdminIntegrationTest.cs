@@ -4,12 +4,10 @@ using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order.Row;
-using Webpay.Integration.CSharp.Util.Testing;
-using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Util.Constant;
-using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 using Webpay.Integration.CSharp.Order.Handle;
+using static Webpay.Integration.CSharp.Util.Testing.TestingTool;
 
 namespace Webpay.Integration.CSharp.IntegrationTest
 {
@@ -19,49 +17,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         private static PaymentResponse CreateCardOrderWithTwoOrderRows()
         {
             var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-            var payment =
-                HostedAdminTest.MakePreparedPayment(
-                    HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
+            var payment = HostedAdminTest.MakePreparedPayment(HostedAdminTest.PrepareRegularPaymentWithTwoRows(PaymentMethod.SVEACARDPAY, customerRefNo));
             return payment;
-        }
-
-        private static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRows()
-        {
-            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-                .AddCustomerDetails(Item.IndividualCustomer()
-                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderDate(TestingTool.DefaultTestDate)
-                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                ;
-            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
-            Assert.IsTrue(order.Accepted);
-            return order;
-        }
-
-        private static CreateOrderEuResponse CreatePaymentPlanOrderWithOneOrderRow()
-        {
-            // get campaigns
-            var campaigns = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .DoRequest();
-
-            // create order
-            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
-                .AddCustomerDetails(Item.IndividualCustomer()
-                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderDate(TestingTool.DefaultTestDate)
-                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                .SetCurrency(TestingTool.DefaultTestCurrency)
-                ;
-            CreateOrderEuResponse order = createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
-            Assert.IsTrue(order.Accepted);
-            return order;
         }
 
         /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
@@ -161,7 +118,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // deliver first order row and assert the response
             DeliverOrderRowsBuilder builder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetCountryCode(DefaultTestCountryCode)
                 .SetInvoiceDistributionType(DistributionType.POST) // TODO harmonise InvoiceDistributionType w/AdminWS?!
                 .SetRowToDeliver(1)
                 ;
@@ -191,7 +148,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             DeliverOrderRowsBuilder builder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
                 .SetTransactionId((long) answer.TransactionId)
                 // we've checked that answer was accepted, i.e. transactionId exists
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetCountryCode(DefaultTestCountryCode)
                 .SetRowToDeliver(1)
                 .SetRowToDeliver(2)
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
@@ -230,7 +187,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // deliver all order rows
             DeliverOrderRowsBuilder builder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
                 .SetTransactionId((long) answer.TransactionId)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetCountryCode(DefaultTestCountryCode)
                 .SetRowToDeliver(1)
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
@@ -440,7 +397,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var deliverBuilder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
-                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddOrderRow(CreatePaymentPlanOrderRow())
                 ;
             var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
             Assert.IsTrue(deliverResponse.Accepted);
@@ -467,7 +424,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var deliverBuilder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
-                .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
+                .AddOrderRow(CreatePaymentPlanOrderRow())
                 ;
             var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
             Assert.IsTrue(deliverResponse.Accepted);

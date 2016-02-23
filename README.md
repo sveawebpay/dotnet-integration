@@ -35,10 +35,11 @@
     * [5.6 WebpayConnection.CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#56-webpayconnectioncloseorder)
 * [6. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
 * [7. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#7-webpayadmin-entrypoint-method-reference)
-* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadmin-queryorder)
-* [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmin-deliverorderrows)
-* [7.3 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#73-webpayadmin-cancelorder)
-* [7.4 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#74-webpayadmin-creditamount)
+* [7.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
+* [7.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmindeliverorderrows)
+* [7.3 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#73-webpayadmincancelorder)
+* [7.4 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#74-webpayadmincreditamount)
+* [7.5 WebpayAdmin.CreditOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#75-webpayadmincreditorderrows)
 * [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
@@ -930,6 +931,40 @@ send the request using the CreditAmountBuilder methods:
        response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
        response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
        response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
+
+```
+
+[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
+### 7.5 WebpayAdmin.CreditOrderRows
+ The  WebpayAdmin.CreditOrderRows entrypoint method is used to credit rows in an order after it has been delivered.
+Supports invoice, PaymentPlan.
+(To credit a payment plan order, please contact Svea customer service first.)
+
+If you wish to credit an amount not present in the original order, use addCreditOrderRow() or addCreditOrderRows()
+and supply a new order row for the amount to credit.
+
+If you wish to credit an invoice or Payment Plan order row in full, you can specify the index of the order row to credit using setRowToCredit().
+The corresponding order row at Svea will then be credited.
+
+     * Following the request Svea will issue a credit invoice including the original order rows specified using setRowToCredit(),
+     * as well as any new credit order rows specified using addCreditOrderRow().
+
+Get an order builder instance using the WebpayAdmin.CreditOrderRows entrypoint, then provide more information about the
+transaction and send the request using the CreditOrderRowsBuilder methods:
+
+```csharp
+    CreditOrderRowsBuilder request = WebpayAdmin.CreditOrderRows(config)
+           .SetInvoiceId()               // required for invoice only, use invoice number recieved with deliverOrder response
+           .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
+           .SetInvoiceDistributionType() // required for invoice only
+           .SetCountryCode()             // required
+           .AddCreditOrderRow()          // optional, use to specify a new credit row, i.e. for amounts not present in the original order
+           .SetRowToCredit()             // optional, index of original order rows you wish to deliver
+          ;
+          // then select the corresponding request class and send request
+          response = request.CreditInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
+          response = request.CreditPaymentPlanOrderRows().DoRequest();
 
 ```
 

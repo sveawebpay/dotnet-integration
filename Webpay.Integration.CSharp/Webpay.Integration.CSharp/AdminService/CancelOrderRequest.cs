@@ -42,7 +42,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var request = new Webpay.Integration.CSharp.AdminWS.CancelOrderRequest()
             {
                 Authentication = auth,
-                SveaOrderId = _builder.GetOrderId(),
+                SveaOrderId = _builder.Id,
                 OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode())               
             };

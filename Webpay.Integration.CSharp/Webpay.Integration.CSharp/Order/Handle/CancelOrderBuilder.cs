@@ -1,14 +1,12 @@
-﻿using Webpay.Integration.CSharp.AdminService;
-using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+﻿using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
     public class CancelOrderBuilder : Builder<CancelOrderBuilder>
     {
-        private long _orderId;
-        public PaymentType OrderType { get; set; }
+        internal long Id { get; private set; }
+        internal PaymentType OrderType { get; private set; }
 
         public CancelOrderBuilder(IConfigurationProvider config) : base(config)
         {
@@ -17,18 +15,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public CancelOrderBuilder SetOrderId(long orderId)
         {
-            _orderId = orderId;
+            Id = orderId;
             return this;
         }
 
         public CancelOrderBuilder SetTransactionId(long orderId)
         {
             return this.SetOrderId(orderId);
-        }
-
-        public long GetOrderId()
-        {
-            return _orderId;
         }
 
         public override CancelOrderBuilder SetCountryCode(CountryCode countryCode)
@@ -49,7 +42,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.CancelOrderRequest(this);
         }
 
-        public AnnulTransactionRequest CancelCardOrder()
+        public AdminService.AnnulTransactionRequest CancelCardOrder()
         {
             return new AdminService.AnnulTransactionRequest(this);
         }

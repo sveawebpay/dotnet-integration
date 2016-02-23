@@ -94,6 +94,7 @@
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Handle\CreditAmountBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
+    <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />

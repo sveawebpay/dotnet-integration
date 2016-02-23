@@ -65,7 +65,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var orderToDeliver = new AdminWS.DeliverOrderInformation()
             {
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
-                SveaOrderId = _builder.GetOrderId(),
+                SveaOrderId = _builder.Id,
                 OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType)
                 //PrintType // optional for EU-clients
             };
@@ -74,8 +74,8 @@ namespace Webpay.Integration.CSharp.AdminService
             {
                 Authentication = auth,
                 OrderToDeliver = orderToDeliver,
-                RowNumbers = _builder._rowIndexesToDeliver.ToArray(),
-                InvoiceDistributionType = ConvertDistributionTypeToInvoiceDistributionType(_builder._distributionType)
+                RowNumbers = _builder.RowIndexesToDeliver.ToArray(),
+                InvoiceDistributionType = ConvertDistributionTypeToInvoiceDistributionType(_builder.DistributionType)
             };
 
             // make request to correct endpoint, return response object

@@ -9,23 +9,6 @@ namespace Webpay.Integration.CSharp.AdminService
     {
         private readonly CreditAmountBuilder _builder;
 
-        //private AdminWS.OrderType ConvertPaymentTypeToOrderType(Util.Constant.PaymentType pt)
-        //{
-        //    switch (pt)
-        //    {
-        //        #pragma warning disable 0162 //CS0162 Unreachable code detected
-        //        case PaymentType.INVOICE:
-        //            return AdminWS.OrderType.Invoice;
-        //            break;
-        //        case PaymentType.PAYMENTPLAN:
-        //            return AdminWS.OrderType.PaymentPlan;
-        //            break;
-        //        default:
-        //            throw new SveaWebPayException("Invalid PaymentType");
-        //        #pragma warning restore 0162
-        //    }
-        //}
-
         public CreditAmountRequest(CreditAmountBuilder builder)
         {
             _builder = builder;
@@ -43,7 +26,7 @@ namespace Webpay.Integration.CSharp.AdminService
             {
                 Authentication = auth,
                 AmountInclVat = _builder.AmountIncVat,
-                ContractNumber = _builder.GetContractNumber(),
+                ContractNumber = _builder.Id,
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
                 Description = _builder.Description
             };

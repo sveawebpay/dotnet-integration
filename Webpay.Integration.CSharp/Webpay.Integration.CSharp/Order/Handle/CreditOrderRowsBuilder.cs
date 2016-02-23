@@ -10,8 +10,8 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal long Id { get; private set; }
         internal PaymentType OrderType { get; set; }
         internal DistributionType DistributionType { get; private set; }
-        internal List<long> RowIndexesToCredit { get; private set; } // keep private set; for non-C# 6 compatibility
-        internal List<OrderRowBuilder> NewCreditOrderRows { get; private set; } // keep private set; for non-C# 6 compatibility
+        internal List<long> RowIndexesToCredit { get; private set; }
+        internal List<OrderRowBuilder> NewCreditOrderRows { get; private set; }
 
         public CreditOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {

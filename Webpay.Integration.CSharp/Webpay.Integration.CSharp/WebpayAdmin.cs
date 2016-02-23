@@ -94,7 +94,6 @@ namespace Webpay.Integration.CSharp
             return new CancelOrderRowsBuilder(configurationProvider);
         }
 
-
         /// <summary>
         /// ...
         ///  CreditOrderRowsBuilder request = WebpayAdmin.CreditOrderRows(config)

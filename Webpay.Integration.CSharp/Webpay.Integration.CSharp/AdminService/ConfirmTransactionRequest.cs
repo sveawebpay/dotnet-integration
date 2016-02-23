@@ -12,7 +12,7 @@ namespace Webpay.Integration.CSharp.AdminService
 {
     public class ConfirmTransactionRequest
     {
-        DeliverOrderRowsBuilder _builder;
+        private readonly DeliverOrderRowsBuilder _builder;
 
         public ConfirmTransactionRequest(DeliverOrderRowsBuilder builder)
         {
@@ -25,7 +25,7 @@ namespace Webpay.Integration.CSharp.AdminService
 
             // calculate original order rows total, incvat row sum over numberedOrderRows
             var originalOrderTotal = 0M;
-            foreach(NumberedOrderRowBuilder originalRow in _builder._numberedOrderRows)
+            foreach(NumberedOrderRowBuilder originalRow in _builder.NumberedOrderRows)
             {
 
                 originalOrderTotal += (originalRow.GetAmountExVat()??0) * (1 + (originalRow.GetVatPercent()??0) / 100M) * originalRow.GetQuantity();
@@ -35,7 +35,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var deliveredOrderTotal = 0M;
             foreach (int rowIndex in _builder.RowIndexesToDeliver)
             {
-                var deliveredRow = _builder._numberedOrderRows[(rowIndex - 1)]; // -1 as NumberedOrderRows is one-indexed
+                var deliveredRow = _builder.NumberedOrderRows[(rowIndex - 1)]; // -1 as NumberedOrderRows is one-indexed
                 deliveredOrderTotal += (deliveredRow.GetAmountExVat()??0) * (1 + (deliveredRow.GetVatPercent()??0) / 100M) * deliveredRow.GetQuantity();
             }
 
@@ -60,6 +60,7 @@ namespace Webpay.Integration.CSharp.AdminService
                         <response>
                             <statuscode>100</statuscode>
                         </response>");
+
                     return Confirm.Response(dummyInternalErrorResponseXml);
                 }
             }

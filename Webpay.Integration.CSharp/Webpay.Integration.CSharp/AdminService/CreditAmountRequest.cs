@@ -1,5 +1,4 @@
 ﻿using Webpay.Integration.CSharp.AdminWS;
-using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 

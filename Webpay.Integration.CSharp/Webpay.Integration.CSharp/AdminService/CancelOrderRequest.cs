@@ -1,30 +1,12 @@
 ﻿using Webpay.Integration.CSharp.AdminWS;
-using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.AdminService
 {
-    public class CancelOrderRequest
+    public class CancelOrderRequest : WebpayAdminRequest
     {
         private readonly CancelOrderBuilder _builder;
-
-        private AdminWS.OrderType ConvertPaymentTypeToOrderType(Util.Constant.PaymentType pt)
-        {
-            switch (pt)
-            {
-                #pragma warning disable 0162 //CS0162 Unreachable code detected
-                case PaymentType.INVOICE:
-                    return AdminWS.OrderType.Invoice;
-                    break;
-                case PaymentType.PAYMENTPLAN:
-                    return AdminWS.OrderType.PaymentPlan;
-                    break;
-                default:
-                    throw new SveaWebPayException("Invalid PaymentType");
-                #pragma warning restore 0162
-            }
-        }
 
         public CancelOrderRequest(CancelOrderBuilder builder)
         {

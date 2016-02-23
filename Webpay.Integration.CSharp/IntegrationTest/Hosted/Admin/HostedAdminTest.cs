@@ -578,10 +578,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.Transaction.NumberedOrderRows[0].GetAmountExVat(), Is.EqualTo(100.00M));
             Assert.That(response.Transaction.NumberedOrderRows[0].GetAmountIncVat(), Is.EqualTo(125.00M));
             Assert.That(response.Transaction.NumberedOrderRows[0].GetVatPercent(), Is.EqualTo(25.00M));
-            Assert.That(response.Transaction.NumberedOrderRows[0].GetDescription, Is.EqualTo("Specification"));
-            Assert.That(response.Transaction.NumberedOrderRows[0].GetQuantity, Is.EqualTo(2));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetDescription(), Is.EqualTo("Specification"));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetQuantity(), Is.EqualTo(2));
             Assert.That(response.Transaction.NumberedOrderRows[0].GetArticleNumber(), Is.EqualTo("1"));
-            Assert.That(response.Transaction.NumberedOrderRows[0].GetUnit, Is.EqualTo("st"));
+            Assert.That(response.Transaction.NumberedOrderRows[0].GetUnit(), Is.EqualTo("st"));
         }
 
         [Test]

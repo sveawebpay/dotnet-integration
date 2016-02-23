@@ -4,7 +4,6 @@ using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Testing;
-using static Webpay.Integration.CSharp.Util.Testing.TestingTool;
 
 namespace Webpay.Integration.CSharp.IntegrationTest
 {
@@ -15,7 +14,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_CreateOrder_CreateInvoiceOrder_WithAllExVatRows()
         {
             // create order
-            var order = CreateInvoiceOrderWithTwoOrderRows();
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
             Assert.IsTrue(order.Accepted);
         }
 
@@ -23,19 +22,19 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_CreateOrder_CreatePaymentPlanOrder_WithAllExVatRows()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
             Assert.IsTrue(order.Accepted);
         }
         [Test]
         public void Test_DeliverOrder_DeliverInvoiceOrder_WithAllIdenticalRows()
         {
             // create order
-            var order = CreateInvoiceOrderWithTwoOrderRows();
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
 
             // deliver first order row and assert the response
             DeliverOrderBuilder builder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                .SetCountryCode(DefaultTestCountryCode)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetInvoiceDistributionType(DistributionType.POST)
                 .SetNumberOfCreditDays(30)
                 .SetCaptureDate(DateTime.Now)
@@ -51,12 +50,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_DeliverOrder_DeliverInvoiceOrder_WithOneIdenticalRows()
         {
             // create order
-            var order = CreateInvoiceOrderWithTwoOrderRows();
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
 
             // deliver first order row and assert the response
             DeliverOrderBuilder builder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                .SetCountryCode(DefaultTestCountryCode)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetInvoiceDistributionType(DistributionType.POST)
                 .SetNumberOfCreditDays(30)
                 .SetCaptureDate(DateTime.Now)
@@ -72,12 +71,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_DeliverOrder_DeliverPaymentPlanOrder_WithAllIdenticalRows()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
 
             // deliver first order row and assert the response
             DeliverOrderBuilder builder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                .SetCountryCode(DefaultTestCountryCode)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;
@@ -89,12 +88,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         public void Test_DeliverOrder_DeliverPaymentPlanOrder_IgnoresOrderRows()
         {
             // create order
-            var order = CreatePaymentPlanOrderWithTwoOrderRows();
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
 
             // deliver first order row and assert the response
             DeliverOrderBuilder builder = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                .SetCountryCode(DefaultTestCountryCode)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 //.AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;

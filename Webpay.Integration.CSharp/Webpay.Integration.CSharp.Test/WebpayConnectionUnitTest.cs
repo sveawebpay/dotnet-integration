@@ -14,7 +14,7 @@ namespace Webpay.Integration.CSharp.Test
         // WebPay Request and Response Classes
         //
         // createOrder - useInvoicePayment => request class
-        [Test] static void createOrder_useInvoicePayment_returns_InvoicePayment_request()
+        [Test] static public void createOrder_useInvoicePayment_returns_InvoicePayment_request()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe();
@@ -40,13 +40,13 @@ namespace Webpay.Integration.CSharp.Test
         // validation - createOrder - addDiscount optional
 
         // validation - createOrder - customerDetails - invoice - individual - SE
-        [Test] static void validation_createOrder_customerDetails_invoice_individual_SE()
+        [Test] static public void validation_createOrder_customerDetails_invoice_individual_SE()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe();
         }
         // validation - createOrder - customerDetails - invoice - company - SE
-        [Test] static void validation_createOrder_customerDetails_invoice_company_SE()
+        [Test] static public void validation_createOrder_customerDetails_invoice_company_SE()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForCustomerIdentityCompanyFromSe();
@@ -60,13 +60,13 @@ namespace Webpay.Integration.CSharp.Test
         // validation - createOrder - customerDetails - invoice - individual - DE
         // validation - createOrder - customerDetails - invoice - company - DE
         // validation - createOrder - customerDetails - invoice - individual - NL
-        [Test] private static void validation_createOrder_customerDetails_invoice_individual_NL()
+        [Test] public static void validation_createOrder_customerDetails_invoice_individual_NL()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForCustomerIdentityIndividualFromNl();
         }
         // validation - createOrder - customerDetails - invoice - company - NL
-        [Test] private static void validation_createOrder_customerDetails_invoice_company_NL()
+        [Test] public static void validation_createOrder_customerDetails_invoice_company_NL()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForCustomerIdentityCompanyFromNl();
@@ -108,7 +108,7 @@ namespace Webpay.Integration.CSharp.Test
         // validation - createOrder - sums - addOrderRow - hosted - priceIncludingVat false
         // validation - createOrder - sums - addOrderRow - hosted - priceIncludingVat true
         // validation - createOrder - sums - above w/addFee - webservice - priceIncludingVat false
-        [Test] private static void validation_createOrder_sums_orderRow_shippingFee_invoiceFee_company_NL()
+        [Test] public static void validation_createOrder_sums_orderRow_shippingFee_invoiceFee_company_NL()
         {
             new Webpay.Integration.CSharp.Test.Webservice.Payment.InvoicePaymentTest()
                 .TestInvoiceRequestObjectForSEorderOnOneProductRow();

@@ -22,8 +22,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             return payment;
         }
 
-        /// WebPayAdmin.queryOrder() ---------------------------------------------------------------------------------------
-        // .queryInvoiceOrder
+        /// WebpayAdmin.QueryOrder() ---------------------------------------------------------------------------------------
+        // .QueryInvoiceOrder
         [Test]
         public void Test_QueryOrder_QueryInvoiceOrder()
         {
@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
 
-        // .queryPaymentPlanOrder
+        // .QueryPaymentPlanOrder
         [Test]
         public void Test_QueryOrder_QueryPaymentPlanOrder()
         {
@@ -59,7 +59,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
 
-        // .queryCardOrder
+        // .QueryCardOrder
         [Test]
         public void Test_QueryOrder_QueryCardOrder()
         {
@@ -87,7 +87,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Transaction.NumberedOrderRows.First().GetUnit(), Is.EqualTo("st")); //SetUnit
         }
 
-        // .queryDirectBankOrder
+        // .QueryDirectBankOrder
         [Test]
         public void Test_QueryOrder_QueryDirectBankOrder()
         {
@@ -299,7 +299,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
         }
 
-        //public void test_deliverOrderRows_deliverCardOrderRows_deliver_first_of_two_rows()
         [Test]
         public void Test_DeliverOrderRows_DeliverCardOrderRows_Deliver_First_Of_Two_Rows()
         {
@@ -580,9 +579,40 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(creditResponse.Accepted);
         }
 
-        // / WebPayAdmin.cancelOrder()
+        // / WebpayAdmin.CancelOrderRows()
         // --------------------------------------------------------------------------------------
-        // .cancelInvoiceOrder
+        // .CancelInvoiceOrderRows
+        public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelAllRows()
+        {
+            // create order
+            var order = TestingTool.CreateInvoiceOrderWithOneOrderRows();
+
+            // deliver order
+            var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
+                .SetRowToCancel(1)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelInvoiceOrderRows().DoRequest();
+            Assert.IsTrue(cancellationResponse.Accepted);
+        }
+
+        // TODO public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelFirstOfTwoRows()
+        // TODO public void Test_CreditOrderRows_CreditInvoiceOrderRows_CancelDeliveredRowFails()
+
+        // .CancelPaymentPlanOrderRows
+        // TODO public void Test_CancelOrderRows_CancelPaymentPlanOrderRows_CancelAllRows()
+        // TODO public void Test_CancelOrderRows_CancelPaymentPlanOrderRows_CancelFirstOfTwoRows()
+        ///  response = request.CancelPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelPaymentPlanRowsResponse
+
+        // .CancelCardOrderRows
+        // TODO
+        ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Response.LowerTransactionResponse
+
+
+
+        // / WebpayAdmin.cancelOrder()
+        // --------------------------------------------------------------------------------------
+        // .CancelInvoiceOrder
         [Test]
         public void Test_CancelOrder_CancelInvoiceOrder()
         {
@@ -599,7 +629,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(cancellation.Accepted);
         }
 
-        // .cancelPaymentPlanOrder
+        // .CancelPaymentPlanOrder
         [Test]
         public void Test_CancelOrder_CancelPaymentPlanOrder()
         {

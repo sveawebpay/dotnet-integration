@@ -964,7 +964,7 @@ transaction and send the request using the CreditOrderRowsBuilder methods:
           ;
           // then select the corresponding request class and send request
           response = request.CreditInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
-          response = request.CreditPaymentPlanOrderRows().DoRequest();
+          response = request.CreditPaymentPlanOrderRows().DoRequest();      //returns AdminWS.CancelPaymentPlanRowsResponse
 
 ```
 

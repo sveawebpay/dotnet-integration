@@ -390,6 +390,21 @@ namespace Webpay.Integration.CSharp.Util.Testing
             CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
             return order;
         }
+        public static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRowsSpecifiedIncVat()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateIncVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            return order;
+        }
 
         public static CreateOrderEuResponse CreatePaymentPlanOrderWithOneOrderRow()
         {

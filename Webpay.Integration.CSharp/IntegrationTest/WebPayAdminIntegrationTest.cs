@@ -658,9 +658,51 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(updateResponse.ResultCode, Is.EqualTo(50036));
             Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
+        [Test]
+        public void Test_UpdateOrderRows_UpdatePaymentPlanOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
+        {
+            // create order
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
 
-        ///  response = request.UpdatePaymentPlanOrderRows().DoRequest();       // returns AdminWS.UpdateOrderRowsResponse
+            // update order
+            var updatedOrderRowIndex = 2; // i.e. 2nd row, as NumberedOrderRows are 1-indexed.
+            //var updatedOrderRowPriceIncVat = 80M;
+            var updatedOrderRowPriceExVat = 64M;
+            var updatedOrderRowName = "New row #1";
+            var updatedOrderRowDescription = "Replaces second original order row!";
 
+            var updatedOrderRow = new NumberedOrderRowBuilder()
+                .SetRowNumber(updatedOrderRowIndex)
+                //.SetAmountIncVat(updatedOrderRowPriceIncVat)
+                .SetAmountExVat(updatedOrderRowPriceExVat)
+                .SetVatPercent(25M)
+                .SetQuantity(1M)
+                .SetDiscountPercent(10)
+                .SetName(updatedOrderRowName)
+                .SetDescription(updatedOrderRowDescription)
+                ;
+
+            UpdateOrderRowsBuilder update = WebpayAdmin.UpdateOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddUpdateOrderRow(updatedOrderRow)
+                ;
+            // then select the corresponding request class and send request
+            AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdatePaymentPlanOrderRows().DoRequest();
+            Assert.True(updateResponse.Accepted);
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);   //
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceExVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName + ": " + updatedOrderRowDescription));
+        }
 
         // WebpayAdmin.CancelOrderRows()
         [Test] public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelAllRows()

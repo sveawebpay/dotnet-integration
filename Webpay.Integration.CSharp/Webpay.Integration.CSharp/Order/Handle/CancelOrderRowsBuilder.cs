@@ -11,13 +11,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal PaymentType OrderType { get; set; }
         //internal DateTime? CaptureDate { get; private set; }
         internal List<long> RowIndexesToCancel { get; private set; }
-        //internal List<NumberedOrderRowBuilder> NumberedOrderRows { get; private set; }
+        internal List<NumberedOrderRowBuilder> NumberedOrderRows { get; private set; }
 
         public CancelOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {
             //this.CaptureDate = null;
             this.RowIndexesToCancel = new List<long>();
-            //this.NumberedOrderRows = new List<NumberedOrderRowBuilder>();
+            this.NumberedOrderRows = new List<NumberedOrderRowBuilder>();
         }
 
         public CancelOrderRowsBuilder SetOrderId(long orderId)
@@ -43,11 +43,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        //public CancelOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
-        //{
-        //    NumberedOrderRows.AddRange(numberedOrderRows);
-        //    return this;
-        //}
+        public CancelOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
+        {
+            NumberedOrderRows.AddRange(numberedOrderRows);
+            return this;
+        }
 
         public AdminService.CancelOrderRowsRequest CancelInvoiceOrderRows()
         {
@@ -61,9 +61,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.CancelOrderRowsRequest(this);
         }
 
-        //public AdminService.LowerTransactionRequest DeliverCardOrderRows()
-        //{
-        //    return new AdminService.LowerTransactionRequest(this);
-        //}
+        public AdminService.LowerTransactionRequest CancelCardOrderRows()
+        {
+            return new AdminService.LowerTransactionRequest(this);
+        }
     }
 }

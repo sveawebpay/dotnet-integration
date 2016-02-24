@@ -1,3 +1,4 @@
+using System;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -60,5 +61,31 @@ namespace Webpay.Integration.CSharp.AdminService
             };
             return or;
         }
+
+        protected static decimal GetVatPercentFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat)
+        {
+            // calculate vatPercent from 2 out of 3 of builder order row vat%, incVat, exVat 
+            return (vp ?? (((incvat??0M)/(exvat??0M)) - 1M) * 100M);
+        }
+        protected static decimal GetAmountIncVatFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat)
+        {
+            // calculate amountIncVat from 2 out of 3 of builder order row vat%, incVat, exVat 
+            return (incvat ?? ((exvat??0M) * (1 + GetVatPercentFromBuilderOrderRow(vp, incvat, exvat) / 100M)));
+        }
+
+        protected static decimal GetRowAmountIncVatFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat, decimal quantity)
+        {
+            return (incvat ?? ((exvat ?? 0) * (1 + (vp ?? 0) / 100M))) * quantity;
+        }
+
+        protected static string GetDescriptionFromBuilderOrderRow(string name, string description)
+        {
+            // calculate description as "<name>", "<description>" or if both, "<name>: <description>" from builder order row name, description
+            return String.Format("{0}{1}{2}",
+                name ?? "",
+                (name == null) ? "" : ((description == null) ? "" : ": "),
+                description);
+        }
+
     }
 }

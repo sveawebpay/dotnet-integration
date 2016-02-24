@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.AdminService
 {
-    public class CreditPaymentPlanOrderRowsRequest
+    public class CreditPaymentPlanOrderRowsRequest : WebpayAdminRequest
     {
         private readonly CreditOrderRowsBuilder _builder;
 
@@ -37,21 +36,15 @@ namespace Webpay.Integration.CSharp.AdminService
             }
             foreach (var ncr in _builder.NewCreditOrderRows)
             {
-                // calculate amountIncVat from 2 out of 3 of incVat, exVat and vat% 
-                var vatPercent = (decimal)(ncr.GetVatPercent() ?? (((ncr.GetAmountIncVat() / ncr.GetAmountExVat()) - 1M) * 100M));
-                var amountIncVat = (decimal)(ncr.GetAmountIncVat() ?? (ncr.GetAmountExVat()*(1 + vatPercent/100M)));
-
-                // "<name>", "<description>" or if both, "<name>: <description>"
-                var rowNameAndDescription = String.Format("{0}{1}{2}",
-                    ncr.GetName() ?? "",
-                    (ncr.GetName() == null) ? "" : ((ncr.GetDescription() == null) ? "" : ": "),
-                    ncr.GetDescription());
+                var vatPercent = GetVatPercentFromBuilderOrderRow(ncr.GetVatPercent(), ncr.GetAmountIncVat(), ncr.GetAmountExVat());
+                var amountIncVat = GetAmountIncVatFromBuilderOrderRow(ncr.GetVatPercent(), ncr.GetAmountIncVat(), ncr.GetAmountExVat());
+                var description = GetDescriptionFromBuilderOrderRow(ncr.GetName(), ncr.GetDescription());
 
                 var cancellationRow = new AdminWS.CancellationRow()
                 {
                     AmountInclVat = amountIncVat,
                     VatPercent = vatPercent,
-                    Description = rowNameAndDescription,
+                    Description = description,
                     RowNumber = null
                 };
                 cancellationRows.Add(cancellationRow);

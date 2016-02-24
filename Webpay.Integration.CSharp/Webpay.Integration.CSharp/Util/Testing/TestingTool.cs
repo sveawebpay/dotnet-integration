@@ -76,6 +76,7 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetAmountExVat(100)
                        .SetQuantity(2)
                        .SetUnit("st")
+                       //.SetVatPercent(25)
                        .SetDiscountPercent(0);
         }
 

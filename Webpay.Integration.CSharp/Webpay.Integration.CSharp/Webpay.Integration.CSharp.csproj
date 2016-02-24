@@ -55,6 +55,7 @@
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditInvoiceOrderRowsRequest.cs" />
+    <Compile Include="AdminService\LowerTransactionRequest.cs" />
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="AdminService\AnnulTransactionRequest.cs" />

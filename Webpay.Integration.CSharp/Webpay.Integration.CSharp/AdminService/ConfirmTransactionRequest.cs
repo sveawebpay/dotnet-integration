@@ -10,7 +10,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.AdminService
 {
-    public class ConfirmTransactionRequest
+    public class ConfirmTransactionRequest : WebpayAdminRequest
     {
         private readonly DeliverOrderRowsBuilder _builder;
 
@@ -21,14 +21,12 @@ namespace Webpay.Integration.CSharp.AdminService
 
         public ConfirmResponse DoRequest()
         {
-            // should validate _builder.GetOrderId() existence here
-
             // calculate original order rows total, incvat row sum over numberedOrderRows
             var originalOrderTotal = 0M;
             foreach(NumberedOrderRowBuilder originalRow in _builder.NumberedOrderRows)
             {
-
-                originalOrderTotal += (originalRow.GetAmountExVat()??0) * (1 + (originalRow.GetVatPercent()??0) / 100M) * originalRow.GetQuantity();
+                originalOrderTotal += GetRowAmountIncVatFromBuilderOrderRow(
+                    originalRow.GetVatPercent(), originalRow.GetAmountIncVat(), originalRow.GetAmountExVat(), originalRow.GetQuantity());
             }
 
             // calculate delivered order rows total, incvat row sum over deliveredOrderRows
@@ -36,7 +34,8 @@ namespace Webpay.Integration.CSharp.AdminService
             foreach (int rowIndex in _builder.RowIndexesToDeliver)
             {
                 var deliveredRow = _builder.NumberedOrderRows[(rowIndex - 1)]; // -1 as NumberedOrderRows is one-indexed
-                deliveredOrderTotal += (deliveredRow.GetAmountExVat()??0) * (1 + (deliveredRow.GetVatPercent()??0) / 100M) * deliveredRow.GetQuantity();
+                deliveredOrderTotal += GetRowAmountIncVatFromBuilderOrderRow(
+                    deliveredRow.GetVatPercent(), deliveredRow.GetAmountIncVat(), deliveredRow.GetAmountExVat(), deliveredRow.GetQuantity());
             }
 
             var amountToLowerOrderBy = originalOrderTotal - deliveredOrderTotal;

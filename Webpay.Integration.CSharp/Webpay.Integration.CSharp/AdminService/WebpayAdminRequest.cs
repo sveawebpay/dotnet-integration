@@ -57,7 +57,7 @@ namespace Webpay.Integration.CSharp.AdminService
                 NumberOfUnits = orb.GetQuantity(),
                 PriceIncludingVat = orb.GetAmountIncVat().HasValue, // true iff we have set amountIncVat
                 PricePerUnit = (decimal)(orb.GetAmountIncVat() ?? orb.GetAmountExVat()),
-                VatPercent = (decimal)(orb.GetVatPercent() ?? (((orb.GetAmountIncVat() / orb.GetAmountExVat()) - 1M) * 100M))
+                VatPercent = (decimal)(orb.GetVatPercent() ?? (((orb.GetAmountIncVat() / orb.GetAmountExVat()) - 1M) * 100M)) // TODO change to GetVatPercentFromBuilderOrderRow
             };
             return or;
         }

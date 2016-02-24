@@ -532,6 +532,57 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
             Assert.IsTrue(creditResponse.Accepted);
         }
+        // WebpayAdmin.UpdateOrderRows()
+        [Test] public void Test_UpdateOrderRows_UpdateInvoiceOrderRows()
+        { }
+
+        [Test]
+        public void Test_UpdateOrderRows_UpdateInvoiceOrderRows()
+        {
+            // create order
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+
+            // update order
+            var updatedOrderRowIndex = 2; // 1-indexed
+            var updatedOrderRowPriceIncVat = 69.99M;
+            var updatedOrderRowName = "New row #1";
+            var updatedOrderRowDescription = "Replaces second original order row!";
+
+            var updatedOrderRow = new NumberedOrderRowBuilder()
+                .SetRowNumber(updatedOrderRowIndex) 
+                .SetAmountIncVat(updatedOrderRowPriceIncVat)
+                .SetVatPercent(12M)
+                .SetQuantity(1M)
+                .SetDiscountPercent(10) // (69.99inc @12% -10%)*1 => total row amount 62.99
+                .SetName(updatedOrderRowName)
+                .SetDescription(updatedOrderRowDescription)
+                ;
+
+            UpdateOrderRowsBuilder update = WebpayAdmin.UpdateOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddUpdateOrderRow(updatedOrderRow)
+                ;
+            // then select the corresponding request class and send request
+            AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdateInvoiceOrderRows().DoRequest()
+            Assert.True(updateResponse.Accepted);
+            //TODO more asserts?
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex-1).PriceIncludingVat, Is.EqualTo(updatedOrderRowPriceIncVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName+": "+updatedOrderRowDescription));
+        }
+
+        ///  response = request.UpdatePaymentPlanOrderRows().DoRequest();       // returns AdminWS.UpdateOrderRowsResponse
+
+
         // WebpayAdmin.CancelOrderRows()
         [Test] public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelAllRows()
         {

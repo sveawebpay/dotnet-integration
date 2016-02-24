@@ -9,7 +9,7 @@ namespace Webpay.Integration.CSharp.AdminService
 {
     public class AnnulTransactionRequest
     {
-        readonly CancelOrderBuilder _builder;
+        private readonly CancelOrderBuilder _builder;
 
         public AnnulTransactionRequest(CancelOrderBuilder builder) {
             _builder = builder;
@@ -17,11 +17,9 @@ namespace Webpay.Integration.CSharp.AdminService
 
         public AnnulResponse DoRequest()
         {
-            // should validate _builder.GetOrderId() existence here
-
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Annul(new Annul(
-                    transactionId: _builder.GetOrderId()
+                    transactionId: _builder.Id
                     ));
 
             return hostedActionRequest.DoRequest<AnnulResponse>();

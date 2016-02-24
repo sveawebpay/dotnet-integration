@@ -52,13 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
+    <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditInvoiceOrderRowsRequest.cs" />
+    <Compile Include="AdminService\LowerTransactionRequest.cs" />
     <Compile Include="AdminService\DeliverOrdersRequest.cs" />
     <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
     <Compile Include="AdminService\AnnulTransactionRequest.cs" />
     <Compile Include="AdminService\CreditTransactionRequest.cs" />
     <Compile Include="AdminService\QueryTransactionRequest.cs" />
+    <Compile Include="AdminService\WebpayAdminRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Handle\CreditAmountBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
+    <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />

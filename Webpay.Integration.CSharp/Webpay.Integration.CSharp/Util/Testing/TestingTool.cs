@@ -76,6 +76,7 @@ namespace Webpay.Integration.CSharp.Util.Testing
                        .SetAmountExVat(100)
                        .SetQuantity(2)
                        .SetUnit("st")
+                       //.SetVatPercent(25)
                        .SetDiscountPercent(0);
         }
 
@@ -359,6 +360,20 @@ namespace Webpay.Integration.CSharp.Util.Testing
             return cCustomer;
         }
 
+        public static CreateOrderEuResponse CreateInvoiceOrderWithOneOrderRow()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))                
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            return order;
+        }
 
         public static CreateOrderEuResponse CreateInvoiceOrderWithTwoOrderRows()
         {

@@ -1,14 +1,12 @@
-﻿using System;
-using Webpay.Integration.CSharp.AdminService;
-using Webpay.Integration.CSharp.Config;
+﻿using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
     public class QueryOrderBuilder : Builder<QueryOrderBuilder>
     {
-        private long _orderId;
-        public PaymentType OrderType { get; set; }
+        internal long Id { get; private set; }
+        internal PaymentType OrderType { get; private set; }
 
         public QueryOrderBuilder(IConfigurationProvider config) : base(config)
         {
@@ -17,18 +15,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public QueryOrderBuilder SetOrderId(long orderId)
         {
-            _orderId = orderId;
+            Id = orderId;
             return this;
         }
 
         public QueryOrderBuilder SetTransactionId(long orderId)
         {
             return this.SetOrderId(orderId);
-        }
-
-        public long GetOrderId()
-        {
-            return _orderId;
         }
 
         public override QueryOrderBuilder SetCountryCode(CountryCode countryCode)
@@ -49,12 +42,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.GetOrdersRequest(this);
         }
 
-        public QueryTransactionRequest QueryCardOrder()
+        public AdminService.QueryTransactionRequest QueryCardOrder()
         {
             return new AdminService.QueryTransactionRequest(this);
         }
 
-        public QueryTransactionRequest QueryDirectBankOrder()
+        public AdminService.QueryTransactionRequest QueryDirectBankOrder()
         {
             return new AdminService.QueryTransactionRequest(this);
         }

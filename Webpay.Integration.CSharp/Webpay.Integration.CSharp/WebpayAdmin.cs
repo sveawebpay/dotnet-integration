@@ -76,6 +76,26 @@ namespace Webpay.Integration.CSharp
 
         /// <summary>
         /// ...
+        ///  CancelOrderRowsBuilder request = WebpayAdmin.CancelOrderRows(config)
+        ///   .SetInvoiceId()               // required for invoice only, use invoice number recieved with deliverOrder response
+        ///   .SetTransactionId()           // optional, card only, alias for SetOrderId()
+        ///   .SetCountryCode()             // required
+        ///   .SetRowToCancel()             // optional, index of original order rows you wish to deliver
+        ///   .AddNumberedOrderRow()        // required for card orders, should match orginal row indexes
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.CancelInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
+        ///  response = request.CancelPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelPaymentPlanRowsResponse
+        ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Response.LowerTransactionResponse
+        /// ...
+        /// </summary>
+        public static CancelOrderRowsBuilder CancelOrderRows(IConfigurationProvider configurationProvider)
+        {
+            return new CancelOrderRowsBuilder(configurationProvider);
+        }
+
+        /// <summary>
+        /// ...
         ///  CreditOrderRowsBuilder request = WebpayAdmin.CreditOrderRows(config)
         ///   .SetInvoiceId()               // required for invoice only, use invoice number recieved with deliverOrder response
         ///   .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
@@ -86,7 +106,7 @@ namespace Webpay.Integration.CSharp
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.CreditInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
-        ///  ???response = request.CreditPaymentPlanOrderRows().DoRequest();    // returns AdminWS.xxx
+        ///  response = request.CreditPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelPaymentPlanRowsResponse
         /// ...
         /// </summary>
         public static CreditOrderRowsBuilder CreditOrderRows(IConfigurationProvider configurationProvider)

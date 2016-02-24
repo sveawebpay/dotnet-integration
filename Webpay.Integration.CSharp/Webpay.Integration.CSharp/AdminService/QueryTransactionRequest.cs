@@ -21,7 +21,7 @@ namespace Webpay.Integration.CSharp.AdminService
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByTransactionId(
-                    transactionId: _builder.GetOrderId()
+                    transactionId: _builder.Id
                     ));
 
             return hostedActionRequest.DoRequest<QueryResponse>();

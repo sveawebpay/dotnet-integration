@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.AdminService
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Credit(new Credit(
-                    transactionId: _builder.GetTransactionId(),
+                    transactionId: _builder.Id,
                     amountToCredit: Decimal.ToInt64(_builder.AmountIncVat * 100)    //centessimal
                     ));
 

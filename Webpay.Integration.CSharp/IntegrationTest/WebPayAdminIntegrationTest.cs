@@ -624,7 +624,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
             Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
         }
-        // TODO public void Test_CreditOrderRows_CreditInvoiceOrderRows_CancelDeliveredRowFails()
         [Test]
         public void Test_CreditOrderRows_CreditInvoiceOrderRows_CancelDeliveredRowFails()
         {
@@ -669,19 +668,44 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelPaymentPlanOrderRows().DoRequest();
             Assert.IsTrue(cancellationResponse.Accepted);
         }
-        // TODO public void Test_CancelOrderRows_CancelPaymentPlanOrderRows_CancelFirstOfTwoRows()
-        ///  response = request.CancelPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelPaymentPlanRowsResponse
 
-        // .CancelCardOrderRows
-        // TODO
-        ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Response.LowerTransactionResponse
-
-
-
-        // / WebpayAdmin.cancelOrder()
-        // --------------------------------------------------------------------------------------
-        // .CancelInvoiceOrder
         [Test]
+        public void Test_CancelOrderRows_CancelPaymentPlanOrderRows_CancelFirstOfTwoRows()
+        {
+            // create order
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+
+            // cancel order rows
+            var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetRowToCancel(1)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelPaymentPlanOrderRows().DoRequest();
+            Assert.IsTrue(cancellationResponse.Accepted);
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
+            Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
+        } 
+
+    // .CancelCardOrderRows
+    // TODO
+    ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Response.LowerTransactionResponse
+
+
+
+    // / WebpayAdmin.cancelOrder()
+    // --------------------------------------------------------------------------------------
+    // .CancelInvoiceOrder
+    [Test]
         public void Test_CancelOrder_CancelInvoiceOrder()
         {
             // create order

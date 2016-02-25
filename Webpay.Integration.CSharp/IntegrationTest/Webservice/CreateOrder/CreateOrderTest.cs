@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.IntegrationTest.Config;
+using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -128,5 +129,47 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
             Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
             Assert.That(response.Accepted, Is.True);
         }
+
+        [Test]
+        public void Test_CreateOrder_SE_WithOnlyNationalIdNumber_ShouldNotSetIndividualIdentity()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
+            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
+
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            Assert.IsTrue(order.Accepted);
+        }
+
+
+        //CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            //                                                 .AddOrderRow(TestingTool.CreateOrderRowDe())
+            //                                                 .AddCustomerDetails(Item.CompanyCustomer()
+            //                                                                         .SetNationalIdNumber("12345")
+            //                                                                         .SetVatNumber("DE123456789")
+            //                                                                         .SetStreetAddress(
+            //                                                                             "Adalbertsteinweg", "1")
+            //                                                                         .SetZipCode("52070")
+            //                                                                         .SetLocality("AACHEN"))
+            //                                                 .SetCountryCode(CountryCode.DE)
+            //                                                 .SetClientOrderNumber(
+            //                                                     TestingTool.DefaultTestClientOrderNumber)
+            //                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+            //                                                 .SetCurrency(Currency.EUR)
+            //                                                 .UseInvoicePayment()
+            //                                                 .DoRequest();
+
+            //Assert.That(response.ResultCode, Is.EqualTo(0));
+            //Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
+            //Assert.That(response.Accepted, Is.True);
     }
 }

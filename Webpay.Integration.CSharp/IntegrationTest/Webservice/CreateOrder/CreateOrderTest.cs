@@ -169,6 +169,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
             CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
             Assert.IsTrue(order.Accepted);
         }
+
+        [Test]
+        public void Test_CreateOrder_NO_WithAllCustomerDetailsSet_ShouldNotSetIndividualIdentity()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber("17054512066")     // NO test individual "Ola Norrmann"
+                    // below taken from docs, not accurate
+                    .SetBirthDate("19460509")               //Required for individual customers in NL and DE
+                    .SetName("Tess", "Testson")             //Required for individual customers in NL and DE
+                    .SetInitials("SB")                      //Required for individual customers in NL
+                    .SetStreetAddress("Gatan", "23")            //Required in NL and DE
+                    .SetCoAddress("c/o Eriksson")           //Optional
+                    .SetZipCode("9999")                         //Required in NL and DE
+                    .SetLocality("Stan")                    //Required in NL and DE
+                    .SetPhoneNumber("999999")               //Optional
+                    .SetEmail("test@svea.com")              //Optional but desirable
+                    .SetIpAddress("123.123.123")            //Optional but desirable
+                )
+                .SetCountryCode(CountryCode.NO) // NO
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber("33308")  // NO Invoice
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
+            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
+
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            Assert.IsTrue(order.Accepted);
+        }
+
         //CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
         //                                                 .AddOrderRow(TestingTool.CreateOrderRowDe())
         //                                                 .AddCustomerDetails(Item.CompanyCustomer()

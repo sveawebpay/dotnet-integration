@@ -150,26 +150,44 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
             Assert.IsTrue(order.Accepted);
         }
 
+        [Test]
+        public void Test_CreateOrder_NO_WithOnlyNationalIdNumber_ShouldNotSetIndividualIdentity()
+        {
+            CreateOrderBuilder createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(Item.IndividualCustomer()
+                    .SetNationalIdNumber("17054512066"))    // NO test individual "Ola Norrmann"
+                .SetCountryCode(CountryCode.NO) // NO
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber("33308")  // NO Invoice
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                ;
+            CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
+            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
 
+            CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
+            Assert.IsTrue(order.Accepted);
+        }
         //CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-            //                                                 .AddOrderRow(TestingTool.CreateOrderRowDe())
-            //                                                 .AddCustomerDetails(Item.CompanyCustomer()
-            //                                                                         .SetNationalIdNumber("12345")
-            //                                                                         .SetVatNumber("DE123456789")
-            //                                                                         .SetStreetAddress(
-            //                                                                             "Adalbertsteinweg", "1")
-            //                                                                         .SetZipCode("52070")
-            //                                                                         .SetLocality("AACHEN"))
-            //                                                 .SetCountryCode(CountryCode.DE)
-            //                                                 .SetClientOrderNumber(
-            //                                                     TestingTool.DefaultTestClientOrderNumber)
-            //                                                 .SetOrderDate(TestingTool.DefaultTestDate)
-            //                                                 .SetCurrency(Currency.EUR)
-            //                                                 .UseInvoicePayment()
-            //                                                 .DoRequest();
+        //                                                 .AddOrderRow(TestingTool.CreateOrderRowDe())
+        //                                                 .AddCustomerDetails(Item.CompanyCustomer()
+        //                                                                         .SetNationalIdNumber("12345")
+        //                                                                         .SetVatNumber("DE123456789")
+        //                                                                         .SetStreetAddress(
+        //                                                                             "Adalbertsteinweg", "1")
+        //                                                                         .SetZipCode("52070")
+        //                                                                         .SetLocality("AACHEN"))
+        //                                                 .SetCountryCode(CountryCode.DE)
+        //                                                 .SetClientOrderNumber(
+        //                                                     TestingTool.DefaultTestClientOrderNumber)
+        //                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+        //                                                 .SetCurrency(Currency.EUR)
+        //                                                 .UseInvoicePayment()
+        //                                                 .DoRequest();
 
-            //Assert.That(response.ResultCode, Is.EqualTo(0));
-            //Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
-            //Assert.That(response.Accepted, Is.True);
+        //Assert.That(response.ResultCode, Is.EqualTo(0));
+        //Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
+        //Assert.That(response.Accepted, Is.True);
     }
 }

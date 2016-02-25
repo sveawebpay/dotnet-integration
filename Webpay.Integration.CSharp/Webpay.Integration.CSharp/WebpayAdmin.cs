@@ -119,7 +119,7 @@ namespace Webpay.Integration.CSharp
         ///  UpdateOrderRowsBuilder request = WebpayAdmin.UpdateOrderRows(config)
         ///   .SetOrderId()                 // required, use svea order number recieved in create order response
         ///   .SetCountryCode()             // required
-        ///   .AddUpdateOrderRow()          // required, new NumberedOrderRow, replaces original order row with matching row number
+        ///   .AddUpdateOrderRow()          // required, new NumberedOrderRowBuilder, replaces original order row with matching row number
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.UpdateInvoiceOrderRows().DoRequest();           // returns AdminWS.UpdateOrderRowsResponse
@@ -130,6 +130,23 @@ namespace Webpay.Integration.CSharp
         {
             return new UpdateOrderRowsBuilder(configurationProvider);
         }
+
+        /// <summary>
+        /// ...
+        ///  AddOrderRowsBuilder request = WebpayAdmin.AddOrderRows(config)
+        ///   .SetOrderId()                 // required, use svea order number recieved in create order response
+        ///   .SetCountryCode()             // required
+        ///   .AddOrderRow()                // required, new OrderRowBuilder, replaces original order row with matching row number
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.AddInvoiceOrderRows().DoRequest();           // returns AdminWS.AddOrderRowsResponse
+        ///  response = request.AddPaymentPlanOrderRows().DoRequest();       // returns AdminWS.AddOrderRowsResponse
+        /// ...
+        /// </summary>
+        public static AddOrderRowsBuilder AddOrderRows(IConfigurationProvider configurationProvider)
+        {
+            return new AddOrderRowsBuilder(configurationProvider);
+        }        
 
         /// <summary>
         ///  ...

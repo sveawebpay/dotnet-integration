@@ -532,6 +532,62 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
             Assert.IsTrue(creditResponse.Accepted);
         }
+        // WebpayAdmin.AddOrderRows()
+        [Test] public void Test_AddOrderRows_AddInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
+        {
+            // create order
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+
+            // add order rows
+            //var firstOrderRowPriceIncVat = 80M;
+            var firstOrderRowPriceExVat = 64M;
+            var firstOrderRowName = "New row #1";
+            var firstOrderRowDescription = "This should be the third order row!";
+
+            var firstOrderRow = new OrderRowBuilder()
+                //.SetAmountIncVat(firstOrderRowPriceIncVat)
+                .SetAmountExVat(firstOrderRowPriceExVat)
+                .SetVatPercent(25M)
+                .SetQuantity(1M)
+                .SetDiscountPercent(10)
+                .SetName(firstOrderRowName)
+                .SetDescription(firstOrderRowDescription)
+                ;
+
+            var secondOrderRowPriceExVat = 32M;
+            var secondOrderRowName = "New row #2";
+            var secondOrderRowDescription = "This should be the fourth order row!";
+
+            var secondOrderRow = new OrderRowBuilder(firstOrderRow); // uses copy constructor
+            secondOrderRow
+                .SetAmountExVat(secondOrderRowPriceExVat)
+                .SetName(secondOrderRowName)
+                .SetDescription(secondOrderRowDescription)
+            ;
+
+            AddOrderRowsBuilder builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRow(firstOrderRow)
+                .AddOrderRow(secondOrderRow)
+                ;
+            // then select the corresponding request class and send request
+            AdminWS.UpdateOrderRowsResponse addition = builder.AddInvoiceOrderRows().DoRequest();
+            Assert.True(addition.Accepted);
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            //Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).PriceIncludingVat);   //
+            //Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
+            //Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
+        }
+
         // WebpayAdmin.UpdateOrderRows()
         [Test] public void Test_UpdateOrderRows_UpdateInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
         {
@@ -577,8 +633,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex-1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex-1).Description, Is.EqualTo(updatedOrderRowName+": "+updatedOrderRowDescription));
         }
-        [Test]
-        public void Test_UpdateOrderRows_UpdateInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedIncVat()
+        [Test] public void Test_UpdateOrderRows_UpdateInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedIncVat()
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRowsSpecifiedIncVat();
@@ -622,8 +677,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceIncVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName + ": " + updatedOrderRowDescription));
         }
-        [Test]
-        public void Test_UpdateOrderRows_UpdateInvoiceOrderRows_OriginalAndUpdatedOrdersHasDifferentPriceIncludingVatFlagFails()
+        [Test] public void Test_UpdateOrderRows_UpdateInvoiceOrderRows_OriginalAndUpdatedOrdersHasDifferentPriceIncludingVatFlagFails()
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRowsSpecifiedIncVat();
@@ -658,8 +712,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(updateResponse.ResultCode, Is.EqualTo(50036));
             Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
-        [Test]
-        public void Test_UpdateOrderRows_UpdatePaymentPlanOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
+        [Test] public void Test_UpdateOrderRows_UpdatePaymentPlanOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
@@ -703,7 +756,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName + ": " + updatedOrderRowDescription));
         }
-
         // WebpayAdmin.CancelOrderRows()
         [Test] public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelAllRows()
         {

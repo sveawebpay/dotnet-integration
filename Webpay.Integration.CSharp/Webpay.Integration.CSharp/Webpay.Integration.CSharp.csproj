@@ -100,6 +100,7 @@
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\AddOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\UpdateOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="AdminService\GetOrdersRequest.cs" />
     <Compile Include="AdminService\CancelOrderRequest.cs" />
     <Compile Include="AdminService\CreditAmountRequest.cs" />
+    <Compile Include="AdminService\AddOrderRowsRequest.cs" />
     <Compile Include="Webservice\Getaddresses\GetAddresses.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\GetPaymentPlanParams.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\PaymentPlanPricePerMonth.cs" />

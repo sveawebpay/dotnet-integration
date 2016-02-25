@@ -582,7 +582,63 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-           Assert.IsTrue(answer.Accepted);
+            Assert.IsTrue(answer.Accepted);
+            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
+            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PricePerUnit, Is.EqualTo(secondOrderRowPriceExVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).Description, Is.EqualTo(secondOrderRowName + ": " + secondOrderRowDescription));
+        }
+        [Test] public void Test_AddOrderRows_AddPaymentPlanOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
+        {
+            // create order
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+
+            // add order rows
+            //var firstOrderRowPriceIncVat = 80M;
+            var firstOrderRowPriceExVat = 64M;
+            var firstOrderRowName = "New row #1";
+            var firstOrderRowDescription = "This should be the third order row!";
+
+            var firstOrderRow = new OrderRowBuilder()
+                //.SetAmountIncVat(firstOrderRowPriceIncVat)
+                .SetAmountExVat(firstOrderRowPriceExVat)
+                .SetVatPercent(25M)
+                .SetQuantity(1M)
+                .SetDiscountPercent(10)
+                .SetName(firstOrderRowName)
+                .SetDescription(firstOrderRowDescription)
+                ;
+
+            var secondOrderRowPriceExVat = 32M;
+            var secondOrderRowName = "New row #2";
+            var secondOrderRowDescription = "This should be the fourth order row!";
+
+            var secondOrderRow = new OrderRowBuilder(firstOrderRow); // uses copy constructor
+            secondOrderRow
+                .SetAmountExVat(secondOrderRowPriceExVat)
+                .SetName(secondOrderRowName)
+                .SetDescription(secondOrderRowDescription)
+            ;
+
+            AddOrderRowsBuilder builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRows( new List<OrderRowBuilder>() { firstOrderRow, secondOrderRow } )
+                ;
+            // then select the corresponding request class and send request
+            AdminWS.AddOrderRowsResponse addition = builder.AddPaymentPlanOrderRows().DoRequest();
+            Assert.True(addition.Accepted);
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
             Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));

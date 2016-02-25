@@ -57,9 +57,30 @@ namespace Webpay.Integration.CSharp.AdminService
                 NumberOfUnits = orb.GetQuantity(),
                 PriceIncludingVat = orb.GetAmountIncVat().HasValue, // true iff we have set amountIncVat
                 PricePerUnit = (decimal)(orb.GetAmountIncVat() ?? orb.GetAmountExVat()),
-                VatPercent = (decimal)(orb.GetVatPercent() ?? (((orb.GetAmountIncVat() / orb.GetAmountExVat()) - 1M) * 100M)) // TODO change to GetVatPercentFromBuilderOrderRow
+                VatPercent = GetVatPercentFromBuilderOrderRow(orb.GetVatPercent(), orb.GetAmountIncVat(), orb.GetAmountExVat()),
             };
             return or;
+        }
+
+        protected AdminWS.NumberedOrderRow ConvertNumberedOrderRowBuilderToAdminWSNumberedOrderRow(NumberedOrderRowBuilder norb)
+        {
+            var nor = new AdminWS.NumberedOrderRow()
+            {
+                ArticleNumber = norb.GetArticleNumber(),
+                Description = GetDescriptionFromBuilderOrderRow(norb.GetName(), norb.GetDescription()),
+                //DiscountAmount = ,
+                //DiscountAmountIncludingVat = ,
+                DiscountPercent = norb.GetDiscountPercent(),
+                //ExtensionData = ,
+                NumberOfUnits = norb.GetQuantity(),
+                PriceIncludingVat = norb.GetAmountIncVat().HasValue, // true iff we have set amountIncVat
+                PricePerUnit = (decimal)(norb.GetAmountIncVat() ?? norb.GetAmountExVat()),
+                VatPercent = GetVatPercentFromBuilderOrderRow(norb.GetVatPercent(), norb.GetAmountIncVat(), norb.GetAmountExVat()),
+                //DiscountAmount = ,                    // not yet supported
+                //DiscountAmountIncludingVat = ,        // not yet supported
+                RowNumber = norb.GetRowNumber()
+            };
+            return nor;
         }
 
         protected static decimal GetVatPercentFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat)

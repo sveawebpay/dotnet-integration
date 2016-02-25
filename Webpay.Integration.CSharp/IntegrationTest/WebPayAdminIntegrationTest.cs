@@ -573,7 +573,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(secondOrderRow)
                 ;
             // then select the corresponding request class and send request
-            AdminWS.UpdateOrderRowsResponse addition = builder.AddInvoiceOrderRows().DoRequest();
+            AdminWS.AddOrderRowsResponse addition = builder.AddInvoiceOrderRows().DoRequest();
             Assert.True(addition.Accepted);
 
             // query order
@@ -582,10 +582,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            //Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).PriceIncludingVat);   //
-            //Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
-            //Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(firstOrderRowIndex - 1).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
+           Assert.IsTrue(answer.Accepted);
+            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
+            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PricePerUnit, Is.EqualTo(secondOrderRowPriceExVat));
+            Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).Description, Is.EqualTo(secondOrderRowName + ": " + secondOrderRowDescription));
         }
 
         // WebpayAdmin.UpdateOrderRows()

@@ -49,7 +49,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var or = new AdminWS.OrderRow()
             {
                 ArticleNumber = orb.GetArticleNumber(),
-                Description = orb.GetDescription(),
+                Description = GetDescriptionFromBuilderOrderRow(orb.GetName(), orb.GetDescription()),
                 //DiscountAmount = ,
                 //DiscountAmountIncludingVat = ,
                 DiscountPercent = orb.GetDiscountPercent(),

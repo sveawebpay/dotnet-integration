@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\UpdateOrderRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditInvoiceOrderRowsRequest.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\AddOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\UpdateOrderBuilder.cs" />
     <Compile Include="Order\Handle\UpdateOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />

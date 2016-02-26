@@ -51,7 +51,6 @@ namespace Webpay.Integration.CSharp
         {
             return new DeliverOrdersBuilder(configurationProvider);
         }
-
         /// <summary>
         /// ...
         ///  UpdateOrderBuilder request = WebpayAdmin.UpdateOrder(config)
@@ -69,7 +68,6 @@ namespace Webpay.Integration.CSharp
         {
             return new UpdateOrderBuilder(configurationProvider);
         }
-
         /// <summary>
         /// ...
         ///  DeliverOrderRowsBuilder request = WebpayAdmin.DeliverOrderRows(config)

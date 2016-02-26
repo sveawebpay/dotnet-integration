@@ -108,8 +108,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
         }
         // WebpayAdmin.UpdateOrder()
-        [Test]
-        public void Test_UpdateOrder_UpdateInvoiceOrder()
+        [Test] public void Test_UpdateOrder_UpdateInvoiceOrder()
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
@@ -121,14 +120,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             var clientOrderNumberText = "Updated order description";
             var notesText = "Updated order notes description";
-            var newClientOrderNumber = clientOrderNumberText + Enumerable.Repeat('.',(maxClientOrderNumberLength - clientOrderNumberText.Length));
-            var newNotes = notesText + Enumerable.Repeat('.', (maxNotesLength - notesText.Length));
+            var newClientOrderNumber = clientOrderNumberText.PadRight(maxClientOrderNumberLength, '.');
+            var newNotes = notesText.PadRight(maxNotesLength, '.');
 
-            var updateBuilder = new UpdateOrderBuilder()
+            var updateBuilder = new UpdateOrderBuilder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)    
                 .SetCountryCode(CountryCode.SE)
-                .SetClientOrderNumber(newClientOrderNumber)
-                .SetName(newNotes)
+                .SetClientOrderNumber(clientOrderNumberText)
+                .SetNotes(notesText)
             ;
             AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdateInvoiceOrder().DoRequest();
             Assert.True(updateResponse.Accepted);
@@ -140,8 +139,35 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
-            Assert.That(answer.Orders.FirstOrDefault().ClientOrderId, Is.EqualTo(newClientOrderNumber));
-            Assert.That(answer.Orders.FirstOrDefault().Notes, Is.EqualTo(newNotes));
+            Assert.That(answer.Orders.FirstOrDefault().ClientOrderId, Is.EqualTo(clientOrderNumberText));
+            Assert.That(answer.Orders.FirstOrDefault().Notes, Is.EqualTo(notesText));
+        }
+        [Test] public void Test_UpdateOrder_UpdateInvoiceOrder_TooLongClientOrderNumberReturnsError()
+        {
+            // create order
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+
+            // update order
+            var maxClientOrderNumberLength = 29; // should be 32, bug report filed 160226;
+            var maxNotesLength = 200;
+
+            var clientOrderNumberText = "Updated order description";
+            var notesText = "Updated order notes description";
+            var newClientOrderNumber = clientOrderNumberText.PadRight(maxClientOrderNumberLength +1, '.');
+            var newNotes = notesText.PadRight(maxNotesLength +1, '.');
+
+            var updateBuilder = new UpdateOrderBuilder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .SetClientOrderNumber(newClientOrderNumber)
+                .SetNotes(newNotes)
+            ;
+            AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdateInvoiceOrder().DoRequest();
+            Assert.False(updateResponse.Accepted);
+            Assert.That(updateResponse.ResultCode, Is.EqualTo(20025));
+            Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The ClientOrderNumber is too long"));
+
         }
         // WebpayAdmin.DeliverOrders()
         [Test] public void Test_DeliverOrders_DeliverInvoiceOrderRows_SetOrderIdAndSingleOrder()

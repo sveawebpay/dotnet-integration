@@ -1,7 +1,5 @@
 using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Order.Handle;
-using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp
 {
@@ -52,6 +50,24 @@ namespace Webpay.Integration.CSharp
         public static DeliverOrdersBuilder DeliverOrders(IConfigurationProvider configurationProvider)
         {
             return new DeliverOrdersBuilder(configurationProvider);
+        }
+
+        /// <summary>
+        /// ...
+        ///  UpdateOrderBuilder request = WebpayAdmin.UpdateOrder(config)
+        ///   .SetOrderId()                 // required
+        ///   .SetCountryCode()             // required
+        ///   .SetClientOrderNumber()       // optional, new ClientOrderNumber field content, string w/max length of 32
+        ///   .SetNotes                     // optional, new Notes field content, string w/max length of 200 
+        ///  ;
+        ///  // then select the corresponding request class and send request
+        ///  response = request.UpdateInvoiceOrder().DoRequest();     // returns AdminWS.UpdateOrderResponse
+        ///  response = request.UpdatePaymentPlanOrder().DoRequest();  // returns AdminWS.UpdateOrderResponse
+        ///  ...
+        /// </summary>
+        public static UpdateOrderBuilder UpdateOrder(IConfigurationProvider configurationProvider)
+        {
+            return new UpdateOrderBuilder(configurationProvider);
         }
 
         /// <summary>

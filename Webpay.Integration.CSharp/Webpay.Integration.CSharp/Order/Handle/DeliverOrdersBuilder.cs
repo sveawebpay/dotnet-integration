@@ -8,7 +8,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
     {
         internal List<long> OrderIds { get; private set; }
         internal DistributionType DistributionType { get; private set; }
-        public PaymentType OrderType { get; set; }
+        internal PaymentType OrderType { get; private set; }
 
 
         public DeliverOrdersBuilder(IConfigurationProvider config) : base(config)

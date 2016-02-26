@@ -43,7 +43,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.UpdateOrderRequest(this);
         }
 
-        public AdminService.UpdateOrderRequest UpdatePaymentPlanOrders()
+        public AdminService.UpdateOrderRequest UpdatePaymentPlanOrder()
         {
             OrderType = PaymentType.PAYMENTPLAN;
             return new AdminService.UpdateOrderRequest(this);

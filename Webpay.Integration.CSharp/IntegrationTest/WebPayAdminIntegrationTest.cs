@@ -115,13 +115,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.True(order.Accepted);
 
             // update order
-            var maxClientOrderNumberLength = 32;
-            var maxNotesLength = 200;
-
-            var clientOrderNumberText = "Updated order description";
-            var notesText = "Updated order notes description";
-            var newClientOrderNumber = clientOrderNumberText.PadRight(maxClientOrderNumberLength, '.');
-            var newNotes = notesText.PadRight(maxNotesLength, '.');
+            var clientOrderNumberText = "Updated clientOrderNumber";
+            var notesText = "Updated notes";
 
             var updateBuilder = new UpdateOrderBuilder(SveaConfig.GetDefaultConfig())
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)    
@@ -152,8 +147,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             var maxClientOrderNumberLength = 29; // should be 32, bug report filed 160226;
             var maxNotesLength = 200;
 
-            var clientOrderNumberText = "Updated order description";
-            var notesText = "Updated order notes description";
+            var clientOrderNumberText = "Updated clientOrderNumber";
+            var notesText = "Updated notes";
             var newClientOrderNumber = clientOrderNumberText.PadRight(maxClientOrderNumberLength +1, '.');
             var newNotes = notesText.PadRight(maxNotesLength +1, '.');
 
@@ -167,7 +162,35 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.False(updateResponse.Accepted);
             Assert.That(updateResponse.ResultCode, Is.EqualTo(20025));
             Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The ClientOrderNumber is too long"));
+        }
+        [Test] public void Test_UpdateOrder_UpdatePaymentPlanOrder()
+        {
+            // create order
+            var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
+            Assert.True(order.Accepted);
+ 
+            // update order
+            var clientOrderNumberText = "Updated clientOrderNumber";
+            var notesText = "Updated notes";
 
+            var updateBuilder = new UpdateOrderBuilder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .SetClientOrderNumber(clientOrderNumberText)
+                .SetNotes(notesText) // will be ignored for paymentplan order
+            ;
+            AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdatePaymentPlanOrder().DoRequest();
+            Assert.True(updateResponse.Accepted);
+
+            // query order
+            QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                ;
+            AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
+            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Orders.FirstOrDefault().ClientOrderId, Is.EqualTo(clientOrderNumberText));
+            Assert.That(answer.Orders.FirstOrDefault().Notes, Is.Null); // i.e. no change compared with before the update order request
         }
         // WebpayAdmin.DeliverOrders()
         [Test] public void Test_DeliverOrders_DeliverInvoiceOrderRows_SetOrderIdAndSingleOrder()

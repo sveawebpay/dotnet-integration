@@ -1,16 +1,14 @@
-﻿using Webpay.Integration.CSharp.AdminService;
-using Webpay.Integration.CSharp.Config;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+﻿using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
     public class CreditAmountBuilder : Builder<CreditAmountBuilder>
     {
-        private long _orderId;
+        internal long Id { get; private set; }
         internal string Description { get; private set; }
         internal decimal AmountIncVat { get; private set; }
-        public PaymentType OrderType { get; set; }
+        internal PaymentType OrderType { get; private set; }
 
         public CreditAmountBuilder(IConfigurationProvider config) : base(config)
         {
@@ -19,7 +17,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public CreditAmountBuilder SetContractNumber(long orderId)
         {
-            _orderId = orderId;
+            Id = orderId;
             return this;
         }
 
@@ -28,15 +26,6 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this.SetContractNumber(orderId);
         }
 
-        public long GetContractNumber()
-        {
-            return _orderId;
-        }
-
-        public long GetTransactionId()
-        {
-            return _orderId;
-        }
         public override CreditAmountBuilder SetCountryCode(CountryCode countryCode)
         {
             _countryCode = countryCode;

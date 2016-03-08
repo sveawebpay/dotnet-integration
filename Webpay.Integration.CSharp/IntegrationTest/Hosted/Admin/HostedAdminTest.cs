@@ -758,7 +758,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
-        internal static Uri PrepareRegularPaymentWithTwoRows(PaymentMethod paymentMethod, string createCustomerRefNo)
+        internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber(createCustomerRefNo)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .___SetSimulatorCode_ForTestingOnly("0")
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
+        }
+
+        internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetClientOrderNumber(createCustomerRefNo)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentMethod(paymentMethod)
+                .___SetSimulatorCode_ForTestingOnly("0")
+                .SetReturnUrl(
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                .PreparePayment("127.0.0.1");
+        }
+
+        internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))

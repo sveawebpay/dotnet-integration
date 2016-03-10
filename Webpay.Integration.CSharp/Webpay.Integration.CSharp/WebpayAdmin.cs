@@ -100,7 +100,7 @@ namespace Webpay.Integration.CSharp
         ///  // then select the corresponding request class and send request
         ///  response = request.CancelInvoiceOrderRows().DoRequest();           // returns AdminWS.DeliveryResponse
         ///  response = request.CancelPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelPaymentPlanRowsResponse
-        ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Response.LowerTransactionResponse
+        ///  response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Actions.LowerTransactionResponse
         /// ...
         /// </summary>
         public static CancelOrderRowsBuilder CancelOrderRows(IConfigurationProvider configurationProvider)

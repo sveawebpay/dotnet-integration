@@ -53,12 +53,13 @@ namespace Webpay.Integration.CSharp
         ///         .SetCountryCode()              // required
         ///         .SetInvoiceDistributionType()  // invoice only, required
         ///         .SetNumberOfCreditDays()       // invoice only, optional
-        ///         .AddOrderRow()                 // deprecated, optional, invoice only -- use WebPayAdmin.DeliverOrderRows instead
-        ///         .SetCreditInvoice()            // deprecated, optional, invoice only -- use WebPayAdmin.CreditOrderRows instead
+        ///         .AddOrderRow()                 // invoice only, required
+        ///         .SetCreditInvoice()            // invoice only, optional -- use WebPayAdmin.CreditOrderRows instead
         ///     ;
         ///     // then select the corresponding request class and send request
         ///     response = request.DeliverInvoiceOrder().doRequest();       // returns DeliverOrderResponse
         ///     response = request.DeliverPaymentPlanOrder().doRequest();   // returns DeliverOrderResponse
+        ///     response = request.DeliverCardOrder().doRequest();   // Confirms a card order and returns ConfirmResponse
         /// </summary>
         /// <param name="config"></param>
         /// <returns>DeliverOrderBuilder</returns>

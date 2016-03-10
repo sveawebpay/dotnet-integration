@@ -1,6 +1,6 @@
 ﻿namespace Webpay.Integration.CSharp.Order.Row
 {
-    public class ShippingFeeBuilder : IRowBuilder
+    public class ShippingFeeBuilder : IRowBuilder, IPriced<ShippingFeeBuilder>
     {
         private string _shippingId;
         private string _name;

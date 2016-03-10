@@ -1,8 +1,10 @@
-﻿using Webpay.Integration.CSharp.Util.Constant;
+﻿using System.Collections;
+using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Config
 {
-    internal class SveaTestConfigurationProvider : IConfigurationProvider
+    public class SveaTestConfigurationProvider : IConfigurationProvider
     {
         public string GetUsername(PaymentType type, CountryCode country)
         {
@@ -132,7 +134,27 @@ namespace Webpay.Integration.CSharp.Config
 
         public string GetEndPoint(PaymentType type)
         {
-            return type == PaymentType.HOSTED ? SveaConfig.GetTestPayPageUrl() : SveaConfig.GetTestWebserviceUrl();
+            switch (type)
+            {
+                #pragma warning disable 0162 //CS0162 Unreachable code detected
+                case PaymentType.HOSTED:
+                    return SveaConfig.GetTestPayPageUrl();
+                    break;
+
+                case PaymentType.INVOICE:
+                case PaymentType.PAYMENTPLAN:
+                    return SveaConfig.GetTestWebserviceUrl();
+                    break;
+
+                case PaymentType.ADMIN_TYPE:
+                    return SveaConfig.GetTestAdminServiceUrl();
+                    break;
+
+                default:
+                    throw new SveaWebPayException("Unknown PaymentType");
+                #pragma warning restore 0162
+            }
         }
+
     }
 }

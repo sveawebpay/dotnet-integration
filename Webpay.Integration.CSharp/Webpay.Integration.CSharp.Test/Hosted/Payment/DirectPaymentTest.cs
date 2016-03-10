@@ -20,7 +20,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                     .ConfigureExcludedPaymentMethod()
                                                     .GetExcludedPaymentMethod();
 
-            Assert.That(excluded.Count, Is.EqualTo(18));
+            Assert.That(excluded.Count, Is.EqualTo(19));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                     .ConfigureExcludedPaymentMethod()
                                                     .GetExcludedPaymentMethod();
 
-            Assert.That(excluded.Count, Is.EqualTo(22));
+            Assert.That(excluded.Count, Is.EqualTo(23));
         }
 
         [Test]

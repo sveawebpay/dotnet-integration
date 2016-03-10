@@ -82,6 +82,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public PayPagePayment ExcludeCardPaymentMethod()
         {
             ExcludedPaymentMethod.Add(PaymentMethod.KORTCERT.Value);
+            ExcludedPaymentMethod.Add(PaymentMethod.SVEACARDPAY.Value);
             ExcludedPaymentMethod.Add(PaymentMethod.SKRILL.Value);
 
             return this;
@@ -144,6 +145,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             ExcludedPaymentMethod = excluded.ExcludeInvoicesAndPaymentPlan();
 
             ExcludedPaymentMethod.Add(PaymentMethod.KORTCERT.Value);
+            ExcludedPaymentMethod.Add(PaymentMethod.SVEACARDPAY.Value);
             ExcludedPaymentMethod.Add(PaymentMethod.SKRILL.Value);
             ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
             ExcludeDirectPaymentMethod();

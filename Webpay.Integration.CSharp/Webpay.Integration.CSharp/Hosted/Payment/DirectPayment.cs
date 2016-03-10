@@ -62,6 +62,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
 
             ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
             ExcludedPaymentMethod.Add(PaymentMethod.KORTCERT.Value);
+            ExcludedPaymentMethod.Add(PaymentMethod.SVEACARDPAY.Value);
             ExcludedPaymentMethod.Add(PaymentMethod.SKRILL.Value);
 
             ExcludedPaymentMethod.AddRange(Excluded.ExcludeInvoicesAndPaymentPlan());

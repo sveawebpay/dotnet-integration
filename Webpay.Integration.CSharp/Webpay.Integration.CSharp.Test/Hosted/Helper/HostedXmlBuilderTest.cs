@@ -114,7 +114,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
             _xml = _xmlBuilder.GetXml(payment);
 
             const string expectedString = 
-                "<customer><ssn>164608142222</ssn><firstname>Tess, T Persson</firstname>" +
+                "<customer><ssn>194608142222</ssn><firstname>Tess, T Persson</firstname>" +
                 "<phone>0811111111</phone><email>test@svea.com</email>" +
                 "<address>Testgatan</address><housenumber>1</housenumber>" +
                 "<address2>c/o Eriksson, Erik</address2><zip>99999</zip>" +
@@ -214,10 +214,10 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
 
             const string expectedString = 
                 "<excludepaymentMethods><exclude>BANKAXESS</exclude>" +
-                "<exclude>PAYPAL</exclude><exclude>KORTCERT</exclude" +
-                "><exclude>SKRILL</exclude><exclude>SVEAINVOICESE</exclude>" +
-                "<exclude>SVEAINVOICEEU_SE</exclude><exclude>SVEASPLITSE</exclude>" +
-                "<exclude>SVEASPLITEU_SE</exclude>" +
+                "<exclude>PAYPAL</exclude><exclude>KORTCERT</exclude>" +
+                "<exclude>SVEACARDPAY</exclude><exclude>SKRILL</exclude>" +
+                "<exclude>SVEAINVOICESE</exclude><exclude>SVEAINVOICEEU_SE</exclude>" +
+                "<exclude>SVEASPLITSE</exclude><exclude>SVEASPLITEU_SE</exclude>" +
                 "<exclude>SVEAINVOICEEU_DE</exclude><exclude>SVEASPLITEU_DE</exclude>" +
                 "<exclude>SVEAINVOICEEU_DK</exclude><exclude>SVEASPLITEU_DK</exclude>" +
                 "<exclude>SVEAINVOICEEU_FI</exclude><exclude>SVEASPLITEU_FI</exclude>" +

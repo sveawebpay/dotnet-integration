@@ -6,6 +6,8 @@ using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.WebpayWS;
 using Webpay.Integration.CSharp.Webservice.Helper;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Webpay.Integration.CSharp.Webservice.Payment
 {
@@ -76,7 +78,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                                    : null,
                     OrderDate = CrOrderBuilder.GetOrderDate(),
                     CustomerReference = CrOrderBuilder.GetCustomerReference(),
-                    OrderRows = formattedOrderRows.ToArray()
+                    OrderRows = formattedOrderRows.ToArray(),
                 };
 
             sveaOrder.CreateOrderInformation = SetOrderType(OrderInfo);
@@ -104,7 +106,8 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                                            new EndpointAddress(
                                                CrOrderBuilder.GetConfig().GetEndPoint(PayType)));
 
-            return Soapsc.CreateOrderEu(request);
+            var createOrderEuResponse = Soapsc.CreateOrderEu(request);
+            return createOrderEuResponse;
         }
 
         protected abstract CreateOrderInformation SetOrderType(CreateOrderInformation information);

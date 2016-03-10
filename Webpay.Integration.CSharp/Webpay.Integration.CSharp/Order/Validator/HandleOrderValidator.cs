@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.Order.Validator
                     ValidateOrderType(order),
                     ValidateOrderId(order),
                     ValidateInvoiceDetails(order),
-                    ValidateOrderRows(order),
+                    ((order.GetOrderType() == OrderType.INVOICE) || (order.GetOrderType() == OrderType.PAYMENTPLAN)) ? ValidateOrderRows(order) : ""
                 };
 
             foreach (var line in list.Where(line => !string.IsNullOrWhiteSpace(line)))
@@ -54,8 +54,8 @@ namespace Webpay.Integration.CSharp.Order.Validator
         private static string ValidateInvoiceDetails(DeliverOrderBuilder order)
         {
             if (order.GetOrderId() > 0 && order.GetOrderType() == OrderType.INVOICE &&
-                (order.GetInvoiceDistributionType() == InvoiceDistributionType.NONE ||
-                 !Enum.IsDefined(typeof (InvoiceDistributionType), order.GetInvoiceDistributionType())))
+                (order.GetInvoiceDistributionType() == DistributionType.NONE ||
+                 !Enum.IsDefined(typeof (DistributionType), order.GetInvoiceDistributionType())))
             {
                 return "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.";
             }

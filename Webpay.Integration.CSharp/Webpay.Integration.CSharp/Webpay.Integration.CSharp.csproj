@@ -27,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,9 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,11 +51,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
+    <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\UpdateOrderRequest.cs" />
+    <Compile Include="AdminService\UpdateOrderRowsRequest.cs" />
+    <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
+    <Compile Include="AdminService\CreditInvoiceOrderRowsRequest.cs" />
+    <Compile Include="AdminService\LowerTransactionRequest.cs" />
+    <Compile Include="AdminService\DeliverOrdersRequest.cs" />
+    <Compile Include="AdminService\DeliverOrderRowsRequest.cs" />
+    <Compile Include="AdminService\AnnulTransactionRequest.cs" />
+    <Compile Include="AdminService\CreditTransactionRequest.cs" />
+    <Compile Include="AdminService\QueryTransactionRequest.cs" />
+    <Compile Include="AdminService\WebpayAdminRequest.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Config\SveaConfig.cs" />
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
+    <Compile Include="Hosted\Admin\Actions\Annul.cs" />
+    <Compile Include="Hosted\Admin\Response\CreditResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\AnnulResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\CancelRecurSubscription.cs" />
+    <Compile Include="Hosted\Admin\Response\CancelRecurSubscriptionResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\Confirm.cs" />
+    <Compile Include="Hosted\Admin\Response\ConfirmResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\CustomerRefNoResponseBase.cs" />
+    <Compile Include="Hosted\Admin\Actions\GetPaymentMethods.cs" />
+    <Compile Include="Hosted\Admin\Response\GetPaymentMethodsResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\GetReconciliationReport.cs" />
+    <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\Credit.cs" />
+    <Compile Include="Hosted\Admin\Response\LowerAmountResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\Query.cs" />
+    <Compile Include="Hosted\Admin\Actions\QueryByClientOrderNumber.cs" />
+    <Compile Include="Hosted\Admin\Response\QueryResponse.cs" />
+    <Compile Include="Hosted\Admin\Actions\ReconciliationTransaction.cs" />
+    <Compile Include="Hosted\Admin\Response\RecurResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\SpecificHostedAdminResponseBase.cs" />
+    <Compile Include="Hosted\Admin\Response\TransactionIdResponseBase.cs" />
+    <Compile Include="Hosted\Admin\HostedAdmin.cs" />
+    <Compile Include="Hosted\Admin\Actions\LowerAmount.cs" />
+    <Compile Include="Hosted\Admin\HostedActionRequest.cs" />
+    <Compile Include="Hosted\Admin\Actions\QueryByTransactionId.cs" />
+    <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
+    <Compile Include="Hosted\Admin\Actions\Recur.cs" />
+    <Compile Include="Order\Builder.cs" />
+    <Compile Include="Order\Handle\CreditAmountBuilder.cs" />
+    <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
+    <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\AddOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\UpdateOrderBuilder.cs" />
+    <Compile Include="Order\Handle\UpdateOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
+    <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />
+    <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
+    <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
+    <Compile Include="Service References\AdminWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AdminWS\BasicResponse.cs" />
+    <Compile Include="Util\Constant\OrderRowStatus.cs" />
+    <Compile Include="WebpayAdmin.cs" />
     <Compile Include="Hosted\Helper\ExcludePayments.cs" />
     <Compile Include="Hosted\Helper\HostedRowFormatter.cs" />
     <Compile Include="Hosted\Helper\HostedXmlBuilder.cs" />
@@ -66,19 +124,20 @@
     <Compile Include="Hosted\Payment\CardPayment.cs" />
     <Compile Include="Hosted\Payment\DirectPayment.cs" />
     <Compile Include="Hosted\Payment\HostedPayment.cs" />
+    <Compile Include="Hosted\Admin\HostedAdminRequest.cs" />
+    <Compile Include="Hosted\Admin\HostedAdminResponse.cs" />
     <Compile Include="Hosted\Payment\PaymentMethodPayment.cs" />
     <Compile Include="Hosted\Payment\PayPagePayment.cs" />
-    <Compile Include="Order\IBuilderCommand.cs" />
     <Compile Include="Order\Create\CreateOrderBuilder.cs" />
     <Compile Include="Order\Handle\CloseOrderBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrderBuilder.cs" />
-    <Compile Include="Order\ICreateBuilderCommand.cs" />
     <Compile Include="Order\Identity\CompanyCustomer.cs" />
     <Compile Include="Order\Identity\Customer.cs" />
     <Compile Include="Order\Identity\IndividualCustomer.cs" />
     <Compile Include="Order\OrderBuilder.cs" />
     <Compile Include="Order\Row\FixedDiscountBuilder.cs" />
     <Compile Include="Order\Row\InvoiceFeeBuilder.cs" />
+    <Compile Include="Order\Row\IPriced.cs" />
     <Compile Include="Order\Row\IRowBuilder.cs" />
     <Compile Include="Order\Row\Item.cs" />
     <Compile Include="Order\Row\OrderRowBuilder.cs" />
@@ -90,6 +149,7 @@
     <Compile Include="Order\Validator\IOrderValidator.cs" />
     <Compile Include="Order\Validator\OrderValidator.cs" />
     <Compile Include="Order\Validator\WebServiceOrderValidator.cs" />
+    <Compile Include="Hosted\Payment\SubscriptionType.cs" />
     <Compile Include="Response\Hosted\SveaResponse.cs" />
     <Compile Include="Response\Response.cs" />
     <Compile Include="Service References\WebpayWS\Reference.cs">
@@ -99,7 +159,7 @@
     </Compile>
     <Compile Include="Util\Constant\CountryCode.cs" />
     <Compile Include="Util\Constant\Currency.cs" />
-    <Compile Include="Util\Constant\InvoiceDistributionType.cs" />
+    <Compile Include="Util\Constant\DistributionType.cs" />
     <Compile Include="Util\Constant\InvoiceType.cs" />
     <Compile Include="Util\Constant\LanguageCode.cs" />
     <Compile Include="Util\Constant\OrderType.cs" />
@@ -114,6 +174,10 @@
     <Compile Include="Util\Xml\Utf8StringWriter.cs" />
     <Compile Include="WebpayConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AdminService\GetOrdersRequest.cs" />
+    <Compile Include="AdminService\CancelOrderRequest.cs" />
+    <Compile Include="AdminService\CreditAmountRequest.cs" />
+    <Compile Include="AdminService\AddOrderRowsRequest.cs" />
     <Compile Include="Webservice\Getaddresses\GetAddresses.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\GetPaymentPlanParams.cs" />
     <Compile Include="Webservice\Getpaymentplanparams\PaymentPlanPricePerMonth.cs" />
@@ -121,6 +185,8 @@
     <Compile Include="Webservice\Handleorder\DeliverInvoice.cs" />
     <Compile Include="Webservice\Handleorder\DeliverPaymentPlan.cs" />
     <Compile Include="Webservice\Handleorder\HandleOrder.cs" />
+    <Compile Include="Webservice\Helper\Maybe.cs" />
+    <Compile Include="Webservice\Helper\FuncExtensions.cs" />
     <Compile Include="Webservice\Helper\WebServiceRowFormatter.cs" />
     <Compile Include="Webservice\Payment\InvoicePayment.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanPayment.cs" />
@@ -132,6 +198,136 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\AdminWS\AdminService.wsdl" />
+    <None Include="Service References\AdminWS\AdminService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CreateApprovedOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.CreateOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.DeliveryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetAccountCreditsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetOrdersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.PdfLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.SearchInvoicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.SearchOrdersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.SumOfAmountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WebpayWS\sveawebpay.wsdl" />
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -204,6 +400,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AdminWS\" />
     <WCFMetadataStorage Include="Service References\WebpayWS\" />
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +414,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\WebpayWS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\AdminService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

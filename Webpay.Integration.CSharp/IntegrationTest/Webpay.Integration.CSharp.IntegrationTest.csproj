@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,8 +62,12 @@
   <ItemGroup>
     <Compile Include="Config\ConfigurationProviderTest.cs" />
     <Compile Include="Config\ConfigurationProviderTestData.cs" />
+    <Compile Include="Hosted\Admin\HostedAdminTest.cs" />
+    <Compile Include="Hosted\Admin\PaymentResponse.cs" />
     <Compile Include="Hosted\Payment\HostedPaymentResponseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebpayConnectionIntegrationTest.cs" />
+    <Compile Include="WebpayAdminIntegrationTest.cs" />
     <Compile Include="Webservice\CreateOrder\CreateOrderTest.cs" />
     <Compile Include="Webservice\GetAddress\GetAddressesTest.cs" />
     <Compile Include="Webservice\GetPaymentPlanParams\GetPaymentPlanParamsTest.cs" />
@@ -72,6 +78,7 @@
     <Compile Include="Webservice\Payment\DoPaymentPlanTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

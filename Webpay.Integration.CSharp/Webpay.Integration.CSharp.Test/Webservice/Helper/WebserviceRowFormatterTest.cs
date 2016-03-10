@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -88,8 +90,9 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             Assert.That(newRows[0].ArticleNumber, Is.Empty);
             Assert.That(newRows[0].Description, Is.EqualTo("Tester"));
-            Assert.That(newRows[0].PricePerUnit, Is.EqualTo(4.0));
+            Assert.That(newRows[0].PricePerUnit, Is.EqualTo(5.0));
             Assert.That(newRows[0].VatPercent, Is.EqualTo(25.0));
+            Assert.That(newRows[0].PriceIncludingVat, Is.True);
             Assert.That(newRows[0].DiscountPercent, Is.EqualTo(0));
             Assert.That(newRows[0].NumberOfUnits, Is.EqualTo(1));
             Assert.That(newRows[0].Unit, Is.EqualTo("st"));
@@ -113,7 +116,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             List<OrderRow> newRows = new WebServiceRowFormatter<CreateOrderBuilder>(order).FormatRows();
 
             Assert.That(newRows[1].ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRows[1].Description, Is.EqualTo("Tess: Tester"));
+            Assert.That(newRows[1].Description, Is.EqualTo("Tess: Tester (25%)"));
             Assert.That(newRows[1].PricePerUnit, Is.EqualTo(-0.8M));
             Assert.That(newRows[1].VatPercent, Is.EqualTo(25.0M));
             Assert.That(newRows[1].DiscountPercent, Is.EqualTo(0));
@@ -139,7 +142,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             List<OrderRow> newRows = new WebServiceRowFormatter<CreateOrderBuilder>(order).FormatRows();
 
             Assert.That(newRows[1].ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRows[1].Description, Is.EqualTo("Tess: Tester"));
+            Assert.That(newRows[1].Description, Is.EqualTo("Tess: Tester (25%)"));
             Assert.That(newRows[1].PricePerUnit, Is.EqualTo(-0.4));
             Assert.That(newRows[1].VatPercent, Is.EqualTo(25));
             Assert.That(newRows[1].DiscountPercent, Is.EqualTo(0));
@@ -217,12 +220,13 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             List<OrderRow> newRows = new WebServiceRowFormatter<CreateOrderBuilder>(order).FormatRows();
 
+            Assert.That(newRows[2].ArticleNumber, Is.EqualTo("42"));
 
             // 100*250/356 = 70.22 incl. 25% vat => 14.04 vat as amount 
             OrderRow newRow = newRows[2];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("42"));
             Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(100): testFormatFixedDiscountRowsWithDifferentVatRatesPresent (25%)"));
-            Assert.That(newRow.PricePerUnit, Is.EqualTo(-56.18M));
+            Assert.That(newRow.PricePerUnit, Is.EqualTo(-70.22M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1));
@@ -232,7 +236,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             newRow = newRows[3];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("42"));
             Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(100): testFormatFixedDiscountRowsWithDifferentVatRatesPresent (6%)"));
-            Assert.That(newRow.PricePerUnit, Is.EqualTo(-28.09M));
+            Assert.That(newRow.PricePerUnit, Is.EqualTo(-29.78M));
             Assert.That(newRow.VatPercent, Is.EqualTo(6));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1));
@@ -261,7 +265,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             OrderRow newRow = newRows[1];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRow.Description, Is.EqualTo(".SetAmountExVat(4.0), .SetVatPercent(25): TestFormatFixedDiscountRowsamountIncVatAndVatPercentWithSingleVatRatePresent"));
+            Assert.That(newRow.Description, Is.EqualTo(".SetAmountExVat(4.0), .SetVatPercent(25): TestFormatFixedDiscountRowsamountIncVatAndVatPercentWithSingleVatRatePresent (25%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-0.8M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
@@ -296,7 +300,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             // 100 @25% vat = -80 excl. vat
             OrderRow newRow = newRows[2];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("42"));
-            Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(111), .vatPercent(25): TestFormatFixedDiscountRowsamountIncVatAndVatPercentWithDifferentVatRatesPresent"));
+            Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(111), .vatPercent(25): TestFormatFixedDiscountRowsamountIncVatAndVatPercentWithDifferentVatRatesPresent (25%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-88.80M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
@@ -325,7 +329,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             OrderRow newRow = newRows[1];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRow.Description, Is.EqualTo("Tess: Tester"));
+            Assert.That(newRow.Description, Is.EqualTo("Tess: Tester (25%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-1.0M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
@@ -360,7 +364,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             // 100 @25% vat = -80 excl. vat
             OrderRow newRow = newRows[2];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("42"));
-            Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(100): testFormatFixedDiscountRowsWithDifferentVatRatesPresent"));
+            Assert.That(newRow.Description, Is.EqualTo(".SetAmountIncVat(100): testFormatFixedDiscountRowsWithDifferentVatRatesPresent (25%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-111.00M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0));
@@ -387,7 +391,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 
             OrderRow newRow = newRows[1];
             Assert.That(newRow.ArticleNumber, Is.EqualTo("0"));
-            Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(20): TestFormatRelativeDiscountRowsWithSingleVatRatePresent"));
+            Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(20): TestFormatRelativeDiscountRowsWithSingleVatRatePresent (12%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-20.00M));
             Assert.That(newRow.VatPercent, Is.EqualTo(12));
             Assert.That(newRow.DiscountPercent, Is.EqualTo(0)); // not the same thing as in our WebPayItem...
@@ -437,5 +441,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1)); // 1 "discount unit"
             Assert.That(newRow.Unit, Is.EqualTo("st"));
         }
+
+
     }
 }

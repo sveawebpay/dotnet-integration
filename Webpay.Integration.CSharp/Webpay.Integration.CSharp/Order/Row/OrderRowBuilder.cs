@@ -1,6 +1,6 @@
 ﻿namespace Webpay.Integration.CSharp.Order.Row
 {
-    public class OrderRowBuilder : IRowBuilder
+    public class OrderRowBuilder : IRowBuilder, IPriced<OrderRowBuilder>
     {
         private string _articleNumber;
         private string _name;
@@ -12,6 +12,27 @@
         private string _unit;
         private int _vatDiscount;
         private int _discountPercent;
+
+        // copy constructor
+        public OrderRowBuilder(OrderRowBuilder original)
+        {
+            _articleNumber = original._articleNumber;
+            _name = original._name;
+            _description = original._description;
+            _amountExVat = original._amountExVat;
+            _amountIncVat = original._amountIncVat;
+            _vatPercent = original._vatPercent;
+            _quantity = original._quantity;
+            _unit = original._unit;
+            _vatDiscount = original._vatDiscount;
+            _discountPercent = original._discountPercent;
+        }
+
+        // default constructor
+        public OrderRowBuilder()
+        {
+            // intentionally left blank
+        }
 
         public string GetArticleNumber()
         {

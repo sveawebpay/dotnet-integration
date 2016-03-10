@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
+using Webpay.Integration.CSharp.Hosted.Admin;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -14,13 +18,14 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         private long _orderId;
         private OrderType _orderType = OrderType.NONE;
-        private InvoiceDistributionType _distributionType;
+        private DistributionType _distributionType;
         private long? _invoiceIdToCredit;
         private int _numberOfCreditDays;
+        private DateTime? _captureDate;
 
-        public DeliverOrderBuilder(IConfigurationProvider config)
+        public DeliverOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            Config = config;
+            _captureDate = null;
         }
 
         public HandleOrderValidator GetValidator()
@@ -55,12 +60,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
             _orderType = orderType;
         }
 
-        public InvoiceDistributionType GetInvoiceDistributionType()
+        public DistributionType GetInvoiceDistributionType()
         {
             return _distributionType;
         }
 
-        public DeliverOrderBuilder SetInvoiceDistributionType(InvoiceDistributionType type)
+        public DeliverOrderBuilder SetInvoiceDistributionType(DistributionType type)
         {
             _distributionType = type;
             return this;
@@ -112,6 +117,8 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new HandleOrder(this);
         }
 
+
+
         public override DeliverOrderBuilder SetFixedDiscountRows(List<FixedDiscountBuilder> fixedDiscountRows)
         {
             FixedDiscountRows = fixedDiscountRows;
@@ -124,11 +131,6 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public override DeliverOrderBuilder Run(IBuilderCommand<DeliverOrderBuilder> runner)
-        {
-            return runner.Run(this);
-        }
-
         public override DeliverOrderBuilder AddOrderRow(OrderRowBuilder itemOrderRow)
         {
             OrderRows.Add(itemOrderRow);
@@ -137,7 +139,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public override DeliverOrderBuilder SetCountryCode(CountryCode countryCode)
         {
-            CountryCode = countryCode;
+            _countryCode = countryCode;
             return this;
         }
 
@@ -171,6 +173,27 @@ namespace Webpay.Integration.CSharp.Order.Handle
                 InvoiceFeeRows.Add(itemFee as InvoiceFeeBuilder);
             }
             return this;
+        }
+
+
+        public DeliverOrderBuilder SetCaptureDate(DateTime captureDate)
+        {
+            _captureDate = captureDate;
+            return this;
+        }
+
+        public HostedActionRequest DeliverCardOrder()
+        {
+            // no validation for this release, we fall back on the service error messages
+
+            var action = new Confirm(
+                this.GetOrderId(),
+                this._captureDate ?? DateTime.Now // if no captureDate given, use today
+            );
+
+            var request = new HostedAdmin(this._config, this._countryCode);
+
+            return request.Confirm( action );
         }
     }
 }

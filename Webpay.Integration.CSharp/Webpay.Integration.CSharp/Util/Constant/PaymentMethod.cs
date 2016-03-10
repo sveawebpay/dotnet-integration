@@ -13,13 +13,15 @@ namespace Webpay.Integration.CSharp.Util.Constant
         public static readonly PaymentMethod SEBFTGSE = new PaymentMethod("DBSEBFTGSE", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod SHBSE = new PaymentMethod("DBSHBSE", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod SWEDBANKSE = new PaymentMethod("DBSWEDBANKSE", PaymentMethodType.DIRECT);
+
         public static readonly PaymentMethod KORTCERT = new PaymentMethod("KORTCERT", PaymentMethodType.CARD);
         public static readonly PaymentMethod SKRILL = new PaymentMethod("SKRILL", PaymentMethodType.CARD);
-        public static readonly PaymentMethod PAYPAL = new PaymentMethod("PAYPAL", PaymentMethodType.PSP);
-        public static readonly PaymentMethod INVOICE = new PaymentMethod("INVOICE", PaymentMethodType.INVOICE);
+        public static readonly PaymentMethod SVEACARDPAY = new PaymentMethod("SVEACARDPAY", PaymentMethodType.CARD);
 
-        public static readonly PaymentMethod PAYMENTPLAN = new PaymentMethod("PAYMENTPLAN",
-                                                                             PaymentMethodType.PAYMENTPLAN);
+        public static readonly PaymentMethod PAYPAL = new PaymentMethod("PAYPAL", PaymentMethodType.PSP);
+
+        public static readonly PaymentMethod INVOICE = new PaymentMethod("INVOICE", PaymentMethodType.INVOICE);
+        public static readonly PaymentMethod PAYMENTPLAN = new PaymentMethod("PAYMENTPLAN", PaymentMethodType.PAYMENTPLAN);
 
         private PaymentMethod(string value, PaymentMethodType paymentMethodType)
         {
@@ -35,9 +37,13 @@ namespace Webpay.Integration.CSharp.Util.Constant
                 SEBFTGSE,
                 SHBSE,
                 SWEDBANKSE,
+
                 KORTCERT,
                 SKRILL,
+                SVEACARDPAY,
+
                 PAYPAL,
+
                 INVOICE,
                 PAYMENTPLAN
             };

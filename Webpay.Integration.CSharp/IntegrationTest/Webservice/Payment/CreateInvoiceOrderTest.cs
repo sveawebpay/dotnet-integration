@@ -123,6 +123,39 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         }
 
         [Test]
+        public void TestInvoiceRequestUsingForNewVatFunctionCornerCase()
+        {
+            var useInvoicePayment = WebpayConnection
+                .CreateOrder(SveaConfig.GetDefaultConfig())
+                .AddOrderRow(Item
+                    .OrderRow()
+                    .SetArticleNumber("1")
+                    .SetName("Prod")
+                    .SetDescription("Specification")
+                    .SetAmountIncVat(100.00M)
+                    .SetQuantity(1)
+                    .SetUnit("st")
+                    .SetVatPercent(24)
+                    .SetVatDiscount(0))
+                .AddCustomerDetails(Item
+                    .IndividualCustomer()
+                    .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
+                .UseInvoicePayment();
+            var createOrderEuRequest = useInvoicePayment.PrepareRequest();
+            CreateOrderEuResponse response = useInvoicePayment
+                                                             .DoRequest();
+
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(100.00M)); // Old version gives 100.01
+        }
+
+        [Test]
         public void TestInvoiceForIndividualFromSe()
         {
             var response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

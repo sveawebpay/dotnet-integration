@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="48aa7fda-0134-4945-9dad-e210141f216d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AdminService.disco" MetadataType="Disco" ID="0e64c2a3-d109-443b-9260-2177a6caa335" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?disco" />
+    <MetadataFile FileName="AdminService.xsd" MetadataType="Schema" ID="6e28fb66-c9c3-484c-a993-8450d3d23efe" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AdminService1.xsd" MetadataType="Schema" ID="ccca0466-122f-4d2a-a080-3e0881ad322d" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AdminService2.xsd" MetadataType="Schema" ID="5c24de07-8655-4e18-a357-4798b6aaf428" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd4" />
+    <MetadataFile FileName="AdminService3.xsd" MetadataType="Schema" ID="c5a06fe5-04f9-4cdb-a9a6-1dce6025ef25" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd5" />
+    <MetadataFile FileName="AdminService4.xsd" MetadataType="Schema" ID="afa96a00-04d5-405c-9457-b751c7038377" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd6" />
+    <MetadataFile FileName="AdminService5.xsd" MetadataType="Schema" ID="92db23ce-61cf-4365-8cb7-452bb442c88a" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AdminService6.xsd" MetadataType="Schema" ID="275dc17f-0354-43a1-9bf2-700bbda7a225" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd8" />
+    <MetadataFile FileName="AdminService.wsdl" MetadataType="Wsdl" ID="72bff7e3-90b3-4ea9-9a8e-f3052db23e59" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?wsdl" />
+    <MetadataFile FileName="AdminService7.xsd" MetadataType="Schema" ID="e94dc256-6551-44f0-bf9a-a4b433790b35" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AdminService8.xsd" MetadataType="Schema" ID="c6ea7106-f3c7-4a64-9074-620360ea4e73" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd7" />
+    <MetadataFile FileName="AdminService9.xsd" MetadataType="Schema" ID="98456258-0dfd-4944-97cd-0f3b6f1f642d" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd9" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

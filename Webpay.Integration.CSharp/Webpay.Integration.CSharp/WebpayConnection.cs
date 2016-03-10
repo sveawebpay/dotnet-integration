@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
@@ -33,7 +34,9 @@ namespace Webpay.Integration.CSharp
         /// Start building request to close order.
         /// </summary>
         /// <param name="config"></param>
+        /// <remarks>Deprecated</remarks>
         /// <returns>CloseOrderBuilder</returns>
+        [Obsolete("Use WebpayAdmin.CancelOrder() instead")]
         public static CloseOrderBuilder CloseOrder(IConfigurationProvider config = null)
         {
             if (config == null)
@@ -45,7 +48,18 @@ namespace Webpay.Integration.CSharp
         }
 
         /// <summary>
-        /// Starts building request for deliver order.
+        ///     DeliverOrderBuilder request = WebpayConnection.DeliverOrder(config)
+        ///         .SetOrderId()                  // invoice or payment plan only, required
+        ///         .SetCountryCode()              // required
+        ///         .SetInvoiceDistributionType()  // invoice only, required
+        ///         .SetNumberOfCreditDays()       // invoice only, optional
+        ///         .AddOrderRow()                 // invoice only, required
+        ///         .SetCreditInvoice()            // invoice only, optional -- use WebPayAdmin.CreditOrderRows instead
+        ///     ;
+        ///     // then select the corresponding request class and send request
+        ///     response = request.DeliverInvoiceOrder().doRequest();       // returns DeliverOrderResponse
+        ///     response = request.DeliverPaymentPlanOrder().doRequest();   // returns DeliverOrderResponse
+        ///     response = request.DeliverCardOrder().doRequest();   // Confirms a card order and returns ConfirmResponse
         /// </summary>
         /// <param name="config"></param>
         /// <returns>DeliverOrderBuilder</returns>

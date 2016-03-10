@@ -1,4 +1,5 @@
 # C#/.Net Integration Package API for SveaWebPay
+Version 1.0.0
 
 ## Index
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)

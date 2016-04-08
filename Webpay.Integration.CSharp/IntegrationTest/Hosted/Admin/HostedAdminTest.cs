@@ -24,6 +24,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
         }
 
+        [Test]
+        public void TestPreparedMailPaymentRequest()
+        {
+            Uri uri = PrepareRegularMailPayment(PaymentMethod.NORDEASE, CreateCustomerRefNo());
+
+            Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/mp\\/*"));
+        }
+
         [Test, Ignore]
         public void TestGetRecurringPaymentUrl()
         {
@@ -744,7 +752,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 );
         }
 
-        internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
+        internal static PaymentMethodPayment PrepareRegularPaymentMethodPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -755,9 +763,21 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html");
+        }
+
+        internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
+        {
+            return PrepareRegularPaymentMethodPayment(paymentMethod, createCustomerRefNo)
                 .PreparePayment("127.0.0.1");
         }
+
+        internal static Uri PrepareRegularMailPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
+        {
+            return PrepareRegularPaymentMethodPayment(paymentMethod, createCustomerRefNo)
+                .PrepareMailPayment();
+        }
+
         internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
         {
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

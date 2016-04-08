@@ -228,25 +228,32 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 	.GetPaymentForm();
     or
     .PreparePayment("234.214.2.23")
-
+    or
+    .PrepareMailPayment()
 //Continue as a direct bank payment
 .UsePayPageDirectBankOnly()
 	...
 	.GetPaymentForm();
     or
     .PreparePayment("234.214.2.23")
+    or
+    .PrepareMailPayment()
 //Continue as a PayPage payment
 .UsePayPage()
 	...
 	.GetPaymentForm();
     or
     .PreparePayment("234.214.2.23")
+    or
+    .PrepareMailPayment()
 //Continue as a PayPage payment
 .UsePaymentMethod(PaymentMethod.DBSEBSE) //see APPENDIX for Constants
 	...
 	.GetPaymentForm()
     or
     .PreparePayment("234.214.2.23")
+    or
+    .PrepareMailPayment()
 //Continue as an invoice payment
 .UseInvoicePayment()
 	...
@@ -257,8 +264,8 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 	.DoRequest();
 ```
 
-If you want to prepare a payment and send a link to the user for the payment. In this case a hosted payment will be used.
-The `.PreparePayment()`-method will return a `Uri` for the customer to use to complete the payment of the order.
+If you want to prepare a payment or an email payment and send a link to the user for the payment. In this case a hosted payment will be used.
+The `.PreparePayment()`-method and `.PrepareMailPayment()`-method will return a `Uri` for the customer to use to complete the payment of the order.
 
 ### 3.2 Customer Identity
 Customer identity is required for invoice and payment plan orders. Required values varies
@@ -329,6 +336,10 @@ If you pass the xml response to an instance of SveaResponse, you will receive a 
 >The most effective way is to use `.UseInvoicePayment()` and `.UsePaymentPlanPayment()` for the synchronous payments, and use the `.UsePaymentMethod()` for the asynchronous requests.
 >
 >Alternatively you can go by *PayPage* for the asynchronous requests by using `.UsePayPageCardOnly()` and `.UsePayPageDirectBankOnly()`.
+
+*I wish to prepare an order and receive a link that I can email to a customer, who then will complete the order payment. Using either prepared payment (url is valid up to one hour) or prepared email payment.*
+
+>Create and build the order, then select the payment method with the *.UsePaymentMethod()*, but instead of getting a form for sending the customer to Webpay through HTTP POST with *.GetPaymentForm()*, use *.PreparePayment()* or *.PrepareMailPayment()* to get an prepared url to send to the customer to WebPay through a HTTP GET.
 
 *I am using more than one payment and want them gathered on on place.*
 

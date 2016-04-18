@@ -1,4 +1,5 @@
 # C#/.Net Integration Package API for SveaWebPay
+Version 1.0.0
 
 ## Index
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
@@ -8,13 +9,13 @@
 	* [3.2 Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#32-customer-identity)
 	* [3.3 Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#33-other-values)
 	* [3.4 Choose payment](https://github.com/sveawebpay/dotnet-integration/tree/master#34-choose-payment)
-[4. Payment method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#4-payment-method-reference)
+* [4. Payment method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#4-payment-method-reference)
     * [4.1 Invoice payment](https://github.com/sveawebpay/dotnet-integration/tree/master#41-invoice-payment)
     * [4.2 Payment plan payment](https://github.com/sveawebpay/dotnet-integration/tree/master#42-payment-plan-payment)
 	* [4.3 Card payment](https://github.com/sveawebpay/dotnet-integration/tree/master#43-card-payment)
 	* [4.4 Direct bank payment](https://github.com/sveawebpay/dotnet-integration/tree/master#44-direct-bank-payment)
 	* [4.5 PayPage](https://github.com/sveawebpay/dotnet-integration/tree/master#45-paypage)
-[5. Item reference](https://github.com/sveawebpay/dotnet-integration/tree/master#5-item-reference)
+* [5. Item reference](https://github.com/sveawebpay/dotnet-integration/tree/master#5-item-reference)
     * [5.1 Item.OrderRow()](https://github.com/sveawebpay/dotnet-integration/tree/master#51-itemorderrow)
     * [5.2 Item.ShippingFee()](https://github.com/sveawebpay/dotnet-integration/tree/master#52-itemshippingfee)
     * [5.3 Item.InvoiceFee()](https://github.com/sveawebpay/dotnet-integration/tree/master#53-iteminvoicefee)
@@ -31,18 +32,18 @@
     * [6.5 WebpayConnection.DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#65-webpayconnectiondeliverorder)
 	* [6.6 WebpayConnection.CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#66-webpayconnectioncloseorder)
 * [7. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
-* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
-* [8.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
-* [8.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmindeliverorderrows)
-* [8.3 WebpayAdmin.DeliverOrders()](https://github.com/sveawebpay/dotnet-integration/tree/master#83-webpayadmindeliverorders)
-* [8.4 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#84-webpayadmincancelorder)
-* [8.5 WebpayAdmin.CancelOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#85-webpayadmincancelorderrows)
-* [8.6 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#86-webpayadmincreditamount)
-* [8.7 WebpayAdmin.CreditOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#87-webpayadmincreditorderrows)
-* [8.8 WebpayAdmin.AddOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#88-webpayadminaddorderrows)
-* [8.9 WebpayAdmin.UpdateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#89-webpayadminupdateorder)
-* [8.10 WebpayAdmin.UpdateOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#810-webpayadminupdateorderrows)
-* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
+	* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
+	* [8.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
+	* [8.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmindeliverorderrows)
+	* [8.3 WebpayAdmin.DeliverOrders()](https://github.com/sveawebpay/dotnet-integration/tree/master#83-webpayadmindeliverorders)
+	* [8.4 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#84-webpayadmincancelorder)
+	* [8.5 WebpayAdmin.CancelOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#85-webpayadmincancelorderrows)
+	* [8.6 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#86-webpayadmincreditamount)
+	* [8.7 WebpayAdmin.CreditOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#87-webpayadmincreditorderrows)
+	* [8.8 WebpayAdmin.AddOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#88-webpayadminaddorderrows)
+	* [8.9 WebpayAdmin.UpdateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#89-webpayadminupdateorder)
+	* [8.10 WebpayAdmin.UpdateOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#810-webpayadminupdateorderrows)
+	* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 
 ## 1. Introduction
@@ -294,9 +295,9 @@ depending on country and customer type. For SE, NO, DK and FI national id number
 ```csharp
 .SetCountryCode(CountryCode.SE)         	//Required
 .SetCurrency(Currency.SEK)                     	//Required for card payment, direct payment and PayPage payment.
-.SetClientOrderNumber("33")           		//Required for card payment, direct payment, PaymentMethod payment and PayPage payments. Must be uniqe.
-.SetOrderDate(new DateTime(2012, 12, 12))   //Required for synchronous payments
-.SetCustomerReference("ref33")             	//Optional
+.SetClientOrderNumber("33")           		//Required for card payment, direct payment, Unique String(65). Optional for Invoice and Payment plan String(32).
+.SetOrderDate(new DateTime(2012, 12, 12))       //Required for synchronous payments
+.SetCustomerReference("ref33")             	//Optional for invoice and payment plan String(32), ignored for card & direct bank orders.
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
@@ -396,7 +397,6 @@ PaymentForm form = WebpayConnection.CreateOrder()
 
 .SetCancelUrl() In case the hosted payment service is cancelled by the user, the payment service will redirect back to the cancel url. Unless a return url is specified, no cancel button will be presented at the payment service.
 
-
 ### 4.4 Direct bank payment
 
 Select i.e.
@@ -449,6 +449,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 
 #### 4.5.1 Exclude specific payment methods
 Optional if you want to exlude specific payment methods for *PayPage*.
+
 ```csharp
 .UsePayPage()
 	.SetReturnUrl("http://myurl.se")                                            //Required
@@ -507,6 +508,7 @@ and the html form element as array.
 
 The values of *xmlMessageBase64*, *merchantid* and *mac* are to be sent as xml to SveaWebPay.
 Function GetPaymentForm() returns object type *PaymentForm* with accessible members:
+
 
 | Value                 | Returns    | Description                               |
 |-----------------------|----------- |-------------------------------------------|
@@ -590,7 +592,6 @@ When discount or coupon is a percentage on total product amount.
 	.SetName("Relative")                   //Optional
 	.SetDescription("RelativeDiscount"))   //Optional
 ```
-
 ### 5.5 Item.IndividualCustomer
 When adding individual customer information to an order.
 ```csharp
@@ -687,6 +688,7 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 .SetCustomerReference("ref33")
 .SetClientOrderNumber("33")
 .SetCurrency(Currency.SEK)
+
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -716,7 +718,6 @@ Can be used when creating an order. Only applicable for SE, NO and DK. In Norway
 Set your store authorization here.
 
 Set order type
-
 ```csharp
     .SetOrderTypeInvoice()         //Required if this is an invoice order
 or
@@ -734,10 +735,11 @@ GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see
 	.SetCountryCode(CountryCode.SE)                                 //Required
 	.SetOrderTypeInvoice()                                          //Required. Used by Configurationprovider to get the right config
 	.SetIndividual("194605092222")                                  //See Individual or Company
-        .SetZipCode("9999")                                             //Required
+    .SetZipCode("9999")                                             //Required
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
 
 ## 6.5 WebpayConnection.DeliverOrder()
 Use the WebpayConnection.DeliverOrder request to deliver one Invoice order with specified orderrows and/or one complete payementplan order.
@@ -938,6 +940,7 @@ Get an instance using the WebpayAdmin.CancelOrderRows entrypoint, then provide m
 the request using the CancelOrderBuilder methods:
 
 ```csharp
+
   CancelOrderRowsBuilder request = WebpayAdmin.CancelOrderRows(config)
         .SetInvoiceId()               // required for invoice only, use invoice number recieved with deliverOrder response
         .SetTransactionId()           // optional, card only, alias for SetOrderId()
@@ -949,9 +952,11 @@ the request using the CancelOrderBuilder methods:
         response = request.CancelInvoiceOrderRows().DoRequest();           // returns AdminWS.CancelOrderRowsResponse
         response = request.CancelPaymentPlanOrderRows().DoRequest();       // returns AdminWS.CancelOrderRowsResponse
         response = request.CancelCardOrderRows().DoRequest();              // returns Hosted.Admin.Actions.LowerAmountResponse
+
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
+
 
 ### 8.6 WebpayAdmin.CreditAmount
 The WebpayAdmin.CreditAmount entrypoint method is used to credit an amount in an order after it has been delivered. Supports PaymentPlan,

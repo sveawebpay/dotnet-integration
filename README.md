@@ -1,5 +1,5 @@
 # C#/.Net Integration Package API for SveaWebPay
-Version 1.0.0
+Version 1.0.1
 
 ## Index
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
@@ -748,7 +748,7 @@ You can use this function to credit an invoice order, but it is recomended to us
 You can use this function to partly deliver an invoice order, but it is recomended to use WebpayConnection.DeliverOrderRows() instead.
 If you want to deliver a complete order, or orders, it is recomended to use WebpayConnection.DeliverOrders() instead.
 
-Paymentplan orders can not be partly delivered, and there fore no orderrows is required. 
+Paymentplan orders can not be partly delivered, and there fore no orderrows is required.
 
 Returns *DeliverOrderEuResponse* object.
 
@@ -771,7 +771,7 @@ Any left out items should not be delivered physically, as they will not be invoi
      response = request.DeliverPaymentPlanOrder().doRequest();   // returns DeliverOrderResponse
 	 response = request.DeliverCardOrder().doRequest();   // Confirms a card order and returns ConfirmResponse
 
-	 
+
 ```
 
 You can add OrderRow, Fee and Discount. Choose the right Item as parameter.
@@ -887,13 +887,13 @@ For card orders, use AddNumberedOrderRow() or AddNumberedOrderRows() to pass in 
 ### 8.3 WebpayAdmin.DeliverOrders
         Use WebpayAdmin.DeliverOrders to deliver one or more orders of the same type without specifying order rows.
         All order rows as currently held by Svea will be delivered when the request is made.
-        
-        When delivered, invoice orders will return a corresponding invoice id, and payment plan orders a contract number. 
+
+        When delivered, invoice orders will return a corresponding invoice id, and payment plan orders a contract number.
         These may be found in the returned DeliverOrderResult structure along with the corresponding order id.
 ```csharp
    DeliverOrdersBuilder request = WebpayAdmin.DeliverOrders(config)
         .SetOrderId()                 // optional, order id to deliver
-        .SetOrderIds()                // optional, note that order ids must all be of the same type (invoice, part payment) 
+        .SetOrderIds()                // optional, note that order ids must all be of the same type (invoice, part payment)
         .SetCountryCode()             // required
         .SetInvoiceDistributionType() // required for invoice only, will apply to all invoice orders
         ;
@@ -1040,7 +1040,7 @@ Supports invoice, PaymentPlan.
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ### 8.9 WebpayAdmin.UpdateOrder
- The  WebpayAdmin.UpdateOrder entrypoint method is used to add or change ClientOrderNumber and/or Notes. 
+ The  WebpayAdmin.UpdateOrder entrypoint method is used to add or change ClientOrderNumber and/or Notes.
 
 Supports invoice, PaymentPlan.
 
@@ -1050,7 +1050,7 @@ Supports invoice, PaymentPlan.
         .SetOrderId()                 // required
         .SetCountryCode()             // required
         .SetClientOrderNumber()       // optional, new ClientOrderNumber field content, string w/max length of 29
-        .SetNotes                     // optional, invoice only, new Notes field content, string w/max length of 200 
+        .SetNotes                     // optional, invoice only, new Notes field content, string w/max length of 200
         ;
         // then select the corresponding request class and send request
         response = request.UpdateInvoiceOrder().DoRequest();      // returns AdminWS.UpdateOrderResponse

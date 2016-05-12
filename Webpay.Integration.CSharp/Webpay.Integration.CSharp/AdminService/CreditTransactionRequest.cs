@@ -20,7 +20,7 @@ namespace Webpay.Integration.CSharp.AdminService
         {
             // should validate _builder.GetOrderId() existence here
 
-            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Credit(new Credit(
                     transactionId: _builder.Id,
                     amountToCredit: Decimal.ToInt64(_builder.AmountIncVat * 100)    //centessimal

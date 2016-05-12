@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.AdminService
             }
 
             // lower order by calculated amount
-            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .LowerAmount(new LowerAmount(
                 transactionId: _builder.Id,
                 amountToLower: Decimal.ToInt64(amountToLowerOrderBy * 100)    // centessimal

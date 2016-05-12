@@ -17,7 +17,7 @@ namespace Webpay.Integration.CSharp.AdminService
 
         public AnnulResponse DoRequest()
         {
-            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Annul(new Annul(
                     transactionId: _builder.Id
                     ));

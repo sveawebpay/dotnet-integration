@@ -19,7 +19,7 @@ namespace Webpay.Integration.CSharp.AdminService
         {
             // should validate _builder.GetOrderId() existence here
 
-            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Query(new QueryByTransactionId(
                     transactionId: _builder.Id
                     ));

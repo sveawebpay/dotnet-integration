@@ -97,5 +97,15 @@ namespace Webpay.Integration.CSharp.Test.Response
 
             Assert.That(response.ErrorMessage, Is.EqualTo("Invalid XML."));
         }
+
+        [Test]
+        public void TestSetErrorParamsCode325WithInvalidTransactionElement()
+        {
+            const string responseXmlBase64 =
+                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+PGludmFsaWR0cmFuc2FjdGlvbj48Y3VzdG9tZXJyZWZubz5PcmRlck5yOjU0NDQ2LTk0MjdjMzUyMWY3YjQ4NzQ5ZWNkOWU4YTYzZmM2NjUzPC9jdXN0b21lcnJlZm5vPjwvaW52YWxpZHRyYW5zYWN0aW9uPjxzdGF0dXNjb2RlPjMyNTwvc3RhdHVzY29kZT48L3Jlc3BvbnNlPg==";
+            var response = new SveaResponse(responseXmlBase64);
+
+            Assert.That(response.ErrorMessage, Is.EqualTo("Invalid callbackurl."));
+        }
     }
 }

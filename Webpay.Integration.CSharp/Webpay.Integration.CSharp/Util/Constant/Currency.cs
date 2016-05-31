@@ -8,6 +8,7 @@
         SEK = 1,
         EUR = 2,
         NOK = 3,
-        DKK = 4
+        DKK = 4,
+        PLN = 5
     }
 }

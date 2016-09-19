@@ -1,5 +1,5 @@
 # C#/.Net Integration Package API for SveaWebPay
-Version 1.0.1
+Version 1.0.2
 
 ## Index
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
@@ -818,8 +818,23 @@ Asynchronous responses recieved after sending the values *merchantid* and *xmlMe
 hosted solutions can also be processed through the *SveaResponse* class.
 
 The response from server will be sent to the *returnUrl* with POST or GET. The response contains the parameters:
-*response* and *merchantid*.
+*response*, *merchantid* and *mac*.
 Class *SveaResponse* will return an object structured similar to the synchronous answer.
+
+It's highly recommended to validate the mac parameter that is contained in the response, which is done by processing the correct variables through the *SveaResponse* class.
+
+Params:
+responseXmlBase64 - The POST or GET message Base64 encoded
+macToValidate - Mac provided in the POST or GET message
+countryCode - Your countryCode(i.e SE)
+SveaConfig - SveaConfig object containing merchantid and secret word
+```csharp
+	var respObject = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig);
+```
+
+If the mac is invalid the decoded xml will contain an ErrorMessage saying "Mac validation failed." and if the validation is successful the ResultCode will be "0 (ORDER_ACCEPTED)".
+
+If you dont want to validate the mac simply see the example below.
 
 Params:
 * The POST or GET message Base64 encoded
@@ -968,17 +983,17 @@ Get an order builder instance using the WebpayAdmin.CreditAmount entrypoint, the
 send the request using the CreditAmountBuilder methods:
 
 ```csharp
-    CreditAmountBuilder request = WebpayAdmin.CreditAmount(config)
-        .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
-        .SetTransactionId()           // required for card or direct bank only
-        .SetCountryCode()             // required for payment plan only
-        .SetDescription()             // optional for payment plan only, description to print on resulting cancellation rows
-        .SetAmountIncVat()            // required, amount to credit
-        ;
-       // then select the corresponding request class and send request
-       response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
-       response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
-       response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
+    CreditAmountBuilderÂ requestÂ =Â WebpayAdmin.CreditAmount(config)
+Â Â Â Â     .SetContractNumber()Â Â Â Â Â Â Â Â Â Â //Â requiredÂ forÂ paymentÂ planÂ only,Â useÂ contractÂ numberÂ recievedÂ withÂ deliverOrderÂ response
+    Â Â Â Â .SetTransactionId()Â Â Â Â Â Â Â Â Â Â Â //Â requiredÂ forÂ cardÂ orÂ directÂ bankÂ only
+Â Â Â Â     .SetCountryCode()Â Â Â Â Â Â Â Â Â Â Â Â Â //Â requiredÂ forÂ paymentÂ planÂ only
+    Â Â Â Â .SetDescription()Â Â Â Â Â Â Â Â Â Â Â Â Â //Â optionalÂ forÂ paymentÂ planÂ only,Â descriptionÂ toÂ printÂ onÂ resultingÂ cancellationÂ rows
+Â Â Â Â     .SetAmountIncVat()Â Â Â Â Â Â Â Â Â Â Â Â //Â required,Â amountÂ toÂ credit
+Â Â Â      ;
+    Â Â Â //Â thenÂ selectÂ theÂ correspondingÂ requestÂ classÂ andÂ sendÂ request
+    Â Â Â responseÂ =Â request.CreditPaymentPlanAmount().DoRequest();Â Â //Â returnsÂ AdminWS.CancelPaymentPlanAmountResponse
+    Â Â Â responseÂ =Â request.CreditCardAmount().DoRequest();Â Â Â Â Â Â Â Â Â //Â returnsÂ Hosted.Admin.Actions.CreditResponse
+    Â Â Â responseÂ =Â request.CreditDirectBankAmount().DoRequest();Â Â Â //Â returnsÂ Hosted.Admin.Actions.CreditResponse
 
 ```
 

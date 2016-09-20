@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using Webpay.Integration.CSharp.Response.Hosted;
+using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Config;
 
 namespace Webpay.Integration.CSharp.Test.Response
 {
@@ -38,6 +40,7 @@ namespace Webpay.Integration.CSharp.Test.Response
             Assert.That(response.ExpiryMonth, Is.EqualTo("03"));
             Assert.That(response.ExpiryYear, Is.EqualTo("20"));
             Assert.That(response.AuthCode, Is.EqualTo("152587"));
+            Assert.That(response.ResultCode, Is.EqualTo("0 (ORDER_ACCEPTED)"));
         }
 
         [Test]
@@ -62,7 +65,6 @@ namespace Webpay.Integration.CSharp.Test.Response
         {
             const string testXmlResponseBase64 =
                 "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+DQogIDx0cmFuc2FjdGlvbiBpZD0iNTY3MDYyIj4NCiAgICA8cGF5bWVudG1ldGhvZD5EQk5PUkRFQVNFPC9wYXltZW50bWV0aG9kPg0KICAgIDxtZXJjaGFudGlkPjExNzU8L21lcmNoYW50aWQ+DQogICAgPGN1c3RvbWVycmVmbm8+dGVzdF8xMzU5NjIzMDIyMTQzPC9jdXN0b21lcnJlZm5vPg0KICAgIDxhbW91bnQ+NTAwPC9hbW91bnQ+DQogICAgPGN1cnJlbmN5PlNFSzwvY3VycmVuY3k+DQogIDwvdHJhbnNhY3Rpb24+DQogIDxzdGF0dXNjb2RlPjEwNzwvc3RhdHVzY29kZT4NCjwvcmVzcG9uc2U+DQo=";
-
             var response = new SveaResponse(testXmlResponseBase64);
             Assert.That(response.ResultCode, Is.EqualTo("107 (DENIED_BY_BANK)"));
         }
@@ -92,10 +94,36 @@ namespace Webpay.Integration.CSharp.Test.Response
         public void TestSetErrorParamsCode101()
         {
             const string responseXmlBase64 =
-                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+DQogIDx0cmFuc2FjdGlvbiBpZD0iNTY3MDU4Ij4NCiAgICA8cGF5bWVudG1ldGhvZD5LT1JUQ0VSVDwvcGF5bWVudG1ldGhvZD4NCiAgICA8bWVyY2hhbnRpZD4xMTc1PC9tZXJjaGFudGlkPg0KICAgIDxjdXN0b21lcnJlZm5vPnRlc3RfMTM1OTYyMTQ2NTk5MDwvY3VzdG9tZXJyZWZubz4NCiAgICA8YW1vdW50PjUwMDwvYW1vdW50Pg0KICAgIDxjdXJyZW5jeT5TRUs8L2N1cnJlbmN5Pg0KICAgIDxjYXJkdHlwZT5WSVNBPC9jYXJkdHlwZT4NCiAgICA8bWFza2VkY2FyZG5vPjQ0NDQzM3h4eHh4eDMzMDA8L21hc2tlZGNhcmRubz4NCiAgICA8ZXhwaXJ5bW9udGg+MDM8L2V4cGlyeW1vbnRoPg0KICAgIDxleHBpcnl5ZWFyPjIwPC9leHBpcnl5ZWFyPg0KICAgIDxhdXRoY29kZT43NjQ4Nzc8L2F1dGhjb2RlPg0KICA8L3RyYW5zYWN0aW9uPg0KICA8c3RhdHVzY29kZT4xMDE8L3N0YXR1c2NvZGU+DQo8L3Jlc3BvbnNlPg==";
+                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+DQogIDx0cmFuc2FjdGlvbiBpZD0iNTY3MDU4Ij4NCiAgICA8cGF5bWVudG1ldGhvZD5LT1JUQ0VSVDwvcGF5bWVudG1ldGhvZD4NCiAgICA8bWVyY2hhbnRpZD4xMTc1PC9tZXJjaGFudGlkPg0KICAgIDxjdXN0b21lcnJlZm5vPnRlc3RfMTM1OTYyMTQ2NTk5MDwvY3VzdG9tZXJyZWZubz4NCiAgICA8YW1vdW50PjUwMDwvYW1vdW50Pg0KICAgIDxjdXJyZW5jeT5TRUs8L2N1cnJlbmN5Pg0KICAgIDxjYXJkdHlwZT5WSVNBPC9jYXJkdHlwZT4NCiAgICA8bWFza2VkY2FyZG5vPjQ0NDQzM3h4eHh4eDMzMDA8L21hc2tlZGNhcmRubz4NCiAgICA8ZXhwaXJ5bW9udGg+MDM8L2V4cGlyeW1vbnRoPg0KICAgIDxleHBpcnl5ZWFyPjIwPC9leHBpcnl5ZWFyPg0KICAgIDxhdXRoY29kZT43NjQ4Nzc8L2F1dGhjb2RlPg0KICA8L3RyYW5zYWN0aW9uPg0KICA8c3RhdHVzY29kZT4xMDE8L3N0YXR1c2NvZGU+DQo8L3Jlc3BvbnNlPg==";     
             var response = new SveaResponse(responseXmlBase64);
 
             Assert.That(response.ErrorMessage, Is.EqualTo("Invalid XML."));
+        }
+
+        [Test]
+        public void TestMacValidationSuccess()
+        {
+            const string responseXmlBase64 =
+                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+PHRyYW5zYWN0aW9uIGlkPSI2MDgyMjYiPjxwYXltZW50bWV0aG9kPktPUlRDRVJUPC9wYXltZW50bWV0aG9kPjxtZXJjaGFudGlkPjExMzA8L21lcmNoYW50aWQ+PGN1c3RvbWVycmVmbm8+MjAxNi0wMS0wNVQxMjo1MzozNSAwMDowMDwvY3VzdG9tZXJyZWZubz48YW1vdW50PjEyNDk5PC9hbW91bnQ+PGN1cnJlbmN5PlNFSzwvY3VycmVuY3k+PGNhcmR0eXBlPlZJU0E8L2NhcmR0eXBlPjxtYXNrZWRjYXJkbm8+NDQ0NDMzeHh4eHh4MTEwMDwvbWFza2VkY2FyZG5vPjxleHBpcnltb250aD4wNTwvZXhwaXJ5bW9udGg+PGV4cGlyeXllYXI+MjE8L2V4cGlyeXllYXI+PGF1dGhjb2RlPjM3MjUyNzwvYXV0aGNvZGU+PGN1c3RvbWVyPjxmaXJzdG5hbWUvPjxsYXN0bmFtZS8+PGluaXRpYWxzLz48ZW1haWwvPjxzc24vPjxhZGRyZXNzLz48YWRkcmVzczIvPjxjaXR5Lz48Y291bnRyeT5TRTwvY291bnRyeT48emlwLz48cGhvbmUvPjx2YXRudW1iZXIvPjxob3VzZW51bWJlci8+PGNvbXBhbnluYW1lLz48ZnVsbG5hbWUvPjwvY3VzdG9tZXI+PC90cmFuc2FjdGlvbj48c3RhdHVzY29kZT4wPC9zdGF0dXNjb2RlPjwvcmVzcG9uc2U+";
+            const string macToValidate = "a9159ec5a2f8871fb4c50cab225f6b0319724cfdc95216c949b2332849f021c934712fb4fda275e4e50f9e160badf6bbbf64e7c6cc8dc382f555b74680c43225";
+            CountryCode countryCode = CountryCode.SE;
+            var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
+            Assert.That(response.MacValidation, Is.EqualTo(1));
+            Assert.That(response.OrderAccepted, Is.True);
+            Assert.That(response.ResultCode, Is.EqualTo("0 (ORDER_ACCEPTED)"));
+
+        }
+        [Test]
+        public void TestMacValidationFailed()
+        {
+            const string responseXmlBase64 =
+                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+PHRyYW5zYWN0aW9uIGlkPSI2MDgyMjYiPjxwYXltZW50bWV0aG9kPktPUlRDRVJUPC9wYXltZW50bWV0aG9kPjxtZXJjaGFudGlkPjExMzA8L21lcmNoYW50aWQ+PGN1c3RvbWVycmVmbm8+MjAxNi0wMS0wNVQxMjo1MzozNSAwMDowMDwvY3VzdG9tZXJyZWZubz48YW1vdW50PjEyNDk5PC9hbW91bnQ+PGN1cnJlbmN5PlNFSzwvY3VycmVuY3k+PGNhcmR0eXBlPlZJU0E8L2NhcmR0eXBlPjxtYXNrZWRjYXJkbm8+NDQ0NDMzeHh4eHh4MTEwMDwvbWFza2VkY2FyZG5vPjxleHBpcnltb250aD4wNTwvZXhwaXJ5bW9udGg+PGV4cGlyeXllYXI+MjE8L2V4cGlyeXllYXI+PGF1dGhjb2RlPjM3MjUyNzwvYXV0aGNvZGU+PGN1c3RvbWVyPjxmaXJzdG5hbWUvPjxsYXN0bmFtZS8+PGluaXRpYWxzLz48ZW1haWwvPjxzc24vPjxhZGRyZXNzLz48YWRkcmVzczIvPjxjaXR5Lz48Y291bnRyeT5TRTwvY291bnRyeT48emlwLz48cGhvbmUvPjx2YXRudW1iZXIvPjxob3VzZW51bWJlci8+PGNvbXBhbnluYW1lLz48ZnVsbG5hbWUvPjwvY3VzdG9tZXI+PC90cmFuc2FjdGlvbj48c3RhdHVzY29kZT4wPC9zdGF0dXNjb2RlPjwvcmVzcG9uc2U+";
+            const string macToValidate = "wrong mac";
+            CountryCode countryCode = CountryCode.SE;
+            var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
+            Assert.That(response.MacValidation, Is.EqualTo(2));
+            Assert.That(response.OrderAccepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Mac validation failed."));
         }
     }
 }

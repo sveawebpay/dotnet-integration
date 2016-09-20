@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Text;
 using System.Xml;
+using System.Linq;
+using System.Security.Cryptography;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Security;
+using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Response.Hosted
 {
     public class SveaResponse : Response
     {
-        public readonly SveaConfig Config = new SveaConfig();
+       // public readonly SveaConfig Config = new SveaConfig();
 
         public string TransactionId { get; set; }
         public string ClientOrderNumber { get; set; }
@@ -23,15 +27,51 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         public string ExpiryYear { get; set; }
         public string AuthCode { get; set; }
         public string Xml { get; set; }
-
+        public int MacValidation { get; set; }
         /// <summary>
         /// SveaResponse
         /// </summary>
         /// <param name="responseXmlBase64"></param>
         /// <exception cref="Exception"></exception>
-        public SveaResponse(string responseXmlBase64)
+        public SveaResponse(string responseXmlBase64, string macToValidate = null, CountryCode countryCode = 0, IConfigurationProvider config = null)
         {
-            SetValues(responseXmlBase64);
+            if (responseXmlBase64 != null)
+            {
+                if (config != null)
+                {
+                    string secret = config.GetSecretWord(PaymentType.HOSTED, countryCode);
+                    if (validateMac(responseXmlBase64, secret, macToValidate) == true)
+                    {
+                        MacValidation = 1;
+                    }
+                    else
+                    {
+                        MacValidation = 2;
+                    }
+                }
+                SetValues(responseXmlBase64);
+            }
+        }
+
+        private bool validateMac(string responseXmlBase64, string secret, string macToValidate)
+        {
+                string calculatedMac = stringToHashString(responseXmlBase64, secret);
+                if (macToValidate == calculatedMac)
+                {
+                    return true;
+                }
+               
+            return false;
+        }
+
+        private static string stringToHashString(string responseXmlBase64, string secret)
+        {
+            string[] arrayStr = {responseXmlBase64, secret};
+            string calculatedMac = String.Join("",arrayStr);
+            using (SHA512 hash = SHA512Managed.Create())
+            {
+                return String.Join("", hash.ComputeHash(Encoding.UTF8.GetBytes(calculatedMac)).Select(item => item.ToString("x2")));
+            }
         }
 
         private void SetValues(string xmlBase64)
@@ -40,15 +80,20 @@ namespace Webpay.Integration.CSharp.Response.Hosted
 
             var d1 = new XmlDocument();
             d1.LoadXml(Xml);
-
             foreach (XmlElement element in d1.GetElementsByTagName("response"))
             {
                 var status = int.Parse(GetTagValue(element, "statuscode"));
-                if (status == 0)
+                if(status == 0 && MacValidation == 2)
+                {
+                    OrderAccepted = false;
+                    ErrorMessage = "Mac validation failed.";
+                }
+                else if (status == 0 && MacValidation <= 1)
                 {
                     OrderAccepted = true;
                     ResultCode = "0 (ORDER_ACCEPTED)";
                 }
+                
                 else
                 {
                     OrderAccepted = false;

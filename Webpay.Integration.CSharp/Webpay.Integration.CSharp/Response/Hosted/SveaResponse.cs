@@ -28,20 +28,19 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         public string AuthCode { get; set; }
         public string Xml { get; set; }
         public int MacValidation { get; set; }
-        public string Mac { get; set; }
         /// <summary>
         /// SveaResponse
         /// </summary>
         /// <param name="responseXmlBase64"></param>
         /// <exception cref="Exception"></exception>
-        public SveaResponse(string responseXmlBase64, string mac = null, CountryCode countryCode = 0, IConfigurationProvider config = null)
+        public SveaResponse(string responseXmlBase64, string macToValidate = null, CountryCode countryCode = 0, IConfigurationProvider config = null)
         {
             if (responseXmlBase64 != null)
             {
                 if (config != null)
                 {
                     string secret = config.GetSecretWord(PaymentType.HOSTED, countryCode);
-                    if (validateMac(responseXmlBase64, secret, mac) == true)
+                    if (validateMac(responseXmlBase64, secret, macToValidate) == true)
                     {
                         MacValidation = 1;
                     }
@@ -54,11 +53,10 @@ namespace Webpay.Integration.CSharp.Response.Hosted
             }
         }
 
-        private bool validateMac(string responseXmlBase64, string secret, string mac)
+        private bool validateMac(string responseXmlBase64, string secret, string macToValidate)
         {
-                string macKey = stringToHashString(responseXmlBase64, secret);
-                Mac = macKey;
-                if (mac == macKey)
+                string calculatedMac = stringToHashString(responseXmlBase64, secret);
+                if (macToValidate == calculatedMac)
                 {
                     return true;
                 }
@@ -69,10 +67,10 @@ namespace Webpay.Integration.CSharp.Response.Hosted
         private static string stringToHashString(string responseXmlBase64, string secret)
         {
             string[] arrayStr = {responseXmlBase64, secret};
-            string macKey = String.Join("",arrayStr);
+            string calculatedMac = String.Join("",arrayStr);
             using (SHA512 hash = SHA512Managed.Create())
             {
-                return String.Join("", hash.ComputeHash(Encoding.UTF8.GetBytes(macKey)).Select(item => item.ToString("x2")));
+                return String.Join("", hash.ComputeHash(Encoding.UTF8.GetBytes(calculatedMac)).Select(item => item.ToString("x2")));
             }
         }
 

@@ -735,7 +735,6 @@ GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see
 	.SetCountryCode(CountryCode.SE)                                 //Required
 	.SetOrderTypeInvoice()                                          //Required. Used by Configurationprovider to get the right config
 	.SetIndividual("194605092222")                                  //See Individual or Company
-    .SetZipCode("9999")                                             //Required
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

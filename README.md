@@ -1133,7 +1133,7 @@ Supports invoice, PaymentPlan.
         .SetOrderId()                 // required
         .SetCountryCode()             // required
         .SetClientOrderNumber()       // optional, new ClientOrderNumber field content, string w/max length of 29
-        .SetNotes                     // optional, invoice only, new Notes field content, string w/max length of 200
+        .SetNotes()                     // optional, invoice only, new Notes field content, string w/max length of 200
         ;
         // then select the corresponding request class and send request
         response = request.UpdateInvoiceOrder().DoRequest();      // returns AdminWS.UpdateOrderResponse

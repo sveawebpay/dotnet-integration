@@ -8,6 +8,7 @@ using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Validator;
+using Webpay.Integration.CSharp.Response.Hosted;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Payment
@@ -202,6 +203,38 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             var paymentId = messageDoc.SelectSingleNode("//id").InnerText;
 
             return new Uri(baseUrl + "/preparedpayment/" + paymentId);
+        }
+
+        /// <summary>
+        /// PreparedPayment contacts the server with the payment request data, and returns a GET URL to that 
+        /// payment. This is convenient for creating an order and then sending the URL e.g. in an email.
+        /// </summary>
+        /// <returns>PaymentLink</returns>
+        public Uri PrepareMailPayment()
+        {
+            CalculateRequestValues();
+            var xmlBuilder = new HostedXmlBuilder();
+            string xml = xmlBuilder.GetXml(this);
+
+            var secretWord = CrOrderBuilder.GetConfig()
+                .GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var sentMerchantId = CrOrderBuilder.GetConfig()
+                .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+            var payPageUrl = CrOrderBuilder.GetConfig()
+                .GetEndPoint(PaymentType.HOSTED);
+
+            var baseUrl = payPageUrl.Replace("/payment", "");
+
+            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, payPageUrl);
+
+            var targetAddress = baseUrl + "/rest/mailpayment";
+
+            var message = HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest).Message;
+            var messageDoc = new XmlDocument();
+            messageDoc.LoadXml(message);
+            var url = messageDoc.SelectSingleNode("//url").InnerText;
+
+            return new Uri(url);
         }
 
         /// <summary>

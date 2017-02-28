@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                 .DeliverInvoiceOrder()
                                 .DoRequest();
 
-            Assert.That(response.ErrorMessage, Is.EqualTo("An order with the provided id does not exist."));
+            Assert.That(response.ErrorMessage, Is.EqualTo("Order does not exist."));
         }
 
         [Test]

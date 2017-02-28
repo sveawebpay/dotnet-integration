@@ -446,7 +446,8 @@ var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), Country
                     customerRefNo: 10000001,
                     subscriptionId: 123123123,
                     currency: "SEK",
-                    amount: 10000
+                    amount: 10000,
+                    vat: 2500
                 ));
 HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();	
 var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();

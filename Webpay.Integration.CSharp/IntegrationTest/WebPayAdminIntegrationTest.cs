@@ -1304,7 +1304,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create order
             // use an existing captured order (status SUCCESS), as we can't do a
             // capture on an order via the webservice
-            var capturedTransactionId = 610262L;
+            var capturedTransactionId = 625718L;
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())

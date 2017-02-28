@@ -193,8 +193,7 @@ var orderRows = new List<OrderRowBuilder>();
 orderRows.Add(Item.OrderRow(). ...)
 ...
 CreateOrder.AddOrderRows(orderRows);
-
-
+```
 For every new payment type implementation, you follow the steps from the beginning and chose your payment type preferred in the end:
 Build order -> choose payment type -> DoRequest/GetPaymentForm/PreparePayment
 
@@ -396,6 +395,76 @@ PaymentForm form = WebpayConnection.CreateOrder()
 .SetCallbackUrl() In case the hosted payment transaction completes, but the service is unable to return a response to the return url, the payment service will retry several times using the callback url as a fallback, if specified. This may happen if i.e. the user closes the browser before the payment service redirects back to the shop.
 
 .SetCancelUrl() In case the hosted payment service is cancelled by the user, the payment service will redirect back to the cancel url. Unless a return url is specified, no cancel button will be presented at the payment service.
+
+### 4.3.1 Recurring card payment
+
+A recurring card payment uses the same logic as a normal card payment except that you need to a subscriptionType using .SetSubscriptionType()
+
+```csharp
+PaymentForm form = WebpayConnection.CreateOrder()
+.AddOrderRow(...)  
+.SetCountryCode(CountryCode.SE)      
+.SetClientOrderNumber("33")
+.SetCurrency("SEK)
+.SetOrderDate(new DateTime(2016, 12, 24))
+.UsePaymentMethod(PaymentMethod.SVEACARDPAY)
+.SetSubscriptionType(subscriptionType)
+	.SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
+
+```
+
+There are four different subscription types:
+
+```csharp
+RECURRING*
+RECURRINGCAPTURE
+ONECLICK*
+ONECLICKCAPTURE
+```
+Subscription types marked with a * is only possible to use if the merchant has a scandinavian acquirer.
+
+RECURRING and RECURRINGCAPTURE should be used if no action is required by the card holder, for example if the customer should be charged every month.
+
+ONECLICK and ONECLICKCAPTURE should be used if the card holder is required to make an action each time the card should be charged such as refilling a virtual coin pouch used in games or other services.
+
+RECURRINGCAPTURE and ONECLICKCAPTURE should be used if the merchant wants to capture the initial transaction which results in money being charged.
+
+RECURRING and ONECLICK should be used if you dont want to capture the initial transaction, in this case the money is reserved for a few days and then will be returned unless a "recur" is made(explained below).
+
+After using the method above you will get a subscriptionId in you response which you will use in order to make recur calls.
+
+Subscriptions can be automaticlly charged, log in to the payment gateway to configure this otherwise use the method below to charge the card manually.
+
+A subscription is valid for 12 months and after that you will need to renew the subscription.
+
+### 4.3.2 Recur
+By sending in the customerReference, subscriptionId, currency and amount you will successfully charge money from a existing subscription.
+```csharp
+var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Recur(new Recur(
+                    customerRefNo: 10000001,
+                    subscriptionId: 123123123,
+                    currency: "SEK",
+                    amount: 10000
+                ));
+HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();	
+var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+```
+If the call was successful a transaction is made in the payment gateway.
+
+### 4.3.3 Cancelling a subscription
+To cancel a subscription you need to call .cancelRecurSubscription() with the subscriptionId.
+```csharp
+var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .CancelRecurSubscription(new CancelRecurSubscription(
+                    subscriptionId: "12341234"
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+	    var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+```
+The payment gateway will respond with statuscode 0 indicating a success.
 
 ### 4.4 Direct bank payment
 
@@ -735,7 +804,6 @@ GetAddressesEuResponse response = WebpayConnection.GetAddresses(myConfig)		//see
 	.SetCountryCode(CountryCode.SE)                                 //Required
 	.SetOrderTypeInvoice()                                          //Required. Used by Configurationprovider to get the right config
 	.SetIndividual("194605092222")                                  //See Individual or Company
-    .SetZipCode("9999")                                             //Required
 	.DoRequest();
 ```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
@@ -1065,7 +1133,7 @@ Supports invoice, PaymentPlan.
         .SetOrderId()                 // required
         .SetCountryCode()             // required
         .SetClientOrderNumber()       // optional, new ClientOrderNumber field content, string w/max length of 29
-        .SetNotes                     // optional, invoice only, new Notes field content, string w/max length of 200
+        .SetNotes()                     // optional, invoice only, new Notes field content, string w/max length of 200
         ;
         // then select the corresponding request class and send request
         response = request.UpdateInvoiceOrder().DoRequest();      // returns AdminWS.UpdateOrderResponse

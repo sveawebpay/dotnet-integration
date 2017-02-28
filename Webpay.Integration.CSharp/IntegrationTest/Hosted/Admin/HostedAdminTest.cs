@@ -630,12 +630,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             const string customerRefNo = "Customer reference number or client order number";
             const string subscriptionId = "The subscription id";
             const long amount = 66600L;
+            const long vat = 2500;
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Recur(new Recur(
                     customerRefNo: customerRefNo,
                     subscriptionId: subscriptionId,
                     currency: Currency.SEK,
-                    amount: amount
+                    amount: amount,
+                    vat: vat
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -643,6 +645,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/vat").InnerText, Is.EqualTo(vat + ""));
 
             var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
 

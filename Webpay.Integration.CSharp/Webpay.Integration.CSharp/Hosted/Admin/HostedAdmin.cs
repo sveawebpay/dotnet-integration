@@ -122,7 +122,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <subscriptionid>{1}</subscriptionid>
                 <currency>{2}</currency>
                 <amount>{3}</amount>
-                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount);
+                <vat>{4}</vat>
+                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount, recur.Vat);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
         }
     }

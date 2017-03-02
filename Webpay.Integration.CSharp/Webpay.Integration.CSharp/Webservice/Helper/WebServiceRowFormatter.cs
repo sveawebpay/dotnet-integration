@@ -161,6 +161,11 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                         .SetQuantity(orderRow.GetQuantity())
                         .SetUnit(orderRow.GetUnit());
 
+                    if (orderRow.GetDiscountPercent() != 0)
+                    {
+                        newRow.SetDiscountPercent((int) orderRow.GetDiscountPercent());
+                    }
+
                     FillMissingVatAndAmount(orderRow, newRow);
 
                     CheckConsistency(newRow);
@@ -391,7 +396,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                             Description = FormatDescription(row),
                             PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
                             PricePerUnit = MathUtil.BankersRound( order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
-                            DiscountPercent = 0,
+                            DiscountPercent = row.GetDiscountPercent(),
                             Unit = row.GetUnit(),
                             VatPercent = row.GetVatPercent().GetValueOrDefault()
                         };
@@ -407,7 +412,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     Description = FormatDescription(row),
                     PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
                     PricePerUnit = MathUtil.BankersRound(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
-                    DiscountPercent = 0,
+                    DiscountPercent = row.GetDiscountPercent(),
                     Unit = row.GetUnit(),
                     VatPercent = row.GetVatPercent().GetValueOrDefault()
                 };
@@ -424,7 +429,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     Description = FormatDescription(row),
                     PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
                     PricePerUnit = MathUtil.BankersRound(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
-                    DiscountPercent = 0,
+                    DiscountPercent = row.GetDiscountPercent(),
                     Unit = row.GetUnit(),
                     VatPercent = row.GetVatPercent().GetValueOrDefault()
                 };
@@ -445,7 +450,7 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                         Description = FormatDiscountDescription(row),
                         PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
                         PricePerUnit = MathUtil.BankersRound( -(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault())),
-                        DiscountPercent = 0,
+                        DiscountPercent = row.GetDiscountPercent(),
                         Unit = row.GetUnit(),
                         VatPercent = row.GetVatPercent().GetValueOrDefault()
                     };

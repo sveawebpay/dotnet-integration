@@ -79,7 +79,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                                                               .SetDescription("Specification")
                                                                               .SetName("Prod")
                                                                               .SetVatPercent(12M)
-                                                                              .SetDiscountPercent(0))
+                                                                              .SetDiscountPercent(5))
                                                              .AddCustomerDetails(
                                                                  Item.IndividualCustomer()
                                                                      .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
@@ -92,7 +92,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
 
 
             Assert.That(response.Accepted, Is.True);
-            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(50.4));
+            Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(47.88m));
         }
 
         [Test]

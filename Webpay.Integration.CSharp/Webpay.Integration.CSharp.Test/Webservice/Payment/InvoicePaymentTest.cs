@@ -248,7 +248,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.That(request.CreateOrderInformation.OrderRows[2].NumberOfUnits, Is.EqualTo(1));
             Assert.That(request.CreateOrderInformation.OrderRows[2].VatPercent, Is.EqualTo(25));
             Assert.That(request.CreateOrderInformation.OrderRows[3].VatPercent, Is.EqualTo(6));
-            Assert.That(request.CreateOrderInformation.OrderRows[2].DiscountPercent, Is.EqualTo(0));
+            Assert.That(request.CreateOrderInformation.OrderRows[2].DiscountPercent, Is.EqualTo(20));
         }
 
         [Test]

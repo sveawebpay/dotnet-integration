@@ -12,7 +12,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string SubscriptionId;
         public readonly long Vat;
 
-        public Recur(string customerRefNo, string subscriptionId, Currency currency, long amount, long vat)
+        public Recur(string customerRefNo, string subscriptionId, Currency currency, long amount, long vat = 0)
         {
             CustomerRefNo = customerRefNo;
             SubscriptionId = subscriptionId;

@@ -116,14 +116,15 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest Recur(Recur recur)
         {
+            var vat = recur.Vat != 0 ? "<vat>" + recur.Vat + "</vat>" : "";
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <recur>
                 <customerrefno>{0}</customerrefno>
                 <subscriptionid>{1}</subscriptionid>
                 <currency>{2}</currency>
                 <amount>{3}</amount>
-                <vat>{4}</vat>
-                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount, recur.Vat);
+                {4}
+                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount, vat);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
         }
     }

@@ -8,10 +8,10 @@ namespace Webpay.Integration.CSharp.Config
         private const string HostedProdAdminBaseUrl = "https://webpay.sveaekonomi.se/webpay/rest";
         private const string SwpTestUrl = "https://test.sveaekonomi.se/webpay/payment";
         private const string SwpProdUrl = "https://webpay.sveaekonomi.se/webpay/payment";
-        private const string SwpTestWsUrl = "https://webservices.sveaekonomi.se/webpay_test/SveaWebPay.asmx?WSDL";
-        private const string SwpProdWsUrl = "https://webservices.sveaekonomi.se/webpay/SveaWebPay.asmx?WSDL";
-        private const string SwpTestAdminWsUrl = "https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc" + "/secure"; // make sure to include "/secure" part
-        private const string SwpProdAdminWsUrl = "https://partnerweb.sveaekonomi.se/WebPayAdminService/AdminService.svc" + "/secure"; // make sure to include "/secure" part
+        private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL";
+        private const string SwpProdWsUrl = "https://webpayws.svea.com/SveaWebPay.asmx?WSDL";
+        private const string SwpTestAdminWsUrl = "https://webpayadminservicestage.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part
+        private const string SwpProdAdminWsUrl = "https://webpayadminservice.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part
 
         public static string GetProdWebserviceUrl()
         {

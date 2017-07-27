@@ -43,7 +43,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
             Assert.That(_defaultConf.GetEndPoint(PaymentType.HOSTED),
                         Is.EqualTo("https://test.sveaekonomi.se/webpay/payment"));
             Assert.That(_defaultConf.GetEndPoint(PaymentType.INVOICE),
-                        Is.EqualTo("https://webservices.sveaekonomi.se/webpay_test/SveaWebPay.asmx?WSDL"));
+                        Is.EqualTo("https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL"));
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
         public void TestProductionUrls()
         {
             Assert.That(SveaConfig.GetProdPayPageUrl(), Is.EqualTo("https://webpay.sveaekonomi.se/webpay/payment"));
-            Assert.That(SveaConfig.GetProdWebserviceUrl(), Is.EqualTo("https://webservices.sveaekonomi.se/webpay/SveaWebPay.asmx?WSDL"));
+            Assert.That(SveaConfig.GetProdWebserviceUrl(), Is.EqualTo("https://webpayws.svea.com/SveaWebPay.asmx?WSDL"));
         }
 
         [Test]

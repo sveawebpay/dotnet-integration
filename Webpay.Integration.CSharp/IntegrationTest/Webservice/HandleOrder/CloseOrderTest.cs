@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Testing;
@@ -27,10 +28,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
             Assert.That(response.ResultCode, Is.EqualTo(0));
             Assert.That(response.Accepted, Is.True);
 
-            CloseOrderEuResponse closeResponse = WebpayConnection.CloseOrder(SveaConfig.GetDefaultConfig())
+            CancelOrderResponse closeResponse = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
                                                                  .SetOrderId(response.CreateOrderResult.SveaOrderId)
                                                                  .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                                 .CloseInvoiceOrder()
+                                                                 .CancelInvoiceOrder()
                                                                  .DoRequest();
 
             Assert.That(closeResponse.ResultCode, Is.EqualTo(0));
@@ -55,14 +56,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.HandleOrder
 
             Assert.That(response.ResultCode, Is.EqualTo(0));
             Assert.That(response.Accepted, Is.True);
-
-            CloseOrder closeOrder = WebpayConnection.CloseOrder(SveaConfig.GetDefaultConfig())
-                                                    .SetOrderId(orderId)
-                                                    .CloseInvoiceOrder();
-
-            const string expectedMsg = "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
-
-            Assert.That(closeOrder.ValidateRequest(), Is.EqualTo(expectedMsg));
         }
     }
 }

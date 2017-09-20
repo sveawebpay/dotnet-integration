@@ -177,16 +177,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
         }
 
         [Test]
-        public void TestConnectionCloseOrderFailsIfNoConfigurationIsProvided()
-        {
-            var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.CloseOrder()
-                                                                                     .CloseInvoiceOrder()
-                                                                                     .DoRequest());
-
-            Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
-        }
-
-        [Test]
         public void TestConnectionGetAddressFailsIfNoConfigurationIsProvided()
         {
             var exception = Assert.Throws<SveaWebPayException>(() => WebpayConnection.GetAddresses()

@@ -366,7 +366,6 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                                             .SetArticleNumber(row.GetDiscountId())
                                             .SetDescription(row.GetDescription())
                                             .SetName(row.GetName())
-                                            .SetDiscountPercent((int)row.GetDiscountPercent())
                                             .SetQuantity(row.GetQuantity())
                                             .SetUnit(row.GetUnit())
                                             .SetAmountIncVat(byVatAmountIncVat* row.GetDiscountPercent() / 100)

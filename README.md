@@ -1,4 +1,4 @@
-# C#/.Net Integration Package API for Svea Webpay / Svea Ekonomi
+# C#/.Net Integration Package API for Svea Webpay
 Version 1.0.5
 
 ## Table of contents

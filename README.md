@@ -1,5 +1,5 @@
 # C#/.Net Integration Package API for Svea Webpay / Svea Ekonomi
-Version 1.0.4
+Version 1.0.5
 
 ## Table of contents
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)

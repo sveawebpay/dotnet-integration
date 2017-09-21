@@ -1,5 +1,5 @@
 # C#/.Net Integration Package API for Svea Webpay / Svea Ekonomi
-Version 1.0.4
+Version 1.0.5
 
 ## Table of contents
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
@@ -393,7 +393,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 ```
 .SetReturnUrl() When a hosted payment transaction completes (regardless of outcome, i.e. accepted or denied), the payment service will answer with a response xml message sent to the return url specified.
 
-.SetCallbackUrl() In case the hosted payment transaction completes, but the service is unable to return a response to the return url, the payment service will retry several times using the callback url as a fallback, if specified. This may happen if i.e. the user closes the browser before the payment service redirects back to the shop.
+.SetCallbackUrl() In case the hosted payment transaction completes, the payment service will always send a request to the callback url as a fallback, if specified. This is useful if the user closes the browser before getting redirected back to the shop.
 
 .SetCancelUrl() In case the hosted payment service is cancelled by the user, the payment service will redirect back to the cancel url. Unless a return url is specified, no cancel button will be presented at the payment service.
 
@@ -489,7 +489,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 
 .SetReturnUrl() When a hosted payment transaction completes (regardless of outcome, i.e. accepted or denied), the payment service will answer with a response xml message sent to the return url specified.
 
-.SetCallbackUrl() In case the hosted payment transaction completes, but the service is unable to return a response to the return url, the payment service will retry several times using the callback url as a fallback, if specified. This may happen if i.e. the user closes the browser before the payment service redirects back to the shop.
+.SetCallbackUrl() In case the hosted payment transaction completes, the payment service will always send a request to the callback url as a fallback, if specified. This is useful if the user closes the browser before getting redirected back to the shop.
 
 .SetCancelUrl() In case the hosted payment service is cancelled by the user, the payment service will redirect back to the cancel url. Unless a return url is specified, no cancel button will be presented at the payment service.
 
@@ -513,7 +513,7 @@ PaymentForm form = WebpayConnection.CreateOrder()
 
 .SetReturnUrl() When a hosted payment transaction completes (regardless of outcome, i.e. accepted or denied), the payment service will answer with a response xml message sent to the return url specified.
 
-.SetCallbackUrl() In case the hosted payment transaction completes, but the service is unable to return a response to the return url, the payment service will retry several times using the callback url as a fallback, if specified. This may happen if i.e. the user closes the browser before the payment service redirects back to the shop.
+.SetCallbackUrl() In case the hosted payment transaction completes, the payment service will always send a request to the callback url as a fallback, if specified. This is useful if the user closes the browser before getting redirected back to the shop.
 
 .SetCancelUrl() In case the hosted payment service is cancelled by the user, the payment service will redirect back to the cancel url. Unless a return url is specified, no cancel button will be presented at the payment service.
 

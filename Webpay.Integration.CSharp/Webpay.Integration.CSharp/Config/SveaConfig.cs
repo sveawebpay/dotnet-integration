@@ -4,10 +4,10 @@ namespace Webpay.Integration.CSharp.Config
 {
     public class SveaConfig
     {
-        private const string HostedTestAdminBaseUrl = "https://test.sveaekonomi.se/webpay/rest";
-        private const string HostedProdAdminBaseUrl = "https://webpay.sveaekonomi.se/webpay/rest";
-        private const string SwpTestUrl = "https://test.sveaekonomi.se/webpay/payment";
-        private const string SwpProdUrl = "https://webpay.sveaekonomi.se/webpay/payment";
+        private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/rest";
+        private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/rest";
+        private const string SwpTestUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/payment";
+        private const string SwpProdUrl = "https://webpaypaymentgateway.svea.com/webpay/payment";
         private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL";
         private const string SwpProdWsUrl = "https://webpayws.svea.com/SveaWebPay.asmx?WSDL";
         private const string SwpTestAdminWsUrl = "https://webpayadminservicestage.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part

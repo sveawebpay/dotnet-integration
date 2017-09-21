@@ -758,7 +758,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://webpaypaymentgatewaytest.svea.com/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
         internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
@@ -773,7 +773,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://webpaypaymentgatewaytest.svea.com/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
 
@@ -789,7 +789,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://webpaypaymentgatewaytest.svea.com/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
 
@@ -805,7 +805,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UsePaymentMethod(paymentMethod)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://webpaypaymentgatewaytest.svea.com/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
 
@@ -826,7 +826,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .SetSubscriptionType(subscriptionType)
                 .___SetSimulatorCode_ForTestingOnly("0")
                 .SetReturnUrl(
-                    "https://test.sveaekonomi.se/webpay/public/static/testlandingpage.html")
+                    "https://webpaypaymentgatewaytest.svea.com/webpay/public/static/testlandingpage.html")
                 .PreparePayment("127.0.0.1");
         }
 

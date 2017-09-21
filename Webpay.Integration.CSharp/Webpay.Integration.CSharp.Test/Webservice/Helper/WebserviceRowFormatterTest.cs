@@ -145,7 +145,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRows[1].Description, Is.EqualTo("Tess: Tester (25%)"));
             Assert.That(newRows[1].PricePerUnit, Is.EqualTo(-0.4));
             Assert.That(newRows[1].VatPercent, Is.EqualTo(25));
-            Assert.That(newRows[1].DiscountPercent, Is.EqualTo(10));
             Assert.That(newRows[1].NumberOfUnits, Is.EqualTo(1));
             Assert.That(newRows[1].Unit, Is.EqualTo("st"));
         }
@@ -394,7 +393,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(20): TestFormatRelativeDiscountRowsWithSingleVatRatePresent (12%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-20.00M));
             Assert.That(newRow.VatPercent, Is.EqualTo(12));
-            Assert.That(newRow.DiscountPercent, Is.EqualTo(20)); // not the same thing as in our WebPayItem...
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1));
             Assert.That(newRow.Unit, Is.EqualTo("st"));
         }
@@ -428,7 +426,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(10): TestFormatRelativeDiscountRowsWithDifferentVatRatesPresent (25%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-20.00M));
             Assert.That(newRow.VatPercent, Is.EqualTo(25));
-            Assert.That(newRow.DiscountPercent, Is.EqualTo(10)); // not the same thing as in our WebPayItem...
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1)); // 1 "discount unit"
             Assert.That(newRow.Unit, Is.EqualTo("st"));
 
@@ -437,7 +434,6 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRow.Description, Is.EqualTo(".SetDiscountPercent(10): TestFormatRelativeDiscountRowsWithDifferentVatRatesPresent (6%)"));
             Assert.That(newRow.PricePerUnit, Is.EqualTo(-10.00));
             Assert.That(newRow.VatPercent, Is.EqualTo(6));
-            Assert.That(newRow.DiscountPercent, Is.EqualTo(10)); // not the same thing as in our WebPayItem...
             Assert.That(newRow.NumberOfUnits, Is.EqualTo(1)); // 1 "discount unit"
             Assert.That(newRow.Unit, Is.EqualTo("st"));
         }

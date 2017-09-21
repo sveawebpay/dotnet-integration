@@ -160,8 +160,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             ;
             AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdateInvoiceOrder().DoRequest();
             Assert.False(updateResponse.Accepted);
-            Assert.That(updateResponse.ResultCode, Is.EqualTo(20025));
-            Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The ClientOrderNumber is too long"));
+            Assert.That(updateResponse.ResultCode, Is.EqualTo(20035));
+            Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The field Notes can't contain more than 200 characters. "));
         }
         [Test] public void Test_UpdateOrder_UpdatePaymentPlanOrder()
         {

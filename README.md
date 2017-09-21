@@ -1,7 +1,7 @@
-# C#/.Net Integration Package API for SveaWebPay
-Version 1.0.2
+# C#/.Net Integration Package API for Svea Webpay / Svea Ekonomi
+Version 1.0.5
 
-## Index
+## Table of contents
 * [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
 * [2. Build and Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build-and-configuration)
 * [3. Building an order](https://github.com/sveawebpay/dotnet-integration/tree/master#3-building-an-order)
@@ -29,8 +29,7 @@ Version 1.0.2
     * [6.2 WebpayConnection.GetPaymentPlanParams()](https://github.com/sveawebpay/dotnet-integration/tree/master#62-webpayconnectiongetpaymentplanparams)
     * [6.3 WebpayConnection.PaymentPlanPricePerMonth()](https://github.com/sveawebpay/dotnet-integration/tree/master#63-webpayconnectionpaymentplanpricepermonth)
     * [6.4 WebpayConnection.GetAddresses()](https://github.com/sveawebpay/dotnet-integration/tree/master#64-webpayconnectiongetaddresses)
-    * [6.5 WebpayConnection.DeliverOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#65-webpayconnectiondeliverorder)
-	* [6.6 WebpayConnection.CloseOrder](https://github.com/sveawebpay/dotnet-integration/tree/master#66-webpayconnectioncloseorder)
+    * [6.5 WebpayConnection.DeliverOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#65-webpayconnectiondeliverorder)
 * [7. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
 	* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
 	* [8.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
@@ -301,17 +300,17 @@ depending on country and customer type. For SE, NO, DK and FI national id number
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ### 3.4 Choose payment
-End process by choosing the payment method you desire.
+End the process by choosing the payment method you desire.
 
 Invoice and payment plan will perform a synchronous payment and return an object as response.
 
-Other payments(card, direct bank and payments from the *PayPage*) on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
+Other payments such as card, direct bank and payments from the *PayPage* on the other hand are asynchronous. They will return an html form with formatted message to send from your store.
 
 The response is then returned to the return url you have specified in function *SetReturnUrl()*. The response may also be sent to the url specified with *SetCallbackUrl()* in case the customer doesn't return to the store after the transaction has concluded at the bank/card payment page.
 
 If you pass the xml response to an instance of SveaResponse, you will receive a formatted response object as well.
 
-#### Which payment method to choose?
+#### Which payment method should I use?
 *I am using the invoice and/or payment plan payment methods in my integration.*
 
 >The best way is to use `.UseInvoicePayment()` and `.UsePaymentPlanPayment()`. These payment methods are synchronous and will give you an instant response.
@@ -331,11 +330,13 @@ If you pass the xml response to an instance of SveaResponse, you will receive a 
 
 *I am using more than one payment and want them gathered on on place.*
 
->You can go by *PayPage* and choose to show all your payments here, or modify to exclude or include one or more payments. Use `.UsePayPage()` where you can custom your own *PayPage*. This introduces an additional step in the customer checkout flow, though. Note also that Invoice and Payment plan payments will return an asynchronous when used from PayPage.
+>You can use the *PayPage* and either choose to show all your payments here or  exclude or include one or more payments. Use `.UsePayPage()` where you can customize your own *PayPage*.
+
+Please note that using this method introduces an additional step for the customer and is not recommended.
 
 
 ## 4. Payment method reference
-Select payment method to use with the CreateOrderBuilder class useXX() methods, which return an instance of the appropriate payment request class.
+Select a payment method to use with the CreateOrderBuilder class useXX() methods, which returns an instance of the appropriate payment request class.
 
 ### 4.1 Invoice Payment
 Perform an invoice payment. This payment form will perform a synchronous payment and return a response.
@@ -857,28 +858,6 @@ orderRows.Add(Item.OrderRow(). ...)
 DeliverOrder.AddOrderRows(orderRows);
 ```
 
-[<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
-
-
-
-## 6.6. CloseOrder
-Use when you want to cancel an undelivered order. Valid only for invoice and payment plan orders.
-Required is the order id received when creating the order. Set your store authorization here.
-
-#### Close by payment type
-```csharp
-    .CloseInvoiceOrder()
-or
-    .ClosePaymentPlanOrder()
-```
-
-```csharp
-CloseOrderEuResponse response =  WebpayConnection.CloseOrder()
-	.SetOrderId(orderId)						//Required, received when creating an order.
-	.SetCountryCode(CountryCode.SE)			//Required
-	.CloseInvoiceOrder()
-	.DoRequest();
-```
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
 ## 7. Response handler

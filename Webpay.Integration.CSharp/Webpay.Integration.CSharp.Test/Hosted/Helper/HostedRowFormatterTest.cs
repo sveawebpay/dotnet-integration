@@ -163,36 +163,46 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
         }
 
         [Test]
-        public void TestFormatTotalAmount()
+        public void TestGetTotalAmount()
         {
-            var row = new HostedOrderRowBuilder()
-                .SetAmount(100L)
-                .SetQuantity(2);
-            var rows = new List<HostedOrderRowBuilder> {row};
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountIncVat(100L)
+                                                                        .SetVatPercent(25)
+                                                                        .SetQuantity(2));
 
-            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalAmount(rows), Is.EqualTo(200L));
+            var formatter = new HostedRowFormatter<CreateOrderBuilder>();
+
+            List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
+            Assert.That(formatter.GetTotalAmount(), Is.EqualTo(20000L));
         }
 
         [Test]
-        public void TestFormatTotalVat()
+        public void TestGetTotalVat()
         {
-            var row = new HostedOrderRowBuilder()
-                .SetVat(100L)
-                .SetQuantity(2);
-            var rows = new List<HostedOrderRowBuilder> {row};
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountIncVat(100L)
+                                                                        .SetVatPercent(25)
+                                                                        .SetQuantity(2));
+            var formatter = new HostedRowFormatter<CreateOrderBuilder>();
+            List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
 
-            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows), Is.EqualTo(200L));
+            Assert.That(formatter.GetTotalVat(), Is.EqualTo(4000L));
         }
 
         [Test]
-        public void TestFormatTotalVatNegative()
+        public void TestGetTotalVatNegative()
         {
-            var row = new HostedOrderRowBuilder()
-                .SetVat(-100L)
-                .SetQuantity(2);
-            var rows = new List<HostedOrderRowBuilder> {row};
+            CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                       .AddOrderRow(Item.OrderRow()
+                                                                        .SetAmountIncVat(-100L)
+                                                                        .SetVatPercent(25)
+                                                                        .SetQuantity(2));
+            var formatter = new HostedRowFormatter<CreateOrderBuilder>();
+            List<HostedOrderRowBuilder> formatRowsList = formatter.FormatRows(order);
 
-            Assert.That(new HostedRowFormatter<CreateOrderBuilder>().FormatTotalVat(rows), Is.EqualTo(-200L));
+            Assert.That(formatter.GetTotalVat(), Is.EqualTo(-4000L));
         }
     }
 }

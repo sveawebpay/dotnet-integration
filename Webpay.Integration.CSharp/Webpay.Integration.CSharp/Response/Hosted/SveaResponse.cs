@@ -13,6 +13,7 @@ namespace Webpay.Integration.CSharp.Response.Hosted
     {
        // public readonly SveaConfig Config = new SveaConfig();
 
+        public int StatusCode { get; set; }
         public string TransactionId { get; set; }
         public string ClientOrderNumber { get; set; }
         public string PaymentMethod { get; set; }
@@ -82,13 +83,13 @@ namespace Webpay.Integration.CSharp.Response.Hosted
             d1.LoadXml(Xml);
             foreach (XmlElement element in d1.GetElementsByTagName("response"))
             {
-                var status = int.Parse(GetTagValue(element, "statuscode"));
-                if(status == 0 && MacValidation == 2)
+                StatusCode = int.Parse(GetTagValue(element, "statuscode"));
+                if(StatusCode == 0 && MacValidation == 2)
                 {
                     OrderAccepted = false;
                     ErrorMessage = "Mac validation failed.";
                 }
-                else if (status == 0 && MacValidation <= 1)
+                else if (StatusCode == 0 && MacValidation <= 1)
                 {
                     OrderAccepted = true;
                     ResultCode = "0 (ORDER_ACCEPTED)";
@@ -97,7 +98,7 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                 else
                 {
                     OrderAccepted = false;
-                    SetErrorParams(status);
+                    SetErrorParams(StatusCode);
                 }
 
                 TransactionId = GetTagAttribute(element, "transaction", "id");

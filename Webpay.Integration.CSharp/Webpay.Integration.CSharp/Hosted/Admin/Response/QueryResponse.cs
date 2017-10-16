@@ -46,6 +46,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
                     MinorCurrencyToDecimalAmount(TextInt(response, "/response/transaction/creditedamount")),
                     TextInt(response, "/response/transaction/merchantresponsecode"),
                     TextString(response, "/response/transaction/paymentmethod"),
+                    TextString(response, "/response/transaction/cardtype"),
                     TextString(response, "/response/transaction/callbackurl"),
                     TextString(response, "/response/transaction/subscriptionid"),
                     TextString(response, "/response/transaction/subscriptiontype"),
@@ -119,6 +120,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
         public readonly decimal? CreditedAmount;
         public readonly int? MerchantResponseCode;
         public readonly string PaymentMethod;
+        public readonly string CardType;
         public readonly string CallbackUrl;
         public readonly string SubscriptionId;
         public readonly string SubscriptionType;
@@ -133,7 +135,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
         public readonly IList<TransactionOrderRow> OrderRows; // TODO set to private
         public readonly IList<NumberedOrderRowBuilder> NumberedOrderRows; 
 
-        public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string callbackUrl, string subscriptionId, string subscriptionType, string eci, string mdStatus, string expiryYear, string expiryMonth, string chName, string authCode, TransactionCustomer customer)
+        public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string cardType, string callbackUrl, string subscriptionId, string subscriptionType, string eci, string mdStatus, string expiryYear, string expiryMonth, string chName, string authCode, TransactionCustomer customer)
         {
             CustomerRefNo = customerRefNo;
             ClientOrderNumber = CustomerRefNo;
@@ -149,6 +151,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
             CreditedAmount = creditedAmount;
             MerchantResponseCode = merchantResponseCode;
             PaymentMethod = paymentMethod;
+            CardType = cardType;
             CallbackUrl = callbackUrl;
             SubscriptionId = subscriptionId;
             SubscriptionType = subscriptionType;

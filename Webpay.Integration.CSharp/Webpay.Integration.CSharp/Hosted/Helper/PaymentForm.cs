@@ -18,8 +18,13 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         private string _htmlFormMethod;
         private string _url;
 
-        public PaymentForm()
+        private readonly string _htmlFormId;
+        private readonly string _htmlFormName;
+
+        public PaymentForm(string htmlFormId, string htmlFormName)
         {
+            _htmlFormId = htmlFormId;
+            _htmlFormName = htmlFormName;
             _formHtmlFields = new Dictionary<string, string>();
             _htmlFormMethod = "post";
             SetSubmitMessage(CountryCode.NL);
@@ -100,7 +105,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
         {
             _macSha512 = HashUtil.CreateHash(_xmlMessageBase64 + _secretWord);
 
-            _completeHtmlFormWithSubmitButton = "<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\""
+            _completeHtmlFormWithSubmitButton = "<form name=\"" + _htmlFormName + "\" id=\"" + _htmlFormId + "\" method=\"post\" action=\""
                                                 + _url
                                                 + "\">"
                                                 + "<input type=\"hidden\" name=\"merchantid\" value=\"" + _merchantid +

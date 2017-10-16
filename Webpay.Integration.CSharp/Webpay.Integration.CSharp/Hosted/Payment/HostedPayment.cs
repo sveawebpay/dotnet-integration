@@ -146,13 +146,13 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         /// GetPaymentForm
         /// </summary>
         /// <returns>PaymentForm</returns>
-        public PaymentForm GetPaymentForm()
+        public PaymentForm GetPaymentForm(string htmlFormId = "paymentForm", string htmlFormName = "paymentForm")
         {
             CalculateRequestValues();
             var xmlBuilder = new HostedXmlBuilder();
             string xml = xmlBuilder.GetXml(this);
 
-            var form = new PaymentForm();
+            var form = new PaymentForm(htmlFormId, htmlFormName);
             form.SetXmlMessage(xml);
 
             form.SetMerchantId(CrOrderBuilder.GetConfig()

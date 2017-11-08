@@ -24,13 +24,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
         }
 
-        [Test, Ignore]
+        [Test]
         public void TestGetRecurringPaymentUrl()
         {
             var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRING);
         }
 
-        [Test, Ignore]
+        [Test]
         public void TestGetRecurringCapturePaymentUrl()
         {
             var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRINGCAPTURE);

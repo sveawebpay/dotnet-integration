@@ -136,23 +136,20 @@ namespace Webpay.Integration.CSharp.Config
         {
             switch (type)
             {
-                #pragma warning disable 0162 //CS0162 Unreachable code detected
                 case PaymentType.HOSTED:
                     return SveaConfig.GetTestPayPageUrl();
-                    break;
 
                 case PaymentType.INVOICE:
+                    return SveaConfig.GetTestWebserviceUrl();
+
                 case PaymentType.PAYMENTPLAN:
                     return SveaConfig.GetTestWebserviceUrl();
-                    break;
 
                 case PaymentType.ADMIN_TYPE:
                     return SveaConfig.GetTestAdminServiceUrl();
-                    break;
 
                 default:
                     throw new SveaWebPayException("Unknown PaymentType");
-                #pragma warning restore 0162
             }
         }
 

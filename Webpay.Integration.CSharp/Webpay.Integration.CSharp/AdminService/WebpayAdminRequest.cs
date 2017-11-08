@@ -11,19 +11,17 @@ namespace Webpay.Integration.CSharp.AdminService
         {
             switch (dt)
             {
-                #pragma warning disable 0162 //CS0162 Unreachable code detected
                 case DistributionType.NONE:
                     throw new SveaWebPayException("Invalid DistributionType");
-                    break;
+
                 case DistributionType.EMAIL:
                     return AdminWS.InvoiceDistributionType.Email;
-                    break;
+
                 case DistributionType.POST:
                     return AdminWS.InvoiceDistributionType.Post;
-                    break;
+
                 default:
                     throw new SveaWebPayException("Invalid DistributionType");
-                #pragma warning restore 0162
             }
         }
 

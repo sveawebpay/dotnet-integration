@@ -487,6 +487,10 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     resultCodeMessage = resultCode + " (TIMEOUT)";
                     errorMessage = "Timeout at Svea.";
                     break;
+                case 341:
+                    resultCodeMessage = resultCode + " (ONLY_DEBIT_CARDS_ALLOWED)";
+                    errorMessage = "Only debit cards allowed.";
+                    break;     
                 case 500:
                     resultCodeMessage = resultCode + " (ANTIFRAUD_CARDBIN_NOT_ALLOWED)";
                     errorMessage = "Antifraud - cardbin not allowed.";

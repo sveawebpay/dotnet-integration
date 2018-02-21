@@ -69,7 +69,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                    "https://webpaypaymentgatewaytest.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .PreparePayment("127.0.0.1");
 
-            Assert.That(uri.AbsoluteUri, Is.StringMatching(".*\\/preparedpayment\\/[0-9]+"));
+            Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));
         }
 
         /*

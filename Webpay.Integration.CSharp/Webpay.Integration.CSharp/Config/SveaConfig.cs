@@ -1,13 +1,11 @@
-﻿using System.Reflection.Emit;
-
-namespace Webpay.Integration.CSharp.Config
+﻿namespace Webpay.Integration.CSharp.Config
 {
     public class SveaConfig
     {
-        private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/rest";
-        private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/rest";
-        private const string SwpTestUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/payment";
-        private const string SwpProdUrl = "https://webpaypaymentgateway.svea.com/webpay/payment";
+        private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/";
+        private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/";
+        //private const string SwpTestUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/payment";
+        //private const string SwpProdUrl = "https://webpaypaymentgateway.svea.com/webpay/payment";
         private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL";
         private const string SwpProdWsUrl = "https://webpayws.svea.com/SveaWebPay.asmx?WSDL";
         private const string SwpTestAdminWsUrl = "https://webpayadminservicestage.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part
@@ -25,17 +23,17 @@ namespace Webpay.Integration.CSharp.Config
 
         public static string GetProdPayPageUrl()
         {
-            return SwpProdUrl;
+            return HostedProdAdminBaseUrl + "payment";
         }
 
         public static string GetTestHostedAdminUrl()
         {
-            return HostedTestAdminBaseUrl;
+            return HostedTestAdminBaseUrl + "rest";
         }
 
         public static string GetProdHostedAdminUrl()
         {
-            return HostedProdAdminBaseUrl;
+            return HostedProdAdminBaseUrl + "rest";
         }
 
         public static string GetTestWebserviceUrl()
@@ -50,7 +48,7 @@ namespace Webpay.Integration.CSharp.Config
 
         public static string GetTestPayPageUrl()
         {
-            return SwpTestUrl;
+            return HostedTestAdminBaseUrl + "payment";
         }
 
         public static IConfigurationProvider GetDefaultConfig()

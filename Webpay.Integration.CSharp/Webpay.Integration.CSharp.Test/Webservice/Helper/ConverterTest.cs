@@ -138,7 +138,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         }
 
 
-        [Test, ExpectedException(typeof (SveaWebPayValidationException))]
+        /*[Test, ExpectedException(typeof (SveaWebPayValidationException))]
         public void FillMissingValuesInconsistentThrowsIncZeroExSomething()
         {
             var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
@@ -194,7 +194,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
                                                                         .SetAmountExVat(33)
                                                                         .SetAmountIncVat(110));
             var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
-        }
+        }*/
 
 
         [Test]

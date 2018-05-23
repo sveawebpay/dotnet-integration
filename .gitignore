@@ -108,5 +108,4 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-*.nuspec
 *.nupkg

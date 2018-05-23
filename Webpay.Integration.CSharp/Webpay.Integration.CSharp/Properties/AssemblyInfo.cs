@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Webpay.Integration.CSharp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Integration package for Svea Webpay webservices")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Svea Ekonomi AB")]
 [assembly: AssemblyProduct("Webpay.Integration.CSharp")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.9.0")]
+[assembly: AssemblyFileVersion("1.0.9.0")]

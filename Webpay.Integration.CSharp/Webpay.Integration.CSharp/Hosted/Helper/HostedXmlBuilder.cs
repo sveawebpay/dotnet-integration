@@ -33,6 +33,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 xmlw.WriteStartElement("payment");
 
                 payment.WritePaymentSpecificXml(xmlw);
+
                 doWriteSimple("customerrefno", order.GetClientOrderNumber()); //This is not an error. Do not confuse with order.GetCustomerReference().
                 doWriteSimple("currency", order.GetCurrency());
                 doWriteSimple("amount", payment.GetAmount().ToString(CultureInfo.InvariantCulture));
@@ -44,7 +45,19 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("iscompany", order.GetIsCompanyIdentity().ToString().ToLower());
                 doWriteSimple("ipaddress", payment.GetIpAddress());
 
-                SerializeCustomer(order, xmlw);
+                if(payment.GetType() == typeof(PaymentMethodPayment))
+                {
+                    var pm = payment as PaymentMethodPayment;
+                    if(pm.GetPaymentMethod() == PaymentMethod.SVEACARDPAY_PF)
+                    {
+                        SerializeUnknownCustomer(order, xmlw);
+                    }
+                }
+                else
+                {
+                    SerializeCustomer(order, xmlw);
+                }
+
                 SerializeRows(rows, xmlw);
                 SerializeExcludedPaymentMethods(payment.GetExcludedPaymentMethod(), xmlw);
 
@@ -55,15 +68,27 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             return xmlOutput.ToString();
         }
 
+        private void SerializeUnknownCustomer(CreateOrderBuilder order, XmlWriter xmlw)
+        {
+            Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);
+
+            xmlw.WriteStartElement("customer");
+            doWriteSimple("unknowncustomer", "true");
+            doWriteSimple("country", order.GetCountryCode().ToString().ToUpper());
+            xmlw.WriteEndElement();
+        }
+
         private void SerializeCustomer(CreateOrderBuilder order, XmlWriter xmlw)
         {
+            Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);
+
             if (order.GetCustomerIdentity() == null)
             {
                 return;
             }
 
             CustomerIdentity customer;
-            Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);
+            
 
             if (order.GetIsCompanyIdentity())
             {

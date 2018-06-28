@@ -1163,6 +1163,7 @@ Enumeration, used in *UsePaymentMethod(PaymentMethod PaymentMethod)*, *.UsePayPa
 | PaymentMethod.SWEDBANK_SE         | Direct bank payment, Swedbank, Sweden.        |
 | PaymentMethod.KORTCERT            | Card payments, Certitrade.                    |
 | PaymentMethod.SVEACARDPAY         | Card payments, Svea.                          |
+| PaymentMethod.SVEACARDPAY_PF		| Card payments, Svea w/ Payment Facilitator	|
 | PaymentMethod.PAYPAL              | Paypal                                        |
 | PaymentMethod.SKRILL              | Card payment with Dankort, Skrill.            |
 | PaymentMethod.INVOICE             | Invoice by PayPage.                           |

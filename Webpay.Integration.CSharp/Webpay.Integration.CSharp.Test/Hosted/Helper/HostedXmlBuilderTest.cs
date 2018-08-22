@@ -208,7 +208,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .AddCustomerDetails(Item.CompanyCustomer())
                                    .UsePayPageDirectBankOnly()
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
@@ -239,7 +239,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .AddCustomerDetails(Item.CompanyCustomer())
                                    .UsePayPageCardOnly()
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
@@ -274,7 +274,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .AddCustomerDetails(Item.CompanyCustomer())
                                    .UsePayPage()
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
@@ -293,7 +293,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .UsePayPage()
                                    .SetPayPageLanguageCode(LanguageCode.sv)
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .GetPaymentForm()
                                    .GetXmlMessage();
 
@@ -311,7 +311,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .AddCustomerDetails(Item.CompanyCustomer())
                                    .UsePayPage()
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .SetPaymentMethod(PaymentMethod.PAYPAL)
                                    .GetPaymentForm()
                                    .GetXmlMessage();
@@ -330,7 +330,7 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Helper
                                    .AddCustomerDetails(Item.CompanyCustomer())
                                    .UsePayPage()
                                    .SetReturnUrl(
-                                       "https://webpaypaymentgatewaytest.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
+                                       "https://webpaypaymentgatewaystage.svea.com/Webpayconnection/admin/merchantresponSetest.xhtm")
                                    .SetPaymentMethod(PaymentMethod.INVOICE)
                                    .GetPaymentForm()
                                    .GetXmlMessage();

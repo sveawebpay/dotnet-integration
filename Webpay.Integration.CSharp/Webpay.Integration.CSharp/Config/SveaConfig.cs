@@ -2,9 +2,9 @@
 {
     public class SveaConfig
     {
-        private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/";
+        private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/";
         private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/";
-        //private const string SwpTestUrl = "https://webpaypaymentgatewaytest.svea.com/webpay/payment";
+        //private const string SwpTestUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/payment";
         //private const string SwpProdUrl = "https://webpaypaymentgateway.svea.com/webpay/payment";
         private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL";
         private const string SwpProdWsUrl = "https://webpayws.svea.com/SveaWebPay.asmx?WSDL";

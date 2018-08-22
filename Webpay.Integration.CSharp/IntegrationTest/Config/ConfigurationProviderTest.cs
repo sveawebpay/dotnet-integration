@@ -41,7 +41,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
                         Is.EqualTo("8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"));
 
             Assert.That(_defaultConf.GetEndPoint(PaymentType.HOSTED),
-                        Is.EqualTo("https://webpaypaymentgatewaytest.svea.com/webpay/payment"));
+                        Is.EqualTo("https://webpaypaymentgatewaystage.svea.com/webpay/payment"));
             Assert.That(_defaultConf.GetEndPoint(PaymentType.INVOICE),
                         Is.EqualTo("https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL"));
         }

@@ -29,7 +29,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPageCardOnly()
                                                .SetReturnUrl(
-                                                   "https://webpaypaymentgatewaytest.svea.com/webpay/admin/merchantresponsetest.xhtml")
+                                                   "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .GetPaymentForm();
 
             var postResponse = PostRequest(form);
@@ -47,7 +47,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePaymentMethod(PaymentMethod.NORDEASE)
                                                .SetReturnUrl(
-                                                   "https://webpaypaymentgatewaytest.svea.com/webpay/admin/merchantresponsetest.xhtml")
+                                                   "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .GetPaymentForm();
 
             var postResponse = PostRequest(form);
@@ -66,7 +66,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePayPageCardOnly()
                                                .SetReturnUrl(
-                                                   "https://webpaypaymentgatewaytest.svea.com/webpay/admin/merchantresponsetest.xhtml")
+                                                   "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .PreparePayment("127.0.0.1");
 
             Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));
@@ -82,7 +82,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePaymentMethod(PaymentMethod.SVEACARDPAY_PF)
                                                .SetReturnUrl(
-                                                   "https://webpaypaymentgatewaytest.svea.com/webpay/admin/merchantresponsetest.xhtml")
+                                                   "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .PreparePayment("127.0.0.1");
 
             Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));

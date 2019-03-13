@@ -109,3 +109,4 @@ UpgradeLog*.XML
 
 # NuGet
 *.nupkg
+/Webpay.Integration.CSharp/.vs/config/applicationhost.config

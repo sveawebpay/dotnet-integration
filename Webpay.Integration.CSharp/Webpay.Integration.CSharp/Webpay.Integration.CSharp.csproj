@@ -198,37 +198,112 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Service References\AdminWS\AdminService.wsdl" />
-    <None Include="Service References\AdminWS\AdminService.xsd">
+    <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService1.xsd">
+    <None Include="Service References\AdminWS\AdminService1.wsdl" />
+    <None Include="Service References\AdminWS\AdminService10.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService2.xsd">
+    <None Include="Service References\AdminWS\AdminService101.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService3.xsd">
+    <None Include="Service References\AdminWS\AdminService1010.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService4.xsd">
+    <None Include="Service References\AdminWS\AdminService1011.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService5.xsd">
+    <None Include="Service References\AdminWS\AdminService1012.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService6.xsd">
+    <None Include="Service References\AdminWS\AdminService1013.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService7.xsd">
+    <None Include="Service References\AdminWS\AdminService1014.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService8.xsd">
+    <None Include="Service References\AdminWS\AdminService1015.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\AdminWS\AdminService9.xsd">
+    <None Include="Service References\AdminWS\AdminService1016.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1017.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1018.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1019.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService102.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1020.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1021.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1022.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1023.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1024.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1025.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1026.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1027.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1028.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1029.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService103.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1030.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService1031.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService104.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService105.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService106.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService107.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService108.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService109.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AdminWS\AdminService11.wsdl" />
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -272,6 +347,15 @@
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetClientIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -281,10 +365,16 @@
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoicesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse.datasource">
@@ -300,6 +390,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.PdfLinkResponse.datasource">
@@ -329,7 +422,7 @@
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\WebpayWS\sveawebpay.wsdl" />
+    <None Include="Service References\WebpayWS\SveaWebPay1.wsdl" />
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -364,6 +457,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.DeliverOrderEuResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.GetAccountCreditParamsEuResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.GetAddressesEuResponse.datasource">
@@ -405,9 +501,6 @@
     <WCFMetadataStorage Include="Service References\WebpayWS\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WebpayWS\sveawebpay.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\WebpayWS\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -420,9 +513,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\AdminWS\AdminService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\AdminWS\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +523,15 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\AdminService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebpayWS\SveaWebPay1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AdminWS\AdminService11.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

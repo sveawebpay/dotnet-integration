@@ -11,6 +11,26 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
     public class CreateInvoiceOrderTest
     {
         [Test]
+        public void TestInvoiceDoRequestWithPeppolId()
+        {
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                             .AddCustomerDetails(Item.CompanyCustomer()
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetPeppolId("1234:asdf")
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .UseInvoicePayment()
+                                                             .DoRequest();
+
+            Assert.That(response.ResultCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+        }
+
+        [Test]
         public void TestInvoiceDoRequestWithIpAddressSetSe()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

@@ -755,6 +755,8 @@ CreateOrderEuResponse response = WebpayConnection.CreateOrder(myConfig)		//See C
 //Other values
 .SetCountryCode(CountryCode.SE)
 .SetOrderDate(new DateTime(2012, 12, 12))
+//Optional, use if company wants Peppol invoice
+.SetPeppolId("1234:ab1234")
 .SetCustomerReference("ref33")
 .SetClientOrderNumber("33")
 .SetCurrency(Currency.SEK)

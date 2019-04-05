@@ -27,6 +27,7 @@ namespace Webpay.Integration.CSharp.Order.Create
         private long? _campaignCode;
         private bool _sendAutomaticGiroPaymentForm;
         private bool _hasSetCountryCode;
+        private string _peppolId;
 
         protected CustomerIdentity CustomerId;
 
@@ -43,6 +44,17 @@ namespace Webpay.Integration.CSharp.Order.Create
         public CreateOrderBuilder SetValidator(OrderValidator validator)
         {
             _validator = validator;
+            return this;
+        }
+
+        public string GetPeppolId()
+        {
+            return _peppolId;
+        }
+
+        public CreateOrderBuilder SetPeppolId(string peppolId)
+        {
+            _peppolId = peppolId;
             return this;
         }
 

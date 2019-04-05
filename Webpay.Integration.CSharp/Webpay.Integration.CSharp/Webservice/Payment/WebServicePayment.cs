@@ -79,6 +79,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                     OrderDate = CrOrderBuilder.GetOrderDate(),
                     CustomerReference = CrOrderBuilder.GetCustomerReference(),
                     OrderRows = formattedOrderRows.ToArray(),
+                    PeppolId = CrOrderBuilder.GetPeppolId()
                 };
 
             sveaOrder.CreateOrderInformation = SetOrderType(OrderInfo);

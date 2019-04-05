@@ -452,5 +452,144 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
+
+        [Test]
+        public void testFailOnIncorrectFormatPeppolIdFirstCharacters()
+        {
+            const string expectedMessage = "NOT VALID - First 4 characters of PeppolId must be numeric.";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.IndividualCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("12a4:1sdf")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void TestFailOnIncorrectFormatPeppolIdFifthCharacter()
+        {
+            const string expectedMessage = "NOT VALID - The fifth character of PeppolId must be \":\"";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.IndividualCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("12345678")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testFailOnIncorrectFormatPeppolIdLastCharacters()
+        {
+            const string expectedMessage = "NOT VALID - All characters after the fifth character in PeppolId must be alphanumeric.";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.IndividualCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("1234:.")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testFailOnIncorrectFormatPeppolIdTooShort()
+        {
+            const string expectedMessage = "NOT VALID - PeppolId is too short, must be 6 characters or longer.";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.CompanyCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("1234")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testFailOnIncorrectFormatPeppolIdTooLong()
+        {
+            const string expectedMessage = "NOT VALID - PeppolId is too long, must be 55 characters or fewer.";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.CompanyCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("1234:asdf123456789asdf123456789asdf123456789asdf123456789asdf123456789")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testFailOnIncorrectFormatPeppolIdWrongCustomerType()
+        {
+            const string expectedMessage = "NOT VALID - CustomerType must be a company when using PeppolId.";
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                 .AddCustomerDetails(Item.IndividualCustomer()
+                                                                         .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber)
+                                                                         .SetIpAddress("123.123.123"))
+                                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                 .SetOrderDate(TestingTool.DefaultTestDate)
+                                                 .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                 .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                 .SetPeppolId("1234:asdf")
+                                                 .UseInvoicePayment()
+                                                 .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
     }
 }

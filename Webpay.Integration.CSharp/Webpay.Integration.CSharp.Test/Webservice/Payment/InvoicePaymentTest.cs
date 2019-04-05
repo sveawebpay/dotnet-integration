@@ -13,6 +13,26 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
     {
 
         [Test]
+        public void TestInvoiceRequestObjectWithPeppolId()
+        {
+            CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+                                                             .AddCustomerDetails(Item.CompanyCustomer()
+                                                                                     .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber)
+                                                                                     .SetIpAddress("123.123.123"))
+                                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetPeppolId("1234:asdf")
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .UseInvoicePayment()
+                                                             .PrepareRequest();
+
+            Assert.That(request.CreateOrderInformation.PeppolId, Is.EqualTo("1234:asdf"));
+        }
+
+        [Test]
         public void TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe()
         {
             CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

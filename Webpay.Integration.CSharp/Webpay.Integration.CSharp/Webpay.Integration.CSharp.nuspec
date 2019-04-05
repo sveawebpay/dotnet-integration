@@ -11,8 +11,8 @@
     <iconUrl>http://cdn.svea.com/sveaekonomi/rgb_ekonomi_small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added SVEACARDPAY_PF</releaseNotes>
-    <copyright>Copyright 2018</copyright>
+    <releaseNotes>PG stage endpoint updated, Peppol support</releaseNotes>
+    <copyright>Copyright 2019</copyright>
     <tags>svea webpay</tags>
   </metadata>
 </package>

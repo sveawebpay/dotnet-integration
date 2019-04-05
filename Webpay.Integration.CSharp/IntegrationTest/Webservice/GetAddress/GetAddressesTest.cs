@@ -50,7 +50,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                              .DoRequest();
 
             Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
-            Assert.That(response.Addresses[0].FirstName, Is.EqualTo("Tess T"));
+            Assert.That(response.Addresses[0].FirstName, Is.EqualTo("Tess"));
             Assert.That(response.Addresses[0].LastName, Is.EqualTo("Persson"));
             Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testgatan 1"));
             Assert.That(response.Addresses[0].Postcode, Is.EqualTo(99999));

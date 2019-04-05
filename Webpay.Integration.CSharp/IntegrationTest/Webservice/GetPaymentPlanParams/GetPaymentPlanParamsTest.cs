@@ -18,14 +18,17 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
 
             Assert.That(response.ResultCode, Is.EqualTo(0));
             Assert.That(response.Accepted, Is.True);
-            Assert.That(response.CampaignCodes.Length, Is.EqualTo(7));
+            Assert.That(response.CampaignCodes.Length, Is.EqualTo(10));
             Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(213060));
-            Assert.That(response.CampaignCodes[1].CampaignCode, Is.EqualTo(223060));
-            Assert.That(response.CampaignCodes[2].CampaignCode, Is.EqualTo(223065));
-            Assert.That(response.CampaignCodes[3].CampaignCode, Is.EqualTo(223066));
-            Assert.That(response.CampaignCodes[4].CampaignCode, Is.EqualTo(310012));
-            Assert.That(response.CampaignCodes[5].CampaignCode, Is.EqualTo(410012));
-            Assert.That(response.CampaignCodes[6].CampaignCode, Is.EqualTo(410024));
+            Assert.That(response.CampaignCodes[1].CampaignCode, Is.EqualTo(222065));
+            Assert.That(response.CampaignCodes[2].CampaignCode, Is.EqualTo(222066));
+            Assert.That(response.CampaignCodes[3].CampaignCode, Is.EqualTo(223060));
+            Assert.That(response.CampaignCodes[4].CampaignCode, Is.EqualTo(223065));
+            Assert.That(response.CampaignCodes[5].CampaignCode, Is.EqualTo(223066));
+            Assert.That(response.CampaignCodes[6].CampaignCode, Is.EqualTo(310012));
+            Assert.That(response.CampaignCodes[7].CampaignCode, Is.EqualTo(410012));
+            Assert.That(response.CampaignCodes[8].CampaignCode, Is.EqualTo(410024));
+            Assert.That(response.CampaignCodes[9].CampaignCode, Is.EqualTo(996699));
         }
 
         [Test]
@@ -37,12 +40,12 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
 
             Assert.IsTrue(response.Accepted);
             Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(213060));
-            Assert.That(response.CampaignCodes[0].Description, Is.EqualTo("Köp nu betala om 3 månader (räntefritt)"));
-            Assert.That(response.CampaignCodes[0].PaymentPlanType, Is.EqualTo(PaymentPlanTypeCode.InterestAndAmortizationFree));
-            Assert.That(response.CampaignCodes[0].ContractLengthInMonths, Is.EqualTo(3));
+            Assert.That(response.CampaignCodes[0].Description, Is.EqualTo("Dela upp betalningen på 60 månader"));
+            Assert.That(response.CampaignCodes[0].PaymentPlanType, Is.EqualTo(PaymentPlanTypeCode.Standard));
+            Assert.That(response.CampaignCodes[0].ContractLengthInMonths, Is.EqualTo(60));
             Assert.That(response.CampaignCodes[0].InitialFee, Is.EqualTo(100));
             Assert.That(response.CampaignCodes[0].NotificationFee, Is.EqualTo(29));
-            Assert.That(response.CampaignCodes[0].InterestRatePercent, Is.EqualTo(0));
+            Assert.That(response.CampaignCodes[0].InterestRatePercent, Is.EqualTo(16.75M));
             Assert.That(response.CampaignCodes[0].NumberOfInterestFreeMonths, Is.EqualTo(3));
             Assert.That(response.CampaignCodes[0].NumberOfPaymentFreeMonths, Is.EqualTo(3));
             Assert.That(response.CampaignCodes[0].FromAmount, Is.EqualTo(1000));

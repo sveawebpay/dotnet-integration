@@ -80,7 +80,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
             Assert.That(response.Accepted, Is.True);
         }
 
-        [Test]
+        [Test, Ignore("Credit score is broken for Germany in stage")]
         public void TestDeCompanyIdentity()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
@@ -105,7 +105,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
             Assert.That(response.Accepted, Is.True);
         }
 
-        [Test]
+        [Test, Ignore("Credit score is broken for Netherlands in stage")]
         public void TestNlCompanyIdentity()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

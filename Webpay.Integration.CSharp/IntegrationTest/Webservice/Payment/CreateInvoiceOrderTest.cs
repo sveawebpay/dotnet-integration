@@ -231,7 +231,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             Assert.That(response.CreateOrderResult.CustomerIdentity.CountryCode, Is.EqualTo("SE"));
         }
 
-        [Test]
+        [Test, Ignore("Credit score is broken for Netherlands in stage")]
         public void TestInvoiceForIndividualFromNl()
         {
             CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

@@ -18,21 +18,27 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://partnerweb.sveaekonomi.se/WebPayAdminService_test/AdminService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://webpayadminservice.svea.com/AdminService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="AdminService.disco" MetadataType="Disco" ID="0e64c2a3-d109-443b-9260-2177a6caa335" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?disco" />
-    <MetadataFile FileName="AdminService.xsd" MetadataType="Schema" ID="6e28fb66-c9c3-484c-a993-8450d3d23efe" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd3" />
-    <MetadataFile FileName="AdminService1.xsd" MetadataType="Schema" ID="ccca0466-122f-4d2a-a080-3e0881ad322d" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd0" />
-    <MetadataFile FileName="AdminService2.xsd" MetadataType="Schema" ID="5c24de07-8655-4e18-a357-4798b6aaf428" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd4" />
-    <MetadataFile FileName="AdminService3.xsd" MetadataType="Schema" ID="c5a06fe5-04f9-4cdb-a9a6-1dce6025ef25" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd5" />
-    <MetadataFile FileName="AdminService4.xsd" MetadataType="Schema" ID="afa96a00-04d5-405c-9457-b751c7038377" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd6" />
-    <MetadataFile FileName="AdminService5.xsd" MetadataType="Schema" ID="92db23ce-61cf-4365-8cb7-452bb442c88a" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd1" />
-    <MetadataFile FileName="AdminService6.xsd" MetadataType="Schema" ID="275dc17f-0354-43a1-9bf2-700bbda7a225" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd8" />
-    <MetadataFile FileName="AdminService.wsdl" MetadataType="Wsdl" ID="72bff7e3-90b3-4ea9-9a8e-f3052db23e59" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?wsdl" />
-    <MetadataFile FileName="AdminService7.xsd" MetadataType="Schema" ID="e94dc256-6551-44f0-bf9a-a4b433790b35" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd2" />
-    <MetadataFile FileName="AdminService8.xsd" MetadataType="Schema" ID="c6ea7106-f3c7-4a64-9074-620360ea4e73" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd7" />
-    <MetadataFile FileName="AdminService9.xsd" MetadataType="Schema" ID="98456258-0dfd-4944-97cd-0f3b6f1f642d" SourceId="1" SourceUrl="https://partnerweb.sveaekonomi.se/WebPayAdminService_Test/AdminService.svc?xsd=xsd9" />
+    <MetadataFile FileName="AdminService1016.xsd" MetadataType="Schema" ID="6738f6a7-07be-4480-b2f3-4c0f59732809" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd12" />
+    <MetadataFile FileName="AdminService1017.xsd" MetadataType="Schema" ID="add08353-a1e8-4709-820d-38b8f8ff06a0" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd6" />
+    <MetadataFile FileName="AdminService1018.xsd" MetadataType="Schema" ID="58e888e4-8fde-4253-8e12-43d705dda532" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd7" />
+    <MetadataFile FileName="AdminService11.wsdl" MetadataType="Wsdl" ID="126557c2-0c96-4ded-838f-c862fd17a367" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?wsdl" />
+    <MetadataFile FileName="AdminService1019.xsd" MetadataType="Schema" ID="b28acdd3-f030-4aba-91c2-9a7a5b0130cf" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd5" />
+    <MetadataFile FileName="AdminService1020.xsd" MetadataType="Schema" ID="f8e4b89b-8439-4a9a-a226-46f91878d2d3" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AdminService1021.xsd" MetadataType="Schema" ID="7b826d6a-8b54-455d-aecd-3cf662ee7fb0" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd11" />
+    <MetadataFile FileName="AdminService1022.xsd" MetadataType="Schema" ID="0eb0a538-81b4-4696-8687-824487c2615c" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AdminService1023.xsd" MetadataType="Schema" ID="b8a2a6d1-0a67-43c2-ba2b-9c9e995d9bc6" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AdminService1024.xsd" MetadataType="Schema" ID="acbba99b-65e0-45ab-bb52-a87e095792a7" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd10" />
+    <MetadataFile FileName="AdminService1025.xsd" MetadataType="Schema" ID="413cbe52-adf4-4cf7-900f-480af174cce4" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd14" />
+    <MetadataFile FileName="AdminService1026.xsd" MetadataType="Schema" ID="b3fc44c5-ccc1-49f2-96af-44ac414f3349" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd8" />
+    <MetadataFile FileName="AdminService1027.xsd" MetadataType="Schema" ID="6789cf51-bba5-424f-ad34-cb0d4de73cc7" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd9" />
+    <MetadataFile FileName="AdminService1028.xsd" MetadataType="Schema" ID="7adf0b2b-226c-4a66-9bbb-bdf22dc49ee2" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd13" />
+    <MetadataFile FileName="AdminService1029.xsd" MetadataType="Schema" ID="96d411b5-caa0-4677-955e-19e3d6dada00" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AdminService1030.xsd" MetadataType="Schema" ID="abfafff9-bf01-49c4-94f0-5bfa567ebc31" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd15" />
+    <MetadataFile FileName="AdminService11.disco" MetadataType="Disco" ID="2896928a-ac0c-42ec-8bc6-b8cf83142184" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?disco" />
+    <MetadataFile FileName="AdminService1031.xsd" MetadataType="Schema" ID="c4c2db63-b2a8-4fbf-bfd8-feb841c363ca" SourceId="1" SourceUrl="https://webpayadminservice.svea.com/AdminService.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

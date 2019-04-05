@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" />
+  <xs:element name="GetOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q1:GetOrdersRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetOrdersResult" nillable="true" type="q2:GetOrdersResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrderRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q3:CancelOrderRowsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrderRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CancelOrderRowsResult" nillable="true" type="q4:CancelOrderRowsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q5:CancelOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CancelOrderResult" nillable="true" type="q6:CancelOrderResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliverPartial">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q7:PartialDeliveryRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliverPartialResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="DeliverPartialResult" nillable="true" type="q8:DeliveryResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliverOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q9:DeliveryRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliverOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="DeliverOrdersResult" nillable="true" type="q10:DeliveryResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q11:SearchOrdersRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="SearchOrdersResult" nillable="true" type="q12:SearchOrdersResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddOrderRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q13:AddOrderRowsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddOrderRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="AddOrderRowsResult" nillable="true" type="q14:AddOrderRowsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateOrderRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q15:UpdateOrderRowsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateOrderRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="UpdateOrderRowsResult" nillable="true" type="q16:UpdateOrderRowsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchInvoices">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q17:SearchInvoicesRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchInvoicesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="SearchInvoicesResult" nillable="true" type="q18:SearchInvoicesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoices">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q19:GetInvoicesRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetInvoicesResult" nillable="true" type="q20:GetInvoicesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreditInvoiceRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q21:CreditInvoiceRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreditInvoiceRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CreditInvoiceRowsResult" nillable="true" type="q22:DeliveryResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchPaymentPlans">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q23:SearchPaymentPlansRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchPaymentPlansResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="SearchPaymentPlansResult" nillable="true" type="q24:SearchPaymentPlansResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q25:UpdateOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="UpdateOrderResult" nillable="true" type="q26:UpdateOrderResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfOrderAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q27:SumOfOrderAmountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfOrderAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetSumOfOrderAmountResult" nillable="true" type="q28:SumOfAmountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfInvoiceAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q29:SumOfInvoiceAmountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfInvoiceAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetSumOfInvoiceAmountResult" nillable="true" type="q30:SumOfAmountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfPaymentPlanAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q31:SumOfPaymentPlanAmountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumOfPaymentPlanAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetSumOfPaymentPlanAmountResult" nillable="true" type="q32:SumOfAmountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApproveInvoice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q33:ApproveInvoiceRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApproveInvoiceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="ApproveInvoiceResult" nillable="true" type="q34:ApproveInvoiceResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q35:CreateOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CreateOrderResult" nillable="true" type="q36:CreateOrderResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReleasePendingOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q37:ReleasePendingRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReleasePendingOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="ReleasePendingOrderResult" nillable="true" type="q38:ReleasePendingResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFinancialReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q39:GetFinancialReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFinancialReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetFinancialReportResult" nillable="true" type="q40:GetFinancialReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoiceReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q41:GetInvoiceReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoiceReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetInvoiceReportResult" nillable="true" type="q42:GetInvoiceReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountingReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q43:GetAccountingReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountingReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetAccountingReportResult" nillable="true" type="q44:GetAccountingReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRegressionReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q45:GetRegressionReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRegressionReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetRegressionReportResult" nillable="true" type="q46:GetRegressionReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPaymentPlanReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q47:GetPaymentPlanReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPaymentPlanReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetPaymentPlanReportResult" nillable="true" type="q48:GetPaymentPlanReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoiceJournalReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q49:GetInvoiceJournalReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoiceJournalReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetInvoiceJournalReportResult" nillable="true" type="q50:GetInvoiceJournalReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicePdfLink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q51:GetInvoicePdfLinkRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicePdfLinkResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetInvoicePdfLinkResult" nillable="true" type="q52:PdfLinkResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderPdfLink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q53:GetOrderPdfLinkRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderPdfLinkResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetOrderPdfLinkResult" nillable="true" type="q54:PdfLinkResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderEvents">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q55:GetOrderEventsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderEventsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetOrderEventsResult" nillable="true" type="q56:GetOrderEventsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPendingReasons">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q57:GetPendingReasonsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPendingReasonsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetPendingReasonsResult" nillable="true" type="q58:GetPendingReasonsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicesWithChangedDueDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q59:GetInvoicesWithChangedDueDateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicesWithChangedDueDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="GetInvoicesWithChangedDueDateResult" nillable="true" type="q60:GetInvoicesWithChangedDueDateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeInvoiceDueDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q61:ChangeInvoiceDueDateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeInvoiceDueDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="ChangeInvoiceDueDateResult" nillable="true" type="q62:ChangeInvoiceDueDateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateApprovedOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q63:CreateApprovedOrderRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateApprovedOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CreateApprovedOrderResult" nillable="true" type="q64:CreateApprovedOrderResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPaymentPlanRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q65:CancelPaymentPlanRowsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPaymentPlanRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CancelPaymentPlanRowsResult" nillable="true" type="q66:CancelPaymentPlanRowsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPaymentPlanAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q67:CancelPaymentPlanAmountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPaymentPlanAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="CancelPaymentPlanAmountResult" nillable="true" type="q68:CancelPaymentPlanAmountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchAccountCredits">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q69:SearchAccountCreditsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchAccountCreditsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="SearchAccountCreditsResult" nillable="true" type="q70:SearchAccountCreditsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountCredits">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" minOccurs="0" name="request" nillable="true" type="q71:GetAccountCreditsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountCreditsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetAccountCreditsResult" nillable="true" type="q72:GetAccountCreditsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelAccountCreditAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q73="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q73:CancelAccountCreditAmountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelAccountCreditAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="CancelAccountCreditAmountResult" nillable="true" type="q74:CancelAccountCreditAmountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelAccountCreditRows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q75:CancelAccountCreditRowsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelAccountCreditRowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="CancelAccountCreditRowsResult" nillable="true" type="q76:CancelAccountCreditRowsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q77:GetClientIdRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetClientIdResult" nillable="true" type="q78:GetClientIdResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAccountCreditRegressReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q79:AccountCreditRegressReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAccountCreditRegressReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GenerateAccountCreditRegressReportResult" nillable="true" type="q80:AccountCreditRegressReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAccountingAgreementType25Report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q81:AccountingAgreementType25ReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAccountingAgreementType25ReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GenerateAccountingAgreementType25ReportResult" nillable="true" type="q82:AccountingAgreementType25ReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSpecificationReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q83="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q83:GetSpecificationReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSpecificationReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="GetSpecificationReportResult" nillable="true" type="q84:GetSpecificationReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientsByIdentityAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q85="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q85:GetClientsByIdentityAccountRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientsByIdentityAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetClientsByIdentityAccountResult" nillable="true" type="q86:GetClientsByIdentityAccountResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicesPaidToClientForReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q87:GetInvoicesPaidToClientForReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInvoicesPaidToClientForReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q88="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetInvoicesPaidToClientForReportResult" nillable="true" type="q88:GetInvoicesPaidToClientForReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDebtInvoicesPaidToClientForReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q89="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q89:GetDebtInvoicesPaidToClientForReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDebtInvoicesPaidToClientForReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetDebtInvoicesPaidToClientForReportResult" nillable="true" type="q90:GetDebtInvoicesPaidToClientForReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKickbackReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q91="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" minOccurs="0" name="request" nillable="true" type="q91:GetKickbackReportRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKickbackReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q92="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" minOccurs="0" name="GetKickbackReportResult" nillable="true" type="q92:GetKickbackReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

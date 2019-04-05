@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="GetPaymentPlanParamsEuResponse" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse, Service References.WebpayWS.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse, Service References.WebpayWS.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

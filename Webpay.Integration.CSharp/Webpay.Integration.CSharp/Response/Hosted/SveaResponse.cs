@@ -355,6 +355,26 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     resultCodeMessage = resultCode + " (ILLEGAL_CREDIT_USER)";
                     errorMessage = "User is not allowed to perform credit operation.";
                     break;
+                case 146:
+                    resultCodeMessage = resultCode + " (CUSTOMER_NOT_FOUND)";
+                    errorMessage = "Customer not found.";
+                    break;
+                case 147:
+                    resultCodeMessage = resultCode + " (AGE_LIMIT_EXCEEDED)";
+                    errorMessage = "E.g. the transaction is too old.";
+                    break;
+                case 148:
+                    resultCodeMessage = resultCode + " (BROWSER_NOT_SUPPORTED)";
+                    errorMessage = "Browser not supported.";
+                    break;
+                case 149:
+                    resultCodeMessage = resultCode + " (PENDING)";
+                    errorMessage = "Waiting for final Status code.";
+                    break;
+                case 150:
+                    resultCodeMessage = resultCode + " (CREDIT_PENDING)";
+                    errorMessage = "Credit is currently pending.";
+                    break;
                 case 300:
                     resultCodeMessage = resultCode + " (BAD_CARDHOLDER_NAME)";
                     errorMessage = "Invalid value for cardholder name.";
@@ -487,6 +507,38 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     resultCodeMessage = resultCode + " (TIMEOUT)";
                     errorMessage = "Timeout at Svea.";
                     break;
+                case 333:
+                    resultCodeMessage = resultCode + " (BAD_PERIOD)";
+                    errorMessage = "The reconciliation period is invalid.";
+                    break;
+                case 334:
+                    resultCodeMessage = resultCode + " (BAD_ADDRESS_ID)";
+                    errorMessage = "AddressSelector is not valid for this CountryCode.";
+                    break;
+                case 335:
+                    resultCodeMessage = resultCode + " (BAD_CUSTOMER_DATA)";
+                    errorMessage = "The supplied customer data is invalid.";
+                    break;
+                case 336:
+                    resultCodeMessage = resultCode + " (BAD_UNIT)";
+                    errorMessage = "Invalid unit.";
+                    break;
+                case 337:
+                    resultCodeMessage = resultCode + " (BAD_EXTERNAL_PAYMENT_REF)";
+                    errorMessage = "Invalid external payment reference.";
+                    break;
+                case 338:
+                    resultCodeMessage = resultCode + " (BAD_STOREDCARDALIAS)";
+                    errorMessage = "Invalid stored card alias.";
+                    break;
+                case 339:
+                    resultCodeMessage = resultCode + " (STOREDCARDALIS_NOT_ACTIVE)";
+                    errorMessage = "Stored card alias inactive.";
+                    break;
+                case 340:
+                    resultCodeMessage = resultCode + " (STORED_CARDS_NOT_ENABLED)";
+                    errorMessage = "This merchant does not have stored cards enabled.";
+                    break;
                 case 341:
                     resultCodeMessage = resultCode + " (ONLY_DEBIT_CARDS_ALLOWED)";
                     errorMessage = "Only debit cards allowed.";
@@ -505,7 +557,7 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     break;
                 case 503:
                     resultCodeMessage = resultCode + " (ANTIFRAUD_MAX_AMOUNT_PER_IP_EXCEEDED)";
-                    errorMessage = "Antofraud – max amount per ip exceeded.";
+                    errorMessage = "Antifraud – max amount per ip exceeded.";
                     break;
                 case 504:
                     resultCodeMessage = resultCode + " (ANTIFRAUD_MAX_TRANSACTIONS_PER_IP_EXCEEDED)";
@@ -517,7 +569,7 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     break;
                 case 506:
                     resultCodeMessage = resultCode + " (ANTIFRAUD_MAX_AMOUNT_PER_CARDNO_EXCEEDED)";
-                    errorMessage = "Antifraud – max amount per cardnumer exceeded.";
+                    errorMessage = "Antifraud – max amount per cardnumber exceeded.";
                     break;
                 case 507:
                     resultCodeMessage = resultCode + " (ANTIFRAUD_IP_ADDRESS_BLOCKED)";

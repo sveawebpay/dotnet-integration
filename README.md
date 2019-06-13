@@ -43,8 +43,13 @@
 	* [8.10 WebpayAdmin.UpdateOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#810-webpayadminupdateorderrows)
 	* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
+## !!! Note regarding Svea Checkout !!!
+
+This SDK does not have any support for Svea Checkout. There's technical documentation available for Svea Checkout here: https://checkoutapi.svea.com/docs/html/version-1.htm
 
 ## 1. Introduction
+
+
 The WebpayConnection and WebpayAdmin classes make up the Svea API. Together they provide unified entrypoints to the various Svea web services. The API also encompass the support classes IConfigurationProvider, SveaResponse and Item, as well as various constant container classes and support classes.
 
 The WebpayConnection class methods contains the functions needed to create orders and perform payment requests using Svea payment methods. It contains methods to define order contents, send order requests, as well as support methods needed to do this.

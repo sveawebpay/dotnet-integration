@@ -108,11 +108,12 @@ namespace Webpay.Integration.CSharp.Test.Response
             const string macToValidate = "a9159ec5a2f8871fb4c50cab225f6b0319724cfdc95216c949b2332849f021c934712fb4fda275e4e50f9e160badf6bbbf64e7c6cc8dc382f555b74680c43225";
             CountryCode countryCode = CountryCode.SE;
             var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
-            Assert.That(response.MacValidation, Is.EqualTo(1));
+            Assert.That(response.MacValidation, Is.EqualTo(true));
             Assert.That(response.OrderAccepted, Is.True);
             Assert.That(response.ResultCode, Is.EqualTo("0 (ORDER_ACCEPTED)"));
 
         }
+
         [Test]
         public void TestMacValidationFailed()
         {
@@ -121,9 +122,19 @@ namespace Webpay.Integration.CSharp.Test.Response
             const string macToValidate = "wrong mac";
             CountryCode countryCode = CountryCode.SE;
             var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
-            Assert.That(response.MacValidation, Is.EqualTo(2));
+            Assert.That(response.MacValidation, Is.EqualTo(false));
             Assert.That(response.OrderAccepted, Is.False);
             Assert.That(response.ErrorMessage, Is.EqualTo("Mac validation failed."));
+        }
+
+        [Test]
+        public void TestSetErrorParamsCode150()
+        {
+            const string responseXmlBase64 =
+                "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+CiAgPHRyYW5zYWN0aW9uIGlkPSI1NjY5MjMiPgogICAgPHBheW1lbnRtZXRob2Q+S09SVENFUlQ8L3BheW1lbnRtZXRob2Q+CiAgICA8bWVyY2hhbnRpZD4xMTc1PC9tZXJjaGFudGlkPgogICAgPGN1c3RvbWVycmVmbm8+dGVzdF8xMzU5NDYwNTc2NDkxPC9jdXN0b21lcnJlZm5vPgogICAgPGFtb3VudD41MDA8L2Ftb3VudD4KICAgIDxjdXJyZW5jeT5TRUs8L2N1cnJlbmN5PgogICAgPGNhcmR0eXBlPlZJU0E8L2NhcmR0eXBlPgogICAgPG1hc2tlZGNhcmRubz40NDQ0MzN4eHh4eHgzMzAwPC9tYXNrZWRjYXJkbm8+CiAgICA8ZXhwaXJ5bW9udGg+MDM8L2V4cGlyeW1vbnRoPgogICAgPGV4cGlyeXllYXI+MjA8L2V4cGlyeXllYXI+CiAgICA8YXV0aGNvZGU+MTUyNTg3PC9hdXRoY29kZT4KICA8L3RyYW5zYWN0aW9uPgogIDxzdGF0dXNjb2RlPjE1MDwvc3RhdHVzY29kZT4KPC9yZXNwb25zZT4=";
+            var response = new SveaResponse(responseXmlBase64);
+            Assert.That(response.OrderAccepted, Is.True);
+            Assert.That(response.ResultCode, Is.EqualTo("150 (CREDIT_PENDING)"));
         }
     }
 }

@@ -84,17 +84,26 @@ namespace Webpay.Integration.CSharp.Response.Hosted
             foreach (XmlElement element in d1.GetElementsByTagName("response"))
             {
                 StatusCode = int.Parse(GetTagValue(element, "statuscode"));
-                if(StatusCode == 0 && MacValidation == 2)
+                // MacValidation should be reworked in a new major release, MacValidation should be mandatory
+                if (StatusCode == 0 && MacValidation == 2 || StatusCode == 150 && MacValidation == 2)
                 {
                     OrderAccepted = false;
                     ErrorMessage = "Mac validation failed.";
                 }
-                else if (StatusCode == 0 && MacValidation <= 1)
+                else if (StatusCode == 0 && MacValidation <= 1 || StatusCode == 150 && MacValidation <= 1)
                 {
+                    switch(StatusCode)
+                    {
+                        case 0:
+                            ResultCode = "0 (ORDER_ACCEPTED)";
+                            break;
+                        case 150:
+                            ResultCode = "150 (CREDIT_PENDING)";
+                            break;
+                    }
                     OrderAccepted = true;
-                    ResultCode = "0 (ORDER_ACCEPTED)";
                 }
-                
+
                 else
                 {
                     OrderAccepted = false;

@@ -67,7 +67,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                              .DoRequest();
 
             Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Error));
-            Assert.That(response.ErrorMessage, Is.EqualTo("CountryCode: Supported countries are SE, DK"));
+            Assert.That(response.ErrorMessage, Is.EqualTo("Invalid CountryCode: Supported CountryCodes are: SE, DK."));
         }
 
         [Test]

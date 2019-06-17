@@ -10,6 +10,7 @@ using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Hosted.Payment;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
+using Webpay.Integration.CSharp.Order.Handle;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -744,6 +745,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
             Assert.That(ex.Message,
                 Is.EqualTo("SEVERE: The mac from the server does not match the expected mac. The message might have been tampered with, or the secret word used is not correct. Merchant:1130 Message:\nPD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48cmVzcG9uc2U+PHN0YXR1c2NvZGU+MDwvc3RhdHVzY29kZT48cHJlcGFyZWRwYXltZW50PjxpZD4yNjYwOTwvaWQ+PGNyZWF0ZWQ+MjAxNS0wNC0yMyAxNzo0MjoxMSBDRVNUPC9jcmVhdGVkPjwvcHJlcGFyZWRwYXltZW50PjwvcmVzcG9uc2U+"));
+        }
+
+        [Test, Ignore("Create a directbank transaction with Trustly to test this")]
+        public void TestHostedAdminResponseStatus150()
+        {
+            CreditAmountBuilder request = WebpayAdmin.CreditAmount(new SveaTestConfigurationProvider())
+                .SetTransactionId(697022)
+                .SetAmountIncVat(100);
+            var response = request.CreditDirectBankAmount().DoRequest();
+
+            Assert.That(response.StatusCode, Is.EqualTo(150));
+            Assert.That(response.Accepted, Is.EqualTo(true));        
         }
 
         internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)

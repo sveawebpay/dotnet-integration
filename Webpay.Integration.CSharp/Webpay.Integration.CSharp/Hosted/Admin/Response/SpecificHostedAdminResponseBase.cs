@@ -11,7 +11,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
         protected SpecificHostedAdminResponseBase(XmlNode response)
         {
             StatusCode = TextInt(response, "/response/statuscode").GetValueOrDefault(101);
-            Accepted = StatusCode == 0;
+            if(StatusCode == 0 || StatusCode == 150)
+            {
+                Accepted = true;
+            }
+            
             var errorMessage = SveaResponse.StatusCodeToMessage(StatusCode);
             ErrorMessage = errorMessage.Item2;
         }

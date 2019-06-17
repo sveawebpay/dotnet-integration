@@ -11,7 +11,7 @@
     <iconUrl>http://cdn.svea.com/sveaekonomi/rgb_ekonomi_small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add new status codes from Payment Gateway, Handle status code 150 as accepted</releaseNotes>
+    <releaseNotes>Handle status code 150 as accepted in HostedAdminResponse</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>svea webpay</tags>
   </metadata>

@@ -95,12 +95,22 @@ namespace Webpay.Integration.CSharp.Webservice.Handleorder
             return _sveaDeliverOrder;
         }
 
-        private static InvoiceDistributionType ConvertInvoiceDistributionType(
-            Util.Constant.DistributionType getDistributionType)
+        private static InvoiceDistributionType ConvertInvoiceDistributionType(Util.Constant.DistributionType getDistributionType)
         {
-            return getDistributionType == Util.Constant.DistributionType.EMAIL
-                       ? InvoiceDistributionType.Email
-                       : InvoiceDistributionType.Post;
+            switch(getDistributionType)
+            {
+                case DistributionType.POST:
+                    return InvoiceDistributionType.Post;
+
+                case DistributionType.EMAIL:
+                    return InvoiceDistributionType.Email;
+
+                case DistributionType.EINVOICEB2B:
+                    return InvoiceDistributionType.EInvoiceB2B;
+
+                default:
+                    return InvoiceDistributionType.Post;
+            }
         }
 
         private static WebpayWS.OrderType ConvertOrderType(OrderType orderType)

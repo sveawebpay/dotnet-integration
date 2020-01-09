@@ -47,6 +47,24 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
         }
 
         [Test]
+        public void TestDeliverInvoiceOrderWithEInvoiceB2BResult()
+        {
+            long orderId = CreateNorwegianExVatInvoiceAndReturnOrderId();
+
+            DeliverOrderEuResponse response = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+                                                              .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                              .SetOrderId(orderId)
+                                                              .SetNumberOfCreditDays(1)
+                                                              .SetInvoiceDistributionType(DistributionType.EINVOICEB2B)
+                                                              .SetCountryCode(CountryCode.NO)
+                                                              .DeliverInvoiceOrder()
+                                                              .DoRequest();
+
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.EInvoiceB2B));
+        }
+
+        [Test]
         public void TestDeliverInvoiceOrderCreatedInclVatDeliveredInclVat()
         {
             var orderId = CreateIncVatOrderAndReturnOrderId();
@@ -160,5 +178,20 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
             return response1.CreateOrderResult.SveaOrderId;
         }
 
+        private long CreateNorwegianExVatInvoiceAndReturnOrderId()
+        {
+            CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+                                                             .AddCustomerDetails(Item.CompanyCustomer()
+                                                                                     .SetNationalIdNumber("923313850"))
+                                                             .SetCountryCode(CountryCode.NO)
+                                                             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                             .SetOrderDate(TestingTool.DefaultTestDate)
+                                                             .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                             .UseInvoicePayment()
+                                                             .DoRequest();
+
+            return response.CreateOrderResult.SveaOrderId;
+        }
     }
 }

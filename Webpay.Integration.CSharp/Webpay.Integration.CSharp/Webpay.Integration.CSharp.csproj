@@ -189,6 +189,7 @@
     <Compile Include="Webservice\Handleorder\HandleOrder.cs" />
     <Compile Include="Webservice\Helper\Maybe.cs" />
     <Compile Include="Webservice\Helper\FuncExtensions.cs" />
+    <Compile Include="Webservice\Helper\PeppolId.cs" />
     <Compile Include="Webservice\Helper\WebServiceRowFormatter.cs" />
     <Compile Include="Webservice\Payment\InvoicePayment.cs" />
     <Compile Include="Webservice\Payment\PaymentPlanPayment.cs" />

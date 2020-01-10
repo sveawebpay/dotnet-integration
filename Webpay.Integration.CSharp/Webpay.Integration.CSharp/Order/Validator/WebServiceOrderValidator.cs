@@ -56,29 +56,11 @@ namespace Webpay.Integration.CSharp.Order.Validator
 
         private static string ValidatePeppolId(CreateOrderBuilder order)
         {
-            if (order.GetPeppolId().Length < 6)
-            {
-                return "NOT VALID - PeppolId is too short, must be 6 characters or longer.";
-            }
+            string validation = ValidatePeppolIdString(order.GetPeppolId());
 
-            if (order.GetPeppolId().Length > 55)
+            if (validation != "")
             {
-                return "NOT VALID - PeppolId is too long, must be 55 characters or fewer.";
-            }
-
-            if (Regex.IsMatch(order.GetPeppolId().Substring(0, 4), @"^\d+$") == false)
-            {
-                return "NOT VALID - First 4 characters of PeppolId must be numeric.";
-            }
-
-            if (order.GetPeppolId().Substring(4,1) != ":")
-            {
-                return "NOT VALID - The fifth character of PeppolId must be \":\"";
-            }
-
-            if (order.GetPeppolId().Substring(5).All(char.IsLetterOrDigit) == false)
-            {
-                return "NOT VALID - All characters after the fifth character in PeppolId must be alphanumeric.";
+                return validation;
             }
 
             if (order.GetIsCompanyIdentity() == false)
@@ -86,6 +68,35 @@ namespace Webpay.Integration.CSharp.Order.Validator
                 return "NOT VALID - CustomerType must be a company when using PeppolId.";
             }
 
+            return "";
+        }
+
+        public static string ValidatePeppolIdString(string peppolId)
+        {
+            if (peppolId.Length < 6)
+            {
+                return "NOT VALID - PeppolId is too short, must be 6 characters or longer.";
+            }
+
+            if (peppolId.Length > 55)
+            {
+                return "NOT VALID - PeppolId is too long, must be 55 characters or fewer.";
+            }
+
+            if (Regex.IsMatch(peppolId.Substring(0, 4), @"^\d+$") == false)
+            {
+                return "NOT VALID - First 4 characters of PeppolId must be numeric.";
+            }
+
+            if (peppolId.Substring(4, 1) != ":")
+            {
+                return "NOT VALID - The fifth character of PeppolId must be \":\"";
+            }
+
+            if (peppolId.Substring(5).All(char.IsLetterOrDigit) == false)
+            {
+                return "NOT VALID - All characters after the fifth character in PeppolId must be alphanumeric.";
+            }
             return "";
         }
     }

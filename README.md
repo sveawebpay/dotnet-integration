@@ -29,8 +29,8 @@
     * [6.3 WebpayConnection.PaymentPlanPricePerMonth()](https://github.com/sveawebpay/dotnet-integration/tree/master#63-webpayconnectionpaymentplanpricepermonth)
     * [6.4 WebpayConnection.GetAddresses()](https://github.com/sveawebpay/dotnet-integration/tree/master#64-webpayconnectiongetaddresses)
     * [6.5 WebpayConnection.DeliverOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#65-webpayconnectiondeliverorder)
-* [7. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#6-response-handler)
-	* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
+* [7. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#7-response-handler)
+* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
 	* [8.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
 	* [8.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmindeliverorderrows)
 	* [8.3 WebpayAdmin.DeliverOrders()](https://github.com/sveawebpay/dotnet-integration/tree/master#83-webpayadmindeliverorders)
@@ -41,7 +41,9 @@
 	* [8.8 WebpayAdmin.AddOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#88-webpayadminaddorderrows)
 	* [8.9 WebpayAdmin.UpdateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#89-webpayadminupdateorder)
 	* [8.10 WebpayAdmin.UpdateOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#810-webpayadminupdateorderrows)
-	* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
+* [9. Helper methods](https://github.com/sveawebpay/dotnet-integration/tree/master#9-helpermethods)
+    * [9.1 PeppolID](https://github.com/sveawebpay/dotnet-integration/tree/master#91-peppolid)
+* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
 
 ## !!! Note regarding Svea Checkout !!!
 
@@ -1151,6 +1153,17 @@ Supports invoice, PaymentPlan.
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)
 
+
+## 9. Helper methods
+
+### 9.1 Peppol-ID
+You can validate any string to see if it's a valid peppol-ID by calling the static method "IsValidPeppolId" in the PeppolId class in the "Webpay.Integration.CSharp.Webservice.Helper" namespace
+
+Example:
+```csharp
+    bool validationResult = PeppolId.IsValidPeppolId("1234:asdf"); // will return true
+    bool validationResult = PeppolId.IsValidPeppolId("1:1"); // will return false
+```
 
 ## APPENDIX
 

@@ -20,7 +20,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                               .DoRequest();
 
             Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
-            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson, Tess T"));
+            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson Tess T"));
             Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testgatan 1"));
             Assert.That(response.Addresses[0].Postarea, Is.EqualTo("Stan"));
         }
@@ -35,7 +35,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetAddress
                                                               .DoRequest();
 
             Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
-            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson, Tess T"));
+            Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson Tess T"));
             Assert.That(response.Addresses[0].AddressLine2, Is.EqualTo("Testgatan 1"));
             Assert.That(response.Addresses[0].Postarea, Is.EqualTo("Stan"));
         }

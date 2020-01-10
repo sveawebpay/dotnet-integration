@@ -34,16 +34,18 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
             Assert.That(result[2]["pricePerMonth"], Is.EqualTo(2000));
             Assert.That(result[3]["campaignCode"], Is.EqualTo(223060));
             Assert.That(result[3]["pricePerMonth"], Is.EqualTo(2029));
-            Assert.That(result[4]["campaignCode"], Is.EqualTo(223065));
-            Assert.That(result[4]["pricePerMonth"], Is.EqualTo(2000));
-            Assert.That(result[5]["campaignCode"], Is.EqualTo(223066));
+            Assert.That(result[4]["campaignCode"], Is.EqualTo(223062));
+            Assert.That(result[4]["pricePerMonth"], Is.EqualTo(2029));
+            Assert.That(result[5]["campaignCode"], Is.EqualTo(223065));
             Assert.That(result[5]["pricePerMonth"], Is.EqualTo(2000));
-            Assert.That(result[6]["campaignCode"], Is.EqualTo(310012));
-            Assert.That(result[6]["pricePerMonth"], Is.EqualTo(202));
-            Assert.That(result[7]["campaignCode"], Is.EqualTo(410012));
-            Assert.That(result[7]["pricePerMonth"], Is.EqualTo(214));
-            Assert.That(result[8]["campaignCode"], Is.EqualTo(410024));
-            Assert.That(result[8]["pricePerMonth"], Is.EqualTo(129));
+            Assert.That(result[6]["campaignCode"], Is.EqualTo(223066));
+            Assert.That(result[6]["pricePerMonth"], Is.EqualTo(2000));
+            Assert.That(result[7]["campaignCode"], Is.EqualTo(310012));
+            Assert.That(result[7]["pricePerMonth"], Is.EqualTo(202));
+            Assert.That(result[8]["campaignCode"], Is.EqualTo(410012));
+            Assert.That(result[8]["pricePerMonth"], Is.EqualTo(214));
+            Assert.That(result[9]["campaignCode"], Is.EqualTo(410024));
+            Assert.That(result[9]["pricePerMonth"], Is.EqualTo(129));
         }
 
         [Test]

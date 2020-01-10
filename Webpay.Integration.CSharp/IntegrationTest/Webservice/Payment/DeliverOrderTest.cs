@@ -19,10 +19,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                 .SetOrderId(54086L)
                                 .SetInvoiceDistributionType(DistributionType.POST)
                                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                .DeliverInvoiceOrder()
+                                .DeliverPaymentPlanOrder()
                                 .DoRequest();
 
-            Assert.That(response.ErrorMessage, Is.EqualTo("Order does not exist."));
+            Assert.That(response.ErrorMessage, Is.EqualTo("Could not complete the request to deliver an order!"));
         }
 
         [Test]

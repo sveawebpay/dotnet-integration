@@ -455,7 +455,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testFailOnIncorrectFormatPeppolIdFirstCharacters()
+        public void TestFailOnIncorrectFormatPeppolIdFirstCharacters()
         {
             const string expectedMessage = "NOT VALID - First 4 characters of PeppolId must be numeric.";
 
@@ -502,7 +502,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testFailOnIncorrectFormatPeppolIdLastCharacters()
+        public void TestFailOnIncorrectFormatPeppolIdLastCharacters()
         {
             const string expectedMessage = "NOT VALID - All characters after the fifth character in PeppolId must be alphanumeric.";
 
@@ -525,7 +525,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testFailOnIncorrectFormatPeppolIdTooShort()
+        public void TestFailOnIncorrectFormatPeppolIdTooShort()
         {
             const string expectedMessage = "NOT VALID - PeppolId is too short, must be 6 characters or longer.";
 
@@ -548,7 +548,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testFailOnIncorrectFormatPeppolIdTooLong()
+        public void TestFailOnIncorrectFormatPeppolIdTooLong()
         {
             const string expectedMessage = "NOT VALID - PeppolId is too long, must be 55 characters or fewer.";
 
@@ -571,7 +571,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testFailOnIncorrectFormatPeppolIdWrongCustomerType()
+        public void TestFailOnIncorrectFormatPeppolIdWrongCustomerType()
         {
             const string expectedMessage = "NOT VALID - CustomerType must be a company when using PeppolId.";
 
@@ -594,7 +594,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testIncorrectCountryCodeOnDeliverOrderWithEInvoiceB2B()
+        public void TestIncorrectCountryCodeOnDeliverOrderWithEInvoiceB2B()
         {
             const string expectedMessage = "NOT VALID - Invalid country code, must be CountryCode.NO if InvoiceDistributionType is DistributionType.EInvoiceB2B.";
 
@@ -615,7 +615,7 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
         }
 
         [Test]
-        public void testIncorrectPaymentOnDeliverOrderWithEInvoiceB2B()
+        public void TestIncorrectPaymentOnDeliverOrderWithEInvoiceB2B()
         {
             const string expectedMessage = "NOT VALID - Invalid payment method, DistributionType.EINVOICEB2B can only be used when payment method is invoice.";
 

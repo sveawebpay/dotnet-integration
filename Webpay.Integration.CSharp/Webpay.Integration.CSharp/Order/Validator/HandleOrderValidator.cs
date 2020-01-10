@@ -53,13 +53,25 @@ namespace Webpay.Integration.CSharp.Order.Validator
 
         private static string ValidateInvoiceDetails(DeliverOrderBuilder order)
         {
+            string errors = "";
             if (order.GetOrderId() > 0 && order.GetOrderType() == OrderType.INVOICE &&
                 (order.GetInvoiceDistributionType() == DistributionType.NONE ||
                  !Enum.IsDefined(typeof (DistributionType), order.GetInvoiceDistributionType())))
             {
-                return "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.";
+                errors += "MISSING VALUE - SetInvoiceDistributionType is required for DeliverInvoiceOrder.\n";
             }
-            return "";
+
+            if(order.GetInvoiceDistributionType() == DistributionType.EINVOICEB2B && order.GetCountryCode() != CountryCode.NO)
+            {
+                errors += "NOT VALID - Invalid country code, must be CountryCode.NO if InvoiceDistributionType is DistributionType.EInvoiceB2B.\n";
+            }
+
+            if(order.GetInvoiceDistributionType() == DistributionType.EINVOICEB2B && order.GetOrderType() == OrderType.PAYMENTPLAN)
+            {
+                errors += "NOT VALID - Invalid payment method, DistributionType.EINVOICEB2B can only be used when payment method is invoice.\n";
+            }
+
+            return errors;
         }
 
         private static string ValidateOrderRows(DeliverOrderBuilder order)

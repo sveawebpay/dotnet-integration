@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order.Create;
+using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Validator;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -588,6 +589,48 @@ namespace Webpay.Integration.CSharp.Test.Order.Validator
                                                  .SetPeppolId("1234:asdf")
                                                  .UseInvoicePayment()
                                                  .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testIncorrectCountryCodeOnDeliverOrderWithEInvoiceB2B()
+        {
+            const string expectedMessage = "NOT VALID - Invalid country code, must be CountryCode.NO if InvoiceDistributionType is DistributionType.EInvoiceB2B.";
+
+            DeliverOrderBuilder order = new DeliverOrderBuilder(SveaConfig.GetDefaultConfig());
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                    .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                    .AddDiscount(Item.FixedDiscount()
+                        .SetAmountIncVat(10))
+                    .SetInvoiceDistributionType(DistributionType.EINVOICEB2B)
+                    .SetOrderId(54086L)
+                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                    .DeliverInvoiceOrder()
+                    .PrepareRequest());
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void testIncorrectPaymentOnDeliverOrderWithEInvoiceB2B()
+        {
+            const string expectedMessage = "NOT VALID - Invalid payment method, DistributionType.EINVOICEB2B can only be used when payment method is invoice.";
+
+            DeliverOrderBuilder order = new DeliverOrderBuilder(SveaConfig.GetDefaultConfig());
+
+            var exception = Assert.Throws<SveaWebPayValidationException>(
+                () => order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                    .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                    .AddDiscount(Item.FixedDiscount()
+                        .SetAmountIncVat(10))
+                    .SetInvoiceDistributionType(DistributionType.EINVOICEB2B)
+                    .SetOrderId(54086L)
+                    .SetCountryCode(CountryCode.NO)
+                    .DeliverPaymentPlanOrder()
+                    .PrepareRequest());
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }

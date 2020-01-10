@@ -108,7 +108,7 @@ namespace Webpay.Integration.CSharp.Test.Response
             const string macToValidate = "a9159ec5a2f8871fb4c50cab225f6b0319724cfdc95216c949b2332849f021c934712fb4fda275e4e50f9e160badf6bbbf64e7c6cc8dc382f555b74680c43225";
             CountryCode countryCode = CountryCode.SE;
             var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
-            Assert.That(response.MacValidation, Is.EqualTo(true));
+            Assert.That(response.MacValidation, Is.EqualTo(1));
             Assert.That(response.OrderAccepted, Is.True);
             Assert.That(response.ResultCode, Is.EqualTo("0 (ORDER_ACCEPTED)"));
 
@@ -122,7 +122,7 @@ namespace Webpay.Integration.CSharp.Test.Response
             const string macToValidate = "wrong mac";
             CountryCode countryCode = CountryCode.SE;
             var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
-            Assert.That(response.MacValidation, Is.EqualTo(false));
+            Assert.That(response.MacValidation, Is.EqualTo(2));
             Assert.That(response.OrderAccepted, Is.False);
             Assert.That(response.ErrorMessage, Is.EqualTo("Mac validation failed."));
         }

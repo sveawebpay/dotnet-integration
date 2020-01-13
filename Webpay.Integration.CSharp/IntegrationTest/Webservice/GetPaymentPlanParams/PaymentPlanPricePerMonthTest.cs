@@ -24,28 +24,28 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
         {
             GetPaymentPlanParamsEuResponse paymentPlanParams = GetParamsForTesting();
 
-            List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(2000.0M, paymentPlanParams);
+            List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(11200.0M, paymentPlanParams);
 
             Assert.That(result[0]["campaignCode"], Is.EqualTo(213060));
-            Assert.That(result[0]["pricePerMonth"], Is.EqualTo(80));
+            Assert.That(result[0]["pricePerMonth"], Is.EqualTo(317));
             Assert.That(result[1]["campaignCode"], Is.EqualTo(222065));
-            Assert.That(result[1]["pricePerMonth"], Is.EqualTo(2000));
+            Assert.That(result[1]["pricePerMonth"], Is.EqualTo(11200));
             Assert.That(result[2]["campaignCode"], Is.EqualTo(222066));
-            Assert.That(result[2]["pricePerMonth"], Is.EqualTo(2000));
+            Assert.That(result[2]["pricePerMonth"], Is.EqualTo(11200));
             Assert.That(result[3]["campaignCode"], Is.EqualTo(223060));
-            Assert.That(result[3]["pricePerMonth"], Is.EqualTo(2029));
+            Assert.That(result[3]["pricePerMonth"], Is.EqualTo(11229));
             Assert.That(result[4]["campaignCode"], Is.EqualTo(223062));
-            Assert.That(result[4]["pricePerMonth"], Is.EqualTo(2029));
+            Assert.That(result[4]["pricePerMonth"], Is.EqualTo(11229));
             Assert.That(result[5]["campaignCode"], Is.EqualTo(223065));
-            Assert.That(result[5]["pricePerMonth"], Is.EqualTo(2000));
+            Assert.That(result[5]["pricePerMonth"], Is.EqualTo(11200));
             Assert.That(result[6]["campaignCode"], Is.EqualTo(223066));
-            Assert.That(result[6]["pricePerMonth"], Is.EqualTo(2000));
+            Assert.That(result[6]["pricePerMonth"], Is.EqualTo(11200));
             Assert.That(result[7]["campaignCode"], Is.EqualTo(310012));
-            Assert.That(result[7]["pricePerMonth"], Is.EqualTo(202));
+            Assert.That(result[7]["pricePerMonth"], Is.EqualTo(993));
             Assert.That(result[8]["campaignCode"], Is.EqualTo(410012));
-            Assert.That(result[8]["pricePerMonth"], Is.EqualTo(214));
+            Assert.That(result[8]["pricePerMonth"], Is.EqualTo(1066));
             Assert.That(result[9]["campaignCode"], Is.EqualTo(410024));
-            Assert.That(result[9]["pricePerMonth"], Is.EqualTo(129));
+            Assert.That(result[9]["pricePerMonth"], Is.EqualTo(574));
         }
 
         [Test]

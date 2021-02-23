@@ -92,6 +92,19 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
         }
 
+        public HostedActionRequest LowerAmountConfirm(LowerAmountConfirm lowerAmount)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <loweramountconfirm>
+                <transactionid>{0}</transactionid>
+                <amounttolower>{1}</amounttolower>
+                <capturedate>{2}</capturedate>
+                </loweramountconfirm>", lowerAmount.TransactionId, 
+                                        lowerAmount.AmountToLower,
+                                        lowerAmount.CaptureDate.ToString("yyyy-MM-dd"));
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramountconfirm");
+        }
+
         public HostedActionRequest Query(QueryByTransactionId query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>

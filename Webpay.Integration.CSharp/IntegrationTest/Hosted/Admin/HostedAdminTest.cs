@@ -416,6 +416,86 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestLowerAmountConfirmCompleteFlow()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+
+            LowerAmountResponse lowerAmountResponse = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .LowerAmountConfirm(new LowerAmountConfirm(
+                    transactionId: payment.TransactionId,
+                    amountToLower: 111,
+                    captureDate: DateTime.Now
+                    ))
+                .PrepareRequest()
+                .DoRequest()
+                .To(LowerAmount.Response);
+        }
+
+        [Test]
+        public void TestLowerAmountConfirm()
+        {
+            var customerRefNo = CreateCustomerRefNo();
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .LowerAmountConfirm(new LowerAmountConfirm(
+                    transactionId: payment.TransactionId,
+                    amountToLower: 111,
+                    captureDate: DateTime.Parse("2021-05-29")
+                ));
+
+            HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/amounttolower").InnerText, Is.EqualTo("111"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/capturedate").InnerText, Is.EqualTo("2021-05-29"));
+
+            var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
+        }
+
+
+        [Test]
+        public void TestLowerAmountConfirmResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
+            LowerAmountConfirmResponse response = LowerAmountConfirm.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.EqualTo(598972));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+        }
+
+        [Test]
+        public void TestLowerAmountConfirmResponseFailure()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
+            LowerAmountConfirmResponse response = LowerAmountConfirm.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.Null);
+            Assert.That(response.CustomerRefNo, Is.Null);
+            Assert.That(response.ClientOrderNumber, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(107));
+            Assert.That(response.Accepted, Is.False);
+            Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+        }
+
+        [Test]
         public void TestQueryTransactionIdDirectPayment()
         {
             var customerRefNo = CreateCustomerRefNo();

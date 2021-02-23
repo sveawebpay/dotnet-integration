@@ -53,6 +53,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
                 return (T)(object)hostedAdminResponse.To(LowerAmount.Response);
             }
+            //LowerAmountConfirm
+            if (typeof(T) == typeof(LowerAmountConfirmResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(LowerAmountConfirm.Response);
+            }
             //Query
             if ( typeof(T) == typeof(QueryResponse) )
             {

@@ -11,8 +11,8 @@
     <iconUrl>http://cdn.svea.com/sveaekonomi/rgb_ekonomi_small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add EINVOICEB2B distribution type, add helper method to validate peppol-ID, calculate price per month according to new formula</releaseNotes>
-    <copyright>Copyright 2019</copyright>
+    <releaseNotes>Added LowerAmountConfirm method</releaseNotes>
+    <copyright>Copyright 2021</copyright>
     <tags>svea webpay</tags>
   </metadata>
 </package>

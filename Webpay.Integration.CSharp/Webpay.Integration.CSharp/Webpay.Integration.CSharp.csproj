@@ -72,6 +72,7 @@
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
+    <Compile Include="Hosted\Admin\Actions\LowerAmountConfirm.cs" />
     <Compile Include="Hosted\Admin\Response\CreditResponse.cs" />
     <Compile Include="Hosted\Admin\Response\AnnulResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\CancelRecurSubscription.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Hosted\Admin\Actions\GetReconciliationReport.cs" />
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
+    <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Query.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByClientOrderNumber.cs" />

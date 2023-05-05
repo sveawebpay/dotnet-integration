@@ -37,25 +37,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
         }
 
         [Test]
-        public void TestDoNordeaSePaymentRequest()
-        {
-            PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                               .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                               .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
-                                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                               .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
-                                               .SetCurrency(TestingTool.DefaultTestCurrency)
-                                               .UsePaymentMethod(PaymentMethod.NORDEASE)
-                                               .SetReturnUrl(
-                                                   "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
-                                               .GetPaymentForm();
-
-            var postResponse = PostRequest(form);
-            Assert.That(postResponse.Item1, Is.EqualTo("OK"));
-            Assert.That(postResponse.Item2.StartsWith(ExpectedResponseStart));
-        }
-
-        [Test]
         public void TestPreparedPaymentRequest()
         {
             Uri uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

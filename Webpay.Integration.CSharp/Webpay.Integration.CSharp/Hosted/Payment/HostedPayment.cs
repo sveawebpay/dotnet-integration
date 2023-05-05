@@ -30,6 +30,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         protected ExcludePayments Excluded;
         protected string LanguageCode = Util.Constant.LanguageCode.en.ToString();
         protected string IpAddress;
+        protected string PayerAlias;
 
         public HostedPayment(CreateOrderBuilder createOrderBuilder)
         {
@@ -38,6 +39,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             Excluded = new ExcludePayments();
             ExcludedPaymentMethod = new List<string>();
             ReturnUrl = "";
+            PayerAlias = createOrderBuilder.GetPayerAlias();
         }
 
         public CreateOrderBuilder GetCreateOrderBuilder()
@@ -58,6 +60,11 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
         public long GetAmount()
         {
             return Amount;
+        }
+
+        public string GetPayerAlias()
+        {
+            return PayerAlias;
         }
 
         public long GetVat()

@@ -28,6 +28,7 @@ namespace Webpay.Integration.CSharp.Order.Create
         private bool _sendAutomaticGiroPaymentForm;
         private bool _hasSetCountryCode;
         private string _peppolId;
+        private string _payerAlias;
 
         protected CustomerIdentity CustomerId;
 
@@ -35,7 +36,16 @@ namespace Webpay.Integration.CSharp.Order.Create
         {
             // this space intentionally left blank
         }
+        public string GetPayerAlias()
+        {
+            return _payerAlias;
+        }
 
+        public CreateOrderBuilder SetPayerAlias(string payerAlias)
+        {
+            _payerAlias = payerAlias;
+            return this;
+        }
         public OrderValidator GetValidator()
         {
             return _validator;

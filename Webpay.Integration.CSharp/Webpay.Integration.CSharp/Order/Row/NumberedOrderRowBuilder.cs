@@ -40,7 +40,7 @@ namespace Webpay.Integration.CSharp.Order.Row
         {
             this._rowNumber = rowNumber;
             return this;
-        }
+        }      
         public OrderRowStatus? GetStatus()
         {
             return _status;

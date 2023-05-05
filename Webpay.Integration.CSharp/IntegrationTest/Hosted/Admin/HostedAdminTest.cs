@@ -11,6 +11,8 @@ using Webpay.Integration.CSharp.Hosted.Payment;
 using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.Order.Handle;
+using Webpay.Integration.CSharp.Order.Row;
+using System.Collections.Generic;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -20,7 +22,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestPreparedPaymentRequest()
         {
-            Uri uri = PrepareRegularPayment(PaymentMethod.NORDEASE, CreateCustomerRefNo());
+            Uri uri = PrepareRegularPayment(PaymentMethod.SWISH, CreateCustomerRefNo());
 
             Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));
         }
@@ -192,6 +194,49 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestConfirmPartial()
+        {
+            var orderRows = new List<NumberedOrderRowBuilder>
+            {
+                new NumberedOrderRowBuilder() { }.SetRowNumber(1).SetQuantity(1),
+                new NumberedOrderRowBuilder() { }.SetRowNumber(2).SetQuantity(1),
+            };
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .ConfirmPartial(new ConfirmPartial(
+                    transactionId: 12341234,
+                    callerReferenceId: "1234445566",
+                    amount: 1000,
+                    orderRows: orderRows
+                ));
+           
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/callerReferenceId").InnerText, Is.EqualTo("1234445566"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
+        }
+
+        [Test]
+        public void TestConfirmPartialResponse()
+        {
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
+            ConfirmPartialResponse response = ConfirmPartial.Response(responseXml);
+
+            Assert.That(response.TransactionId, Is.EqualTo(598972));
+            Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+            Assert.That(response.StatusCode, Is.EqualTo(0));
+            Assert.That(response.Accepted, Is.True);
+            Assert.That(response.ErrorMessage, Is.Empty);
+        }
+
+        [Test]
         public void TestConfirmResponseFailure()
         {
             var responseXml = new XmlDocument();
@@ -225,7 +270,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
             var expectedPaymentmethodsXml =
-                "<paymentmethod>BANKAXESS</paymentmethod><paymentmethod>DBNORDEASE</paymentmethod><paymentmethod>DBSEBSE</paymentmethod><paymentmethod>KORTCERT</paymentmethod><paymentmethod>SVEACARDPAY</paymentmethod><paymentmethod>SVEACARDPAY_PF</paymentmethod><paymentmethod>SWISH</paymentmethod><paymentmethod>TRUSTLY</paymentmethod>";
+                "<paymentmethod>SVEACARDPAY</paymentmethod><paymentmethod>SVEACARDPAY_PF</paymentmethod><paymentmethod>SWISH</paymentmethod><paymentmethod>TRUSTLY</paymentmethod>";
 
             Assert.That(actualPaymentmethodsXml, Is.EqualTo(expectedPaymentmethodsXml));
         }
@@ -274,19 +319,19 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetReconciliationReport(new GetReconciliationReport(
-                    date: new DateTime(2015, 04, 17)
+                    date: new DateTime(2023, 04, 27)
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2015-04-17"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2023-04-27"));
 
             var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/reconciliation").InnerXml,
-                Does.Match("<reconciliationtransaction><transactionid>598268</transactionid><customerrefno>ti-3-183-Nakkilankatu-A3</customerrefno><paymentmethod>KORTCERT</paymentmethod><amount>28420</amount><currency>SEK</currency><time>2015-04-17 00:15:22 CEST</time></reconciliationtransaction>"));
+                Does.Contain("<transactionid>864280</transactionid>"));
 
-            Assert.That(hostedAdminResponse.To(GetReconciliationReport.Response).ReconciliationTransactions[0].Amount, Is.EqualTo(284.20M));
+            Assert.That(hostedAdminResponse.To(GetReconciliationReport.Response).ReconciliationTransactions[0].Amount, Is.EqualTo(250M));
         }
 
 
@@ -419,7 +464,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestLowerAmountConfirmCompleteFlow()
         {
             var customerRefNo = CreateCustomerRefNo();
-            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
 
             LowerAmountResponse lowerAmountResponse = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmountConfirm(new LowerAmountConfirm(
@@ -436,7 +481,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestLowerAmountConfirm()
         {
             var customerRefNo = CreateCustomerRefNo();
-            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.KORTCERT, customerRefNo));
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmountConfirm(new LowerAmountConfirm(
@@ -499,7 +544,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestQueryTransactionIdDirectPayment()
         {
             var customerRefNo = CreateCustomerRefNo();
-            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
             var now = DateTime.Now;
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
@@ -529,7 +574,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/creditstatus").InnerText, Is.EqualTo("CREDNONE"));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/creditedamount").InnerText, Is.EqualTo("0"));
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantresponsecode").InnerText, Is.EqualTo("0"));
-            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/paymentmethod").InnerText, Is.EqualTo("DBNORDEASE"));
+            Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/paymentmethod").InnerText, Is.EqualTo("SWISH"));
         }
 
 
@@ -685,7 +730,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         public void TestQueryCustomerRefNoDirectPayment()
         {
             var customerRefNo = CreateCustomerRefNo();
-            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.NORDEASE, customerRefNo));
+            var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
             var now = DateTime.Now;
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
@@ -840,10 +885,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
-        {
+        {           
             return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                .SetPayerAlias(TestingTool.DefaultTestPayerAlias)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetClientOrderNumber(createCustomerRefNo)
                 .SetCurrency(TestingTool.DefaultTestCurrency)

@@ -44,8 +44,9 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("callbackurl", payment.GetCallbackUrl());
                 doWriteSimple("iscompany", order.GetIsCompanyIdentity().ToString().ToLower());
                 doWriteSimple("ipaddress", payment.GetIpAddress());
+                doWriteSimple("payeralias", payment.GetPayerAlias());
 
-                if(payment.GetType() == typeof(PaymentMethodPayment))
+                if (payment.GetType() == typeof(PaymentMethodPayment))
                 {
                     var pm = payment as PaymentMethodPayment;
                     if(pm.GetPaymentMethod() == PaymentMethod.SVEACARDPAY_PF)

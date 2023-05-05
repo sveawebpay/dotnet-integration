@@ -17,6 +17,7 @@ namespace Webpay.Integration.CSharp.Util.Constant
         public static readonly PaymentMethod KORTCERT = new PaymentMethod("KORTCERT", PaymentMethodType.CARD);
         public static readonly PaymentMethod SKRILL = new PaymentMethod("SKRILL", PaymentMethodType.CARD);
         public static readonly PaymentMethod SVEACARDPAY = new PaymentMethod("SVEACARDPAY", PaymentMethodType.CARD);
+        public static readonly PaymentMethod SWISH = new PaymentMethod("SWISH", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod SVEACARDPAY_PF = new PaymentMethod("SVEACARDPAY_PF", PaymentMethodType.CARD);
 
         public static readonly PaymentMethod PAYPAL = new PaymentMethod("PAYPAL", PaymentMethodType.PSP);

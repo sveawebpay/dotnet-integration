@@ -1,0 +1,2058 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Order" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Invoice" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.PaymentPlan" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums" />
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd15" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.AccountCredit" />
+  <xs:complexType name="AddOrderRowsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="OrderRows" nillable="true" type="q1:ArrayOfOrderRow" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q2:OrderType" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddOrderRowsRequest" nillable="true" type="tns:AddOrderRowsRequest" />
+  <xs:complexType name="BasicRequest">
+    <xs:sequence>
+      <xs:element name="Authentication" nillable="true" type="tns:Authentication">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Settings" nillable="true" type="tns:ArrayOfSetting" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasicRequest" nillable="true" type="tns:BasicRequest" />
+  <xs:complexType name="Authentication">
+    <xs:sequence>
+      <xs:element name="Password" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Username" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Authentication" nillable="true" type="tns:Authentication" />
+  <xs:complexType name="ArrayOfSetting">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Setting" nillable="true" type="tns:Setting" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSetting" nillable="true" type="tns:ArrayOfSetting" />
+  <xs:complexType name="Setting">
+    <xs:sequence>
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Setting" nillable="true" type="tns:Setting" />
+  <xs:complexType name="AddOrderRowsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="RowNumbers" nillable="true" type="q3:ArrayOfOrderRowReferenceItem" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddOrderRowsResponse" nillable="true" type="tns:AddOrderRowsResponse" />
+  <xs:complexType name="BasicResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element name="ResultCode" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasicResponse" nillable="true" type="tns:BasicResponse" />
+  <xs:complexType name="ApproveInvoiceRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="InvoiceId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ApproveInvoiceRequest" nillable="true" type="tns:ApproveInvoiceRequest" />
+  <xs:complexType name="ApproveInvoiceResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ApproveInvoiceResponse" nillable="true" type="tns:ApproveInvoiceResponse" />
+  <xs:complexType name="ArrayOfCancellationRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CancellationRow" nillable="true" type="tns:CancellationRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCancellationRow" nillable="true" type="tns:ArrayOfCancellationRow" />
+  <xs:complexType name="CancellationRow">
+    <xs:sequence>
+      <xs:element name="AmountInclVat" type="xs:decimal" />
+      <xs:element name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RowNumber" nillable="true" type="xs:int" />
+      <xs:element name="VatPercent" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancellationRow" nillable="true" type="tns:CancellationRow" />
+  <xs:complexType name="CancelOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q4:OrderType" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelOrderRequest" nillable="true" type="tns:CancelOrderRequest" />
+  <xs:complexType name="CancelOrderResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelOrderResponse" nillable="true" type="tns:CancelOrderResponse" />
+  <xs:complexType name="CancelOrderRowsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" name="OrderRowNumbers" nillable="true" type="q5:ArrayOflong" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q6:OrderType" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelOrderRowsRequest" nillable="true" type="tns:CancelOrderRowsRequest" />
+  <xs:complexType name="CancelOrderRowsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelOrderRowsResponse" nillable="true" type="tns:CancelOrderRowsResponse" />
+  <xs:complexType name="CancelPaymentPlanAmountRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="AmountInclVat" type="xs:decimal" />
+          <xs:element name="ClientId" type="xs:int" />
+          <xs:element name="ContractNumber" type="xs:long" />
+          <xs:element name="Description" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelPaymentPlanAmountRequest" nillable="true" type="tns:CancelPaymentPlanAmountRequest" />
+  <xs:complexType name="CancelPaymentPlanAmountResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelPaymentPlanAmountResponse" nillable="true" type="tns:CancelPaymentPlanAmountResponse" />
+  <xs:complexType name="CancelPaymentPlanRowsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="CancellationRows" nillable="true" type="tns:ArrayOfCancellationRow" />
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="ContractNumber" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelPaymentPlanRowsRequest" nillable="true" type="tns:CancelPaymentPlanRowsRequest" />
+  <xs:complexType name="CancelPaymentPlanRowsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelPaymentPlanRowsResponse" nillable="true" type="tns:CancelPaymentPlanRowsResponse" />
+  <xs:complexType name="CreditInvoiceRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" minOccurs="0" name="InvoiceDistributionType" type="q7:InvoiceDistributionType" />
+          <xs:element minOccurs="0" name="InvoiceId" type="xs:long" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="NewCreditInvoiceRows" nillable="true" type="q8:ArrayOfOrderRow" />
+          <xs:element minOccurs="0" name="RowCreditingOptions" nillable="true" type="tns:ArrayOfRowCreditingOption" />
+          <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RowNumbers" nillable="true" type="q9:ArrayOflong" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreditInvoiceRequest" nillable="true" type="tns:CreditInvoiceRequest" />
+  <xs:complexType name="ArrayOfRowCreditingOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RowCreditingOption" nillable="true" type="tns:RowCreditingOption" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRowCreditingOption" nillable="true" type="tns:ArrayOfRowCreditingOption" />
+  <xs:complexType name="RowCreditingOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="QuantityToCredit" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RowNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RowCreditingOption" nillable="true" type="tns:RowCreditingOption" />
+  <xs:complexType name="DeliveryResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element name="OrdersDelivered" nillable="true" type="tns:ArrayOfDeliverOrderResult" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeliveryResponse" nillable="true" type="tns:DeliveryResponse" />
+  <xs:complexType name="ArrayOfDeliverOrderResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DeliverOrderResult" nillable="true" type="tns:DeliverOrderResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDeliverOrderResult" nillable="true" type="tns:ArrayOfDeliverOrderResult" />
+  <xs:complexType name="DeliverOrderResult">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element name="DeliveredAmount" type="xs:decimal" />
+      <xs:element name="DeliveryReferenceNumber" type="xs:long" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="OrderType" type="q10:OrderType" />
+      <xs:element name="SveaOrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeliverOrderResult" nillable="true" type="tns:DeliverOrderResult" />
+  <xs:complexType name="PartialDeliveryRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CancelRemainingRows" type="xs:boolean" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" minOccurs="0" name="InvoiceDistributionType" nillable="true" type="q11:InvoiceDistributionType" />
+          <xs:element name="OrderToDeliver" nillable="true" type="tns:DeliverOrderInformation" />
+          <xs:element minOccurs="0" name="RowDeliveryOptions" nillable="true" type="tns:ArrayOfRowDeliveryOption" />
+          <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" name="RowNumbers" nillable="true" type="q12:ArrayOflong" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartialDeliveryRequest" nillable="true" type="tns:PartialDeliveryRequest" />
+  <xs:complexType name="DeliverOrderInformation">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q13:OrderType" />
+      <xs:element minOccurs="0" name="PrintType" nillable="true" type="xs:int" />
+      <xs:element name="SveaOrderId" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeliverOrderInformation" nillable="true" type="tns:DeliverOrderInformation" />
+  <xs:complexType name="ArrayOfRowDeliveryOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RowDeliveryOption" nillable="true" type="tns:RowDeliveryOption" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRowDeliveryOption" nillable="true" type="tns:ArrayOfRowDeliveryOption" />
+  <xs:complexType name="RowDeliveryOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="QuantityToDeliver" nillable="true" type="xs:decimal" />
+      <xs:element name="RowNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RowDeliveryOption" nillable="true" type="tns:RowDeliveryOption" />
+  <xs:complexType name="ExtendOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="NewExpirationDate" type="xs:dateTime" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ExtendOrderRequest" nillable="true" type="tns:ExtendOrderRequest" />
+  <xs:complexType name="ArrayOfAccountCreditRegressReportDataRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountCreditRegressReportDataRow" nillable="true" type="tns:AccountCreditRegressReportDataRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountCreditRegressReportDataRow" nillable="true" type="tns:ArrayOfAccountCreditRegressReportDataRow" />
+  <xs:complexType name="AccountCreditRegressReportDataRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCreditNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="AdministratorId" type="xs:int" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditForClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="CreditForCustomerId" type="xs:int" />
+      <xs:element minOccurs="0" name="CreditForInvoiceId" type="xs:int" />
+      <xs:element minOccurs="0" name="CreditForOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoiceId" type="xs:int" />
+      <xs:element minOccurs="0" name="SveaOrderCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="TransactionDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TransactionType" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountCreditRegressReportDataRow" nillable="true" type="tns:AccountCreditRegressReportDataRow" />
+  <xs:complexType name="ArrayOfAccountingAgreementType25ReportDataRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountingAgreementType25ReportDataRow" nillable="true" type="tns:AccountingAgreementType25ReportDataRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountingAgreementType25ReportDataRow" nillable="true" type="tns:ArrayOfAccountingAgreementType25ReportDataRow" />
+  <xs:complexType name="AccountingAgreementType25ReportDataRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="AdministrationFee" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaidAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReferenceNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SveaOrderCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="TransactionDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountingAgreementType25ReportDataRow" nillable="true" type="tns:AccountingAgreementType25ReportDataRow" />
+  <xs:complexType name="ArrayOfAccountingAgreementType25Summation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountingAgreementType25Summation" nillable="true" type="tns:AccountingAgreementType25Summation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountingAgreementType25Summation" nillable="true" type="tns:ArrayOfAccountingAgreementType25Summation" />
+  <xs:complexType name="AccountingAgreementType25Summation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="Credit" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Debit" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Quantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RowNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="TransactionDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountingAgreementType25Summation" nillable="true" type="tns:AccountingAgreementType25Summation" />
+  <xs:complexType name="GetAccountingReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IncludeGroupMembers" type="xs:boolean" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAccountingReportRequest" nillable="true" type="tns:GetAccountingReportRequest" />
+  <xs:complexType name="GetAccountingReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfAccountingReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAccountingReportResponse" nillable="true" type="tns:GetAccountingReportResponse" />
+  <xs:complexType name="ArrayOfAccountingReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountingReportRow" nillable="true" type="tns:AccountingReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountingReportRow" nillable="true" type="tns:ArrayOfAccountingReportRow" />
+  <xs:complexType name="AccountingReportRow">
+    <xs:sequence>
+      <xs:element name="AccountNumber" type="xs:long" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element name="Credit" type="xs:decimal" />
+      <xs:element name="Debit" type="xs:decimal" />
+      <xs:element name="Id" type="xs:int" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="ReportingDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountingReportRow" nillable="true" type="tns:AccountingReportRow" />
+  <xs:complexType name="ArrayOfClientData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientData" nillable="true" type="tns:ClientData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientData" nillable="true" type="tns:ArrayOfClientData" />
+  <xs:complexType name="ClientData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgreementType" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClientData" nillable="true" type="tns:ClientData" />
+  <xs:complexType name="GetFinancialReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetFinancialReportRequest" nillable="true" type="tns:GetFinancialReportRequest" />
+  <xs:complexType name="GetFinancialReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportHeader" nillable="true" type="tns:FinancialReportHeader" />
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfFinancialReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetFinancialReportResponse" nillable="true" type="tns:GetFinancialReportResponse" />
+  <xs:complexType name="FinancialReportHeader">
+    <xs:sequence>
+      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="Address" nillable="true" type="q14:Address" />
+      <xs:element name="Administrator" nillable="true" type="xs:string" />
+      <xs:element name="ClientTypeId" type="xs:int" />
+      <xs:element name="Currency" nillable="true" type="xs:string" />
+      <xs:element name="FromDate" type="xs:dateTime" />
+      <xs:element name="ToDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FinancialReportHeader" nillable="true" type="tns:FinancialReportHeader" />
+  <xs:complexType name="ArrayOfFinancialReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FinancialReportRow" nillable="true" type="tns:FinancialReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFinancialReportRow" nillable="true" type="tns:ArrayOfFinancialReportRow" />
+  <xs:complexType name="FinancialReportRow">
+    <xs:sequence>
+      <xs:element name="Count" type="xs:int" />
+      <xs:element name="Credit" type="xs:decimal" />
+      <xs:element name="Debit" type="xs:decimal" />
+      <xs:element name="Description" nillable="true" type="xs:string" />
+      <xs:element name="RowId" type="xs:int" />
+      <xs:element name="RowNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FinancialReportRow" nillable="true" type="tns:FinancialReportRow" />
+  <xs:complexType name="GetInvoiceJournalReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceJournalReportRequest" nillable="true" type="tns:GetInvoiceJournalReportRequest" />
+  <xs:complexType name="GetInvoiceJournalReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfInvoiceJournalReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceJournalReportResponse" nillable="true" type="tns:GetInvoiceJournalReportResponse" />
+  <xs:complexType name="ArrayOfInvoiceJournalReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceJournalReportRow" nillable="true" type="tns:InvoiceJournalReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoiceJournalReportRow" nillable="true" type="tns:ArrayOfInvoiceJournalReportRow" />
+  <xs:complexType name="InvoiceJournalReportRow">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element name="CustomerId" type="xs:long" />
+      <xs:element name="InvoiceAmount" type="xs:decimal" />
+      <xs:element name="InvoiceId" type="xs:long" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="PostingDate" type="xs:dateTime" />
+      <xs:element name="ReportingDate" type="xs:dateTime" />
+      <xs:element name="VatAmount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceJournalReportRow" nillable="true" type="tns:InvoiceJournalReportRow" />
+  <xs:complexType name="GetInvoicePdfLinkRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element name="InvoiceId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicePdfLinkRequest" nillable="true" type="tns:GetInvoicePdfLinkRequest" />
+  <xs:complexType name="PdfLinkResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PdfLink" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PdfLinkResponse" nillable="true" type="tns:PdfLinkResponse" />
+  <xs:complexType name="GetInvoiceReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceReportRequest" nillable="true" type="tns:GetInvoiceReportRequest" />
+  <xs:complexType name="GetInvoiceReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfInvoiceReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceReportResponse" nillable="true" type="tns:GetInvoiceReportResponse" />
+  <xs:complexType name="ArrayOfInvoiceReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceReportRow" nillable="true" type="tns:InvoiceReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoiceReportRow" nillable="true" type="tns:ArrayOfInvoiceReportRow" />
+  <xs:complexType name="InvoiceReportRow">
+    <xs:sequence>
+      <xs:element name="AdministrationFee" type="xs:decimal" />
+      <xs:element name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="CreditFee" type="xs:decimal" />
+      <xs:element name="CustomerId" type="xs:long" />
+      <xs:element name="InvoiceId" type="xs:long" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="PostageFee" type="xs:decimal" />
+      <xs:element name="ReportDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderId" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceReportRow" nillable="true" type="tns:InvoiceReportRow" />
+  <xs:complexType name="GetInvoicesWithChangedDueDateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" name="ClientIds" nillable="true" type="q15:ArrayOflong" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicesWithChangedDueDateRequest" nillable="true" type="tns:GetInvoicesWithChangedDueDateRequest" />
+  <xs:complexType name="GetInvoicesWithChangedDueDateResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfInvoiceWithChangedDueDate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicesWithChangedDueDateResponse" nillable="true" type="tns:GetInvoicesWithChangedDueDateResponse" />
+  <xs:complexType name="ArrayOfInvoiceWithChangedDueDate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceWithChangedDueDate" nillable="true" type="tns:InvoiceWithChangedDueDate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoiceWithChangedDueDate" nillable="true" type="tns:ArrayOfInvoiceWithChangedDueDate" />
+  <xs:complexType name="InvoiceWithChangedDueDate">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element name="DueDate" type="xs:dateTime" />
+      <xs:element name="InvoiceDate" type="xs:dateTime" />
+      <xs:element name="InvoiceId" type="xs:long" />
+      <xs:element minOccurs="0" name="OrgDueDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceWithChangedDueDate" nillable="true" type="tns:InvoiceWithChangedDueDate" />
+  <xs:complexType name="ArrayOfKickbackReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KickbackReportRow" nillable="true" type="tns:KickbackReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKickbackReportRow" nillable="true" type="tns:ArrayOfKickbackReportRow" />
+  <xs:complexType name="KickbackReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CustomerId" type="xs:long" />
+      <xs:element minOccurs="0" name="InvoiceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceExpireDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceId" type="xs:long" />
+      <xs:element minOccurs="0" name="TransactionType" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KickbackReportRow" nillable="true" type="tns:KickbackReportRow" />
+  <xs:complexType name="GetOrderEventsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="EndDate" type="xs:dateTime" />
+          <xs:element name="EventType" type="tns:OrderEventType" />
+          <xs:element name="LastEventId" type="xs:long" />
+          <xs:element name="StartDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetOrderEventsRequest" nillable="true" type="tns:GetOrderEventsRequest" />
+  <xs:simpleType name="OrderEventType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="All" />
+      <xs:enumeration value="OrderEvent" />
+      <xs:enumeration value="PendingEvent" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderEventType" nillable="true" type="tns:OrderEventType" />
+  <xs:complexType name="GetOrderEventsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Events" nillable="true" type="tns:ArrayOfOrderEvent" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetOrderEventsResponse" nillable="true" type="tns:GetOrderEventsResponse" />
+  <xs:complexType name="ArrayOfOrderEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderEvent" nillable="true" type="tns:OrderEvent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderEvent" nillable="true" type="tns:ArrayOfOrderEvent" />
+  <xs:complexType name="OrderEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EventId" type="xs:long" />
+      <xs:element minOccurs="0" name="EventType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderAction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PendingEvent" nillable="true" type="tns:PendingEvent" />
+      <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderEvent" nillable="true" type="tns:OrderEvent" />
+  <xs:complexType name="PendingEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActionReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PendingStatus" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PendingEvent" nillable="true" type="tns:PendingEvent" />
+  <xs:complexType name="GetOrderPdfLinkRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element name="OrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetOrderPdfLinkRequest" nillable="true" type="tns:GetOrderPdfLinkRequest" />
+  <xs:complexType name="GetPaymentPlanReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetPaymentPlanReportRequest" nillable="true" type="tns:GetPaymentPlanReportRequest" />
+  <xs:complexType name="GetPaymentPlanReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfPaymentPlanReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetPaymentPlanReportResponse" nillable="true" type="tns:GetPaymentPlanReportResponse" />
+  <xs:complexType name="ArrayOfPaymentPlanReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanReportRow" nillable="true" type="tns:PaymentPlanReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentPlanReportRow" nillable="true" type="tns:ArrayOfPaymentPlanReportRow" />
+  <xs:complexType name="PaymentPlanReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdministrationFee" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element name="ContractId" type="xs:long" />
+      <xs:element name="CustomerId" type="xs:long" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PayToClientAmount" type="xs:decimal" />
+      <xs:element name="ReportingDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SveaOrderId" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentPlanReportRow" nillable="true" type="tns:PaymentPlanReportRow" />
+  <xs:complexType name="ArrayOfPendingReason">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PendingReason" nillable="true" type="tns:PendingReason" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPendingReason" nillable="true" type="tns:ArrayOfPendingReason" />
+  <xs:complexType name="PendingReason">
+    <xs:sequence>
+      <xs:element name="CreatedDate" type="xs:dateTime" />
+      <xs:element name="PendingType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PendingReason" nillable="true" type="tns:PendingReason" />
+  <xs:complexType name="GetRegressionReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetRegressionReportRequest" nillable="true" type="tns:GetRegressionReportRequest" />
+  <xs:complexType name="GetRegressionReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportRows" nillable="true" type="tns:ArrayOfRegressionReportRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetRegressionReportResponse" nillable="true" type="tns:GetRegressionReportResponse" />
+  <xs:complexType name="ArrayOfRegressionReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RegressionReportRow" nillable="true" type="tns:RegressionReportRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRegressionReportRow" nillable="true" type="tns:ArrayOfRegressionReportRow" />
+  <xs:complexType name="RegressionReportRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capital" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientOrderNumber" nillable="true" type="xs:string" />
+      <xs:element name="CustomerId" type="xs:long" />
+      <xs:element minOccurs="0" name="Fee" type="xs:decimal" />
+      <xs:element name="InvoiceId" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element name="PostingDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Rate" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RecordDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReportingDate" type="xs:dateTime" />
+      <xs:element name="RowNumber" type="xs:int" />
+      <xs:element name="SveaOrderCreationDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="SveaOrderId" nillable="true" type="xs:long" />
+      <xs:element name="TransactionAmount" type="xs:decimal" />
+      <xs:element name="TransactionType" type="xs:int" />
+      <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegressionReportRow" nillable="true" type="tns:RegressionReportRow" />
+  <xs:simpleType name="SpecificationReportType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Bank">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Card">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SpecificationReportType" nillable="true" type="tns:SpecificationReportType" />
+  <xs:complexType name="ArrayOfSpecificationRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SpecificationRow" nillable="true" type="tns:SpecificationRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSpecificationRow" nillable="true" type="tns:ArrayOfSpecificationRow" />
+  <xs:complexType name="SpecificationRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ClientOrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Fee" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SveaIsPaymentFacilitator" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TransactionId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SpecificationRow" nillable="true" type="tns:SpecificationRow" />
+  <xs:complexType name="SpecificationSummation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalFee" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SpecificationSummation" nillable="true" type="tns:SpecificationSummation" />
+  <xs:complexType name="ReleasePendingRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="PendingType" nillable="true" type="xs:string" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReleasePendingRequest" nillable="true" type="tns:ReleasePendingRequest" />
+  <xs:complexType name="ReleasePendingResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReleasePendingResponse" nillable="true" type="tns:ReleasePendingResponse" />
+  <xs:complexType name="UpdateOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BillingEmailAddress" nillable="true" type="xs:string" />
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element minOccurs="0" name="ClientOrderNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+          <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q16:OrderType" />
+          <xs:element minOccurs="0" name="PeppolId" nillable="true" type="xs:string" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateOrderRequest" nillable="true" type="tns:UpdateOrderRequest" />
+  <xs:complexType name="UpdateOrderResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateOrderResponse" nillable="true" type="tns:UpdateOrderResponse" />
+  <xs:complexType name="UpdateOrderRowsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q17:OrderType" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+          <xs:element name="UpdatedOrderRows" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateOrderRowsRequest" nillable="true" type="tns:UpdateOrderRowsRequest" />
+  <xs:complexType name="ArrayOfNumberedOrderRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NumberedOrderRow" nillable="true" type="tns:NumberedOrderRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNumberedOrderRow" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+  <xs:complexType name="NumberedOrderRow">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q18="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" base="q18:OrderRow">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreditInvoiceId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="InvoiceId" nillable="true" type="xs:long" />
+          <xs:element name="RowNumber" type="xs:long" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="NumberedOrderRow" nillable="true" type="tns:NumberedOrderRow" />
+  <xs:complexType name="UpdateOrderRowsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateOrderRowsResponse" nillable="true" type="tns:UpdateOrderRowsResponse" />
+  <xs:complexType name="GetOrdersRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="OrdersToRetrieve" nillable="true" type="tns:ArrayOfGetOrderInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetOrdersRequest" nillable="true" type="tns:GetOrdersRequest" />
+  <xs:complexType name="ArrayOfGetOrderInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GetOrderInformation" nillable="true" type="tns:GetOrderInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGetOrderInformation" nillable="true" type="tns:ArrayOfGetOrderInformation" />
+  <xs:complexType name="GetOrderInformation">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="OrderType" type="q19:OrderType" />
+      <xs:element name="SveaOrderId" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetOrderInformation" nillable="true" type="tns:GetOrderInformation" />
+  <xs:complexType name="GetOrdersResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Orders" nillable="true" type="tns:ArrayOfOrder" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetOrdersResponse" nillable="true" type="tns:GetOrdersResponse" />
+  <xs:complexType name="ArrayOfOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" minOccurs="0" name="AccountCreditDetails" nillable="true" type="q20:AccountCreditDetails" />
+      <xs:element minOccurs="0" name="BillingEmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChangedDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element name="CreatedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreditReportStatus" nillable="true" type="tns:CreditReportStatus" />
+      <xs:element name="Currency" nillable="true" type="xs:string" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="Customer" nillable="true" type="q21:CustomerIdentity" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="CustomerReference" nillable="true" type="xs:string" />
+      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="DeliveryAddress" nillable="true" type="q22:Address" />
+      <xs:element name="IsPossibleToAdminister" type="xs:boolean" />
+      <xs:element name="IsPossibleToCancel" type="xs:boolean" />
+      <xs:element name="Notes" nillable="true" type="xs:string" />
+      <xs:element name="OrderDeliveryStatus" nillable="true" type="xs:string" />
+      <xs:element name="OrderRows" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+      <xs:element name="OrderStatus" nillable="true" type="xs:string" />
+      <xs:element name="OrderType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentPlanDetails" nillable="true" type="tns:PaymentPlanDetails" />
+      <xs:element minOccurs="0" name="PendingReasons" nillable="true" type="tns:ArrayOfPendingReason" />
+      <xs:element name="SveaOrderId" type="xs:long" />
+      <xs:element name="SveaWillBuy" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
+  <xs:complexType name="CreditReportStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Accepted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditReportStatus" nillable="true" type="tns:CreditReportStatus" />
+  <xs:complexType name="PaymentPlanDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CampaignCode" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ContractLengthMonths" type="xs:int" />
+      <xs:element minOccurs="0" name="ContractNumber" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentPlanDetails" nillable="true" type="tns:PaymentPlanDetails" />
+  <xs:complexType name="DeliveryRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" minOccurs="0" name="InvoiceDistributionType" nillable="true" type="q23:InvoiceDistributionType" />
+          <xs:element name="OrdersToDeliver" nillable="true" type="tns:ArrayOfDeliverOrderInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeliveryRequest" nillable="true" type="tns:DeliveryRequest" />
+  <xs:complexType name="ArrayOfDeliverOrderInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DeliverOrderInformation" nillable="true" type="tns:DeliverOrderInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDeliverOrderInformation" nillable="true" type="tns:ArrayOfDeliverOrderInformation" />
+  <xs:complexType name="SearchOrdersRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="EndIndex" type="xs:int" />
+          <xs:element name="SearchOrderFilter" nillable="true" type="tns:SearchOrderFilter" />
+          <xs:element name="SearchOrderSorting" nillable="true" type="tns:SearchOrderSorting" />
+          <xs:element name="StartIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchOrdersRequest" nillable="true" type="tns:SearchOrdersRequest" />
+  <xs:complexType name="SearchOrderFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptedDeliveryStatus" nillable="true" type="tns:ArrayOfOrderDeliveryStatus" />
+      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="AcceptedOrderStatus" nillable="true" type="q24:ArrayOfOrderStatus" />
+      <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ClientIds" nillable="true" type="q25:ArrayOflong" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TextMatch" nillable="true" type="xs:string" />
+      <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Order" minOccurs="0" name="TextMatchType" nillable="true" type="q26:TextMatchType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchOrderFilter" nillable="true" type="tns:SearchOrderFilter" />
+  <xs:complexType name="ArrayOfOrderDeliveryStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderDeliveryStatus" type="tns:OrderDeliveryStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderDeliveryStatus" nillable="true" type="tns:ArrayOfOrderDeliveryStatus" />
+  <xs:simpleType name="OrderDeliveryStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Created" />
+      <xs:enumeration value="PartiallyDelivered" />
+      <xs:enumeration value="Delivered" />
+      <xs:enumeration value="Cancelled" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderDeliveryStatus" nillable="true" type="tns:OrderDeliveryStatus" />
+  <xs:complexType name="SearchOrderSorting">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SortDirection" type="tns:SortDirection" />
+      <xs:element minOccurs="0" name="SortOrderProperty" type="tns:SortOrderProperty" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchOrderSorting" nillable="true" type="tns:SearchOrderSorting" />
+  <xs:simpleType name="SortDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ascending">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Descending">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortDirection" nillable="true" type="tns:SortDirection" />
+  <xs:simpleType name="SortOrderProperty">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CreatedDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RemainingAmount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClientOrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreditApproved">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SveaOrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerName">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Status">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NationalIdNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OrderType">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortOrderProperty" nillable="true" type="tns:SortOrderProperty" />
+  <xs:complexType name="SearchOrdersResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element name="OrderListItems" nillable="true" type="tns:ArrayOfOrderListItem" />
+          <xs:element name="ResultCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchOrdersResponse" nillable="true" type="tns:SearchOrdersResponse" />
+  <xs:complexType name="ArrayOfOrderListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderListItem" nillable="true" type="tns:OrderListItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderListItem" nillable="true" type="tns:ArrayOfOrderListItem" />
+  <xs:complexType name="OrderListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CancelledDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ChangedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreditApproved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreditRejectionMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="CustomerType" type="q27:CustomerType" />
+      <xs:element minOccurs="0" name="DeliveryStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NationalIdNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderListItem" nillable="true" type="tns:OrderListItem" />
+  <xs:complexType name="SearchInvoicesRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="EndIndex" type="xs:int" />
+          <xs:element name="SearchInvoiceFilter" nillable="true" type="tns:SearchInvoiceFilter" />
+          <xs:element name="SearchInvoiceSorting" nillable="true" type="tns:SearchInvoiceSorting" />
+          <xs:element name="StartIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchInvoicesRequest" nillable="true" type="tns:SearchInvoicesRequest" />
+  <xs:complexType name="SearchInvoiceFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptedPaymentStatus" nillable="true" type="tns:ArrayOfInvoicePaymentStatus" />
+      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ClientIds" nillable="true" type="q28:ArrayOflong" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TextMatch" nillable="true" type="xs:string" />
+      <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Invoice" minOccurs="0" name="TextMatchType" nillable="true" type="q29:TextMatchType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchInvoiceFilter" nillable="true" type="tns:SearchInvoiceFilter" />
+  <xs:complexType name="ArrayOfInvoicePaymentStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoicePaymentStatus" type="tns:InvoicePaymentStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoicePaymentStatus" nillable="true" type="tns:ArrayOfInvoicePaymentStatus" />
+  <xs:simpleType name="InvoicePaymentStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PendingApproval">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Sent">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Paid">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Overdue">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Reminded">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DebtCollection">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Cancelled">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartlyPaid">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Credited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreditLoss">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Refund">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="InvoicePaymentStatus" nillable="true" type="tns:InvoicePaymentStatus" />
+  <xs:complexType name="SearchInvoiceSorting">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SortDirection" type="tns:SortDirection" />
+      <xs:element minOccurs="0" name="SortInvoiceProperty" type="tns:SortInvoiceProperty" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchInvoiceSorting" nillable="true" type="tns:SearchInvoiceSorting" />
+  <xs:simpleType name="SortInvoiceProperty">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InvoiceDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Amount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InvoiceId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DueDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SveaOrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerName">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Status">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NationalIdNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Type">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SveaHasBought">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaidToClientDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortInvoiceProperty" nillable="true" type="tns:SortInvoiceProperty" />
+  <xs:complexType name="SearchInvoicesResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element name="InvoiceListItems" nillable="true" type="tns:ArrayOfInvoiceListItem" />
+          <xs:element name="ResultCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchInvoicesResponse" nillable="true" type="tns:SearchInvoicesResponse" />
+  <xs:complexType name="ArrayOfInvoiceListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceListItem" nillable="true" type="tns:InvoiceListItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoiceListItem" nillable="true" type="tns:ArrayOfInvoiceListItem" />
+  <xs:complexType name="InvoiceListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountToPay" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CustomerCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="CustomerType" type="q30:CustomerType" />
+      <xs:element minOccurs="0" name="DueDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceId" type="xs:long" />
+      <xs:element minOccurs="0" name="NationalIdNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaidToClientDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SveaHasBought" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+      <xs:element minOccurs="0" name="Type" type="tns:InvoiceType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceListItem" nillable="true" type="tns:InvoiceListItem" />
+  <xs:simpleType name="InvoiceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Debit">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Credit">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="InvoiceType" nillable="true" type="tns:InvoiceType" />
+  <xs:complexType name="GetInvoicesRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="InvoicesToRetrieve" nillable="true" type="tns:ArrayOfGetInvoiceInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicesRequest" nillable="true" type="tns:GetInvoicesRequest" />
+  <xs:complexType name="ArrayOfGetInvoiceInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GetInvoiceInformation" nillable="true" type="tns:GetInvoiceInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGetInvoiceInformation" nillable="true" type="tns:ArrayOfGetInvoiceInformation" />
+  <xs:complexType name="GetInvoiceInformation">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element name="InvoiceId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetInvoiceInformation" nillable="true" type="tns:GetInvoiceInformation" />
+  <xs:complexType name="GetInvoicesResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Invoices" nillable="true" type="tns:ArrayOfInvoice" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicesResponse" nillable="true" type="tns:GetInvoicesResponse" />
+  <xs:complexType name="ArrayOfInvoice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Invoice" nillable="true" type="tns:Invoice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvoice" nillable="true" type="tns:ArrayOfInvoice" />
+  <xs:complexType name="Invoice">
+    <xs:sequence>
+      <xs:element name="Amount" type="xs:decimal" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientReference" nillable="true" type="xs:string" />
+      <xs:element name="CreditApproved" type="xs:boolean" />
+      <xs:element name="CreditedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CreditedDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="Currency" nillable="true" type="xs:string" />
+      <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="Customer" nillable="true" type="q31:CustomerIdentity" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="CustomerReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DebtCollectionDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="DueDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EarliestPossibleNewDueDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="InvoiceDate" type="xs:dateTime" />
+      <xs:element name="InvoiceId" type="xs:long" />
+      <xs:element name="InvoiceRows" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+      <xs:element name="IsPossibleToCancel" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LatestPossibleNewDueDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaidDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PaidToClientDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Reminder1Date" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Reminder2Date" nillable="true" type="xs:dateTime" />
+      <xs:element name="Status" nillable="true" type="xs:string" />
+      <xs:element name="SveaHasBought" type="xs:boolean" />
+      <xs:element name="SveaOrderId" type="xs:long" />
+      <xs:element name="Type" type="tns:InvoiceType" />
+      <xs:element name="UnmatchedCreditAmount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Invoice" nillable="true" type="tns:Invoice" />
+  <xs:complexType name="SearchPaymentPlansRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="EndIndex" type="xs:int" />
+          <xs:element name="SearchPaymentPlanFilter" nillable="true" type="tns:SearchPaymentPlanFilter" />
+          <xs:element name="SearchPaymentPlanSorting" nillable="true" type="tns:SearchPaymentPlanSorting" />
+          <xs:element name="StartIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchPaymentPlansRequest" nillable="true" type="tns:SearchPaymentPlansRequest" />
+  <xs:complexType name="SearchPaymentPlanFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptedStatus" nillable="true" type="tns:ArrayOfPaymentPlanStatus" />
+      <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ClientIds" nillable="true" type="q32:ArrayOflong" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TextMatch" nillable="true" type="xs:string" />
+      <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.PaymentPlan" minOccurs="0" name="TextMatchType" nillable="true" type="q33:TextMatchType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchPaymentPlanFilter" nillable="true" type="tns:SearchPaymentPlanFilter" />
+  <xs:complexType name="ArrayOfPaymentPlanStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanStatus" type="tns:PaymentPlanStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentPlanStatus" nillable="true" type="tns:ArrayOfPaymentPlanStatus" />
+  <xs:simpleType name="PaymentPlanStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Cancelled" />
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="WaitingToBeSent" />
+      <xs:enumeration value="WaitingForContract" />
+      <xs:enumeration value="Running" />
+      <xs:enumeration value="Finished" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PaymentPlanStatus" nillable="true" type="tns:PaymentPlanStatus" />
+  <xs:complexType name="SearchPaymentPlanSorting">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SortDirection" type="tns:SortDirection" />
+      <xs:element minOccurs="0" name="SortPaymentPlanProperty" type="tns:SortPaymentPlanProperty" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchPaymentPlanSorting" nillable="true" type="tns:SearchPaymentPlanSorting" />
+  <xs:simpleType name="SortPaymentPlanProperty">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ApprovedDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Amount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ContractNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaidDate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SveaOrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerName">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Status">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NationalIdNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClientOrderId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ContractLengthMonths">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortPaymentPlanProperty" nillable="true" type="tns:SortPaymentPlanProperty" />
+  <xs:complexType name="SearchPaymentPlansResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element name="PaymentPlanListItems" nillable="true" type="tns:ArrayOfPaymentPlanListItem" />
+          <xs:element name="ResultCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchPaymentPlansResponse" nillable="true" type="tns:SearchPaymentPlansResponse" />
+  <xs:complexType name="ArrayOfPaymentPlanListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentPlanListItem" nillable="true" type="tns:PaymentPlanListItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentPlanListItem" nillable="true" type="tns:ArrayOfPaymentPlanListItem" />
+  <xs:complexType name="PaymentPlanListItem">
+    <xs:sequence>
+      <xs:element name="Amount" type="xs:decimal" />
+      <xs:element name="ApprovedDate" type="xs:dateTime" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element name="ContractLengthMonths" type="xs:int" />
+      <xs:element name="ContractNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="CustomerCountryCode" nillable="true" type="xs:string" />
+      <xs:element name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="CustomerType" type="q34:CustomerType" />
+      <xs:element name="NationalIdNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaidDate" nillable="true" type="xs:dateTime" />
+      <xs:element name="Status" nillable="true" type="xs:string" />
+      <xs:element name="SveaOrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentPlanListItem" nillable="true" type="tns:PaymentPlanListItem" />
+  <xs:complexType name="SumOfOrderAmountRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SearchOrderFilter" nillable="true" type="tns:SearchOrderFilter" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SumOfOrderAmountRequest" nillable="true" type="tns:SumOfOrderAmountRequest" />
+  <xs:complexType name="SumOfAmountResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element name="Amount" type="xs:decimal" />
+          <xs:element name="Count" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SumOfAmountResponse" nillable="true" type="tns:SumOfAmountResponse" />
+  <xs:complexType name="SumOfInvoiceAmountRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SearchInvoiceFilter" nillable="true" type="tns:SearchInvoiceFilter" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SumOfInvoiceAmountRequest" nillable="true" type="tns:SumOfInvoiceAmountRequest" />
+  <xs:complexType name="SumOfPaymentPlanAmountRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReturnPaidToClientAmount" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SearchPaymentPlanFilter" nillable="true" type="tns:SearchPaymentPlanFilter" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SumOfPaymentPlanAmountRequest" nillable="true" type="tns:SumOfPaymentPlanAmountRequest" />
+  <xs:complexType name="CreateOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" nillable="true" type="xs:long" />
+          <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder" name="OrderInformation" nillable="true" type="q35:CreateOrderInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateOrderRequest" nillable="true" type="tns:CreateOrderRequest" />
+  <xs:complexType name="CreateOrderResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder" minOccurs="0" name="OrderResult" nillable="true" type="q36:CreateOrderResult" />
+          <xs:element minOccurs="0" name="OrderRows" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateOrderResponse" nillable="true" type="tns:CreateOrderResponse" />
+  <xs:complexType name="ChangeInvoiceDueDateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="InvoiceId" type="xs:long" />
+          <xs:element name="NewDueDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangeInvoiceDueDateRequest" nillable="true" type="tns:ChangeInvoiceDueDateRequest" />
+  <xs:complexType name="ChangeInvoiceDueDateResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangeInvoiceDueDateResponse" nillable="true" type="tns:ChangeInvoiceDueDateResponse" />
+  <xs:complexType name="CreateApprovedOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientUsername" nillable="true" type="xs:string" />
+          <xs:element name="CustomerInformation" nillable="true" type="tns:CustomerInformation" />
+          <xs:element minOccurs="0" name="DeliveryAddress" nillable="true" type="tns:DeliveryAddress" />
+          <xs:element minOccurs="0" name="DeliveryAddressSelector" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InvoiceAddress" nillable="true" type="tns:InvoiceAddress" />
+          <xs:element minOccurs="0" name="InvoiceAddressSelector" nillable="true" type="xs:string" />
+          <xs:element name="OrderInformation" nillable="true" type="tns:OrderInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateApprovedOrderRequest" nillable="true" type="tns:CreateApprovedOrderRequest" />
+  <xs:complexType name="CustomerInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BirthDate" nillable="true" type="xs:string" />
+      <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="CustomerType" type="q37:CustomerType" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalCustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IndustryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NationalIdNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerInformation" nillable="true" type="tns:CustomerInformation" />
+  <xs:complexType name="DeliveryAddress">
+    <xs:sequence>
+      <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/DataObjects.Enums" minOccurs="0" name="AddressSource" type="q38:AddressSource" />
+      <xs:element minOccurs="0" name="CoAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HouseNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Locality" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Salutation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignedWithNationalId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StreetAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeliveryAddress" nillable="true" type="tns:DeliveryAddress" />
+  <xs:complexType name="InvoiceAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CoAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HouseNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Locality" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Salutation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StreetAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceAddress" nillable="true" type="tns:InvoiceAddress" />
+  <xs:complexType name="OrderInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCreditInformation" nillable="true" type="tns:AccountCreditInformation" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BillingEmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />
+      <xs:element name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditReportId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="CustomerReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalCreditReportId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="InvoiceInformation" nillable="true" type="tns:InvoiceInformation" />
+      <xs:element minOccurs="0" name="IpAddress" nillable="true" type="xs:string" />
+      <xs:element name="OrderDate" type="xs:dateTime" />
+      <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="OrderRows" nillable="true" type="q39:ArrayOfOrderRow" />
+      <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" name="OrderType" type="q40:OrderType" />
+      <xs:element minOccurs="0" name="PaymentPlanInformation" nillable="true" type="tns:PaymentPlanInformation" />
+      <xs:element minOccurs="0" name="PeppolId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScoringId" nillable="true" type="xs:long" />
+      <xs:element name="WillBuy" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderInformation" nillable="true" type="tns:OrderInformation" />
+  <xs:complexType name="AccountCreditInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CampaignCode" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountCreditInformation" nillable="true" type="tns:AccountCreditInformation" />
+  <xs:complexType name="InvoiceInformation">
+    <xs:sequence>
+      <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" minOccurs="0" name="DistributionType" nillable="true" type="q41:InvoiceDistributionType" />
+      <xs:element minOccurs="0" name="BillingReferences" nillable="true" type="tns:ArrayOfBillingReference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceInformation" nillable="true" type="tns:InvoiceInformation" />
+  <xs:complexType name="ArrayOfBillingReference">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BillingReference" nillable="true" type="tns:BillingReference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBillingReference" nillable="true" type="tns:ArrayOfBillingReference" />
+  <xs:complexType name="BillingReference">
+    <xs:sequence>
+      <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/DataObjects.Enums" name="Type" type="q42:BillingReferenceType" />
+      <xs:element name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BillingReference" nillable="true" type="tns:BillingReference" />
+  <xs:complexType name="PaymentPlanInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CampaignCode" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="SendAutomaticGiroPaymentForm" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentPlanInformation" nillable="true" type="tns:PaymentPlanInformation" />
+  <xs:complexType name="CreateApprovedOrderResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ClientOrderNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="OrderType" nillable="true" type="xs:string" />
+          <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PendingReasons" nillable="true" type="q43:ArrayOfstring" />
+          <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+          <xs:element minOccurs="0" name="SveaWillBuyOrder" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateApprovedOrderResponse" nillable="true" type="tns:CreateApprovedOrderResponse" />
+  <xs:complexType name="SearchAccountCreditsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element name="EndIndex" type="xs:int" />
+          <xs:element name="SearchAccountCreditFilter" nillable="true" type="tns:SearchAccountCreditFilter" />
+          <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" name="SearchAccountCreditSorting" nillable="true" type="q44:SearchAccountCreditSorting" />
+          <xs:element name="StartIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchAccountCreditsRequest" nillable="true" type="tns:SearchAccountCreditsRequest" />
+  <xs:complexType name="SearchAccountCreditFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptedAccountCreditStatuses" nillable="true" type="tns:ArrayOfAccountCreditStatus" />
+      <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccountCreditIds" nillable="true" type="q45:ArrayOflong" />
+      <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ClientIds" nillable="true" type="q46:ArrayOflong" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TextMatch" nillable="true" type="xs:string" />
+      <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.AccountCredit" minOccurs="0" name="TextMatchType" nillable="true" type="q47:TextMatchType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchAccountCreditFilter" nillable="true" type="tns:SearchAccountCreditFilter" />
+  <xs:complexType name="ArrayOfAccountCreditStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountCreditStatus" type="tns:AccountCreditStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountCreditStatus" nillable="true" type="tns:ArrayOfAccountCreditStatus" />
+  <xs:simpleType name="AccountCreditStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="WaitingToBeSent" />
+      <xs:enumeration value="SentToEconomySystem" />
+      <xs:enumeration value="Cancelled" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AccountCreditStatus" nillable="true" type="tns:AccountCreditStatus" />
+  <xs:complexType name="ArrayOfAccountCreditListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountCreditListItem" nillable="true" type="tns:AccountCreditListItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountCreditListItem" nillable="true" type="tns:ArrayOfAccountCreditListItem" />
+  <xs:complexType name="AccountCreditListItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ClientAccountCreditId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="CustomerType" type="q48:CustomerType" />
+      <xs:element minOccurs="0" name="NationalIdNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaidToClientDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountCreditListItem" nillable="true" type="tns:AccountCreditListItem" />
+  <xs:complexType name="GetAccountCreditsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasicRequest">
+        <xs:sequence>
+          <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" name="AccountCreditsToRetrieve" nillable="true" type="q49:ArrayOfGetAccountCreditInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAccountCreditsRequest" nillable="true" type="tns:GetAccountCreditsRequest" />
+  <xs:complexType name="ArrayOfAccountCreditItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountCreditItem" nillable="true" type="tns:AccountCreditItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountCreditItem" nillable="true" type="tns:ArrayOfAccountCreditItem" />
+  <xs:complexType name="AccountCreditItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCreditRows" nillable="true" type="tns:ArrayOfNumberedOrderRow" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ClientAccountCreditId" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+      <xs:element minOccurs="0" name="ContractNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreditReportStatus" nillable="true" type="tns:CreditReportStatus" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" minOccurs="0" name="Customer" nillable="true" type="q50:CustomerIdentity" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="DeliveryStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountCreditItem" nillable="true" type="tns:AccountCreditItem" />
+</xs:schema>

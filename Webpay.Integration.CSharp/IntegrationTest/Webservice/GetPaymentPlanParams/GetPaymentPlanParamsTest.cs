@@ -29,13 +29,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
                                                                       .DoRequest();
 
             Assert.IsTrue(response.Accepted);
-            Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(213060));
-            Assert.That(response.CampaignCodes[0].Description, Is.EqualTo("Dela upp betalningen på 60 månader"));
-            Assert.That(response.CampaignCodes[0].PaymentPlanType, Is.EqualTo(PaymentPlanTypeCode.Standard));
-            Assert.That(response.CampaignCodes[0].ContractLengthInMonths, Is.EqualTo(60));
-            Assert.That(response.CampaignCodes[0].InitialFee, Is.EqualTo(100));
+            Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(223060));
+            Assert.That(response.CampaignCodes[0].Description, Is.EqualTo("Köp nu betala om 3 månader (räntefritt)"));
+            Assert.That(response.CampaignCodes[0].PaymentPlanType, Is.EqualTo(PaymentPlanTypeCode.InterestAndAmortizationFree));
+            Assert.That(response.CampaignCodes[0].ContractLengthInMonths, Is.EqualTo(3));
+            Assert.That(response.CampaignCodes[0].InitialFee, Is.EqualTo(0));
             Assert.That(response.CampaignCodes[0].NotificationFee, Is.EqualTo(29));
-            Assert.That(response.CampaignCodes[0].InterestRatePercent, Is.EqualTo(16.75M));
+            Assert.That(response.CampaignCodes[0].InterestRatePercent, Is.EqualTo(0));
             Assert.That(response.CampaignCodes[0].NumberOfInterestFreeMonths, Is.EqualTo(3));
             Assert.That(response.CampaignCodes[0].NumberOfPaymentFreeMonths, Is.EqualTo(3));
             Assert.That(response.CampaignCodes[0].FromAmount, Is.EqualTo(1000));

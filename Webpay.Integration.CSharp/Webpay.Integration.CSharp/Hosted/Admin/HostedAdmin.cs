@@ -49,6 +49,20 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
         }
 
+        public HostedActionRequest ConfirmPartial(ConfirmPartial confirmPartial)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <confirmPartial>
+                <callerReferenceId>{0}</callerReferenceId>
+                <transactionid>{1}</transactionid>
+                <amount>{2}</amount>
+                <orderrows>{3}
+                </orderrows>
+                </confirmPartial>", confirmPartial.CallerReferenceId, confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
+
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirmpartial");
+        }
+
         public HostedActionRequest Credit(Credit credit)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>

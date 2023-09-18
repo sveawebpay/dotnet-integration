@@ -431,7 +431,7 @@
     <None Include="Service References\AdminWS\Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\WebpayWS\SveaWebPay1.wsdl" />
+    <None Include="Service References\WebpayWS\sveawebpay.wsdl" />
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.AddToBlockListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -486,9 +486,6 @@
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.GetOrdersResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\WebpayWS\Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanOptionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -535,9 +532,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\AdminWS\AdminService1.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\WebpayWS\SveaWebPay1.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\AdminWS\AdminService11.disco" />

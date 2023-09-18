@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://webservices.sveaekonomi.se/webpay" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://webservices.sveaekonomi.se/webpay" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@sveaekonomi.se for more information. -CreateOrder -CancelOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="https://webservices.sveaekonomi.se/webpay" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="https://webservices.sveaekonomi.se/webpay" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@svea.com for more information. -CreateOrder -CloseOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="https://webservices.sveaekonomi.se/webpay">
       <s:element name="CreateOrder">
@@ -418,21 +418,9 @@
       </s:element>
       <s:complexType name="CheckInternalScoringResponse">
         <s:complexContent mixed="false">
-          <s:extension base="tns:BasicResponse">
-            <s:sequence>
-              <s:element minOccurs="1" maxOccurs="1" name="RejectionCode" type="tns:CheckInternalScoringRejectionCode" />
-              <s:element minOccurs="1" maxOccurs="1" name="CreditDecisionId" type="s:long" />
-            </s:sequence>
-          </s:extension>
+          <s:extension base="tns:BasicResponse" />
         </s:complexContent>
       </s:complexType>
-      <s:simpleType name="CheckInternalScoringRejectionCode">
-        <s:restriction base="s:string">
-          <s:enumeration value="Approved" />
-          <s:enumeration value="Denied" />
-          <s:enumeration value="Error" />
-        </s:restriction>
-      </s:simpleType>
       <s:element name="CreatePaymentPlan">
         <s:complexType>
           <s:sequence>
@@ -984,6 +972,7 @@
           <s:extension base="tns:BasicRequest">
             <s:sequence>
               <s:element minOccurs="0" maxOccurs="1" name="CreateOrderInformation" type="tns:CreateOrderInformation" />
+              <s:element minOccurs="0" maxOccurs="1" name="Navigation" type="tns:Navigation" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1001,6 +990,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="tns:OrderType" />
           <s:element minOccurs="0" maxOccurs="1" name="CreatePaymentPlanDetails" type="tns:CreatePaymentPlanDetails" />
           <s:element minOccurs="0" maxOccurs="1" name="CreateAccountCreditDetails" type="tns:CreateAccountCreditDetails" />
+          <s:element minOccurs="0" maxOccurs="1" name="GroupReference" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfOrderRow">
@@ -1085,6 +1075,12 @@
           <s:element minOccurs="1" maxOccurs="1" name="CampaignCode" nillable="true" type="s:long" />
         </s:sequence>
       </s:complexType>
+      <s:complexType name="Navigation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ConfirmationUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RejectionUrl" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="CreateOrderEuResponse">
         <s:complexType>
           <s:sequence>
@@ -1098,6 +1094,7 @@
             <s:sequence>
               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="CreateOrderResult" type="tns:CreateOrderResult" />
+              <s:element minOccurs="0" maxOccurs="1" name="NavigationResult" type="tns:NavigationResult" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1117,6 +1114,11 @@
       <s:complexType name="ArrayOfString">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="NavigationResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="RedirectUrl" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="CloseOrderEu">
@@ -1197,6 +1199,13 @@
           <s:enumeration value="Post" />
           <s:enumeration value="Email" />
           <s:enumeration value="EInvoiceB2B" />
+          <s:enumeration value="Peppol" />
+          <s:enumeration value="Omni" />
+          <s:enumeration value="Omni20" />
+          <s:enumeration value="Omni21" />
+          <s:enumeration value="Omni22" />
+          <s:enumeration value="Omni23" />
+          <s:enumeration value="Omni24" />
         </s:restriction>
       </s:simpleType>
       <s:complexType name="DeliverAccountCreditDetails">
@@ -1346,43 +1355,6 @@
           <s:element minOccurs="1" maxOccurs="1" name="FromAmount" type="s:decimal" />
           <s:element minOccurs="1" maxOccurs="1" name="ToAmount" type="s:decimal" />
         </s:sequence>
-      </s:complexType>
-      <s:element name="GetPaymentPlanContractDetailsEu">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetPaymentPlanContractDetailsEuRequest" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="GetPaymentPlanContractDetailsEuRequest">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:BasicRequest">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="OrderRows" type="tns:ArrayOfOrderRow" />
-              <s:element minOccurs="1" maxOccurs="1" name="MonthlyAmount" type="s:decimal" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:element name="GetPaymentPlanContractDetailsEuResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentPlanContractDetailsEuResult" type="tns:GetPaymentPlanContractDetailsEuResponse" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="GetPaymentPlanContractDetailsEuResponse">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:BasicResponse">
-            <s:sequence>
-              <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="ContractLengthMonths" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="MonthlyAmount" type="s:decimal" />
-              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
-              <s:element minOccurs="1" maxOccurs="1" name="InitialFee" type="s:decimal" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
       </s:complexType>
       <s:element name="GetContractPdfEu">
         <s:complexType>
@@ -1559,12 +1531,6 @@
   <wsdl:message name="GetPaymentPlanParamsEuSoapOut">
     <wsdl:part name="parameters" element="tns:GetPaymentPlanParamsEuResponse" />
   </wsdl:message>
-  <wsdl:message name="GetPaymentPlanContractDetailsEuSoapIn">
-    <wsdl:part name="parameters" element="tns:GetPaymentPlanContractDetailsEu" />
-  </wsdl:message>
-  <wsdl:message name="GetPaymentPlanContractDetailsEuSoapOut">
-    <wsdl:part name="parameters" element="tns:GetPaymentPlanContractDetailsEuResponse" />
-  </wsdl:message>
   <wsdl:message name="GetContractPdfEuSoapIn">
     <wsdl:part name="parameters" element="tns:GetContractPdfEu" />
   </wsdl:message>
@@ -1679,10 +1645,6 @@
     <wsdl:operation name="GetPaymentPlanParamsEu">
       <wsdl:input message="tns:GetPaymentPlanParamsEuSoapIn" />
       <wsdl:output message="tns:GetPaymentPlanParamsEuSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
-      <wsdl:input message="tns:GetPaymentPlanContractDetailsEuSoapIn" />
-      <wsdl:output message="tns:GetPaymentPlanContractDetailsEuSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetContractPdfEu">
       <wsdl:input message="tns:GetContractPdfEuSoapIn" />
@@ -1891,15 +1853,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetPaymentPlanParamsEu">
       <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanParamsEu" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
-      <soap:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2126,15 +2079,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetPaymentPlanContractDetailsEu">
-      <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetContractPdfEu">
       <soap12:operation soapAction="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu" style="document" />
       <wsdl:input>
@@ -2146,12 +2090,12 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="Service">
-    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@sveaekonomi.se for more information. -CreateOrder -CancelOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Following methods in this service is deprecated. Please consult documentation at sveawebpay.se, and/or support-webpay@svea.com for more information. -CreateOrder -CloseOrder -CreateInvoice -CreatePaymentPlan -ApprovePaymentPlan -CancelPaymentPlan -ChangeOrderAmount -ChangeOrderInfo -CheckInternalScoring -GetContractPdf -GetOrders -GetPaymentPlanParams -GetPaymentPlanStatus</wsdl:documentation>
     <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
-      <soap:address location="https://webpayws.svea.com/SveaWebPay.asmx" />
+      <soap:address location="https://webpayws.svea.com/sveawebpay.asmx" />
     </wsdl:port>
     <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
-      <soap12:address location="https://webpayws.svea.com/SveaWebPay.asmx" />
+      <soap12:address location="https://webpayws.svea.com/sveawebpay.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

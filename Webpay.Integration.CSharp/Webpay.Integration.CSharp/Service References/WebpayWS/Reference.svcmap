@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3fe40eab-5cf0-41fc-aa58-425cf5aa1ee8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="3fe40eab-5cf0-41fc-aa58-425cf5aa1ee8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,11 +18,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://webpayws.svea.com/SveaWebPay.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address=" https://webpayws.svea.com/sveawebpay.asmx?WSDL" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SveaWebPay1.disco" MetadataType="Disco" ID="d4588cd4-f924-4839-b18d-615a8281098a" SourceId="1" SourceUrl="https://webpayws.svea.com/SveaWebPay.asmx?disco" />
-    <MetadataFile FileName="SveaWebPay1.wsdl" MetadataType="Wsdl" ID="941ef6d2-eefb-497a-8fc2-fd9d4dde895d" SourceId="1" SourceUrl="https://webpayws.svea.com/SveaWebPay.asmx?wsdl" />
+    <MetadataFile FileName="sveawebpay.wsdl" MetadataType="Wsdl" ID="112c20c3-9188-4872-86e2-e10af71b770c" SourceId="1" SourceUrl="https://webpayws.svea.com/sveawebpay.asmx?WSDL" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -153,12 +153,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse GetPaymentPlanParamsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetPaymentPlanContractDetailsEu", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
-        Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse GetPaymentPlanContractDetailsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetContractPdfEu", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
@@ -890,6 +884,27 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         /// <remarks/>
         EInvoiceB2B,
+        
+        /// <remarks/>
+        Peppol,
+        
+        /// <remarks/>
+        Omni,
+        
+        /// <remarks/>
+        Omni20,
+        
+        /// <remarks/>
+        Omni21,
+        
+        /// <remarks/>
+        Omni22,
+        
+        /// <remarks/>
+        Omni23,
+        
+        /// <remarks/>
+        Omni24,
     }
     
     /// <remarks/>
@@ -997,6 +1012,38 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         /// <remarks/>
         AccountCredit,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
+    public partial class NavigationResult : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string redirectUrlField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string RedirectUrl {
+            get {
+                return this.redirectUrlField;
+            }
+            set {
+                this.redirectUrlField = value;
+                this.RaisePropertyChanged("RedirectUrl");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     /// <remarks/>
@@ -2740,7 +2787,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetContractPdfEuResponse))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanContractDetailsEuResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanParamsEuResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetAccountCreditParamsEuResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DeliverOrderEuResponse))]
@@ -2869,85 +2915,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
             set {
                 this.pdfLinkField = value;
                 this.RaisePropertyChanged("PdfLink");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
-    public partial class GetPaymentPlanContractDetailsEuResponse : BasicResponse {
-        
-        private int resultCodeField;
-        
-        private int contractLengthMonthsField;
-        
-        private decimal monthlyAmountField;
-        
-        private decimal amountField;
-        
-        private decimal initialFeeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int ResultCode {
-            get {
-                return this.resultCodeField;
-            }
-            set {
-                this.resultCodeField = value;
-                this.RaisePropertyChanged("ResultCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ContractLengthMonths {
-            get {
-                return this.contractLengthMonthsField;
-            }
-            set {
-                this.contractLengthMonthsField = value;
-                this.RaisePropertyChanged("ContractLengthMonths");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public decimal MonthlyAmount {
-            get {
-                return this.monthlyAmountField;
-            }
-            set {
-                this.monthlyAmountField = value;
-                this.RaisePropertyChanged("MonthlyAmount");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public decimal Amount {
-            get {
-                return this.amountField;
-            }
-            set {
-                this.amountField = value;
-                this.RaisePropertyChanged("Amount");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public decimal InitialFee {
-            get {
-                return this.initialFeeField;
-            }
-            set {
-                this.initialFeeField = value;
-                this.RaisePropertyChanged("InitialFee");
             }
         }
     }
@@ -3098,6 +3065,8 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         private CreateOrderResult createOrderResultField;
         
+        private NavigationResult navigationResultField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int ResultCode {
@@ -3119,6 +3088,18 @@ namespace Webpay.Integration.CSharp.WebpayWS {
             set {
                 this.createOrderResultField = value;
                 this.RaisePropertyChanged("CreateOrderResult");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public NavigationResult NavigationResult {
+            get {
+                return this.navigationResultField;
+            }
+            set {
+                this.navigationResultField = value;
+                this.RaisePropertyChanged("NavigationResult");
             }
         }
     }
@@ -3707,50 +3688,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public partial class CheckInternalScoringResponse : BasicResponse {
-        
-        private CheckInternalScoringRejectionCode rejectionCodeField;
-        
-        private long creditDecisionIdField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public CheckInternalScoringRejectionCode RejectionCode {
-            get {
-                return this.rejectionCodeField;
-            }
-            set {
-                this.rejectionCodeField = value;
-                this.RaisePropertyChanged("RejectionCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public long CreditDecisionId {
-            get {
-                return this.creditDecisionIdField;
-            }
-            set {
-                this.creditDecisionIdField = value;
-                this.RaisePropertyChanged("CreditDecisionId");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
-    public enum CheckInternalScoringRejectionCode {
-        
-        /// <remarks/>
-        Approved,
-        
-        /// <remarks/>
-        Denied,
-        
-        /// <remarks/>
-        Error,
     }
     
     /// <remarks/>
@@ -4722,6 +4659,52 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
+    public partial class Navigation : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string confirmationUrlField;
+        
+        private string rejectionUrlField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ConfirmationUrl {
+            get {
+                return this.confirmationUrlField;
+            }
+            set {
+                this.confirmationUrlField = value;
+                this.RaisePropertyChanged("ConfirmationUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string RejectionUrl {
+            get {
+                return this.rejectionUrlField;
+            }
+            set {
+                this.rejectionUrlField = value;
+                this.RaisePropertyChanged("RejectionUrl");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public partial class CreateAccountCreditDetails : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.Nullable<long> campaignCodeField;
@@ -4852,6 +4835,8 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         private CreateAccountCreditDetails createAccountCreditDetailsField;
         
+        private string groupReferenceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string ClientOrderNumber {
@@ -4981,6 +4966,18 @@ namespace Webpay.Integration.CSharp.WebpayWS {
             set {
                 this.createAccountCreditDetailsField = value;
                 this.RaisePropertyChanged("CreateAccountCreditDetails");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string GroupReference {
+            get {
+                return this.groupReferenceField;
+            }
+            set {
+                this.groupReferenceField = value;
+                this.RaisePropertyChanged("GroupReference");
             }
         }
         
@@ -5533,7 +5530,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetContractPdfEuRequest))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanContractDetailsEuRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanParamsEuRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetAccountCreditParamsEuRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DeliverOrderEuRequest))]
@@ -5616,43 +5612,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
-    public partial class GetPaymentPlanContractDetailsEuRequest : BasicRequest {
-        
-        private OrderRow[] orderRowsField;
-        
-        private decimal monthlyAmountField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        public OrderRow[] OrderRows {
-            get {
-                return this.orderRowsField;
-            }
-            set {
-                this.orderRowsField = value;
-                this.RaisePropertyChanged("OrderRows");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public decimal MonthlyAmount {
-            get {
-                return this.monthlyAmountField;
-            }
-            set {
-                this.monthlyAmountField = value;
-                this.RaisePropertyChanged("MonthlyAmount");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public partial class GetPaymentPlanParamsEuRequest : BasicRequest {
     }
     
@@ -5721,6 +5680,8 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         private CreateOrderInformation createOrderInformationField;
         
+        private Navigation navigationField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public CreateOrderInformation CreateOrderInformation {
@@ -5730,6 +5691,18 @@ namespace Webpay.Integration.CSharp.WebpayWS {
             set {
                 this.createOrderInformationField = value;
                 this.RaisePropertyChanged("CreateOrderInformation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Navigation Navigation {
+            get {
+                return this.navigationField;
+            }
+            set {
+                this.navigationField = value;
+                this.RaisePropertyChanged("Navigation");
             }
         }
     }
@@ -6485,10 +6458,6 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuResponse GetPaymentPlanParamsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanParamsEuRequest request) {
             return base.Channel.GetPaymentPlanParamsEu(request);
-        }
-        
-        public Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuResponse GetPaymentPlanContractDetailsEu(Webpay.Integration.CSharp.WebpayWS.GetPaymentPlanContractDetailsEuRequest request) {
-            return base.Channel.GetPaymentPlanContractDetailsEu(request);
         }
         
         public Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuResponse GetContractPdfEu(Webpay.Integration.CSharp.WebpayWS.GetContractPdfEuRequest request) {

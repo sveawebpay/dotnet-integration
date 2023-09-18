@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="8DTGo0ZmBFUXaX8wfqGHwRWJKVM=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="esRqw0VToJ9qoFJ10BfB4cdowA0RW8ehT6RJjeVaRgE=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="ServiceSoap">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ServiceSoap" contract="WebpayWS.ServiceSoap" bindingType="basicHttpBinding" address="https://webpayws.svea.com/SveaWebPay.asmx" bindingConfiguration="ServiceSoap">
+    <endpoint name="ServiceSoap" contract="WebpayWS.ServiceSoap" bindingType="basicHttpBinding" address="https://webpayws.svea.com/sveawebpay.asmx" bindingConfiguration="ServiceSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://webpayws.svea.com/SveaWebPay.asmx</serializedValue>
+          <serializedValue>https://webpayws.svea.com/sveawebpay.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

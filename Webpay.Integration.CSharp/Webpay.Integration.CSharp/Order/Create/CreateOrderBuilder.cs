@@ -29,6 +29,7 @@ namespace Webpay.Integration.CSharp.Order.Create
         private bool _hasSetCountryCode;
         private string _peppolId;
         private string _payerAlias;
+        private Navigation _navigation;
 
         protected CustomerIdentity CustomerId;
 
@@ -295,6 +296,16 @@ namespace Webpay.Integration.CSharp.Order.Create
             return new PaymentPlanPayment(this);
         }
 
+        public CreateOrderBuilder AddNavigationUrls(string confUrl, string rejUrl)
+        {
+            _navigation = new Navigation() { ConfirmationUrl= confUrl, RejectionUrl = rejUrl };
+            return this;
+        }
+
+        public Navigation GetNavigation()
+        {
+            return _navigation;
+        }
         public CreateOrderBuilder AddCustomerDetails(CustomerIdentity customerIdentity)
         {
             CustomerId = customerIdentity;

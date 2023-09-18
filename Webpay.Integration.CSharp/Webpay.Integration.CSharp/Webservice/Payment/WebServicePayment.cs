@@ -83,6 +83,7 @@ namespace Webpay.Integration.CSharp.Webservice.Payment
                 };
 
             sveaOrder.CreateOrderInformation = SetOrderType(OrderInfo);
+            sveaOrder.Navigation = CrOrderBuilder.GetNavigation();
 
             return sveaOrder;
         }

@@ -22,7 +22,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                 .DeliverPaymentPlanOrder()
                                 .DoRequest();
 
-            Assert.That(response.ErrorMessage, Is.EqualTo("Could not complete the request to deliver an order!"));
+            Assert.That(response.ErrorMessage, Is.EqualTo("Currently unable to modify order, please try again later."));
         }
 
         [Test]

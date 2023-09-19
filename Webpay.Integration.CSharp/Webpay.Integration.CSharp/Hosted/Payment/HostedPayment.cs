@@ -39,7 +39,7 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
             Excluded = new ExcludePayments();
             ExcludedPaymentMethod = new List<string>();
             ReturnUrl = "";
-            PayerAlias = createOrderBuilder.GetPayerAlias();
+            PayerAlias = createOrderBuilder == null ? null : createOrderBuilder.GetPayerAlias();
         }
 
         public CreateOrderBuilder GetCreateOrderBuilder()

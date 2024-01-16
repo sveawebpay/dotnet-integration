@@ -46,19 +46,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("ipaddress", payment.GetIpAddress());
                 doWriteSimple("payeralias", payment.GetPayerAlias());
 
-                if (payment.GetType() == typeof(PaymentMethodPayment))
-                {
-                    var pm = payment as PaymentMethodPayment;
-                    if(pm.GetPaymentMethod() == PaymentMethod.SVEACARDPAY_PF)
-                    {
-                        SerializeUnknownCustomer(order, xmlw);
-                    }
-                }
-                else
-                {
-                    SerializeCustomer(order, xmlw);
-                }
-
+                SerializeCustomer(order, xmlw);
                 SerializeRows(rows, xmlw);
                 SerializeExcludedPaymentMethods(payment.GetExcludedPaymentMethod(), xmlw);
 
@@ -89,7 +77,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
             }
 
             CustomerIdentity customer;
-            
+
 
             if (order.GetIsCompanyIdentity())
             {

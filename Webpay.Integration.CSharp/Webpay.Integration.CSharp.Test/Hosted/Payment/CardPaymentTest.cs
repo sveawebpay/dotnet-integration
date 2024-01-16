@@ -62,6 +62,52 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         }
 
         [Test]
+        public void TestBuildCardPaymentWithCustomer()
+        {
+            PaymentForm form = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                     .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+                                     .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                                     .AddDiscount(TestingTool.CreateRelativeDiscount())
+                                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                     .SetOrderDate(TestingTool.DefaultTestDate)
+                                     .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                     .SetCurrency(TestingTool.DefaultTestCurrency)
+                                     .UsePaymentMethod(PaymentMethod.SVEACARDPAY_PF)
+                                     .SetReturnUrl("http://myurl.se")
+                                     .GetPaymentForm();
+
+            string xml = form.GetXmlMessage();
+
+            const string expectedCustomer = "<customer><ssn>194605092222</ssn><firstname>Tess</firstname><lastname>Persson</lastname><initials>SB</initials><phone>0811111111</phone><email>test@svea.com</email><address>Testgatan</address><housenumber>1</housenumber><address2>c/o Eriksson, Erik</address2><zip>99999</zip><city>Stan</city><country>SE</country></customer>";
+
+            var startIndex = xml.IndexOf("<customer>", System.StringComparison.InvariantCulture);
+            var endIndex = xml.IndexOf("</customer>", System.StringComparison.InvariantCulture)+11;
+            string customer = xml.Substring(startIndex,
+                                          endIndex- startIndex);
+            Assert.That(xml.Contains("<customer>"), Is.True);
+            Assert.That(customer, Is.EqualTo(expectedCustomer));
+        }
+
+        [Test]
+        public void TestBuildCardPaymentWithOutCustomer()
+        {
+            PaymentForm form = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                     .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                                     .AddDiscount(TestingTool.CreateRelativeDiscount())
+                                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                     .SetOrderDate(TestingTool.DefaultTestDate)
+                                     .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                     .SetCurrency(TestingTool.DefaultTestCurrency)
+                                     .UsePaymentMethod(PaymentMethod.SVEACARDPAY_PF)
+                                     .SetReturnUrl("http://myurl.se")
+                                     .GetPaymentForm();
+
+            string xml = form.GetXmlMessage();
+
+            Assert.That(xml.Contains("<customer>"), Is.False);
+        }
+
+        [Test]
         public void TestBuildCardPaymentDe()
         {
             PaymentForm form = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())

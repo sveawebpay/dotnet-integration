@@ -130,7 +130,8 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
         [Test]
         public void TestExcludeInvoicesAndAllInstallmentsAllCountries()
         {
-            var payment = new FakeHostedPayment(null);
+            
+            var payment = new FakeHostedPayment(CreateOrderBuilder());
             var exclude = new ExcludePayments();
             List<string> excludedPaymentMethod = payment.GetExcludedPaymentMethod();
             excludedPaymentMethod.AddRange(exclude.ExcludeInvoicesAndPaymentPlan());
@@ -478,6 +479,15 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
             // matches 1400 discount
             Assert.That(formattedTotalAmount, Is.EqualTo(26700)); // 35600 - 8900 discount
             Assert.That(formattedTotalVat, Is.EqualTo(4200)); //  5600 - 1400 discount (= 10000/35600 *5600) discount
+        }
+        public CreateOrderBuilder CreateOrderBuilder()
+        {
+            return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+                                                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                                                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                                                                   .SetCurrency(TestingTool.DefaultTestCurrency)
+                                                                   .AddOrderRow(Item.OrderRow()
+                                                                                    .SetQuantity(1));
         }
     }
 }

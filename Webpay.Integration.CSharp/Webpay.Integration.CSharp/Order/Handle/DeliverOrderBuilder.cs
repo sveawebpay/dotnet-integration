@@ -117,7 +117,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new HandleOrder(this);
         }
 
-
+        public override DeliverOrderBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
 
         public override DeliverOrderBuilder SetFixedDiscountRows(List<FixedDiscountBuilder> fixedDiscountRows)
         {
@@ -188,12 +192,15 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
             var action = new Confirm(
                 this.GetOrderId(),
-                this._captureDate ?? DateTime.Now // if no captureDate given, use today
+                this._captureDate ?? DateTime.Now, // if no captureDate given, use today
+                this._correlationId
             );
 
             var request = new HostedAdmin(this._config, this._countryCode);
 
             return request.Confirm( action );
         }
+
+        
     }
 }

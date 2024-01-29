@@ -5,7 +5,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     /// </summary>
     public class QueryByClientOrderNumber : QueryByCustomerRefNo
     {
-        public QueryByClientOrderNumber(string clientOrderNumber) : base(clientOrderNumber)
+        public QueryByClientOrderNumber(string clientOrderNumber,string correlaiond) : base(clientOrderNumber, correlaiond)
         {
         }
     }

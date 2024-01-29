@@ -29,9 +29,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public DeliverOrderRowsBuilder SetCallerReferenceId(long CallerReferenceId)
+        public DeliverOrderRowsBuilder SetCallerReferenceId(string callerReferenceId)
         {
-            CallerReferenceId = CallerReferenceId;
+            CallerReferenceId = callerReferenceId;
             return this;
         }
 
@@ -73,6 +73,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AdminService.ConfirmTransactionRequest DeliverCardOrderRows()
         {
             return new AdminService.ConfirmTransactionRequest(this);
+        }
+
+        public override DeliverOrderRowsBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
         }
     }
 }

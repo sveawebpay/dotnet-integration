@@ -7,6 +7,7 @@ namespace Webpay.Integration.CSharp.Order
     {
         protected IConfigurationProvider _config;
         protected CountryCode _countryCode;
+        protected string _correlationId;
 
         protected Builder(IConfigurationProvider config)
         {
@@ -22,6 +23,12 @@ namespace Webpay.Integration.CSharp.Order
         {
             return _countryCode;
         }
+
+        public string GetCorrelationId()
+        {
+            return _correlationId;
+        }
         public abstract T SetCountryCode(CountryCode countryCode);
+        public abstract T SetCorrelationId(string correlationId);
     }
 }

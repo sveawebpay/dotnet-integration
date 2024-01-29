@@ -4,13 +4,13 @@ using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class LowerAmountConfirm
+    public class LowerAmountConfirm:BasicRequest
     {
         public readonly long AmountToLower;
         public readonly long TransactionId;
         public readonly DateTime CaptureDate;
 
-        public LowerAmountConfirm(long transactionId, long amountToLower, DateTime captureDate)
+        public LowerAmountConfirm(long transactionId, long amountToLower, DateTime captureDate, string correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             AmountToLower = amountToLower;

@@ -48,5 +48,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
             OrderType = PaymentType.PAYMENTPLAN;
             return new AdminService.UpdateOrderRequest(this);
         }
+
+        public override UpdateOrderBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
     }
 }

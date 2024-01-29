@@ -23,8 +23,8 @@ namespace Webpay.Integration.CSharp.AdminService
             var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Credit(new Credit(
                     transactionId: _builder.Id,
-                    amountToCredit: Decimal.ToInt64(_builder.AmountIncVat * 100)    //centessimal
-                    ));
+                    amountToCredit: Decimal.ToInt64(_builder.AmountIncVat * 100),    //centessimal
+                    correlationId: _builder.GetCorrelationId()));
 
             return hostedActionRequest.DoRequest<CreditResponse>();
         }

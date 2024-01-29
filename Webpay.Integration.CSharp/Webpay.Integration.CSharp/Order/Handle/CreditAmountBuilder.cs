@@ -59,5 +59,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             return new AdminService.CreditTransactionRequest(this);
         }
+
+        public override CreditAmountBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
     }
 }

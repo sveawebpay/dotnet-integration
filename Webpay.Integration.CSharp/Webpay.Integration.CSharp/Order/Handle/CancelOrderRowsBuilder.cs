@@ -65,5 +65,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             return new AdminService.LowerTransactionRequest(this);
         }
+
+        public override CancelOrderRowsBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
     }
 }

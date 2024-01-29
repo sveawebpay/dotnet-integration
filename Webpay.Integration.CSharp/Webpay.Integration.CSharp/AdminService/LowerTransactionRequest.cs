@@ -31,8 +31,8 @@ namespace Webpay.Integration.CSharp.AdminService
             var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .LowerAmount(new LowerAmount(
                 transactionId: _builder.Id,
-                amountToLower: Decimal.ToInt64(amountToLowerOrderBy * 100)    // centessimal
-                ));
+                amountToLower: Decimal.ToInt64(amountToLowerOrderBy * 100),    // centessimal
+                correlationId:_builder.GetCorrelationId()));
 
             return hostedActionRequest.DoRequest<LowerAmountResponse>();
         }

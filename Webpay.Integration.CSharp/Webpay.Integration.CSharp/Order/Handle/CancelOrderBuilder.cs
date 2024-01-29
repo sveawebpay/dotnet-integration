@@ -18,7 +18,6 @@ namespace Webpay.Integration.CSharp.Order.Handle
             Id = orderId;
             return this;
         }
-
         public CancelOrderBuilder SetTransactionId(long orderId)
         {
             return this.SetOrderId(orderId);
@@ -45,6 +44,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AdminService.AnnulTransactionRequest CancelCardOrder()
         {
             return new AdminService.AnnulTransactionRequest(this);
+        }
+
+        public override CancelOrderBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
         }
     }
 }

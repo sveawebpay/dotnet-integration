@@ -4,7 +4,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class Recur
+    public class Recur:BasicRequest
     {
         public readonly long Amount;
         public readonly Currency Currency;
@@ -12,7 +12,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly string SubscriptionId;
         public readonly long Vat;
 
-        public Recur(string customerRefNo, string subscriptionId, Currency currency, long amount, long vat = 0)
+        public Recur(string customerRefNo, string subscriptionId, Currency currency, long amount, string correlationId, long vat = 0) : base(correlationId)
         {
             CustomerRefNo = customerRefNo;
             SubscriptionId = subscriptionId;

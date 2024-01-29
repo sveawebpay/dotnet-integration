@@ -21,7 +21,8 @@ namespace Webpay.Integration.CSharp.AdminService
 
             var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Query(new QueryByTransactionId(
-                    transactionId: _builder.Id
+                    transactionId: _builder.Id,
+                    correlationId: _builder.GetCorrelationId()
                     ));
 
             return hostedActionRequest.DoRequest<QueryResponse>();

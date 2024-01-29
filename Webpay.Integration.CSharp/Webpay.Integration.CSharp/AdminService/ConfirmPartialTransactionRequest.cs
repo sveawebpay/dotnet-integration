@@ -41,7 +41,8 @@ namespace Webpay.Integration.CSharp.AdminService
                         transactionId: _builder.Id,
                         callerReferenceId: _builder.CallerReferenceId, 
                         amount: Decimal.ToInt64(deliveredOrderTotal * 100),
-                        orderRows: deliverOrderRows
+                        orderRows: deliverOrderRows,
+                        correlationId:_builder.GetCorrelationId()
                         ));
 
                 var partialConfirmResponse = partialConfirmRequest.DoRequest<ConfirmPartialResponse>();

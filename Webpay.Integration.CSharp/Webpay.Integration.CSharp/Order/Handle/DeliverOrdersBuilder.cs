@@ -50,5 +50,11 @@ namespace Webpay.Integration.CSharp.Order.Handle
             DistributionType = DistributionType.POST;   // always use Post for payment plan orders
             return new AdminService.DeliverOrdersRequest(this);
         }
+
+        public override DeliverOrdersBuilder SetCorrelationId(string correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
     }
 }

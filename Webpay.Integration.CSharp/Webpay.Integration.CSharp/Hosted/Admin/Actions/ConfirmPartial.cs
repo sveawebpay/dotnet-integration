@@ -8,14 +8,14 @@ using Webpay.Integration.CSharp.Order.Row;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class ConfirmPartial
+    public class ConfirmPartial:BasicRequest
     {
         public readonly long TransactionId;
         public readonly string CallerReferenceId;
         public readonly long Amount;
         public readonly List<NumberedOrderRowBuilder> OrderRows;
 
-        public ConfirmPartial(long transactionId,  string callerReferenceId ,long amount ,List<NumberedOrderRowBuilder> orderRows)
+        public ConfirmPartial(long transactionId,  string callerReferenceId ,long amount ,List<NumberedOrderRowBuilder> orderRows, string correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             CallerReferenceId = callerReferenceId;

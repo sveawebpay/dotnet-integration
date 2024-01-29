@@ -3,11 +3,11 @@ using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class CancelRecurSubscription
+    public class CancelRecurSubscription:BasicRequest
     {
         public readonly string SubscriptionId;
 
-        public CancelRecurSubscription(string subscriptionId)
+        public CancelRecurSubscription(string subscriptionId, string correlationId) : base(correlationId)
         {
             SubscriptionId = subscriptionId;
         }

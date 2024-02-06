@@ -1,3 +1,4 @@
+using System;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -7,7 +8,7 @@ namespace Webpay.Integration.CSharp.Order
     {
         protected IConfigurationProvider _config;
         protected CountryCode _countryCode;
-        protected string _correlationId;
+        protected Guid? _correlationId;
 
         protected Builder(IConfigurationProvider config)
         {
@@ -24,11 +25,11 @@ namespace Webpay.Integration.CSharp.Order
             return _countryCode;
         }
 
-        public string GetCorrelationId()
+        public Guid? GetCorrelationId()
         {
             return _correlationId;
         }
         public abstract T SetCountryCode(CountryCode countryCode);
-        public abstract T SetCorrelationId(string correlationId);
+        public abstract T SetCorrelationId(Guid? correlationId);
     }
 }

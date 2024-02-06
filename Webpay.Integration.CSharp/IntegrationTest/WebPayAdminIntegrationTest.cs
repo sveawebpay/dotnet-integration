@@ -1059,7 +1059,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
-                .SetCorrelationId("123456789")
+                .SetCorrelationId(new Guid())
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();

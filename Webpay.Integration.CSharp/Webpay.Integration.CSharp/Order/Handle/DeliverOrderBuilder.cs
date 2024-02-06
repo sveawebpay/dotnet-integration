@@ -117,7 +117,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new HandleOrder(this);
         }
 
-        public override DeliverOrderBuilder SetCorrelationId(string correlationId)
+        public override DeliverOrderBuilder SetCorrelationId(Guid? correlationId)
         {
             _correlationId = correlationId;
             return this;

@@ -1,4 +1,5 @@
-﻿using Webpay.Integration.CSharp.Config;
+﻿using System;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
@@ -52,7 +53,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.QueryTransactionRequest(this);
         }
 
-        public override QueryOrderBuilder SetCorrelationId(string correlationId)
+        public override QueryOrderBuilder SetCorrelationId(Guid? correlationId)
         {
             _correlationId = correlationId;
             return this;

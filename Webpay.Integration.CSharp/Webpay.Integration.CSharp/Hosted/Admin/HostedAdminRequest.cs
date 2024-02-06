@@ -48,7 +48,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             {
                 foreach (var item in hostedRequest.Headers)
                 {
-                    client.Headers.Add(item.Header.Key,item.Header.Value);
+                    client.Headers.Add(item.Header.Key,item.Header.Value.ToString());
                 }
                              
                 var response =

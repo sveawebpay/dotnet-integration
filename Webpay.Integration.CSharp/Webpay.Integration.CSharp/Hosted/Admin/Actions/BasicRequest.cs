@@ -8,8 +8,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     public class BasicRequest
     {
-        public readonly string CorrelationId;
-        public BasicRequest(string correlationId = "")
+        public readonly Guid? CorrelationId;
+        public BasicRequest(Guid? correlationId )
         {
             CorrelationId = correlationId;
         }

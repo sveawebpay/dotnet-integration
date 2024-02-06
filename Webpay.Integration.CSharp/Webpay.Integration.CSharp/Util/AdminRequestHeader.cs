@@ -8,9 +8,9 @@ namespace Webpay.Integration.CSharp.Util
 {
     public class AdminRequestHeader
     {
-        public AdminRequestHeader(string key, string value) {
-            Header = new KeyValuePair<string, string>(key, value);
+        public AdminRequestHeader(string key, object value) {
+            Header = new KeyValuePair<string, object>(key, value);
         }
-       public KeyValuePair<string, string> Header { get; set; }
+       public KeyValuePair<string, object> Header { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
@@ -7,7 +8,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly string SubscriptionId;
 
-        public CancelRecurSubscription(string subscriptionId, string correlationId) : base(correlationId)
+        public CancelRecurSubscription(string subscriptionId, Guid? correlationId) : base(correlationId)
         {
             SubscriptionId = subscriptionId;
         }

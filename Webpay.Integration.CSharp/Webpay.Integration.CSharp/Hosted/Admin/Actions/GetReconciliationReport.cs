@@ -8,7 +8,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly DateTime Date;
 
-        public GetReconciliationReport(DateTime date, string correlationId) : base(correlationId)
+        public GetReconciliationReport(DateTime date, Guid? correlationId) : base(correlationId)
         {
             Date = date;
         }

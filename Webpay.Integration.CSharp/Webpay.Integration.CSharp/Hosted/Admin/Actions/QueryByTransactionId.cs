@@ -7,9 +7,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     public class QueryByTransactionId : Query
     {
         public readonly long TransactionId;
-        public readonly string CorrelationId;
+        public readonly Guid? CorrelationId;
 
-        public QueryByTransactionId(long transactionId, string correlationId)
+        public QueryByTransactionId(long transactionId, Guid? correlationId)
         {
             TransactionId = transactionId;
             CorrelationId = correlationId;

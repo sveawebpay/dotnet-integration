@@ -10,7 +10,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly DateTime CaptureDate;
         public readonly long TransactionId;
         
-        public Confirm(long transactionId, DateTime captureDate, string correlationId):base(correlationId) 
+        public Confirm(long transactionId, DateTime captureDate, Guid? correlationId):base(correlationId) 
         {
             TransactionId = transactionId;
             CaptureDate = captureDate;

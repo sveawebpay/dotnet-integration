@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
@@ -61,7 +62,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <amount>{2}</amount>
                 <orderrows>{3}
                 </orderrows>
-                </confirmPartial>", confirmPartial.CallerReferenceId, confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
+                </confirmPartial>", confirmPartial.CallerReferenceId.ToString(), confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
             AddCorrelationIdHeader(confirmPartial.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/confirmpartial");
         }
@@ -161,7 +162,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/recur");
         }
 
-        private void AddCorrelationIdHeader(string correlationId)
+        private void AddCorrelationIdHeader(Guid? correlationId)
         {
             Headers.Add(new AdminRequestHeader("X-Svea-CorrelationId", correlationId));
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -51,7 +52,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.DeliverOrdersRequest(this);
         }
 
-        public override DeliverOrdersBuilder SetCorrelationId(string correlationId)
+        public override DeliverOrdersBuilder SetCorrelationId(Guid? correlationId)
         {
             _correlationId = correlationId;
             return this;

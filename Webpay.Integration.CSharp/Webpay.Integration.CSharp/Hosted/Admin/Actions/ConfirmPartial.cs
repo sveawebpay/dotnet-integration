@@ -11,11 +11,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     public class ConfirmPartial:BasicRequest
     {
         public readonly long TransactionId;
-        public readonly string CallerReferenceId;
-        public readonly long Amount;
+        public readonly Guid CallerReferenceId;
+        public readonly long? Amount;
         public readonly List<NumberedOrderRowBuilder> OrderRows;
 
-        public ConfirmPartial(long transactionId,  string callerReferenceId ,long amount ,List<NumberedOrderRowBuilder> orderRows, string correlationId) : base(correlationId)
+        public ConfirmPartial(long transactionId, Guid callerReferenceId ,long? amount ,List<NumberedOrderRowBuilder> orderRows, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             CallerReferenceId = callerReferenceId;

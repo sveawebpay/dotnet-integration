@@ -47,7 +47,7 @@ namespace Webpay.Integration.CSharp.AdminService
                     .LowerAmount(new LowerAmount(
                         transactionId: _builder.Id,
                         amountToLower: Decimal.ToInt64(amountToLowerOrderBy *100),    // centessimal
-                        correlationId: "123456789"));
+                        correlationId: new Guid()));
 
                 var lowerAmountResponse = lowerAmountRequest.DoRequest<LowerAmountResponse>();
 
@@ -67,7 +67,7 @@ namespace Webpay.Integration.CSharp.AdminService
                 .Confirm(new Confirm(
                     transactionId: _builder.Id,
                     captureDate: _builder.CaptureDate ?? DateTime.Now , // if no captureDate set, use today's date as default.
-                    correlationId: "123456789"
+                    correlationId: new Guid()
                     ));
 
             return hostedActionRequest.DoRequest<ConfirmResponse>();

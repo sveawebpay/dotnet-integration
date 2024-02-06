@@ -1,3 +1,4 @@
+using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
@@ -8,7 +9,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public readonly long AmountToCredit;
         public readonly long TransactionId;
 
-        public Credit(long transactionId, long amountToCredit, string correlationId) : base(correlationId)
+        public Credit(long transactionId, long amountToCredit, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             AmountToCredit = amountToCredit;

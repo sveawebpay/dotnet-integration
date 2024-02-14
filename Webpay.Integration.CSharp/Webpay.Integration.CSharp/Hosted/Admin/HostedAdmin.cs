@@ -57,7 +57,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <confirmPartial>
-                <callerReferenceId>{0}</callerReferenceId>
+                <captureRequestId>{0}</captureRequestId>
                 <transactionid>{1}</transactionid>
                 <amount>{2}</amount>
                 <orderrows>{3}

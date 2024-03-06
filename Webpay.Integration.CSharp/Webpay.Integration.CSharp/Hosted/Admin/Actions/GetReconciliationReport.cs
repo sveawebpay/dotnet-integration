@@ -4,11 +4,11 @@ using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class GetReconciliationReport
+    public class GetReconciliationReport:BasicRequest
     {
         public readonly DateTime Date;
 
-        public GetReconciliationReport(DateTime date)
+        public GetReconciliationReport(DateTime date, Guid? correlationId) : base(correlationId)
         {
             Date = date;
         }

@@ -47,6 +47,7 @@ namespace Webpay.Integration.CSharp.AdminService
             // make request to correct endpoint, return response object
             var endpoint = _builder.GetConfig().GetEndPoint(PaymentType.ADMIN_TYPE);
             var adminWS = new AdminServiceClient("WcfAdminSoapService", endpoint);
+            
             var response = adminWS.DeliverOrders(request);
 
             return response;

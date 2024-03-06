@@ -1,13 +1,14 @@
+using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class Annul
+    public class Annul:BasicRequest
     {
         public readonly long TransactionId;
 
-        public Annul(long transactionId)
+        public Annul(long transactionId, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
         }

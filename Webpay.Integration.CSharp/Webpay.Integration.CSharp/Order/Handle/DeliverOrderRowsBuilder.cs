@@ -14,7 +14,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal DistributionType DistributionType { get; private set; }
         internal List<long> RowIndexesToDeliver { get; private set; }
         internal List<NumberedOrderRowBuilder> NumberedOrderRows { get; private set; }
-        internal string CallerReferenceId { get; private set; }
+        internal Guid CallerReferenceId { get; private set; }
 
         public DeliverOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {
@@ -29,9 +29,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public DeliverOrderRowsBuilder SetCallerReferenceId(long CallerReferenceId)
+        public DeliverOrderRowsBuilder SetCallerReferenceId(Guid callerReferenceId)
         {
-            CallerReferenceId = CallerReferenceId;
+            CallerReferenceId = callerReferenceId;
             return this;
         }
 
@@ -73,6 +73,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AdminService.ConfirmTransactionRequest DeliverCardOrderRows()
         {
             return new AdminService.ConfirmTransactionRequest(this);
+        }
+
+        public override DeliverOrderRowsBuilder SetCorrelationId(Guid? correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
         }
     }
 }

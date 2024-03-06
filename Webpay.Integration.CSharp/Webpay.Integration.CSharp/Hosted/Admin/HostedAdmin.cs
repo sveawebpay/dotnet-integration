@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
@@ -9,12 +12,13 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public readonly IConfigurationProvider ConfigurationProvider;
         public readonly CountryCode CountryCode;
         public readonly string MerchantId;
-
+        public readonly List<AdminRequestHeader> Headers;
         public HostedAdmin(IConfigurationProvider configurationProvider, CountryCode countryCode)
         {
             ConfigurationProvider = configurationProvider;
             MerchantId = configurationProvider.GetMerchantId(PaymentType.HOSTED, countryCode);
             CountryCode = countryCode;
+            Headers = new List<AdminRequestHeader>();
         }
 
         public HostedActionRequest Annul(Annul annul)
@@ -23,8 +27,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <annul>
                 <transactionid>{0}</transactionid>
                 </annul>", annul.TransactionId);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/annul");
+            AddCorrelationIdHeader(annul.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/annul");
         }
 
         public HostedActionRequest CancelRecurSubscription(CancelRecurSubscription cancelRecurSubscription)
@@ -33,8 +37,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <cancelrecursubscription>
                 <subscriptionid>{0}</subscriptionid>
                 </cancelrecursubscription>", cancelRecurSubscription.SubscriptionId);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            AddCorrelationIdHeader(cancelRecurSubscription.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/cancelrecursubscription");
         }
 
@@ -45,22 +49,22 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 <capturedate>{1}</capturedate>
                 </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd"));
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirm");
+            AddCorrelationIdHeader(confirm.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/confirm");
         }
 
         public HostedActionRequest ConfirmPartial(ConfirmPartial confirmPartial)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <confirmPartial>
-                <callerReferenceId>{0}</callerReferenceId>
+                <captureRequestId>{0}</captureRequestId>
                 <transactionid>{1}</transactionid>
                 <amount>{2}</amount>
                 <orderrows>{3}
                 </orderrows>
-                </confirmPartial>", confirmPartial.CallerReferenceId, confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/confirmpartial");
+                </confirmPartial>", confirmPartial.CallerReferenceId.ToString(), confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
+            AddCorrelationIdHeader(confirmPartial.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/confirmpartial");
         }
 
         public HostedActionRequest Credit(Credit credit)
@@ -70,8 +74,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 <amounttocredit>{1}</amounttocredit>
                 </credit>", credit.TransactionId, credit.AmountToCredit);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/credit");
+            AddCorrelationIdHeader(credit.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/credit");
         }
 
         public HostedActionRequest GetPaymentMethods(GetPaymentMethods getPaymentMethods)
@@ -80,8 +84,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <getpaymentmethods>
                 <merchantid>{0}</merchantid>
                 </getpaymentmethods>", getPaymentMethods.MerchantId);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            AddCorrelationIdHeader(getPaymentMethods.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/getpaymentmethods");
         }
 
@@ -91,8 +95,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <getreconciliationreport>
                 <date>{0}</date>
                 </getreconciliationreport>", getReconciliationReport.Date.ToString("yyyy-MM-dd"));
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            AddCorrelationIdHeader(getReconciliationReport.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/getreconciliationreport");
         }
 
@@ -103,7 +107,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 <amounttolower>{1}</amounttolower>
                 </loweramount>", lowerAmount.TransactionId, lowerAmount.AmountToLower);
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramount");
+            AddCorrelationIdHeader(lowerAmount.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramount");
         }
 
         public HostedActionRequest LowerAmountConfirm(LowerAmountConfirm lowerAmount)
@@ -116,7 +121,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 </loweramountconfirm>", lowerAmount.TransactionId, 
                                         lowerAmount.AmountToLower,
                                         lowerAmount.CaptureDate.ToString("yyyy-MM-dd"));
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/loweramountconfirm");
+            AddCorrelationIdHeader(lowerAmount.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramountconfirm");
         }
 
         public HostedActionRequest Query(QueryByTransactionId query)
@@ -125,8 +131,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <query>
                 <transactionid>{0}</transactionid>
                 </query>", query.TransactionId);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            AddCorrelationIdHeader(query.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/querytransactionid");
         }
 
@@ -136,8 +142,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <query>
                 <customerrefno>{0}</customerrefno>
                 </query>", query.CustomerRefNo);
-
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider,
+            AddCorrelationIdHeader(query.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/querycustomerrefno");
         }
 
@@ -152,7 +158,13 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <amount>{3}</amount>
                 {4}
                 </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount, vat);
-            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, "/recur");
+            AddCorrelationIdHeader(recur.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/recur");
+        }
+
+        private void AddCorrelationIdHeader(Guid? correlationId)
+        {
+            Headers.Add(new AdminRequestHeader("X-Svea-CorrelationId", correlationId));
         }
     }
 }

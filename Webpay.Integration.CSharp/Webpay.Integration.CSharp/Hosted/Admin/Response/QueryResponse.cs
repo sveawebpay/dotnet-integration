@@ -54,7 +54,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
                     TextString(response, "/response/transaction/mdstatus"),
                     TextString(response, "/response/transaction/expiryyear"),
                     TextString(response, "/response/transaction/expirymonth"),
-                    TextString(response, "/response/transaction/ch_name"),
+                    TextString(response, "/response/transaction/chname"),
                     TextString(response, "/response/transaction/authcode"),
                     customer
                     );

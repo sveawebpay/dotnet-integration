@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -48,6 +49,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         {
             OrderType = PaymentType.PAYMENTPLAN;
             return new AdminService.AddOrderRowsRequest(this);
+        }
+
+        public override AddOrderRowsBuilder SetCorrelationId(Guid? correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
         }
     }
 }

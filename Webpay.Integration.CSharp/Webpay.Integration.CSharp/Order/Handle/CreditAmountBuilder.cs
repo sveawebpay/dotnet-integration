@@ -1,4 +1,5 @@
-﻿using Webpay.Integration.CSharp.Config;
+﻿using System;
+using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
@@ -58,6 +59,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AdminService.CreditTransactionRequest CreditDirectBankAmount()
         {
             return new AdminService.CreditTransactionRequest(this);
+        }
+
+        public override CreditAmountBuilder SetCorrelationId(Guid? correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
         }
     }
 }

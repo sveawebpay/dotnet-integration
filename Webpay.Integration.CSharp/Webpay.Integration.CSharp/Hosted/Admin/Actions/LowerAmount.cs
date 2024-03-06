@@ -1,14 +1,15 @@
+using System;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
-    public class LowerAmount
+    public class LowerAmount:BasicRequest
     {
         public readonly long AmountToLower;
         public readonly long TransactionId;
 
-        public LowerAmount(long transactionId, long amountToLower)
+        public LowerAmount(long transactionId, long amountToLower, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             AmountToLower = amountToLower;

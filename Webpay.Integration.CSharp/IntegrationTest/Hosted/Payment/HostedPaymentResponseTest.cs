@@ -58,6 +58,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
         {
             Uri uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                                               .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                                .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                                .SetCurrency(TestingTool.DefaultTestCurrency)

@@ -8,6 +8,7 @@ using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Helper;
 using Webpay.Integration.CSharp.Order.Create;
 using Webpay.Integration.CSharp.Order.Validator;
+using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Payment
@@ -198,8 +199,11 @@ namespace Webpay.Integration.CSharp.Hosted.Payment
                 .GetEndPoint(PaymentType.HOSTED);
 
             var baseUrl = payPageUrl.Replace("/payment", "");
-
-            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, baseUrl);
+            var headers = new List<AdminRequestHeader>
+            {
+                new AdminRequestHeader("X-Svea-CorrelationId", CrOrderBuilder.GetCorrelationId())
+            };
+            var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, baseUrl, headers);
 
             var targetAddress = baseUrl + "/rest/preparepayment";
 

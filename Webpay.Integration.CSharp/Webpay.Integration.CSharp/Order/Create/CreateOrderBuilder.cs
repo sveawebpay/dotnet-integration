@@ -384,5 +384,10 @@ namespace Webpay.Integration.CSharp.Order.Create
             return this;
         }
 
+        public override CreateOrderBuilder SetCorrelationId(Guid? correlationId)
+        {
+            _correlationId = correlationId;
+            return this;
+        }
     }
 }

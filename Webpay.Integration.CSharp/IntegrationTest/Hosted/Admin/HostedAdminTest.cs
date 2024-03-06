@@ -44,7 +44,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
-                    subscriptionId: "3352"
+                    subscriptionId: "3352",
+                    correlationId: new Guid()
                 ))
                 .DoRequest<RecurResponse>();
         }
@@ -55,7 +56,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 598683,
-                    captureDate: DateTime.Now
+                    captureDate: DateTime.Now,
+                    correlationId: new Guid()
                 ))
                 .DoRequest<ConfirmResponse>();
         }
@@ -67,7 +69,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Annul(new Annul(
-                    transactionId: payment.TransactionId
+                    transactionId: payment.TransactionId,
+                    correlationId: new Guid()
                 ));
             AnnulResponse response = hostedActionRequest.DoRequest<AnnulResponse>();
 
@@ -121,7 +124,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .CancelRecurSubscription(new CancelRecurSubscription(
-                    subscriptionId: "12341234"
+                    subscriptionId: "12341234",
+                    correlationId: new Guid()
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -164,7 +168,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Confirm(new Confirm(
                     transactionId: 12341234,
-                    captureDate: new DateTime(2015, 05, 22)
+                    captureDate: new DateTime(2015, 05, 22),
+                    correlationId: new Guid()
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -204,9 +209,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .ConfirmPartial(new ConfirmPartial(
                     transactionId: 12341234,
-                    callerReferenceId: "1234445566",
+                    callerReferenceId: new Guid(),
                     amount: 1000,
-                    orderRows: orderRows
+                    orderRows: orderRows,
+                    correlationId: new Guid()
                 ));
            
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -259,7 +265,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetPaymentMethods(new GetPaymentMethods(
-                    merchantId: 1130
+                    merchantId: 1130,
+                    correlationId: new Guid()
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -319,7 +326,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .GetReconciliationReport(new GetReconciliationReport(
-                    date: new DateTime(2023, 04, 27)
+                    date: new DateTime(2023, 04, 27),
+                    correlationId: new Guid()
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -392,7 +400,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             LowerAmountResponse lowerAmountResponse = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmount(new LowerAmount(
                     transactionId: payment.TransactionId,
-                    amountToLower: 666
+                    amountToLower: 666,
+                    correlationId: new Guid()
                     ))
                 .PrepareRequest()
                 .DoRequest()
@@ -408,7 +417,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .LowerAmount(new LowerAmount(
                     transactionId: payment.TransactionId,
-                    amountToLower: 666
+                    amountToLower: 666,
+                    correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -470,7 +480,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .LowerAmountConfirm(new LowerAmountConfirm(
                     transactionId: payment.TransactionId,
                     amountToLower: 111,
-                    captureDate: DateTime.Now
+                    captureDate: DateTime.Now,
+                    correlationId: new Guid()
                     ))
                 .PrepareRequest()
                 .DoRequest()
@@ -487,7 +498,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .LowerAmountConfirm(new LowerAmountConfirm(
                     transactionId: payment.TransactionId,
                     amountToLower: 111,
-                    captureDate: DateTime.Parse("2021-05-29")
+                    captureDate: DateTime.Parse("2021-05-29"),
+                    correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -549,7 +561,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByTransactionId(
-                    transactionId: payment.TransactionId
+                    transactionId: payment.TransactionId,
+                    correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -606,7 +619,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                                 <mdstatus>mdstatus</mdstatus>
                                 <expiryyear>2015</expiryyear>
                                 <expirymonth>09</expirymonth>
-                                <ch_name>ch_name</ch_name>
+                                <chname>ch_name</chname>
                                 <authcode>authcode</authcode>
                                 <customer id=""22513"">
                                     <firstname>Testa</firstname>
@@ -666,7 +679,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(response.Transaction.MdStatus, Is.EqualTo("mdstatus"));
             Assert.That(response.Transaction.ExpiryYear, Is.EqualTo("2015"));
             Assert.That(response.Transaction.ExpiryMonth, Is.EqualTo("09"));
-            Assert.That(response.Transaction.ChName, Is.EqualTo("ch_name"));
+            Assert.That(response.Transaction.ChName, Is.EqualTo("chname"));
             Assert.That(response.Transaction.AuthCode, Is.EqualTo("authcode"));
             Assert.That(response.Transaction.Customer.Id, Is.EqualTo("22513"));
             Assert.That(response.Transaction.Customer.FirstName, Is.EqualTo("Testa"));
@@ -735,7 +748,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByCustomerRefNo(
-                    customerRefNo: customerRefNo
+                    customerRefNo: customerRefNo,
+                    correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -759,6 +773,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     subscriptionId: subscriptionId,
                     currency: Currency.SEK,
                     amount: amount,
+                    correlationId: new Guid(),
                     vat: vat
                 ));
 

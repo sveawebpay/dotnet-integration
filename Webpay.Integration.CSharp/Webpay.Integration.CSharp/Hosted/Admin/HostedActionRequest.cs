@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Net;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
+using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin
@@ -13,15 +16,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public readonly string MerchantId;
         public readonly string ServicePath;
         public readonly string Xml;
+        public readonly List<AdminRequestHeader> Headers;
 
         public HostedActionRequest(string xml, CountryCode countryCode, string merchantId,
-            IConfigurationProvider configurationProvider, string servicePath)
+            IConfigurationProvider configurationProvider, List<AdminRequestHeader> headers, string servicePath)
         {
             Xml = xml;
             CountryCode = countryCode;
             MerchantId = merchantId;
             ConfigurationProvider = configurationProvider;
             ServicePath = servicePath;
+            Headers = headers;
         }
 
         public T DoRequest<T>()
@@ -93,7 +98,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public HostedAdminRequest PrepareRequest()
         {
             return new HostedAdminRequest(Xml, ConfigurationProvider.GetSecretWord(PaymentType.HOSTED, CountryCode),
-                MerchantId, GetEndPointBase());
+                MerchantId, GetEndPointBase(), Headers);
         }
     }
 }

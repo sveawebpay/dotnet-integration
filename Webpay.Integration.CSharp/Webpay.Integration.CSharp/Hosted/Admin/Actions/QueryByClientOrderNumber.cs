@@ -1,3 +1,5 @@
+using System;
+
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
     /// <summary>
@@ -5,7 +7,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     /// </summary>
     public class QueryByClientOrderNumber : QueryByCustomerRefNo
     {
-        public QueryByClientOrderNumber(string clientOrderNumber) : base(clientOrderNumber)
+        public QueryByClientOrderNumber(string clientOrderNumber, Guid? correlationId) : base(clientOrderNumber, correlationId)
         {
         }
     }

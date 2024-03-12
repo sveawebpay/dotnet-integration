@@ -6,9 +6,9 @@ namespace Webpay.Integration.CSharp.AdminService
 {
     public class CreditAmountRequest
     {
-        private readonly CreditAmountBuilder _builder;
+        private readonly CreditOrderBuilder _builder;
 
-        public CreditAmountRequest(CreditAmountBuilder builder)
+        public CreditAmountRequest(CreditOrderBuilder builder)
         {
             _builder = builder;
         }

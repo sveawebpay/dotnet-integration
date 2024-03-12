@@ -1,45 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
+using Webpay.Integration.CSharp.Order.Row;
+using Webpay.Integration.CSharp.Order.Row.credit;
 using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
-    public class CreditAmountBuilder : Builder<CreditAmountBuilder>
+    // For direct bank , mobile , card payments
+    public class CreditOrderBuilder : Builder<CreditOrderBuilder>
     {
         internal long Id { get; private set; }
         internal string Description { get; private set; }
         internal decimal AmountIncVat { get; private set; }
+        internal List<CreditOrderRowBuilder> CreditOrderRows { get; private set; }
         internal PaymentType OrderType { get; private set; }
 
-        public CreditAmountBuilder(IConfigurationProvider config) : base(config)
+        public CreditOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            // intentionally left blank
+            CreditOrderRows = new List<CreditOrderRowBuilder>();
         }
 
-        public CreditAmountBuilder SetContractNumber(long orderId)
+        public CreditOrderBuilder SetContractNumber(long orderId)
         {
             Id = orderId;
             return this;
         }
 
-        public CreditAmountBuilder SetTransactionId(long orderId)
+        public CreditOrderBuilder SetTransactionId(long orderId)
         {
             return this.SetContractNumber(orderId);
         }
 
-        public override CreditAmountBuilder SetCountryCode(CountryCode countryCode)
+        public override CreditOrderBuilder SetCountryCode(CountryCode countryCode)
         {
             _countryCode = countryCode;
             return this;
         }
 
-        public CreditAmountBuilder SetDescription(string description)
+        public CreditOrderBuilder SetDescription(string description)
         {
             Description = description;
             return this;
         }
 
-        public CreditAmountBuilder SetAmountIncVat(decimal amountIncVat)
+        public CreditOrderBuilder SetAmountIncVat(decimal amountIncVat)
         {
             AmountIncVat = amountIncVat;
             return this;
@@ -47,7 +52,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
         public AdminService.CreditAmountRequest CreditPaymentPlanAmount()
         {
-            OrderType = PaymentType.PAYMENTPLAN;
+            OrderType = PaymentType.HOSTED;
             return new AdminService.CreditAmountRequest(this);
         }
 
@@ -61,7 +66,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.CreditTransactionRequest(this);
         }
 
-        public override CreditAmountBuilder SetCorrelationId(Guid? correlationId)
+        public override CreditOrderBuilder SetCorrelationId(Guid? correlationId)
         {
             _correlationId = correlationId;
             return this;

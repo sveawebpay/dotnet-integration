@@ -13,44 +13,44 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly long AmountToCredit;
         public readonly long TransactionId;
+        public readonly List<NewCreditOrderRowBuilder> NewOrderRows;
         public readonly List<CreditOrderRowBuilder> OrderRows;
 
-        public Credit(long transactionId, long amountToCredit, List<CreditOrderRowBuilder> orderRows, Guid? correlationId) : base(correlationId)
+        public Credit(long transactionId, long amountToCredit, List<NewCreditOrderRowBuilder> newOrderRows, List<CreditOrderRowBuilder> orderRows, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             AmountToCredit = amountToCredit;
+            NewOrderRows = newOrderRows;
             OrderRows = orderRows;
         }
         public string GetXmlForOrderRows()
         {
-
-            var xml = "<orderrows>";
-            foreach (var row in OrderRows)
+            if(OrderRows.Count()>0 ||NewOrderRows.Count()>0)
             {
-                xml += GetXmlForOrderRow(row);
+                var xml = "<orderrows>";
+                foreach (var row in OrderRows)
+                {
+                    xml += GetXmlForOrderRow(row);
 
+                }
+                foreach (var row in NewOrderRows)
+                {
+                    xml += GetXmlForOrderRow(row);
+
+                }
+                xml += "</orderrows>";
+                return xml;
             }
-            xml += "</orderrows>";
-            return xml;
+            return "";
         }
         public static CreditResponse Response(XmlDocument responseXml)
         {
             return new CreditResponse(responseXml);
         }
 
-        private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
+        private string GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
         {
-            //Existing order row
-            if(String.IsNullOrEmpty(orderRow.Name))
-            {
-                return $"<row>" +
-                       $"<rowId>{orderRow.RowId}</rowId>" +
-                       $"<quantity>{orderRow.Quantity}</quantity> " +
-                       $"</row>";
-            }
-             // new order row
             return $"<row>" +
-                         $"<rowId>{orderRow.RowId}</rowId>" +
                          $"<name>{orderRow.Name}</name> " +
                          $"<unitprice>{orderRow.UnitPrice}</unitprice> " +
                          $"<quantity>{orderRow.Quantity}</quantity> " +
@@ -58,8 +58,15 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                          $"<discountpercent>{orderRow.DiscountPercent}</discountpercent> " +
                          $"<discountamount>{orderRow.DiscountAmount}</discountamount> " +
                          $"<unit>{orderRow.Unit}</unit> " +
-                         $"<articlenumber>{orderRow.ArticleNumber}</articlenumber> " +
+                         $"<articlenumber>{orderRow.ArticleNumber}</articlenumber>" +
                          $"</row>";
+        }
+        private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
+        {
+                return $"<row>" +
+                       $"<rowId>{orderRow.RowId}</rowId>" +
+                       $"<quantity>{orderRow.Quantity}</quantity>" +
+                       $"</row>";         
         }
         public bool ValidateCreditRequest(out CreditResponse response)
         {
@@ -74,25 +81,23 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 response = GetValidationErrorResponse("Invalid AmountToCredit");
                 return false;
             }
-            else if (OrderRows.Any(x=> !string.IsNullOrEmpty(x.Name)
-                    && (x.RowId<=0)
-                    && (x.UnitPrice == null || x.UnitPrice <= 0)
-                    && (x.Quantity <= 0)
-                    && (x.VatPercent == null || x.VatPercent < 0)
-                    && (x.DiscountPercent == null || x.DiscountPercent < 0)
-                    && (x.DiscountAmount == null || x.DiscountAmount < 0)
-                    && string.IsNullOrEmpty(x.Unit)
-                    && string.IsNullOrEmpty(x.ArticleNumber)
-                )
-             )
+            else if (NewOrderRows.Count()>0 && NewOrderRows.Any(x=> 
+                    string.IsNullOrEmpty(x.Name)
+                    || (x.UnitPrice <= 0)
+                    || (x.Quantity <= 0)
+                    || (x.VatPercent < 0)
+                    || (x.DiscountPercent < 0)
+                    || (x.DiscountAmount < 0)
+                    || string.IsNullOrEmpty(x.Unit)
+                    || string.IsNullOrEmpty(x.ArticleNumber)
+                ))
             {
                 response = GetValidationErrorResponse("Invalid New OrderRow");
                 return false;
             }
-            else if (OrderRows.Any(x => string.IsNullOrEmpty(x.Name) 
-                    && (x.RowId <= 0)
-                    && (x.Quantity <= 0))
-                )
+            else if (OrderRows.Count()>0 && OrderRows.Any(x =>  
+                       (x.RowId <= 0)
+                    || (x.Quantity <= 0)))
             {
                 response = GetValidationErrorResponse("Invalid OrderRow");
                 return false;

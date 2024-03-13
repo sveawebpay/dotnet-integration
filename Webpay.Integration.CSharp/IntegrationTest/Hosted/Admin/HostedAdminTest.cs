@@ -13,6 +13,7 @@ using Webpay.Integration.CSharp.Util.Testing;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using System.Collections.Generic;
+using Webpay.Integration.CSharp.Order.Row.credit;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -174,6 +175,52 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
+        public void TestCreditOrderRows()
+        {
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Credit(new Credit(
+                    transactionId: 12341234,
+                    amountToCredit: 100, 
+                    orderRows: new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId =1 } },
+                    newOrderRows: new List<NewCreditOrderRowBuilder> { },
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
+        }
+
+        [Test]
+        public void TestCreditNewOrderRows()
+        {
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Credit(new Credit(
+                    transactionId: 12341234,
+                    amountToCredit: 100,
+                    orderRows: new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } },
+                    newOrderRows: new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder { 
+                            Quantity = 1,
+                            ArticleNumber = "11",
+                            DiscountAmount = 10,
+                            DiscountPercent=2 ,
+                            Name = "test",
+                            Unit = "test",
+                            UnitPrice = 10,
+                            VatPercent=1
+                        } 
+                    },
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").LastChild.SelectSingleNode("name").InnerText, Is.EqualTo("test"));
+        }
+        [Test]
         public void TestConfirmResponse()
         {
             var responseXml = new XmlDocument();
@@ -205,14 +252,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .ConfirmPartial(new ConfirmPartial(
                     transactionId: 12341234,
-                    callerReferenceId: new Guid(),
+                    callerReferenceId: new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"),
                     amount: 1000,
-                    orderRows: orderRows, correlationId: null
+                    orderRows: orderRows, correlationId: new Guid()
                 ));
            
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/callerReferenceId").InnerText, Is.EqualTo("1234445566"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/captureRequestId").InnerText, Is.EqualTo("9d2b0228-4d0d-4c23-8b49-01a698857709"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/confirmPartial/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
         }
 
@@ -550,7 +597,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByTransactionId(
-                    transactionId: payment.TransactionId, correlationId: null
+                    transactionId: payment.TransactionId, 
+                    correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -607,7 +655,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                                 <mdstatus>mdstatus</mdstatus>
                                 <expiryyear>2015</expiryyear>
                                 <expirymonth>09</expirymonth>
-                                <ch_name>ch_name</ch_name>
+                                <chname>ch_name</chname>
                                 <authcode>authcode</authcode>
                                 <customer id=""22513"">
                                     <firstname>Testa</firstname>
@@ -736,7 +784,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Query(new QueryByCustomerRefNo(
-                    customerRefNo: customerRefNo, correlationId: null
+                    customerRefNo: customerRefNo, correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
@@ -760,7 +808,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                     subscriptionId: subscriptionId,
                     currency: Currency.SEK,
                     amount: amount,
-                    vat: vat, correlationId: null
+                    vat: vat, correlationId: new Guid()
                 ));
 
             HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();

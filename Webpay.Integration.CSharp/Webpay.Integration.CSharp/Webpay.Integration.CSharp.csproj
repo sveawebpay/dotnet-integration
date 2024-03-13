@@ -119,6 +119,7 @@
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Order\Row\Credit\CreditOrderRowBuilder.cs" />
+    <Compile Include="Order\Row\Credit\NewCreditOrderRowBuilder.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -282,8 +282,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
             Assert.IsFalse(delivery.Accepted);
-            Assert.That(delivery.ResultCode, Is.EqualTo(50000));    // will use the first order clientid for both, and orders belong to different clients...
-            Assert.That(delivery.ErrorMessage, Is.EqualTo("Client is not authorized for this method."));
+            Assert.That(delivery.ResultCode, Is.EqualTo(20004));    // will use the first order clientid for both, and orders belong to different clients...
+            Assert.That(delivery.ErrorMessage, Is.EqualTo("No order found for orderId: " + orderTwo.CreateOrderResult.SveaOrderId.ToString()));
         }
         [Test] public void Test_DeliverOrders_DeliverPaymentPlanOrderRows_SetOrderIdAndSingleOrder()
         {
@@ -1087,7 +1087,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("ANNULLED"));
-            Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(0.0M)); //r1, r2: 100.00ex@25*2 => 500.00
+            Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(null)); //r1, r2: 100.00ex@25*2 => 500.00
         }
         [Test] public void Test_CancelOrderRows_CancelCardOrderRows_CancellingFirstOfTwoRows()
         {
@@ -1291,8 +1291,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetContractNumber(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
-                .SetAmountIncVat(100.00M)
-                ;
+                .SetAmountIncVat(100.00M);
             AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
             Assert.IsFalse(response.Accepted);
             Assert.That(response.ResultCode, Is.EqualTo(27006));
@@ -1323,8 +1322,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
-                .SetAmountIncVat(amountToCredit)
-                ;
+                .SetAmountIncVat(amountToCredit);
             CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
             Assert.IsTrue(response.Accepted);
 

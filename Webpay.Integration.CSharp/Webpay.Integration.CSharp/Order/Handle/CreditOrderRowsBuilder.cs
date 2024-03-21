@@ -6,6 +6,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.Order.Handle
 {
+    // for invoices 
     public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
     {
         internal long Id { get; private set; }

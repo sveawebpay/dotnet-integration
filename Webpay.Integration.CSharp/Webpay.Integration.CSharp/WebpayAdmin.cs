@@ -196,9 +196,9 @@ namespace Webpay.Integration.CSharp
         ///  response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
         ///  ...
         /// </summary>
-        public static CreditAmountBuilder CreditAmount(IConfigurationProvider configurationProvider)
+        public static CreditOrderBuilder CreditAmount(IConfigurationProvider configurationProvider)
         {
-            return new CreditAmountBuilder(configurationProvider);
+            return new CreditOrderBuilder(configurationProvider);
         }
     }
 }

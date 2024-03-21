@@ -63,6 +63,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
                                                .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                                .SetCurrency(TestingTool.DefaultTestCurrency)
                                                .UsePaymentMethod(PaymentMethod.SVEACARDPAY_PF)
+                                               
                                                .SetReturnUrl(
                                                    "https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                                .PreparePayment("127.0.0.1");

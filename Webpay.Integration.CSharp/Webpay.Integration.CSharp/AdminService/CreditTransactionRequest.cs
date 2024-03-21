@@ -27,14 +27,14 @@ namespace Webpay.Integration.CSharp.AdminService
                     newOrderRows: _builder.NewOrderRows,
                     orderRows: _builder.OrderRows,
                     correlationId: _builder.GetCorrelationId());
-            CreditResponse validationResoponse = null;
-            if(creditRequest.ValidateCreditRequest(out validationResoponse))
+            CreditResponse validationResoponse;
+            if (creditRequest.ValidateCreditRequest(out validationResoponse))
             {
                 var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .Credit(creditRequest);
                 return hostedActionRequest.DoRequest<CreditResponse>();
             }
-            return validationResoponse;
+            return null;
         }
     }
 }

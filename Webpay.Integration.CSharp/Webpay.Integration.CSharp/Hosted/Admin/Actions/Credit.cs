@@ -25,9 +25,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         public string GetXmlForOrderRows()
         {
-            if(OrderRows.Count()>0 ||NewOrderRows.Count()>0)
+            var xml = "<orderrows>";
+            if (OrderRows.Count()>0 ||NewOrderRows.Count()>0)
             {
-                var xml = "<orderrows>";
+               
                 foreach (var row in OrderRows)
                 {
                     xml += GetXmlForOrderRow(row);
@@ -38,10 +39,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                     xml += GetXmlForOrderRow(row);
 
                 }
-                xml += "</orderrows>";
-                return xml;
             }
-            return "";
+            xml += "</orderrows>";
+            return xml;
         }
         public static CreditResponse Response(XmlDocument responseXml)
         {
@@ -76,11 +76,16 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 response =GetValidationErrorResponse("Invalid transactionId");
                 return false;
             }
-            else if (AmountToCredit < 0)
+            else if (AmountToCredit <= 0 && NewOrderRows.Count() == 0 && OrderRows.Count() == 0)
             {
-                response = GetValidationErrorResponse("Invalid AmountToCredit");
+                response = GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required");
                 return false;
             }
+            else if (AmountToCredit > 0 && NewOrderRows.Count() != 0 && OrderRows.Count() != 0)
+            {
+                response = GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time");
+                return false;
+            }           
             else if (NewOrderRows.Count()>0 && NewOrderRows.Any(x=> 
                     string.IsNullOrEmpty(x.Name)
                     || (x.UnitPrice <= 0)

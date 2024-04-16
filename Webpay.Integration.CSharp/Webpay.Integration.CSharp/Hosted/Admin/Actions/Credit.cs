@@ -6,6 +6,7 @@ using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Row.credit;
+using Webpay.Integration.CSharp.Response;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
@@ -13,41 +14,55 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly long AmountToCredit;
         public readonly long TransactionId;
-        public readonly List<NewCreditOrderRowBuilder> NewOrderRows;
-        public readonly List<CreditOrderRowBuilder> OrderRows;
+        public readonly List<Delivery> Deliveries;
 
-        public Credit(long transactionId, long amountToCredit, List<NewCreditOrderRowBuilder> newOrderRows, List<CreditOrderRowBuilder> orderRows, Guid? correlationId) : base(correlationId)
+        public Credit(long transactionId, long amountToCredit, List<Delivery> deliveries, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             AmountToCredit = amountToCredit;
-            NewOrderRows = newOrderRows;
-            OrderRows = orderRows;
+            Deliveries = deliveries;
         }
-        public string GetXmlForOrderRows()
+        public string GetXmlForDeliveries()
         {
-            var xml = "<orderrows>";
-            if (OrderRows.Count()>0 ||NewOrderRows.Count()>0)
+            var xml = "<deliveries>";
+            Deliveries.ForEach(delivery =>
             {
-               
-                foreach (var row in OrderRows)
+                xml += GetXmlForDelivery(delivery);
+            });
+            xml += "</deliveries>";
+            return xml; 
+        }
+       
+        public static CreditResponse Response(XmlDocument responseXml)
+        {
+            return new CreditResponse(responseXml);
+        }
+        private string GetXmlForDelivery(Delivery delivery)
+        {
+            return $"<delivery>" +
+                        $"<id>{delivery.Id}</id> " +
+                        $"<orderrows>{GetXmlForOrderRows(delivery)}</orderrows> " +
+                        $"</delivery>";
+        }
+        private string GetXmlForOrderRows(Delivery delivery)
+        {
+            var xml = "";
+            if (delivery.OrderRows.Count() > 0 || delivery.NewOrderRows.Count() > 0)
+            {
+
+                foreach (var row in delivery.OrderRows)
                 {
                     xml += GetXmlForOrderRow(row);
 
                 }
-                foreach (var row in NewOrderRows)
+                foreach (var row in delivery.NewOrderRows)
                 {
                     xml += GetXmlForOrderRow(row);
 
                 }
             }
-            xml += "</orderrows>";
             return xml;
         }
-        public static CreditResponse Response(XmlDocument responseXml)
-        {
-            return new CreditResponse(responseXml);
-        }
-
         private string GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
         {
             return $"<row>" +
@@ -71,22 +86,56 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         public bool ValidateCreditRequest(out CreditResponse response)
         {
             response = null;
+            var deliveryResponse = ValidateDeliveries();
             if ( TransactionId < 0)
             {
                 response =GetValidationErrorResponse("Invalid transactionId");
                 return false;
             }
-            else if (AmountToCredit <= 0 && NewOrderRows.Count() == 0 && OrderRows.Count() == 0)
+            else if (!deliveryResponse.Item1)
             {
-                response = GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required");
+                response = deliveryResponse.Item2;
                 return false;
             }
-            else if (AmountToCredit > 0 && NewOrderRows.Count() != 0 && OrderRows.Count() != 0)
+          
+           return true;
+        }
+        private Tuple<bool, CreditResponse> ValidateDeliveries()
+        {
+            if(Deliveries.Count()==0 && AmountToCredit <=0)
             {
-                response = GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time");
-                return false;
-            }           
-            else if (NewOrderRows.Count()>0 && NewOrderRows.Any(x=> 
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or deliveries with order rows are required"));
+            }
+            else if (Deliveries.Count() > 0 && AmountToCredit > 0)
+            {
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
+            }
+            else if(Deliveries.Count() > 0 && AmountToCredit <= 0)
+            {
+                foreach (var delivery in Deliveries)
+                {
+                    var response = ValidateDelivery(delivery);
+                    if (response.Item1 == false)
+                        return response;
+                }
+            }
+            return new Tuple<bool, CreditResponse>(true,null); 
+        }
+        private Tuple<bool, CreditResponse> ValidateDelivery(Delivery delivery)
+        {
+            if (delivery.Id <=0 )
+            {
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, delivery Id cannot be null"));
+            }
+            else if (AmountToCredit <= 0 && delivery.NewOrderRows.Count() == 0 && delivery.OrderRows.Count() == 0)
+            {
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required"));
+            }
+            else if (AmountToCredit > 0 && delivery.NewOrderRows.Count() != 0 && delivery.OrderRows.Count() != 0)
+            {
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
+            }
+            else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
                     string.IsNullOrEmpty(x.Name)
                     || (x.UnitPrice <= 0)
                     || (x.Quantity <= 0)
@@ -97,19 +146,16 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                     || string.IsNullOrEmpty(x.ArticleNumber)
                 ))
             {
-                response = GetValidationErrorResponse("Invalid New OrderRow");
-                return false;
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}"));
             }
-            else if (OrderRows.Count()>0 && OrderRows.Any(x =>  
+            else if (delivery.OrderRows.Count() > 0 && delivery.OrderRows.Any(x =>
                        (x.RowId <= 0)
                     || (x.Quantity <= 0)))
             {
-                response = GetValidationErrorResponse("Invalid OrderRow");
-                return false;
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid OrderRow for delivery Id {delivery.Id}"));
             }
-           return true;
+            return new Tuple<bool, CreditResponse>(true, null); ;
         }
-
         private CreditResponse GetValidationErrorResponse(string message)
         {
             var ValidationErrorResponseXml = new XmlDocument();

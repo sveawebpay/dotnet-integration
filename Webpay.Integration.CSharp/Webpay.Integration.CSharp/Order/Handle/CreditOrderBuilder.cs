@@ -14,21 +14,19 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal long Id { get; private set; }
         internal string Description { get; private set; }
         internal decimal AmountIncVat { get; private set; }
-        internal List<NewCreditOrderRowBuilder> NewOrderRows { get; private set; }
-        internal List<CreditOrderRowBuilder> OrderRows { get; private set; }
+        internal List<Delivery> Deliveries { get; private set; }
         internal PaymentType OrderType { get; private set; }
 
         public CreditOrderBuilder(IConfigurationProvider config) : base(config)
         {
-            NewOrderRows = new List<NewCreditOrderRowBuilder>();
-            OrderRows = new List<CreditOrderRowBuilder>();
+            Deliveries = new List<Delivery>();
         }
-        public CreditOrderBuilder AddOrderRows(IList<NewCreditOrderRowBuilder> newCreditOrderRows, IList<CreditOrderRowBuilder> orderRows)
+        public CreditOrderBuilder AddDeliveries(List<Delivery> deliveries)
         {
-            NewOrderRows.AddRange(newCreditOrderRows);
-            OrderRows.AddRange(orderRows);
+            Deliveries.AddRange(deliveries);
             return this;
         }
+       
         public CreditOrderBuilder SetContractNumber(long orderId)
         {
             Id = orderId;

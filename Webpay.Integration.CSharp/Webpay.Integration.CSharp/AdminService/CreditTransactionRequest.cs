@@ -24,8 +24,7 @@ namespace Webpay.Integration.CSharp.AdminService
             var creditRequest = new Credit(
                     transactionId: _builder.Id,
                     amountToCredit: Decimal.ToInt64(_builder.AmountIncVat * 100),
-                    newOrderRows: _builder.NewOrderRows,
-                    orderRows: _builder.OrderRows,
+                    deliveries: _builder.Deliveries,
                     correlationId: _builder.GetCorrelationId());
             CreditResponse validationResoponse;
             if (creditRequest.ValidateCreditRequest(out validationResoponse))

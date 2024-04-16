@@ -14,6 +14,7 @@ using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using System.Collections.Generic;
 using Webpay.Integration.CSharp.Order.Row.credit;
+using Webpay.Integration.CSharp.Order;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -176,31 +177,30 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
         [Test]
         public void TestCreditOrderRows()
-        {
+        {     
+            var delivery = new Delivery { Id = 1234, NewOrderRows = new List<NewCreditOrderRowBuilder> { }, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } };
+            var deliveries = new List<Delivery> { delivery };
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Credit(new Credit(
                     transactionId: 12341234,
                     amountToCredit: 100, 
-                    orderRows: new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId =1 } },
-                    newOrderRows: new List<NewCreditOrderRowBuilder> { },
+                    deliveries: deliveries,
                     correlationId: null
                 ));
-
+          
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
         }
 
         [Test]
         public void TestCreditNewOrderRows()
         {
-            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-                .Credit(new Credit(
-                    transactionId: 12341234,
-                    amountToCredit: 100,
-                    orderRows: new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } },
-                    newOrderRows: new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder { 
+            var delivery = new Delivery { 
+                Id = 1234, 
+                NewOrderRows = new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder {
                             Quantity = 1,
                             ArticleNumber = "11",
                             DiscountAmount = 10,
@@ -209,16 +209,26 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                             Unit = "test",
                             UnitPrice = 10,
                             VatPercent=1
-                        } 
-                    },
+                        }
+                    }, 
+                OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } 
+            };
+            var deliveries = new List<Delivery> { delivery };
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Credit(new Credit(
+                    transactionId: 12341234,
+                    amountToCredit: 100,
+                    deliveries: deliveries,
                     correlationId: null
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").FirstChild.SelectSingleNode("rowId").InnerText, Is.EqualTo("1"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/orderrows").LastChild.SelectSingleNode("name").InnerText, Is.EqualTo("test"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText, Is.EqualTo("test"));
+
         }
         [Test]
         public void TestConfirmResponse()

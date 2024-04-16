@@ -282,8 +282,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
             Assert.IsFalse(delivery.Accepted);
-            Assert.That(delivery.ResultCode, Is.EqualTo(50000));    // will use the first order clientid for both, and orders belong to different clients...
-            Assert.That(delivery.ErrorMessage, Is.EqualTo("Client is not authorized for this method."));
+            Assert.That(delivery.ResultCode, Is.EqualTo(20004));    // will use the first order clientid for both, and orders belong to different clients...
+            Assert.That(delivery.ErrorMessage, Is.EqualTo("No order found for orderId: " + orderTwo.CreateOrderResult.SveaOrderId.ToString()));
         }
         [Test] public void Test_DeliverOrders_DeliverPaymentPlanOrderRows_SetOrderIdAndSingleOrder()
         {
@@ -326,7 +326,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
-                .SetCountryCode(CountryCode.SE);
+                .SetCountryCode(CountryCode.SE)
+                ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(answer.Accepted);
@@ -339,7 +340,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetRowToDeliver(1)
                 .SetRowToDeliver(2)
-                .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
+                .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
+                ;
 
             ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
             Assert.IsTrue(delivery.Accepted);
@@ -347,7 +349,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
-                .SetCountryCode(CountryCode.SE);
+                .SetCountryCode(CountryCode.SE)
+                ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
             Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
@@ -1059,7 +1062,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
                 .SetCountryCode(CountryCode.SE)
-                .SetCorrelationId(new Guid())
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
@@ -1269,7 +1271,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(contract.Accepted);
 
             // credit amount
-            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(contract.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
@@ -1285,12 +1287,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // credit amount
-            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
-                .SetAmountIncVat(100.00M)
-                ;
+                .SetAmountIncVat(100.00M);
             AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
             Assert.IsFalse(response.Accepted);
             Assert.That(response.ResultCode, Is.EqualTo(27006));
@@ -1317,12 +1318,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             // credit amount
             var amountToCredit = 1.00M;
-            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
-                .SetAmountIncVat(amountToCredit)
-                ;
+                .SetAmountIncVat(amountToCredit);
             CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
             Assert.IsTrue(response.Accepted);
 
@@ -1356,7 +1356,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             // credit amount
             var amountToCredit = 1.00M;
-            CreditAmountBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")

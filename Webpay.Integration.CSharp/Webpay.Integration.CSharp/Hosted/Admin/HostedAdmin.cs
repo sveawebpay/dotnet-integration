@@ -74,7 +74,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 <transactionid>{0}</transactionid>
                 <amounttocredit>{1}</amounttocredit>
                 {2}
-                </credit>", credit.TransactionId, credit.AmountToCredit, credit.GetXmlForOrderRows());
+                </credit>", credit.TransactionId, credit.AmountToCredit, credit.GetXmlForDeliveries());
             AddCorrelationIdHeader(credit.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/credit");
         }

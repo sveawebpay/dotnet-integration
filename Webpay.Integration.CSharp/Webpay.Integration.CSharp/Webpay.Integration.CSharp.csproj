@@ -108,6 +108,7 @@
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
+    <Compile Include="Order\Delivery.cs" />
     <Compile Include="Order\Handle\CreditOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />

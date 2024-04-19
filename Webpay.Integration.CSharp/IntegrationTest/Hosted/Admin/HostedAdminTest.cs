@@ -937,7 +937,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             CreditOrderBuilder request = WebpayAdmin.CreditAmount(new SveaTestConfigurationProvider())
                 .SetTransactionId(697022)
                 .SetAmountIncVat(100);
-            var response = request.CreditDirectBankAmount().DoRequest();
+            var response = request.CreditDirectBankPayment().DoRequest();
 
             Assert.That(response.StatusCode, Is.EqualTo(150));
             Assert.That(response.Accepted, Is.EqualTo(true));        

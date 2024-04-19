@@ -123,9 +123,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         private Tuple<bool, CreditResponse> ValidateDelivery(Delivery delivery)
         {
-            if (delivery.Id <=0 )
+            if (delivery== null || delivery.Id <=0 )
             {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, delivery Id cannot be null"));
+                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, invalid delivery Id"));
             }
             else if (AmountToCredit <= 0 && delivery.NewOrderRows.Count() == 0 && delivery.OrderRows.Count() == 0)
             {

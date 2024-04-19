@@ -62,12 +62,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return new AdminService.CreditAmountRequest(this);
         }
 
-        public AdminService.CreditTransactionRequest CreditCardAmount()
+        public AdminService.CreditTransactionRequest CreditCardPayment()
         {
             return new AdminService.CreditTransactionRequest(this);
         }
 
-        public AdminService.CreditTransactionRequest CreditDirectBankAmount()
+        public AdminService.CreditTransactionRequest CreditDirectBankPayment()
         {
             return new AdminService.CreditTransactionRequest(this);
         }

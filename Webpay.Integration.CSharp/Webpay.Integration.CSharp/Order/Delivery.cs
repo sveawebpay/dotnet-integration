@@ -10,7 +10,7 @@ namespace Webpay.Integration.CSharp.Order
 {
     public class Delivery
     {
-        public int Id {  get; set; }
+        public long? Id {  get; set; }
         public List<NewCreditOrderRowBuilder> NewOrderRows { get; set; }
         public List<CreditOrderRowBuilder> OrderRows { get; set; }
         public Delivery() {

@@ -1323,7 +1323,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(amountToCredit);
-            CreditResponse response = creditAmountBuilder.CreditCardAmount().DoRequest();
+            CreditResponse response = creditAmountBuilder.CreditCardPayment().DoRequest();
             Assert.IsTrue(response.Accepted);
 
             // query updated order
@@ -1362,7 +1362,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(amountToCredit)
                 ;
-            CreditResponse response = creditAmountBuilder.CreditDirectBankAmount().DoRequest();
+            CreditResponse response = creditAmountBuilder.CreditDirectBankPayment().DoRequest();
             Assert.IsTrue(response.Accepted);
 
             // query updated order

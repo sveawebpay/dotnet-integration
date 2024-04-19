@@ -194,6 +194,25 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
         }
+        [Test]
+        public void TestCreditOrderRowsWithoutDeliveryId()
+        {
+            var delivery = new Delivery {NewOrderRows = new List<NewCreditOrderRowBuilder> { }, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } };
+            var deliveries = new List<Delivery> { delivery };
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Credit(new Credit(
+                    transactionId: 12341234,
+                    amountToCredit: 100,
+                    deliveries: deliveries,
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo(""));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
+        }
 
         [Test]
         public void TestCreditNewOrderRows()
@@ -934,7 +953,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test, Ignore("Create a directbank transaction with Trustly to test this")]
         public void TestHostedAdminResponseStatus150()
         {
-            CreditOrderBuilder request = WebpayAdmin.CreditAmount(new SveaTestConfigurationProvider())
+            CreditOrderBuilder request = WebpayAdmin.CreditPayment(new SveaTestConfigurationProvider())
                 .SetTransactionId(697022)
                 .SetAmountIncVat(100);
             var response = request.CreditDirectBankPayment().DoRequest();

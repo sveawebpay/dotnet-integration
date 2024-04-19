@@ -30,9 +30,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 xml += GetXmlForDelivery(delivery);
             });
             xml += "</deliveries>";
-            return xml; 
+            return xml;
         }
-       
+
         public static CreditResponse Response(XmlDocument responseXml)
         {
             return new CreditResponse(responseXml);
@@ -78,18 +78,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
         {
-                return $"<row>" +
-                       $"<rowId>{orderRow.RowId}</rowId>" +
-                       $"<quantity>{orderRow.Quantity}</quantity>" +
-                       $"</row>";         
+            return $"<row>" +
+                   $"<rowId>{orderRow.RowId}</rowId>" +
+                   $"<quantity>{orderRow.Quantity}</quantity>" +
+                   $"</row>";
         }
         public bool ValidateCreditRequest(out CreditResponse response)
         {
             response = null;
             var deliveryResponse = ValidateDeliveries();
-            if ( TransactionId < 0)
+            if (TransactionId < 0)
             {
-                response =GetValidationErrorResponse("Invalid transactionId");
+                response = GetValidationErrorResponse("Invalid transactionId");
                 return false;
             }
             else if (!deliveryResponse.Item1)
@@ -97,12 +97,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 response = deliveryResponse.Item2;
                 return false;
             }
-          
-           return true;
+
+            return true;
         }
         private Tuple<bool, CreditResponse> ValidateDeliveries()
         {
-            if(Deliveries.Count()==0 && AmountToCredit <=0)
+            if (Deliveries.Count() == 0 && AmountToCredit <= 0)
             {
                 return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or deliveries with order rows are required"));
             }
@@ -110,7 +110,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             {
                 return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
             }
-            else if(Deliveries.Count() > 0 && AmountToCredit <= 0)
+            else if (Deliveries.Count() > 0 && AmountToCredit <= 0)
             {
                 foreach (var delivery in Deliveries)
                 {
@@ -119,40 +119,39 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                         return response;
                 }
             }
-            return new Tuple<bool, CreditResponse>(true,null); 
+            return new Tuple<bool, CreditResponse>(true, null);
         }
         private Tuple<bool, CreditResponse> ValidateDelivery(Delivery delivery)
         {
-            if (delivery== null || delivery.Id <=0 )
+            if (delivery != null)
             {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, invalid delivery Id"));
-            }
-            else if (AmountToCredit <= 0 && delivery.NewOrderRows.Count() == 0 && delivery.OrderRows.Count() == 0)
-            {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required"));
-            }
-            else if (AmountToCredit > 0 && delivery.NewOrderRows.Count() != 0 && delivery.OrderRows.Count() != 0)
-            {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
-            }
-            else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
-                    string.IsNullOrEmpty(x.Name)
-                    || (x.UnitPrice <= 0)
-                    || (x.Quantity <= 0)
-                    || (x.VatPercent < 0)
-                    || (x.DiscountPercent < 0)
-                    || (x.DiscountAmount < 0)
-                    || string.IsNullOrEmpty(x.Unit)
-                    || string.IsNullOrEmpty(x.ArticleNumber)
-                ))
-            {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}"));
-            }
-            else if (delivery.OrderRows.Count() > 0 && delivery.OrderRows.Any(x =>
-                       (x.RowId <= 0)
-                    || (x.Quantity <= 0)))
-            {
-                return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid OrderRow for delivery Id {delivery.Id}"));
+                if (AmountToCredit <= 0 && delivery.NewOrderRows.Count() == 0 && delivery.OrderRows.Count() == 0)
+                {
+                    return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required"));
+                }
+                else if (AmountToCredit > 0 && delivery.NewOrderRows.Count() != 0 && delivery.OrderRows.Count() != 0)
+                {
+                    return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
+                }
+                else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
+                        string.IsNullOrEmpty(x.Name)
+                        || (x.UnitPrice <= 0)
+                        || (x.Quantity <= 0)
+                        || (x.VatPercent < 0)
+                        || (x.DiscountPercent < 0)
+                        || (x.DiscountAmount < 0)
+                        || string.IsNullOrEmpty(x.Unit)
+                        || string.IsNullOrEmpty(x.ArticleNumber)
+                    ))
+                {
+                    return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}"));
+                }
+                else if (delivery.OrderRows.Count() > 0 && delivery.OrderRows.Any(x =>
+                           (x.RowId <= 0)
+                        || (x.Quantity <= 0)))
+                {
+                    return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid OrderRow for delivery Id {delivery.Id}"));
+                }
             }
             return new Tuple<bool, CreditResponse>(true, null); ;
         }

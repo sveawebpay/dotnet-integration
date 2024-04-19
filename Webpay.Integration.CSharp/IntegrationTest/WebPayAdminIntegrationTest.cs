@@ -1271,7 +1271,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(contract.Accepted);
 
             // credit amount
-            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(contract.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
@@ -1287,7 +1287,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.IsTrue(order.Accepted);
 
             // credit amount
-            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(order.CreateOrderResult.SveaOrderId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
@@ -1318,7 +1318,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             // credit amount
             var amountToCredit = 1.00M;
-            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")
@@ -1356,7 +1356,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
 
             // credit amount
             var amountToCredit = 1.00M;
-            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditAmount(SveaConfig.GetDefaultConfig())
+            CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
                 .SetContractNumber(capturedTransactionId)
                 .SetCountryCode(CountryCode.SE)
                 .SetDescription("test of credit amount")

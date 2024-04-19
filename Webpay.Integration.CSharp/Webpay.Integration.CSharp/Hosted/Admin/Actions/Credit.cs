@@ -27,7 +27,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             var xml = "<deliveries>";
             Deliveries.ForEach(delivery =>
             {
-                xml += GetXmlForDelivery(delivery);
+                if(delivery != null)
+                {
+                    xml += GetXmlForDelivery(delivery);
+                }
+                
             });
             xml += "</deliveries>";
             return xml;

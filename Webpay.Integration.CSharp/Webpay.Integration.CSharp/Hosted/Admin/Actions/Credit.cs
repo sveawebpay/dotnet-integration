@@ -83,7 +83,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
         {
             return $"<row>" +
-                   $"<rowId>{orderRow.RowId}</rowId>" +
+                   $"<rowid>{orderRow.RowId}</rowid>" +
                    $"<quantity>{orderRow.Quantity}</quantity>" +
                    $"</row>";
         }

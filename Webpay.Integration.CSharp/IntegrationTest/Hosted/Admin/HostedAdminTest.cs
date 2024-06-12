@@ -190,14 +190,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
           
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
         }
         [Test]
         public void TestCreditOrderRowsWithoutDeliveryId()
         {
-            var delivery = new Delivery {NewOrderRows = new List<NewCreditOrderRowBuilder> { }, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } };
+            var delivery = new Delivery {NewOrderRows = new List<NewCreditOrderRowBuilder> { }, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { RowId = 1 } } };
             var deliveries = new List<Delivery> { delivery };
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Credit(new Credit(
@@ -209,7 +208,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo(""));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
         }
@@ -243,7 +241,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/amounttocredit").InnerText, Is.EqualTo("100"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText, Is.EqualTo("test"));

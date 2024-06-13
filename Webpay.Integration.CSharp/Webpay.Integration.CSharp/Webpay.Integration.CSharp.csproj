@@ -108,7 +108,8 @@
     <Compile Include="Hosted\Admin\Actions\QueryByCustomerRefNo.cs" />
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
-    <Compile Include="Order\Handle\CreditAmountBuilder.cs" />
+    <Compile Include="Order\Delivery.cs" />
+    <Compile Include="Order\Handle\CreditOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderRowsBuilder.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Order\Handle\DeliverOrderRowsBuilder.cs" />
     <Compile Include="Order\Handle\DeliverOrdersBuilder.cs" />
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
+    <Compile Include="Order\Row\Credit\CreditOrderRowBuilder.cs" />
+    <Compile Include="Order\Row\Credit\NewCreditOrderRowBuilder.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>

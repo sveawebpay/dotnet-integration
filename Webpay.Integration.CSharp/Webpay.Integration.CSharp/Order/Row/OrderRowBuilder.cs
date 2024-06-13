@@ -13,6 +13,7 @@
         private int _vatDiscount;
         private int _discountPercent;
 
+
         // copy constructor
         public OrderRowBuilder(OrderRowBuilder original)
         {

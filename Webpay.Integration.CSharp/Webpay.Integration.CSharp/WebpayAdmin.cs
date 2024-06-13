@@ -183,7 +183,7 @@ namespace Webpay.Integration.CSharp
 
         /// <summary>
         ///  ...
-        ///  CreditAmountBuilder request = WebpayAdmin.CreditAmount(config)
+        ///  CreditAmountBuilder request = WebpayAdmin.CreditPayment(config)
         ///   .SetContractNumber()          // required for payment plan only, use contract number recieved with deliverOrder response
         ///   .SetTransactionId()           // required for card or direct bank only
         ///   .SetCountryCode()             // required for payment plan only
@@ -192,13 +192,13 @@ namespace Webpay.Integration.CSharp
         ///  ;
         ///  // then select the corresponding request class and send request
         ///  response = request.CreditPaymentPlanAmount().DoRequest();  // returns AdminWS.CancelPaymentPlanAmountResponse
-        ///  response = request.CreditCardAmount().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
-        ///  response = request.CreditDirectBankAmount().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
+        ///  response = request.CreditCardPayment().DoRequest();         // returns Hosted.Admin.Actions.CreditResponse
+        ///  response = request.CreditDirectBankPayment().DoRequest();   // returns Hosted.Admin.Actions.CreditResponse
         ///  ...
         /// </summary>
-        public static CreditAmountBuilder CreditAmount(IConfigurationProvider configurationProvider)
+        public static CreditOrderBuilder CreditPayment(IConfigurationProvider configurationProvider)
         {
-            return new CreditAmountBuilder(configurationProvider);
+            return new CreditOrderBuilder(configurationProvider);
         }
     }
 }

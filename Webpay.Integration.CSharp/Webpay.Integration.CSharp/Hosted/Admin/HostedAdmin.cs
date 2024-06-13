@@ -69,11 +69,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest Credit(Credit credit)
         {
+            var creditByAmount = $"<amounttocredit>{credit.AmountToCredit}</amounttocredit>";
+            if (credit.Deliveries.Count>0)
+            {
+                creditByAmount = "";
+            }
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <credit>
                 <transactionid>{0}</transactionid>
-                <amounttocredit>{1}</amounttocredit>
-                </credit>", credit.TransactionId, credit.AmountToCredit);
+                {1}
+                {2}
+                </credit>", credit.TransactionId, creditByAmount, credit.GetXmlForDeliveries());
             AddCorrelationIdHeader(credit.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/credit");
         }

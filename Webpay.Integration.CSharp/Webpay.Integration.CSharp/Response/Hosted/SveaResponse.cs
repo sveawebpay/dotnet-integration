@@ -437,8 +437,8 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     errorMessage = "Invalid value for tr number.";
                     break;
                 case 313:
-                    resultCodeMessage = resultCode + " (BAD_AUTHCODE)";
-                    errorMessage = "Invalid value for authcode.";
+                    resultCodeMessage = resultCode + " (BAD_QUANTITY)";
+                    errorMessage = "Invalid value for quantity.";
                     break;
                 case 314:
                     resultCodeMessage = resultCode + " (BAD_CC_DESCR)";

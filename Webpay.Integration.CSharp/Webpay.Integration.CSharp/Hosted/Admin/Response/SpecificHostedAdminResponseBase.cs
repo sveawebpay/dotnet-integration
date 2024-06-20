@@ -15,9 +15,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
             {
                 Accepted = true;
             }
-            
-            var errorMessage = SveaResponse.StatusCodeToMessage(StatusCode);
-            ErrorMessage = errorMessage.Item2;
+
+            var errorMessage = TextString(response, "/response/errorMessage");
+            ErrorMessage = string.IsNullOrEmpty(errorMessage) ? SveaResponse.StatusCodeToMessage(StatusCode).Item2 : errorMessage;
         }
 
         public int StatusCode { get; private set; }

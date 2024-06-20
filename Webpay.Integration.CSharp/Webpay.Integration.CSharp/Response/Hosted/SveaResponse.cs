@@ -584,6 +584,10 @@ namespace Webpay.Integration.CSharp.Response.Hosted
                     resultCodeMessage = resultCode + " (ANTIFRAUD_IP_ADDRESS_BLOCKED)";
                     errorMessage = "Antifraud – IP address blocked.";
                     break;
+                case 403:
+                    resultCodeMessage = resultCode + " (BAD_Request)";
+                    errorMessage = "Validation failed";
+                    break;
                 default:
                     resultCodeMessage = resultCode + " (UNKNOWN_ERROR)";
                     errorMessage = "Unknown error.";

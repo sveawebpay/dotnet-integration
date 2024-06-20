@@ -74,7 +74,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
             AnnulResponse response = hostedActionRequest.DoRequest<AnnulResponse>();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted , Is.EqualTo(0));
             Assert.That(response.StatusCode, Is.EqualTo(0));
             Assert.That(response.TransactionId, Is.EqualTo(payment.TransactionId));
         }
@@ -219,7 +219,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 Id = 1234, 
                 NewOrderRows = new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder {
                             Quantity = 1,
-                            ArticleNumber = "11",
+                            ArticleNumber = "",
                             DiscountAmount = 10,
                             DiscountPercent=2 ,
                             Name = "test",

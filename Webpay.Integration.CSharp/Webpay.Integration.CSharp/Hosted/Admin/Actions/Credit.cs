@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
@@ -72,7 +73,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             return $"<row>" +
                          $"<name>{orderRow.Name}</name> " +
                          $"<unitprice>{orderRow.UnitPrice}</unitprice> " +
-                         $"<quantity>{orderRow.Quantity}</quantity> " +
+                         $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity> " +
                          $"<vatpercent>{orderRow.VatPercent}</vatpercent> " +
                          $"<discountpercent>{orderRow.DiscountPercent}</discountpercent> " +
                          $"<discountamount>{orderRow.DiscountAmount}</discountamount> " +
@@ -84,7 +85,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         {
             return $"<row>" +
                    $"<rowid>{orderRow.RowId}</rowid>" +
-                   $"<quantity>{orderRow.Quantity}</quantity>" +
+                   $"<quantity>{orderRow.Quantity.Value.ToString(CultureInfo.InvariantCulture)}</quantity>" +
                    $"</row>";
         }
         public bool ValidateCreditRequest(out CreditResponse response)

@@ -83,9 +83,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
         {
+            var quantity = orderRow.Quantity.HasValue ? orderRow.Quantity.Value.ToString(CultureInfo.InvariantCulture) : orderRow.Quantity.ToString();
             return $"<row>" +
                    $"<rowid>{orderRow.RowId}</rowid>" +
-                   $"<quantity>{orderRow.Quantity.Value.ToString(CultureInfo.InvariantCulture)}</quantity>" +
+                   $"<quantity>{quantity}</quantity>" +
                    $"</row>";
         }
         public bool ValidateCreditRequest(out CreditResponse response)

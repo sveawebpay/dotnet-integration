@@ -178,7 +178,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         [Test]
         public void TestCreditOrderRows()
         {     
-            var delivery = new Delivery { Id = 1234, NewOrderRows = new List<NewCreditOrderRowBuilder> { }, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } };
+            var delivery = new Delivery { Id = 1234, OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder {  RowId = 1 } } };
             var deliveries = new List<Delivery> { delivery };
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                 .Credit(new Credit(

@@ -3,7 +3,7 @@
     public class NewCreditOrderRowBuilder 
     {
         public string Name { get; set; }
-        public decimal UnitPrice { get; set; }
+        public long UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public decimal VatPercent { get; set; }
         public decimal DiscountAmount { get; set; }

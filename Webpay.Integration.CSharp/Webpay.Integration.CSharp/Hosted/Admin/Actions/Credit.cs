@@ -74,8 +74,8 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                          $"<name>{orderRow.Name}</name> " +
                          $"<unitprice>{orderRow.UnitPrice}</unitprice> " +
                          $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity> " +
-                         $"<vatpercent>{orderRow.VatPercent}</vatpercent> " +
-                         $"<discountpercent>{orderRow.DiscountPercent}</discountpercent> " +
+                         $"<vatpercent>{orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent> " +
+                         $"<discountpercent>{orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent> " +
                          $"<discountamount>{orderRow.DiscountAmount}</discountamount> " +
                          $"<unit>{orderRow.Unit}</unit> " +
                          $"<articlenumber>{orderRow.ArticleNumber}</articlenumber>" +

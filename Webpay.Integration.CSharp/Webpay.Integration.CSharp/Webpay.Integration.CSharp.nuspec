@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
+    <version>1.6.0</version>
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://cdn.svea.com/sveaekonomi/rgb_ekonomi_small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added LowerAmountConfirm method</releaseNotes>
+    <releaseNotes>Added support for Credit order rows, New payment methods (Swish_PF, Vipps, MobilePay) added</releaseNotes>
     <copyright>Copyright 2021</copyright>
     <tags>svea webpay</tags>
   </metadata>

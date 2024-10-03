@@ -154,9 +154,9 @@ namespace Webpay.Integration.CSharp.Test.Hosted.Payment
                                                .SetReturnUrl("http://myurl.se")
                                                .GetPaymentForm();
 
-            const string expectedMerchantId = "1130";
+            const string expectedMerchantId = "1110";
             const string expectedSecretWord =
-                "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3";
+                "1f8bcd8a564073f7156efd2522d5998f5487a1dcd19e1e120276fb1fb7e233a6059c45d6eb44a8d7342a4989bbb95acd4708051bbc145bda43ae0dd3503928db";
 
             Assert.That(form.GetMerchantId(), Is.EqualTo(expectedMerchantId));
             Assert.That(form.GetSecretWord(), Is.EqualTo(expectedSecretWord));

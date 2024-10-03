@@ -35,10 +35,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Config
             Assert.That(_defaultConf.GetClientNumber(PaymentType.INVOICE, countrycode), Is.EqualTo(79021));
             Assert.That(_defaultConf.GetClientNumber(PaymentType.PAYMENTPLAN, countrycode), Is.EqualTo(59999));
 
-            Assert.That(_defaultConf.GetMerchantId(PaymentType.HOSTED, countrycode), Is.EqualTo("1130"));
+            Assert.That(_defaultConf.GetMerchantId(PaymentType.HOSTED, countrycode), Is.EqualTo("1110"));
 
             Assert.That(_defaultConf.GetSecretWord(PaymentType.HOSTED, countrycode),
-                        Is.EqualTo("8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3"));
+                        Is.EqualTo("1f8bcd8a564073f7156efd2522d5998f5487a1dcd19e1e120276fb1fb7e233a6059c45d6eb44a8d7342a4989bbb95acd4708051bbc145bda43ae0dd3503928db"));
 
             Assert.That(_defaultConf.GetEndPoint(PaymentType.HOSTED),
                         Is.EqualTo("https://webpaypaymentgatewaystage.svea.com/webpay/payment"));

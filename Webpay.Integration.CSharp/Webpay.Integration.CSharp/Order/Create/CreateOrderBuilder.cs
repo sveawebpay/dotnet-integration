@@ -29,6 +29,7 @@ namespace Webpay.Integration.CSharp.Order.Create
         private bool _hasSetCountryCode;
         private string _peppolId;
         private string _payerAlias;
+        private string _message;
         private Navigation _navigation;
 
         protected CustomerIdentity CustomerId;
@@ -94,7 +95,15 @@ namespace Webpay.Integration.CSharp.Order.Create
             _customerReference = customerReference;
             return this;
         }
-
+        public CreateOrderBuilder SetMessage(string message)
+        {
+            _message = message;
+            return this;
+        }
+        public string GetMessage()
+        {
+            return _message;
+        }
         public DateTime GetOrderDate()
         {
             return _orderDate;

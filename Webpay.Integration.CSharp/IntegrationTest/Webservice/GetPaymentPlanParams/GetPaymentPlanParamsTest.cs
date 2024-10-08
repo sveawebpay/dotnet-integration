@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
                                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                                       .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted);
             Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(223060));
             Assert.That(response.CampaignCodes[0].Description, Is.EqualTo("Köp nu betala om 3 månader (räntefritt)"));
             Assert.That(response.CampaignCodes[0].PaymentPlanType, Is.EqualTo(PaymentPlanTypeCode.InterestAndAmortizationFree));
@@ -62,7 +62,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.GetPaymentPlanPar
                                                              .UsePaymentPlanPayment(code)
                                                              .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted);
         }
     }
 }

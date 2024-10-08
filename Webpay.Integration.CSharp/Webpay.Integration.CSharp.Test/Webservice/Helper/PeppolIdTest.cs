@@ -1,5 +1,5 @@
-﻿using Webpay.Integration.CSharp.Webservice.Helper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Webpay.Integration.CSharp.Webservice.Helper;
 
 namespace Webpay.Integration.CSharp.Test.Webservice.Helper
 {
@@ -17,7 +17,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
         public void TestInvalidPeppolId()
         {
             bool validationResult = PeppolId.IsValidPeppolId("1:1");
-            Assert.IsFalse(validationResult);
+            Assert.IsTrue(!validationResult);
         }
     }
 }

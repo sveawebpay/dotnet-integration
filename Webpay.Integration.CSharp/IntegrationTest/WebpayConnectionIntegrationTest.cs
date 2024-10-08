@@ -15,13 +15,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
         }
         [Test] public void Test_CreateOrder_CreatePaymentPlanOrder_WithAllExVatRows()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
         }
         // WebpayConnection.DeliverOrder()
         [Test] public void Test_DeliverOrder_DeliverInvoiceOrder_WithAllIdenticalRows()
@@ -40,7 +40,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;
             var delivery = builder.DeliverInvoiceOrder().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(500.00M)); // 100ex@25%*2st *2rows
         }
         [Test] public void Test_DeliverOrder_DeliverInvoiceOrder_WithOneIdenticalRows()
@@ -59,7 +59,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;
             var delivery = builder.DeliverInvoiceOrder().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(250.00M)); // 100ex@25%*2st *1row
         }
         [Test] public void Test_DeliverOrder_DeliverPaymentPlanOrder_WithAllIdenticalRows()
@@ -75,7 +75,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;
             var delivery = builder.DeliverPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(5000.00M)); // 1000ex@25%*2st *2rows
         }
         [Test] public void Test_DeliverOrder_DeliverPaymentPlanOrder_IgnoresOrderRows()
@@ -91,7 +91,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
                 ;
             var delivery = builder.DeliverPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(5000.00M)); // 1000ex@25%*2st *2row
         }
     }

@@ -75,8 +75,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                                                              .DoRequest();
 
             Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
-            Assert.IsNull(response.CreateOrderResult.CustomerIdentity.IndividualIdentity);
-            Assert.IsNull(response.CreateOrderResult.CustomerIdentity.CompanyIdentity);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.IndividualIdentity == null);
+            Assert.That(response.CreateOrderResult.CustomerIdentity.CompanyIdentity == null);
             Assert.That(response.Accepted, Is.True);
         }
 
@@ -144,10 +144,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 ;
             CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
-            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
             CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
         }
 
         [Test]
@@ -164,10 +164,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 ;
             CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
-            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
             CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
         }
 
         [Test]
@@ -196,10 +196,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.CreateOrder
                 .SetCurrency(TestingTool.DefaultTestCurrency)
                 ;
             CreateOrderEuRequest request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
-            Assert.IsNull(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity);
+            Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
             CreateOrderEuResponse order = createOrderBuilder.UseInvoicePayment().DoRequest();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
         }
 
         //CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

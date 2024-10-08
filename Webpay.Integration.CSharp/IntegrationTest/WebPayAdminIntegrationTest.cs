@@ -40,7 +40,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -48,14 +48,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
         [Test] public void Test_QueryOrder_QueryPaymentPlanOrder()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -63,7 +63,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
         }
         [Test] public void Test_QueryOrder_QueryCardOrder()
@@ -78,7 +78,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
             Assert.That(answer.Transaction.NumberedOrderRows.First().GetName(), Is.EqualTo("Prod")); //SetName
             Assert.That(answer.Transaction.NumberedOrderRows.First().GetAmountExVat(), Is.EqualTo(100M));
@@ -104,7 +104,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             //Webpay.Integration.CSharp.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
             QueryResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
         }
         // WebpayAdmin.UpdateOrder()
@@ -112,7 +112,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var clientOrderNumberText = "Updated clientOrderNumber";
@@ -125,7 +125,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetNotes(notesText)
             ;
             AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdateInvoiceOrder().DoRequest();
-            Assert.True(updateResponse.Accepted);
+            Assert.That(updateResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -133,7 +133,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Orders.FirstOrDefault().ClientOrderId, Is.EqualTo(clientOrderNumberText));
             Assert.That(answer.Orders.FirstOrDefault().Notes, Is.EqualTo(notesText));
         }
@@ -141,7 +141,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var maxClientOrderNumberLength = 29; // should be 32, bug report filed 160226;
@@ -159,7 +159,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetNotes(newNotes)
             ;
             AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdateInvoiceOrder().DoRequest();
-            Assert.False(updateResponse.Accepted);
+            Assert.That(!updateResponse.Accepted);
             Assert.That(updateResponse.ResultCode, Is.EqualTo(20035));
             Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The field Notes can't contain more than 200 characters."));
         }
@@ -167,7 +167,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
  
             // update order
             var clientOrderNumberText = "Updated clientOrderNumber";
@@ -180,7 +180,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetNotes(notesText) // will be ignored for paymentplan order
             ;
             AdminWS.UpdateOrderResponse updateResponse = updateBuilder.UpdatePaymentPlanOrder().DoRequest();
-            Assert.True(updateResponse.Accepted);
+            Assert.That(updateResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -188,7 +188,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Orders.FirstOrDefault().ClientOrderId, Is.EqualTo(clientOrderNumberText));
             Assert.That(answer.Orders.FirstOrDefault().Notes, Is.Null); // i.e. no change compared with before the update order request
         }
@@ -205,7 +205,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceDistributionType(DistributionType.POST)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             /*
             Assert.NotNull(delivery.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber);
 
@@ -214,7 +214,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 select dr.DeliveryReferenceNumber;
             Assert.NotNull(referenceNumber);
             */
-            Assert.NotNull( delivery.OrdersDelivered.Single(od => od.SveaOrderId == order.CreateOrderResult.SveaOrderId).DeliveryReferenceNumber );
+            Assert.That( delivery.OrdersDelivered.Single(od => od.SveaOrderId == order.CreateOrderResult.SveaOrderId).DeliveryReferenceNumber != null);
         }
         [Test] public void Test_DeliverOrders_DeliverInvoiceOrderRows_WithSetOrderIdsAndMultipleOrders()
         {
@@ -233,7 +233,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceDistributionType(DistributionType.POST)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
             Assert.That(delivery.OrdersDelivered.Select( od => orderIdsToDeliver.Contains(od.SveaOrderId) ).Count(), Is.EqualTo(2));
         }
         [Test] public void Test_DeliverOrders_DeliverInvoiceOrderRows_WithMixedSetOrderIdxAndMultipleOrders()
@@ -255,7 +255,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceDistributionType(DistributionType.POST)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
 
             var referenceNumbers = from od in delivery.OrdersDelivered
                                    where orderIdsToDeliver.Contains(od.SveaOrderId) || od.SveaOrderId == orderThree.CreateOrderResult.SveaOrderId
@@ -281,7 +281,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceDistributionType(DistributionType.POST)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
-            Assert.IsFalse(delivery.Accepted);
+            Assert.That(!delivery.Accepted);
             Assert.That(delivery.ResultCode, Is.EqualTo(20004));    // will use the first order clientid for both, and orders belong to different clients...
             Assert.That(delivery.ErrorMessage, Is.EqualTo("No order found for orderId: " + orderTwo.CreateOrderResult.SveaOrderId.ToString()));
         }
@@ -296,10 +296,10 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverPaymentPlanOrders().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
 
-            Assert.NotNull(delivery.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber);
-            Assert.NotNull(delivery.OrdersDelivered.Single(od => od.SveaOrderId == order.CreateOrderResult.SveaOrderId).DeliveryReferenceNumber);
+            Assert.That(delivery.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber!=null);
+            Assert.That(delivery.OrdersDelivered.Single(od => od.SveaOrderId == order.CreateOrderResult.SveaOrderId).DeliveryReferenceNumber!=null);
         }       
         // WebpayAdmin.DeliverOrderRows()
         [Test] public void Test_DeliverOrderRows_DeliverInvoiceOrderRows()
@@ -315,7 +315,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetRowToDeliver(1)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
         }
         [Test] public void Test_DeliverOrderRows_DeliverCardOrderRows_Deliver_All_Rows()
         {
@@ -330,7 +330,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // deliver all order rows
@@ -344,7 +344,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
 
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -352,7 +352,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
         }
         [Test] public void Test_DeliverOrderRows_DeliverCardOrderRows_Deliver_First_Of_Two_Rows()
@@ -367,7 +367,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // deliver all order rows
@@ -378,7 +378,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
             ConfirmResponse delivery = builder.DeliverCardOrderRows().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
 
             // query updated order
             QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -386,7 +386,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("CONFIRMED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00M)); //r1, 100.00ex@25*2 => 250.00
         }
@@ -405,7 +405,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 ;
             AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
            // credit order rows
            CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
@@ -416,7 +416,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetRowToCredit(2)
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(creditResponse.Accepted);
+            Assert.That(creditResponse.Accepted);
         }
         [Test] public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddCreditOrderRow()
         {
@@ -432,7 +432,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 ;
             AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             var newExVatCreditOrderRow = new OrderRowBuilder()
                 .SetName("NewCreditOrderRow")
@@ -451,7 +451,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddCreditOrderRows(newCreditOrderRows)
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(creditResponse.Accepted);
+            Assert.That(creditResponse.Accepted);
         }
         [Test] public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRowAndMismatchedVatFlagSettingsFails()
         {
@@ -467,7 +467,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 ;
             AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             var newIncVatCreditOrderRow = new OrderRowBuilder()
                 .SetName("NewCreditOrderRow")
@@ -486,7 +486,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddCreditOrderRows( newCreditOrderRows )
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
-            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(!creditResponse.Accepted);
             Assert.That(creditResponse.ResultCode, Is.EqualTo(50036));
             Assert.That(creditResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
@@ -504,7 +504,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 ;
             AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             var newExVatCreditOrderRow = new OrderRowBuilder()
                 .SetName("NewCreditOrderRow")
@@ -524,7 +524,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddCreditOrderRows(newCreditOrderRows)
             ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
-            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(!creditResponse.Accepted);
             Assert.That(creditResponse.ResultCode, Is.EqualTo(50036));
             Assert.That(creditResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
@@ -542,7 +542,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 ;
             AdminWS.DeliveryResponse deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             // credit order rows
             CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
@@ -553,7 +553,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                  .SetRowToCredit(2)
              ;
             AdminWS.DeliveryResponse creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
-            Assert.IsFalse(creditResponse.Accepted);
+            Assert.That(!creditResponse.Accepted);
             Assert.That(creditResponse.ResultCode, Is.EqualTo(20010));
             Assert.That(creditResponse.ErrorMessage, Is.EqualTo("All rows must belong to the invoice"));
         }
@@ -561,7 +561,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // TODO copy create-deliver to WebpayConnectionIntegrationTest
             // deliver order
@@ -571,7 +571,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                 ;
             var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             // credit order rows
             CreditOrderRowsBuilder creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
@@ -580,13 +580,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                  .SetRowToCredit(1)
              ;
             AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
-            Assert.IsTrue(creditResponse.Accepted);
+            Assert.That(creditResponse.Accepted);
         }
         [Test] public void Test_CreditOrderRows_CreditPaymentPlanOrderRows_UsingAddCreditOrderRow()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // TODO copy create-deliver to WebpayConnectionIntegrationTest
             // deliver order
@@ -596,7 +596,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
                 ;
             var deliverResponse = deliverBuilder.DeliverPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(deliverResponse.Accepted);
+            Assert.That(deliverResponse.Accepted);
 
             var newExVatCreditOrderRow = new OrderRowBuilder()
                 .SetName("NewCreditOrderRow")
@@ -614,14 +614,14 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                  .AddCreditOrderRows(newCreditOrderRows)
              ;
             AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
-            Assert.IsTrue(creditResponse.Accepted);
+            Assert.That(creditResponse.Accepted);
         }
         // WebpayAdmin.AddOrderRows()
         [Test] public void Test_AddOrderRows_AddInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // add order rows
             //var firstOrderRowPriceIncVat = 80M;
@@ -658,7 +658,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.AddOrderRowsResponse addition = builder.AddInvoiceOrderRows().DoRequest();
-            Assert.True(addition.Accepted);
+            Assert.That(addition.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -666,11 +666,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
+            Assert.That(answer.Accepted);
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PricePerUnit, Is.EqualTo(secondOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).Description, Is.EqualTo(secondOrderRowName + ": " + secondOrderRowDescription));
         }
@@ -678,7 +678,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // add order rows
             //var firstOrderRowPriceIncVat = 80M;
@@ -714,7 +714,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.AddOrderRowsResponse addition = builder.AddPaymentPlanOrderRows().DoRequest();
-            Assert.True(addition.Accepted);
+            Assert.That(addition.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -722,11 +722,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
+            Assert.That(answer.Accepted);
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PriceIncludingVat);   // row #3
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).PricePerUnit, Is.EqualTo(firstOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(2).Description, Is.EqualTo(firstOrderRowName + ": " + firstOrderRowDescription));
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PriceIncludingVat);   // row #4
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PricePerUnit, Is.EqualTo(secondOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).Description, Is.EqualTo(secondOrderRowName + ": " + secondOrderRowDescription));
         }
@@ -735,7 +735,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // add order rows
             var firstOrderRowPriceIncVat = 80M;
@@ -772,7 +772,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.AddOrderRowsResponse addition = builder.AddInvoiceOrderRows().DoRequest();
-            Assert.IsFalse(addition.Accepted);
+            Assert.That(!addition.Accepted);
             Assert.That(addition.ResultCode,Is.EqualTo(50036));
             Assert.That(addition.ErrorMessage,Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
@@ -781,7 +781,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var updatedOrderRowIndex = 2; // i.e. 2nd row, as NumberedOrderRows are 1-indexed.
@@ -808,7 +808,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdateInvoiceOrderRows().DoRequest();
-            Assert.True(updateResponse.Accepted);
+            Assert.That(updateResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -816,8 +816,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);   //
+            Assert.That(answer.Accepted);
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);   //
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex-1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex-1).Description, Is.EqualTo(updatedOrderRowName+": "+updatedOrderRowDescription));
         }
@@ -825,7 +825,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRowsSpecifiedIncVat();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var updatedOrderRowIndex = 2; // i.e. 2nd row, as NumberedOrderRows are 1-indexed.
@@ -852,7 +852,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdateInvoiceOrderRows().DoRequest();
-            Assert.True(updateResponse.Accepted);
+            Assert.That(updateResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -860,8 +860,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            Assert.IsTrue((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);
+            Assert.That(answer.Accepted);
+            Assert.That((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceIncVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName + ": " + updatedOrderRowDescription));
         }
@@ -869,7 +869,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRowsSpecifiedIncVat();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var updatedOrderRowIndex = 2; // i.e. 2nd row, as NumberedOrderRows are 1-indexed.
@@ -896,7 +896,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdateInvoiceOrderRows().DoRequest();
-            Assert.False(updateResponse.Accepted);
+            Assert.That(!updateResponse.Accepted);
             Assert.That(updateResponse.ResultCode, Is.EqualTo(50036));
             Assert.That(updateResponse.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
         }
@@ -904,7 +904,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // update order
             var updatedOrderRowIndex = 2; // i.e. 2nd row, as NumberedOrderRows are 1-indexed.
@@ -931,7 +931,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
             // then select the corresponding request class and send request
             AdminWS.UpdateOrderRowsResponse updateResponse = update.UpdatePaymentPlanOrderRows().DoRequest();
-            Assert.True(updateResponse.Accepted);
+            Assert.That(updateResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -939,8 +939,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
-            Assert.IsFalse((bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);   //
+            Assert.That(answer.Accepted);
+            Assert.That(!(bool)answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PriceIncludingVat);   //
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).PricePerUnit, Is.EqualTo(updatedOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(updatedOrderRowIndex - 1).Description, Is.EqualTo(updatedOrderRowName + ": " + updatedOrderRowDescription));
         }
@@ -949,7 +949,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithOneOrderRow();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // cancel order rows
             var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
@@ -958,13 +958,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(cancellationResponse.Accepted);
+            Assert.That(cancellationResponse.Accepted);
         }
         [Test] public void Test_CancelOrderRows_CancelInvoiceOrderRows_CancelFirstOfTwoRows()
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // cancel order rows
             var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
@@ -973,7 +973,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelInvoiceOrderRows().DoRequest();
-            Assert.IsTrue(cancellationResponse.Accepted);
+            Assert.That(cancellationResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -981,7 +981,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryInvoiceOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
             Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
         }
@@ -989,7 +989,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // deliver order
             DeliverOrdersBuilder builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
@@ -998,7 +998,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetInvoiceDistributionType(DistributionType.POST)
                 ;
             AdminWS.DeliveryResponse delivery = builder.DeliverInvoiceOrders().DoRequest();
-            Assert.IsTrue(delivery.Accepted);
+            Assert.That(delivery.Accepted);
 
             // cancel order rows
             var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
@@ -1007,7 +1007,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelInvoiceOrderRows().DoRequest();
-            Assert.IsFalse(cancellationResponse.Accepted);
+            Assert.That(!cancellationResponse.Accepted);
             Assert.That(cancellationResponse.ResultCode, Is.EqualTo(20000));
             Assert.That(cancellationResponse.ErrorMessage, Is.EqualTo("Order is closed."));
         }
@@ -1015,7 +1015,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // cancel order rows
             var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
@@ -1024,13 +1024,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelPaymentPlanOrderRows().DoRequest();
-            Assert.IsTrue(cancellationResponse.Accepted);
+            Assert.That(cancellationResponse.Accepted);
         }
         [Test] public void Test_CancelOrderRows_CancelPaymentPlanOrderRows_CancelFirstOfTwoRows()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithTwoOrderRows();
-            Assert.True(order.Accepted);
+            Assert.That(order.Accepted);
 
             // cancel order rows
             var cancellation = WebpayAdmin.CancelOrderRows(SveaConfig.GetDefaultConfig())
@@ -1039,7 +1039,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.CancelOrderRowsResponse cancellationResponse = cancellation.CancelPaymentPlanOrderRows().DoRequest();
-            Assert.IsTrue(cancellationResponse.Accepted);
+            Assert.That(cancellationResponse.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1047,7 +1047,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             AdminWS.GetOrdersResponse answer = queryOrderBuilder.QueryPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
             Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
         }
@@ -1056,7 +1056,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
             var payment = CreateCardOrderWithTwoOrderRows();
-            // TODO fix Assert.IsTrue(payment.Accepted);
+            // TODO fix Assert.That(payment.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1065,7 +1065,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // cancel all order rows
@@ -1077,7 +1077,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
             LowerAmountResponse cancellation = builder.CancelCardOrderRows().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
 
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1085,7 +1085,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("ANNULLED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(null)); //r1, r2: 100.00ex@25*2 => 500.00
         }
@@ -1094,7 +1094,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
             var payment = CreateCardOrderWithTwoOrderRows();
-            // TODO fix Assert.IsTrue(payment.Accepted);
+            // TODO fix Assert.That(payment.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1103,7 +1103,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // cancel all order rows
@@ -1115,7 +1115,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
             LowerAmountResponse cancellation = builder.CancelCardOrderRows().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
 
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1123,7 +1123,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.0M)); //r2: 100.00ex@25*2 => 250.00
         }        
@@ -1133,7 +1133,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
             var payment = CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndVatPercent();
-            // TODO fix Assert.IsTrue(payment.Accepted);
+            // TODO fix Assert.That(payment.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1142,7 +1142,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // cancel all order rows
@@ -1154,7 +1154,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
             LowerAmountResponse cancellation = builder.CancelCardOrderRows().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
 
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1162,7 +1162,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.0M)); //r2: 100.00ex@25*2 => 250.00
         }
@@ -1171,7 +1171,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create card order
             // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
             var payment = CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndExVat();
-            // TODO fix Assert.IsTrue(payment.Accepted);
+            // TODO fix Assert.That(payment.Accepted);
 
             // query order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1180,7 +1180,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); //r1, r2: 100.00ex@25*2 => 500.00
 
             // cancel all order rows
@@ -1192,7 +1192,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows)
                 ;
             LowerAmountResponse cancellation = builder.CancelCardOrderRows().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
 
             // query updated order
             CSharp.Order.Handle.QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1200,7 +1200,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.0M)); //r2: 100.00ex@25*2 => 250.00
         }
@@ -1209,7 +1209,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // do cancelOrder request and assert the response
             CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
@@ -1217,13 +1217,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
             ;
             AdminWS.CancelOrderResponse cancellation = cancelOrderBuilder.CancelInvoiceOrder().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
         }
         [Test] public void Test_CancelOrder_CancelPaymentPlanOrder()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
            
             // do cancelOrder request and assert the response
             CancelOrderBuilder cancelOrderBuilder = WebpayAdmin.CancelOrder(SveaConfig.GetDefaultConfig())
@@ -1231,7 +1231,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
             ;
             AdminWS.CancelOrderResponse cancellation = cancelOrderBuilder.CancelPaymentPlanOrder().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
         }
         [Test] public void Test_CancelOrder_CancelCardOrder()
         {
@@ -1244,7 +1244,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
             ;
             AnnulResponse cancellation = cancelOrderBuilder.CancelCardOrder().DoRequest();
-            Assert.IsTrue(cancellation.Accepted);
+            Assert.That(cancellation.Accepted);
 
             // query updated order
             QueryOrderBuilder queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1252,7 +1252,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED")); // TODO make enum w/Transaction statuses
         }
         // WebpayAdmin.CreditAmount()
@@ -1260,7 +1260,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // deliver paymentplan
             var contract = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
@@ -1268,7 +1268,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 .DeliverPaymentPlanOrder().DoRequest()
                 ;
-            Assert.IsTrue(contract.Accepted);
+            Assert.That(contract.Accepted);
 
             // credit amount
             CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
@@ -1278,13 +1278,13 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetAmountIncVat(100.00M)
                 ;
             AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
-            Assert.IsTrue(response.Accepted);            
+            Assert.That(response.Accepted);            
         }
         [Test] public void Test_CreditAmount_CreditPaymentPlanAmount_CreditUndeliveredPaymentPlanFails()
         {
             // create order
             var order = TestingTool.CreatePaymentPlanOrderWithOneOrderRow();
-            Assert.IsTrue(order.Accepted);
+            Assert.That(order.Accepted);
 
             // credit amount
             CreditOrderBuilder creditAmountBuilder = WebpayAdmin.CreditPayment(SveaConfig.GetDefaultConfig())
@@ -1293,7 +1293,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(100.00M);
             AdminWS.CancelPaymentPlanAmountResponse response = creditAmountBuilder.CreditPaymentPlanAmount().DoRequest();
-            Assert.IsFalse(response.Accepted);
+            Assert.That(!response.Accepted);
             Assert.That(response.ResultCode, Is.EqualTo(27006));
             Assert.That(response.ErrorMessage, Is.EqualTo("No paymentplan exists with the provided id."));
 
@@ -1313,7 +1313,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             var before = answer.Transaction.CreditedAmount;
 
             // credit amount
@@ -1324,7 +1324,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetDescription("test of credit amount")
                 .SetAmountIncVat(amountToCredit);
             CreditResponse response = creditAmountBuilder.CreditCardPayment().DoRequest();
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted);
 
             // query updated order
             QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1332,7 +1332,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
             Assert.That(after, Is.EqualTo(before + amountToCredit));
         }
@@ -1351,7 +1351,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 ;
 
             QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(answer.Accepted);
+            Assert.That(answer.Accepted);
             var before = answer.Transaction.CreditedAmount;
 
             // credit amount
@@ -1363,7 +1363,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetAmountIncVat(amountToCredit)
                 ;
             CreditResponse response = creditAmountBuilder.CreditDirectBankPayment().DoRequest();
-            Assert.IsTrue(response.Accepted);
+            Assert.That(response.Accepted);
 
             // query updated order
             QueryOrderBuilder queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
@@ -1371,7 +1371,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
                 .SetCountryCode(CountryCode.SE)
                 ;
             QueryResponse queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
-            Assert.IsTrue(queryConfirmedOrderAnswer.Accepted);
+            Assert.That(queryConfirmedOrderAnswer.Accepted);
             var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
             Assert.That(after, Is.EqualTo(before + amountToCredit));
         }

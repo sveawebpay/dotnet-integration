@@ -208,9 +208,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                             DiscountAmount = 10,
                             DiscountPercent=2 ,
                             Name = "test",
-                            Unit = "test",
-                            UnitPrice = 10,
-                            VatPercent=1
+                            VatPercent=1,
+                            UnitPrice = 1
                         }
                     }, 
                 OrderRows = new List<CreditOrderRowBuilder> { new CreditOrderRowBuilder { Quantity = 1, RowId = 1 } } 

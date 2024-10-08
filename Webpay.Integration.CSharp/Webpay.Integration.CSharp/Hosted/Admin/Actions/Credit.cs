@@ -146,7 +146,6 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                         || (x.VatPercent < 0)
                         || (x.DiscountPercent < 0)
                         || (x.DiscountAmount < 0)
-                        || string.IsNullOrEmpty(x.Unit)
                     ))
                 {
                     return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}"));

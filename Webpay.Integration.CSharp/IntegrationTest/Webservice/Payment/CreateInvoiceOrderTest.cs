@@ -189,8 +189,8 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Webservice.Payment
                                            .UseInvoicePayment()
                                            .DoRequest();
 
-            Assert.IsTrue(response.Accepted);
-            Assert.IsTrue(response.CreateOrderResult.SveaWillBuyOrder);
+            Assert.That(response.Accepted);
+            Assert.That(response.CreateOrderResult.SveaWillBuyOrder);
             Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(250.00));
             Assert.That(response.CreateOrderResult.OrderType, Is.EqualTo("Invoice"));
 

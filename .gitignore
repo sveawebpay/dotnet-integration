@@ -115,3 +115,8 @@ UpgradeLog*.XML
 # Visual Studio 2015 cache/options directory
 .vs/
 /Webpay.Integration.CSharp/Webpay.Integration.CSharp/nuget.exe
+*.exe
+/.gitignore
+/.gitignore
+/.gitignore
+/.gitignore

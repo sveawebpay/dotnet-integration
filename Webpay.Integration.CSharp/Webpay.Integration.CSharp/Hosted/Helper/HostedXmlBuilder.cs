@@ -45,6 +45,7 @@ namespace Webpay.Integration.CSharp.Hosted.Helper
                 doWriteSimple("iscompany", order.GetIsCompanyIdentity().ToString().ToLower());
                 doWriteSimple("ipaddress", payment.GetIpAddress());
                 doWriteSimple("payeralias", payment.GetPayerAlias());
+                doWriteSimple("message", payment.GetMessage());
 
                 SerializeCustomer(order, xmlw);
                 SerializeRows(rows, xmlw);

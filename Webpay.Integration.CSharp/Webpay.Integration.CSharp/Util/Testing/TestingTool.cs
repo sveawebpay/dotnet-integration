@@ -18,6 +18,9 @@ namespace Webpay.Integration.CSharp.Util.Testing
         public const string DefaultTestIndividualNationalIdNumber = "194605092222";
         public const string DefaultTestCompanyNationalIdNumber = "194608142222";        // enskild firma
         public const string DefaultTestPayerAlias = "1234567890";        // enskild firma
+        public const string DefaultTestVippsPayerAlias = "48060316";
+        public const string DefaultTestMobilePayPayerAlias = "004526856827";
+        
         public static readonly DateTime DefaultTestDate = new DateTime(2012, 12, 12);
 
         public static OrderRowBuilder CreateMiniOrderRow()

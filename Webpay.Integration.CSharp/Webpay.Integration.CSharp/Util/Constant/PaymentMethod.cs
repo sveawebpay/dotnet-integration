@@ -18,7 +18,10 @@ namespace Webpay.Integration.CSharp.Util.Constant
         public static readonly PaymentMethod SKRILL = new PaymentMethod("SKRILL", PaymentMethodType.CARD);
         public static readonly PaymentMethod SVEACARDPAY = new PaymentMethod("SVEACARDPAY", PaymentMethodType.CARD);
         public static readonly PaymentMethod SWISH = new PaymentMethod("SWISH", PaymentMethodType.DIRECT);
+        public static readonly PaymentMethod SWISH_PF = new PaymentMethod("SWISH_PF", PaymentMethodType.DIRECT);
         public static readonly PaymentMethod SVEACARDPAY_PF = new PaymentMethod("SVEACARDPAY_PF", PaymentMethodType.CARD);
+        public static readonly PaymentMethod MOBILEPAY = new PaymentMethod("MOBILEPAY", PaymentMethodType.CARD);
+        public static readonly PaymentMethod VIPPS = new PaymentMethod("VIPPS", PaymentMethodType.CARD);
 
         public static readonly PaymentMethod PAYPAL = new PaymentMethod("PAYPAL", PaymentMethodType.PSP);
 
@@ -44,9 +47,13 @@ namespace Webpay.Integration.CSharp.Util.Constant
             SKRILL,
             SVEACARDPAY,
             SVEACARDPAY_PF,
+            MOBILEPAY,
+            VIPPS,
+            SWISH,
+            SWISH_PF,
+
 
             PAYPAL,
-
             INVOICE,
             PAYMENTPLAN
         };

@@ -204,7 +204,6 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 Id = 1234, 
                 NewOrderRows = new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder {
                             Quantity = 1,
-                            ArticleNumber = "",
                             DiscountAmount = 10,
                             DiscountPercent=2 ,
                             Name = "test",
@@ -229,6 +228,47 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText, Is.EqualTo("test"));
 
+        }
+        [Test]
+        public void TestCreditNewOrderRowsWithZeroUnitPrice()
+        {
+            var delivery = new Delivery
+            {
+                Id = 1234,
+                NewOrderRows = new List<NewCreditOrderRowBuilder> { new NewCreditOrderRowBuilder {
+                            Quantity = 1,
+                            DiscountAmount = 10,
+                            DiscountPercent=2 ,
+                            Name = "test",
+                            VatPercent=1,
+                            UnitPrice = 0
+                        },
+                        new NewCreditOrderRowBuilder {
+                            Quantity = 1,
+                            DiscountAmount = 10,
+                            DiscountPercent=2 ,
+                            Name = "test",
+                            VatPercent=1,
+                            UnitPrice = 1
+                        }
+                    },
+                OrderRows = new List<CreditOrderRowBuilder> { }
+            };
+            var deliveries = new List<Delivery> { delivery };
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .Credit(new Credit(
+                    transactionId: 12341234,
+                    amountToCredit: 100,
+                    deliveries: deliveries,
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText, Is.EqualTo("test"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[0].SelectSingleNode("unitprice").InnerText, Is.EqualTo("0"));
         }
         [Test]
         public void TestConfirmResponse()

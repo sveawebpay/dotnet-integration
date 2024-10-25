@@ -46,7 +46,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         {
             return $"<delivery>" +
                         $"<id>{delivery.Id}</id> " +
-                        $"<orderrows>{GetXmlForOrderRows(delivery)}</orderrows> " +
+                        $"<orderrows>{GetXmlForOrderRows(delivery)}</orderrows>" +
                         $"</delivery>";
         }
         private string GetXmlForOrderRows(Delivery delivery)
@@ -71,13 +71,13 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         private string GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
         {
             return $"<row>" +
-                         $"<name>{orderRow.Name}</name> " +
-                         $"<unitprice>{orderRow.UnitPrice}</unitprice> " +
-                         $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity> " +
-                         $"<vatpercent>{orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent> " +
-                         $"<discountpercent>{orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent> " +
-                         $"<discountamount>{orderRow.DiscountAmount}</discountamount> " +
-                         $"<unit>{orderRow.Unit}</unit> " +
+                         $"<name>{orderRow.Name}</name>" +
+                         $"<unitprice>{orderRow.UnitPrice}</unitprice>" +
+                         $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
+                         $"<vatpercent>{orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +
+                         $"<discountpercent>{orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
+                         $"<discountamount>{orderRow.DiscountAmount}</discountamount>" +
+                         $"<unit>{orderRow.Unit}</unit>" +
                          $"<articlenumber>{orderRow.ArticleNumber}</articlenumber>" +
                          $"</row>";
         }
@@ -141,7 +141,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 }
                 else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
                         string.IsNullOrEmpty(x.Name)
-                        || (x.UnitPrice <= 0)
+                        || (x.UnitPrice < 0)
                         || (x.Quantity <= 0)
                         || (x.VatPercent < 0)
                         || (x.DiscountPercent < 0)

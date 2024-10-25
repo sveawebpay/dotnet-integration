@@ -58,7 +58,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Payment
 
         // In order to run this change response type for merchant 1110 to Post from Get
 
-        [Test]
+        [Test,Ignore("")]
         public void TestDoMobilePayPaymentRequest()
         {
             PaymentForm form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())

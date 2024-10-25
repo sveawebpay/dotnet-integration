@@ -110,8 +110,13 @@ UpgradeLog*.XML
 # NuGet
 *.nupkg
 /Webpay.Integration.CSharp/.vs/config/applicationhost.config
+*.nuspec
 
-# Visual Studio 2015 cache/options directorys
+
 .vs/
 /Webpay.Integration.CSharp/Webpay.Integration.CSharp/nuget.exe
 /Webpay.Integration.CSharp/Webpay.Integration.CSharp/Hosted/nuget.exe
+
+*.exe
+/.gitignore
+

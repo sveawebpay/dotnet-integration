@@ -1,0 +1,92 @@
+using System.Globalization;
+using System.Xml;
+using Webpay.Integration.Response.Hosted;
+using Webpay.Integration.Util.Calculation;
+
+namespace Webpay.Integration.Hosted.Admin.Response;
+
+public abstract class SpecificHostedAdminResponseBase
+{
+    public int StatusCode { get; private set; }
+    public bool Accepted { get; private set; }
+    public string ErrorMessage { get; private set; }
+
+    protected SpecificHostedAdminResponseBase(XmlNode response)
+    {
+        StatusCode = TextInt(response, "/response/statuscode").GetValueOrDefault(101);
+        if(StatusCode == 0 || StatusCode == 150)
+        {
+            Accepted = true;
+        }
+
+        var errorMessage = TextString(response, "/response/errorMessage");
+        ErrorMessage = string.IsNullOrEmpty(errorMessage) ? SveaResponse.StatusCodeToMessage(StatusCode).Item2 : errorMessage;
+    }
+
+    protected static long? AttributeLong(XmlNode response, string element, string attribute)
+    {
+        try
+        {
+            return Convert.ToInt64(response.SelectSingleNode(element).Attributes[attribute].Value);
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
+    }
+
+    protected static string AttributeString(XmlNode response, string element, string attribute)
+    {
+        try
+        {
+            return response.SelectSingleNode(element).Attributes[attribute].Value;
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
+    }
+
+    protected static int? TextInt(XmlNode response, string element)
+    {
+        try
+        {
+            return Convert.ToInt32(response.SelectSingleNode(element).InnerText);
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
+    }
+
+    protected static decimal? TextDecimal(XmlNode response, string element)
+    {
+        decimal parsedDecimal;
+
+        return Decimal.TryParse(response.SelectSingleNode(element).InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out parsedDecimal)
+            ? parsedDecimal
+            : (decimal?)null;
+    }
+
+    protected static string TextString(XmlNode response, string element)
+    {
+        try
+        {
+            return response.SelectSingleNode(element).InnerText;
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
+    }
+
+    public static decimal? MinorCurrencyToDecimalAmount(int? amountMinor)
+    {
+        return amountMinor.HasValue ? MathUtil.BankersRound(((decimal)amountMinor) / 100) : (decimal?) null;
+    }
+
+    public static decimal MinorCurrencyToDecimalAmount(int amountMinor)
+    {
+        return MathUtil.BankersRound(((decimal)amountMinor) / 100);
+    }
+}

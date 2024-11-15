@@ -141,7 +141,6 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                 }
                 else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
                         string.IsNullOrEmpty(x.Name)
-                        || (x.UnitPrice < 0)
                         || (x.Quantity <= 0)
                         || (x.VatPercent < 0)
                         || (x.DiscountPercent < 0)

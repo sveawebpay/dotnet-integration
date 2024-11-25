@@ -6,7 +6,6 @@ using WebpayWS;
 
 namespace Webpay.Integration.Test;
 
-// Fixture contains defining tests for main WebpayConnection entrypoint methods & integration package functionality common between all integration packages
 [TestFixture]
 public class WebpayConnectionUnitTest
 {
@@ -19,7 +18,6 @@ public class WebpayConnectionUnitTest
             .TestInvoiceRequestObjectForCustomerIdentityIndividualFromSe();
     }
     // createOrder - useInvoicePayment - useInvoicePayment - doRequest => response class
-    // TODO use existing integration tests or add mocked request response data if available
     
     // createOrder - usePaymentPlanPayment 
     // createOrder - usePaymentPlanPayment - doRequest

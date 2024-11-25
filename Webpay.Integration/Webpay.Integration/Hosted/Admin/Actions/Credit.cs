@@ -131,7 +131,7 @@ public class Credit : BasicRequest
     //    return new Tuple<bool, CreditResponse>(true, null);
     //}
 
-    private (bool, CreditResponse) ValidateDeliveries()
+    private (bool, CreditResponse?) ValidateDeliveries()
     {
         if (!Deliveries.Any() && AmountToCredit <= 0)
         {
@@ -167,7 +167,6 @@ public class Credit : BasicRequest
     //        }
     //        else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
     //                string.IsNullOrEmpty(x.Name)
-    //                || (x.UnitPrice < 0)
     //                || (x.Quantity <= 0)
     //                || (x.VatPercent < 0)
     //                || (x.DiscountPercent < 0)
@@ -186,7 +185,7 @@ public class Credit : BasicRequest
     //    return new Tuple<bool, CreditResponse>(true, null); ;
     //}
 
-    private (bool, CreditResponse) ValidateDelivery(Delivery delivery) =>
+    private (bool, CreditResponse?) ValidateDelivery(Delivery delivery) =>
         delivery switch
         {
             null => (true, null),
@@ -197,7 +196,7 @@ public class Credit : BasicRequest
             _ when AmountToCredit > 0 && delivery.NewOrderRows.Any() && delivery.OrderRows.Any() =>
                 (false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time")),
 
-            _ when delivery.NewOrderRows.Any(x => string.IsNullOrEmpty(x.Name) || x.UnitPrice < 0 || x.Quantity <= 0 || x.VatPercent < 0 || x.DiscountPercent < 0 || x.DiscountAmount < 0) =>
+            _ when delivery.NewOrderRows.Any(x => string.IsNullOrEmpty(x.Name) || x.Quantity <= 0 || x.VatPercent < 0 || x.DiscountPercent < 0 || x.DiscountAmount < 0) =>
                 (false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}")),
 
             _ when delivery.OrderRows.Any(x => x.RowId <= 0 || x.Quantity <= 0) =>

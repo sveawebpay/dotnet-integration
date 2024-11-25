@@ -31,7 +31,6 @@ public class CloseOrderTest
             .DoRequest();
 
         Assert.That(closeResponse.ResultCode, Is.EqualTo(0));
-        //Assert.That(closeResponse.Accepted, Is.True);
         Assert.That(closeResponse.ResultCode, Is.EqualTo(0), "Order was not accepted.");
     }
 

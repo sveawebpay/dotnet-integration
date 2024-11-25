@@ -13,7 +13,6 @@ public class OrderRowBuilder : IRowBuilder, IPriced<OrderRowBuilder>
     private int _vatDiscount;
     private int _discountPercent;
 
-
     // copy constructor
     public OrderRowBuilder(OrderRowBuilder original)
     {
@@ -29,10 +28,10 @@ public class OrderRowBuilder : IRowBuilder, IPriced<OrderRowBuilder>
         _discountPercent = original._discountPercent;
     }
 
-    // default constructor
+    // Default constructor
     public OrderRowBuilder()
     {
-        // intentionally left blank
+        // Intentionally left blank
     }
 
     public string GetArticleNumber()

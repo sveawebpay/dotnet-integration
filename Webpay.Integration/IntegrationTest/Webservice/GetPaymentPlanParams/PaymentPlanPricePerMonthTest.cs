@@ -10,7 +10,7 @@ public class PaymentPlanPricePerMonthTest
     private async Task<GetPaymentPlanParamsEuResponse> GetParamsForTesting()
     {
         var request = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig());
-        GetPaymentPlanParamsEuResponse response = await request
+        var response = await request
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DoRequest();
 
@@ -21,8 +21,7 @@ public class PaymentPlanPricePerMonthTest
     public async Task TestBuildPriceCalculator()
     {
         var paymentPlanParams = await GetParamsForTesting();
-
-        List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(11200.0M, paymentPlanParams);
+        var result = WebpayConnection.PaymentPlanPricePerMonth(11200.0M, paymentPlanParams);
 
         Assert.That(result[0]["campaignCode"], Is.EqualTo(223060));
         Assert.That(result[0]["pricePerMonth"], Is.EqualTo(11229));
@@ -48,8 +47,7 @@ public class PaymentPlanPricePerMonthTest
     public async Task TestBuildPriceCalculatorWithLowPrice()
     {
         var paymentPlanParams = await GetParamsForTesting();
-
-        List<Dictionary<string, long>> result = WebpayConnection.PaymentPlanPricePerMonth(99.0M, paymentPlanParams);
+        var result = WebpayConnection.PaymentPlanPricePerMonth(99.0M, paymentPlanParams);
 
         Assert.That(result.Count == 0, Is.True);
     }

@@ -8,12 +8,12 @@ public static class HashUtil
     public static string CreateHash(string inputString)
     {
         var utfEncoding = new UTF8Encoding();
-        byte[] message = utfEncoding.GetBytes(inputString);
+        var message = utfEncoding.GetBytes(inputString);
 
         var hashString = new SHA512Managed();
-        string hex = String.Empty;
+        var hex = String.Empty;
 
-        byte[] hashValue = hashString.ComputeHash(message);
+        var hashValue = hashString.ComputeHash(message);
         foreach (byte x in hashValue)
         {
             hex += String.Format("{0:x2}", x);

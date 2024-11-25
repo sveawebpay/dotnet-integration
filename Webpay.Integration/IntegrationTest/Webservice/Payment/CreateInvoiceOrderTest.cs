@@ -161,7 +161,7 @@ public class CreateInvoiceOrderTest
             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
             .UseInvoicePayment();
 
-        var createOrderEuRequest = useInvoicePayment.PrepareRequest();
+        var _ = useInvoicePayment.PrepareRequest();
         var response = await useInvoicePayment.DoRequest();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));

@@ -14,7 +14,7 @@ public class HostedPaymentsRequestTest
                                    .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                    .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
                                    .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                   .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetOrderDate(TestingTool.DefaultTestDate)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)

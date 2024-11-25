@@ -18,39 +18,45 @@ public class NumberedOrderRowBuilder : OrderRowBuilder, IPriced<NumberedOrderRow
         return _creditInvoiceId;
 
     }
+
     public NumberedOrderRowBuilder SetCreditInvoiceId(long? creditInvoiceId)
     {
         this._creditInvoiceId = creditInvoiceId;
         return this;
     }
+
     public long? GetInvoiceId()
     {
         return _invoiceId;
     }
+
     public NumberedOrderRowBuilder SetInvoiceId(long? invoiceId)
     {
         this._invoiceId = invoiceId;
         return this;
     }
+
     public int GetRowNumber()
     {
         return _rowNumber;
     }
+
     public NumberedOrderRowBuilder SetRowNumber(int rowNumber)
     {
-        this._rowNumber = rowNumber;
+        _rowNumber = rowNumber;
         return this;
     }      
+
     public OrderRowStatus? GetStatus()
     {
         return _status;
     }
+
     public NumberedOrderRowBuilder SetStatus(OrderRowStatus? status)
     {
-        this._status = status;
+        _status = status;
         return this;
     }
-    // shadow OrderRowBuilder setter methods to ensure correct return type
 
     /// <summary>
     /// Optional

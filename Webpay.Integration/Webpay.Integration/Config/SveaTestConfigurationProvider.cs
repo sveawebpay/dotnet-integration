@@ -5,6 +5,7 @@ namespace Webpay.Integration.Config;
 
 public class SveaTestConfigurationProvider : IConfigurationProvider
 {
+    // TODO: cleanup
     //public string GetUsername(PaymentType type, CountryCode country)
     //{
     //    if (type == PaymentType.INVOICE || type == PaymentType.PAYMENTPLAN)

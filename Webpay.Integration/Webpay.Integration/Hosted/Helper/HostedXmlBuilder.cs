@@ -56,16 +56,6 @@ public class HostedXmlBuilder
         return xmlOutput.ToString();
     }
 
-    private void SerializeUnknownCustomer(CreateOrderBuilder order, XmlWriter xmlw)
-    {
-        Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);
-
-        xmlw.WriteStartElement("customer");
-        doWriteSimple("unknowncustomer", "true");
-        doWriteSimple("country", order.GetCountryCode().ToString().ToUpper());
-        xmlw.WriteEndElement();
-    }
-
     private void SerializeCustomer(CreateOrderBuilder order, XmlWriter xmlw)
     {
         Action<string, string> doWriteSimple = (name, value) => WriteSimpleElement(name, value, xmlw);

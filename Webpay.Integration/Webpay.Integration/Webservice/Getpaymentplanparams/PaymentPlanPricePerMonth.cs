@@ -25,6 +25,8 @@ public class PaymentPlanPricePerMonth
             var numberOfPayments = Math.Max(1, campaignCode.ContractLengthInMonths - campaignCode.NumberOfPaymentFreeMonths);
 
             var paymentFactor = CalculatePaymentFactor(numberOfPayments, (double)campaignCode.InterestRatePercent / 100);
+
+            // TODO: cleanup
             //double pricePerMonth;
             //switch(campaignCode.PaymentPlanType)
             //{

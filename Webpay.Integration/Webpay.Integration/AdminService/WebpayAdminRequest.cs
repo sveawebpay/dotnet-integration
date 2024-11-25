@@ -6,6 +6,7 @@ namespace Webpay.Integration.AdminService;
 
 public class WebpayAdminRequest
 {
+    //TODO: cleanup
     //protected AdminWS.InvoiceDistributionType ConvertDistributionTypeToInvoiceDistributionType(DistributionType dt)
     //{
     //    switch (dt)

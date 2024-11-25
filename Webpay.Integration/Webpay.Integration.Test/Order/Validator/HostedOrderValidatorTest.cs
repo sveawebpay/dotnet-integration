@@ -30,7 +30,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                            "MISSING VALUE - OrderRows are required. Use AddOrderRow(Item.OrderRow) to get orderrow setters.\n";
 
             CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
 
@@ -49,7 +49,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetVatPercent(25))
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .SetClientOrderNumber("")
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
             _orderValidator = new HostedOrderValidator();
@@ -94,7 +94,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer());
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer());
             _orderValidator = new HostedOrderValidator();
 
             Assert.That(_orderValidator.Validate(order), Is.Empty);
@@ -111,7 +111,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer());
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer());
             _orderValidator = new HostedOrderValidator();
 
             Assert.That(_orderValidator.Validate(order), Is.Empty);
@@ -128,7 +128,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetAmountExVat(5.0M)
                                                                         .SetVatPercent(25)
                                                                         .SetQuantity(1))
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer());
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer());
             _orderValidator = new HostedOrderValidator();
 
             Assert.That(_orderValidator.Validate(order), Is.Empty);
@@ -146,7 +146,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetAmountExVat(100))
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .SetClientOrderNumber("")
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
             _orderValidator = new HostedOrderValidator();
@@ -166,7 +166,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetVatPercent(25))
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .SetClientOrderNumber("")
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
             _orderValidator = new HostedOrderValidator();
@@ -185,7 +185,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                                         .SetAmountIncVat(125))
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .SetClientOrderNumber("")
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
             _orderValidator = new HostedOrderValidator();
@@ -202,7 +202,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                        .AddOrderRow(null)
                                                        .SetCurrency(TestingTool.DefaultTestCurrency)
                                                        .SetClientOrderNumber("")
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetValidator(new VoidValidator())
                                                        .Build();
             _orderValidator = new HostedOrderValidator();

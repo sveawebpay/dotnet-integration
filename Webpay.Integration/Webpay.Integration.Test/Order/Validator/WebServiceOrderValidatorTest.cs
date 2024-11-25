@@ -361,7 +361,7 @@ namespace Webpay.Integration.Test.Order.Validator
                                                        .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                                        .AddOrderRow(TestingTool.CreateMiniOrderRow())
-                                                       .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                                       .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                                        .SetOrderDate(new DateTime())
                                                        .SetValidator(new VoidValidator());
 

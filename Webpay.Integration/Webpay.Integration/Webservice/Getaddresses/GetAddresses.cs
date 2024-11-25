@@ -68,7 +68,7 @@ public class GetAddresses
 
     private ClientAuthInfo GetStoreAuthorization()
     {
-        PaymentType type = _orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN;
+        var type = _orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN;
         return new ClientAuthInfo
         {
             ClientNumber = _config.GetClientNumber(type, _countryCode),
@@ -79,7 +79,7 @@ public class GetAddresses
 
     public string ValidateRequest()
     {
-        string errors = "";
+        var errors = "";
         if (_countryCode == CountryCode.NONE)
         {
             errors += "MISSING VALUE - CountryCode is required, use SetCountryCode(...).\n";
@@ -93,7 +93,7 @@ public class GetAddresses
 
     public GetCustomerAddressesRequest PrepareRequest()
     {
-        string errors = ValidateRequest();
+        var errors = ValidateRequest();
         if (errors.Length > 0)
         {
             throw new SveaWebPayValidationException(errors);
@@ -110,7 +110,7 @@ public class GetAddresses
 
     public async Task<GetCustomerAddressesResponse> DoRequest()
     {
-        GetCustomerAddressesRequest request = PrepareRequest();
+        var request = PrepareRequest();
 
         Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, 
                                        _config.GetEndPoint(_orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN));

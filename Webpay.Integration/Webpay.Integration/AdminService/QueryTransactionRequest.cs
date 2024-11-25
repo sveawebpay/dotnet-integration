@@ -15,7 +15,6 @@ public class QueryTransactionRequest
 
     public QueryResponse DoRequest()
     {
-        // TODO: validate _builder.GetOrderId() existence here?
         var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .Query(new QueryByTransactionId(
                 transactionId: _builder.Id,

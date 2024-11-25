@@ -15,6 +15,7 @@ public class WebServiceOrderValidator : OrderValidator
 
         var identityValidator = new IdentityValidator();
 
+        // TODO: cleanup
         //switch (order.GetCountryCode())
         //{
         //    case CountryCode.NONE:
@@ -77,6 +78,7 @@ public class WebServiceOrderValidator : OrderValidator
         return "";
     }
 
+    // TODO
     //public static string ValidatePeppolIdString(string peppolId)
     //{
     //    if (peppolId.Length < 6)

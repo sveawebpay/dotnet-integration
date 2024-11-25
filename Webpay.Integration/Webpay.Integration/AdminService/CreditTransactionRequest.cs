@@ -23,6 +23,7 @@ public class CreditTransactionRequest
                 correlationId: _builder.GetCorrelationId());
 
         CreditResponse validationResoponse;
+
         if (creditRequest.ValidateCreditRequest(out validationResoponse))
         {
             var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())

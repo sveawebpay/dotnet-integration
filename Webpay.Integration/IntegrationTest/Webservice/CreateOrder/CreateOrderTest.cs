@@ -14,7 +14,7 @@ public class CreateOrderTest
     public async Task TestConfiguration()
     {
         var conf = new ConfigurationProviderTestData();
-        CreateOrderEuResponse response = await WebpayConnection.CreateOrder(conf)
+        var response = await WebpayConnection.CreateOrder(conf)
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
             .AddCustomerDetails(Item.IndividualCustomer()
@@ -193,26 +193,4 @@ public class CreateOrderTest
         var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
         Assert.That(order.Accepted);
     }
-
-    // TODO?
-    //CreateOrderEuResponse response = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-    //                                                 .AddOrderRow(TestingTool.CreateOrderRowDe())
-    //                                                 .AddCustomerDetails(Item.CompanyCustomer()
-    //                                                                         .SetNationalIdNumber("12345")
-    //                                                                         .SetVatNumber("DE123456789")
-    //                                                                         .SetStreetAddress(
-    //                                                                             "Adalbertsteinweg", "1")
-    //                                                                         .SetZipCode("52070")
-    //                                                                         .SetLocality("AACHEN"))
-    //                                                 .SetCountryCode(CountryCode.DE)
-    //                                                 .SetClientOrderNumber(
-    //                                                     TestingTool.DefaultTestClientOrderNumber)
-    //                                                 .SetOrderDate(TestingTool.DefaultTestDate)
-    //                                                 .SetCurrency(Currency.EUR)
-    //                                                 .UseInvoicePayment()
-    //                                                 .DoRequest();
-
-    //Assert.That(response.ResultCode, Is.EqualTo(0));
-    //Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
-    //Assert.That(response.Accepted, Is.True);
 }

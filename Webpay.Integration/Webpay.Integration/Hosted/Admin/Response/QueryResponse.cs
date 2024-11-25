@@ -128,7 +128,7 @@ public class Transaction
     public readonly string ChName;
     public readonly string AuthCode;
 
-    public readonly IList<TransactionOrderRow> OrderRows; // TODO set to private
+    public readonly IList<TransactionOrderRow> OrderRows;
     public readonly IList<NumberedOrderRowBuilder> NumberedOrderRows; 
 
     public Transaction(string customerRefNo, int merchantId, string status, decimal amount, string currency, decimal? vat, decimal? capturedAmount, decimal? authorizedAmount, DateTime created, string creditStatus, decimal? creditedAmount, int? merchantResponseCode, string paymentMethod, string cardType, string callbackUrl, string subscriptionId, string subscriptionType, string eci, string mdStatus, string expiryYear, string expiryMonth, string chName, string authCode, TransactionCustomer customer)

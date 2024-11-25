@@ -46,7 +46,7 @@ public class DeliverOrdersBuilder : Builder<DeliverOrdersBuilder>
     public AdminService.DeliverOrdersRequest DeliverPaymentPlanOrders()
     {
         OrderType = PaymentType.PAYMENTPLAN;
-        DistributionType = DistributionType.POST;   // Always use Post for payment plan orders
+        DistributionType = DistributionType.POST; // Always use Post for payment plan orders
         return new AdminService.DeliverOrdersRequest(this);
     }
 

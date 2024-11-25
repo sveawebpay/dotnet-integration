@@ -286,12 +286,8 @@ public class WebServiceRowFormatter<T>
                          {
                              var byVatVatPercent = vatAndAmount.Key;
                              var byVatAmountIncVat = vatAndAmount.Value;
-
                              var orderRowBuilder = Item.OrderRow();
-
                              var newRow = ConvertFixedDiscountToOrderRow(orderRowBuilder, discount);
-
-
 
                              if (discount.GetAmountIncVat() != null)
                              {
@@ -306,7 +302,6 @@ public class WebServiceRowFormatter<T>
                              else if (discount.GetAmountExVat() != null)
                              {
                                  var exVatRatio = (byVatAmountIncVat * 100 / (100 + byVatVatPercent)) / order.TotalAmountExVat;
-
                                  var discountAmountExVat = discount.GetAmountExVat().GetValueOrDefault() * exVatRatio;
 
                                  newRow
@@ -373,7 +368,7 @@ public class WebServiceRowFormatter<T>
 
     public static List<OrderRow> ConvertToWebserviceOrder(Order order)
     {
-        var res =  order
+        var res = order
             .NewOrderRows
             .ConvertAll(row =>
             {

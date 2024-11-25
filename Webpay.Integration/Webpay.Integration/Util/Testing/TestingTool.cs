@@ -343,7 +343,7 @@ public static class TestingTool
             _ => throw new SveaWebPayException("Unsupported argument for method.")
         };
 
-    public static CompanyCustomer CreateMiniCompanyCustomer()
+    public static CompanyCustomer CreateMinimalCompanyCustomer()
     {
         return Item.CompanyCustomer()
                    .SetVatNumber("2345234")

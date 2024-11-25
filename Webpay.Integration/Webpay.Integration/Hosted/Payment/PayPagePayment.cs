@@ -24,20 +24,32 @@ public class PayPagePayment : HostedPayment
         return _paymentMethod;
     }
 
+    // TODO: test and cleanup
+    //public PayPagePayment SetPaymentMethod(PaymentMethod paymentMethod)
+    //{
+    //    if (paymentMethod == PaymentMethod.INVOICE)
+    //    {
+    //        _paymentMethod = GetValidInvoiceTypeForIncludedList();
+    //    }
+    //    else if (paymentMethod == PaymentMethod.PAYMENTPLAN)
+    //    {
+    //        _paymentMethod = GetValidPaymentPlanTypeForIncludedList();
+    //    }
+    //    else
+    //    {
+    //        _paymentMethod = paymentMethod.Value;
+    //    }
+    //    return this;
+    //}
     public PayPagePayment SetPaymentMethod(PaymentMethod paymentMethod)
     {
-        if (paymentMethod == PaymentMethod.INVOICE)
+        _paymentMethod = paymentMethod.Value switch
         {
-            _paymentMethod = GetValidInvoiceTypeForIncludedList();
-        }
-        else if (paymentMethod == PaymentMethod.PAYMENTPLAN)
-        {
-            _paymentMethod = GetValidPaymentPlanTypeForIncludedList();
-        }
-        else
-        {
-            _paymentMethod = paymentMethod.Value;
-        }
+            _ when paymentMethod == PaymentMethod.INVOICE => GetValidInvoiceTypeForIncludedList(),
+            _ when paymentMethod == PaymentMethod.PAYMENTPLAN => GetValidPaymentPlanTypeForIncludedList(),
+            _ => paymentMethod.Value
+        };
+
         return this;
     }
 
@@ -149,7 +161,7 @@ public class PayPagePayment : HostedPayment
         ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
         ExcludeDirectPaymentMethod();
 
-        // Remove the included methods from the excluded payment methods
+        // Remove included methods from excluded payment methods
         foreach (string pm in _includedPaymentMethod)
         {
             ExcludedPaymentMethod.Remove(pm);
@@ -162,13 +174,13 @@ public class PayPagePayment : HostedPayment
     {
         foreach (var ppt in PaymentPlanType.AllPaymentPlanValueTypes)
         {
-            //never include from old flow to include list - won´t show in paypage
+            // Never include from old flow to include list - won´t show in paypage
             if (CrOrderBuilder.GetCountryCode() == CountryCode.SE &&
                 ppt == PaymentPlanType.PAYMENTPLANSE)
             {
                 continue;
             }
-            //include only Payment plan for current country 
+            // Include only Payment plan for current country 
             if (ppt.CountryCode == CrOrderBuilder.GetCountryCode())
             {
                 return ppt.Value;
@@ -181,7 +193,7 @@ public class PayPagePayment : HostedPayment
     {
         foreach (var it in InvoiceType.AllInvoiceValueTypes)
         {
-            //never include old flow to include list
+            // Never include old flow to include list
             if (CrOrderBuilder.GetCountryCode() == CountryCode.SE && it == InvoiceType.INVOICESE)
             {
                 continue;

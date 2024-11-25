@@ -69,7 +69,7 @@ public class AddOrderRowsRequest : WebpayAdminRequest
         {
             Authentication = auth,
             SveaOrderId = _builder.Id,
-            OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),    // not required for EU-clients
+            OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),
             ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
             OrderRows = _builder.OrderRows.Select(x => ConvertOrderRowBuilderToAdminWSOrderRow(x)).ToArray()
         };

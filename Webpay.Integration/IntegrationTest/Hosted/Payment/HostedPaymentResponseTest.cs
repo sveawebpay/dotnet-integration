@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using System.Web;
 using Webpay.Integration.Config;
@@ -21,7 +19,7 @@ public class HostedPaymentResponseTest
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                   .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                    .SetCurrency(TestingTool.DefaultTestCurrency)
@@ -38,7 +36,7 @@ public class HostedPaymentResponseTest
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                   .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                    .SetCountryCode(CountryCode.NO)
                                    .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                    .SetCurrency(Currency.NOK)
@@ -47,7 +45,7 @@ public class HostedPaymentResponseTest
                                    .UsePaymentMethod(PaymentMethod.VIPPS)
                                    .SetReturnUrl("https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                    .GetPaymentForm();
-        var config = SveaConfig.GetDefaultConfig();
+        var _ = SveaConfig.GetDefaultConfig();
         
         var postResponse = PostRequest(form,CountryCode.NO);
         Assert.That(postResponse.Item1, Is.EqualTo("OK"));
@@ -59,7 +57,7 @@ public class HostedPaymentResponseTest
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                    .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                   .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                    .SetCountryCode(CountryCode.SE)
                                    .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                    .SetCurrency(Currency.SEK)
@@ -68,7 +66,7 @@ public class HostedPaymentResponseTest
                                    .UsePaymentMethod(PaymentMethod.MOBILEPAY)
                                    .SetReturnUrl("https://webpaypaymentgatewaystage.svea.com/webpay/admin/merchantresponsetest.xhtml")
                                    .GetPaymentForm();
-        var config = SveaConfig.GetDefaultConfig();
+        var _ = SveaConfig.GetDefaultConfig();
 
         var postResponse = PostRequest(form);
         Assert.That(postResponse.Item1, Is.EqualTo("OK"));
@@ -79,7 +77,7 @@ public class HostedPaymentResponseTest
     {
         var uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                   .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                  .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                  .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                   .SetClientOrderNumber(Guid.NewGuid().ToString().Replace("-", ""))
                                   .SetCurrency(TestingTool.DefaultTestCurrency)

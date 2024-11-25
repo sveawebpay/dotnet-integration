@@ -27,61 +27,74 @@ public class HostedActionRequest
         Headers = headers;
     }
 
+    // TODO: cleanup
+    //public T DoRequest<T>()
+    //{
+    //    if (typeof(T) == typeof(AnnulResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(Annul.Response);
+    //    }
+    //    if (typeof(T) == typeof(ConfirmResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(Confirm.Response);
+    //    }
+    //    if (typeof(T) == typeof(CreditResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(Credit.Response);
+    //    }
+    //    if (typeof(T) == typeof(LowerAmountResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(LowerAmount.Response);
+    //    }
+    //    if (typeof(T) == typeof(LowerAmountConfirmResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(LowerAmountConfirm.Response);
+    //    }
+    //    if ( typeof(T) == typeof(QueryResponse) )
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T) (object) hostedAdminResponse.To(Query.Response);
+    //    }
+    //    if (typeof(T) == typeof(RecurResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse.To(Recur.Response);
+    //    }
+    //    if (typeof(T) == typeof(HostedAdminResponse))
+    //    {
+    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+    //        return (T)(object)hostedAdminResponse;
+    //    }
+
+    //    throw new SveaWebPayException("unknown request type");
+    //}
+
     public T DoRequest<T>()
     {
-        // Annul
-        if (typeof(T) == typeof(AnnulResponse))
+        var typeToResponseMap = new Dictionary<Type, Func<HostedAdminResponse, object>>
+        {
+            { typeof(AnnulResponse), response => response.To(Annul.Response) },
+            { typeof(ConfirmResponse), response => response.To(Confirm.Response) },
+            { typeof(CreditResponse), response => response.To(Credit.Response) },
+            { typeof(LowerAmountResponse), response => response.To(LowerAmount.Response) },
+            { typeof(LowerAmountConfirmResponse), response => response.To(LowerAmountConfirm.Response) },
+            { typeof(QueryResponse), response => response.To(Query.Response) },
+            { typeof(RecurResponse), response => response.To(Recur.Response) },
+            { typeof(HostedAdminResponse), response => response }
+        };
+
+        if (typeToResponseMap.TryGetValue(typeof(T), out var converter))
         {
             var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(Annul.Response);
+            return (T)converter(hostedAdminResponse);
         }
-        // CancelRecurSubscription
-        // Confirm
-        if (typeof(T) == typeof(ConfirmResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(Confirm.Response);
-        }
-        // Credit
-        if (typeof(T) == typeof(CreditResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(Credit.Response);
-        }
-        // GetPaymentMethods
-        // GetReconciliationReport
-        // LowerAmount
-        if (typeof(T) == typeof(LowerAmountResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(LowerAmount.Response);
-        }
-        // LowerAmountConfirm
-        if (typeof(T) == typeof(LowerAmountConfirmResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(LowerAmountConfirm.Response);
-        }
-        // Query
-        if ( typeof(T) == typeof(QueryResponse) )
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T) (object) hostedAdminResponse.To(Query.Response);
-        }
-        // Recur
-        if (typeof(T) == typeof(RecurResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse.To(Recur.Response);
-        }
-        // Raw HostedAdminResponse
-        if (typeof(T) == typeof(HostedAdminResponse))
-        {
-            var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-            return (T)(object)hostedAdminResponse;
-        }
-        // default catch-all
-        throw new SveaWebPayException("unknown request type");
+
+        throw new SveaWebPayException("Unknown request type");
     }
 
     private string GetEndPointBase()

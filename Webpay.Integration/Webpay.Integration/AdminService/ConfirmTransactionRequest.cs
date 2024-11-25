@@ -39,7 +39,7 @@ public class ConfirmTransactionRequest : WebpayAdminRequest
 
         if (amountToLowerOrderBy > 0M)
         {
-            // First loweramount, then confirm!
+            // First loweramount, then confirm
             var lowerAmountRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
                 .LowerAmount(new LowerAmount(
                     transactionId: _builder.Id,
@@ -60,6 +60,7 @@ public class ConfirmTransactionRequest : WebpayAdminRequest
                 return Confirm.Response(dummyInternalErrorResponseXml);
             }
         }
+
         var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .Confirm(new Confirm(
                 transactionId: _builder.Id,

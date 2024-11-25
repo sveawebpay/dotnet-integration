@@ -166,7 +166,7 @@ public class OrderBuilderTest
 
     private CreateOrderBuilder CreateCompanyDetails(CreateOrderBuilder orderBuilder)
     {
-        return orderBuilder.AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer());
+        return orderBuilder.AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer());
     }
 
     private void CreateTestOrderRow()

@@ -183,8 +183,6 @@ public class DeliverOrderBuilder : OrderBuilder<DeliverOrderBuilder>
 
     public HostedActionRequest DeliverCardOrder()
     {
-        // No validation for this release, we fall back on the service error messages
-
         var action = new Confirm(
             this.GetOrderId(),
             this._captureDate ?? DateTime.Now, // If no captureDate given, use today

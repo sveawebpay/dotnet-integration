@@ -133,7 +133,7 @@ public class SveaResponse : Response
 
     private string GetTagAttribute(XmlElement elementNode, string tagName, string attributeName)
     {
-        XmlNode trans = elementNode.GetElementsByTagName(tagName).Item(0);
+        var trans = elementNode.GetElementsByTagName(tagName).Item(0);
         if (trans != null)
         {
             XmlNamedNodeMap attr = trans.Attributes;
@@ -147,7 +147,7 @@ public class SveaResponse : Response
 
     private string GetTagValue(XmlElement elementNode, string tagName)
     {
-        XmlNodeList nodeList = elementNode.GetElementsByTagName(tagName);
+        var nodeList = elementNode.GetElementsByTagName(tagName);
         var element = (XmlElement) nodeList.Item(0);
         if (element != null && element.HasChildNodes)
         {

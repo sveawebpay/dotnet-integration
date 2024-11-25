@@ -170,7 +170,7 @@ public class InvoicePaymentTest
     {
         var request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-            .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+            .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .SetOrderDate(TestingTool.DefaultTestDate)

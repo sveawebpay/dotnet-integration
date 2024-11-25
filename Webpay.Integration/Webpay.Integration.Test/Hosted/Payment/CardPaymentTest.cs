@@ -33,7 +33,7 @@ public class CardPaymentTest
     public void TestBuildCardPayment()
     {
         var form = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                 .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                 .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                  .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                  .AddDiscount(TestingTool.CreateRelativeDiscount())
                                  .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -108,7 +108,7 @@ public class CardPaymentTest
     public void TestBuildCardPaymentDe()
     {
         var form = _order.AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                         .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                         .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                          .AddFee(TestingTool.CreateExVatBasedShippingFee())
                          .AddDiscount(TestingTool.CreateRelativeDiscount())
                          .SetCountryCode(CountryCode.DE)
@@ -142,7 +142,7 @@ public class CardPaymentTest
                                    .AddFee(TestingTool.CreateExVatBasedShippingFee())
                                    .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
                                    .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                   .AddCustomerDetails(TestingTool.CreateMiniCompanyCustomer())
+                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
                                    .SetOrderDate(TestingTool.DefaultTestDate)
                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)

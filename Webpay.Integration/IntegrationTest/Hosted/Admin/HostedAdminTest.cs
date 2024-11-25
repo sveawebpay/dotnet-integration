@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Web;
+﻿using System.Web;
 using System.Xml;
 using Webpay.Integration.Config;
 using Webpay.Integration.Hosted.Admin;
@@ -8,7 +7,6 @@ using Webpay.Integration.Hosted.Admin.Response;
 using Webpay.Integration.Hosted.Payment;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
-using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Order.Row;
 using Webpay.Integration.Order.Row.credit;
 using Webpay.Integration.Order;
@@ -21,7 +19,7 @@ public class HostedAdminTest
     [Test]
     public void TestPreparedPaymentRequest()
     {
-        Uri uri = PrepareRegularPayment(PaymentMethod.SWISH, CreateCustomerRefNo());
+        var uri = PrepareRegularPayment(PaymentMethod.SWISH, CreateCustomerRefNo());
 
         Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));
     }
@@ -29,19 +27,19 @@ public class HostedAdminTest
     [Test]
     public void TestGetRecurringPaymentUrl()
     {
-        var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRING);
+        var _ = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRING);
     }
 
     [Test]
     public void TestGetRecurringCapturePaymentUrl()
     {
-        var prepareRecurPayment = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRINGCAPTURE);
+        var _ = PrepareRecurPayment(PaymentMethod.KORTCERT, SubscriptionType.RECURRINGCAPTURE);
     }
 
     [Test, Ignore("")]
     public void TestSemiManualCancelRecurSubscription()
     {
-        var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+        var _ = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .CancelRecurSubscription(new CancelRecurSubscription(
                 subscriptionId: "3352",correlationId:null
             ))
@@ -51,7 +49,7 @@ public class HostedAdminTest
     [Test, Ignore("")]
     public void TestSemiManualConfirm()
     {
-        var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+        var _ = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .Confirm(new Confirm(
                 transactionId: 598683,
                 captureDate: DateTime.Now, correlationId: null
@@ -69,7 +67,7 @@ public class HostedAdminTest
                             <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
                             </transaction><statuscode>0</statuscode>
                         </response>");
-        AnnulResponse response = Annul.Response(responseXml);
+        var response = Annul.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -87,7 +85,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        AnnulResponse response = Annul.Response(responseXml);
+        var response = Annul.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -117,7 +115,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>0</statuscode>
                         </response>");
-        CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
+        var response = CancelRecurSubscription.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -132,7 +130,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>101</statuscode>
                         </response>");
-        CancelRecurSubscriptionResponse response = CancelRecurSubscription.Response(responseXml);
+        var response = CancelRecurSubscription.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(101));
         Assert.That(response.Accepted, Is.False);
@@ -276,7 +274,7 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        ConfirmResponse response = Confirm.Response(responseXml);
+        var response = Confirm.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -319,7 +317,7 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        ConfirmPartialResponse response = ConfirmPartial.Response(responseXml);
+        var response = ConfirmPartial.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -337,7 +335,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        ConfirmResponse response = Confirm.Response(responseXml);
+        var response = Confirm.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -380,7 +378,7 @@ public class HostedAdminTest
                                 <paymentmethod>DBNORDEASE</paymentmethod>
                             </paymentmethods>
                         </response>");
-        GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
+        var response = GetPaymentMethods.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -398,7 +396,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        GetPaymentMethodsResponse response = GetPaymentMethods.Response(responseXml);
+        var response = GetPaymentMethods.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(107));
         Assert.That(response.Accepted, Is.False);
@@ -423,6 +421,7 @@ public class HostedAdminTest
         var reconciliationXml = hostedAdminResponse.MessageXmlDocument
             .SelectSingleNode("/response/reconciliation/reconciliationtransaction").InnerXml;
 
+        // TODO: Cleanup
         //Assert.That(reconciliationXml,
         //    Does.Contain("<transactionid>864104</transactionid><customerrefno>test_1682491068546</customerrefno><paymentmethod>SVEACARDPAY</paymentmethod><amount>500</amount><currency>SEK</currency><time>2023-04-27 00:04:00 CEST</time>"));
         var matchPattern = @"<transactionid>\d+</transactionid><customerrefno>.*</customerrefno><paymentmethod>SVEACARDPAY</paymentmethod><amount>500</amount><currency>SEK</currency><time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} CEST</time>";
@@ -449,7 +448,7 @@ public class HostedAdminTest
                                 </reconciliationtransaction>
                             </reconciliation>
                         </response>");
-        GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
+        var response = GetReconciliationReport.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -471,7 +470,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        GetReconciliationReportResponse response = GetReconciliationReport.Response(responseXml);
+        var response = GetReconciliationReport.Response(responseXml);
 
         Assert.That(response.StatusCode, Is.EqualTo(107));
         Assert.That(response.Accepted, Is.False);
@@ -490,7 +489,7 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        LowerAmountResponse response = LowerAmount.Response(responseXml);
+        var response = LowerAmount.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -508,7 +507,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        LowerAmountResponse response = LowerAmount.Response(responseXml);
+        var response = LowerAmount.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -518,6 +517,7 @@ public class HostedAdminTest
         Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
     }
 
+    // TODO?
     //[Test]
     //public void TestLowerAmountConfirmCompleteFlow()
     //{
@@ -569,7 +569,7 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        LowerAmountConfirmResponse response = LowerAmountConfirm.Response(responseXml);
+        var response = LowerAmountConfirm.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -587,7 +587,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        LowerAmountConfirmResponse response = LowerAmountConfirm.Response(responseXml);
+        var response = LowerAmountConfirm.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -598,10 +598,10 @@ public class HostedAdminTest
     }
 
     [Test]
-    public void TestQueryTransactionIdDirectPayment()
+    public async Task TestQueryTransactionIdDirectPayment()
     {
         var customerRefNo = CreateCustomerRefNo();
-        var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
+        var payment = await MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
         var now = DateTime.Now;
 
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
@@ -610,7 +610,7 @@ public class HostedAdminTest
                 correlationId: new Guid()
             ));
 
-        HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
+        var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
         var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
@@ -697,7 +697,8 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        QueryResponse response = Query.Response(responseXml);
+
+        var response = Query.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(599086));
         Assert.That(response.CustomerRefNo, Is.EqualTo("19aa8f62d9cb44eb6851ff3650873b2ac"));
@@ -771,7 +772,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        QueryResponse response = Query.Response(responseXml);
+        var response = Query.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -783,18 +784,17 @@ public class HostedAdminTest
     }
 
     [Test]
-    public void TestQueryCustomerRefNoDirectPayment()
+    public async Task TestQueryCustomerRefNoDirectPayment()
     {
         var customerRefNo = CreateCustomerRefNo();
-        var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
-        var now = DateTime.Now;
+        var _ = await MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
 
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .Query(new QueryByCustomerRefNo(
                 customerRefNo: customerRefNo, correlationId: new Guid()
             ));
 
-        HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
+        var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
 
         var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
@@ -818,7 +818,8 @@ public class HostedAdminTest
                 vat: vat, correlationId: new Guid()
             ));
 
-        HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
+        var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/currency").InnerText, Is.EqualTo(Currency.SEK.ToString()));
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/amount").InnerText, Is.EqualTo(amount + ""));
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/customerrefno").InnerText, Is.EqualTo(customerRefNo));
@@ -827,7 +828,7 @@ public class HostedAdminTest
 
         var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
 
-        //Call to non-existing subscription
+        // Call to non-existing subscription
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322"));
     }
 
@@ -852,7 +853,7 @@ public class HostedAdminTest
                             </transaction>
                             <statuscode>0</statuscode>
                         </response>");
-        RecurResponse response = Recur.Response(responseXml);
+        var response = Recur.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.EqualTo(598972));
         Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
@@ -880,7 +881,7 @@ public class HostedAdminTest
                         <response>
                             <statuscode>107</statuscode>
                         </response>");
-        RecurResponse response = Recur.Response(responseXml);
+        var response = Recur.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);
@@ -929,7 +930,7 @@ public class HostedAdminTest
     [Test, Ignore("Create a directbank transaction with Trustly to test this")]
     public void TestHostedAdminResponseStatus150()
     {
-        CreditOrderBuilder request = WebpayAdmin.CreditPayment(new SveaTestConfigurationProvider())
+        var request = WebpayAdmin.CreditPayment(new SveaTestConfigurationProvider())
             .SetTransactionId(697022)
             .SetAmountIncVat(100);
         var response = request.CreditDirectBankPayment().DoRequest();
@@ -953,6 +954,7 @@ public class HostedAdminTest
                 "https://webpaypaymentgatewaystage.svea.com/webpay/public/static/testlandingpage.html")
             .PreparePayment("127.0.0.1");
     }
+
     internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
@@ -1022,17 +1024,42 @@ public class HostedAdminTest
             .PreparePayment("127.0.0.1");
     }
 
-    internal static PaymentResponse MakePreparedPayment(Uri preparePayment)
-    {
-        var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
-        webRequest.AllowAutoRedirect = false;
-        var webResponse = (HttpWebResponse)webRequest.GetResponse();
-        var location = new Uri(webResponse.Headers["Location"]);
-        var nameValueCollection = HttpUtility.ParseQueryString(location.Query);
-        var messageBase64 = nameValueCollection["response"];
-        var merchantId = nameValueCollection["merchantid"];
-        var mac = nameValueCollection["mac"];
+    // TODO: cleanup
+    // WebRequest.Create is deprecated...
+    //internal static PaymentResponse MakePreparedPayment(Uri preparePayment)
+    //{
+    //    var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
+    //    webRequest.AllowAutoRedirect = false;
 
-        return new PaymentResponse(messageBase64, mac, merchantId);
+    //    var webResponse = (HttpWebResponse)webRequest.GetResponse();
+    //    var location = new Uri(webResponse.Headers["Location"]);
+    //    var nameValueCollection = HttpUtility.ParseQueryString(location.Query);
+    //    var messageBase64 = nameValueCollection["response"];
+    //    var merchantId = nameValueCollection["merchantid"];
+    //    var mac = nameValueCollection["mac"];
+
+    //    return new PaymentResponse(messageBase64, mac, merchantId);
+    //}
+    internal static async Task<PaymentResponse> MakePreparedPayment(Uri preparePayment)
+    {
+        using (var handler = new HttpClientHandler { AllowAutoRedirect = false })
+        using (var httpClient = new HttpClient(handler))
+        {
+            var response = await httpClient.GetAsync(preparePayment, HttpCompletionOption.ResponseHeadersRead);
+
+            if (response.Headers.Location == null)
+            {
+                throw new InvalidOperationException("The response does not contain a 'Location' header.");
+            }
+
+            var location = response.Headers.Location;
+            var nameValueCollection = HttpUtility.ParseQueryString(location.Query);
+
+            var messageBase64 = nameValueCollection["response"];
+            var merchantId = nameValueCollection["merchantid"];
+            var mac = nameValueCollection["mac"];
+
+            return new PaymentResponse(messageBase64, mac, merchantId);
+        }
     }
 }

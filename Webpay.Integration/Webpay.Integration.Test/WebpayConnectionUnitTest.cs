@@ -105,10 +105,10 @@ public class WebpayConnectionUnitTest
     // validation - createOrder - sums - addOrderRow - hosted - priceIncludingVat false
     // validation - createOrder - sums - addOrderRow - hosted - priceIncludingVat true
     // validation - createOrder - sums - above w/addFee - webservice - priceIncludingVat false
-    [Test] public static void validation_createOrder_sums_orderRow_shippingFee_invoiceFee_company_NL()
+    [Test] public static async Task validation_createOrder_sums_orderRow_shippingFee_invoiceFee_company_NL()
     {
         new Webpay.Integration.Test.Webservice.Payment.InvoicePaymentTest()
-            .TestInvoiceRequestObjectForSEorderOnOneProductRow();
+            .TestInvoiceRequestObjectForSEOrderOnOneProductRow();
     }
     // validation - createOrder - sums - above w/addFee - webservice - priceIncludingVat true
     // validation - createOrder - sums - above w/addFee - hosted - priceIncludingVat false

@@ -13,7 +13,7 @@ public class WebpayAdminIntegrationTest
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRows()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = HostedAdminTest.MakePreparedPayment(
+        var payment = await HostedAdminTest.MakePreparedPayment(
             HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo));
         return payment;
     }
@@ -21,7 +21,7 @@ public class WebpayAdminIntegrationTest
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndVatPercent()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = HostedAdminTest.MakePreparedPayment(
+        var payment = await HostedAdminTest.MakePreparedPayment(
             HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo));
         return payment;
     }
@@ -29,7 +29,7 @@ public class WebpayAdminIntegrationTest
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndExVat()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = HostedAdminTest.MakePreparedPayment(
+        var payment = await HostedAdminTest.MakePreparedPayment(
             HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod.SVEACARDPAY, customerRefNo));
         return payment;
     }

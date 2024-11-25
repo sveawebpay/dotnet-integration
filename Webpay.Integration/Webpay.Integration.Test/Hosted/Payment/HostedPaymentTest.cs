@@ -1,5 +1,4 @@
 ﻿using Webpay.Integration.Config;
-using Webpay.Integration.Hosted;
 using Webpay.Integration.Hosted.Helper;
 using Webpay.Integration.Order.Create;
 using Webpay.Integration.Order.Row;
@@ -15,16 +14,17 @@ public class HostedPaymentTest
     public void TestCalculateRequestValuesNullExtraRows()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(4)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(1))
-                                                   .AddFee(Item.ShippingFee())
-                                                   .AddDiscount(Item.FixedDiscount())
-                                                   .AddDiscount(Item.RelativeDiscount());
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(4)
+                    .SetVatPercent(25)
+                    .SetQuantity(1))
+            .AddFee(Item.ShippingFee())
+            .AddDiscount(Item.FixedDiscount())
+            .AddDiscount(Item.RelativeDiscount());
 
         var payment = new FakeHostedPayment(order);
         payment
@@ -38,43 +38,51 @@ public class HostedPaymentTest
     public void TestVatPercentAndAmountIncVatCalculation()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountIncVat(5)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(1));
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountIncVat(5)
+                    .SetVatPercent(25)
+                    .SetQuantity(1));
 
         order.SetShippingFeeRows(null);
         order.SetFixedDiscountRows(null);
         order.SetRelativeDiscountRows(null);
+
         var payment = new FakeHostedPayment(order);
-        payment.SetReturnUrl("myUrl").CalculateRequestValues();
+        payment
+            .SetReturnUrl("myUrl")
+            .CalculateRequestValues();
 
         Assert.That(payment.GetAmount(), Is.EqualTo(500));
     }
 
     [Test]
-    public void TestAmountIncVatAndvatPercentShippingFee()
+    public void TestAmountIncVatAndVatPercentShippingFee()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                    .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                    .SetCurrency(TestingTool.DefaultTestCurrency)
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountIncVat(5)
-                                                     .SetVatPercent(25)
-                                                     .SetQuantity(1))
-                                    .AddFee(Item.ShippingFee()
-                                                .SetAmountIncVat(5)
-                                                .SetVatPercent(25));
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountIncVat(5)
+                    .SetVatPercent(25)
+                    .SetQuantity(1))
+            .AddFee(
+                Item.ShippingFee()
+                    .SetAmountIncVat(5)
+                    .SetVatPercent(25));
 
         order.SetFixedDiscountRows(null);
         order.SetRelativeDiscountRows(null);
 
         var payment = new FakeHostedPayment(order);
-        payment.SetReturnUrl("myUrl").CalculateRequestValues();
+        payment
+            .SetReturnUrl("myUrl")
+            .CalculateRequestValues();
 
         Assert.That(payment.GetAmount(), Is.EqualTo(1000L));
     }
@@ -82,17 +90,20 @@ public class HostedPaymentTest
     [Test]
     public void TestAmountIncVatAndAmountExVatCalculation()
     {
-        CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                   .AddOrderRow(TestingTool.CreateMiniOrderRow());
+        var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(TestingTool.CreateMiniOrderRow());
 
         order.SetShippingFeeRows(null);
         order.SetFixedDiscountRows(null);
         order.SetRelativeDiscountRows(null);
+
         var payment = new FakeHostedPayment(order);
-        payment.SetReturnUrl("myurl").CalculateRequestValues();
+        payment
+            .SetReturnUrl("myurl")
+            .CalculateRequestValues();
 
         Assert.That(payment.GetAmount(), Is.EqualTo(500L));
     }
@@ -100,21 +111,23 @@ public class HostedPaymentTest
     [Test]
     public void TestCreatePaymentForm()
     {
-        CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(4)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(1))
-                                                   .AddCustomerDetails(TestingTool.CreateCompanyCustomer());
+        var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(4)
+                    .SetVatPercent(25)
+                    .SetQuantity(1))
+            .AddCustomerDetails(TestingTool.CreateCompanyCustomer());
 
         var payment = new FakeHostedPayment(order);
         payment.SetReturnUrl("myurl");
-        var form = payment.GetPaymentForm();
 
+        var form = payment.GetPaymentForm();
         var formHtmlFields = form.GetFormHtmlFields();
+
         Assert.That(formHtmlFields["form_end_tag"], Is.EqualTo("</form>"));
     }
 
@@ -155,14 +168,15 @@ public class HostedPaymentTest
     public void TestAmountFromMultipleItemsDefinedWithExVatAndVatPercent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetArticleNumber("0")
-                                                                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetAmountExVat(69.99M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(30)
-                                                                    .SetUnit("st"));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetArticleNumber("0")
+                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetAmountExVat(69.99M)
+                    .SetVatPercent(25)
+                    .SetQuantity(30)
+                    .SetUnit("st"));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -178,16 +192,16 @@ public class HostedPaymentTest
     public void TestAmountFromMultipleItemsDefinedWithIncVatAndVatPercent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetArticleNumber("0")
-                                                                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetAmountIncVat(87.4875M) // If low precision here, i.e. 87.49, we'll get a cumulative rounding error
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(30)
-                                                                    .SetUnit("st"));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetArticleNumber("0")
+                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetAmountIncVat(87.4875M) // If low precision here, i.e. 87.49, we'll get a cumulative rounding error
+                    .SetVatPercent(25)
+                    .SetQuantity(30)
+                    .SetUnit("st"));
 
-        // Follows HostedPayment calculateRequestValues() outline:
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
         var formattedTotalAmount = formatter.GetTotalAmount();
@@ -202,14 +216,15 @@ public class HostedPaymentTest
     public void TestAmountFromMultipleItemsDefinedWithExVatAndIncVat()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetArticleNumber("0")
-                                                                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
-                                                                    .SetAmountExVat(69.99M)
-                                                                    .SetAmountIncVat(87.4875M) // If low precision here, i.e. 87.49, we'll get a cumulative rounding error
-                                                                    .SetQuantity(30)
-                                                                    .SetUnit("st"));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetArticleNumber("0")
+                    .SetName("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetDescription("testCalculateRequestValuesCorrectTotalAmountFromMultipleItems")
+                    .SetAmountExVat(69.99M)
+                    .SetAmountIncVat(87.4875M) // If low precision here, i.e. 87.49, we'll get a cumulative rounding error
+                    .SetQuantity(30)
+                    .SetUnit("st"));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -221,18 +236,19 @@ public class HostedPaymentTest
         Assert.That(formattedTotalVat, Is.EqualTo(52492)); // 52492,5 rounded half-to-even
     }
 
-
     // Calculated fixed discount vat rate, single vat rate in order
     [Test]
     public void TestAmountFromMultipleItemsWithFixedDiscountIncVatOnly()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(69.99M)
-                                                     .SetVatPercent(25)
-                                                     .SetQuantity(30))
-                                    .AddDiscount(Item.FixedDiscount()
-                                                     .SetAmountIncVat(10.00M));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(69.99M)
+                    .SetVatPercent(25)
+                    .SetQuantity(30))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountIncVat(10.00M));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -241,21 +257,23 @@ public class HostedPaymentTest
 
         Assert.That(formatRowsList.Count, Is.EqualTo(2));
         Assert.That(formattedTotalAmount, Is.EqualTo(261462)); // 262462,5 - 1000 discount rounded half-to-even
-        Assert.That(formattedTotalVat, Is.EqualTo(52292)); // 52492,5  -  200 discount (= 10/2624,62*524,92) rounded half-to-even
+        Assert.That(formattedTotalVat, Is.EqualTo(52292)); // 52492,5 - 200 discount rounded half-to-even
     }
 
-    // Explicit fixed discount vat rate, , single vat rate in order
+    // Explicit fixed discount vat rate, single vat rate in order
     [Test]
     public void TestAmountFromMultipleItemsWithFixedDiscountIncVatAndVatPercent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(69.99M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(30))
-                                                   .AddDiscount(Item.FixedDiscount()
-                                                                    .SetAmountIncVat(12.50M)
-                                                                    .SetVatPercent(25));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(69.99M)
+                    .SetVatPercent(25)
+                    .SetQuantity(30))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountIncVat(12.50M)
+                    .SetVatPercent(25));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -272,47 +290,49 @@ public class HostedPaymentTest
     public void TestAmountWithFixedDiscountIncVatOnlyWithDifferentVatRatesPresent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(100.00M)
-                                                     .SetVatPercent(25)
-                                                     .SetQuantity(2))
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(100.00M)
-                                                     .SetVatPercent(6)
-                                                     .SetQuantity(1))
-                                    .AddDiscount(Item.FixedDiscount()
-                                                     .SetAmountIncVat(100.00M));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(25)
+                    .SetQuantity(2))
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(6)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountIncVat(100.00M));
 
-        // follows HostedPayment calculateRequestValues() outline:
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
         var formattedTotalAmount = formatter.GetTotalAmount();
         var formattedTotalVat = formatter.GetTotalVat();
 
         Assert.That(formatRowsList.Count, Is.EqualTo(3));
-        // 100*250/356 = 70.22 incl. 25% vat => 14.04 vat as amount 
-        // 100*106/356 = 29.78 incl. 6% vat => 1.69 vat as amount 
-        // matches 15,73 discount (= 100/356 *56) discount
         Assert.That(formattedTotalAmount, Is.EqualTo(25600)); // 35600 - 10000 discount
-        Assert.That(formattedTotalVat, Is.EqualTo(4027)); //  5600 -  1573 discount (= 10000/35600 *5600) discount
+        Assert.That(formattedTotalVat, Is.EqualTo(4027)); // 5600 - 1573 discount
     }
 
     // Explicit fixed discount vat rate, multiple vat rate in order
     [Test]
     public void TestAmountWithFixedDiscountIncVatAndVatPercentWithDifferentVatRatesPresent()
     {
-        CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(2))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(6)
-                                                                    .SetQuantity(1))
-                                                   .AddDiscount(Item.FixedDiscount()
-                                                                    .SetAmountIncVat(125.00M)
-                                                                    .SetVatPercent(25));
+        var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(25)
+                    .SetQuantity(2))
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(6)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountIncVat(125.00M)
+                    .SetVatPercent(25));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -321,24 +341,27 @@ public class HostedPaymentTest
 
         Assert.That(formatRowsList.Count, Is.EqualTo(3));
         Assert.That(formattedTotalAmount, Is.EqualTo(23100)); // 35600 - 12500 discount
-        Assert.That(formattedTotalVat, Is.EqualTo(3100)); //  5600 -  2500 discount
+        Assert.That(formattedTotalVat, Is.EqualTo(3100)); // 5600 - 2500 discount
     }
 
     [Test]
     public void TestAmountWithFixedDiscountExVatAndVatPercentWithDifferentVatRatesPresent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(100.00M)
-                                                     .SetVatPercent(25)
-                                                     .SetQuantity(2))
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(100.00M)
-                                                     .SetVatPercent(6)
-                                                     .SetQuantity(1))
-                                    .AddDiscount(Item.FixedDiscount()
-                                                     .SetAmountExVat(100.00M)
-                                                     .SetVatPercent(0));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(25)
+                    .SetQuantity(2))
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(6)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(0));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -347,24 +370,27 @@ public class HostedPaymentTest
 
         Assert.That(formatRowsList.Count, Is.EqualTo(3));
         Assert.That(formattedTotalAmount, Is.EqualTo(25600)); // 35600 - 10000 discount
-        Assert.That(formattedTotalVat, Is.EqualTo(5600)); //  5600 - 0 discount
+        Assert.That(formattedTotalVat, Is.EqualTo(5600)); // 5600 - 0 discount
     }
 
     [Test]
     public void TestAmountWithFixedDiscountExVatAndIncVatWithDifferentVatRatesPresent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(2))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(6)
-                                                                    .SetQuantity(1))
-                                                   .AddDiscount(Item.FixedDiscount()
-                                                                    .SetAmountExVat(80.00M)
-                                                                    .SetAmountIncVat(100.00M));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(25)
+                    .SetQuantity(2))
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(6)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.FixedDiscount()
+                    .SetAmountExVat(80.00M)
+                    .SetAmountIncVat(100.00M));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -373,20 +399,21 @@ public class HostedPaymentTest
 
         Assert.That(formatRowsList.Count, Is.EqualTo(3));
         Assert.That(formattedTotalAmount, Is.EqualTo(25600)); // 35600 - 10000 discount
-        Assert.That(formattedTotalVat, Is.EqualTo(3600)); //  5600 - 2000 discount
+        Assert.That(formattedTotalVat, Is.EqualTo(3600)); // 5600 - 2000 discount
     }
 
-    // Calculated relative discount vat rate, single vat rate in order
     [Test]
     public void TestAmountFromMultipleItemsWithRelativeDiscountWithDifferentVatRatesPresent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                    .AddOrderRow(Item.OrderRow()
-                                                     .SetAmountExVat(69.99M)
-                                                     .SetVatPercent(25)
-                                                     .SetQuantity(30))
-                                    .AddDiscount(Item.RelativeDiscount()
-                                                     .SetDiscountPercent(25));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(69.99M)
+                    .SetVatPercent(25)
+                    .SetQuantity(30))
+            .AddDiscount(
+                Item.RelativeDiscount()
+                    .SetDiscountPercent(25));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -394,21 +421,22 @@ public class HostedPaymentTest
         var formattedTotalVat = formatter.GetTotalVat();
 
         Assert.That(formatRowsList.Count, Is.EqualTo(2));
-        Assert.That(formattedTotalAmount, Is.EqualTo(196847)); // (262462,5  - 65615,625 discount (25%) rounded half-to-even
-        Assert.That(formattedTotalVat, Is.EqualTo(39369)); //  52492,5  - 13123,125 discount (25%) rounded half-to-even
+        Assert.That(formattedTotalAmount, Is.EqualTo(196847)); // 262462.5 - 65615.625 discount
+        Assert.That(formattedTotalVat, Is.EqualTo(39369)); // 52492.5 - 13123.125 discount
     }
 
-    // Calculated relative discount vat rate, single vat rate in order
     [Test]
     public void TestAmountFromMultipleItemsWithRelativeDiscountWithDifferentVatRatesPresent2()
     {
-        CreateOrderBuilder order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(69.99M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(1))
-                                                   .AddDiscount(Item.RelativeDiscount()
-                                                                    .SetDiscountPercent(25));
+        var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(69.99M)
+                    .SetVatPercent(25)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.RelativeDiscount()
+                    .SetDiscountPercent(25));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -416,25 +444,27 @@ public class HostedPaymentTest
         var formattedTotalVat = formatter.GetTotalVat();
 
         Assert.That(formatRowsList.Count, Is.EqualTo(2));
-        Assert.That(formattedTotalAmount, Is.EqualTo(6562)); // 8748,75 - 2187,18 discount rounded half-to-even
-        Assert.That(formattedTotalVat, Is.EqualTo(1312)); // 1749,75 - 437,5 discount (1750*.25) rounded half-to-even
+        Assert.That(formattedTotalAmount, Is.EqualTo(6562)); // 8748.75 - 2187.18 discount
+        Assert.That(formattedTotalVat, Is.EqualTo(1312)); // 1749.75 - 437.5 discount
     }
 
-    // Calculated relative discount vat rate, multiple vat rate in order
     [Test]
     public void TestAmountWithRelativeDiscountWithDifferentVatRatesPresent()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(25)
-                                                                    .SetQuantity(2))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(6)
-                                                                    .SetQuantity(1))
-                                                   .AddDiscount(Item.RelativeDiscount()
-                                                                    .SetDiscountPercent(25));
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(25)
+                    .SetQuantity(2))
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetAmountExVat(100.00M)
+                    .SetVatPercent(6)
+                    .SetQuantity(1))
+            .AddDiscount(
+                Item.RelativeDiscount()
+                    .SetDiscountPercent(25));
 
         var formatter = new HostedRowFormatter<CreateOrderBuilder>();
         var formatRowsList = formatter.FormatRows(order);
@@ -442,20 +472,18 @@ public class HostedPaymentTest
         var formattedTotalVat = formatter.GetTotalVat();
 
         Assert.That(formatRowsList.Count, Is.EqualTo(3));
-        // 5000*.25 = 1250
-        // 600*.25 = 150  
-        // matches 1400 discount
         Assert.That(formattedTotalAmount, Is.EqualTo(26700)); // 35600 - 8900 discount
-        Assert.That(formattedTotalVat, Is.EqualTo(4200)); //  5600 - 1400 discount (= 10000/35600 *5600) discount
+        Assert.That(formattedTotalVat, Is.EqualTo(4200)); // 5600 - 1400 discount
     }
 
     public CreateOrderBuilder CreateOrderBuilder()
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                               .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                               .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                               .SetCurrency(TestingTool.DefaultTestCurrency)
-                               .AddOrderRow(Item.OrderRow()
-                                                .SetQuantity(1));
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(
+                Item.OrderRow()
+                    .SetQuantity(1));
     }
 }

@@ -54,13 +54,12 @@ public class ConverterTest
     public void FillMissingValuesGivenIncAndExVat()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetAmountIncVat(125.00M))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(200.00M)
-                                                                    .SetAmountIncVat(220.00M));
-        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            .AddOrderRow(Item.OrderRow().SetAmountExVat(100.00M).SetAmountIncVat(125.00M))
+            .AddOrderRow(Item.OrderRow().SetAmountExVat(200.00M).SetAmountIncVat(220.00M));
+
+        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(
+            new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+
         AssertVat(result, 0, 25);
         AssertVat(result, 1, 10);
         AssertAmountEx(result, 0, 100M);
@@ -73,27 +72,26 @@ public class ConverterTest
     public void FillMissingValuesGivenIncAndExVatBothZero()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(0)
-                                                                    .SetAmountIncVat(0));
-        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            .AddOrderRow(Item.OrderRow().SetAmountExVat(0).SetAmountIncVat(0));
+
+        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(
+            new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+
         AssertVat(result, 0, 0);
         AssertAmountEx(result, 0, 0);
         AssertAmountInc(result, 0, 0);
     }
 
-
     [Test]
     public void FillMissingValuesGivenIncAndVat()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountIncVat(125.00M)
-                                                                    .SetVatPercent(25))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountIncVat(220.00M)
-                                                                    .SetVatPercent(10));
-        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            .AddOrderRow(Item.OrderRow().SetAmountIncVat(125.00M).SetVatPercent(25))
+            .AddOrderRow(Item.OrderRow().SetAmountIncVat(220.00M).SetVatPercent(10));
+
+        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(
+            new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+
         AssertVat(result, 0, 25);
         AssertVat(result, 1, 10);
         AssertAmountEx(result, 0, 100M);
@@ -106,11 +104,14 @@ public class ConverterTest
     public void FillMissingValuesExVatIncVatAndVatGivenConsistently()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountIncVat(125.00M)
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(25));
-        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            .AddOrderRow(Item.OrderRow()
+                .SetAmountIncVat(125.00M)
+                .SetAmountExVat(100.00M)
+                .SetVatPercent(25));
+
+        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(
+            new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+
         AssertVat(result, 0, 25);
         AssertAmountEx(result, 0, 100M);
         AssertAmountInc(result, 0, 125M);
@@ -120,13 +121,12 @@ public class ConverterTest
     public void FillMissingValuesGivenExAndVat()
     {
         var order = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(100.00M)
-                                                                    .SetVatPercent(25))
-                                                   .AddOrderRow(Item.OrderRow()
-                                                                    .SetAmountExVat(200.00M)
-                                                                    .SetVatPercent(10));
-        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+            .AddOrderRow(Item.OrderRow().SetAmountExVat(100.00M).SetVatPercent(25))
+            .AddOrderRow(Item.OrderRow().SetAmountExVat(200.00M).SetVatPercent(10));
+
+        var result = WebServiceRowFormatter<CreateOrderBuilder>.FillMissingOrderRowValues(
+            new WebServiceRowFormatter<CreateOrderBuilder>.Order(order));
+
         AssertVat(result, 0, 25);
         AssertVat(result, 1, 10);
         AssertAmountEx(result, 0, 100M);
@@ -140,12 +140,15 @@ public class ConverterTest
     {
         var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
         var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(25)
-                                .SetQuantity(1)
-                                .SetAmountExVat(100)
-                                .SetAmountIncVat(125));
+            .SetVatPercent(25)
+            .SetQuantity(1)
+            .SetAmountExVat(100)
+            .SetAmountIncVat(125));
+
         var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
+
         Assert.That(result.TotalAmountExVat, Is.EqualTo(100));
         Assert.That(result.TotalAmountIncVat, Is.EqualTo(125));
         Assert.That(result.TotalVatAsAmount, Is.EqualTo(25));
@@ -158,17 +161,21 @@ public class ConverterTest
     {
         var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
         var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(25)
-                                .SetQuantity(1)
-                                .SetAmountExVat(100)
-                                .SetAmountIncVat(125));
+            .SetVatPercent(25)
+            .SetQuantity(1)
+            .SetAmountExVat(100)
+            .SetAmountIncVat(125));
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(25)
-                                .SetQuantity(1)
-                                .SetAmountExVat(200)
-                                .SetAmountIncVat(250));
+            .SetVatPercent(25)
+            .SetQuantity(1)
+            .SetAmountExVat(200)
+            .SetAmountIncVat(250));
+
         var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
+
         Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
         Assert.That(result.TotalAmountIncVat, Is.EqualTo(375));
         Assert.That(result.TotalVatAsAmount, Is.EqualTo(75));
@@ -176,23 +183,26 @@ public class ConverterTest
         Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(1));
     }
 
-
     [Test]
     public void SumByVatMultipleRowsDifferentVat()
     {
         var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
         var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(25)
-                                .SetQuantity(1)
-                                .SetAmountExVat(100)
-                                .SetAmountIncVat(125));
+            .SetVatPercent(25)
+            .SetQuantity(1)
+            .SetAmountExVat(100)
+            .SetAmountIncVat(125));
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(10)
-                                .SetQuantity(1)
-                                .SetAmountExVat(200)
-                                .SetAmountIncVat(220));
+            .SetVatPercent(10)
+            .SetQuantity(1)
+            .SetAmountExVat(200)
+            .SetAmountIncVat(220));
+
         var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
+
         Assert.That(result.TotalAmountExVat, Is.EqualTo(300));
         Assert.That(result.TotalAmountIncVat, Is.EqualTo(345));
         Assert.That(result.TotalVatAsAmount, Is.EqualTo(45));
@@ -206,25 +216,28 @@ public class ConverterTest
     {
         var orderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig());
         var order = new WebServiceRowFormatter<CreateOrderBuilder>.Order(orderBuilder);
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(25)
-                                .SetQuantity(2)
-                                .SetAmountExVat(100)
-                                .SetAmountIncVat(125));
+            .SetVatPercent(25)
+            .SetQuantity(2)
+            .SetAmountExVat(100)
+            .SetAmountIncVat(125));
+
         order.NewOrderRows.Add(Item.OrderRow()
-                                .SetVatPercent(10)
-                                .SetQuantity(3)
-                                .SetAmountExVat(200)
-                                .SetAmountIncVat(220));
+            .SetVatPercent(10)
+            .SetQuantity(3)
+            .SetAmountExVat(200)
+            .SetAmountIncVat(220));
+
         var result = WebServiceRowFormatter<CreateOrderBuilder>.CalculateOrderRowTotals(order);
-        Assert.That(result.TotalAmountExVat, Is.EqualTo(2*100 + 3*200));
-        Assert.That(result.TotalAmountIncVat, Is.EqualTo(2*125 + 3*220));
-        Assert.That(result.TotalVatAsAmount, Is.EqualTo(2*25 + 3*20));
+
+        Assert.That(result.TotalAmountExVat, Is.EqualTo(2 * 100 + 3 * 200));
+        Assert.That(result.TotalAmountIncVat, Is.EqualTo(2 * 125 + 3 * 220));
+        Assert.That(result.TotalVatAsAmount, Is.EqualTo(2 * 25 + 3 * 20));
         Assert.That(result.TotalAmountPerVatRateIncVat[25], Is.EqualTo(2 * 125));
         Assert.That(result.TotalAmountPerVatRateIncVat[10], Is.EqualTo(3 * 220));
         Assert.That(result.TotalAmountPerVatRateIncVat.Keys.Count, Is.EqualTo(2));
     }
-
 
     private void AssertAmountInc(WebServiceRowFormatter<CreateOrderBuilder>.Order result, int item, decimal amount)
     {

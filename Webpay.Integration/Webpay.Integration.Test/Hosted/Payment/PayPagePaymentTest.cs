@@ -11,24 +11,29 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetExcludePaymentMethod()
     {
-        var excludePaymentMethod = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.NORDEASE};
+        var excludePaymentMethod = new List<PaymentMethod>
+        {
+            PaymentMethod.INVOICE,
+            PaymentMethod.NORDEASE
+        };
 
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                             .UsePayPage()
-                                             .ExcludePaymentMethod(excludePaymentMethod);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .ExcludePaymentMethod(excludePaymentMethod);
 
         var expectedValues = new List<string>
-            {
-                InvoiceType.INVOICESE.Value,
-                InvoiceType.INVOICEEUSE.Value,
-                InvoiceType.INVOICENO.Value,
-                InvoiceType.INVOICEDK.Value,
-                InvoiceType.INVOICEFI.Value,
-                InvoiceType.INVOICENL.Value,
-                InvoiceType.INVOICEDE.Value,
-                PaymentMethod.NORDEASE.Value,
-            };
+        {
+            InvoiceType.INVOICESE.Value,
+            InvoiceType.INVOICEEUSE.Value,
+            InvoiceType.INVOICENO.Value,
+            InvoiceType.INVOICEDK.Value,
+            InvoiceType.INVOICEFI.Value,
+            InvoiceType.INVOICENL.Value,
+            InvoiceType.INVOICEDE.Value,
+            PaymentMethod.NORDEASE.Value,
+        };
 
         Assert.That(payPagePayment.GetExcludedPaymentMethod(), Is.EqualTo(expectedValues));
     }
@@ -36,9 +41,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetExcludePaymentMethodDefaultConfigurationNoExcluded()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .UsePayPage()
-                                                        .ExcludePaymentMethod();
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .UsePayPage()
+            .ExcludePaymentMethod();
+
         payPagePayment.IncludePaymentMethod();
 
         Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(24));
@@ -48,9 +55,10 @@ public class PayPagePaymentTest
     [Test]
     public void TestDefaultSe()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage();
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage();
 
         payPagePayment.ConfigureExcludedPaymentMethod();
 
@@ -60,10 +68,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetPaymentMethode()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .SetPaymentMethod(PaymentMethod.INVOICE);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .SetPaymentMethod(PaymentMethod.INVOICE);
 
         payPagePayment.ConfigureExcludedPaymentMethod();
 
@@ -73,10 +82,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetPaymentMethodDe()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(CountryCode.DE)
-                                                        .UsePayPage()
-                                                        .SetPaymentMethod(PaymentMethod.INVOICE);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(CountryCode.DE)
+            .UsePayPage()
+            .SetPaymentMethod(PaymentMethod.INVOICE);
 
         payPagePayment.ConfigureExcludedPaymentMethod();
 
@@ -86,10 +96,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetPaymentMethodPaymentPlanSe()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
 
         payPagePayment.ConfigureExcludedPaymentMethod();
 
@@ -99,11 +110,12 @@ public class PayPagePaymentTest
     [Test]
     public void TestExcludePaymentPlanSe()
     {
-        var list = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN};
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .ExcludePaymentMethod(list);
+        var excludeList = new List<PaymentMethod> { PaymentMethod.PAYMENTPLAN };
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .ExcludePaymentMethod(excludeList);
 
         payPagePayment.ConfigureExcludedPaymentMethod();
 
@@ -113,10 +125,12 @@ public class PayPagePaymentTest
     [Test]
     public void TestSetPaymentMethodPaymentPlanNl()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(CountryCode.NL)
-                                                        .UsePayPage()
-                                                        .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(CountryCode.NL)
+            .UsePayPage()
+            .SetPaymentMethod(PaymentMethod.PAYMENTPLAN);
+
         payPagePayment.ConfigureExcludedPaymentMethod();
 
         Assert.That(payPagePayment.GetPaymentMethod(), Is.EqualTo(PaymentPlanType.PAYMENTPLANNL.Value));
@@ -125,10 +139,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestExcludeCardPaymentMethod()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .ExcludeCardPaymentMethod();
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .ExcludeCardPaymentMethod();
 
         Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(3));
         Assert.That(payPagePayment.GetExcludedPaymentMethod()[0], Is.EqualTo(PaymentMethod.KORTCERT.Value));
@@ -139,11 +154,17 @@ public class PayPagePaymentTest
     [Test]
     public void TestIncludeCardPaymentMethod()
     {
-        var includedPaymentMethod = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .IncludePaymentMethod(includedPaymentMethod);
+        var includedPaymentMethod = new List<PaymentMethod>
+        {
+            PaymentMethod.KORTCERT,
+            PaymentMethod.SKRILL
+        };
+
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .IncludePaymentMethod(includedPaymentMethod);
 
         Assert.That(payPagePayment.GetIncludedPaymentMethod().Count, Is.EqualTo(2));
     }
@@ -151,10 +172,11 @@ public class PayPagePaymentTest
     [Test]
     public void TestExcludeDirectPaymentMethodSmall()
     {
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                        .UsePayPage()
-                                                        .ExcludeDirectPaymentMethod();
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .ExcludeDirectPaymentMethod();
 
         Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(6));
         Assert.That(payPagePayment.GetIncludedPaymentMethod().Count, Is.EqualTo(0));
@@ -164,22 +186,23 @@ public class PayPagePaymentTest
     public void TestIncludePaymentMethod()
     {
         var includedPaymentMethod = new List<PaymentMethod>
-            {
-                PaymentMethod.KORTCERT,
-                PaymentMethod.SKRILL,
-                PaymentMethod.INVOICE,
-                PaymentMethod.PAYMENTPLAN,
-                PaymentMethod.SWEDBANKSE,
-                PaymentMethod.SHBSE,
-                PaymentMethod.SEBFTGSE,
-                PaymentMethod.SEBSE,
-                PaymentMethod.NORDEASE
-            };
+        {
+            PaymentMethod.KORTCERT,
+            PaymentMethod.SKRILL,
+            PaymentMethod.INVOICE,
+            PaymentMethod.PAYMENTPLAN,
+            PaymentMethod.SWEDBANKSE,
+            PaymentMethod.SHBSE,
+            PaymentMethod.SEBFTGSE,
+            PaymentMethod.SEBSE,
+            PaymentMethod.NORDEASE
+        };
 
-        var payPagePayment = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                             .UsePayPage()
-                                             .IncludePaymentMethod(includedPaymentMethod);
+        var payPagePayment = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPage()
+            .IncludePaymentMethod(includedPaymentMethod);
 
         Assert.That(payPagePayment.GetExcludedPaymentMethod().Count, Is.EqualTo(15));
         Assert.That(payPagePayment.GetExcludedPaymentMethod()[0], Is.EqualTo("SVEAINVOICESE"));
@@ -195,26 +218,31 @@ public class PayPagePaymentTest
     [Test]
     public void TestBuildPayPagePaymentWithExcludePaymentMethod()
     {
-        var paymentMethods = new List<PaymentMethod> {PaymentMethod.INVOICE, PaymentMethod.KORTCERT};
+        var paymentMethods = new List<PaymentMethod>
+        {
+            PaymentMethod.INVOICE,
+            PaymentMethod.KORTCERT
+        };
 
-        var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddFee(Item.ShippingFee()
-                                                       .SetAmountExVat(50)
-                                                       .SetShippingId("33")
-                                                       .SetDescription("Specification")
-                                                       .SetVatPercent(25))
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(
-                                               Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .ExcludePaymentMethod(paymentMethods)
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+        var form = WebpayConnection
+            .CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddFee(Item.ShippingFee()
+                .SetAmountExVat(50)
+                .SetShippingId("33")
+                .SetDescription("Specification")
+                .SetVatPercent(25))
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(Item.IndividualCustomer()
+                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .ExcludePaymentMethod(paymentMethods)
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
         const string expected =
@@ -236,7 +264,7 @@ public class PayPagePaymentTest
             "<exclude>SVEAINVOICEEU_NL</exclude><exclude>SVEAINVOICEEU_DE</exclude>" +
             "<exclude>KORTCERT</exclude></excludepaymentMethods>" +
             "<addinvoicefee>false</addinvoicefee></payment>";
-        
+
         Assert.That(xml, Is.EqualTo(expected));
     }
 
@@ -244,21 +272,23 @@ public class PayPagePaymentTest
     public void TestPayPagePaymentExcludeCardPayments()
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .ExcludeCardPaymentMethod()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .ExcludeCardPaymentMethod()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
-        var paymentMethod = xml.Substring(xml.IndexOf("KORTCERT", StringComparison.InvariantCulture), "KORTCERT".Length);
-        var paymentMethod2 = xml.Substring(xml.IndexOf("SKRILL", StringComparison.InvariantCulture), "SKRILL".Length);
+        var paymentMethod = xml.Substring(
+            xml.IndexOf("KORTCERT", StringComparison.InvariantCulture), "KORTCERT".Length);
+        var paymentMethod2 = xml.Substring(
+            xml.IndexOf("SKRILL", StringComparison.InvariantCulture), "SKRILL".Length);
 
         Assert.That(paymentMethod, Is.EqualTo(PaymentMethod.KORTCERT.Value));
         Assert.That(paymentMethod2, Is.EqualTo("SKRILL"));
@@ -268,67 +298,82 @@ public class PayPagePaymentTest
     public void TestExcludeDirectPaymentMethodLarge()
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .ExcludeDirectPaymentMethod()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
-
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .ExcludeDirectPaymentMethod()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
-        var paymentMethod = xml.Substring(xml.IndexOf("DBNORDEASE", StringComparison.InvariantCulture), "DBNORDEASE".Length);
+        var paymentMethod = xml.Substring(
+            xml.IndexOf("DBNORDEASE", StringComparison.InvariantCulture), "DBNORDEASE".Length);
+
         Assert.That(paymentMethod, Is.EqualTo(PaymentMethod.NORDEASE.Value));
     }
 
     [Test]
     public void TestIncludePaymentPlan()
     {
-        var paymentMethods = new List<PaymentMethod> {PaymentMethod.PAYMENTPLAN, PaymentMethod.SKRILL};
+        var paymentMethods = new List<PaymentMethod>
+        {
+            PaymentMethod.PAYMENTPLAN,
+            PaymentMethod.SKRILL
+        };
+
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(
-                                               Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .IncludePaymentMethod(paymentMethods)
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(
+                Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .IncludePaymentMethod(paymentMethods)
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
-        var paymentMethod = xml.Substring(xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
+        var paymentMethod = xml.Substring(
+            xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
+
         Assert.That(paymentMethod, Is.EqualTo(InvoiceType.INVOICESE.Value));
     }
 
     [Test]
     public void TestPayPagePaymentIncludePaymentMethod()
     {
-        var paymentMethods = new List<PaymentMethod> {PaymentMethod.KORTCERT, PaymentMethod.SKRILL};
+        var paymentMethods = new List<PaymentMethod>
+        {
+            PaymentMethod.KORTCERT,
+            PaymentMethod.SKRILL
+        };
+
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(
-                                               Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .IncludePaymentMethod(paymentMethods)
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(
+                Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .IncludePaymentMethod(paymentMethods)
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
-        var paymentMethod = xml.Substring(xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
+        var paymentMethod = xml.Substring(
+            xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
+
         Assert.That(paymentMethod, Is.EqualTo(InvoiceType.INVOICESE.Value));
     }
 
@@ -336,22 +381,24 @@ public class PayPagePaymentTest
     public void TestPayPagePaymentIncludePaymentMethodEmpty()
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                           .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                           .AddCustomerDetails(
-                                               Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetOrderDate(TestingTool.DefaultTestDate)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .UsePayPage()
-                                           .IncludePaymentMethod()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(
+                Item.IndividualCustomer().SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPage()
+            .IncludePaymentMethod()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var xml = form.GetXmlMessage();
-        var paymentMethod = xml.Substring(xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
-        var paymentMethod2 = xml.Substring(xml.IndexOf("DBSWEDBANKSE", StringComparison.InvariantCulture), "DBSWEDBANKSE".Length);
+        var paymentMethod = xml.Substring(
+            xml.IndexOf("SVEAINVOICESE", StringComparison.InvariantCulture), "SVEAINVOICESE".Length);
+        var paymentMethod2 = xml.Substring(
+            xml.IndexOf("DBSWEDBANKSE", StringComparison.InvariantCulture), "DBSWEDBANKSE".Length);
 
         Assert.That(paymentMethod, Is.EqualTo(InvoiceType.INVOICESE.Value));
         Assert.That(paymentMethod2, Is.EqualTo(PaymentMethod.SWEDBANKSE.Value));

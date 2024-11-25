@@ -1,7 +1,6 @@
 ﻿using Webpay.Integration.Config;
 using Webpay.Integration.Order.Row;
 using Webpay.Integration.Util.Testing;
-using WebpayWS;
 
 namespace Webpay.Integration.Test.Order;
 
@@ -12,12 +11,12 @@ public class NewOrderBuilderTest
     public void TestBuildOrderRowList()
     {
         var orderRows = new List<OrderRowBuilder>
-            {
-                TestingTool.CreateExVatBasedOrderRow("1"),
-                TestingTool.CreateExVatBasedOrderRow("2")
-            };
+        {
+            TestingTool.CreateExVatBasedOrderRow("1"),
+            TestingTool.CreateExVatBasedOrderRow("2")
+        };
 
-        CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+        var request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRows(orderRows)
             .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -35,7 +34,7 @@ public class NewOrderBuilderTest
     [Test]
     public void TestBuildOrderWithCompanyCustomer()
     {
-        CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+        var request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
             .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)

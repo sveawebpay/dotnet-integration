@@ -12,10 +12,10 @@ public class DirectPaymentTest
     public void TestConfigureExcludedPaymentMethodSe()
     {
         var excluded = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                       .UsePayPageDirectBankOnly()
-                                       .ConfigureExcludedPaymentMethod()
-                                       .GetExcludedPaymentMethod();
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .UsePayPageDirectBankOnly()
+            .ConfigureExcludedPaymentMethod()
+            .GetExcludedPaymentMethod();
 
         Assert.That(excluded.Count, Is.EqualTo(19));
     }
@@ -24,10 +24,10 @@ public class DirectPaymentTest
     public void TestConfigureExcludedPaymentMethodNo()
     {
         var excluded = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                .SetCountryCode(CountryCode.NO)
-                                                .UsePayPageDirectBankOnly()
-                                                .ConfigureExcludedPaymentMethod()
-                                                .GetExcludedPaymentMethod();
+            .SetCountryCode(CountryCode.NO)
+            .UsePayPageDirectBankOnly()
+            .ConfigureExcludedPaymentMethod()
+            .GetExcludedPaymentMethod();
 
         Assert.That(excluded.Count, Is.EqualTo(23));
     }
@@ -36,18 +36,18 @@ public class DirectPaymentTest
     public void TestBuildDirectBankPayment()
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                   .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                   .AddFee(TestingTool.CreateExVatBasedShippingFee())
-                                   .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
-                                   .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
-                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                   .SetOrderDate(TestingTool.DefaultTestDate)
-                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                   .UsePayPageDirectBankOnly()
-                                   .SetReturnUrl("http://myurl.se")
-                                   .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddFee(TestingTool.CreateExVatBasedShippingFee())
+            .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPageDirectBankOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var base64Payment = form.GetXmlMessageBase64();
         var html = Base64Util.DecodeBase64String(base64Payment);
@@ -59,18 +59,18 @@ public class DirectPaymentTest
     public void TestBuildDirectBankPaymentNotSe()
     {
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                   .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                   .AddFee(TestingTool.CreateExVatBasedShippingFee())
-                                   .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
-                                   .AddDiscount(TestingTool.CreateRelativeDiscount())
-                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
-                                   .SetCountryCode(CountryCode.DE)
-                                   .SetOrderDate(TestingTool.DefaultTestDate)
-                                   .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                   .SetCurrency(TestingTool.DefaultTestCurrency)
-                                   .UsePayPageDirectBankOnly()
-                                   .SetReturnUrl("http://myurl.se")
-                                   .GetPaymentForm();
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddFee(TestingTool.CreateExVatBasedShippingFee())
+            .AddFee(TestingTool.CreateExVatBasedInvoiceFee())
+            .AddDiscount(TestingTool.CreateRelativeDiscount())
+            .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
+            .SetCountryCode(CountryCode.DE)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePayPageDirectBankOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         var base64Payment = form.GetXmlMessageBase64();
         var html = Base64Util.DecodeBase64String(base64Payment);

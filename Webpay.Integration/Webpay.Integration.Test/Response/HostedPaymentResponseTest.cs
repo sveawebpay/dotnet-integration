@@ -105,12 +105,12 @@ public class HostedPaymentResponseTest
         const string responseXmlBase64 =
             "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+PHRyYW5zYWN0aW9uIGlkPSI2MDgyMjYiPjxwYXltZW50bWV0aG9kPlNWRUFDQVJEUEFZPC9wYXltZW50bWV0aG9kPjxtZXJjaGFudGlkPjExMTA8L21lcmNoYW50aWQ+PGN1c3RvbWVycmVmbm8+MjAxNi0wMS0wNVQxMjo1MzozNSAwMDowMDwvY3VzdG9tZXJyZWZubz48YW1vdW50PjEyNDk5PC9hbW91bnQ+PGN1cnJlbmN5PlNFSzwvY3VycmVuY3k+PGNhcmR0eXBlPlZJU0E8L2NhcmR0eXBlPjxtYXNrZWRjYXJkbm8+NDQ0NDMzeHh4eHh4MTEwMDwvbWFza2VkY2FyZG5vPjxleHBpcnltb250aD4wNTwvZXhwaXJ5bW9udGg+PGV4cGlyeXllYXI+MjE8L2V4cGlyeXllYXI+PGF1dGhjb2RlPjM3MjUyNzwvYXV0aGNvZGU+PGN1c3RvbWVyPjxmaXJzdG5hbWUvPjxsYXN0bmFtZS8+PGluaXRpYWxzLz48ZW1haWwvPjxzc24vPjxhZGRyZXNzLz48YWRkcmVzczIvPjxjaXR5Lz48Y291bnRyeT5TRTwvY291bnRyeT48emlwLz48cGhvbmUvPjx2YXRudW1iZXIvPjxob3VzZW51bWJlci8+PGNvbXBhbnluYW1lLz48ZnVsbG5hbWUvPjwvY3VzdG9tZXI+PC90cmFuc2FjdGlvbj48c3RhdHVzY29kZT4wPC9zdGF0dXNjb2RlPjwvcmVzcG9uc2U+";
         const string macToValidate = "0b76a25c5eb5d66b837178f52f4c13f5f19bb7367ca3759b55b4cbd8d7d22000aebf971f9bdd73e5268ad3df6f932ef4a20eafbb3eccc07730c9e270a5197e55";
-        CountryCode countryCode = CountryCode.SE;
+        var countryCode = CountryCode.SE;
+
         var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
         Assert.That(response.MacValidation, Is.EqualTo(1));
         Assert.That(response.OrderAccepted, Is.True);
         Assert.That(response.ResultCode, Is.EqualTo("0 (ORDER_ACCEPTED)"));
-
     }
 
     [Test]
@@ -119,8 +119,9 @@ public class HostedPaymentResponseTest
         const string responseXmlBase64 =
             "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U+PHRyYW5zYWN0aW9uIGlkPSI2MDgyMjYiPjxwYXltZW50bWV0aG9kPktPUlRDRVJUPC9wYXltZW50bWV0aG9kPjxtZXJjaGFudGlkPjExMzA8L21lcmNoYW50aWQ+PGN1c3RvbWVycmVmbm8+MjAxNi0wMS0wNVQxMjo1MzozNSAwMDowMDwvY3VzdG9tZXJyZWZubz48YW1vdW50PjEyNDk5PC9hbW91bnQ+PGN1cnJlbmN5PlNFSzwvY3VycmVuY3k+PGNhcmR0eXBlPlZJU0E8L2NhcmR0eXBlPjxtYXNrZWRjYXJkbm8+NDQ0NDMzeHh4eHh4MTEwMDwvbWFza2VkY2FyZG5vPjxleHBpcnltb250aD4wNTwvZXhwaXJ5bW9udGg+PGV4cGlyeXllYXI+MjE8L2V4cGlyeXllYXI+PGF1dGhjb2RlPjM3MjUyNzwvYXV0aGNvZGU+PGN1c3RvbWVyPjxmaXJzdG5hbWUvPjxsYXN0bmFtZS8+PGluaXRpYWxzLz48ZW1haWwvPjxzc24vPjxhZGRyZXNzLz48YWRkcmVzczIvPjxjaXR5Lz48Y291bnRyeT5TRTwvY291bnRyeT48emlwLz48cGhvbmUvPjx2YXRudW1iZXIvPjxob3VzZW51bWJlci8+PGNvbXBhbnluYW1lLz48ZnVsbG5hbWUvPjwvY3VzdG9tZXI+PC90cmFuc2FjdGlvbj48c3RhdHVzY29kZT4wPC9zdGF0dXNjb2RlPjwvcmVzcG9uc2U+";
         const string macToValidate = "wrong mac";
-        CountryCode countryCode = CountryCode.SE;
+        var countryCode = CountryCode.SE;
         var response = new SveaResponse(responseXmlBase64, macToValidate, countryCode, SveaConfig.GetDefaultConfig());
+
         Assert.That(response.MacValidation, Is.EqualTo(2));
         Assert.That(response.OrderAccepted, Is.False);
         Assert.That(response.ErrorMessage, Is.EqualTo("Mac validation failed."));

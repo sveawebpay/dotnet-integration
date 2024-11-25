@@ -47,7 +47,6 @@ public class DeliverOrderTest
                 .PrepareRequest();
         }
             );
-        //First order row is a product
 
         var invoiceDetails = request.DeliverOrderInformation.DeliverInvoiceDetails;
 
@@ -83,7 +82,6 @@ public class DeliverOrderTest
 
         Assert.That(invoiceDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
 
-
         Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.IsCreditInvoice, Is.True);
         Assert.That(request.DeliverOrderInformation.DeliverInvoiceDetails.InvoiceIdToCredit, Is.EqualTo(117L));
         Assert.That(request.DeliverOrderInformation.SveaOrderId, Is.EqualTo(54086L));
@@ -116,7 +114,6 @@ public class DeliverOrderTest
 
         Assert.That(confirmActionRequest.ConfigurationProvider, Is.TypeOf<SveaTestConfigurationProvider>());
         Assert.That(confirmActionRequest.ServicePath, Contains.Substring("/confirm"));
-
 
         // Set after prepareRequest() has been called on confirmActionRequest
         Assert.That(confirmActionRequest.Xml, Contains.Substring(fakeSveaOrderId.ToString()));

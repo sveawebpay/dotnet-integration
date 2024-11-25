@@ -145,7 +145,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRows[1].Unit, Is.EqualTo("st"));
     }
 
-    // only amountIncVat => calculate mean vat split into diffrent tax rates present
+    // Only AmountIncVat => calculate mean vat split into diffrent tax rates present
     // if we have two orders items with different vat rate, we need to create
     // two discount order rows, one for each vat rate
     [Test]
@@ -190,9 +190,6 @@ public class WebserviceRowFormatterTest
         Assert.That(newRow.Unit, Is.EqualTo("st"));
     }
 
-    // only amountIncVat => calculate mean vat split into diffrent tax rates present
-    // if we have two orders items with different vat rate, we need to create
-    // two discount order rows, one for each vat rate
     [Test]
     public void TestFormatFixedDiscountRowsMixedItemVatSpecAmountIncVatWithDifferentVatRatesPresent()
     {
@@ -237,7 +234,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRow.Unit, Is.EqualTo("st"));
     }
 
-    // amountIncVat and vatPercent => add as one row with specified vat rate only
+    // AmountIncVat and VatPercent => add as one row with specified vat rate only
     [Test]
     public void TestFormatFixedDiscountRowsAmountIncVatAndVatPercentWithSingleVatRatePresent()
     {
@@ -266,7 +263,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRow.Unit, Is.EqualTo("st"));
     }
 
-    // amountIncVat and vatPercent => add as one row with specified vat rate only
+    // AmountIncVat and VatPercent => add as one row with specified vat rate only
     [Test]
     public void TestFormatFixedDiscountRowsAmountIncVatAndVatPercentWithDifferentVatRatesPresent()
     {
@@ -300,7 +297,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRow.Unit, Is.EqualTo("st"));
     }
 
-    // amountExVat and vatPercent => add as one row with specified vat rate only
+    // AmountExVat and VatPercent => add as one row with specified vat rate only
     [Test]
     public void TestFormatFixedDiscountRowsAmountExVatAndVatPercentWithSingleVatRatePresent()
     {
@@ -329,7 +326,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRow.Unit, Is.EqualTo("st"));
     }
 
-    // amountExVat and vatPercent => add as one row with specified vat rate only
+    // AmountExVat and VatPercent => add as one row with specified vat rate only
     [Test]
     public void TestFormatFixedDiscountRowsAmountExVatAndVatPercentWithDifferentVatRatesPresent()
     {

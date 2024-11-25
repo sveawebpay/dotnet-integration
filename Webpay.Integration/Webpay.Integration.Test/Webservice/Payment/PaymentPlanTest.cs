@@ -1,7 +1,6 @@
 ﻿using Webpay.Integration.Config;
 using Webpay.Integration.Exception;
 using Webpay.Integration.Util.Testing;
-using WebpayWS;
 
 namespace Webpay.Integration.Test.Webservice.Payment;
 
@@ -11,16 +10,16 @@ public class PaymentPlanTest
     [Test]
     public void TestPaymentPlanRequestObjectSpecifics()
     {
-        CreateOrderEuRequest request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                                       .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                                                       .AddFee(TestingTool.CreateExVatBasedShippingFee())
-                                                       .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
-                                                       .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                                       .SetOrderDate(TestingTool.DefaultTestDate)
-                                                       .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                                       .SetCurrency(TestingTool.DefaultTestCurrency)
-                                                       .UsePaymentPlanPayment(1337L)
-                                                       .PrepareRequest();
+        var request = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+            .AddFee(TestingTool.CreateExVatBasedShippingFee())
+            .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .UsePaymentPlanPayment(1337L)
+            .PrepareRequest();
 
         Assert.That(request.CreateOrderInformation.CreatePaymentPlanDetails.CampaignCode, Is.EqualTo(1337L));
         Assert.That(request.CreateOrderInformation.CreatePaymentPlanDetails.SendAutomaticGiroPaymentForm, Is.False);
@@ -32,15 +31,16 @@ public class PaymentPlanTest
         try
         {
             WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
-                            .AddFee(TestingTool.CreateExVatBasedShippingFee())
-                            .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
-                            .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                            .SetOrderDate(TestingTool.DefaultTestDate)
-                            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                            .SetCurrency(TestingTool.DefaultTestCurrency)
-                            .UsePaymentPlanPayment(1337L)
-                            .PrepareRequest();
+                .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
+                .AddFee(TestingTool.CreateExVatBasedShippingFee())
+                .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderDate(TestingTool.DefaultTestDate)
+                .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+                .SetCurrency(TestingTool.DefaultTestCurrency)
+                .UsePaymentPlanPayment(1337L)
+                .PrepareRequest();
+
             Assert.Fail("Expected exception not thrown.");
         }
         catch (SveaWebPayException ex)

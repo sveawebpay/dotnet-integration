@@ -15,36 +15,37 @@ public class PaymentFormTest
     {
         var base64Payment = Base64Util.EncodeBase64String("0");
         var mac = HashUtil.CreateHash(base64Payment + SecretWord);
+
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .AddOrderRow(TestingTool.CreateMiniOrderRow())
-                                           .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
-                                           .UsePayPageDirectBankOnly()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .AddOrderRow(TestingTool.CreateMiniOrderRow())
+            .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
+            .UsePayPageDirectBankOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
+
         form.SetMessageBase64(base64Payment)
             .SetMerchantId(MerchantId)
             .SetSecretWord(SecretWord)
             .SetForm();
 
         var expected = "<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\""
-                          + form.GetPayPageUrl()
-                          + "\">"
-                          + "<input type=\"hidden\" name=\"merchantid\" value=\""
-                          + MerchantId
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"message\" value=\""
-                          + base64Payment
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"mac\" value=\""
-                          + mac
-                          + "\" />"
-                          +
-                          "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
-                          + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
-                          + "</form>";
+                       + form.GetPayPageUrl()
+                       + "\">"
+                       + "<input type=\"hidden\" name=\"merchantid\" value=\""
+                       + MerchantId
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"message\" value=\""
+                       + base64Payment
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"mac\" value=\""
+                       + mac
+                       + "\" />"
+                       + "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
+                       + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
+                       + "</form>";
 
         Assert.That(form.GetCompleteForm(), Is.EqualTo(expected));
     }
@@ -54,15 +55,16 @@ public class PaymentFormTest
     {
         var base64Payment = Base64Util.EncodeBase64String("0");
         var mac = HashUtil.CreateHash(base64Payment + SecretWord);
+
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .AddOrderRow(TestingTool.CreateMiniOrderRow())
-                                           .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
-                                           .UsePayPageCardOnly()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .AddOrderRow(TestingTool.CreateMiniOrderRow())
+            .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
+            .UsePayPageCardOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         form.SetMessageBase64(base64Payment)
             .SetMerchantId(MerchantId)
@@ -70,21 +72,20 @@ public class PaymentFormTest
             .SetForm();
 
         var expected = "<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\""
-                          + form.GetPayPageUrl()
-                          + "\">"
-                          + "<input type=\"hidden\" name=\"merchantid\" value=\""
-                          + MerchantId
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"message\" value=\""
-                          + base64Payment
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"mac\" value=\""
-                          + mac
-                          + "\" />"
-                          +
-                          "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
-                          + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
-                          + "</form>";
+                       + form.GetPayPageUrl()
+                       + "\">"
+                       + "<input type=\"hidden\" name=\"merchantid\" value=\""
+                       + MerchantId
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"message\" value=\""
+                       + base64Payment
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"mac\" value=\""
+                       + mac
+                       + "\" />"
+                       + "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
+                       + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
+                       + "</form>";
 
         Assert.That(form.GetCompleteForm(), Is.EqualTo(expected));
     }
@@ -94,14 +95,15 @@ public class PaymentFormTest
     {
         var base64Payment = Base64Util.EncodeBase64String("0");
         var mac = HashUtil.CreateHash(base64Payment + SecretWord);
+
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .AddOrderRow(TestingTool.CreateMiniOrderRow())
-                                           .UsePayPageCardOnly()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .AddOrderRow(TestingTool.CreateMiniOrderRow())
+            .UsePayPageCardOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         form.SetMessageBase64(base64Payment)
             .SetMerchantId(MerchantId)
@@ -109,21 +111,20 @@ public class PaymentFormTest
             .SetForm();
 
         var expected = "<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\""
-                          + form.GetPayPageUrl()
-                          + "\">"
-                          + "<input type=\"hidden\" name=\"merchantid\" value=\""
-                          + MerchantId
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"message\" value=\""
-                          + base64Payment
-                          + "\" />"
-                          + "<input type=\"hidden\" name=\"mac\" value=\""
-                          + mac
-                          + "\" />"
-                          +
-                          "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
-                          + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
-                          + "</form>";
+                       + form.GetPayPageUrl()
+                       + "\">"
+                       + "<input type=\"hidden\" name=\"merchantid\" value=\""
+                       + MerchantId
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"message\" value=\""
+                       + base64Payment
+                       + "\" />"
+                       + "<input type=\"hidden\" name=\"mac\" value=\""
+                       + mac
+                       + "\" />"
+                       + "<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"
+                       + "<input type=\"submit\" name=\"submit\" value=\"Betala\" />"
+                       + "</form>";
 
         Assert.That(form.GetCompleteForm(), Is.EqualTo(expected));
     }
@@ -135,14 +136,14 @@ public class PaymentFormTest
         var mac = HashUtil.CreateHash(base64Payment + SecretWord);
 
         var form = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
-                                           .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                                           .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
-                                           .SetCurrency(TestingTool.DefaultTestCurrency)
-                                           .AddOrderRow(TestingTool.CreateMiniOrderRow())
-                                           .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
-                                           .UsePayPageDirectBankOnly()
-                                           .SetReturnUrl("http://myurl.se")
-                                           .GetPaymentForm();
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetCurrency(TestingTool.DefaultTestCurrency)
+            .AddOrderRow(TestingTool.CreateMiniOrderRow())
+            .AddCustomerDetails(TestingTool.CreateCompanyCustomer())
+            .UsePayPageDirectBankOnly()
+            .SetReturnUrl("http://myurl.se")
+            .GetPaymentForm();
 
         form.SetMessageBase64(base64Payment)
             .SetMerchantId(MerchantId)
@@ -152,21 +153,35 @@ public class PaymentFormTest
         var formHtmlFields = form.GetFormHtmlFields();
         var url = form.GetPayPageUrl();
 
-        Assert.That(formHtmlFields["form_start_tag"], 
-            Is.EqualTo("<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\"" + url + "\">"));
+        Assert.That(
+            formHtmlFields["form_start_tag"],
+            Is.EqualTo($"<form name=\"paymentForm\" id=\"paymentForm\" method=\"post\" action=\"{url}\">")
+        );
 
-        Assert.That(formHtmlFields["input_merchantId"],
-            Is.EqualTo("<input type=\"hidden\" name=\"merchantid\" value=\"" + MerchantId + "\" />"));
+        Assert.That(
+            formHtmlFields["input_merchantId"],
+            Is.EqualTo($"<input type=\"hidden\" name=\"merchantid\" value=\"{MerchantId}\" />")
+        );
 
-        Assert.That(formHtmlFields["input_message"], 
-            Is.EqualTo("<input type=\"hidden\" name=\"message\" value=\"" + base64Payment + "\" />"));
+        Assert.That(
+            formHtmlFields["input_message"],
+            Is.EqualTo($"<input type=\"hidden\" name=\"message\" value=\"{base64Payment}\" />")
+        );
 
-        Assert.That(formHtmlFields["input_mac"], Is.EqualTo("<input type=\"hidden\" name=\"mac\" value=\"" + mac + "\" />"));
+        Assert.That(
+            formHtmlFields["input_mac"],
+            Is.EqualTo($"<input type=\"hidden\" name=\"mac\" value=\"{mac}\" />")
+        );
 
-        Assert.That(formHtmlFields["noscript_p_tag"], 
-            Is.EqualTo("<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>"));
+        Assert.That(
+            formHtmlFields["noscript_p_tag"],
+            Is.EqualTo("<noscript><p>Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt</p></noscript>")
+        );
 
-        Assert.That(formHtmlFields["input_submit"], Is.EqualTo("<input type=\"submit\" name=\"submit\" value=\"Betala\" />"));
+        Assert.That(
+            formHtmlFields["input_submit"],
+            Is.EqualTo("<input type=\"submit\" name=\"submit\" value=\"Betala\" />")
+        );
 
         Assert.That(formHtmlFields["form_end_tag"], Is.EqualTo("</form>"));
     }

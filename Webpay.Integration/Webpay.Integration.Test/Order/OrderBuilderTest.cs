@@ -29,7 +29,7 @@ public class OrderBuilderTest
     [Test]
     public void TestBuildEmptyOrder()
     {
-        CreateOrderBuilder sveaRequest = _order
+        var sveaRequest = _order
             .SetCountryCode(CountryCode.NL)
             .Build();
 
@@ -186,10 +186,12 @@ public class OrderBuilderTest
 
     private void CreateTestFixedDiscountRow()
     {
-        _order.AddDiscount(Item.FixedDiscount()
-                               .SetDiscountId("1")
-                               .SetAmountIncVat(100.00M)
-                               .SetDescription("FixedDiscount"));
+        _order.AddDiscount(
+            Item.FixedDiscount()
+                .SetDiscountId("1")
+                .SetAmountIncVat(100.00M)
+                .SetDescription("FixedDiscount")
+        );
     }
 
     private void CreateTestRelativeDiscountBuilder()

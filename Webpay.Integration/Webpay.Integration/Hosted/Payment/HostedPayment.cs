@@ -115,16 +115,6 @@ public abstract class HostedPayment
             && (payment.GetPaymentMethod() == PaymentMethod.INVOICE ||
                 payment.GetPaymentMethod() == PaymentMethod.PAYMENTPLAN))
         {
-            // TODO: cleanup
-            //switch (CrOrderBuilder.GetCountryCode())
-            //{
-            //    case CountryCode.NL:
-            //        errors += new IdentityValidator().ValidateNlIdentity(CrOrderBuilder);
-            //        break;
-            //    case CountryCode.DE:
-            //        errors += new IdentityValidator().ValidateDeIdentity(CrOrderBuilder);
-            //        break;
-            //}
             errors += CrOrderBuilder.GetCountryCode() switch
             {
                 CountryCode.NL => new IdentityValidator().ValidateNlIdentity(CrOrderBuilder),
@@ -193,7 +183,38 @@ public abstract class HostedPayment
     /// payment. This is convenient for creating an order and then sending the URL e.g. in an email.
     /// </summary>
     /// <returns>PaymentLink</returns>
-    public Uri PreparePayment(String ipAddress)
+    //public Uri PreparePayment(String ipAddress)
+    //{
+    //    IpAddress = ipAddress;
+    //    CalculateRequestValues();
+    //    var xmlBuilder = new HostedXmlBuilder();
+    //    string xml = xmlBuilder.GetXml(this);
+
+    //    var secretWord = CrOrderBuilder.GetConfig()
+    //        .GetSecretWord(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+    //    var sentMerchantId = CrOrderBuilder.GetConfig()
+    //        .GetMerchantId(PaymentType.HOSTED, CrOrderBuilder.GetCountryCode());
+    //    var payPageUrl = CrOrderBuilder.GetConfig()
+    //        .GetEndPoint(PaymentType.HOSTED);
+
+    //    var baseUrl = payPageUrl.Replace("/payment", "");
+    //    var headers = new List<AdminRequestHeader>
+    //    {
+    //        new AdminRequestHeader("X-Svea-CorrelationId", CrOrderBuilder.GetCorrelationId())
+    //    };
+    //    var hostedRequest = new HostedAdminRequest(xml, secretWord, sentMerchantId, baseUrl, headers);
+
+    //    var targetAddress = baseUrl + "/rest/preparepayment";
+
+    //    var message = HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest).Message;
+    //    var messageDoc = new XmlDocument();
+    //    messageDoc.LoadXml(message);
+    //    var paymentId = messageDoc.SelectSingleNode("//id").InnerText;
+
+    //    return new Uri(baseUrl + "/preparedpayment/" + paymentId);
+    //}
+
+    public async Task<Uri> PreparePayment(string ipAddress)
     {
         IpAddress = ipAddress;
         CalculateRequestValues();
@@ -216,7 +237,8 @@ public abstract class HostedPayment
 
         var targetAddress = baseUrl + "/rest/preparepayment";
 
-        var message = HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest).Message;
+        var hostedAdminResponse = await HostedAdminRequest.HostedAdminCall(targetAddress, hostedRequest);
+        var message = hostedAdminResponse.Message;
         var messageDoc = new XmlDocument();
         messageDoc.LoadXml(message);
         var paymentId = messageDoc.SelectSingleNode("//id").InnerText;

@@ -119,7 +119,6 @@ public class GetAddresses
     }
 }
 
-// TODO:
 /*Awaiting approval
 private GetAddressesEuRequest PrepareRequest()
 {

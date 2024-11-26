@@ -29,24 +29,6 @@ public class PaymentForm
         SetSubmitMessage(CountryCode.NL);
     }
 
-    // TODO: test and cleanup
-    //public void SetSubmitMessage(CountryCode countryCode)
-    //{
-    //    switch (countryCode)
-    //    {
-    //        case CountryCode.SE:
-    //            SetSubmitText("Betala");
-    //            _noScriptMessage =
-    //                "Javascript är inaktiverat i er webbläsare, ni får dirigera om till paypage manuellt";
-    //            break;
-    //        default:
-    //            SetSubmitText("Submit");
-    //            _noScriptMessage =
-    //                "Javascript is inactivated in your browser, you will manually have to redirect to the paypage";
-    //            break;
-    //    }
-    //}
-
     public void SetSubmitMessage(CountryCode countryCode)
     {
         (string submitText, string noScriptMessage) = countryCode switch

@@ -26,25 +26,6 @@ public class PaymentPlanPricePerMonth
 
             var paymentFactor = CalculatePaymentFactor(numberOfPayments, (double)campaignCode.InterestRatePercent / 100);
 
-            // TODO: cleanup
-            //double pricePerMonth;
-            //switch(campaignCode.PaymentPlanType)
-            //{
-            //    case PaymentPlanTypeCode.InterestAndAmortizationFree:
-            //        pricePerMonth = Math.Round((double)campaignCode.InitialFee + (double)amount + (double)campaignCode.NotificationFee);
-            //        break;
-
-            //    case PaymentPlanTypeCode.InterestFree:
-            //        pricePerMonth = Math.Round(((double)campaignCode.InitialFee + (double)amount + ((double)campaignCode.NotificationFee * numberOfPayments)) / numberOfPayments);
-            //        break;
-
-            //    case PaymentPlanTypeCode.Standard:
-            //        pricePerMonth = Math.Round(((double)campaignCode.InitialFee + ((double)amount * paymentFactor + (double)campaignCode.NotificationFee) * numberOfPayments) / numberOfPayments);
-            //        break;
-
-            //    default:
-            //        throw new SveaWebPayException("Invalid PaymentPlanTypeCode");
-            //}
             var pricePerMonth = campaignCode.PaymentPlanType switch
             {
                 PaymentPlanTypeCode.InterestAndAmortizationFree =>
@@ -67,7 +48,6 @@ public class PaymentPlanPricePerMonth
         return pricesPerMonth;
     }
 
-    // TODO?
     private double CalculatePaymentFactor(int numberOfPayments, double yearlyInterestRate, int paymentFrequencyPerYear = 12)
     {
         double monthlyInterestRate = yearlyInterestRate / paymentFrequencyPerYear;

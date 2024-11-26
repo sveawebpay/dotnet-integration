@@ -12159,29 +12159,6 @@ namespace AdminWS
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
         
-        // TODO: cleanup
-        //private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
-        //{
-        //    if ((endpointConfiguration == EndpointConfiguration.WcfAdminSoapService))
-        //    {
-        //        System.ServiceModel.WSHttpBinding result = new System.ServiceModel.WSHttpBinding();
-        //        result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
-        //        result.MaxReceivedMessageSize = int.MaxValue;
-        //        result.AllowCookies = true;
-        //        result.Security.Mode = System.ServiceModel.SecurityMode.None;
-        //        return result;
-        //    }
-        //    if ((endpointConfiguration == EndpointConfiguration.AdminSoapService))
-        //    {
-        //        System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
-        //        result.MaxBufferSize = int.MaxValue;
-        //        result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
-        //        result.MaxReceivedMessageSize = int.MaxValue;
-        //        result.AllowCookies = true;
-        //        return result;
-        //    }
-        //    throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
-        //}
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
             if (endpointConfiguration == EndpointConfiguration.WcfAdminSoapService)
@@ -12193,7 +12170,7 @@ namespace AdminWS
                     AllowCookies = true,
                     Security = new System.ServiceModel.WSHttpSecurity
                     {
-                        Mode = System.ServiceModel.SecurityMode.Transport // Use Transport to enable HTTPS
+                        Mode = System.ServiceModel.SecurityMode.Transport // Use Transport for HTTPS
                     }
                 };
                 return binding;

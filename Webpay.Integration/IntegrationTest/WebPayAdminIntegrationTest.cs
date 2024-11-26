@@ -13,24 +13,27 @@ public class WebpayAdminIntegrationTest
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRows()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = await HostedAdminTest.MakePreparedPayment(
-            HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo));
+        var preparedPaymentUri = await HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo);
+        var payment = await HostedAdminTest.MakePreparedPayment(preparedPaymentUri);
+
         return payment;
     }
 
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndVatPercent()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = await HostedAdminTest.MakePreparedPayment(
-            HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo));
+        var preparedPaymentUri = await HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod.SVEACARDPAY, customerRefNo);
+        var payment = await HostedAdminTest.MakePreparedPayment(preparedPaymentUri);
+
         return payment;
     }
 
     private static async Task<PaymentResponse> CreateCardOrderWithTwoOrderRowsSpecifiedIncVatAndExVat()
     {
         var customerRefNo = HostedAdminTest.CreateCustomerRefNo();
-        var payment = await HostedAdminTest.MakePreparedPayment(
-            HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod.SVEACARDPAY, customerRefNo));
+        var preparedPaymentUri = await HostedAdminTest.PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod.SVEACARDPAY, customerRefNo);
+        var payment = await HostedAdminTest.MakePreparedPayment(preparedPaymentUri);
+
         return payment;
     }
 
@@ -147,51 +150,6 @@ public class WebpayAdminIntegrationTest
         Assert.That(order.CreateOrderResult.SveaOrderId, Is.EqualTo(answer.Orders.First().SveaOrderId));
     }
 
-    // TODO
-    //[Test]
-    //public async Task Test_QueryOrder_QueryCardOrder()
-    //{
-    //    // create card order
-    //    var payment = CreateCardOrderWithTwoOrderRows();
-
-    //    // query order
-    //    var queryOrderBuilder = await WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-    //        .SetOrderId(payment.TransactionId)
-    //        .SetCountryCode(CountryCode.SE);
-
-    //    //QueryResponse answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
-    //    QueryResponse answer = queryOrderBuilder.QueryCardOrder().DoRequest();
-    //    Assert.That(answer.Accepted);
-    //    Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetName(), Is.EqualTo("Prod"));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetAmountExVat(), Is.EqualTo(100M));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetVatPercent(), Is.EqualTo(25));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetAmountIncVat(), Is.EqualTo(125M));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetDescription(), Is.EqualTo("Specification"));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetQuantity(), Is.EqualTo(2));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetArticleNumber(), Is.EqualTo("1"));
-    //    Assert.That(answer.Transaction.NumberedOrderRows.First().GetUnit(), Is.EqualTo("st"));
-    //}
-
-    // TODO
-    //[Test]
-    //public async Task Test_QueryOrder_QueryDirectBankOrder()
-    //{
-    //    // create card order
-    //    // TODO change to use CreateOrder().UseCardPayment.GetPaymentUrl() to set up test
-    //    var payment = CreateCardOrderWithTwoOrderRows();
-
-    //    // query order
-    //    var queryOrderBuilder = await WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
-    //        .SetTransactionId(payment.TransactionId)
-    //        .SetCountryCode(CountryCode.SE);
-    //    //Webpay.Integration.Hosted.Admin.HostedAdminResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-    //    //QueryResponse answer = await queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-    //    QueryResponse answer = queryOrderBuilder.QueryDirectBankOrder().DoRequest();
-    //    Assert.That(answer.Accepted);
-    //    Assert.That(answer.TransactionId, Is.EqualTo(payment.TransactionId));
-    //}
-
     [Test]
     public async Task Test_DeliverOrders_DeliverInvoiceOrderRows_SetOrderIdAndSingleOrder()
     {
@@ -295,7 +253,7 @@ public class WebpayAdminIntegrationTest
         var builder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
             .SetOrderId(order.CreateOrderResult.SveaOrderId)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .SetInvoiceDistributionType(DistributionType.POST) // TODO harmonize InvoiceDistributionType w/AdminWS?
+            .SetInvoiceDistributionType(DistributionType.POST)
             .SetRowToDeliver(1);
 
         var delivery = await builder.DeliverInvoiceOrderRows().DoRequest();
@@ -1143,7 +1101,7 @@ public class WebpayAdminIntegrationTest
 
         var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
-        Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED")); // TODO make enum w/Transaction statuses
+        Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED"));
     }
 
     [Test]

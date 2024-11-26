@@ -1,7 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Net;
-using System.Text;
-using System.Xml;
+﻿using System.Xml;
 using Webpay.Integration.Util;
 using Webpay.Integration.Util.Security;
 
@@ -33,30 +30,60 @@ public class HostedAdminRequest
         MessageXmlDocument.LoadXml(message);
     }
 
-    public HostedAdminResponse DoRequest()
+    public async Task<HostedAdminResponse> DoRequest()
     {
-        return HostedAdminCall(EndPointBase, this);
+        return await HostedAdminCall(EndPointBase, this);
     }
 
-    public static HostedAdminResponse HostedAdminCall(string targetAddress, HostedAdminRequest hostedRequest)
+    //public static HostedAdminResponse HostedAdminCall(string targetAddress, HostedAdminRequest hostedRequest)
+    //{
+    //    // TODO
+    //    using (var client = new WebClient())
+    //    {
+    //        foreach (var item in hostedRequest.Headers)
+    //        {
+    //            client.Headers.Add(item.Header.Key, item.Header.Value?.ToString() ?? "");
+    //        }
+
+    //        var response =
+    //            client.UploadValues(targetAddress, new NameValueCollection
+    //            {
+    //                { "message", hostedRequest.MessageBase64Encoded },
+    //                { "mac", hostedRequest.Mac },
+    //                { "merchantid", hostedRequest.MerchantId }
+    //            });
+
+    //        var result = Encoding.UTF8.GetString(response);
+    //        var hostedResponse = new HostedAdminResponse(result, hostedRequest.SecretWord, hostedRequest.MerchantId);
+
+    //        return hostedResponse;
+    //    }
+    //}
+
+    public static async Task<HostedAdminResponse> HostedAdminCall(string targetAddress, HostedAdminRequest hostedRequest)
     {
-        // TODO
-        using (var client = new WebClient())
+        using (var client = new HttpClient())
         {
             foreach (var item in hostedRequest.Headers)
             {
-                client.Headers.Add(item.Header.Key, item.Header.Value?.ToString() ?? "");
+                client.DefaultRequestHeaders.Add(item.Header.Key, item.Header.Value?.ToString() ?? "");
             }
 
-            var response =
-                client.UploadValues(targetAddress, new NameValueCollection
-                {
-                    { "message", hostedRequest.MessageBase64Encoded },
-                    { "mac", hostedRequest.Mac },
-                    { "merchantid", hostedRequest.MerchantId }
-                });
+            var formData = new Dictionary<string, string>
+            {
+                { "message", hostedRequest.MessageBase64Encoded },
+                { "mac", hostedRequest.Mac },
+                { "merchantid", hostedRequest.MerchantId }
+            };
 
-            var result = Encoding.UTF8.GetString(response);
+            var content = new FormUrlEncodedContent(formData);
+
+            HttpResponseMessage response = await client.PostAsync(targetAddress, content);
+
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadAsStringAsync();
+
             var hostedResponse = new HostedAdminResponse(result, hostedRequest.SecretWord, hostedRequest.MerchantId);
 
             return hostedResponse;

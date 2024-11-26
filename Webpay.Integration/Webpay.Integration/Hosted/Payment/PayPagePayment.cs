@@ -24,23 +24,6 @@ public class PayPagePayment : HostedPayment
         return _paymentMethod;
     }
 
-    // TODO: test and cleanup
-    //public PayPagePayment SetPaymentMethod(PaymentMethod paymentMethod)
-    //{
-    //    if (paymentMethod == PaymentMethod.INVOICE)
-    //    {
-    //        _paymentMethod = GetValidInvoiceTypeForIncludedList();
-    //    }
-    //    else if (paymentMethod == PaymentMethod.PAYMENTPLAN)
-    //    {
-    //        _paymentMethod = GetValidPaymentPlanTypeForIncludedList();
-    //    }
-    //    else
-    //    {
-    //        _paymentMethod = paymentMethod.Value;
-    //    }
-    //    return this;
-    //}
     public PayPagePayment SetPaymentMethod(PaymentMethod paymentMethod)
     {
         _paymentMethod = paymentMethod.Value switch
@@ -151,7 +134,6 @@ public class PayPagePayment : HostedPayment
     {
         AddCollectionToIncludedPaymentMethodList(paymentMethods);
 
-        // Exclude all payment methods		
         var excluded = new ExcludePayments();
         ExcludedPaymentMethod = excluded.ExcludeInvoicesAndPaymentPlan();
 
@@ -161,7 +143,6 @@ public class PayPagePayment : HostedPayment
         ExcludedPaymentMethod.Add(PaymentMethod.PAYPAL.Value);
         ExcludeDirectPaymentMethod();
 
-        // Remove included methods from excluded payment methods
         foreach (string pm in _includedPaymentMethod)
         {
             ExcludedPaymentMethod.Remove(pm);

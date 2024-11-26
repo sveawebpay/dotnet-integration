@@ -49,19 +49,6 @@ public class FixedDiscountRowsTest
         return order;
     }
 
-    // TODO: cleanup
-    // This will always be false since it will compare types.
-    // Generics like <T1, T2> in this case would cause a type mismatch unless T1 and T2 are of the same type or compatible types that can be compared.
-    //private static void AssertEquals<T1, T2>(T1 actual, T2 expected)
-    //{
-    //    Assert.That(actual, Is.EqualTo(expected));
-    //}
-    // Use a single generic type instead...
-    //private static void AssertEquals<T>(T actual, T expected)
-    //{
-    //    Assert.That(actual, Is.EqualTo(expected));
-    //}
-    // Or:
     private static void AssertEquals<T1, T2>(T1 actual, T2 expected)
     {
         Assert.That(Convert.ToDouble(actual), Is.EqualTo(Convert.ToDouble(expected)));

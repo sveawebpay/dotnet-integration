@@ -17,9 +17,9 @@ namespace Webpay.Integration.IntegrationTest.Hosted.Admin;
 public class HostedAdminTest
 {
     [Test]
-    public void TestPreparedPaymentRequest()
+    public async Task TestPreparedPaymentRequest()
     {
-        var uri = PrepareRegularPayment(PaymentMethod.SWISH, CreateCustomerRefNo());
+        var uri = await PrepareRegularPayment(PaymentMethod.SWISH, CreateCustomerRefNo());
 
         Assert.That(uri.AbsoluteUri, Does.Match(".*\\/preparedpayment\\/[0-9]+"));
     }
@@ -346,7 +346,7 @@ public class HostedAdminTest
     }
 
     [Test]
-    public void TestGetPaymentMethods()
+    public async Task TestGetPaymentMethods()
     {
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .GetPaymentMethods(new GetPaymentMethods(
@@ -356,7 +356,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
 
-        var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
         var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
@@ -405,7 +405,7 @@ public class HostedAdminTest
     }
 
     [Test]
-    public void TestGetReconciliationReport()
+    public async Task TestGetReconciliationReport()
     {
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .GetReconciliationReport(new GetReconciliationReport(
@@ -415,18 +415,14 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2023-04-27"));
 
-        var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
         var reconciliationXml = hostedAdminResponse.MessageXmlDocument
             .SelectSingleNode("/response/reconciliation/reconciliationtransaction").InnerXml;
 
-        // TODO: Cleanup
-        //Assert.That(reconciliationXml,
-        //    Does.Contain("<transactionid>864104</transactionid><customerrefno>test_1682491068546</customerrefno><paymentmethod>SVEACARDPAY</paymentmethod><amount>500</amount><currency>SEK</currency><time>2023-04-27 00:04:00 CEST</time>"));
         var matchPattern = @"<transactionid>\d+</transactionid><customerrefno>.*</customerrefno><paymentmethod>SVEACARDPAY</paymentmethod><amount>500</amount><currency>SEK</currency><time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} CEST</time>";
         Assert.That(reconciliationXml, Does.Match(matchPattern));
-
         Assert.That(hostedAdminResponse.To(GetReconciliationReport.Response).ReconciliationTransactions[0].Amount, Is.EqualTo(5m));
     }
 
@@ -517,47 +513,6 @@ public class HostedAdminTest
         Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
     }
 
-    // TODO?
-    //[Test]
-    //public void TestLowerAmountConfirmCompleteFlow()
-    //{
-    //    var customerRefNo = CreateCustomerRefNo();
-    //    var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
-
-    //    LowerAmountResponse lowerAmountResponse = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-    //        .LowerAmountConfirm(new LowerAmountConfirm(
-    //            transactionId: payment.TransactionId,
-    //            amountToLower: 111,
-    //            captureDate: DateTime.Now, correlationId: null
-    //            ))
-    //        .PrepareRequest()
-    //        .DoRequest()
-    //        .To(LowerAmount.Response);
-    //}
-
-    //[Test]
-    //public void TestLowerAmountConfirm()
-    //{
-    //    var customerRefNo = CreateCustomerRefNo();
-    //    var payment = MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SVEACARDPAY, customerRefNo));
-
-    //    var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-    //        .LowerAmountConfirm(new LowerAmountConfirm(
-    //            transactionId: payment.TransactionId,
-    //            amountToLower: 111,
-    //            captureDate: DateTime.Parse("2021-05-29"), correlationId: null
-    //        ));
-
-    //    HostedAdminRequest hostedAdminRequest = hostedActionRequest.PrepareRequest();
-    //    Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
-    //    Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/amounttolower").InnerText, Is.EqualTo("111"));
-    //    Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramountconfirm/capturedate").InnerText, Is.EqualTo("2021-05-29"));
-
-    //    var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
-    //    Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
-    //    Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
-    //}
-
     [Test]
     public void TestLowerAmountConfirmResponse()
     {
@@ -601,7 +556,9 @@ public class HostedAdminTest
     public async Task TestQueryTransactionIdDirectPayment()
     {
         var customerRefNo = CreateCustomerRefNo();
-        var payment = await MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
+        var preparedPaymentUri = await PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo);
+        var payment = await MakePreparedPayment(preparedPaymentUri);
+
         var now = DateTime.Now;
 
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
@@ -613,7 +570,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
-        var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1110"));
@@ -787,7 +744,8 @@ public class HostedAdminTest
     public async Task TestQueryCustomerRefNoDirectPayment()
     {
         var customerRefNo = CreateCustomerRefNo();
-        var _ = await MakePreparedPayment(PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo));
+        var preparedPaymentUri = await PrepareRegularPayment(PaymentMethod.SWISH, customerRefNo);
+        var _ = await MakePreparedPayment(preparedPaymentUri);
 
         var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
             .Query(new QueryByCustomerRefNo(
@@ -797,13 +755,13 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
 
-        var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
     }
 
     [Test]
-    public void TestRecur()
+    public async Task TestRecur()
     {
         const string customerRefNo = "Customer reference number or client order number";
         const string subscriptionId = "The subscription id";
@@ -826,7 +784,7 @@ public class HostedAdminTest
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/vat").InnerText, Is.EqualTo(vat + ""));
 
-        var hostedAdminResponse = hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
 
         // Call to non-existing subscription
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322"));
@@ -939,7 +897,7 @@ public class HostedAdminTest
         Assert.That(response.Accepted, Is.EqualTo(true));        
     }
 
-    internal static Uri PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
+    internal static Task<Uri> PrepareRegularPayment(PaymentMethod paymentMethod, string createCustomerRefNo)
     {           
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -955,7 +913,7 @@ public class HostedAdminTest
             .PreparePayment("127.0.0.1");
     }
 
-    internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
+    internal static Task<Uri> PrepareRegularPaymentWithTwoRowsSpecifiedExVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -971,7 +929,7 @@ public class HostedAdminTest
             .PreparePayment("127.0.0.1");
     }
 
-    internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
+    internal static Task<Uri> PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndVatPercent(PaymentMethod paymentMethod, string createCustomerRefNo)
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -987,7 +945,7 @@ public class HostedAdminTest
             .PreparePayment("127.0.0.1");
     }
 
-    internal static Uri PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod paymentMethod, string createCustomerRefNo)
+    internal static Task<Uri> PrepareRegularPaymentWithTwoRowsSpecifiedIncVatAndExVat(PaymentMethod paymentMethod, string createCustomerRefNo)
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -1008,7 +966,7 @@ public class HostedAdminTest
         return "1" + Guid.NewGuid().ToString().Replace("-", "");
     }
 
-    private static Uri PrepareRecurPayment(PaymentMethod paymentMethod, SubscriptionType subscriptionType)
+    private static Task<Uri> PrepareRecurPayment(PaymentMethod paymentMethod, SubscriptionType subscriptionType)
     {
         return WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
@@ -1024,22 +982,6 @@ public class HostedAdminTest
             .PreparePayment("127.0.0.1");
     }
 
-    // TODO: cleanup
-    // WebRequest.Create is deprecated...
-    //internal static PaymentResponse MakePreparedPayment(Uri preparePayment)
-    //{
-    //    var webRequest = (HttpWebRequest)WebRequest.Create(preparePayment);
-    //    webRequest.AllowAutoRedirect = false;
-
-    //    var webResponse = (HttpWebResponse)webRequest.GetResponse();
-    //    var location = new Uri(webResponse.Headers["Location"]);
-    //    var nameValueCollection = HttpUtility.ParseQueryString(location.Query);
-    //    var messageBase64 = nameValueCollection["response"];
-    //    var merchantId = nameValueCollection["merchantid"];
-    //    var mac = nameValueCollection["mac"];
-
-    //    return new PaymentResponse(messageBase64, mac, merchantId);
-    //}
     internal static async Task<PaymentResponse> MakePreparedPayment(Uri preparePayment)
     {
         using (var handler = new HttpClientHandler { AllowAutoRedirect = false })
@@ -1049,7 +991,7 @@ public class HostedAdminTest
 
             if (response.Headers.Location == null)
             {
-                throw new InvalidOperationException("The response does not contain a 'Location' header.");
+                throw new InvalidOperationException("Response does not contain a 'Location' header.");
             }
 
             var location = response.Headers.Location;

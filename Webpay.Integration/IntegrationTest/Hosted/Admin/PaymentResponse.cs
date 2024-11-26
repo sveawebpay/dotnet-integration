@@ -5,9 +5,9 @@ namespace Webpay.Integration.IntegrationTest.Hosted.Admin;
 
 public class PaymentResponse
 {
-    public string MerchantId { get; private set; }
-    public string Mac { get; private set; }
-    public string MessageBase64 { get; private set; }
+    public string? MerchantId { get; private set; }
+    public string? Mac { get; private set; }
+    public string? MessageBase64 { get; private set; }
     public string Message { get; private set; }
     public XmlDocument MessageXmlDoc { get; private set; }
     public long TransactionId { get; private set; }

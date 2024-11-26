@@ -86,7 +86,6 @@ public class HandleOrder
         return _sveaDeliverOrder;
     }
 
-    // TODO:
     private static InvoiceDistributionType ConvertInvoiceDistributionType(DistributionType getDistributionType)
     {
         return getDistributionType switch

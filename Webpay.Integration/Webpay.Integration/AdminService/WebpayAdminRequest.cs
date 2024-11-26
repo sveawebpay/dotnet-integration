@@ -6,24 +6,6 @@ namespace Webpay.Integration.AdminService;
 
 public class WebpayAdminRequest
 {
-    //TODO: cleanup
-    //protected AdminWS.InvoiceDistributionType ConvertDistributionTypeToInvoiceDistributionType(DistributionType dt)
-    //{
-    //    switch (dt)
-    //    {
-    //        case DistributionType.NONE:
-    //            throw new SveaWebPayException("Invalid DistributionType");
-
-    //        case DistributionType.EMAIL:
-    //            return AdminWS.InvoiceDistributionType.Email;
-
-    //        case DistributionType.POST:
-    //            return AdminWS.InvoiceDistributionType.Post;
-
-    //        default:
-    //            throw new SveaWebPayException("Invalid DistributionType");
-    //    }
-    //}
     protected AdminWS.InvoiceDistributionType ConvertDistributionTypeToInvoiceDistributionType(DistributionType dt) =>
         dt switch
         {
@@ -32,22 +14,6 @@ public class WebpayAdminRequest
             _ => throw new SveaWebPayException("Invalid DistributionType")
         };
 
-    //protected AdminWS.OrderType ConvertPaymentTypeToOrderType(PaymentType pt)
-    //{
-    //    switch (pt)
-    //    {
-    //        #pragma warning disable 0162 //CS0162 Unreachable code detected
-    //        case PaymentType.INVOICE:
-    //            return AdminWS.OrderType.Invoice;
-    //            break;
-    //        case PaymentType.PAYMENTPLAN:
-    //            return AdminWS.OrderType.PaymentPlan;
-    //            break;
-    //        default:
-    //            throw new SveaWebPayException("Invalid PaymentType");
-    //        #pragma warning restore 0162
-    //    }
-    //}
     protected AdminWS.OrderType ConvertPaymentTypeToOrderType(PaymentType pt) =>
         pt switch
         {
@@ -62,10 +28,7 @@ public class WebpayAdminRequest
         {
             ArticleNumber = orb.GetArticleNumber(),
             Description = GetDescriptionFromBuilderOrderRow(orb.GetName(), orb.GetDescription()),
-            //DiscountAmount = , // TODO?
-            //DiscountAmountIncludingVat = , // TODO?
             DiscountPercent = orb.GetDiscountPercent(),
-            //ExtensionData = , // TODO?
             NumberOfUnits = orb.GetQuantity(),
             PriceIncludingVat = orb.GetAmountIncVat().HasValue, // true if we have set amountIncVat
             PricePerUnit = (decimal)(orb.GetAmountIncVat() ?? orb.GetAmountExVat()),
@@ -80,16 +43,11 @@ public class WebpayAdminRequest
         {
             ArticleNumber = norb.GetArticleNumber(),
             Description = GetDescriptionFromBuilderOrderRow(norb.GetName(), norb.GetDescription()),
-            //DiscountAmount = , // TODO?
-            //DiscountAmountIncludingVat = , // TODO?
             DiscountPercent = norb.GetDiscountPercent(),
-            //ExtensionData = , // TODO?
             NumberOfUnits = norb.GetQuantity(),
             PriceIncludingVat = norb.GetAmountIncVat().HasValue, // true if we have set amountIncVat
             PricePerUnit = (decimal)(norb.GetAmountIncVat() ?? norb.GetAmountExVat()),
             VatPercent = GetVatPercentFromBuilderOrderRow(norb.GetVatPercent(), norb.GetAmountIncVat(), norb.GetAmountExVat()),
-            //DiscountAmount = ,                    // TODO?
-            //DiscountAmountIncludingVat = ,        // TODO?
             RowNumber = norb.GetRowNumber()
         };
         return nor;

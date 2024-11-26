@@ -108,29 +108,6 @@ public class Credit : BasicRequest
         return true;
     }
 
-    // TODO: cleanup
-    //private Tuple<bool, CreditResponse> ValidateDeliveries()
-    //{
-    //    if (Deliveries.Count() == 0 && AmountToCredit <= 0)
-    //    {
-    //        return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or deliveries with order rows are required"));
-    //    }
-    //    else if (Deliveries.Count() > 0 && AmountToCredit > 0)
-    //    {
-    //        return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
-    //    }
-    //    else if (Deliveries.Count() > 0 && AmountToCredit <= 0)
-    //    {
-    //        foreach (var delivery in Deliveries)
-    //        {
-    //            var response = ValidateDelivery(delivery);
-    //            if (response.Item1 == false)
-    //                return response;
-    //        }
-    //    }
-    //    return new Tuple<bool, CreditResponse>(true, null);
-    //}
-
     private (bool, CreditResponse?) ValidateDeliveries()
     {
         if (!Deliveries.Any() && AmountToCredit <= 0)
@@ -152,38 +129,6 @@ public class Credit : BasicRequest
         }
         return (true, null);
     }
-
-    //private Tuple<bool, CreditResponse> ValidateDelivery(Delivery delivery)
-    //{
-    //    if (delivery != null)
-    //    {
-    //        if (AmountToCredit <= 0 && delivery.NewOrderRows.Count() == 0 && delivery.OrderRows.Count() == 0)
-    //        {
-    //            return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, CreditAmount or order rows are required"));
-    //        }
-    //        else if (AmountToCredit > 0 && delivery.NewOrderRows.Count() != 0 && delivery.OrderRows.Count() != 0)
-    //        {
-    //            return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse("Invalid Credit Request, Credit by amount and by order rows is not allowed at the same time"));
-    //        }
-    //        else if (delivery.NewOrderRows.Count() > 0 && delivery.NewOrderRows.Any(x =>
-    //                string.IsNullOrEmpty(x.Name)
-    //                || (x.Quantity <= 0)
-    //                || (x.VatPercent < 0)
-    //                || (x.DiscountPercent < 0)
-    //                || (x.DiscountAmount < 0)
-    //            ))
-    //        {
-    //            return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid NewOrderRow for delivery Id {delivery.Id}"));
-    //        }
-    //        else if (delivery.OrderRows.Count() > 0 && delivery.OrderRows.Any(x =>
-    //                   (x.RowId <= 0)
-    //                || (x.Quantity <= 0)))
-    //        {
-    //            return new Tuple<bool, CreditResponse>(false, GetValidationErrorResponse($"Invalid OrderRow for delivery Id {delivery.Id}"));
-    //        }
-    //    }
-    //    return new Tuple<bool, CreditResponse>(true, null); ;
-    //}
 
     private (bool, CreditResponse?) ValidateDelivery(Delivery delivery) =>
         delivery switch

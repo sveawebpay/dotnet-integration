@@ -2,16 +2,14 @@
 
 public class SveaConfig
 {
-    // TODO: cleanup
     private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/";
     private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/";
     //private const string SwpTestUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/payment";
     //private const string SwpProdUrl = "https://webpaypaymentgateway.svea.com/webpay/payment";
     private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL";
-    //private const string SwpTestWsUrl = "https://webpaywsstage.svea.com/SveaWebPay.asmx?WSDL" + "/secure";
     private const string SwpProdWsUrl = "https://webpayws.svea.com/SveaWebPay.asmx?WSDL";
-    private const string SwpTestAdminWsUrl = "https://webpayadminservicestage.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part
-    private const string SwpProdAdminWsUrl = "https://webpayadminservice.svea.com/AdminService.svc" + "/secure"; // make sure to include "/secure" part
+    private const string SwpTestAdminWsUrl = "https://webpayadminservicestage.svea.com/AdminService.svc" + "/secure";
+    private const string SwpProdAdminWsUrl = "https://webpayadminservice.svea.com/AdminService.svc" + "/secure";
 
     public static string GetProdWebserviceUrl()
     {

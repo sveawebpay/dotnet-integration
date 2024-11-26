@@ -886,12 +886,12 @@ public class HostedAdminTest
     }
 
     [Test, Ignore("Create a directbank transaction with Trustly to test this")]
-    public void TestHostedAdminResponseStatus150()
+    public async Task TestHostedAdminResponseStatus150()
     {
         var request = WebpayAdmin.CreditPayment(new SveaTestConfigurationProvider())
             .SetTransactionId(697022)
             .SetAmountIncVat(100);
-        var response = request.CreditDirectBankPayment().DoRequest();
+        var response = await request.CreditDirectBankPayment().DoRequest();
 
         Assert.That(response.StatusCode, Is.EqualTo(150));
         Assert.That(response.Accepted, Is.EqualTo(true));        

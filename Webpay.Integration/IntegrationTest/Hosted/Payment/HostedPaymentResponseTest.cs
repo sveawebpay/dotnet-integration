@@ -73,9 +73,9 @@ public class HostedPaymentResponseTest
     }
 
     [Test]
-    public void TestPreparedPaymentRequest()
+    public async Task TestPreparedPaymentRequest()
     {
-        var uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+        var uri = await WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                   .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                   .AddCustomerDetails(TestingTool.CreateMinimalCompanyCustomer())
                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -89,9 +89,9 @@ public class HostedPaymentResponseTest
     }
 
     [Test]
-    public void TestPreparedPaymentRequestCardPayPF()
+    public async Task TestPreparedPaymentRequestCardPayPF()
     {
-        var uri = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+        var uri = await WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
                                   .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
                                   .AddCustomerDetails(TestingTool.CreateIndividualCustomer())
                                   .SetCountryCode(TestingTool.DefaultTestCountryCode)

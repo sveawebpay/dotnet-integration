@@ -15,7 +15,7 @@ public class ConfirmPartialTransactionRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public ConfirmPartialResponse DoRequest()
+    public async Task<ConfirmPartialResponse> DoRequest()
     {           
         // Calculate delivered order rows total, including vat row sum over deliveredOrderRows
         var deliveredOrderTotal = 0M;
@@ -40,21 +40,18 @@ public class ConfirmPartialTransactionRequest : WebpayAdminRequest
                     correlationId:_builder.GetCorrelationId()
                     ));
 
-            var partialConfirmResponse = partialConfirmRequest.DoRequest<ConfirmPartialResponse>();
+            var partialConfirmResponse = await partialConfirmRequest.DoRequest<ConfirmPartialResponse>();
 
             if (!partialConfirmResponse.Accepted)
             {
-              
                 return GetDefaultResponse();
             }
 
             return partialConfirmResponse;
-
         }
         
         return GetDefaultResponse();
     }
-
 
     private ConfirmPartialResponse GetDefaultResponse()
     {

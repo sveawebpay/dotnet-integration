@@ -270,7 +270,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); // r1, r2: 100.00ex@25*2 => 500.00
 
@@ -281,14 +281,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToDeliver(2)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var delivery = builder.DeliverCardOrderRows().DoRequest();
+        var delivery = await builder.DeliverCardOrderRows().DoRequest();
         Assert.That(delivery.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); // r1, r2: 100.00ex@25*2 => 500.00
     }
@@ -302,7 +302,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); // r1, r2: 100.00ex@25*2 => 500.00
 
@@ -312,14 +312,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToDeliver(1)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var delivery = builder.DeliverCardOrderRows().DoRequest();
+        var delivery = await builder.DeliverCardOrderRows().DoRequest();
         Assert.That(delivery.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("CONFIRMED"));
         Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00M)); // r1, 100.00ex@25*2 => 250.00
@@ -933,7 +933,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); // r1, r2: 100.00ex@25*2 => 500.00
 
@@ -944,14 +944,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToCancel(2)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var cancellation = builder.CancelCardOrderRows().DoRequest();
+        var cancellation = await builder.CancelCardOrderRows().DoRequest();
         Assert.That(cancellation.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
 
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("ANNULLED"));
@@ -967,7 +967,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M)); // r1, r2: 100.00ex@25*2 => 500.00
 
@@ -977,14 +977,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToCancel(1)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var cancellation = builder.CancelCardOrderRows().DoRequest();
+        var cancellation = await builder.CancelCardOrderRows().DoRequest();
         Assert.That(cancellation.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
 
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
@@ -1000,7 +1000,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M));
 
@@ -1010,14 +1010,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToCancel(1)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var cancellation = builder.CancelCardOrderRows().DoRequest();
+        var cancellation = await builder.CancelCardOrderRows().DoRequest();
         Assert.That(cancellation.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
         Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.0M));
@@ -1032,7 +1032,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.AuthorizedAmount, Is.EqualTo(500.00M));
 
@@ -1042,14 +1042,14 @@ public class WebpayAdminIntegrationTest
             .SetRowToCancel(1)
             .AddNumberedOrderRows(answer.Transaction.NumberedOrderRows);
 
-        var cancellation = builder.CancelCardOrderRows().DoRequest();
+        var cancellation = await builder.CancelCardOrderRows().DoRequest();
         Assert.That(cancellation.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("AUTHORIZED"));
         Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.0M));
@@ -1092,14 +1092,14 @@ public class WebpayAdminIntegrationTest
             .SetOrderId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var cancellation = cancelOrderBuilder.CancelCardOrder().DoRequest();
+        var cancellation = await cancelOrderBuilder.CancelCardOrder().DoRequest();
         Assert.That(cancellation.Accepted);
 
         var queryOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(payment.TransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         Assert.That(answer.Transaction.Status, Is.EqualTo("ANNULLED"));
     }
@@ -1155,7 +1155,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(capturedTransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         var before = answer.Transaction.CreditedAmount;
 
@@ -1166,14 +1166,14 @@ public class WebpayAdminIntegrationTest
             .SetDescription("test of credit amount")
             .SetAmountIncVat(amountToCredit);
 
-        var response = creditAmountBuilder.CreditCardPayment().DoRequest();
+        var response = await creditAmountBuilder.CreditCardPayment().DoRequest();
         Assert.That(response.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(capturedTransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
         Assert.That(after, Is.EqualTo(before + amountToCredit));
@@ -1189,7 +1189,7 @@ public class WebpayAdminIntegrationTest
             .SetTransactionId(capturedTransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var answer = queryOrderBuilder.QueryCardOrder().DoRequest();
+        var answer = await queryOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(answer.Accepted);
         var before = answer.Transaction.CreditedAmount;
 
@@ -1200,14 +1200,14 @@ public class WebpayAdminIntegrationTest
             .SetDescription("test of credit amount")
             .SetAmountIncVat(amountToCredit);
 
-        var response = creditAmountBuilder.CreditDirectBankPayment().DoRequest();
+        var response = await creditAmountBuilder.CreditDirectBankPayment().DoRequest();
         Assert.That(response.Accepted);
 
         var queryConfirmedOrderBuilder = WebpayAdmin.QueryOrder(SveaConfig.GetDefaultConfig())
             .SetTransactionId(capturedTransactionId)
             .SetCountryCode(CountryCode.SE);
 
-        var queryConfirmedOrderAnswer = queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
+        var queryConfirmedOrderAnswer = await queryConfirmedOrderBuilder.QueryCardOrder().DoRequest();
         Assert.That(queryConfirmedOrderAnswer.Accepted);
         var after = queryConfirmedOrderAnswer.Transaction.CreditedAmount;
         Assert.That(after, Is.EqualTo(before + amountToCredit));

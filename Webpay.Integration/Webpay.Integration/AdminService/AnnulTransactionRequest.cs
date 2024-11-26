@@ -13,7 +13,7 @@ public class AnnulTransactionRequest
         _builder = builder;
     }
 
-    public AnnulResponse DoRequest()
+    public async Task<AnnulResponse> DoRequest()
     {
         var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .Annul(new Annul(
@@ -21,6 +21,6 @@ public class AnnulTransactionRequest
                 correlationId: _builder.GetCorrelationId()
                 ));
 
-        return hostedActionRequest.DoRequest<AnnulResponse>();
+        return await hostedActionRequest.DoRequest<AnnulResponse>();
     }
 }

@@ -13,7 +13,7 @@ public class QueryTransactionRequest
         _builder = builder;
     }
 
-    public QueryResponse DoRequest()
+    public async Task<QueryResponse> DoRequest()
     {
         var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .Query(new QueryByTransactionId(
@@ -21,6 +21,6 @@ public class QueryTransactionRequest
                 correlationId: _builder.GetCorrelationId()
                 ));
 
-        return hostedActionRequest.DoRequest<QueryResponse>();
+        return await hostedActionRequest.DoRequest<QueryResponse>();
     }
 }

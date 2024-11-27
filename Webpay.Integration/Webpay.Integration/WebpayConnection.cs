@@ -9,12 +9,12 @@ using Webpay.Integration.Webservice.Getpaymentplanparams;
 namespace Webpay.Integration;
 
 /// <summary>
-/// Start build request object by choosing the right method.
+/// Building request object by choosing a method.
 /// </summary>
 public static class WebpayConnection
 {
     /// <summary>
-    /// Start build order request to create an order for all payments.
+    /// Build order request to create an order for all payments.
     /// </summary>
     /// <param name="config"></param>
     /// <returns>CreateOrderBuilder</returns>
@@ -46,18 +46,7 @@ public static class WebpayConnection
     }
 
     /// <summary>
-    ///     DeliverOrderBuilder request = WebpayConnection.DeliverOrder(config)
-    ///         .SetOrderId()                  // invoice or payment plan only, required
-    ///         .SetCountryCode()              // required
-    ///         .SetInvoiceDistributionType()  // invoice only, required
-    ///         .SetNumberOfCreditDays()       // invoice only, optional
-    ///         .AddOrderRow()                 // invoice only, required
-    ///         .SetCreditInvoice()            // invoice only, optional -- use WebPayAdmin.CreditOrderRows instead
-    ///     ;
-    ///     // then select the corresponding request class and send request
-    ///     response = request.DeliverInvoiceOrder().doRequest();       // returns DeliverOrderResponse
-    ///     response = request.DeliverPaymentPlanOrder().doRequest();   // returns DeliverOrderResponse
-    ///     response = request.DeliverCardOrder().doRequest();   // Confirms a card order and returns ConfirmResponse
+    /// DeliverOrder request
     /// </summary>
     /// <param name="config"></param>
     /// <returns>DeliverOrderBuilder</returns>

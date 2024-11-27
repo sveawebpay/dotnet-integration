@@ -59,7 +59,7 @@ public class CloseOrder
         return sveaCloseOrder;
     }
 
-    public async Task<CloseOrderEuResponse> DoRequest()
+    public async Task<CloseOrderEuResponse> DoRequestAsync()
     {
         var request = PrepareRequest();
 

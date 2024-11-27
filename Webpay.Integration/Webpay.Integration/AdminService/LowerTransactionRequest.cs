@@ -13,7 +13,7 @@ public class LowerTransactionRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<LowerAmountResponse> DoRequest()
+    public async Task<LowerAmountResponse> DoRequestAsync()
     {
         // Calculate sum of cancelled order rows, applying RowsToCancel to passed in NumberedOrderRows
         var amountToLowerOrderBy = 0M;
@@ -31,6 +31,6 @@ public class LowerTransactionRequest : WebpayAdminRequest
             amountToLower: Decimal.ToInt64(amountToLowerOrderBy * 100), // Centessimal
             correlationId:_builder.GetCorrelationId()));
 
-        return await hostedActionRequest.DoRequest<LowerAmountResponse>();
+        return await hostedActionRequest.DoRequestAsync<LowerAmountResponse>();
     }
 }

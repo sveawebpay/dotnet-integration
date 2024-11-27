@@ -29,7 +29,7 @@ public class WebpayConnectionIntegrationTest
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"));
 
-        var delivery = await builder.DeliverInvoiceOrder().DoRequest();
+        var delivery = await builder.DeliverInvoiceOrder().DoRequestAsync();
 
         Assert.That(delivery.Accepted);
         Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(500.00M)); // 100ex@25%*2st *2rows
@@ -48,7 +48,7 @@ public class WebpayConnectionIntegrationTest
             .SetCaptureDate(DateTime.Now)
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"));
 
-        var delivery = await builder.DeliverInvoiceOrder().DoRequest();
+        var delivery = await builder.DeliverInvoiceOrder().DoRequestAsync();
 
         Assert.That(delivery.Accepted);
         Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(250.00M)); // 100ex@25%*2st *1row
@@ -65,7 +65,7 @@ public class WebpayConnectionIntegrationTest
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"));
 
-        var delivery = await builder.DeliverPaymentPlanOrder().DoRequest();
+        var delivery = await builder.DeliverPaymentPlanOrder().DoRequestAsync();
 
         Assert.That(delivery.Accepted);
         Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(5000.00M)); // 1000ex@25%*2st *2rows
@@ -81,7 +81,7 @@ public class WebpayConnectionIntegrationTest
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"));
 
-        var delivery = await builder.DeliverPaymentPlanOrder().DoRequest();
+        var delivery = await builder.DeliverPaymentPlanOrder().DoRequestAsync();
 
         Assert.That(delivery.Accepted);
         Assert.That(delivery.DeliverOrderResult.Amount, Is.EqualTo(5000.00M)); // 1000ex@25%*2st *2row

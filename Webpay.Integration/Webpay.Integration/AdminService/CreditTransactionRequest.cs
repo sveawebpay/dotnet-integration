@@ -14,7 +14,7 @@ public class CreditTransactionRequest
         _builder = builder;
     }
 
-    public async Task<CreditResponse> DoRequest()
+    public async Task<CreditResponse> DoRequestAsync()
     {
         var creditRequest = new Credit(
                 transactionId: _builder.Id,
@@ -28,7 +28,7 @@ public class CreditTransactionRequest
         {
             var hostedActionRequest = new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
             .Credit(creditRequest);
-            return await hostedActionRequest.DoRequest<CreditResponse>();
+            return await hostedActionRequest.DoRequestAsync<CreditResponse>();
         }
 
         return validationResoponse;

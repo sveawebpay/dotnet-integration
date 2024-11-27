@@ -10,7 +10,7 @@ namespace Webpay.Integration.IntegrationTest.Webservice.Payment;
 public class CreateInvoiceOrderTest
 {
     [Test]
-    public async Task TestInvoiceDoRequestWithPeppolId()
+    public async Task TestInvoiceDoRequestAsyncWithPeppolId()
     {
         var response = await WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -23,14 +23,14 @@ public class CreateInvoiceOrderTest
             .SetPeppolId("1234:asdf")
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
     }
 
     [Test]
-    public async Task TestInvoiceDoRequestWithIpAddressSetSe()
+    public async Task TestInvoiceDoRequestAsyncWithIpAddressSetSe()
     {
         var response = await WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
@@ -43,7 +43,7 @@ public class CreateInvoiceOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -63,7 +63,7 @@ public class CreateInvoiceOrderTest
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -80,7 +80,7 @@ public class CreateInvoiceOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.False);
     }
@@ -104,7 +104,7 @@ public class CreateInvoiceOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(47.88m));
@@ -130,7 +130,7 @@ public class CreateInvoiceOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(248.04));
@@ -162,7 +162,7 @@ public class CreateInvoiceOrderTest
             .UseInvoicePayment();
 
         var _ = useInvoicePayment.PrepareRequest();
-        var response = await useInvoicePayment.DoRequest();
+        var response = await useInvoicePayment.DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -181,7 +181,7 @@ public class CreateInvoiceOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted);
         Assert.That(response.CreateOrderResult.SveaWillBuyOrder);
@@ -217,7 +217,7 @@ public class CreateInvoiceOrderTest
                 .SetVatPercent(25)
                 .SetDiscountPercent(0))
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -236,7 +236,7 @@ public class CreateInvoiceOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(Currency.EUR)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -284,7 +284,7 @@ public class CreateInvoiceOrderTest
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);

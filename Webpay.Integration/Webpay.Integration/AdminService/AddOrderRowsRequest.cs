@@ -13,7 +13,7 @@ public class AddOrderRowsRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<AddOrderRowsResponse> DoRequest()
+    public async Task<AddOrderRowsResponse> DoRequestAsync()
     {
         var auth = new Authentication()
         {

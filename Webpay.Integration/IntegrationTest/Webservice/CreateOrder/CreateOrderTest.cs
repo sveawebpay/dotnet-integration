@@ -25,7 +25,7 @@ public class CreateOrderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -51,7 +51,7 @@ public class CreateOrderTest
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .SetCustomerReference(TestingTool.DefaultTestCustomerReferenceNumber)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -69,7 +69,7 @@ public class CreateOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
         Assert.That(response.CreateOrderResult.CustomerIdentity.IndividualIdentity == null);
@@ -93,7 +93,7 @@ public class CreateOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(Currency.EUR)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
@@ -116,7 +116,7 @@ public class CreateOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(Currency.EUR)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
@@ -140,7 +140,7 @@ public class CreateOrderTest
         Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
         // Execute the order asynchronously and check response
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         Assert.That(order.Accepted);
     }
 
@@ -160,7 +160,7 @@ public class CreateOrderTest
         var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
         Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         Assert.That(order.Accepted);
     }
 
@@ -190,7 +190,7 @@ public class CreateOrderTest
         var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
         Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         Assert.That(order.Accepted);
     }
 }

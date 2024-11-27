@@ -144,7 +144,7 @@ public class ConfigurationProviderTest
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
     }
@@ -155,7 +155,7 @@ public class ConfigurationProviderTest
         var exception = Assert.ThrowsAsync<SveaWebPayException>(async () =>
             await WebpayConnection.CreateOrder()
                                   .UseInvoicePayment()
-                                  .DoRequest());
+                                  .DoRequestAsync());
 
         Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
     }
@@ -166,7 +166,7 @@ public class ConfigurationProviderTest
         var exception = Assert.ThrowsAsync<SveaWebPayException>(async () =>
             await WebpayConnection.DeliverOrder()
                                   .DeliverInvoiceOrder()
-                                  .DoRequest());
+                                  .DoRequestAsync());
 
         Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
     }
@@ -176,7 +176,7 @@ public class ConfigurationProviderTest
     {
         var exception = Assert.ThrowsAsync<SveaWebPayException>(async () =>
             await WebpayConnection.GetAddresses()
-                                  .DoRequest());
+                                  .DoRequestAsync());
 
         Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
     }
@@ -186,7 +186,7 @@ public class ConfigurationProviderTest
     {
         var exception = Assert.ThrowsAsync<SveaWebPayException>(async () =>
             await WebpayConnection.GetPaymentPlanParams()
-                                  .DoRequest());
+                                  .DoRequestAsync());
 
         Assert.That(exception.Message, Is.EqualTo(ExpectedMessage));
     }

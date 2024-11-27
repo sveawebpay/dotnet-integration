@@ -66,10 +66,10 @@ public class GetPaymentPlanParams
     }
 
     /// <summary>
-    /// DoRequest - Asynchronous version
+    /// DoRequestAsync - Asynchronous version
     /// </summary>
     /// <returns>Task<GetPaymentPlanParamsEuResponse></returns>
-    public async Task<GetPaymentPlanParamsEuResponse> DoRequest()
+    public async Task<GetPaymentPlanParamsEuResponse> DoRequestAsync()
     {
         GetPaymentPlanParamsEuRequest request = PrepareRequest();
 

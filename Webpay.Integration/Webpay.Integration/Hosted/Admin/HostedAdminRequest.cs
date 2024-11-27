@@ -30,7 +30,7 @@ public class HostedAdminRequest
         MessageXmlDocument.LoadXml(message);
     }
 
-    public async Task<HostedAdminResponse> DoRequest()
+    public async Task<HostedAdminResponse> DoRequestAsync()
     {
         return await HostedAdminCall(EndPointBase, this);
     }

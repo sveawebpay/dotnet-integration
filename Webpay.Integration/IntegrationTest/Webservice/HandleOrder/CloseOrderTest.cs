@@ -19,7 +19,7 @@ public class CloseOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -28,7 +28,7 @@ public class CloseOrderTest
             .SetOrderId(response.CreateOrderResult.SveaOrderId)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .CancelInvoiceOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(closeResponse.ResultCode, Is.EqualTo(0));
         Assert.That(closeResponse.ResultCode, Is.EqualTo(0), "Order was not accepted.");
@@ -49,7 +49,7 @@ public class CloseOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         var orderId = response.CreateOrderResult.SveaOrderId;
 

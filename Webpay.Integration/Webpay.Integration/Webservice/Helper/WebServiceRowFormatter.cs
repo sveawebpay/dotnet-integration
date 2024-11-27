@@ -30,7 +30,6 @@ public class WebServiceRowFormatter<T>
         public bool AllPricesAreSpecifiedIncVat { get; set; }
         public OrderBuilder<T> Original { get; private set; }
         public OrderRequest WsOrderRequest { get; private set; }
-
         public List<OrderRowBuilder> NewOrderRows { get; private set; }
         public List<ShippingFeeBuilder> NewShippingFeeRows { get; private set; }
         public List<InvoiceFeeBuilder> NewInvoiceFeeRows { get; private set; }
@@ -419,7 +418,6 @@ public class WebServiceRowFormatter<T>
             return wsRow;
         });
         res.AddRange(invoiceFees);
-
 
         var discounts = order.NewFixedDiscountRows
             .Concat(order.NewRelativeDiscountRows)

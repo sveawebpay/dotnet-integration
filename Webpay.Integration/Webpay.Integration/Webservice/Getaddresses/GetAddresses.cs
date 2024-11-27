@@ -108,7 +108,7 @@ public class GetAddresses
         };
     }
 
-    public async Task<GetCustomerAddressesResponse> DoRequest()
+    public async Task<GetCustomerAddressesResponse> DoRequestAsync()
     {
         var request = PrepareRequest();
 
@@ -142,7 +142,7 @@ var request = new GetAddressesEuRequest
 return request;
 }
 
-private GetAddressesEuResponse DoRequest()
+private GetAddressesEuResponse DoRequestAsync()
 {
 GetAddressesEuRequest request = PrepareRequest();
 

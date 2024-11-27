@@ -10,7 +10,7 @@ public class GetPaymentPlanParamsTest
     [Test]
     public async Task TestGetPaymentPlanParams()
     {
-        var response = await WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig()).SetCountryCode(TestingTool.DefaultTestCountryCode).DoRequest();
+        var response = await WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig()).SetCountryCode(TestingTool.DefaultTestCountryCode).DoRequestAsync();
 
         Assert.That(response.ResultCode, Is.EqualTo(0));
         Assert.That(response.Accepted, Is.True);
@@ -23,7 +23,7 @@ public class GetPaymentPlanParamsTest
         var response = await WebpayConnection
             .GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted);
         Assert.That(response.CampaignCodes[0].CampaignCode, Is.EqualTo(223060));
@@ -45,7 +45,7 @@ public class GetPaymentPlanParamsTest
         var paymentPlanParam = await WebpayConnection
             .GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         var code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
@@ -59,7 +59,7 @@ public class GetPaymentPlanParamsTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UsePaymentPlanPayment(code)
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted);
     }

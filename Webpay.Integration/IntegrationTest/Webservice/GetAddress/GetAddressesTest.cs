@@ -16,7 +16,7 @@ public class GetAddressesTest
             .SetIndividual("460509-2222")
             .SetZipCode("99999")
             .SetOrderTypeInvoice()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
         Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson, Tess T"));
@@ -31,7 +31,7 @@ public class GetAddressesTest
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .SetIndividual("460509-2222")
             .SetZipCode("99999")
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
         Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Persson, Tess T"));
@@ -46,7 +46,7 @@ public class GetAddressesTest
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .SetOrderTypeInvoice()
             .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
         Assert.That(response.Addresses[0].FirstName, Is.EqualTo("Tess"));
@@ -63,7 +63,7 @@ public class GetAddressesTest
             .SetCountryCode(CountryCode.NO)
             .SetOrderTypeInvoice()
             .SetIndividual("17054512066")
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Error));
         Assert.That(response.ErrorMessage, Is.EqualTo("Invalid CountryCode: Supported CountryCodes are: SE, DK."));
@@ -76,7 +76,7 @@ public class GetAddressesTest
             .SetCountryCode(CountryCode.NO)
             .SetOrderTypeInvoice()
             .SetCompany("923313850")
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.RejectionCode, Is.EqualTo(GetCustomerAddressesRejectionCode.Accepted));
         Assert.That(response.Addresses[0].LegalName, Is.EqualTo("Test firma AS"));

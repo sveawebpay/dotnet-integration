@@ -13,7 +13,7 @@ public class CreditAmountRequest
         _builder = builder;
     }
 
-    public async Task<CancelPaymentPlanAmountResponse> DoRequest()
+    public async Task<CancelPaymentPlanAmountResponse> DoRequestAsync()
     {
         var auth = new Authentication()
         {

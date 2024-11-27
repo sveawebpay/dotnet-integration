@@ -74,7 +74,7 @@ public abstract class WebServicePayment
         return sveaOrder;
     }
 
-    public async Task<CreateOrderEuResponse> DoRequest()
+    public async Task<CreateOrderEuResponse> DoRequestAsync()
     {
         var request = PrepareRequest();
 

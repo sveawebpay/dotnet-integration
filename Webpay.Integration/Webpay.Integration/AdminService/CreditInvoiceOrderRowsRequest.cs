@@ -13,7 +13,7 @@ public class CreditInvoiceOrderRowsRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<DeliveryResponse> DoRequest()
+    public async Task<DeliveryResponse> DoRequestAsync()
     {
         var auth = new Authentication()
         {

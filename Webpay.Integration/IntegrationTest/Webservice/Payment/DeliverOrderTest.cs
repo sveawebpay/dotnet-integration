@@ -9,7 +9,7 @@ namespace Webpay.Integration.IntegrationTest.Webservice.Payment;
 public class DeliverOrderTest
 {
     [Test]
-    public async Task TestDeliverPaymentPlanOrderDoRequest()
+    public async Task TestDeliverPaymentPlanOrderDoRequestAsync()
     {
         var response = await WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow())
@@ -17,7 +17,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverPaymentPlanOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.ErrorMessage, Is.EqualTo("Currently unable to modify order, please try again later."));
     }
@@ -34,7 +34,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverInvoiceOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
@@ -55,7 +55,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.EINVOICEB2B)
             .SetCountryCode(CountryCode.NO)
             .DeliverInvoiceOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.EInvoiceB2B));
@@ -73,7 +73,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverInvoiceOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
@@ -94,7 +94,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverInvoiceOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.Accepted, Is.True);
         Assert.That(response.DeliverOrderResult.InvoiceResultDetails.InvoiceDistributionType, Is.EqualTo(WebpayWS.InvoiceDistributionType.Post));
@@ -109,7 +109,7 @@ public class DeliverOrderTest
         var paymentPlanParamResponse = await WebpayConnection
             .GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         var code = paymentPlanParamResponse.CampaignCodes[0].CampaignCode;
 
@@ -123,7 +123,7 @@ public class DeliverOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UsePaymentPlanPayment(code)
-            .DoRequest();
+            .DoRequestAsync();
 
         var deliverOrderResponse = await WebpayConnection
             .DeliverOrder(SveaConfig.GetDefaultConfig())
@@ -133,7 +133,7 @@ public class DeliverOrderTest
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverPaymentPlanOrder()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(deliverOrderResponse.Accepted, Is.True);
     }
@@ -152,7 +152,7 @@ public class DeliverOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         return response.CreateOrderResult.SveaOrderId;
     }
@@ -171,7 +171,7 @@ public class DeliverOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         return response.CreateOrderResult.SveaOrderId;
     }
@@ -190,7 +190,7 @@ public class DeliverOrderTest
             .SetOrderDate(TestingTool.DefaultTestDate)
             .SetCurrency(TestingTool.DefaultTestCurrency)
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         return response.CreateOrderResult.SveaOrderId;
     }

@@ -13,7 +13,7 @@ public class CancelOrderRowsRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<CancelOrderRowsResponse> DoRequest()
+    public async Task<CancelOrderRowsResponse> DoRequestAsync()
     {
         var auth = new Authentication()
         {

@@ -25,7 +25,7 @@ public class RelativeDiscountRowsTest
             .SetClientOrderNumber("RelativeDiscountExVat")
             .SetOrderDate(new DateTime(2012, 12, 12))
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(62.5M));
     }
@@ -48,7 +48,7 @@ public class RelativeDiscountRowsTest
             .SetClientOrderNumber("RelativeDiscountIncVat")
             .SetOrderDate(new DateTime(2012, 12, 12))
             .UseInvoicePayment()
-            .DoRequest();
+            .DoRequestAsync();
 
         Assert.That(response.CreateOrderResult.Amount, Is.EqualTo(50.0M));
     }

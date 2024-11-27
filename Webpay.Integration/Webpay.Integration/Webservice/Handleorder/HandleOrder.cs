@@ -104,21 +104,21 @@ public class HandleOrder
             : WebpayWS.OrderType.PaymentPlan;
     }
 
-    public async Task<DeliverOrderEuResponse> DoRequest()
+    public async Task<DeliverOrderEuResponse> DoRequestAsync()
     {
         var request = PrepareRequestInternal(true);
-        var response = await DoRequestInternalAsync(request);
+        var response = await DoRequestAsyncInternalAsync(request);
 
         if (response.ResultCode == 50036)
         {
             request = PrepareRequestInternal(false);
-            response = await DoRequestInternalAsync(request);
+            response = await DoRequestAsyncInternalAsync(request);
         }
 
         return response;
     }
 
-    private async Task<DeliverOrderEuResponse> DoRequestInternalAsync(DeliverOrderEuRequest request)
+    private async Task<DeliverOrderEuResponse> DoRequestAsyncInternalAsync(DeliverOrderEuRequest request)
     {
         var endpointAddress = new EndpointAddress(
             _order.GetConfig().GetEndPoint(_order.GetOrderType() == OrderType.INVOICE

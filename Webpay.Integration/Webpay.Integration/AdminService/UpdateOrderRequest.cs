@@ -13,7 +13,7 @@ public class UpdateOrderRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<UpdateOrderResponse> DoRequest()
+    public async Task<UpdateOrderResponse> DoRequestAsync()
     {
         var auth = new Authentication()
         {

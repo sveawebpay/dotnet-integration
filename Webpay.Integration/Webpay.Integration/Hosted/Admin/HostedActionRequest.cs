@@ -27,7 +27,7 @@ public class HostedActionRequest
         Headers = headers;
     }
 
-    //public T DoRequest<T>()
+    //public T DoRequestAsync<T>()
     //{
     //    var typeToResponseMap = new Dictionary<Type, Func<HostedAdminResponse, object>>
     //    {
@@ -50,7 +50,7 @@ public class HostedActionRequest
     //    throw new SveaWebPayException("Unknown request type");
     //}
 
-    public async Task<T> DoRequest<T>()
+    public async Task<T> DoRequestAsync<T>()
     {
         var typeToResponseMap = new Dictionary<Type, Func<HostedAdminResponse, object>>
         {

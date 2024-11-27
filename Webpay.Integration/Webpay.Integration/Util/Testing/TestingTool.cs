@@ -346,7 +346,7 @@ public static class TestingTool
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         return order;
     }
 
@@ -362,7 +362,7 @@ public static class TestingTool
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         return order;
     }
 
@@ -378,7 +378,7 @@ public static class TestingTool
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        var order = await createOrderBuilder.UseInvoicePayment().DoRequest();
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         return order;
     }
 
@@ -386,7 +386,7 @@ public static class TestingTool
     {
         var campaigns = await WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         var createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
@@ -397,7 +397,7 @@ public static class TestingTool
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        var order = await createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+        var order = await createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequestAsync();
         return order;
     }
 
@@ -405,7 +405,7 @@ public static class TestingTool
     {
         var campaigns = await WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig())
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         var createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreatePaymentPlanOrderRow())
@@ -417,7 +417,7 @@ public static class TestingTool
             .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        var order = await createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequest();
+        var order = await createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequestAsync();
         return order;
     }
 }

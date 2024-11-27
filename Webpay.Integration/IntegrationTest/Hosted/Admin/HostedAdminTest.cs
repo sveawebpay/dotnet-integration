@@ -43,7 +43,7 @@ public class HostedAdminTest
             .CancelRecurSubscription(new CancelRecurSubscription(
                 subscriptionId: "3352",correlationId:null
             ))
-            .DoRequest<RecurResponse>();
+            .DoRequestAsync<RecurResponse>();
     }
 
     [Test, Ignore("")]
@@ -54,7 +54,7 @@ public class HostedAdminTest
                 transactionId: 598683,
                 captureDate: DateTime.Now, correlationId: null
             ))
-            .DoRequest<ConfirmResponse>();
+            .DoRequestAsync<ConfirmResponse>();
     }
 
     [Test]
@@ -356,7 +356,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getpaymentmethods/merchantid").InnerText, Is.EqualTo("1130"));
 
-        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequestAsync<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
         var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
@@ -415,7 +415,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/getreconciliationreport/date").InnerText, Is.EqualTo("2023-04-27"));
 
-        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequestAsync<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
         var reconciliationXml = hostedAdminResponse.MessageXmlDocument
@@ -570,7 +570,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/transactionid").InnerText, Is.EqualTo(payment.TransactionId + ""));
 
-        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequestAsync<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/merchantid").InnerText, Is.EqualTo("1110"));
@@ -755,7 +755,7 @@ public class HostedAdminTest
         var hostedAdminRequest = hostedActionRequest.PrepareRequest();
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/query/customerrefno").InnerText, Is.EqualTo(customerRefNo));
 
-        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequestAsync<HostedAdminResponse>();
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/transaction/customerrefno").InnerText, Is.EqualTo(customerRefNo));
     }
@@ -784,7 +784,7 @@ public class HostedAdminTest
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/subscriptionid").InnerText, Is.EqualTo(subscriptionId));
         Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/recur/vat").InnerText, Is.EqualTo(vat + ""));
 
-        var hostedAdminResponse = await hostedActionRequest.DoRequest<HostedAdminResponse>();
+        var hostedAdminResponse = await hostedActionRequest.DoRequestAsync<HostedAdminResponse>();
 
         // Call to non-existing subscription
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("322"));
@@ -891,7 +891,7 @@ public class HostedAdminTest
         var request = WebpayAdmin.CreditPayment(new SveaTestConfigurationProvider())
             .SetTransactionId(697022)
             .SetAmountIncVat(100);
-        var response = await request.CreditDirectBankPayment().DoRequest();
+        var response = await request.CreditDirectBankPayment().DoRequestAsync();
 
         Assert.That(response.StatusCode, Is.EqualTo(150));
         Assert.That(response.Accepted, Is.EqualTo(true));        

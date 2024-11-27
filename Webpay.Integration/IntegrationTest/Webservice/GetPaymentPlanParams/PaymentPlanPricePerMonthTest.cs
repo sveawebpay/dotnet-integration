@@ -12,7 +12,7 @@ public class PaymentPlanPricePerMonthTest
         var request = WebpayConnection.GetPaymentPlanParams(SveaConfig.GetDefaultConfig());
         var response = await request
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .DoRequest();
+            .DoRequestAsync();
 
         return response;
     }

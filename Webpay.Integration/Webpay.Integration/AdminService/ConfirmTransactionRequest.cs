@@ -16,7 +16,7 @@ public class ConfirmTransactionRequest : WebpayAdminRequest
         _builder = builder;
     }
 
-    public async Task<ConfirmResponse> DoRequest()
+    public async Task<ConfirmResponse> DoRequestAsync()
     {
         // Calculate original order rows total, incvat row sum over numberedOrderRows
         var originalOrderTotal = 0M;
@@ -46,7 +46,7 @@ public class ConfirmTransactionRequest : WebpayAdminRequest
                     amountToLower: Decimal.ToInt64(amountToLowerOrderBy *100), // Centessimal
                     correlationId: new Guid()));
 
-            var lowerAmountResponse = await lowerAmountRequest.DoRequest<LowerAmountResponse>();
+            var lowerAmountResponse = await lowerAmountRequest.DoRequestAsync<LowerAmountResponse>();
 
             // If error lowering amount, return a dummy ConfirmRespose response w/status code 100 INTERNAL_ERROR
             if (!lowerAmountResponse.Accepted)
@@ -68,6 +68,6 @@ public class ConfirmTransactionRequest : WebpayAdminRequest
                 correlationId: new Guid()
                 ));
 
-        return await hostedActionRequest.DoRequest<ConfirmResponse>();
+        return await hostedActionRequest.DoRequestAsync<ConfirmResponse>();
     }
 }

@@ -143,8 +143,9 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
 
             if (_countryCode == CountryCode.SE && CustomerId.CustomerType == CustomerType.Company)
             {
-                CustomerId.NationalIdNumber = CustomerId.CompanyIdentity.CompanyVatNumber ??
-                                              CustomerId.NationalIdNumber;
+                CustomerId.NationalIdNumber = 
+                    CustomerId.CompanyIdentity.CompanyVatNumber ?? CustomerId.NationalIdNumber;
+
                 CustomerId.CompanyIdentity = null;
             }
         }

@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1>Svea Checkout Menu</h1>
+
+<form asp-action="SubmitForm" method="post">
+    <div>
+        <label for="ssn">SSN</label>
+        <input type="text" id="ssn" name="SSN" required />
+    </div>
+    <div>
+        <input type="checkbox" id="isCompany" name="IsCompany" value="true" />
+        <label for="isCompany">Is Company</label>
+    </div>
+    <div>
+        <button type="submit">OK</button>
+    </div>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <p style="color: red;">@ViewBag.Error</p>
+}
+
+@if (ViewBag.Addresses != null)
+{
+    <h3>Customer Addresses:</h3>
+    <ul>
+        @foreach (var address in ViewBag.Addresses)
+        {
+            <li>
+                <strong>@address.SecurityNumber</strong><br />
+                @address.FirstName @address.LastName<br />
+                @address.AddressLine1 @address.AddressLine2<br />
+                @address.Zipcode @address.Postarea<br />
+                Phone: @address.PhoneNumber<br />
+                AddressSelector: @address.AddressSelector
+            </li>
+        }
+    </ul>
+}
+
+@if (ViewBag.ShowAdditionalFields == true)
+{
+    <form asp-action="FinalizeForm" method="post">
+        <div>
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" id="phoneNumber" name="PhoneNumber" required />
+        </div>
+        <div>
+            <label for="emailAddress">Email Address</label>
+            <input type="email" id="emailAddress" name="EmailAddress" required />
+        </div>
+        <div>
+            <label for="paymentOption">Payment Option</label>
+            <select id="paymentOption" name="PaymentOption" required>
+                <option value="Invoice">Invoice</option>
+                <option value="PaymentPlan">Partial Payment</option>
+                <option value="AccountCredit">Account Credit</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Finalize</button>
+        </div>
+    </form>
+}

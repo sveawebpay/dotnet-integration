@@ -29,6 +29,11 @@ public class WebpayAdmin
         return new DeliverOrdersBuilder(configurationProvider);
     }
 
+    public static GetInvoicesBuilder GetInvoices(IConfigurationProvider configurationProvider)
+    {
+        return new GetInvoicesBuilder(configurationProvider);
+    }
+
     /// <summary>
     /// UpdateOrder
     /// </summary>

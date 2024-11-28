@@ -178,6 +178,8 @@ public abstract class HostedPayment
         return form;
     }
 
+    // TODO: cleanup
+
     /// <summary>
     /// PreparedPayment contacts the server with the payment request data, and returns a GET URL to that 
     /// payment. This is convenient for creating an order and then sending the URL e.g. in an email.

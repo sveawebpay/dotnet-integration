@@ -51,7 +51,7 @@ public class GetPaymentPlanParams
     /// <returns>GetPaymentPlanParamsEuRequest</returns>
     public GetPaymentPlanParamsEuRequest PrepareRequest()
     {
-        string errors = ValidateRequest();
+        var errors = ValidateRequest();
         if (errors.Length > 0)
         {
             throw new SveaWebPayValidationException(errors, null);
@@ -71,8 +71,7 @@ public class GetPaymentPlanParams
     /// <returns>Task<GetPaymentPlanParamsEuResponse></returns>
     public async Task<GetPaymentPlanParamsEuResponse> DoRequestAsync()
     {
-        GetPaymentPlanParamsEuRequest request = PrepareRequest();
-
+        var request = PrepareRequest();
         Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, _config.GetEndPoint(PaymentType.PAYMENTPLAN));
 
         return await Soapsc.GetPaymentPlanParamsEuAsync(request);

@@ -317,6 +317,7 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
     {
         return _navigation;
     }
+
     public CreateOrderBuilder AddCustomerDetails(CustomerIdentity customerIdentity)
     {
         CustomerId = customerIdentity;

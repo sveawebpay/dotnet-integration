@@ -1,0 +1,110 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #00aece;
+    border-color: #00aece;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    color: #002c50;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/* Collapsible actions in orders view */
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.collapsible div[automation^='toggle'] {
+    cursor: pointer;
+    color: blue;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+div[automation^='toggle'] {
+    display: none;
+    text-align: end;
+}
+
+.collapsible:not(.active) div[automation^='toggle']:nth-of-type(1) {
+    display: block;
+}
+
+.collapsible.active div[automation^='toggle']:nth-of-type(2) {
+    display: block;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.collapsible:hover {
+    background-color: #eee;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+}

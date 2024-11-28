@@ -1,0 +1,89 @@
+﻿@using Order = Sample.AspNetCore.Models.Order
+@using System.Reflection;
+@model Sample.AspNetCore.Models.ViewModels.OrderListViewModel
+
+@{
+    ViewData["Title"] = "OrderDetails";
+Layout = "~/Views/Shared/_Layout.cshtml";
+var count = 1;
+
+}
+
+@if (TempData["CancelMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["CancelMessage"]</div>
+}
+else if (TempData["OrderRowMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["OrderRowMessage"]</div>
+}
+else if (TempData["DeliverMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["DeliverMessage"]</div>
+}
+else if (TempData["CreditMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["CreditMessage"]</div>
+}
+else if (TempData["ReversalMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["ReversalMessage"]</div>
+}
+else if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+
+    @foreach (var order in Model.PaymentOrders)
+{
+    <div automation="div-fullorder">
+
+            <div automation="div-order">
+                <div>
+                    <h2>Order #@count</h2>
+
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => order.OrderId)
+                        </dt>
+                        @if (order.IsLoaded)
+                    {
+                    }
+                    else
+                    {
+                        <dt class="col-sm-2">
+                                Order (id: @order.OrderId) is not yet in PaymentAdmin. Please reload in a bit.
+                            </dt>
+                    }
+
+                    </dl>
+                </div>
+
+                @if (order.IsLoaded)
+            {
+                <table class="table" automation="table-order">
+                        <thead class="collapsible" automation="toggle-actions">
+                            <tr>
+                                <th>Actions</th>
+                                <th><div automation="toggle-actions">Expand</div><div automation="toggle-actions">Collapse</div></th>
+                            </tr>
+                        </thead>
+                        <tbody class="collapsible-content">
+
+                        </tbody>
+                    </table>
+            }
+            </div>
+
+        </div>
+
+    count++;
+}
+
+</div>

@@ -6,6 +6,7 @@ using Sample.AspNetCore.Models;
 using Sample.AspNetCore.Webpay;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Webpay.Integration;
 using Webpay.Integration.Order.Row;
@@ -82,6 +83,8 @@ public class CheckOutController : Controller
                 return View("Checkout");
             }
 
+            TempData["AddressData"] = JsonSerializer.Serialize(response.Addresses);
+
             ViewBag.Addresses = response.Addresses;
             ViewBag.ShowAdditionalFields = true;
         }
@@ -96,7 +99,8 @@ public class CheckOutController : Controller
     [HttpPost]
     public async Task<IActionResult> FinalizeForm(string PhoneNumber, string EmailAddress, string PaymentOption)
     {
-        var orderItems = _cartService.CartLines.ToOrderItems().ToList();
+        //var orderItems = _cartService.CartLines.ToOrderItems().ToList();
+        var orderItems = _cartService.CartLines.Select(line => line.ToOrderRowBuilder()).ToList();
 
         if (string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(EmailAddress))
         {
@@ -112,14 +116,28 @@ public class CheckOutController : Controller
             return View("Checkout");
         }
 
+        var addressDataJson = TempData["AddressData"] as string;
+        if (string.IsNullOrEmpty(addressDataJson))
+        {
+            ViewBag.Error = "Address data is missing. Please re-enter your SSN.";
+            ViewBag.ShowAdditionalFields = true;
+            return View("Checkout");
+        }
+
+        var addressData = JsonSerializer.Deserialize<CustomerAddress[]>(addressDataJson);
+        var correlationId = Guid.NewGuid();
+        var clientOrderNumber = GenerateRandomOrderNumber();
+        var customerAddressData = addressData[0]; // Use first address...
+        var ipAddress = GetIpAddress();
+        var individualCustomer = TestingTool.ConfigureCustomer(customerAddressData, ipAddress, PhoneNumber, EmailAddress);
+
         var createOrderBuilder = WebpayConnection.CreateOrder(Config)
-            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
-            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
-            .AddCustomerDetails(Item.IndividualCustomer()
-                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .AddOrderRows(orderItems)
+            .AddCustomerDetails(individualCustomer)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
-            .SetOrderDate(TestingTool.DefaultTestDate)
-            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .SetOrderDate(DateTime.Now)
+            .SetClientOrderNumber(clientOrderNumber)
+            .SetCorrelationId(correlationId)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
         // TODO: AccountCredit?
@@ -141,8 +159,6 @@ public class CheckOutController : Controller
             order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         }
 
-        PrintCreateOrderEuResponse(order);
-
         if (order.Accepted)
         {
             _cartService.SveaOrderId = order.CreateOrderResult.SveaOrderId.ToString();
@@ -161,7 +177,8 @@ public class CheckOutController : Controller
 
             await _context.SaveChangesAsync(true);
             return RedirectToAction("Thankyou");
-        } else
+        }
+        else
         {
             ViewBag.Error = "Something went wrong. Please try again.";
             ViewBag.ShowAdditionalFields = true;
@@ -175,66 +192,20 @@ public class CheckOutController : Controller
         return View();
     }
 
-    private void PrintCreateOrderEuResponse(CreateOrderEuResponse response)
+    // Helpers
+    private string GetIpAddress()
     {
-        Console.WriteLine("CreateOrderEuResponse:");
-        Console.WriteLine($"  ResultCode: {response.ResultCode}");
+        var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
+        return remoteIpAddress != null ? remoteIpAddress.ToString() : "0.0.0.0";
+    }
 
-        if (response.CreateOrderResult != null)
-        {
-            Console.WriteLine("  CreateOrderResult:");
-            Console.WriteLine($"    SveaOrderId: {response.CreateOrderResult.SveaOrderId}");
-            Console.WriteLine($"    OrderType: {response.CreateOrderResult.OrderType}");
-            Console.WriteLine($"    SveaWillBuyOrder: {response.CreateOrderResult.SveaWillBuyOrder}");
-            Console.WriteLine($"    Amount: {response.CreateOrderResult.Amount}");
-
-            if (response.CreateOrderResult.CustomerIdentity != null)
-            {
-                Console.WriteLine($"    CustomerIdentity: {response.CreateOrderResult.CustomerIdentity}");
-                // Etc...
-            }
-            else
-            {
-                Console.WriteLine("    CustomerIdentity: null");
-            }
-
-            if (response.CreateOrderResult.ExpirationDate.HasValue)
-            {
-                Console.WriteLine($"    ExpirationDate: {response.CreateOrderResult.ExpirationDate.Value}");
-            }
-            else
-            {
-                Console.WriteLine("    ExpirationDate: null");
-            }
-
-            Console.WriteLine($"    ClientOrderNumber: {response.CreateOrderResult.ClientOrderNumber}");
-
-            if (response.CreateOrderResult.PendingReasons != null && response.CreateOrderResult.PendingReasons.Length > 0)
-            {
-                Console.WriteLine("    PendingReasons:");
-                foreach (var reason in response.CreateOrderResult.PendingReasons)
-                {
-                    Console.WriteLine($"      - {reason}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("    PendingReasons: none");
-            }
-        }
-        else
-        {
-            Console.WriteLine("  CreateOrderResult: null");
-        }
-
-        if (response.NavigationResult != null)
-        {
-            Console.WriteLine("  NavigationResult:");
-            Console.WriteLine($"    RedirectUrl: {response.NavigationResult.RedirectUrl}");
-        }
-        else
-        {
-            Console.WriteLine("  NavigationResult: null");
-        }
+    private string GenerateRandomOrderNumber(int randomLength = 10)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var random = new Random();
+        var randomString = new string(Enumerable.Repeat(chars, randomLength)
+                                        .Select(s => s[random.Next(s.Length)])
+                                        .ToArray());
+        return $"WebpayIntegration-{randomString}";
     }
 }

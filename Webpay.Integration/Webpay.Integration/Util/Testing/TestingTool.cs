@@ -420,4 +420,17 @@ public static class TestingTool
         var order = await createOrderBuilder.UsePaymentPlanPayment(campaigns.CampaignCodes[0].CampaignCode).DoRequestAsync();
         return order;
     }
+
+    public static IndividualCustomer ConfigureCustomer(CustomerAddress customerAddress, string ipAddress, string phoneNumber, string emailAddress)
+    {
+        return Item.IndividualCustomer()
+            .SetNationalIdNumber(customerAddress.SecurityNumber)
+            .SetIpAddress(ipAddress)
+            .SetName(customerAddress.FirstName, customerAddress.LastName)
+            .SetPhoneNumber(phoneNumber)
+            .SetEmail(emailAddress)
+            .SetStreetAddress(customerAddress.AddressLine1, customerAddress.AddressLine2)
+            .SetLocality(customerAddress.Postarea)
+            .SetZipCode(customerAddress.Zipcode);
+    }
 }

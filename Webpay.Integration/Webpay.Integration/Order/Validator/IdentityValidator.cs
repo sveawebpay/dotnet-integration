@@ -79,7 +79,7 @@ public class IdentityValidator
 
     public string ValidateDeIdentity(CreateOrderBuilder order)
     {
-        string errors = "";
+        var errors = "";
 
         // Individual
         if (!order.GetIsCompanyIdentity())

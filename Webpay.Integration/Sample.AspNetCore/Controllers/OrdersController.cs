@@ -83,20 +83,22 @@ public class OrdersController : Controller
         {
             var orderId = int.Parse(order.SveaOrderId);
             var orderViewModel = new OrderViewModel(orderId);
-            // TODO
-            //if (!string.IsNullOrWhiteSpace(order.SveaOrderId))
-            //{
-            //    try
-            //    {
-            //        orderViewModel.Order = await this._sveaClient.PaymentAdmin.GetOrder(long.Parse(order.SveaOrderId)).ConfigureAwait(false);
-            //        orderViewModel.IsLoaded = true;
-            //        orderViewModel.ShippingStatus = order.ShippingStatus;
-            //        orderViewModel.ShippingDescription = order.ShippingDescription;
-            //    }
-            //    catch {}
+            if (!string.IsNullOrWhiteSpace(order.SveaOrderId))
+            {
+                try
+                {
+                    orderViewModel.Order = new Order();
+                    orderViewModel.Order.SveaOrderId = order.SveaOrderId;
+                    orderViewModel.Order.OrderId = orderId;
 
-            //    orderViewModels.Add(orderViewModel);
-            //}
+                    orderViewModel.IsLoaded = true;
+                    orderViewModel.ShippingStatus = order.ShippingStatus;
+                    orderViewModel.ShippingDescription = order.ShippingDescription;
+                }
+                catch {}
+
+                orderViewModels.Add(orderViewModel);
+            }
         }
 
         return View(new OrderListViewModel

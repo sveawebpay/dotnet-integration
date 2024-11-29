@@ -1,13 +1,13 @@
-﻿@using Order = Sample.AspNetCore.Models.Order
-@using System.Reflection;
+﻿@using System.Reflection;
 @model Sample.AspNetCore.Models.ViewModels.OrderListViewModel
 
 @{
     ViewData["Title"] = "OrderDetails";
-Layout = "~/Views/Shared/_Layout.cshtml";
-var count = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 1;
 
 }
+
 
 @if (TempData["CancelMessage"] != null)
 {
@@ -40,8 +40,8 @@ else if (TempData["ErrorMessage"] != null)
     <hr />
 
     @foreach (var order in Model.PaymentOrders)
-{
-    <div automation="div-fullorder">
+    {
+        <div automation="div-fullorder">
 
             <div automation="div-order">
                 <div>
@@ -52,22 +52,19 @@ else if (TempData["ErrorMessage"] != null)
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => order.OrderId)
                         </dt>
-                        @if (order.IsLoaded)
-                    {
-                    }
-                    else
-                    {
-                        <dt class="col-sm-2">
-                                Order (id: @order.OrderId) is not yet in PaymentAdmin. Please reload in a bit.
+                        <dd class="col-sm-4" automation="text-orderid">
+                            @Html.DisplayFor(model => order.Order.SveaOrderId)
+                        </dd>
+                            <dt class="col-sm-2">
+                                No data found for order (id: @order.OrderId)
                             </dt>
-                    }
 
                     </dl>
                 </div>
 
                 @if (order.IsLoaded)
-            {
-                <table class="table" automation="table-order">
+                {
+                    <table class="table" automation="table-order">
                         <thead class="collapsible" automation="toggle-actions">
                             <tr>
                                 <th>Actions</th>
@@ -78,12 +75,13 @@ else if (TempData["ErrorMessage"] != null)
 
                         </tbody>
                     </table>
-            }
+                }
             </div>
 
         </div>
 
-    count++;
-}
+        count++;
+    }
+
 
 </div>

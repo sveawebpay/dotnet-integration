@@ -105,7 +105,6 @@ class Program
             Console.WriteLine("An error occurred:");
             Console.WriteLine(ex.Message);
         }
-
     }
 
     public static void PrintCreateOrderEuResponse(CreateOrderEuResponse response)

@@ -9,7 +9,8 @@ public class OrderViewModel
 
     public long OrderId { get; set; }
     public bool IsLoaded { get; set; }
-    public Order Order { get; set; }
+    //public Order Order { get; set; }
+    public AdminWS.Order Order { get; set; }
     public string ShippingStatus { get; set; }
     public string ShippingDescription { get; set; }
 }

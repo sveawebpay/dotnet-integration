@@ -29,6 +29,18 @@ class Program
 
         try
         {
+            // GetAddresses
+            var response = await WebpayConnection.GetAddresses(config)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetOrderTypeInvoice()
+                .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
+                .DoRequestAsync();
+
+            Console.WriteLine($"GetAddresses accepted: {response.Accepted}");
+            Console.WriteLine(response.Addresses[0].FirstName);
+            Console.WriteLine(response.Addresses[0].LastName);
+
+            // CreateOrder
             var createOrderBuilder = WebpayConnection.CreateOrder(config)
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
                 .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
@@ -47,16 +59,12 @@ class Program
             Console.WriteLine(order.Accepted ? "Order created successfully!" : "Failed to create order.");
             PrintCreateOrderEuResponse(order);
 
-            // GetAddresses
-            var response = await WebpayConnection.GetAddresses(config)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderTypeInvoice()
-                .SetIndividual(TestingTool.DefaultTestIndividualNationalIdNumber)
-                .DoRequestAsync();
+            // GetOrder
+            var queryOrderBuilder = WebpayAdmin.QueryOrder(config)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE);
 
-            Console.WriteLine($"GetAddresses accepted: {response.Accepted}");
-            Console.WriteLine(response.Addresses[0].FirstName);
-            Console.WriteLine(response.Addresses[0].LastName);
+            var answer = await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync();
 
             // DeliverInvoiceOrders
             var orderone = await TestingTool.CreateInvoiceOrderWithTwoOrderRows();
@@ -93,11 +101,11 @@ class Program
 
             if (getInvoicesResponse != null)
             {
-                Console.WriteLine("Invoices retrieved successfully.");
+                Console.WriteLine("\nInvoices retrieved successfully.");
             }
             else
             {
-                Console.WriteLine("Failed to retrieve invoices.");
+                Console.WriteLine("\nFailed to retrieve invoices.");
             }
         }
         catch (Exception ex)

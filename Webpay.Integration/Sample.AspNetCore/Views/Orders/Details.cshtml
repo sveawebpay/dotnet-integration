@@ -5,9 +5,7 @@
     ViewData["Title"] = "OrderDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var count = 1;
-
 }
-
 
 @if (TempData["CancelMessage"] != null)
 {
@@ -48,40 +46,160 @@ else if (TempData["ErrorMessage"] != null)
                     <h2>Order #@count</h2>
 
                     <hr />
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => order.OrderId)
-                        </dt>
-                        <dd class="col-sm-4" automation="text-orderid">
-                            @Html.DisplayFor(model => order.Order.SveaOrderId)
-                        </dd>
-                            <dt class="col-sm-2">
-                                No data found for order (id: @order.OrderId)
-                            </dt>
 
-                    </dl>
-                </div>
-
-                @if (order.IsLoaded)
-                {
-                    <table class="table" automation="table-order">
-                        <thead class="collapsible" automation="toggle-actions">
+                    <h4>Order Details</h4>
+                    <table class="table table-bordered">
+                        <tbody>
                             <tr>
-                                <th>Actions</th>
-                                <th><div automation="toggle-actions">Expand</div><div automation="toggle-actions">Collapse</div></th>
+                                <th>Order ID</th>
+                                <td>@order.Order.SveaOrderId</td>
                             </tr>
-                        </thead>
-                        <tbody class="collapsible-content">
-
+                            <tr>
+                                <th>Billing Email</th>
+                                <td>@order.Order.BillingEmailAddress</td>
+                            </tr>
+                            <tr>
+                                <th>Changed Date</th>
+                                <td>@(order.Order.ChangedDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Client ID</th>
+                                <td>@order.Order.ClientId</td>
+                            </tr>
+                            <tr>
+                                <th>Client Order ID</th>
+                                <td>@order.Order.ClientOrderId</td>
+                            </tr>
+                            <tr>
+                                <th>Created Date</th>
+                                <td>@order.Order.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            </tr>
+                            <tr>
+                                <th>Credit Report Accepted</th>
+                                <td>@(order.Order.CreditReportStatus?.Accepted.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Currency</th>
+                                <td>@(order.Order.Currency ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Name</th>
+                                <td>@(order.Order.Customer?.FullName ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer ID</th>
+                                <td>@(order.Order.CustomerId?.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Reference</th>
+                                <td>@(order.Order.CustomerReference ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Delivery Address</th>
+                                <td>@(order.Order.DeliveryAddress?.Street ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Is Possible to Administer</th>
+                                <td>@(order.Order.IsPossibleToAdminister ? "Yes" : "No")</td>
+                            </tr>
+                            <tr>
+                                <th>Is Possible to Cancel</th>
+                                <td>@(order.Order.IsPossibleToCancel ? "Yes" : "No")</td>
+                            </tr>
+                            <tr>
+                                <th>Notes</th>
+                                <td>@(order.Order.Notes ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Delivery Status</th>
+                                <td>@(order.Order.OrderDeliveryStatus ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Status</th>
+                                <td>@(order.Order.OrderStatus ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Type</th>
+                                <td>@(order.Order.OrderType ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Svea Will Buy</th>
+                                <td>@(order.Order.SveaWillBuy ? "Yes" : "No")</td>
+                            </tr>
                         </tbody>
                     </table>
-                }
+
+                    <h4>Order Rows</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Row Number</th>
+                                <th>Article Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price Per Unit</th>
+                                <th>Discount Percent</th>
+                                <th>Vat Percent</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in order.Order.OrderRows)
+                            {
+                                <tr>
+                                    <td>@row.RowNumber</td>
+                                    <td>@row.ArticleNumber</td>
+                                    <td>@row.Description</td>
+                                    <td>@Convert.ToInt32(row.NumberOfUnits)</td>
+                                    <td>@row.PricePerUnit</td>
+                                    <td>@row.DiscountPercent</td>
+                                    <td>@row.VatPercent</td>
+                                    <td>@row.Status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (order.Order.PendingReasons != null && order.Order.PendingReasons.Any())
+                    {
+                        <h4>Pending Reasons</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Created Date</th>
+                                    <th>Pending Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var reason in order.Order.PendingReasons)
+                                {
+                                    <tr>
+                                        <td>@reason.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                        <td>@reason.PendingType</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (order.IsLoaded)
+                    {
+                        <table class="table" automation="table-order">
+                            <thead class="collapsible" automation="toggle-actions">
+                                <tr>
+                                    <th>Actions</th>
+                                    <th><div automation="toggle-actions">Expand</div><div automation="toggle-actions">Collapse</div></th>
+                                </tr>
+                            </thead>
+                            <tbody class="collapsible-content">
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
             </div>
-
         </div>
-
         count++;
     }
-
 
 </div>

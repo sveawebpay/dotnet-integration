@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sample.AspNetCore.Data;
 using Sample.AspNetCore.Models.ViewModels;
+using Sample.AspNetCore.Webpay;
+using Webpay.Integration;
+using Webpay.Integration.Util.Constant;
 using Order = Sample.AspNetCore.Models.Order;
 
 namespace Sample.AspNetCore.Controllers;
@@ -14,6 +17,15 @@ namespace Sample.AspNetCore.Controllers;
 public class OrdersController : Controller
 {
     private readonly StoreDbContext context;
+
+    private static readonly WebpayConfig Config = new WebpayConfig
+    {
+        MyUserName = "sverigetest",
+        MyPassword = "sverigetest",
+        MyClientNumber = 79021,
+        MyMerchantId = string.Empty,
+        MySecretWord = string.Empty
+    };
    
     public OrdersController(StoreDbContext context)
     {
@@ -87,10 +99,14 @@ public class OrdersController : Controller
             {
                 try
                 {
-                    orderViewModel.Order = new Order();
-                    orderViewModel.Order.SveaOrderId = order.SveaOrderId;
-                    orderViewModel.Order.OrderId = orderId;
+                    var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
+                        .SetOrderId(long.Parse(order.SveaOrderId))
+                        .SetCountryCode(CountryCode.SE);
 
+                    var response = await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync();
+                    var newOrder = response.Orders.FirstOrDefault();
+
+                    orderViewModel.Order = newOrder;
                     orderViewModel.IsLoaded = true;
                     orderViewModel.ShippingStatus = order.ShippingStatus;
                     orderViewModel.ShippingDescription = order.ShippingDescription;

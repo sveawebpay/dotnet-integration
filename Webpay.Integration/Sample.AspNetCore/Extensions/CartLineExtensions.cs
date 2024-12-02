@@ -35,8 +35,7 @@ public static class CartLineExtensions
     {
         return Item.OrderRow()
                    .SetArticleNumber(line.Product.Reference)
-                   .SetName(line.Product.Name)
-                   .SetDescription($"Quantity: {line.Quantity}")
+                   .SetDescription(line.Product.Name)
                    .SetAmountExVat(line.Product.Price - line.Product.DiscountAmount)
                    .SetQuantity(line.Quantity)
                    .SetUnit("pcs")

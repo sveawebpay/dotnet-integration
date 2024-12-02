@@ -5,6 +5,8 @@ using Webpay.Integration.Order.Handle;
 using WebpayWS;
 using Webpay.Integration.Webservice.Getaddresses;
 using Webpay.Integration.Webservice.Getpaymentplanparams;
+using Webpay.Integration.Webservice.GetAccountCreditParams;
+using Webpay.Integration.Webservice.GetContractPdf;
 
 namespace Webpay.Integration;
 
@@ -34,7 +36,7 @@ public static class WebpayConnection
     /// <param name="config"></param>
     /// <remarks>Deprecated</remarks>
     /// <returns>CloseOrderBuilder</returns>
-    [Obsolete("Use WebpayAdmin.CancelOrder() instead")]
+    //[Obsolete("Use WebpayAdmin.CancelOrder() instead")]
     public static CloseOrderBuilder CloseOrder(IConfigurationProvider config = null)
     {
         if (config == null)
@@ -73,6 +75,36 @@ public static class WebpayConnection
         }
 
         return new GetPaymentPlanParams(config);
+    }
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns>GetPaymentPlanParams</returns>
+    public static GetContractPdf GetContractPdf(IConfigurationProvider config = null)
+    {
+        if (config == null)
+        {
+            throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
+        }
+
+        return new GetContractPdf(config);
+    }
+
+    /// <summary>
+    /// Get Account credit parameters to present to customer before creating an account credit payment request
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns>GetPaymentPlanParams</returns>
+    public static GetAccountCreditParams GetAccountCreditParams(IConfigurationProvider config = null)
+    {
+        if (config == null)
+        {
+            throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
+        }
+
+        return new GetAccountCreditParams(config);
     }
 
     /// <summary>

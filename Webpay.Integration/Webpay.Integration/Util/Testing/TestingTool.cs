@@ -433,4 +433,16 @@ public static class TestingTool
             .SetLocality(customerAddress.Postarea)
             .SetZipCode(customerAddress.Zipcode);
     }
+
+    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.NumberedOrderRow row)
+    {
+        return Item.OrderRow()
+                   .SetArticleNumber(row.ArticleNumber)
+                   .SetDescription(row.Description)
+                   .SetAmountExVat(row.PricePerUnit)
+                   .SetQuantity((int)row.NumberOfUnits)
+                   .SetUnit(row.Unit ?? "pcs")
+                   .SetVatPercent((int)row.VatPercent)
+                   .SetVatDiscount(0);
+    }
 }

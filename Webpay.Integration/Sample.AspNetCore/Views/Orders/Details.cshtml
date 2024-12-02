@@ -184,22 +184,61 @@ else if (TempData["ErrorMessage"] != null)
 
                     @if (order.IsLoaded)
                     {
+                        <h4>Order Actions</h4>
                         <table class="table" automation="table-order">
                             <thead class="collapsible" automation="toggle-actions">
                                 <tr>
                                     <th>Actions</th>
-                                    <th><div automation="toggle-actions">Expand</div><div automation="toggle-actions">Collapse</div></th>
+                                    <th>
+                                        <div automation="toggle-actions">Expand</div>
+                                        <div automation="toggle-actions">Collapse</div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="collapsible-content">
+                                <tr>
+                                    <td colspan="2">
+                                        <!-- Actions Dropdown -->
+                                        <form method="post" asp-action="ExecuteAction" asp-controller="Orders">
+                                            <input type="hidden" name="OrderId" value="@order.Order.SveaOrderId" />
+                                            <div class="form-group">
+                                                <label for="actionSelect">Select Action</label>
+                                                <select id="actionSelect" name="Action" class="form-control">
+                                                    @if (order.Order.OrderDeliveryStatus == "Created")
+                                                    {
+                                                        <!-- WebpayService -->
+                                                        <option value="CloseOrderEu">CloseOrderEu</option>
+                                                        <option value="DeliverOrderEu">DeliverOrderEu</option>
+                                                        <option value="GetContractPdfEu">GetContractPdfEu</option>
+                                                        <option value="GetAccountCreditParamsEu">GetAccountCreditParamsEu</option>
+                                                        <option value="GetPaymentPlanParamsEu">GetPaymentPlanParamsEu</option>
+                                                        <!-- AdminService -->
+                                                        <option value="AddOrderRows">AddOrderRows</option>
+                                                        <option value="UpdateOrderRows">Update Order Rows</option>
+                                                        <option value="CancelOrderRows">Cancel Order Rows</option>
+                                                        <option value="UpdateOrder">Update Order</option>
+                                                        <option value="ApproveInvoice">Approve Invoice</option>
+                                                        <option value="DeliverPartial">Deliver Partial</option>
+                                                        <option value="DeliverOrders">Deliver Orders</option>
+                                                        <option value="CancelOrder">Cancel Order</option>
+                                                    }
+                                                    @if (order.Order.OrderDeliveryStatus == "Delivered" && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
+                                                    {
+                                                        <option value="CreditInvoiceRows">Credit Invoice Rows</option>
+                                                        <option value="GetInvoices">Get Invoices</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Execute Action</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     }
-
                 </div>
             </div>
         </div>
         count++;
     }
-
 </div>

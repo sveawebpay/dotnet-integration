@@ -32,6 +32,7 @@ public class AddOrderRowsBuilder : Builder<AddOrderRowsBuilder>
         OrderRows.Add(orderRow);
         return this;
     }
+
     public AddOrderRowsBuilder AddOrderRows( IList<OrderRowBuilder> orderRows)
     {
         OrderRows.AddRange(orderRows);
@@ -43,6 +44,7 @@ public class AddOrderRowsBuilder : Builder<AddOrderRowsBuilder>
         OrderType = PaymentType.INVOICE;
         return new AdminService.AddOrderRowsRequest(this);
     }
+
     public AdminService.AddOrderRowsRequest AddPaymentPlanOrderRows()
     {
         OrderType = PaymentType.PAYMENTPLAN;

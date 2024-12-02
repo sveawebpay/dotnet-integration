@@ -1,5 +1,4 @@
 ﻿using Webpay.Integration.Config;
-using Webpay.Integration.Hosted.Admin;
 using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Order.Row;
 using Webpay.Integration.Util.Constant;
@@ -23,7 +22,7 @@ public class DeliverOrderTest
     [Test]
     public void TestBuildRequest()
     {
-        DeliverOrderBuilder request = _order.SetOrderId(54086L);
+        var request = _order.SetOrderId(54086L);
 
         Assert.That(request.GetOrderId(), Is.EqualTo(54086L));
     }
@@ -91,7 +90,7 @@ public class DeliverOrderTest
     [Test]
     public void TestDeliverPaymentPlanOrder()
     {
-        DeliverOrderEuRequest request = _order
+        var request = _order
             .SetOrderId(54086L)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .DeliverPaymentPlanOrder()
@@ -105,12 +104,11 @@ public class DeliverOrderTest
     public void TestDeliverCardOrder()
     {
         var fakeSveaOrderId = 987654;
-        HostedActionRequest confirmActionRequest = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
+        var confirmActionRequest = WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())
             .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
             .SetOrderId(fakeSveaOrderId)
             .SetCountryCode(CountryCode.SE)
-            .DeliverCardOrder()
-            ;
+            .DeliverCardOrder();
 
         Assert.That(confirmActionRequest.ConfigurationProvider, Is.TypeOf<SveaTestConfigurationProvider>());
         Assert.That(confirmActionRequest.ServicePath, Contains.Substring("/confirm"));

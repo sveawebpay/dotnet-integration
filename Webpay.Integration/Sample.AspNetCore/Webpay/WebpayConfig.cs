@@ -42,6 +42,7 @@ public class WebpayConfig : IConfigurationProvider
         PaymentType.HOSTED => SveaConfig.GetTestPayPageUrl(),
         PaymentType.INVOICE => SveaConfig.GetTestWebserviceUrl(),
         PaymentType.PAYMENTPLAN => SveaConfig.GetTestWebserviceUrl(),
+        PaymentType.ACCOUNTCREDIT => SveaConfig.GetTestWebserviceUrl(),
         PaymentType.ADMIN_TYPE => SveaConfig.GetTestAdminServiceUrl(),
         _ => throw new SveaWebPayException("Unknown PaymentType")
     };

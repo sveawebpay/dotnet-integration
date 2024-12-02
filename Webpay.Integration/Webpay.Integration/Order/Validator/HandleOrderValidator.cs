@@ -11,13 +11,13 @@ public class HandleOrderValidator
         var stringBuilder = new StringBuilder();
 
         var list = new List<string>
-            {
-                ValidateCountry(order),
-                ValidateOrderType(order),
-                ValidateOrderId(order),
-                ValidateInvoiceDetails(order),
-                ((order.GetOrderType() == OrderType.INVOICE) || (order.GetOrderType() == OrderType.PAYMENTPLAN)) ? ValidateOrderRows(order) : ""
-            };
+        {
+            ValidateCountry(order),
+            ValidateOrderType(order),
+            ValidateOrderId(order),
+            ValidateInvoiceDetails(order),
+            ((order.GetOrderType() == OrderType.INVOICE) || (order.GetOrderType() == OrderType.PAYMENTPLAN)) ? ValidateOrderRows(order) : ""
+        };
 
         foreach (var line in list.Where(line => !string.IsNullOrWhiteSpace(line)))
         {
@@ -77,7 +77,7 @@ public class HandleOrderValidator
                        order.GetInvoiceFeeRows().Count;
         if (order.GetOrderType() == OrderType.INVOICE && rowCount == 0)
         {
-            return "MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...).";
+            return "MISSING VALUE - No order or fee has been included. Use AddOrderRow(...) or AddFee(...).";
         }
         return "";
     }

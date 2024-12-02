@@ -1,4 +1,6 @@
-﻿using Webpay.Integration.Config;
+﻿using System.ServiceModel;
+using System.ServiceModel.Channels;
+using Webpay.Integration.Config;
 using Webpay.Integration.Exception;
 using Webpay.Integration.Util.Constant;
 using WebpayWS;
@@ -7,7 +9,7 @@ namespace Webpay.Integration.Webservice.Getpaymentplanparams;
 
 public class GetPaymentPlanParams
 {
-    protected ServiceSoapClient Soapsc;
+    protected ServiceSoapClient _soapsc;
     private CountryCode _countryCode;
     private readonly IConfigurationProvider _config;
 
@@ -72,8 +74,16 @@ public class GetPaymentPlanParams
     public async Task<GetPaymentPlanParamsEuResponse> DoRequestAsync()
     {
         var request = PrepareRequest();
-        Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, _config.GetEndPoint(PaymentType.PAYMENTPLAN));
+        _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, _config.GetEndPoint(PaymentType.PAYMENTPLAN));
 
-        return await Soapsc.GetPaymentPlanParamsEuAsync(request);
+        using (new OperationContextScope(_soapsc.InnerChannel))
+        {
+            var httpRequestMessage = new HttpRequestMessageProperty();
+            httpRequestMessage.Headers["X-Svea-Integration-Platform"] = IntegrationConstants.IntegrationPlatform;
+            httpRequestMessage.Headers["X-Svea-Integration-Version"] = IntegrationConstants.IntegrationPlatformVersion;
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestMessage;
+
+            return await _soapsc.GetPaymentPlanParamsEuAsync(request);
+        }
     }
 }

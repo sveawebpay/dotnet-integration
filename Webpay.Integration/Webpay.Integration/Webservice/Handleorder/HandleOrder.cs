@@ -7,6 +7,7 @@ using WebpayWS;
 using Webpay.Integration.Webservice.Helper;
 using InvoiceDistributionType = WebpayWS.InvoiceDistributionType;
 using OrderType = Webpay.Integration.Util.Constant.OrderType;
+using System.ServiceModel.Channels;
 
 namespace Webpay.Integration.Webservice.Handleorder;
 
@@ -127,6 +128,14 @@ public class HandleOrder
 
         _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
 
-        return await _soapsc.DeliverOrderEuAsync(request);
+        using (new OperationContextScope(_soapsc.InnerChannel))
+        {
+            var httpRequestMessage = new HttpRequestMessageProperty();
+            httpRequestMessage.Headers["X-Svea-Integration-Platform"] = IntegrationConstants.IntegrationPlatform;
+            httpRequestMessage.Headers["X-Svea-Integration-Version"] = IntegrationConstants.IntegrationPlatformVersion;
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestMessage;
+
+            return await _soapsc.DeliverOrderEuAsync(request);
+        }
     }
 }

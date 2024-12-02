@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.ServiceModel.Channels;
 using Webpay.Integration.Exception;
 using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Util.Constant;
@@ -8,7 +9,7 @@ namespace Webpay.Integration.Webservice.Handleorder;
 
 public class CloseOrder
 {
-    protected ServiceSoapClient Soapsc;
+    protected ServiceSoapClient _soapsc;
     private CloseOrderBuilder _order;
 
     public CloseOrder(CloseOrderBuilder order)
@@ -67,8 +68,16 @@ public class CloseOrder
             _order.GetConfig().GetEndPoint(
                 _order.GetOrderType() == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN));
 
-        Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
+        _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
 
-        return await Soapsc.CloseOrderEuAsync(request);
+        using (new OperationContextScope(_soapsc.InnerChannel))
+        {
+            var httpRequestMessage = new HttpRequestMessageProperty();
+            httpRequestMessage.Headers["X-Svea-Integration-Platform"] = IntegrationConstants.IntegrationPlatform;
+            httpRequestMessage.Headers["X-Svea-Integration-Version"] = IntegrationConstants.IntegrationPlatformVersion;
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestMessage;
+
+            return await _soapsc.CloseOrderEuAsync(request);
+        }
     }
 }

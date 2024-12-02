@@ -5,12 +5,13 @@ using Webpay.Integration.Order.Validator;
 using Webpay.Integration.Util.Constant;
 using WebpayWS;
 using Webpay.Integration.Webservice.Helper;
+using System.ServiceModel.Channels;
 
 namespace Webpay.Integration.Webservice.Payment;
 
 public abstract class WebServicePayment
 {
-    protected ServiceSoapClient Soapsc;
+    protected ServiceSoapClient _soapsc;
     protected CreateOrderBuilder CrOrderBuilder;
     protected PaymentType PayType;
     public CreateOrderInformation OrderInfo = new CreateOrderInformation();
@@ -81,10 +82,17 @@ public abstract class WebServicePayment
         var endpointAddress = new EndpointAddress(
             CrOrderBuilder.GetConfig().GetEndPoint(PayType));
 
-        Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
+        _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
 
-        var createOrderEuResponse = await Soapsc.CreateOrderEuAsync(request);
-        return createOrderEuResponse;
+        using (new OperationContextScope(_soapsc.InnerChannel))
+        {
+            var httpRequestMessage = new HttpRequestMessageProperty();
+            httpRequestMessage.Headers["X-Svea-Integration-Platform"] = IntegrationConstants.IntegrationPlatform;
+            httpRequestMessage.Headers["X-Svea-Integration-Version"] = IntegrationConstants.IntegrationPlatformVersion;
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestMessage;
+
+            return await _soapsc.CreateOrderEuAsync(request);
+        }
     }
 
     protected abstract CreateOrderInformation SetOrderType(CreateOrderInformation information);

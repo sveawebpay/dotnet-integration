@@ -1,4 +1,6 @@
-﻿using Webpay.Integration.Config;
+﻿using System.ServiceModel;
+using System.ServiceModel.Channels;
+using Webpay.Integration.Config;
 using Webpay.Integration.Exception;
 using Webpay.Integration.Util.Constant;
 using WebpayWS;
@@ -7,7 +9,7 @@ namespace Webpay.Integration.Webservice.Getaddresses;
 
 public class GetAddresses
 {
-    protected ServiceSoapClient Soapsc;
+    protected ServiceSoapClient _soapsc;
     private string _nationalNumber;
     private string _companyId;
     private CountryCode _countryCode;
@@ -112,10 +114,18 @@ public class GetAddresses
     {
         var request = PrepareRequest();
 
-        Soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, 
+        _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap,
                                        _config.GetEndPoint(_orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN));
 
-        return await Soapsc.GetAddressesAsync(request);
+        using (new OperationContextScope(_soapsc.InnerChannel))
+        {
+            var httpRequestMessage = new HttpRequestMessageProperty();
+            httpRequestMessage.Headers["X-Svea-Integration-Platform"] = IntegrationConstants.IntegrationPlatform;
+            httpRequestMessage.Headers["X-Svea-Integration-Version"] = IntegrationConstants.IntegrationPlatformVersion;
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestMessage;
+
+            return await _soapsc.GetAddressesAsync(request);
+        }
     }
 }
 

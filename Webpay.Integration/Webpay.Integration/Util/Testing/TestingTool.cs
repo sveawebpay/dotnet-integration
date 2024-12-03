@@ -449,6 +449,7 @@ public static class TestingTool
     public static NumberedOrderRowBuilder ToNumberedOrderRowBuilder(this AdminWS.NumberedOrderRow row)
     {
         var newNumberedOrderRowBuilder = new NumberedOrderRowBuilder()
+            .SetArticleNumber(row.ArticleNumber)
             .SetRowNumber((int)row.RowNumber)
             //.SetAmountIncVat(row.PricePerUnit)
             .SetAmountExVat(row.PricePerUnit)

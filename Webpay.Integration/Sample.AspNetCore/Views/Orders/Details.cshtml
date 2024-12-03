@@ -242,28 +242,6 @@ else if (TempData["ErrorMessage"] != null)
                                                             <th>Vat Percent</th>
                                                         </tr>
                                                     </thead>
-                                                    <!-- Looping in foreach did not work in backend -->
-                                                    @*<tbody>
-                                                        @foreach (var row in order.Order.OrderRows)
-                                                        {
-                                                            <tr>
-                                                                <td><input type="text" name="OrderRows[@row.RowNumber].ArticleNumber" value="@row.ArticleNumber" /></td>
-                                                                <td><input type="text" name="OrderRows[@row.RowNumber].Description" value="@row.Description" /></td>
-                                                                <td><input type="number" name="OrderRows[@row.RowNumber].Quantity" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].PricePerUnit" value="@row.PricePerUnit" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].DiscountPercent" value="@row.DiscountPercent" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].VatPercent" value="@row.VatPercent" /></td>
-                                                            </tr>
-                                                        }
-                                                        <tr>
-                                                            <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
-                                                            <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
-                                                            <td><input type="number" name="NewOrderRows[0].Quantity" placeholder="New Quantity" /></td>
-                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].PricePerUnit" placeholder="New Price Per Unit" /></td>
-                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].DiscountPercent" placeholder="New Discount Percent" /></td>
-                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
-                                                        </tr>
-                                                    </tbody> *@
                                                     <tbody>
                                                         <!-- Existing Rows -->
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
@@ -286,6 +264,7 @@ else if (TempData["ErrorMessage"] != null)
 
                                                         <!-- New Rows -->
                                                         <tr class="new-order-row" style="display: table-row;">
+                                                            <td><span class="text-muted">New</span></td>
                                                             <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
                                                             <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
                                                             @*<td><input type="number" name="NewOrderRows[0].Quantity" placeholder="New Quantity" /></td>*@

@@ -65,7 +65,7 @@ else if (TempData["ErrorMessage"] != null)
                 <td>@(item.DiscountPercent != 0 ? item.DiscountPercent.ToString() + "%" : null)</td>
                 <td>@(item.VatPercentage != 0 ? item.VatPercentage.ToString() + "%" : null)</td>
 
-                <td><a class="btn btn-primary" automation="button-addtocart" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId">Add to Cart</a></td>
+                <td><a class="btn btn-primary" automation="button-addtocart" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId" style="width: 130px;">Add to Cart</a></td>
             </tr>
     }
     </tbody>

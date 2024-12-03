@@ -33,7 +33,7 @@ public class UpdateOrderRowsBuilder : Builder<UpdateOrderRowsBuilder>
         return this;
     }
 
-    public UpdateOrderRowsBuilder AddUpdateOrderRows( IList<NumberedOrderRowBuilder> numberedOrderRows)
+    public UpdateOrderRowsBuilder AddUpdateOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
     {
         NumberedOrderRows.AddRange(numberedOrderRows);
         return this;

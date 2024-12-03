@@ -434,7 +434,7 @@ public static class TestingTool
             .SetZipCode(customerAddress.Zipcode);
     }
 
-    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.NumberedOrderRow row)
+    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.OrderRow row)
     {
         return Item.OrderRow()
                    .SetArticleNumber(row.ArticleNumber)
@@ -444,5 +444,20 @@ public static class TestingTool
                    .SetUnit(row.Unit ?? "pcs")
                    .SetVatPercent((int)row.VatPercent)
                    .SetVatDiscount(0);
+    }
+
+    public static NumberedOrderRowBuilder ToNumberedOrderRowBuilder(this AdminWS.NumberedOrderRow row)
+    {
+        var newNumberedOrderRowBuilder = new NumberedOrderRowBuilder()
+            .SetRowNumber((int)row.RowNumber)
+            //.SetAmountIncVat(row.PricePerUnit)
+            .SetAmountExVat(row.PricePerUnit)
+            .SetVatPercent(row.VatPercent)
+            .SetQuantity(row.NumberOfUnits)
+            .SetDiscountPercent((int)row.DiscountPercent)
+            //.SetName(row.Description)
+            .SetDescription(row.Description);
+
+        return newNumberedOrderRowBuilder;
     }
 }

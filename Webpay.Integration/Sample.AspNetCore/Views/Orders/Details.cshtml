@@ -233,6 +233,7 @@ else if (TempData["ErrorMessage"] != null)
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
+                                                            <th>Row Number</th>
                                                             <th>Article Number</th>
                                                             <th>Description</th>
                                                             <th>Quantity</th>
@@ -269,6 +270,11 @@ else if (TempData["ErrorMessage"] != null)
                                                         {
                                                             var row = order.Order.OrderRows[i];
                                                             <tr class="existing-order-row" style="display: none;">
+                                                                <td>
+                                                                    @row.RowNumber
+                                                                    <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
+                                                                </td>
+                                                                @*<td><input type="number" step="0.01" name="OrderRows[@i].RowNumber" value="@row.RowNumber" /></td>*@
                                                                 <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
                                                                 <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
                                                                 <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
@@ -306,27 +312,28 @@ else if (TempData["ErrorMessage"] != null)
 </div>
 
 @section Scripts {
-<script>
-    function toggleRowEditing(action, orderId) {
-        const editSection = document.getElementById(`editOrderRows-${orderId}`);
-        const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
+    <script>
+        function toggleRowEditing(action, orderId) {
+            const editSection = document.getElementById(`editOrderRows-${orderId}`);
+            const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
+            const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
 
-        if (action === "AddOrderRows" || action === "UpdateOrderRows") {
-            editSection.style.display = "block";
-            // Show or hide existing rows based on the action
-            existingRows.forEach(row => {
-                row.style.display = action === "UpdateOrderRows" ? "table-row" : "none";
-            });
-        } else {
-            editSection.style.display = "none";
+            if (action === "AddOrderRows" || action === "UpdateOrderRows") {
+                editSection.style.display = "block";
+
+                if (action === "UpdateOrderRows") {
+                    existingRows.forEach(row => (row.style.display = "table-row"));
+                    newRows.forEach(row => (row.style.display = "none"));
+                } else if (action === "AddOrderRows") {
+                    existingRows.forEach(row => (row.style.display = "none"));
+                    newRows.forEach(row => (row.style.display = "table-row"));
+                }
+            } else {
+                editSection.style.display = "none";
+                existingRows.forEach(row => (row.style.display = "none"));
+                newRows.forEach(row => (row.style.display = "none"));
+            }
         }
-
-		//if (action === "UpdateOrderRows") {
-		//	$(`#editOrderRows-${orderId}`).show();
-		//} else {
-		//	$(`#editOrderRows-${orderId}`).hide();
-		//}
-    }
-</script>
+    </script>
 }
 

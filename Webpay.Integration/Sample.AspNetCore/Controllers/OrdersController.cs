@@ -291,29 +291,32 @@ public class OrdersController : Controller
 
             // AdminService
             case "AddOrderRows":
-                // TODO
                 if (NewOrderRows != null && NewOrderRows.Any())
                 {
-                    // Add logic to process NewOrderRows
-                }
-                //var builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
-                //    .SetOrderId(order.CreateOrderResult.SveaOrderId)
-                //    .SetCountryCode(CountryCode.SE)
-                //    .AddOrderRow(firstOrderRow)
-                //    .AddOrderRow(secondOrderRow);
+                    var newOrderRowBuilders = NewOrderRows
+                        .Select(row => row.ToOrderRowBuilder())
+                        .ToList();
+                    var builder = WebpayAdmin.AddOrderRows(Config)
+                        .SetOrderId(long.Parse(OrderId))
+                        .SetCountryCode(CountryCode.SE)
+                        .AddOrderRows(newOrderRowBuilders);
 
-                //var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
+                    var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
+                }
                 break;
 
             case "UpdateOrderRows":
-                // TODO
                 if (OrderRows != null)
                 {
-                    // Update existing rows
-                }
-                if (NewOrderRows != null)
-                {
-                    // Add new rows
+                    var newOrderRowBuilders = OrderRows
+                        .Select(row => row.ToNumberedOrderRowBuilder())
+                        .ToList();
+                    var builder = WebpayAdmin.UpdateOrderRows(Config)
+                        .SetOrderId(long.Parse(OrderId))
+                        .SetCountryCode(CountryCode.SE)
+                        .AddUpdateOrderRows(newOrderRowBuilders);
+
+                    var addition = await builder.UpdateInvoiceOrderRows().DoRequestAsync();
                 }
                 break;
 

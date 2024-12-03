@@ -2,66 +2,78 @@
     ViewData["Title"] = "Checkout";
 }
 
-<h1>Svea Checkout Menu</h1>
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Svea Checkout Menu</h1>
 
-<form asp-action="SubmitForm" method="post">
-    <div>
-        <label for="ssn">SSN</label>
-        <input type="text" id="ssn" name="SSN" required />
+    <div class="card p-4 mb-4">
+        <h4 class="card-title">Enter Your Details</h4>
+        <form asp-action="SubmitForm" method="post">
+            <div class="mb-3">
+                <label for="ssn" class="form-label">SSN</label>
+                <input type="text" id="ssn" name="SSN" class="form-control" required />
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" id="isCompany" name="IsCompany" class="form-check-input" value="true" />
+                <label for="isCompany" class="form-check-label">Is Company</label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">OK</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <input type="checkbox" id="isCompany" name="IsCompany" value="true" />
-        <label for="isCompany">Is Company</label>
-    </div>
-    <div>
-        <button type="submit">OK</button>
-    </div>
-</form>
 
-@if (ViewBag.Error != null)
-{
-    <p style="color: red;">@ViewBag.Error</p>
-}
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
 
-@if (ViewBag.Addresses != null)
-{
-    <h3>Customer Addresses:</h3>
-    <ul>
-        @foreach (var address in ViewBag.Addresses)
-        {
-            <li>
-                <strong>@address.SecurityNumber</strong><br />
-                @address.FirstName @address.LastName<br />
-                @address.AddressLine1 @address.AddressLine2<br />
-                @address.Zipcode @address.Postarea<br />
-                Phone: @address.PhoneNumber<br />
-                AddressSelector: @address.AddressSelector
-            </li>
-        }
-    </ul>
-}
+    @if (ViewBag.Addresses != null)
+    {
+        <div class="card p-4 mb-4">
+            <h4 class="card-title">Customer Addresses</h4>
+            <ul class="list-group">
+                @foreach (var address in ViewBag.Addresses)
+                {
+                    <li class="list-group-item">
+                        <strong>@address.SecurityNumber</strong><br />
+                        @address.FirstName @address.LastName<br />
+                        @address.AddressLine1 @address.AddressLine2<br />
+                        @address.Zipcode @address.Postarea<br />
+                        <span>Phone: @address.PhoneNumber</span><br />
+                        <span>AddressSelector: @address.AddressSelector</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
 
-@if (ViewBag.ShowAdditionalFields == true)
-{
-    <form asp-action="FinalizeForm" method="post">
-        <div>
-            <label for="phoneNumber">Phone Number</label>
-            <input type="text" id="phoneNumber" name="PhoneNumber" required />
+    @if (ViewBag.ShowAdditionalFields == true)
+    {
+        <div class="card p-4">
+            <h4 class="card-title">Finalize Your Order</h4>
+            <form asp-action="FinalizeForm" method="post">
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <input type="text" id="phoneNumber" name="PhoneNumber" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="emailAddress" classnikey "form-label">Email Address</label>
+                    <input type="email" id="emailAddress" name="EmailAddress" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="paymentOption" class="form-label">Payment Option</label>
+                    <select id="paymentOption" name="PaymentOption" class="form-select" required>
+                        <option value="Invoice">Invoice</option>
+                        <option value="PaymentPlan">Partial Payment</option>
+                        <option value="AccountCredit">Account Credit</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" classnikij "btn btn-success">Finalize</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="emailAddress">Email Address</label>
-            <input type="email" id="emailAddress" name="EmailAddress" required />
-        </div>
-        <div>
-            <label for="paymentOption">Payment Option</label>
-            <select id="paymentOption" name="PaymentOption" required>
-                <option value="Invoice">Invoice</option>
-                <option value="PaymentPlan">Partial Payment</option>
-                <option value="AccountCredit">Account Credit</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit">Finalize</button>
-        </div>
-    </form>
-}
+    }
+</div>

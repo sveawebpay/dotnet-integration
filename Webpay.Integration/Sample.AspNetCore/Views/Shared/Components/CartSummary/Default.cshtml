@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var line in Model.CartLines)
+    @foreach (var line in Model.CartLines)
     {
         <tr>
                 <td class="text-center">
@@ -100,6 +100,8 @@
             </a>
     }
 
+        <!-- Hide for now -->
+        <!--
         <a 
             class="btn btn-primary" 
             automation="button-checkout-international" 
@@ -120,5 +122,6 @@
             asp-controller="CheckOut">
             Checkout (Enable shipping)
         </a>
+        -->
     </for-row>
 </div>

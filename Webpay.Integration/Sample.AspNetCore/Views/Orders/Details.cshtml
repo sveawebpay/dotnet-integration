@@ -36,17 +36,13 @@ else if (TempData["ErrorMessage"] != null)
 
 <div>
     <hr />
-
     @foreach (var order in Model.PaymentOrders)
     {
         <div automation="div-fullorder">
-
             <div automation="div-order">
                 <div>
                     <h2>Order #@count</h2>
-
                     <hr />
-
                     <h4>Order Details</h4>
                     <table class="table table-bordered">
                         <tbody>
@@ -203,7 +199,8 @@ else if (TempData["ErrorMessage"] != null)
                                             <input type="hidden" name="OrderId" value="@order.Order.SveaOrderId" />
                                             <div class="form-group">
                                                 <label for="actionSelect">Select Action</label>
-                                                <select id="actionSelect" name="Action" class="form-control">
+                                                <select id="actionSelect" name="Action" class="form-control" onchange="toggleRowEditing(this.value, @order.Order.SveaOrderId)">
+                                                    <option value="">-- Select Action --</option>
                                                     @if (order.Order.OrderDeliveryStatus == "Created")
                                                     {
                                                         <!-- WebpayService -->
@@ -213,7 +210,7 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="GetAccountCreditParamsEu">GetAccountCreditParamsEu</option>
                                                         <option value="GetPaymentPlanParamsEu">GetPaymentPlanParamsEu</option>
                                                         <!-- AdminService -->
-                                                        <option value="AddOrderRows">AddOrderRows</option>
+                                                        <option value="AddOrderRows">Add Order Rows</option>
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
                                                         <option value="UpdateOrder">Update Order</option>
@@ -229,6 +226,71 @@ else if (TempData["ErrorMessage"] != null)
                                                     }
                                                 </select>
                                             </div>
+
+                                            <!-- Editable Order Rows Section -->
+                                            <div id="editOrderRows-@order.Order.SveaOrderId" class="edit-order-rows" style="display: none;">
+                                                <h4>Edit Order Rows</h4>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Article Number</th>
+                                                            <th>Description</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price Per Unit</th>
+                                                            <th>Discount Percent</th>
+                                                            <th>Vat Percent</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- Looping in foreach did not work in backend -->
+                                                    @*<tbody>
+                                                        @foreach (var row in order.Order.OrderRows)
+                                                        {
+                                                            <tr>
+                                                                <td><input type="text" name="OrderRows[@row.RowNumber].ArticleNumber" value="@row.ArticleNumber" /></td>
+                                                                <td><input type="text" name="OrderRows[@row.RowNumber].Description" value="@row.Description" /></td>
+                                                                <td><input type="number" name="OrderRows[@row.RowNumber].Quantity" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].PricePerUnit" value="@row.PricePerUnit" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].DiscountPercent" value="@row.DiscountPercent" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@row.RowNumber].VatPercent" value="@row.VatPercent" /></td>
+                                                            </tr>
+                                                        }
+                                                        <tr>
+                                                            <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
+                                                            <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
+                                                            <td><input type="number" name="NewOrderRows[0].Quantity" placeholder="New Quantity" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].DiscountPercent" placeholder="New Discount Percent" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
+                                                        </tr>
+                                                    </tbody> *@
+                                                    <tbody>
+                                                        <!-- Existing Rows -->
+                                                        @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
+                                                        {
+                                                            var row = order.Order.OrderRows[i];
+                                                            <tr class="existing-order-row" style="display: none;">
+                                                                <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
+                                                                <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
+                                                                <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@i].PricePerUnit" value="@row.PricePerUnit" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@i].DiscountPercent" value="@row.DiscountPercent" /></td>
+                                                                <td><input type="number" step="0.01" name="OrderRows[@i].VatPercent" value="@row.VatPercent" /></td>
+                                                            </tr>
+                                                        }
+
+                                                        <!-- New Rows -->
+                                                        <tr class="new-order-row" style="display: table-row;">
+                                                            <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
+                                                            <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
+                                                            @*<td><input type="number" name="NewOrderRows[0].Quantity" placeholder="New Quantity" /></td>*@
+                                                            <td><input type="number" name="NewOrderRows[0].NumberOfUnits" placeholder="New Quantity" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].DiscountPercent" placeholder="New Discount Percent" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             <button type="submit" class="btn btn-primary">Execute Action</button>
                                         </form>
                                     </td>
@@ -242,3 +304,29 @@ else if (TempData["ErrorMessage"] != null)
         count++;
     }
 </div>
+
+@section Scripts {
+<script>
+    function toggleRowEditing(action, orderId) {
+        const editSection = document.getElementById(`editOrderRows-${orderId}`);
+        const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
+
+        if (action === "AddOrderRows" || action === "UpdateOrderRows") {
+            editSection.style.display = "block";
+            // Show or hide existing rows based on the action
+            existingRows.forEach(row => {
+                row.style.display = action === "UpdateOrderRows" ? "table-row" : "none";
+            });
+        } else {
+            editSection.style.display = "none";
+        }
+
+		//if (action === "UpdateOrderRows") {
+		//	$(`#editOrderRows-${orderId}`).show();
+		//} else {
+		//	$(`#editOrderRows-${orderId}`).hide();
+		//}
+    }
+</script>
+}
+

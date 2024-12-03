@@ -13,6 +13,8 @@ using Webpay.Integration;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using Order = Sample.AspNetCore.Models.Order;
+using WebpayWS;
+using AdminWS;
 
 namespace Sample.AspNetCore.Controllers;
 
@@ -101,6 +103,7 @@ public class OrdersController : Controller
             {
                 try
                 {
+                    // TODO: need to switch ClientID depending on PaymentType here...
                     var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
                         .SetOrderId(long.Parse(order.SveaOrderId))
                         .SetCountryCode(CountryCode.SE);
@@ -168,7 +171,8 @@ public class OrdersController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ExecuteAction(string OrderId, string Action)
+    //public async Task<IActionResult> ExecuteAction(string OrderId, string Action)
+    public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<NumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows)
     {
         if (string.IsNullOrWhiteSpace(OrderId) || string.IsNullOrWhiteSpace(Action))
         {
@@ -224,6 +228,7 @@ public class OrdersController : Controller
                 break;
 
             case "GetContractPdfEu":
+                // TODO: deprecated...
 
                 var contractPdf = await WebpayConnection
                     .GetContractPdf(Config)
@@ -287,6 +292,10 @@ public class OrdersController : Controller
             // AdminService
             case "AddOrderRows":
                 // TODO
+                if (NewOrderRows != null && NewOrderRows.Any())
+                {
+                    // Add logic to process NewOrderRows
+                }
                 //var builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
                 //    .SetOrderId(order.CreateOrderResult.SveaOrderId)
                 //    .SetCountryCode(CountryCode.SE)
@@ -298,10 +307,19 @@ public class OrdersController : Controller
 
             case "UpdateOrderRows":
                 // TODO
+                if (OrderRows != null)
+                {
+                    // Update existing rows
+                }
+                if (NewOrderRows != null)
+                {
+                    // Add new rows
+                }
                 break;
 
             case "CancelOrderRows":
                 // TODO
+                // Provide popup for selecing a row to cancel
                 break;
 
             case "UpdateOrder":
@@ -318,6 +336,7 @@ public class OrdersController : Controller
 
             case "DeliverOrders":
                 // TODO
+                // Present option for selecting multiple orders to deliver
                 break;
 
             case "CancelOrder":
@@ -326,10 +345,13 @@ public class OrdersController : Controller
 
             case "CreditInvoiceRows":
                 // TODO
+                // Provide popup for selecing a row to credit, or create a new row...
                 break;
 
             case "GetInvoices":
                 // TODO
+                // Present option for retrieving delivered invoices
+
                 //var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
                 //    .SetInvoiceIds(referenceNumbers.ToList())
                 //    .SetCountryCode(CountryCode.SE);

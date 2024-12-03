@@ -262,7 +262,7 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
     }
 
     /// <summary>
-    /// Start create invoicePayment
+    /// Start creating an invoice payment
     /// </summary>
     /// <exception cref="SveaWebPayValidationException"></exception>
     /// <returns>PaymentPlanPayment</returns>
@@ -270,6 +270,16 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
     {
         return new InvoicePayment(this);
     }
+
+    /// <summary>
+    /// Start creating an account credit payment
+    /// </summary>
+    /// <exception cref="SveaWebPayValidationException"></exception>
+    /// <returns>PaymentPlanPayment</returns>
+    //public AccountCreditPayment UseAccountCreditPayment()
+    //{
+    //    return new AccountCredit(this);
+    //}
 
     /// <summary>
     /// Start creating payment plan payment

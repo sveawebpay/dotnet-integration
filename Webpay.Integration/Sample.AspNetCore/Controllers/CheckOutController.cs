@@ -145,17 +145,17 @@ public class CheckOutController : Controller
         // TODO: PaymentPlan requires another ClientID
         if (PaymentOption == "PaymentPlan")
         {
+            Config.MyClientNumber = 59999; // TODO
             var paymentPlanParam = await WebpayConnection.GetPaymentPlanParams(Config)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .DoRequestAsync();
             var code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
-            //var request = createOrderBuilder.UsePaymentPlanPayment(code).PrepareRequest();
             order = await createOrderBuilder.UsePaymentPlanPayment(code).DoRequestAsync();
+            Config.MyClientNumber = 79021; // TODO
         }
         else
         {
-            //var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
             order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         }
 

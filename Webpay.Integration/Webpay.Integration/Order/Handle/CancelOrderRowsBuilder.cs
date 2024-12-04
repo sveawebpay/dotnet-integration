@@ -36,9 +36,9 @@ public class CancelOrderRowsBuilder : Builder<CancelOrderRowsBuilder>
         return this;
     }
 
-    public CancelOrderRowsBuilder SetRowToCancel(long rowIndexToDeliver)
+    public CancelOrderRowsBuilder SetRowToCancel(long rowIndexToCancel)
     {
-        RowIndexesToCancel.Add(rowIndexToDeliver);
+        RowIndexesToCancel.Add(rowIndexToCancel);
         return this;
     }
 

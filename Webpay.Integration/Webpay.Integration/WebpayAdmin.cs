@@ -97,5 +97,14 @@ public class WebpayAdmin
     {
         return new CreditOrderBuilder(configurationProvider);
     }
+
+    /// <summary>
+    /// ApproveInvoice
+    /// </summary>
+    public static ApproveInvoiceBuilder ApproveInvoice(IConfigurationProvider config)
+    {
+        return new ApproveInvoiceBuilder(config);
+    }
+
 }
 

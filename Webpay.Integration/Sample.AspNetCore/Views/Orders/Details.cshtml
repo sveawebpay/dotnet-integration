@@ -218,6 +218,7 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="DeliverPartial">Deliver Partial</option>
                                                         <option value="DeliverOrders">Deliver Orders</option>
                                                         <option value="CancelOrder">Cancel Order</option>
+                                                        <option value="GetInvoices">Get Invoices</option>
                                                     }
                                                     @if (order.Order.OrderDeliveryStatus == "Delivered" && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
                                                     {

@@ -15,6 +15,8 @@ using Webpay.Integration.Util.Testing;
 using Order = Sample.AspNetCore.Models.Order;
 using WebpayWS;
 using AdminWS;
+using Webpay.Integration.Order.Handle;
+using Webpay.Integration.Order.Row;
 
 namespace Sample.AspNetCore.Controllers;
 
@@ -296,12 +298,13 @@ public class OrdersController : Controller
                     var newOrderRowBuilders = NewOrderRows
                         .Select(row => row.ToOrderRowBuilder())
                         .ToList();
-                    var builder = WebpayAdmin.AddOrderRows(Config)
+
+                    var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
                         .SetOrderId(long.Parse(OrderId))
                         .SetCountryCode(CountryCode.SE)
                         .AddOrderRows(newOrderRowBuilders);
 
-                    var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
+                    var addition = await addOrderRowsBuilder.AddInvoiceOrderRows().DoRequestAsync();
                 }
                 break;
 
@@ -311,56 +314,156 @@ public class OrdersController : Controller
                     var newOrderRowBuilders = OrderRows
                         .Select(row => row.ToNumberedOrderRowBuilder())
                         .ToList();
-                    var builder = WebpayAdmin.UpdateOrderRows(Config)
+                    var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
                         .SetOrderId(long.Parse(OrderId))
                         .SetCountryCode(CountryCode.SE)
                         .AddUpdateOrderRows(newOrderRowBuilders);
 
-                    var addition = await builder.UpdateInvoiceOrderRows().DoRequestAsync();
+                    var addition = await updateOrderRowsBuilder.UpdateInvoiceOrderRows().DoRequestAsync();
                 }
                 break;
 
             case "CancelOrderRows":
                 // TODO
                 // Provide popup for selecing a row to cancel
+                var cancellation = WebpayAdmin.CancelOrderRows(Config)
+                    .SetOrderId(long.Parse(OrderId))
+                    .SetRowToCancel(1) // TODO
+                    .SetCountryCode(CountryCode.SE);
+                var cancellationResponse = await cancellation.CancelInvoiceOrderRows().DoRequestAsync();
+
                 break;
 
             case "UpdateOrder":
-                // TODO
+                var clientOrderNumberText = "Updated clientOrderNumber";
+                var notesText = "Updated notes";
+
+                var updateBuilder = new UpdateOrderBuilder(Config)
+                    .SetOrderId(long.Parse(OrderId))
+                    .SetCountryCode(CountryCode.SE)
+                    .SetClientOrderNumber(clientOrderNumberText)
+                    .SetNotes(notesText);
+
+                var updateResponse = await updateBuilder.UpdateInvoiceOrder().DoRequestAsync();
+
+                // TODO (paymentplan)
+                //var updateBuilder = new UpdateOrderBuilder(Config)
+                //    .SetOrderId(long.Parse(OrderId))
+                //    .SetCountryCode(CountryCode.SE)
+                //    .SetClientOrderNumber(clientOrderNumberText)
+                //    .SetNotes(notesText); // Will be ignored for paymentplan order
+
+                //var updateResponse = await updateBuilder.UpdatePaymentPlanOrder().DoRequestAsync();
+
                 break;
 
             case "ApproveInvoice":
-                // TODO
+                // TODO (test)
+                // Order needs to be delivered...
+                var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
+                    .SetInvoiceId(123456789) // TODO
+                    .SetClientId(Config.MyClientNumber)
+                    .SetCountryCode(CountryCode.SE);
+
+                var approveInvoiceResponse= await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
+
+                if (response.ResultCode == 0)
+                {
+                    Console.WriteLine("Invoice approved successfully!");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to approve invoice: {response.ErrorMessage}");
+                }
+
                 break;
 
             case "DeliverPartial":
-                // TODO
+                var deliverBuilder = WebpayAdmin.DeliverOrderRows(Config)
+                    .SetCountryCode(CountryCode.SE)
+                    .SetInvoiceDistributionType(DistributionType.POST)
+                    .SetRowToDeliver(1)
+                    //.SetRowToDeliver(2)
+                    .SetOrderId(long.Parse(OrderId));
+
+                var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
+
                 break;
 
             case "DeliverOrders":
                 // TODO
                 // Present option for selecting multiple orders to deliver
+
+                //var orderIdsToDeliver = new List<long> { order.CreateOrderResult.SveaOrderId, orderTwo.CreateOrderResult.SveaOrderId };
+                var orderIdsToDeliver = new List<long> { long.Parse(OrderId) };
+
+                var builder = WebpayAdmin.DeliverOrders(Config)
+                    .SetOrderIds(orderIdsToDeliver)
+                    //.SetOrderId(long.Parse(OrderId))
+                    .SetCountryCode(CountryCode.SE)
+                    .SetInvoiceDistributionType(DistributionType.POST);
+
+                var delivery = await builder.DeliverInvoiceOrders().DoRequestAsync();
+
+                // TODO (paymentplan)
+                //var builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
+                //    .SetOrderId(long.Parse(OrderId))
+                //    .SetCountryCode(CountryCode.SE);
+
+                //var delivery = await builder.DeliverPaymentPlanOrders().DoRequestAsync();
+
                 break;
 
             case "CancelOrder":
-                // TODO
+                var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
+                    .SetOrderId(long.Parse(OrderId))
+                    .SetCountryCode(CountryCode.SE);
+
+                var cancelInvoiceResponse = await cancelOrderBuilder.CancelInvoiceOrder().DoRequestAsync();
+
+                // TODO (paymentplan)
+                //var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
+                //    .SetOrderId(long.Parse(OrderId))
+                //    .SetCountryCode(CountryCode.SE);
+
+                //var cancelPaymentPlanResponse = await cancelOrderBuilder.CancelPaymentPlanOrder().DoRequestAsync();
+
                 break;
 
             case "CreditInvoiceRows":
                 // TODO
                 // Provide popup for selecing a row to credit, or create a new row...
+
+                // Order needs to be delivered...
+                //var newIncVatCreditOrderRow = new OrderRowBuilder()
+                //    .SetName("NewCreditOrderRow")
+                //    .SetAmountIncVat(10.0M)
+                //    .SetVatPercent(25)
+                //    .SetQuantity(1M);
+
+                //var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
+
+                //var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
+                //    .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                //    .SetInvoiceDistributionType(DistributionType.POST)
+                //    .SetCountryCode(CountryCode.SE)
+                //    .AddCreditOrderRows(newCreditOrderRows);
+
+                //var creditResponse = await creditBuilder.CreditInvoiceOrderRows().DoRequestAsync();
+
                 break;
 
             case "GetInvoices":
                 // TODO
                 // Present option for retrieving delivered invoices
+                var invoiceIdsToFetch = new List<long> { 1226007L }; // ClientInvoiceId
 
-                //var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
-                //    .SetInvoiceIds(referenceNumbers.ToList())
-                //    .SetCountryCode(CountryCode.SE);
+                var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
+                    .SetInvoiceIds(invoiceIdsToFetch)
+                    .SetCountryCode(CountryCode.SE);
 
-                //var getInvoicesRequest = getInvoicesBuilder.Build();
-                //var getInvoicesResponse = await getInvoicesRequest.DoRequestAsync();
+                var getInvoicesRequest = getInvoicesBuilder.Build();
+                var getInvoicesResponse = await getInvoicesRequest.DoRequestAsync();
 
                 break;
 

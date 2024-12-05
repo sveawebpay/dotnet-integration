@@ -201,7 +201,7 @@ else if (TempData["ErrorMessage"] != null)
                                                 <label for="actionSelect">Select Action</label>
                                                 <select id="actionSelect" name="Action" class="form-control" onchange="toggleRowEditing(this.value, @order.Order.SveaOrderId)">
                                                     <option value="">-- Select Action --</option>
-                                                    @if (order.Order.OrderDeliveryStatus == "Created")
+                                                    @if (order.Order.OrderDeliveryStatus == "Created" || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
                                                     {
                                                         <!-- WebpayService -->
                                                         <option value="CloseOrderEu">CloseOrderEu</option>
@@ -214,16 +214,16 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
                                                         <option value="UpdateOrder">Update Order</option>
-                                                        <option value="ApproveInvoice">Approve Invoice</option>
                                                         <option value="DeliverPartial">Deliver Partial</option>
                                                         <option value="DeliverOrders">Deliver Orders</option>
                                                         <option value="CancelOrder">Cancel Order</option>
-                                                        <option value="GetInvoices">Get Invoices</option>
                                                     }
-                                                    @if (order.Order.OrderDeliveryStatus == "Delivered" && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
+                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered" || order.Order.OrderDeliveryStatus == "PartiallyDelivered") 
+                                                        && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
                                                     {
                                                         <option value="CreditInvoiceRows">Credit Invoice Rows</option>
                                                         <option value="GetInvoices">Get Invoices</option>
+                                                        <option value="ApproveInvoice">Approve Invoice</option>
                                                     }
                                                 </select>
                                             </div>
@@ -277,6 +277,48 @@ else if (TempData["ErrorMessage"] != null)
                                                     </tbody>
                                                 </table>
                                             </div>
+
+                                            <!-- Selectable Order Rows Section -->
+                                            <div id="selectOrderRows-@order.Order.SveaOrderId" class="select-order-rows" style="display: none;">
+                                                <h4>Select Order Rows</h4>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row Number</th>
+                                                            <th>Article Number</th>
+                                                            <th>Description</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price Per Unit</th>
+                                                            <th>Discount Percent</th>
+                                                            <th>Vat Percent</th>
+                                                            <th>Select</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
+                                                        {
+                                                            var row = order.Order.OrderRows[i];
+															@if (row.Status == "NotDelivered" )
+                                                            {
+                                                                <tr>
+                                                                    <td>@row.RowNumber</td>
+                                                                    <td>@row.ArticleNumber</td>
+                                                                    <td>@row.Description</td>
+                                                                    <td>@Convert.ToInt32(row.NumberOfUnits)</td>
+                                                                    <td>@row.PricePerUnit</td>
+                                                                    <td>@row.DiscountPercent</td>
+                                                                    <td>@row.VatPercent</td>
+                                                                    <td>
+                                                                        <input type="checkbox" name="OrderRows[@i].IsSelected" value="true" />
+                                                                        <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary">Execute Action</button>
                                         </form>
                                     </td>
@@ -298,6 +340,8 @@ else if (TempData["ErrorMessage"] != null)
             const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
             const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
 
+            const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`)
+
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
 
@@ -308,6 +352,8 @@ else if (TempData["ErrorMessage"] != null)
                     existingRows.forEach(row => (row.style.display = "none"));
                     newRows.forEach(row => (row.style.display = "table-row"));
                 }
+            } else if (action === "CancelOrderRows" || action === "DeliverPartial") {
+                if (selectRowsSection) selectRowsSection.style.display = "block";
             } else {
                 editSection.style.display = "none";
                 existingRows.forEach(row => (row.style.display = "none"));

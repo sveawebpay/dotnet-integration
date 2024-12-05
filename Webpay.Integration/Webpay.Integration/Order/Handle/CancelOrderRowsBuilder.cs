@@ -42,6 +42,15 @@ public class CancelOrderRowsBuilder : Builder<CancelOrderRowsBuilder>
         return this;
     }
 
+    public CancelOrderRowsBuilder SetRowsToCancel(IEnumerable<long> rowIndexesToCancel)
+    {
+        if (rowIndexesToCancel != null)
+        {
+            RowIndexesToCancel.AddRange(rowIndexesToCancel);
+        }
+        return this;
+    }
+
     public CancelOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
     {
         NumberedOrderRows.AddRange(numberedOrderRows);

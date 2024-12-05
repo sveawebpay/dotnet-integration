@@ -17,6 +17,7 @@ using WebpayWS;
 using AdminWS;
 using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Order.Row;
+using Sample.AspNetCore.Models;
 
 namespace Sample.AspNetCore.Controllers;
 
@@ -174,7 +175,7 @@ public class OrdersController : Controller
 
     [HttpPost]
     //public async Task<IActionResult> ExecuteAction(string OrderId, string Action)
-    public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<NumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows)
+    public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<SelectableNumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows)
     {
         if (string.IsNullOrWhiteSpace(OrderId) || string.IsNullOrWhiteSpace(Action))
         {
@@ -190,6 +191,8 @@ public class OrdersController : Controller
         var newOrder = response.Orders.FirstOrDefault();
 
         // TODO: validate order for action
+
+        var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
 
         // Handle action
         switch (Action)
@@ -324,11 +327,11 @@ public class OrdersController : Controller
                 break;
 
             case "CancelOrderRows":
-                // TODO
-                // Provide popup for selecing a row to cancel
+                var rowIndexesToCancel = selectedRows.Select(row => row.RowNumber).ToList();
+
                 var cancellation = WebpayAdmin.CancelOrderRows(Config)
                     .SetOrderId(long.Parse(OrderId))
-                    .SetRowToCancel(1) // TODO
+                    .SetRowsToCancel(rowIndexesToCancel)
                     .SetCountryCode(CountryCode.SE);
                 var cancellationResponse = await cancellation.CancelInvoiceOrderRows().DoRequestAsync();
 
@@ -379,11 +382,12 @@ public class OrdersController : Controller
                 break;
 
             case "DeliverPartial":
+                var rowIndexesToDeliver = selectedRows.Select(row => row.RowNumber).ToList();
+
                 var deliverBuilder = WebpayAdmin.DeliverOrderRows(Config)
                     .SetCountryCode(CountryCode.SE)
                     .SetInvoiceDistributionType(DistributionType.POST)
-                    .SetRowToDeliver(1)
-                    //.SetRowToDeliver(2)
+                    .SetRowsToDeliver(rowIndexesToDeliver)
                     .SetOrderId(long.Parse(OrderId));
 
                 var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
@@ -432,7 +436,7 @@ public class OrdersController : Controller
 
             case "CreditInvoiceRows":
                 // TODO
-                // Provide popup for selecing a row to credit, or create a new row...
+                // Provide popup for selecing a row to credit, or create a new row?
 
                 // Order needs to be delivered...
                 //var newIncVatCreditOrderRow = new OrderRowBuilder()

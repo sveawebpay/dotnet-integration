@@ -56,6 +56,15 @@ public class DeliverOrderRowsBuilder : Builder<DeliverOrderRowsBuilder>
         return this;
     }
 
+    public DeliverOrderRowsBuilder SetRowsToDeliver(IEnumerable<long> rowIndexesToDeliver)
+    {
+        if (rowIndexesToDeliver != null)
+        {
+            RowIndexesToDeliver.AddRange(rowIndexesToDeliver);
+        }
+        return this;
+    }
+
     public DeliverOrderRowsBuilder AddNumberedOrderRows(IList<NumberedOrderRowBuilder> numberedOrderRows)
     {
         NumberedOrderRows.AddRange(numberedOrderRows);

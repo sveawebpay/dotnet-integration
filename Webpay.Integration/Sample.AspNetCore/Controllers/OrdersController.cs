@@ -25,14 +25,7 @@ public class OrdersController : Controller
 {
     private readonly StoreDbContext context;
 
-    private static readonly WebpayConfig Config = new WebpayConfig
-    {
-        MyUserName = "sverigetest",
-        MyPassword = "sverigetest",
-        MyClientNumber = 79021,
-        MyMerchantId = string.Empty,
-        MySecretWord = string.Empty
-    };
+    private static readonly WebpayConfig Config = new WebpayConfig();
    
     public OrdersController(StoreDbContext context)
     {
@@ -106,18 +99,24 @@ public class OrdersController : Controller
             {
                 try
                 {
-                    // TODO: need to switch ClientID depending on PaymentType here...
                     var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
                         .SetOrderId(long.Parse(order.SveaOrderId))
                         .SetCountryCode(CountryCode.SE);
 
-                    var response = await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync();
+                    var response = order.PaymentType switch
+                    {
+                        PaymentType.INVOICE => await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync(),
+                        PaymentType.PAYMENTPLAN => await queryOrderBuilder.QueryPaymentPlanOrder().DoRequestAsync(),
+                        // TODO
+                        //PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
+                        _ => throw new InvalidOperationException("Unsupported PaymentType")
+                    };
+
                     var newOrder = response.Orders.FirstOrDefault();
 
                     orderViewModel.Order = newOrder;
                     orderViewModel.IsLoaded = true;
-                    orderViewModel.ShippingStatus = order.ShippingStatus;
-                    orderViewModel.ShippingDescription = order.ShippingDescription;
+                    orderViewModel.PaymentType = order.PaymentType;
                 }
                 catch {}
 
@@ -187,7 +186,22 @@ public class OrdersController : Controller
             .SetOrderId(long.Parse(OrderId))
             .SetCountryCode(CountryCode.SE);
 
-        var response = await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync();
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.SveaOrderId == OrderId);
+
+        if (order == null)
+        {
+            return NotFound("Order not found.");
+        }
+        var paymentType = order.PaymentType;
+
+        var response = paymentType switch
+        {
+            PaymentType.INVOICE => await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync(),
+            PaymentType.PAYMENTPLAN => await queryOrderBuilder.QueryPaymentPlanOrder().DoRequestAsync(),
+            // TODO
+            //PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
+            _ => throw new InvalidOperationException("Unsupported PaymentType")
+        };
         var newOrder = response.Orders.FirstOrDefault();
 
         // TODO: validate order for action
@@ -199,11 +213,18 @@ public class OrdersController : Controller
         {
             // WebpayService
             case "CloseOrderEu":
-                var closeOrderResponse = await WebpayConnection.CloseOrder(Config)
+                var closeOrderRequest = WebpayConnection.CloseOrder(Config)
                     .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE)
-                    .CloseInvoiceOrder()
-                    .DoRequestAsync();
+                    .SetCountryCode(CountryCode.SE);
+
+                var closeOrderResponse = await (paymentType switch
+                {
+                    PaymentType.INVOICE => closeOrderRequest.CloseInvoiceOrder(),
+                    PaymentType.PAYMENTPLAN => closeOrderRequest.ClosePaymentPlanOrder(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => closeOrderRequest.CloseAccountCreditOrder(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 if (closeOrderResponse.ResultCode == 0)
                 {
@@ -217,13 +238,27 @@ public class OrdersController : Controller
                     .Select(row => row.ToOrderRowBuilder())
                     .ToList();
 
-                var deliverOrderResponse = await WebpayConnection.DeliverOrder(Config)
+                //var deliverOrderResponse = await WebpayConnection.DeliverOrder(Config)
+                //    .AddOrderRows(orderRowBuilders)
+                //    .SetOrderId(long.Parse(OrderId))
+                //    .SetCountryCode(CountryCode.SE)
+                //    .SetInvoiceDistributionType(DistributionType.POST)
+                //    .DeliverInvoiceOrder()
+                //    .DoRequestAsync();
+
+                var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
                     .AddOrderRows(orderRowBuilders)
                     .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE)
-                    .SetInvoiceDistributionType(DistributionType.POST)
-                    .DeliverInvoiceOrder()
-                    .DoRequestAsync();
+                    .SetCountryCode(CountryCode.SE);
+
+                var deliverOrderResponse = await (paymentType switch
+                {
+                    PaymentType.INVOICE => deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST).DeliverInvoiceOrder(),
+                    PaymentType.PAYMENTPLAN => deliverOrderRequest.DeliverPaymentPlanOrder(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => deliverOrderRequest.DeliverAccountCreditOrder(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 if (deliverOrderResponse.ResultCode == 0)
                 {
@@ -265,7 +300,6 @@ public class OrdersController : Controller
                 break;
 
             case "GetAccountCreditParamsEu":
-                Config.MyClientNumber = 58702; // TODO
                 var accountCreditParams = await WebpayConnection
                     .GetAccountCreditParams(Config)
                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -275,12 +309,10 @@ public class OrdersController : Controller
                 {
                     Console.WriteLine("accountCreditParams fetched successfully!");
                 }
-                Config.MyClientNumber = 79021; // TODO
 
                 break;
 
             case "GetPaymentPlanParamsEu":
-                Config.MyClientNumber = 59999; // TODO
                 var paymentPlanParams= await WebpayConnection
                     .GetPaymentPlanParams(Config)
                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
@@ -290,7 +322,6 @@ public class OrdersController : Controller
                 {
                     Console.WriteLine("paymentPlanParams fetched successfully!");
                 }
-                Config.MyClientNumber = 79021; // TODO
 
                 break;
 
@@ -365,7 +396,7 @@ public class OrdersController : Controller
                 // Order needs to be delivered...
                 var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
                     .SetInvoiceId(123456789) // TODO
-                    .SetClientId(Config.MyClientNumber)
+                    .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
                     .SetCountryCode(CountryCode.SE);
 
                 var approveInvoiceResponse= await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();

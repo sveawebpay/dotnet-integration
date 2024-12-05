@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Webpay.Integration;
 using Webpay.Integration.Order.Row;
+using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using WebpayWS;
 using Cart = Sample.AspNetCore.Models.Cart;
@@ -23,14 +24,7 @@ public class CheckOutController : Controller
     private readonly Models.MerchantSettings _merchantSettings;
     private readonly StoreDbContext _context;
 
-    private static readonly WebpayConfig Config = new WebpayConfig
-    {
-        MyUserName = "sverigetest",
-        MyPassword = "sverigetest",
-        MyClientNumber = 79021,
-        MyMerchantId = string.Empty,
-        MySecretWord = string.Empty
-    };
+    private static readonly WebpayConfig Config = new WebpayConfig();
 
     public CheckOutController(
         IOptionsSnapshot<Models.MerchantSettings> merchantsAccessor,
@@ -145,14 +139,12 @@ public class CheckOutController : Controller
         // TODO: PaymentPlan requires another ClientID
         if (PaymentOption == "PaymentPlan")
         {
-            Config.MyClientNumber = 59999; // TODO
             var paymentPlanParam = await WebpayConnection.GetPaymentPlanParams(Config)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .DoRequestAsync();
             var code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
             order = await createOrderBuilder.UsePaymentPlanPayment(code).DoRequestAsync();
-            Config.MyClientNumber = 79021; // TODO
         }
         else
         {
@@ -168,11 +160,19 @@ public class CheckOutController : Controller
 
             _context.Products.AttachRange(products);
 
+            PaymentType paymentType = PaymentOption.ToLowerInvariant() switch
+            {
+                "invoice" => PaymentType.INVOICE,
+                "paymentplan" => PaymentType.PAYMENTPLAN,
+                "accountcredit" => PaymentType.ACCOUNTCREDIT,
+                _ => throw new ArgumentException("Invalid PaymentOption value.")
+            };
+
             _context.Orders.Add(new Order
             {
                 SveaOrderId = _cartService.SveaOrderId,
                 Lines = _cartService.CartLines.ToList(),
-                ShippingStatus = _cartService.ShippingStatus
+                PaymentType = paymentType
             });
 
             await _context.SaveChangesAsync(true);

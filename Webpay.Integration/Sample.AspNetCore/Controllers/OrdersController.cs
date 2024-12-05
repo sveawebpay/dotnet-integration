@@ -338,7 +338,14 @@ public class OrdersController : Controller
                         .SetCountryCode(CountryCode.SE)
                         .AddOrderRows(newOrderRowBuilders);
 
-                    var addition = await addOrderRowsBuilder.AddInvoiceOrderRows().DoRequestAsync();
+                    var addition = await (paymentType switch
+                    {
+                        PaymentType.INVOICE => addOrderRowsBuilder.AddInvoiceOrderRows(),
+                        PaymentType.PAYMENTPLAN => addOrderRowsBuilder.AddPaymentPlanOrderRows(),
+                        // TODO
+                        //PaymentType.ACCOUNTCREDIT => addOrderRowsBuilder.AddAccountCreditOrderRows(),
+                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                    }).DoRequestAsync();
                 }
                 break;
 
@@ -353,7 +360,14 @@ public class OrdersController : Controller
                         .SetCountryCode(CountryCode.SE)
                         .AddUpdateOrderRows(newOrderRowBuilders);
 
-                    var addition = await updateOrderRowsBuilder.UpdateInvoiceOrderRows().DoRequestAsync();
+                    var addition = await (paymentType switch
+                    {
+                        PaymentType.INVOICE => updateOrderRowsBuilder.UpdateInvoiceOrderRows(),
+                        PaymentType.PAYMENTPLAN => updateOrderRowsBuilder.UpdatePaymentPlanOrderRows(),
+                        // TODO
+                        //PaymentType.ACCOUNTCREDIT => updateOrderRowsBuilder.UpdateAccountCreditOrderRows(),
+                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                    }).DoRequestAsync();
                 }
                 break;
 
@@ -364,7 +378,15 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId))
                     .SetRowsToCancel(rowIndexesToCancel)
                     .SetCountryCode(CountryCode.SE);
-                var cancellationResponse = await cancellation.CancelInvoiceOrderRows().DoRequestAsync();
+
+                var cancellationResponse = await (paymentType switch
+                {
+                    PaymentType.INVOICE => cancellation.CancelInvoiceOrderRows(),
+                    PaymentType.PAYMENTPLAN => cancellation.CancelPaymentPlanOrderRows(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => cancellation.CancelAccountCreditOrderRows(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 break;
 
@@ -378,16 +400,14 @@ public class OrdersController : Controller
                     .SetClientOrderNumber(clientOrderNumberText)
                     .SetNotes(notesText);
 
-                var updateResponse = await updateBuilder.UpdateInvoiceOrder().DoRequestAsync();
-
-                // TODO (paymentplan)
-                //var updateBuilder = new UpdateOrderBuilder(Config)
-                //    .SetOrderId(long.Parse(OrderId))
-                //    .SetCountryCode(CountryCode.SE)
-                //    .SetClientOrderNumber(clientOrderNumberText)
-                //    .SetNotes(notesText); // Will be ignored for paymentplan order
-
-                //var updateResponse = await updateBuilder.UpdatePaymentPlanOrder().DoRequestAsync();
+                var updateResponse = await (paymentType switch
+                {
+                    PaymentType.INVOICE => updateBuilder.UpdateInvoiceOrder(),
+                    PaymentType.PAYMENTPLAN => updateBuilder.UpdatePaymentPlanOrder(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => updateBuilder.UpdateAccountCreditOrder(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 break;
 
@@ -429,23 +449,20 @@ public class OrdersController : Controller
                 // TODO
                 // Present option for selecting multiple orders to deliver
 
-                //var orderIdsToDeliver = new List<long> { order.CreateOrderResult.SveaOrderId, orderTwo.CreateOrderResult.SveaOrderId };
                 var orderIdsToDeliver = new List<long> { long.Parse(OrderId) };
 
                 var builder = WebpayAdmin.DeliverOrders(Config)
                     .SetOrderIds(orderIdsToDeliver)
-                    //.SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE)
-                    .SetInvoiceDistributionType(DistributionType.POST);
+                    .SetCountryCode(CountryCode.SE);
 
-                var delivery = await builder.DeliverInvoiceOrders().DoRequestAsync();
-
-                // TODO (paymentplan)
-                //var builder = WebpayAdmin.DeliverOrders(SveaConfig.GetDefaultConfig())
-                //    .SetOrderId(long.Parse(OrderId))
-                //    .SetCountryCode(CountryCode.SE);
-
-                //var delivery = await builder.DeliverPaymentPlanOrders().DoRequestAsync();
+                var delivery = await (paymentType switch
+                {
+                    PaymentType.INVOICE => builder.SetInvoiceDistributionType(DistributionType.POST).DeliverInvoiceOrders(),
+                    PaymentType.PAYMENTPLAN => builder.DeliverPaymentPlanOrders(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => builder.DeliverAccountCreditOrders(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 break;
 
@@ -454,14 +471,14 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId))
                     .SetCountryCode(CountryCode.SE);
 
-                var cancelInvoiceResponse = await cancelOrderBuilder.CancelInvoiceOrder().DoRequestAsync();
-
-                // TODO (paymentplan)
-                //var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
-                //    .SetOrderId(long.Parse(OrderId))
-                //    .SetCountryCode(CountryCode.SE);
-
-                //var cancelPaymentPlanResponse = await cancelOrderBuilder.CancelPaymentPlanOrder().DoRequestAsync();
+                var cancelInvoiceResponse = await (paymentType switch
+                {
+                    PaymentType.INVOICE => cancelOrderBuilder.CancelInvoiceOrder(),
+                    PaymentType.PAYMENTPLAN => cancelOrderBuilder.CancelPaymentPlanOrder(),
+                    // TODO
+                    //PaymentType.ACCOUNTCREDIT => builder.DeliverAccountCreditOrders(),
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                }).DoRequestAsync();
 
                 break;
 
@@ -470,21 +487,36 @@ public class OrdersController : Controller
                 // Provide popup for selecing a row to credit, or create a new row?
 
                 // Order needs to be delivered...
-                //var newIncVatCreditOrderRow = new OrderRowBuilder()
-                //    .SetName("NewCreditOrderRow")
-                //    .SetAmountIncVat(10.0M)
-                //    .SetVatPercent(25)
-                //    .SetQuantity(1M);
+                var newIncVatCreditOrderRow = new OrderRowBuilder()
+                    .SetName("NewCreditOrderRow")
+                    .SetAmountIncVat(10.0M)
+                    .SetVatPercent(25)
+                    .SetQuantity(1M);
 
-                //var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
+                var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
 
-                //var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                //    .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
-                //    .SetInvoiceDistributionType(DistributionType.POST)
-                //    .SetCountryCode(CountryCode.SE)
-                //    .AddCreditOrderRows(newCreditOrderRows);
+                var creditResponse = await (paymentType switch
+                {
+                    // TODO: fix delivery IDs
+                    PaymentType.INVOICE => WebpayAdmin.CreditOrderRows(Config)
+                        //.SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault()?.DeliveryReferenceNumber ?? throw new InvalidOperationException("DeliveryReferenceNumber is required for Invoice."))
+                        .SetInvoiceId(1226007L)
+                        .SetInvoiceDistributionType(DistributionType.POST)
+                        .SetCountryCode(CountryCode.SE)
+                        .AddCreditOrderRows(newCreditOrderRows)
+                        .CreditInvoiceOrderRows(),
 
-                //var creditResponse = await creditBuilder.CreditInvoiceOrderRows().DoRequestAsync();
+                    PaymentType.PAYMENTPLAN => WebpayAdmin.CreditOrderRows(Config)
+                        //.SetContractNumber(deliverResponse.DeliverOrderResult.PaymentPlanResultDetails?.ContractNumber ?? throw new InvalidOperationException("ContractNumber is required for PaymentPlan."))
+                        .SetContractNumber(91067320L)
+                        .SetCountryCode(CountryCode.SE)
+                        .AddCreditOrderRows(newCreditOrderRows)
+                        .CreditPaymentPlanOrderRows(),
+
+                    PaymentType.ACCOUNTCREDIT => throw new NotImplementedException("Credit for AccountCredit is not yet implemented."),
+
+                    _ => throw new InvalidOperationException("Unsupported PaymentType for crediting order rows.")
+                }).DoRequestAsync();
 
                 break;
 

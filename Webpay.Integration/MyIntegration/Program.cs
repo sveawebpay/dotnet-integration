@@ -94,6 +94,7 @@ class Program
             var getInvoicesBuilder = WebpayAdmin.GetInvoices(config)
                 //.SetInvoiceIds(invoiceIdsToRetrieve)
                 .SetInvoiceIds(referenceNumbers.ToList())
+                .SetInvoiceType(PaymentType.INVOICE)
                 .SetCountryCode(CountryCode.SE);
 
             var getInvoicesRequest = getInvoicesBuilder.Build();

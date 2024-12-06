@@ -42,9 +42,19 @@ public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
         return this;
     }
 
-    public CreditOrderRowsBuilder SetRowToCredit( long rowIndexToCredit )
+    public CreditOrderRowsBuilder SetRowToCredit(long rowIndexToCredit)
     {
         RowIndexesToCredit.Add(rowIndexToCredit);
+        return this;
+    }
+
+    public CreditOrderRowsBuilder SetRowsToCredit(IEnumerable<long> rowIndexesToCredit)
+    {
+        if (rowIndexesToCredit != null)
+        {
+            RowIndexesToCredit.AddRange(rowIndexesToCredit);
+        }
+
         return this;
     }
 

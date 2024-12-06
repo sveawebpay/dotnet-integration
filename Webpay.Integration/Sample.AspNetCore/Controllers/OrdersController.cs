@@ -42,6 +42,9 @@ public class OrdersController : Controller
             await context.SaveChangesAsync();
         }
 
+        orderViewModels.Clear();
+        SveaOrderDeliveryReferences.Clear();
+
         return RedirectToAction(nameof(Index));
     }
 
@@ -231,14 +234,6 @@ public class OrdersController : Controller
                     .Select(row => row.ToOrderRowBuilder())
                     .ToList();
 
-                //var deliverOrderResponse = await WebpayConnection.DeliverOrder(Config)
-                //    .AddOrderRows(orderRowBuilders)
-                //    .SetOrderId(long.Parse(OrderId))
-                //    .SetCountryCode(CountryCode.SE)
-                //    .SetInvoiceDistributionType(DistributionType.POST)
-                //    .DeliverInvoiceOrder()
-                //    .DoRequestAsync();
-
                 var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
                     .AddOrderRows(orderRowBuilders)
                     .SetOrderId(long.Parse(OrderId))
@@ -255,16 +250,41 @@ public class OrdersController : Controller
 
                 if (deliverOrderResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = deliverOrderResponse.ErrorMessage;
+                else
+                {
+                    var deliveryReferenceNumber = paymentType switch
+                    {
+                        PaymentType.INVOICE => deliverOrderResponse.DeliverOrderResult.InvoiceResultDetails.InvoiceId,
+                        PaymentType.PAYMENTPLAN => deliverOrderResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber,
+                        // TODO: AccountCredit
+                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                    };
+
+                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
+                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
+
+                    SveaOrderDeliveryReferences[OrderId].Add(deliveryReferenceNumber);
+                }
 
                 break;
 
             case "GetContractPdfEu":
                 // TODO: deprecated...
+                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var contractNumbers) || !contractNumbers.Any())
+                {
+                    TempData["ErrorMessage"] = "No delivery references found for this order.";
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
+                }
+
+                var contractNumber = contractNumbers.FirstOrDefault();
 
                 var contractPdf = await WebpayConnection
                     .GetContractPdf(Config)
                     .SetCountryCode(CountryCode.SE)
-                    .SetContractNumber(123)
+                    .SetContractNumber(contractNumber)
                     .DoRequestAsync();
 
                 if (contractPdf.ResultCode == 0)
@@ -411,10 +431,20 @@ public class OrdersController : Controller
                 break;
 
             case "ApproveInvoice":
-                // TODO (test)
-                // Order needs to be delivered...
+                // TODO: if multiple deliveries, make user be able to select one
+                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var invoiceDeliveryReference) || !invoiceDeliveryReference.Any())
+                {
+                    TempData["ErrorMessage"] = "No delivery references found for this order.";
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
+                }
+
+                var firstInvoiceDeliveryReference = invoiceDeliveryReference.FirstOrDefault(); // Use first delivery reference for credit
+
                 var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
-                    .SetInvoiceId(123456789) // TODO
+                    .SetInvoiceId(firstInvoiceDeliveryReference)
                     .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
                     .SetCountryCode(CountryCode.SE);
 
@@ -438,6 +468,18 @@ public class OrdersController : Controller
 
                 if (deliverResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = deliverResponse.ErrorMessage;
+                else
+                {
+                    var deliveryReferenceNumbers = deliverResponse.OrdersDelivered
+                        .Select(o => o.DeliveryReferenceNumber)
+                        .Select(refNum => refNum)
+                        .ToList();
+
+                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
+                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
+
+                    SveaOrderDeliveryReferences[OrderId].AddRange(deliveryReferenceNumbers);
+                }
 
                 break;
 
@@ -509,15 +551,28 @@ public class OrdersController : Controller
 
                 var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
 
+                // TODO: if multiple deliveries, make user be able to select one
+                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var deliveryReference) || !deliveryReference.Any())
+                {
+                    TempData["ErrorMessage"] = "No delivery references found for this order.";
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
+                }
+
+                var firstDeliveryReference = deliveryReference.FirstOrDefault(); // Use first delivery reference for credit
+                var rowIndexesToCredit = selectedRows.Select(row => row.RowNumber).ToList();
+
                 // TODO: fix delivery IDs and AccountCredit
                 if (paymentType == PaymentType.INVOICE)
                 {
                     var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                        //.SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault()?.DeliveryReferenceNumber ?? throw new InvalidOperationException("DeliveryReferenceNumber is required for Invoice."))
-                        .SetInvoiceId(1226007L)
+                        .SetInvoiceId(firstDeliveryReference)
                         .SetInvoiceDistributionType(DistributionType.POST)
                         .SetCountryCode(CountryCode.SE)
-                        .AddCreditOrderRows(newCreditOrderRows)
+                        //.AddCreditOrderRows(newCreditOrderRows)
+                        .SetRowsToCredit(rowIndexesToCredit)
                         .CreditInvoiceOrderRows();
 
                     var creditResponse = await creditBuilder.DoRequestAsync();
@@ -528,10 +583,10 @@ public class OrdersController : Controller
                 else if (paymentType == PaymentType.PAYMENTPLAN)
                 {
                     var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                        //.SetContractNumber(deliverResponse.DeliverOrderResult.PaymentPlanResultDetails?.ContractNumber ?? throw new InvalidOperationException("ContractNumber is required for PaymentPlan."))
-                        .SetContractNumber(91067320L)
+                        .SetContractNumber(firstDeliveryReference)
                         .SetCountryCode(CountryCode.SE)
-                        .AddCreditOrderRows(newCreditOrderRows)
+                        //.AddCreditOrderRows(newCreditOrderRows)
+                        .SetRowsToCredit(rowIndexesToCredit)
                         .CreditPaymentPlanOrderRows();
 
                     var creditResponse = await creditBuilder.DoRequestAsync();
@@ -543,7 +598,6 @@ public class OrdersController : Controller
                 break;
 
             case "GetInvoices":
-                // TODO: filter on invoices...
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var clientInvoiceIds) || !clientInvoiceIds.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
@@ -552,6 +606,16 @@ public class OrdersController : Controller
                         PaymentOrders = orderViewModels
                     });
                 }
+
+                // Get ALL invoice delivery references (use this for general action button...)
+                //var invoiceOrderIds = await context.Orders
+                //    .Where(o => o.PaymentType == PaymentType.INVOICE)
+                //    .Select(o => o.SveaOrderId)
+                //    .ToListAsync();
+
+                //var invoiceDeliveryReferences = SveaOrderDeliveryReferences
+                //    .Where(kv => invoiceOrderIds.Contains(kv.Key) && kv.Value.Any())
+                //    .ToDictionary(kv => kv.Key, kv => kv.Value);
 
                 var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
                     .SetCountryCode(CountryCode.SE)

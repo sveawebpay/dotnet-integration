@@ -206,24 +206,35 @@ else if (TempData["ErrorMessage"] != null)
                                                         <!-- WebpayService -->
                                                         <option value="CloseOrderEu">CloseOrderEu</option>
                                                         <option value="DeliverOrderEu">DeliverOrderEu</option>
-                                                        <option value="GetContractPdfEu">GetContractPdfEu</option>
-                                                        <option value="GetAccountCreditParamsEu">GetAccountCreditParamsEu</option>
-                                                        <option value="GetPaymentPlanParamsEu">GetPaymentPlanParamsEu</option>
+                                                        @*<option value="GetAccountCreditParamsEu">GetAccountCreditParamsEu</option>
+                                                        <option value="GetPaymentPlanParamsEu">GetPaymentPlanParamsEu</option>*@
                                                         <!-- AdminService -->
                                                         <option value="AddOrderRows">Add Order Rows</option>
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
                                                         <option value="UpdateOrder">Update Order</option>
-                                                        <option value="DeliverPartial">Deliver Partial</option>
+                                                        @if (order.Order.OrderType == "Invoice")
+                                                        {
+                                                            <option value="DeliverPartial">Deliver Partial</option>
+                                                        }
                                                         <option value="DeliverOrders">Deliver Orders</option>
                                                         <option value="CancelOrder">Cancel Order</option>
                                                     }
-                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered" || order.Order.OrderDeliveryStatus == "PartiallyDelivered") 
+                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered" 
+                                                        || order.Order.OrderDeliveryStatus == "PartiallyDelivered") 
                                                         && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
                                                     {
                                                         <option value="CreditInvoiceRows">Credit Invoice Rows</option>
-                                                        <option value="GetInvoices">Get Invoices</option>
-                                                        <option value="ApproveInvoice">Approve Invoice</option>
+                                                        @if (order.Order.OrderType == "Invoice")
+                                                        {
+                                                            <option value="GetInvoices">Get Invoices</option>
+                                                            <option value="ApproveInvoice">Approve Invoice</option>
+                                                        }
+                                                        <!-- WebpayService -->
+                                                        @if (order.Order.OrderType == "PaymentPlan")
+                                                        {
+                                                            <option value="GetContractPdfEu">GetContractPdfEu</option>
+                                                        }
                                                     }
                                                 </select>
                                             </div>
@@ -248,19 +259,22 @@ else if (TempData["ErrorMessage"] != null)
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
                                                         {
                                                             var row = order.Order.OrderRows[i];
-                                                            <tr class="existing-order-row" style="display: none;">
-                                                                <td>
-                                                                    @row.RowNumber
-                                                                    <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
-                                                                </td>
-                                                                @*<td><input type="number" step="0.01" name="OrderRows[@i].RowNumber" value="@row.RowNumber" /></td>*@
-                                                                <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
-                                                                <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
-                                                                <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@i].PricePerUnit" value="@row.PricePerUnit" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@i].DiscountPercent" value="@row.DiscountPercent" /></td>
-                                                                <td><input type="number" step="0.01" name="OrderRows[@i].VatPercent" value="@row.VatPercent" /></td>
-                                                            </tr>
+                                                            @if (row.Status == "NotDelivered")
+                                                            {
+                                                                <tr class="existing-order-row" style="display: none;">
+                                                                    <td>
+                                                                        @row.RowNumber
+                                                                        <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
+                                                                    </td>
+                                                                    @*<td><input type="number" step="0.01" name="OrderRows[@i].RowNumber" value="@row.RowNumber" /></td>*@
+                                                                    <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
+                                                                    <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
+                                                                    <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].PricePerUnit" value="@row.PricePerUnit" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].DiscountPercent" value="@row.DiscountPercent" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].VatPercent" value="@row.VatPercent" /></td>
+                                                                </tr>
+                                                            }
                                                         }
 
                                                         <!-- New Rows -->
@@ -298,9 +312,9 @@ else if (TempData["ErrorMessage"] != null)
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
                                                         {
                                                             var row = order.Order.OrderRows[i];
-															@if (row.Status == "NotDelivered" )
+                                                            @if (row.Status != "Cancelled")
                                                             {
-                                                                <tr>
+                                                                <tr class="@((row.Status == "Delivered") ? "delivered-row" : "not-delivered-row")" style="display: none;">
                                                                     <td>@row.RowNumber</td>
                                                                     <td>@row.ArticleNumber</td>
                                                                     <td>@row.Description</td>
@@ -339,8 +353,13 @@ else if (TempData["ErrorMessage"] != null)
             const editSection = document.getElementById(`editOrderRows-${orderId}`);
             const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
             const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
+			
+            const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
+			const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
+            const notDeliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .not-delivered-row`);
 
-            const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`)
+            if (editSection) editSection.style.display = "none";
+            if (selectRowsSection) selectRowsSection.style.display = "none";
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -354,6 +373,14 @@ else if (TempData["ErrorMessage"] != null)
                 }
             } else if (action === "CancelOrderRows" || action === "DeliverPartial") {
                 if (selectRowsSection) selectRowsSection.style.display = "block";
+
+                notDeliveredRows.forEach(row => (row.style.display = "table-row"));
+                deliveredRows.forEach(row => (row.style.display = "none"));
+
+            } else if (action === "CreditInvoiceRows") {
+                if (selectRowsSection) selectRowsSection.style.display = "block";
+                notDeliveredRows.forEach(row => (row.style.display = "none"));
+                deliveredRows.forEach(row => (row.style.display = "table-row"));
             } else {
                 editSection.style.display = "none";
                 existingRows.forEach(row => (row.style.display = "none"));

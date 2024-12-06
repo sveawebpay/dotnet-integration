@@ -13,8 +13,6 @@ using Webpay.Integration;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using Order = Sample.AspNetCore.Models.Order;
-using WebpayWS;
-using AdminWS;
 using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Order.Row;
 using Sample.AspNetCore.Models;
@@ -24,9 +22,10 @@ namespace Sample.AspNetCore.Controllers;
 public class OrdersController : Controller
 {
     private readonly StoreDbContext context;
-
     private static readonly WebpayConfig Config = new WebpayConfig();
-   
+    private static List<OrderViewModel> orderViewModels = new List<OrderViewModel>();
+    private static readonly Dictionary<string, List<long>> SveaOrderDeliveryReferences = new();
+
     public OrdersController(StoreDbContext context)
     {
         this.context = context;
@@ -90,7 +89,7 @@ public class OrdersController : Controller
             orders = await context.Orders.ToListAsync();
         }
         
-        var orderViewModels = new List<OrderViewModel>();
+        orderViewModels = new List<OrderViewModel>();
         foreach (var order in orders)
         {
             var orderId = int.Parse(order.SveaOrderId);
@@ -173,26 +172,24 @@ public class OrdersController : Controller
     }
 
     [HttpPost]
-    //public async Task<IActionResult> ExecuteAction(string OrderId, string Action)
     public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<SelectableNumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows)
     {
         if (string.IsNullOrWhiteSpace(OrderId) || string.IsNullOrWhiteSpace(Action))
         {
-            return BadRequest("Invalid parameters.");
+            TempData["ErrorMessage"] = "Invalid parameters.";
+            return View("Details", new OrderListViewModel
+            {
+                PaymentOrders = orderViewModels
+            });
         }
+
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.SveaOrderId == OrderId);
+        var paymentType = order.PaymentType;
 
         // Fetch order again to get latest data
         var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
             .SetOrderId(long.Parse(OrderId))
             .SetCountryCode(CountryCode.SE);
-
-        var order = await context.Orders.FirstOrDefaultAsync(o => o.SveaOrderId == OrderId);
-
-        if (order == null)
-        {
-            return NotFound("Order not found.");
-        }
-        var paymentType = order.PaymentType;
 
         var response = paymentType switch
         {
@@ -203,12 +200,10 @@ public class OrdersController : Controller
             _ => throw new InvalidOperationException("Unsupported PaymentType")
         };
         var newOrder = response.Orders.FirstOrDefault();
-
-        // TODO: validate order for action
-
         var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
 
-        // Handle action
+        // TODO: validate order based on actio
+
         switch (Action)
         {
             // WebpayService
@@ -226,10 +221,8 @@ public class OrdersController : Controller
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
-                if (closeOrderResponse.ResultCode == 0)
-                {
-                    Console.WriteLine("Order delivered successfully!");
-                }
+                if (closeOrderResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = closeOrderResponse.ErrorMessage;
 
                 break;
 
@@ -260,10 +253,8 @@ public class OrdersController : Controller
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
-                if (deliverOrderResponse.ResultCode == 0)
-                {
-                    Console.WriteLine("Order delivered successfully!");
-                }
+                if (deliverOrderResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = deliverOrderResponse.ErrorMessage;
 
                 break;
 
@@ -294,7 +285,7 @@ public class OrdersController : Controller
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to fetch contract PDF. ResultCode: {contractPdf.ResultCode}, Error: {contractPdf.ErrorMessage}");
+                    TempData["ErrorMessage"] = contractPdf.ErrorMessage;
                 }
 
                 break;
@@ -305,23 +296,19 @@ public class OrdersController : Controller
                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
                     .DoRequestAsync();
 
-                if (accountCreditParams.ResultCode == 0)
-                {
-                    Console.WriteLine("accountCreditParams fetched successfully!");
-                }
+                if (accountCreditParams.ResultCode != 0)
+                    TempData["ErrorMessage"] = accountCreditParams.ErrorMessage;
 
                 break;
 
             case "GetPaymentPlanParamsEu":
-                var paymentPlanParams= await WebpayConnection
+                var paymentPlanParams = await WebpayConnection
                     .GetPaymentPlanParams(Config)
                     .SetCountryCode(TestingTool.DefaultTestCountryCode)
                     .DoRequestAsync();
 
-                if (paymentPlanParams.ResultCode == 0)
-                {
-                    Console.WriteLine("paymentPlanParams fetched successfully!");
-                }
+                if (paymentPlanParams.ResultCode != 0)
+                    TempData["ErrorMessage"] = paymentPlanParams.ErrorMessage;
 
                 break;
 
@@ -346,6 +333,9 @@ public class OrdersController : Controller
                         //PaymentType.ACCOUNTCREDIT => addOrderRowsBuilder.AddAccountCreditOrderRows(),
                         _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                     }).DoRequestAsync();
+
+                    if (addition.ResultCode != 0)
+                        TempData["ErrorMessage"] = addition.ErrorMessage;
                 }
                 break;
 
@@ -368,6 +358,9 @@ public class OrdersController : Controller
                         //PaymentType.ACCOUNTCREDIT => updateOrderRowsBuilder.UpdateAccountCreditOrderRows(),
                         _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                     }).DoRequestAsync();
+
+                    if (addition.ResultCode != 0)
+                        TempData["ErrorMessage"] = addition.ErrorMessage;
                 }
                 break;
 
@@ -387,6 +380,9 @@ public class OrdersController : Controller
                     //PaymentType.ACCOUNTCREDIT => cancellation.CancelAccountCreditOrderRows(),
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
+
+                if (cancellationResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = cancellationResponse.ErrorMessage;
 
                 break;
 
@@ -409,6 +405,9 @@ public class OrdersController : Controller
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
+                if (updateResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = updateResponse.ErrorMessage;
+
                 break;
 
             case "ApproveInvoice":
@@ -419,16 +418,10 @@ public class OrdersController : Controller
                     .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
                     .SetCountryCode(CountryCode.SE);
 
-                var approveInvoiceResponse= await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
+                var approveInvoiceResponse = await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
 
-                if (response.ResultCode == 0)
-                {
-                    Console.WriteLine("Invoice approved successfully!");
-                }
-                else
-                {
-                    Console.WriteLine($"Failed to approve invoice: {response.ErrorMessage}");
-                }
+                if (approveInvoiceResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = approveInvoiceResponse.ErrorMessage;
 
                 break;
 
@@ -442,6 +435,9 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId));
 
                 var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
+
+                if (deliverResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = deliverResponse.ErrorMessage;
 
                 break;
 
@@ -464,6 +460,21 @@ public class OrdersController : Controller
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
+                if (delivery.ResultCode != 0)
+                    TempData["ErrorMessage"] = delivery.ErrorMessage;
+                else
+                {
+                    var deliveryReferenceNumbers = delivery.OrdersDelivered
+                        .Select(o => o.DeliveryReferenceNumber)
+                        .Select(refNum => refNum)
+                        .ToList();
+
+                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
+                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
+
+                    SveaOrderDeliveryReferences[OrderId].AddRange(deliveryReferenceNumbers);
+                }
+
                 break;
 
             case "CancelOrder":
@@ -480,6 +491,9 @@ public class OrdersController : Controller
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
+                if (cancelInvoiceResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = cancelInvoiceResponse.ErrorMessage;
+
                 break;
 
             case "CreditInvoiceRows":
@@ -489,54 +503,75 @@ public class OrdersController : Controller
                 // Order needs to be delivered...
                 var newIncVatCreditOrderRow = new OrderRowBuilder()
                     .SetName("NewCreditOrderRow")
-                    .SetAmountIncVat(10.0M)
+                    .SetAmountIncVat(-10.0M)
                     .SetVatPercent(25)
                     .SetQuantity(1M);
 
                 var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
 
-                var creditResponse = await (paymentType switch
+                // TODO: fix delivery IDs and AccountCredit
+                if (paymentType == PaymentType.INVOICE)
                 {
-                    // TODO: fix delivery IDs
-                    PaymentType.INVOICE => WebpayAdmin.CreditOrderRows(Config)
+                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
                         //.SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault()?.DeliveryReferenceNumber ?? throw new InvalidOperationException("DeliveryReferenceNumber is required for Invoice."))
                         .SetInvoiceId(1226007L)
                         .SetInvoiceDistributionType(DistributionType.POST)
                         .SetCountryCode(CountryCode.SE)
                         .AddCreditOrderRows(newCreditOrderRows)
-                        .CreditInvoiceOrderRows(),
+                        .CreditInvoiceOrderRows();
 
-                    PaymentType.PAYMENTPLAN => WebpayAdmin.CreditOrderRows(Config)
+                    var creditResponse = await creditBuilder.DoRequestAsync();
+
+                    if (creditResponse.ResultCode != 0)
+                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+                }
+                else if (paymentType == PaymentType.PAYMENTPLAN)
+                {
+                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
                         //.SetContractNumber(deliverResponse.DeliverOrderResult.PaymentPlanResultDetails?.ContractNumber ?? throw new InvalidOperationException("ContractNumber is required for PaymentPlan."))
                         .SetContractNumber(91067320L)
                         .SetCountryCode(CountryCode.SE)
                         .AddCreditOrderRows(newCreditOrderRows)
-                        .CreditPaymentPlanOrderRows(),
+                        .CreditPaymentPlanOrderRows();
 
-                    PaymentType.ACCOUNTCREDIT => throw new NotImplementedException("Credit for AccountCredit is not yet implemented."),
+                    var creditResponse = await creditBuilder.DoRequestAsync();
 
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for crediting order rows.")
-                }).DoRequestAsync();
+                    if (creditResponse.ResultCode != 0)
+                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+                }
 
                 break;
 
             case "GetInvoices":
-                // TODO
-                // Present option for retrieving delivered invoices
-                var invoiceIdsToFetch = new List<long> { 1226007L }; // ClientInvoiceId
+                // TODO: filter on invoices...
+                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var clientInvoiceIds) || !clientInvoiceIds.Any())
+                {
+                    TempData["ErrorMessage"] = "No delivery references found for this order.";
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
+                }
 
                 var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
-                    .SetInvoiceIds(invoiceIdsToFetch)
-                    .SetCountryCode(CountryCode.SE);
+                    .SetCountryCode(CountryCode.SE)
+                    .SetInvoiceType(paymentType)
+                    .SetInvoiceIds(clientInvoiceIds);
 
                 var getInvoicesRequest = getInvoicesBuilder.Build();
                 var getInvoicesResponse = await getInvoicesRequest.DoRequestAsync();
+
+                if (getInvoicesResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = getInvoicesResponse.ErrorMessage;
 
                 break;
 
             default:
                 return BadRequest("Invalid action.");
         }
+
+        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
+            TempData["DeliverMessage"] = "Action successfully executed!";
 
         return RedirectToAction("Details");
     }

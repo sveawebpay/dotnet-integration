@@ -109,8 +109,7 @@ public class OrdersController : Controller
                     {
                         PaymentType.INVOICE => await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync(),
                         PaymentType.PAYMENTPLAN => await queryOrderBuilder.QueryPaymentPlanOrder().DoRequestAsync(),
-                        // TODO
-                        //PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
+                        PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
                         _ => throw new InvalidOperationException("Unsupported PaymentType")
                     };
 
@@ -198,14 +197,13 @@ public class OrdersController : Controller
         {
             PaymentType.INVOICE => await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync(),
             PaymentType.PAYMENTPLAN => await queryOrderBuilder.QueryPaymentPlanOrder().DoRequestAsync(),
-            // TODO
-            //PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
+            PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
             _ => throw new InvalidOperationException("Unsupported PaymentType")
         };
         var newOrder = response.Orders.FirstOrDefault();
         var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
 
-        // TODO: validate order based on actio
+        // TODO: validate order based on action
 
         switch (Action)
         {
@@ -219,8 +217,7 @@ public class OrdersController : Controller
                 {
                     PaymentType.INVOICE => closeOrderRequest.CloseInvoiceOrder(),
                     PaymentType.PAYMENTPLAN => closeOrderRequest.ClosePaymentPlanOrder(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => closeOrderRequest.CloseAccountCreditOrder(),
+                    PaymentType.ACCOUNTCREDIT => closeOrderRequest.CloseAccountCreditOrder(),
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
@@ -243,8 +240,7 @@ public class OrdersController : Controller
                 {
                     PaymentType.INVOICE => deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST).DeliverInvoiceOrder(),
                     PaymentType.PAYMENTPLAN => deliverOrderRequest.DeliverPaymentPlanOrder(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => deliverOrderRequest.DeliverAccountCreditOrder(),
+                    PaymentType.ACCOUNTCREDIT => deliverOrderRequest.DeliverAccountCreditOrder(),
                     _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
                 }).DoRequestAsync();
 
@@ -307,28 +303,6 @@ public class OrdersController : Controller
                 {
                     TempData["ErrorMessage"] = contractPdf.ErrorMessage;
                 }
-
-                break;
-
-            case "GetAccountCreditParamsEu":
-                var accountCreditParams = await WebpayConnection
-                    .GetAccountCreditParams(Config)
-                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                    .DoRequestAsync();
-
-                if (accountCreditParams.ResultCode != 0)
-                    TempData["ErrorMessage"] = accountCreditParams.ErrorMessage;
-
-                break;
-
-            case "GetPaymentPlanParamsEu":
-                var paymentPlanParams = await WebpayConnection
-                    .GetPaymentPlanParams(Config)
-                    .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                    .DoRequestAsync();
-
-                if (paymentPlanParams.ResultCode != 0)
-                    TempData["ErrorMessage"] = paymentPlanParams.ErrorMessage;
 
                 break;
 

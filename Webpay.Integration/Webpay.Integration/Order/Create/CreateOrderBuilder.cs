@@ -274,12 +274,26 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
     /// <summary>
     /// Start creating an account credit payment
     /// </summary>
+    /// <param name="campaignCode"></param>
     /// <exception cref="SveaWebPayValidationException"></exception>
     /// <returns>PaymentPlanPayment</returns>
-    //public AccountCreditPayment UseAccountCreditPayment()
-    //{
-    //    return new AccountCredit(this);
-    //}
+    public AccountCreditPayment UseAccountCreditPayment(long? campaignCode)
+    {
+        if (campaignCode == null)
+        {
+            throw new SveaWebPayValidationException(
+                "MISSING VALUE - Campaign code must be set. Add parameter in .UsePaymentPlanPayment(campaignCode)");
+        }
+        if (CustomerId is CompanyCustomer)
+        {
+            throw new SveaWebPayValidationException(
+                "ERROR - CompanyCustomer is not allowed to use account credit option.");
+        }
+
+        _campaignCode = campaignCode;
+        //TODO: AccountCreditDetails
+        return new AccountCreditPayment(this);
+    }
 
     /// <summary>
     /// Start creating payment plan payment

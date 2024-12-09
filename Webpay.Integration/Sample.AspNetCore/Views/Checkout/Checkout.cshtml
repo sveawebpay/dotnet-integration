@@ -72,11 +72,40 @@
                 </div>
 
                 <div id="campaignSection" class="mb-3" style="display: none;">
-                    <label for="campaigns" class="form-label">Select Campaign</label>
-                    <select id="campaigns" name="CampaignCode" class="form-select">
-                    </select>
+                    <h5>Available Campaigns</h5>
+                    <table id="campaignTable" class="table table-bordered" style="width: 95%; margin: auto;">
+                        <thead>
+                            <tr id="paymentPlanHeader">
+                                <th>Campaign Code</th>
+                                <th>Description</th>
+                                <th>Contract Length (Months)</th>
+                                <th>Monthly Factor</th>
+                                <th>Initial Fee</th>
+                                <th>Notification Fee</th>
+                                <th>Interest Rate (%)</th>
+                                <th>Interest-Free Months</th>
+                                <th>Payment-Free Months</th>
+                                <th>Amount Range</th>
+                                <th>Select</th>
+                            </tr>
+                            <tr id="accountCreditHeader" style="display: none;">
+                                <th>Campaign Code</th>
+                                <th>Description</th>
+                                <th>Initial Fee</th>
+                                <th>Lowest Amount to Pay Per Month</th>
+                                <th>Lowest Percent to Pay Per Month (%)</th>
+                                <th>Lowest Order Amount</th>
+                                <th>Interest Rate (%)</th>
+                                <th>Notification Fee</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
 
+                <input type="hidden" id="selectedCampaignCode" name="CampaignCode" />
                 <div>
                     <button type="submit" id="finalizeButton" class="btn btn-success">Finalize</button>
                     <button type="button" id="showCampaignsButton" class="btn btn-primary" style="display: none;" onclick="fetchCampaigns()">Show Campaigns</button>
@@ -93,8 +122,19 @@
             const finalizeButton = document.getElementById("finalizeButton");
             const showCampaignsButton = document.getElementById("showCampaignsButton");
             const campaignSection = document.getElementById("campaignSection");
+            const paymentPlanHeader = document.getElementById("paymentPlanHeader");
+            const accountCreditHeader = document.getElementById("accountCreditHeader");
 
-            if (paymentOption === "PaymentPlan" || paymentOption === "AccountCredit") {
+            paymentPlanHeader.style.display = "none";
+            accountCreditHeader.style.display = "none";
+
+            if (paymentOption === "PaymentPlan") {
+                paymentPlanHeader.style.display = "";
+                finalizeButton.style.display = "none";
+                showCampaignsButton.style.display = "block";
+                campaignSection.style.display = "none";
+            } else if (paymentOption === "AccountCredit") {
+                accountCreditHeader.style.display = "";
                 finalizeButton.style.display = "none";
                 showCampaignsButton.style.display = "block";
                 campaignSection.style.display = "none";
@@ -107,21 +147,76 @@
 
         async function fetchCampaigns() {
             const paymentOption = document.getElementById("paymentOption").value;
+            const showCampaignsButton = document.getElementById("showCampaignsButton");
 
             try {
                 const response = await fetch(`/CheckOut/GetCampaigns?paymentOption=${paymentOption}`);
                 if (!response.ok) throw new Error("Failed to fetch campaigns.");
 
                 const campaigns = await response.json();
-                const campaignSelect = document.getElementById("campaigns");
-                console.log("campaigns", campaigns);
-                campaignSelect.innerHTML = campaigns.map(c => `<option value="${c.campaignCode}">${c.description} (${c.contractLengthInMonths} months)</option>`).join("");
+                const campaignTableBody = document.querySelector("#campaignTable tbody");
+                const hiddenSelectedCampaignCode = document.getElementById("selectedCampaignCode");
+                campaignTableBody.innerHTML = "";
+
+                campaigns.forEach((campaign, index) => {
+                    let row;
+                    if (paymentOption === "AccountCredit") {
+                        row = `
+                            <tr>
+                                <td>${campaign.campaignCode}</td>
+                                <td>${campaign.description}</td>
+                                <td>${campaign.initialFee}</td>
+                                <td>${campaign.lowestAmountToPayPerMonth}</td>
+                                <td>${campaign.lowestPercentToPayPerMonth}%</td>
+                                <td>${campaign.lowestOrderAmount}</td>
+                                <td>${campaign.interestRatePercent}%</td>
+                                <td>${campaign.notificationFee}</td>
+                                <td>
+                                    <input type="radio" name="CampaignCode" value="${campaign.campaignCode}" ${index === 0 ? "checked" : ""} />
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        row = `
+                            <tr>
+                                <td>${campaign.campaignCode}</td>
+                                <td>${campaign.description}</td>
+                                <td>${campaign.contractLengthInMonths}</td>
+                                <td>${formatDecimal(campaign.monthlyAnnuityFactor)}</td>
+                                <td>${campaign.initialFee}</td>
+                                <td>${campaign.notificationFee}</td>
+                                <td>${campaign.interestRatePercent}</td>
+                                <td>${campaign.numberOfInterestFreeMonths}</td>
+                                <td>${campaign.numberOfPaymentFreeMonths}</td>
+                                <td>${campaign.fromAmount} - ${campaign.toAmount}</td>
+                                <td>
+                                    <input type="radio" name="CampaignCode" value="${campaign.campaignCode}" ${index === 0 ? "checked" : ""} />
+                                </td>
+                            </tr>
+                        `;
+                    }
+                    campaignTableBody.insertAdjacentHTML("beforeend", row);
+                });
+
+                hiddenSelectedCampaignCode.value = campaigns[0].campaignCode;
 
                 document.getElementById("campaignSection").style.display = "block";
                 document.getElementById("finalizeButton").style.display = "block";
+                showCampaignsButton.style.display = "none";
+
+                document.addEventListener("change", (event) => {
+                    if (event.target.name === "CampaignCode") {
+                        const selectedCampaignCode = event.target.value;
+                        document.getElementById("selectedCampaignCode").value = selectedCampaignCode;
+                    }
+                });
             } catch (error) {
                 alert(error.message);
             }
+        }
+
+        function formatDecimal(value) {
+            return value ? parseFloat(value).toFixed(2) : "N/A";
         }
     </script>
 }

@@ -15,7 +15,7 @@ public class WebpayConfig : IConfigurationProvider
     private string GetCredentials(PaymentType type, CountryCode country) =>
         (type, country) switch
         {
-            (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.SE) => "sverigetest",
+            (PaymentType.INVOICE or PaymentType.PAYMENTPLAN or PaymentType.ACCOUNTCREDIT, CountryCode.SE) => "sverigetest",
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.NO) => "norgetest2",
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.FI) => "finlandtest2",
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.DK) => "danmarktest2",
@@ -28,6 +28,7 @@ public class WebpayConfig : IConfigurationProvider
     {
         (CountryCode.SE, PaymentType.INVOICE) => 79021,
         (CountryCode.SE, PaymentType.PAYMENTPLAN) => 59999,
+        (CountryCode.SE, PaymentType.ACCOUNTCREDIT) => 58702,
         (CountryCode.NO, PaymentType.INVOICE) => 33308,
         (CountryCode.NO, PaymentType.PAYMENTPLAN) => 32503,
         (CountryCode.FI, PaymentType.INVOICE) => 26136,

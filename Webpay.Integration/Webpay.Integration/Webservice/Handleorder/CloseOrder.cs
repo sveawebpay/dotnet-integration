@@ -19,7 +19,7 @@ public class CloseOrder
 
     protected ClientAuthInfo GetStoreAuthorization()
     {
-        var type = (_order.GetOrderType() == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN);
+        var type = PaymentTypeExtensions.FromString(_order.GetOrderType());
 
         var auth = new ClientAuthInfo
         {
@@ -65,8 +65,7 @@ public class CloseOrder
         var request = PrepareRequest();
 
         var endpointAddress = new EndpointAddress(
-            _order.GetConfig().GetEndPoint(
-                _order.GetOrderType() == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN));
+            _order.GetConfig().GetEndPoint(PaymentTypeExtensions.FromString(_order.GetOrderType())));
 
         _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
 

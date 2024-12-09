@@ -19,6 +19,7 @@ public class WebpayAdminRequest
         {
             PaymentType.INVOICE => AdminWS.OrderType.Invoice,
             PaymentType.PAYMENTPLAN => AdminWS.OrderType.PaymentPlan,
+            PaymentType.ACCOUNTCREDIT => AdminWS.OrderType.AccountCredit,
             _ => throw new SveaWebPayException("Invalid PaymentType")
         };
 

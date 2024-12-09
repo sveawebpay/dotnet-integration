@@ -113,6 +113,17 @@ public class DeliverOrderBuilder : OrderBuilder<DeliverOrderBuilder>
         return new HandleOrder(this);
     }
 
+    /// <summary>
+    /// Prepares the AccountCredit order for delivery.
+    /// </summary>
+    /// <exception cref="SveaWebPayValidationException"></exception>
+    /// <returns>HandleOrder</returns>
+    public HandleOrder DeliverAccountCreditOrder()
+    {
+        _orderType = OrderType.ACCOUNTCREDIT;
+        return new HandleOrder(this);
+    }
+
     public override DeliverOrderBuilder SetCorrelationId(Guid? correlationId)
     {
         _correlationId = correlationId;

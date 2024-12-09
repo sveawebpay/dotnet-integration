@@ -20,9 +20,8 @@ public class CheckOutController : Controller
 {
     private readonly Cart _cartService;
     private readonly Market _marketService;
-    private readonly Models.MerchantSettings _merchantSettings;
+    private readonly MerchantSettings _merchantSettings;
     private readonly StoreDbContext _context;
-
     private static readonly WebpayConfig Config = new WebpayConfig();
 
     public CheckOutController(
@@ -89,9 +88,8 @@ public class CheckOutController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> FinalizeForm(string PhoneNumber, string EmailAddress, string PaymentOption)
+    public async Task<IActionResult> FinalizeForm(string PhoneNumber, string EmailAddress, string PaymentOption, long? CampaignCode)
     {
-        //var orderItems = _cartService.CartLines.ToOrderItems().ToList();
         var orderItems = _cartService.CartLines.Select(line => line.ToOrderRowBuilder()).ToList();
 
         if (string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(EmailAddress))
@@ -104,6 +102,12 @@ public class CheckOutController : Controller
         if (PaymentOption == null)
         {
             ViewBag.Error = "Payment Option is required.";
+            ViewBag.ShowAdditionalFields = true;
+            return View("Checkout");
+        }
+        else if (PaymentOption != "Invoice" && !CampaignCode.HasValue)
+        {
+            ViewBag.Error = "Campaign Code is required for this Payment Option.";
             ViewBag.ShowAdditionalFields = true;
             return View("Checkout");
         }
@@ -132,17 +136,42 @@ public class CheckOutController : Controller
             .SetCorrelationId(correlationId)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
-        // TODO: AccountCredit?
         CreateOrderEuResponse order;
-        // TODO: PaymentPlan requires another ClientID
         if (PaymentOption == "PaymentPlan")
         {
             var paymentPlanParam = await WebpayConnection.GetPaymentPlanParams(Config)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .DoRequestAsync();
-            var code = paymentPlanParam.CampaignCodes[0].CampaignCode;
 
-            order = await createOrderBuilder.UsePaymentPlanPayment(code).DoRequestAsync();
+            var selectedCampaign = paymentPlanParam.CampaignCodes
+                .FirstOrDefault(c => c.CampaignCode == CampaignCode.Value);
+
+            if (selectedCampaign == null)
+            {
+                ViewBag.Error = "Invalid campaign selected.";
+                ViewBag.ShowAdditionalFields = true;
+                return View("Checkout");
+            }
+
+            order = await createOrderBuilder.UsePaymentPlanPayment(selectedCampaign.CampaignCode).DoRequestAsync();
+        }
+        else if (PaymentOption == "AccountCredit")
+        {
+            var accountCreditParam = await WebpayConnection.GetAccountCreditParams(Config)
+                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .DoRequestAsync();
+
+            var selectedCampaign = accountCreditParam.AccountCreditCampaignCodes
+                .FirstOrDefault(c => c.CampaignCode == CampaignCode.Value);
+
+            if (selectedCampaign == null)
+            {
+                ViewBag.Error = "Invalid campaign selected.";
+                ViewBag.ShowAdditionalFields = true;
+                return View("Checkout");
+            }
+
+            order = await createOrderBuilder.UseAccountCreditPayment(selectedCampaign.CampaignCode).DoRequestAsync();
         }
         else
         {
@@ -206,6 +235,12 @@ public class CheckOutController : Controller
                         .Where(c => totalAmount >= c.FromAmount && totalAmount <= c.ToAmount)
                         .ToList();
 
+                    if (!filteredPaymentPlanCampaigns.Any())
+                    {
+                        ViewBag.Error = "No campaigns found! Please try another amount or payment method.";
+                        return View("Checkout");
+                    }
+
                     return Json(filteredPaymentPlanCampaigns);
 
                 case "AccountCredit":
@@ -221,10 +256,16 @@ public class CheckOutController : Controller
                         .Where(c => totalAmount >= c.LowestOrderAmount)
                         .ToList();
 
+                    if (!filteredAccountCreditCampaigns.Any())
+                    {
+                        ViewBag.Error = "No campaigns found! Please try another amount or payment method.";
+                        return View("Checkout");
+                    }
+
                     return Json(filteredAccountCreditCampaigns);
 
                 default:
-                    return BadRequest("Unsupported payment option.");
+                    return BadRequest("Unsupported payment method.");
             }
         }
         catch (Exception ex)

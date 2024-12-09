@@ -41,6 +41,12 @@ public class QueryOrderBuilder : Builder<QueryOrderBuilder>
         return new AdminService.GetOrdersRequest(this);
     }
 
+    public AdminService.GetOrdersRequest QueryAccountCreditOrder()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
+        return new AdminService.GetOrdersRequest(this);
+    }
+
     public AdminService.QueryTransactionRequest QueryCardOrder()
     {
         return new AdminService.QueryTransactionRequest(this);

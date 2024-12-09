@@ -51,18 +51,25 @@ public abstract class WebServicePayment
 
         var formatter = new WebServiceRowFormatter<CreateOrderBuilder>(CrOrderBuilder);
         var formattedOrderRows = formatter.FormatRows();
+        var campaignCode = CrOrderBuilder.GetCampaignCode();
 
         OrderInfo = new CreateOrderInformation
         {
             CustomerIdentity = CrOrderBuilder.GetSoapPurifiedCustomer(),
             ClientOrderNumber = CrOrderBuilder.GetClientOrderNumber(),
-            CreatePaymentPlanDetails = CrOrderBuilder.GetCampaignCode() != null
-                ? new CreatePaymentPlanDetails
-                {
-                    CampaignCode = CrOrderBuilder.GetCampaignCode(),
-                    SendAutomaticGiroPaymentForm = CrOrderBuilder.GetSendAutomaticGiroPaymentForm()
-                }
-                : null,
+            CreatePaymentPlanDetails = PayType == PaymentType.PAYMENTPLAN && campaignCode != null
+            ? new CreatePaymentPlanDetails
+            {
+                CampaignCode = campaignCode,
+                SendAutomaticGiroPaymentForm = CrOrderBuilder.GetSendAutomaticGiroPaymentForm()
+            }
+            : null,
+            CreateAccountCreditDetails = PayType == PaymentType.ACCOUNTCREDIT
+            ? new CreateAccountCreditDetails
+            {
+                CampaignCode = campaignCode,
+            }
+            : null,
             OrderDate = CrOrderBuilder.GetOrderDate(),
             CustomerReference = CrOrderBuilder.GetCustomerReference(),
             OrderRows = formattedOrderRows.ToArray(),

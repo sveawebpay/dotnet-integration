@@ -70,7 +70,7 @@ public class GetAddresses
 
     private ClientAuthInfo GetStoreAuthorization()
     {
-        var type = _orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN;
+        var type = PaymentTypeExtensions.FromString(_orderType);
         return new ClientAuthInfo
         {
             ClientNumber = _config.GetClientNumber(type, _countryCode),
@@ -115,7 +115,7 @@ public class GetAddresses
         var request = PrepareRequest();
 
         _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap,
-                                       _config.GetEndPoint(_orderType == "Invoice" ? PaymentType.INVOICE : PaymentType.PAYMENTPLAN));
+                                       _config.GetEndPoint(PaymentTypeExtensions.FromString(_orderType)));
 
         using (new OperationContextScope(_soapsc.InnerChannel))
         {

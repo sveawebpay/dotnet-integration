@@ -75,4 +75,10 @@ public class CloseOrderBuilder
         _orderType = "PaymentPlan";
         return new CloseOrder(this);
     }
+
+    public CloseOrder CloseAccountCreditOrder()
+    {
+        _orderType = "AccountCredit";
+        return new CloseOrder(this);
+    }
 }

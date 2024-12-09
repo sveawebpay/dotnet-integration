@@ -59,21 +59,69 @@
                     <input type="text" id="phoneNumber" name="PhoneNumber" class="form-control" required />
                 </div>
                 <div class="mb-3">
-                    <label for="emailAddress" classnikey "form-label">Email Address</label>
+                    <label for="emailAddress" class="form-label">Email Address</label>
                     <input type="email" id="emailAddress" name="EmailAddress" class="form-control" required />
                 </div>
                 <div class="mb-3">
                     <label for="paymentOption" class="form-label">Payment Option</label>
-                    <select id="paymentOption" name="PaymentOption" class="form-select" required>
+                    <select id="paymentOption" name="PaymentOption" class="form-select" onchange="handlePaymentOptionChange()">
                         <option value="Invoice">Invoice</option>
                         <option value="PaymentPlan">Payment Plan</option>
                         <option value="AccountCredit">Account Credit</option>
                     </select>
                 </div>
+
+                <div id="campaignSection" class="mb-3" style="display: none;">
+                    <label for="campaigns" class="form-label">Select Campaign</label>
+                    <select id="campaigns" name="CampaignCode" class="form-select">
+                    </select>
+                </div>
+
                 <div>
-                    <button type="submit" classnikij "btn btn-success">Finalize</button>
+                    <button type="submit" id="finalizeButton" class="btn btn-success">Finalize</button>
+                    <button type="button" id="showCampaignsButton" class="btn btn-primary" style="display: none;" onclick="fetchCampaigns()">Show Campaigns</button>
                 </div>
             </form>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        function handlePaymentOptionChange() {
+            const paymentOption = document.getElementById("paymentOption").value;
+            const finalizeButton = document.getElementById("finalizeButton");
+            const showCampaignsButton = document.getElementById("showCampaignsButton");
+            const campaignSection = document.getElementById("campaignSection");
+
+            if (paymentOption === "PaymentPlan" || paymentOption === "AccountCredit") {
+                finalizeButton.style.display = "none";
+                showCampaignsButton.style.display = "block";
+                campaignSection.style.display = "none";
+            } else {
+                finalizeButton.style.display = "block";
+                showCampaignsButton.style.display = "none";
+                campaignSection.style.display = "none";
+            }
+        }
+
+        async function fetchCampaigns() {
+            const paymentOption = document.getElementById("paymentOption").value;
+
+            try {
+                const response = await fetch(`/CheckOut/GetCampaigns?paymentOption=${paymentOption}`);
+                if (!response.ok) throw new Error("Failed to fetch campaigns.");
+
+                const campaigns = await response.json();
+                const campaignSelect = document.getElementById("campaigns");
+                console.log("campaigns", campaigns);
+                campaignSelect.innerHTML = campaigns.map(c => `<option value="${c.campaignCode}">${c.description} (${c.contractLengthInMonths} months)</option>`).join("");
+
+                document.getElementById("campaignSection").style.display = "block";
+                document.getElementById("finalizeButton").style.display = "block";
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+    </script>
+}

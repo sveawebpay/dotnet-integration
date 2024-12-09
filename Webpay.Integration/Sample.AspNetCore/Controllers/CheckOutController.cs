@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Webpay.Integration;
-using Webpay.Integration.Order.Row;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using WebpayWS;
@@ -55,7 +54,6 @@ public class CheckOutController : Controller
 
         try
         {
-            // TODO: ordertype?
             var request = WebpayConnection.GetAddresses(Config)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetOrderTypeInvoice();
@@ -183,6 +181,55 @@ public class CheckOutController : Controller
             ViewBag.Error = "Something went wrong. Please try again.";
             ViewBag.ShowAdditionalFields = true;
             return View("Checkout");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCampaigns(string paymentOption)
+    {
+        var totalAmount = _cartService.CartLines.Sum(line => line.CalculateTotal());
+
+        try
+        {
+            switch (paymentOption)
+            {
+                case "PaymentPlan":
+                    var paymentPlanParams = await WebpayConnection
+                        .GetPaymentPlanParams(Config)
+                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                        .DoRequestAsync();
+
+                    if (paymentPlanParams.ResultCode != 0)
+                        return BadRequest(paymentPlanParams.ErrorMessage);
+
+                    var filteredPaymentPlanCampaigns = paymentPlanParams.CampaignCodes
+                        .Where(c => totalAmount >= c.FromAmount && totalAmount <= c.ToAmount)
+                        .ToList();
+
+                    return Json(filteredPaymentPlanCampaigns);
+
+                case "AccountCredit":
+                    var accountCreditParams = await WebpayConnection
+                        .GetAccountCreditParams(Config)
+                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                        .DoRequestAsync();
+
+                    if (accountCreditParams.ResultCode != 0)
+                        return BadRequest(accountCreditParams.ErrorMessage);
+
+                    var filteredAccountCreditCampaigns = accountCreditParams.AccountCreditCampaignCodes
+                        .Where(c => totalAmount >= c.LowestOrderAmount)
+                        .ToList();
+
+                    return Json(filteredAccountCreditCampaigns);
+
+                default:
+                    return BadRequest("Unsupported payment option.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
 

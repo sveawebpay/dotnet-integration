@@ -37,6 +37,25 @@ public class DeliverOrdersBuilder : Builder<DeliverOrdersBuilder>
         return this;
     }
 
+    public AdminService.DeliverOrdersRequest DeliverPaymentTypeOrders(PaymentType paymentType)
+    {
+        OrderType = paymentType;
+
+        switch (paymentType)
+        {
+            case PaymentType.PAYMENTPLAN:
+            case PaymentType.ACCOUNTCREDIT:
+                DistributionType = DistributionType.POST;
+                break;
+            case PaymentType.INVOICE:
+                break;
+            default:
+                throw new InvalidOperationException("Unsupported PaymentType for delivering orders.");
+        }
+
+        return new AdminService.DeliverOrdersRequest(this);
+    }
+
     public AdminService.DeliverOrdersRequest DeliverInvoiceOrders()
     {
         OrderType = PaymentType.INVOICE;
@@ -47,6 +66,13 @@ public class DeliverOrdersBuilder : Builder<DeliverOrdersBuilder>
     {
         OrderType = PaymentType.PAYMENTPLAN;
         DistributionType = DistributionType.POST; // Always use Post for payment plan orders
+        return new AdminService.DeliverOrdersRequest(this);
+    }
+
+    public AdminService.DeliverOrdersRequest DeliverAccountCreditOrders()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
+        DistributionType = DistributionType.POST; // Always use Post for account credit orders
         return new AdminService.DeliverOrdersRequest(this);
     }
 

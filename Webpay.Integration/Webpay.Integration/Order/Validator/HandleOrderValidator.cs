@@ -16,7 +16,7 @@ public class HandleOrderValidator
             ValidateOrderType(order),
             ValidateOrderId(order),
             ValidateInvoiceDetails(order),
-            ((order.GetOrderType() == OrderType.INVOICE) || (order.GetOrderType() == OrderType.PAYMENTPLAN)) ? ValidateOrderRows(order) : ""
+            RequiresOrderRowValidation(order.GetOrderType()) ? ValidateOrderRows(order) : ""
         };
 
         foreach (var line in list.Where(line => !string.IsNullOrWhiteSpace(line)))
@@ -25,6 +25,13 @@ public class HandleOrderValidator
         }
 
         return stringBuilder.ToString().Trim();
+    }
+
+    private static bool RequiresOrderRowValidation(OrderType orderType)
+    {
+        return orderType == OrderType.INVOICE ||
+               orderType == OrderType.PAYMENTPLAN ||
+               orderType == OrderType.ACCOUNTCREDIT;
     }
 
     private static string ValidateCountry(DeliverOrderBuilder order)

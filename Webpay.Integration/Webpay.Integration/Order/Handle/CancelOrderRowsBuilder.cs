@@ -57,6 +57,12 @@ public class CancelOrderRowsBuilder : Builder<CancelOrderRowsBuilder>
         return this;
     }
 
+    public AdminService.CancelOrderRowsRequest CancelPaymentTypeOrderRows(PaymentType paymentType)
+    {
+        OrderType = paymentType;
+        return new AdminService.CancelOrderRowsRequest(this);
+    }
+
     public AdminService.CancelOrderRowsRequest CancelInvoiceOrderRows()
     {
         OrderType = PaymentType.INVOICE;
@@ -66,6 +72,12 @@ public class CancelOrderRowsBuilder : Builder<CancelOrderRowsBuilder>
     public AdminService.CancelOrderRowsRequest CancelPaymentPlanOrderRows()
     {
         OrderType = PaymentType.PAYMENTPLAN;
+        return new AdminService.CancelOrderRowsRequest(this);
+    }
+
+    public AdminService.CancelOrderRowsRequest CancelAccountCreditOrderRows()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
         return new AdminService.CancelOrderRowsRequest(this);
     }
 

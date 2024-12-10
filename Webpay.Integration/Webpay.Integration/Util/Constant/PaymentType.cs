@@ -29,4 +29,15 @@ public static class PaymentTypeExtensions
             _ => PaymentType.NONE
         };
     }
+
+    public static OrderType ToOrderType(this PaymentType paymentType)
+    {
+        return paymentType switch
+        {
+            PaymentType.INVOICE => OrderType.INVOICE,
+            PaymentType.PAYMENTPLAN => OrderType.PAYMENTPLAN,
+            PaymentType.ACCOUNTCREDIT => OrderType.ACCOUNTCREDIT,
+            _ => OrderType.NONE
+        };
+    }
 }

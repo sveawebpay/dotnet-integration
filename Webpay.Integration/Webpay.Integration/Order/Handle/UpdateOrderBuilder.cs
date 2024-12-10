@@ -37,6 +37,12 @@ public class UpdateOrderBuilder : Builder<UpdateOrderBuilder>
         return this;
     }
 
+    public AdminService.UpdateOrderRequest UpdatePaymentTypeOrder(PaymentType paymentType)
+    {
+        OrderType = paymentType;
+        return new AdminService.UpdateOrderRequest(this);
+    }
+
     public AdminService.UpdateOrderRequest UpdateInvoiceOrder()
     {
         OrderType = PaymentType.INVOICE;
@@ -46,6 +52,12 @@ public class UpdateOrderBuilder : Builder<UpdateOrderBuilder>
     public AdminService.UpdateOrderRequest UpdatePaymentPlanOrder()
     {
         OrderType = PaymentType.PAYMENTPLAN;
+        return new AdminService.UpdateOrderRequest(this);
+    }
+
+    public AdminService.UpdateOrderRequest UpdateAccountCreditOrder()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
         return new AdminService.UpdateOrderRequest(this);
     }
 

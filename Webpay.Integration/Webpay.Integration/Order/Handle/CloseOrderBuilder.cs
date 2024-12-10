@@ -64,6 +64,12 @@ public class CloseOrderBuilder
         return this;
     }
 
+    public CloseOrder CloseOrderByOrderType(string orderType)
+    {
+        _orderType = orderType;
+        return new CloseOrder(this);
+    }
+
     public CloseOrder CloseInvoiceOrder()
     {
         _orderType = "Invoice";

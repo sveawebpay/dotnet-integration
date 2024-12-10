@@ -90,6 +90,18 @@ public class DeliverOrderBuilder : OrderBuilder<DeliverOrderBuilder>
     }
 
     /// <summary>
+    /// Prepares the specified payment type for delivery.
+    /// </summary>
+    /// <param name="paymentType">The type of order to deliver.</param>
+    /// <exception cref="SveaWebPayValidationException"></exception>
+    /// <returns>HandleOrder</returns>
+    public HandleOrder DeliverOrderByPaymentType(PaymentType paymentType)
+    {
+        _orderType = PaymentTypeExtensions.ToOrderType(paymentType);
+        return new HandleOrder(this);
+    }
+
+    /// <summary>
     /// Updates the invoice order with additional information and prepares it for delivery.
     /// Will automatically match all order rows that are to be delivered with those which was sent
     /// when creating the invoice order.

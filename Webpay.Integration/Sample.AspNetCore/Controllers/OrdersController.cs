@@ -193,13 +193,7 @@ public class OrdersController : Controller
             .SetOrderId(long.Parse(OrderId))
             .SetCountryCode(CountryCode.SE);
 
-        var response = paymentType switch
-        {
-            PaymentType.INVOICE => await queryOrderBuilder.QueryInvoiceOrder().DoRequestAsync(),
-            PaymentType.PAYMENTPLAN => await queryOrderBuilder.QueryPaymentPlanOrder().DoRequestAsync(),
-            PaymentType.ACCOUNTCREDIT => await queryOrderBuilder.QueryAccountCreditOrder().DoRequestAsync(),
-            _ => throw new InvalidOperationException("Unsupported PaymentType")
-        };
+        var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
         var newOrder = response.Orders.FirstOrDefault();
         var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
 
@@ -213,13 +207,7 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId))
                     .SetCountryCode(CountryCode.SE);
 
-                var closeOrderResponse = await (paymentType switch
-                {
-                    PaymentType.INVOICE => closeOrderRequest.CloseInvoiceOrder(),
-                    PaymentType.PAYMENTPLAN => closeOrderRequest.ClosePaymentPlanOrder(),
-                    PaymentType.ACCOUNTCREDIT => closeOrderRequest.CloseAccountCreditOrder(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                var closeOrderResponse = await closeOrderRequest.CloseOrderByOrderType(paymentType.ToString()).DoRequestAsync();
 
                 if (closeOrderResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = closeOrderResponse.ErrorMessage;
@@ -236,13 +224,11 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId))
                     .SetCountryCode(CountryCode.SE);
 
-                var deliverOrderResponse = await (paymentType switch
+                if (paymentType == PaymentType.INVOICE)
                 {
-                    PaymentType.INVOICE => deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST).DeliverInvoiceOrder(),
-                    PaymentType.PAYMENTPLAN => deliverOrderRequest.DeliverPaymentPlanOrder(),
-                    PaymentType.ACCOUNTCREDIT => deliverOrderRequest.DeliverAccountCreditOrder(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                    deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST);
+                }
+                var deliverOrderResponse = await deliverOrderRequest.DeliverOrderByPaymentType(paymentType).DoRequestAsync();
 
                 if (deliverOrderResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = deliverOrderResponse.ErrorMessage;
@@ -252,8 +238,8 @@ public class OrdersController : Controller
                     {
                         PaymentType.INVOICE => deliverOrderResponse.DeliverOrderResult.InvoiceResultDetails.InvoiceId,
                         PaymentType.PAYMENTPLAN => deliverOrderResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber,
-                        // TODO: AccountCredit
-                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
+                        PaymentType.ACCOUNTCREDIT => deliverOrderResponse.DeliverOrderResult.AccountCreditResultDetails.AccountCreditId,
+                        _ => throw new InvalidOperationException("Unsupported PaymentType for delivering order.")
                     };
 
                     if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
@@ -264,6 +250,7 @@ public class OrdersController : Controller
 
                 break;
 
+            #region Deprecated
             case "GetContractPdfEu":
                 // TODO: deprecated...
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var contractNumbers) || !contractNumbers.Any())
@@ -305,6 +292,7 @@ public class OrdersController : Controller
                 }
 
                 break;
+            #endregion
 
             // AdminService
             case "AddOrderRows":
@@ -319,14 +307,7 @@ public class OrdersController : Controller
                         .SetCountryCode(CountryCode.SE)
                         .AddOrderRows(newOrderRowBuilders);
 
-                    var addition = await (paymentType switch
-                    {
-                        PaymentType.INVOICE => addOrderRowsBuilder.AddInvoiceOrderRows(),
-                        PaymentType.PAYMENTPLAN => addOrderRowsBuilder.AddPaymentPlanOrderRows(),
-                        // TODO
-                        //PaymentType.ACCOUNTCREDIT => addOrderRowsBuilder.AddAccountCreditOrderRows(),
-                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                    }).DoRequestAsync();
+                    var addition = await addOrderRowsBuilder.AddOrderRowsByPaymentType(paymentType).DoRequestAsync();
 
                     if (addition.ResultCode != 0)
                         TempData["ErrorMessage"] = addition.ErrorMessage;
@@ -344,14 +325,7 @@ public class OrdersController : Controller
                         .SetCountryCode(CountryCode.SE)
                         .AddUpdateOrderRows(newOrderRowBuilders);
 
-                    var addition = await (paymentType switch
-                    {
-                        PaymentType.INVOICE => updateOrderRowsBuilder.UpdateInvoiceOrderRows(),
-                        PaymentType.PAYMENTPLAN => updateOrderRowsBuilder.UpdatePaymentPlanOrderRows(),
-                        // TODO
-                        //PaymentType.ACCOUNTCREDIT => updateOrderRowsBuilder.UpdateAccountCreditOrderRows(),
-                        _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                    }).DoRequestAsync();
+                    var addition = await updateOrderRowsBuilder.UpdateOrderRowsByPaymentType(paymentType).DoRequestAsync();
 
                     if (addition.ResultCode != 0)
                         TempData["ErrorMessage"] = addition.ErrorMessage;
@@ -366,14 +340,7 @@ public class OrdersController : Controller
                     .SetRowsToCancel(rowIndexesToCancel)
                     .SetCountryCode(CountryCode.SE);
 
-                var cancellationResponse = await (paymentType switch
-                {
-                    PaymentType.INVOICE => cancellation.CancelInvoiceOrderRows(),
-                    PaymentType.PAYMENTPLAN => cancellation.CancelPaymentPlanOrderRows(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => cancellation.CancelAccountCreditOrderRows(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                var cancellationResponse = await cancellation.CancelPaymentTypeOrderRows(paymentType).DoRequestAsync();
 
                 if (cancellationResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = cancellationResponse.ErrorMessage;
@@ -390,14 +357,7 @@ public class OrdersController : Controller
                     .SetClientOrderNumber(clientOrderNumberText)
                     .SetNotes(notesText);
 
-                var updateResponse = await (paymentType switch
-                {
-                    PaymentType.INVOICE => updateBuilder.UpdateInvoiceOrder(),
-                    PaymentType.PAYMENTPLAN => updateBuilder.UpdatePaymentPlanOrder(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => updateBuilder.UpdateAccountCreditOrder(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                var updateResponse = await updateBuilder.UpdatePaymentTypeOrder(paymentType).DoRequestAsync();
 
                 if (updateResponse.ResultCode != 0)
                     TempData["ErrorMessage"] = updateResponse.ErrorMessage;
@@ -467,14 +427,7 @@ public class OrdersController : Controller
                     .SetOrderIds(orderIdsToDeliver)
                     .SetCountryCode(CountryCode.SE);
 
-                var delivery = await (paymentType switch
-                {
-                    PaymentType.INVOICE => builder.SetInvoiceDistributionType(DistributionType.POST).DeliverInvoiceOrders(),
-                    PaymentType.PAYMENTPLAN => builder.DeliverPaymentPlanOrders(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => builder.DeliverAccountCreditOrders(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                var delivery = await builder.DeliverPaymentTypeOrders(paymentType).DoRequestAsync();
 
                 if (delivery.ResultCode != 0)
                     TempData["ErrorMessage"] = delivery.ErrorMessage;
@@ -498,17 +451,10 @@ public class OrdersController : Controller
                     .SetOrderId(long.Parse(OrderId))
                     .SetCountryCode(CountryCode.SE);
 
-                var cancelInvoiceResponse = await (paymentType switch
-                {
-                    PaymentType.INVOICE => cancelOrderBuilder.CancelInvoiceOrder(),
-                    PaymentType.PAYMENTPLAN => cancelOrderBuilder.CancelPaymentPlanOrder(),
-                    // TODO
-                    //PaymentType.ACCOUNTCREDIT => builder.DeliverAccountCreditOrders(),
-                    _ => throw new InvalidOperationException("Unsupported PaymentType for closing order.")
-                }).DoRequestAsync();
+                var cancelOrderResponse = await cancelOrderBuilder.CancelPaymentTypeOrder(paymentType).DoRequestAsync();
 
-                if (cancelInvoiceResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = cancelInvoiceResponse.ErrorMessage;
+                if (cancelOrderResponse.ResultCode != 0)
+                    TempData["ErrorMessage"] = cancelOrderResponse.ErrorMessage;
 
                 break;
 

@@ -25,9 +25,7 @@ public class HandleOrder
 
     private ClientAuthInfo GetStoreAuthorization()
     {
-        var type = (_order.GetOrderType() == OrderType.INVOICE)
-            ? PaymentType.INVOICE
-            : PaymentType.PAYMENTPLAN;
+        var type = PaymentTypeExtensions.FromString(_order.GetOrderType().ToString());
 
         var auth = new ClientAuthInfo
         {
@@ -57,9 +55,11 @@ public class HandleOrder
         }
 
         var formatter = new WebServiceRowFormatter<DeliverOrderBuilder>(_order, useIncVatRequestIfPossible);
+        var orderType = _order.GetOrderType();
 
         DeliverInvoiceDetails deliverInvoiceDetails = null;
-        if (_order.GetOrderType() == OrderType.INVOICE)
+        DeliverAccountCreditDetails deliverAccountCreditDetails = null;
+        if (orderType == OrderType.INVOICE)
         {
             deliverInvoiceDetails = new DeliverInvoiceDetails
             {
@@ -70,10 +70,18 @@ public class HandleOrder
                 OrderRows = formatter.FormatRows().ToArray()
             };
         }
+        else if (orderType == OrderType.ACCOUNTCREDIT)
+        {
+            deliverAccountCreditDetails = new DeliverAccountCreditDetails
+            {
+                OrderRows = formatter.FormatRows().ToArray()
+            };
+        }
 
         _orderInformation = new DeliverOrderInformation
         {
             DeliverInvoiceDetails = deliverInvoiceDetails,
+            DeliverAccountCreditDetails = deliverAccountCreditDetails,
             OrderType = ConvertOrderType(_order.GetOrderType()),
             SveaOrderId = _order.GetOrderId()
         };
@@ -100,9 +108,13 @@ public class HandleOrder
 
     private static WebpayWS.OrderType ConvertOrderType(OrderType orderType)
     {
-        return orderType == OrderType.INVOICE
-            ? WebpayWS.OrderType.Invoice
-            : WebpayWS.OrderType.PaymentPlan;
+        return orderType switch
+        {
+            OrderType.INVOICE => WebpayWS.OrderType.Invoice,
+            OrderType.PAYMENTPLAN => WebpayWS.OrderType.PaymentPlan,
+            OrderType.ACCOUNTCREDIT => WebpayWS.OrderType.AccountCredit,
+            _ => throw new ArgumentOutOfRangeException(nameof(orderType), $"Unsupported order type: {orderType}")
+        };
     }
 
     public async Task<DeliverOrderEuResponse> DoRequestAsync()
@@ -122,9 +134,7 @@ public class HandleOrder
     private async Task<DeliverOrderEuResponse> DoRequestAsyncInternalAsync(DeliverOrderEuRequest request)
     {
         var endpointAddress = new EndpointAddress(
-            _order.GetConfig().GetEndPoint(_order.GetOrderType() == OrderType.INVOICE
-                ? PaymentType.INVOICE
-                : PaymentType.PAYMENTPLAN));
+            _order.GetConfig().GetEndPoint(PaymentTypeExtensions.FromString(_order.GetOrderType().ToString())));
 
         _soapsc = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap, endpointAddress);
 

@@ -29,6 +29,12 @@ public class QueryOrderBuilder : Builder<QueryOrderBuilder>
         return this;
     }
 
+    public AdminService.GetOrdersRequest QueryPaymentTypeOrder(PaymentType paymentType)
+    {
+        OrderType = paymentType;
+        return new AdminService.GetOrdersRequest(this);
+    }
+
     public AdminService.GetOrdersRequest QueryInvoiceOrder()
     {
         OrderType = PaymentType.INVOICE;

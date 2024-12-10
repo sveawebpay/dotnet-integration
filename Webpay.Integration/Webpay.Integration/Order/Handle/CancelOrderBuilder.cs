@@ -28,6 +28,12 @@ public class CancelOrderBuilder : Builder<CancelOrderBuilder>
         return this;
     }
 
+    public AdminService.CancelOrderRequest CancelPaymentTypeOrder(PaymentType paymentType)
+    {
+        OrderType = paymentType;
+        return new AdminService.CancelOrderRequest(this);
+    }
+
     public AdminService.CancelOrderRequest CancelInvoiceOrder()
     {
         OrderType = PaymentType.INVOICE;
@@ -37,6 +43,12 @@ public class CancelOrderBuilder : Builder<CancelOrderBuilder>
     public AdminService.CancelOrderRequest CancelPaymentPlanOrder()
     {
         OrderType = PaymentType.PAYMENTPLAN;
+        return new AdminService.CancelOrderRequest(this);
+    }
+
+    public AdminService.CancelOrderRequest CancelAccountCreditOrder()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
         return new AdminService.CancelOrderRequest(this);
     }
 

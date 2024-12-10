@@ -216,6 +216,7 @@ public class OrdersController : Controller
 
             case "DeliverOrderEu":
                 var orderRowBuilders = newOrder.OrderRows
+                    .Where(row => row.Status == "NotDelivered")
                     .Select(row => row.ToOrderRowBuilder())
                     .ToList();
 

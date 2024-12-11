@@ -434,31 +434,61 @@ public static class TestingTool
             .SetZipCode(customerAddress.Zipcode);
     }
 
-    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.OrderRow row)
+    public static CompanyCustomer ConfigureCompanyCustomer(CustomerAddress customerAddress, string ipAddress, string phoneNumber, string emailAddress)
     {
-        return Item.OrderRow()
-                   .SetArticleNumber(row.ArticleNumber)
-                   .SetDescription(row.Description)
-                   .SetAmountExVat(row.PricePerUnit)
-                   .SetQuantity((int)row.NumberOfUnits)
-                   .SetUnit(row.Unit ?? "pcs")
-                   .SetVatPercent((int)row.VatPercent)
-                   .SetVatDiscount(0);
+        return Item.CompanyCustomer()
+            .SetNationalIdNumber(customerAddress.SecurityNumber)
+            .SetIpAddress(ipAddress)
+            .SetCompanyName(customerAddress.LegalName)
+            .SetPhoneNumber(phoneNumber)
+            .SetEmail(emailAddress)
+            .SetStreetAddress(customerAddress.AddressLine1, customerAddress.AddressLine2)
+            .SetLocality(customerAddress.Postarea)
+            .SetZipCode(customerAddress.Zipcode);
     }
 
-    public static NumberedOrderRowBuilder ToNumberedOrderRowBuilder(this AdminWS.NumberedOrderRow row)
+    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.OrderRow row, bool isCompany)
     {
-        var newNumberedOrderRowBuilder = new NumberedOrderRowBuilder()
-            .SetArticleNumber(row.ArticleNumber)
-            .SetRowNumber((int)row.RowNumber)
-            //.SetAmountIncVat(row.PricePerUnit)
-            .SetAmountExVat(row.PricePerUnit)
-            .SetVatPercent(row.VatPercent)
-            .SetQuantity(row.NumberOfUnits)
-            .SetDiscountPercent((int)row.DiscountPercent)
-            //.SetName(row.Description)
-            .SetDescription(row.Description);
+        var orderRowBuilder = Item.OrderRow()
+                                  .SetArticleNumber(row.ArticleNumber)
+                                  .SetDescription(row.Description)
+                                  .SetQuantity((int)row.NumberOfUnits)
+                                  .SetUnit(row.Unit ?? "pcs")
+                                  .SetVatPercent((int)row.VatPercent)
+                                  .SetVatDiscount(0);
 
-        return newNumberedOrderRowBuilder;
+        if (isCompany)
+        {
+            orderRowBuilder.SetAmountExVat(row.PricePerUnit);
+        }
+        else
+        {
+            orderRowBuilder.SetAmountIncVat(row.PricePerUnit);
+        }
+
+        return orderRowBuilder;
+    }
+
+    public static NumberedOrderRowBuilder ToNumberedOrderRowBuilder(this AdminWS.NumberedOrderRow row, bool isCompany)
+    {
+        var numberedOrderRowBuilder = new NumberedOrderRowBuilder()
+                                      .SetArticleNumber(row.ArticleNumber)
+                                      .SetRowNumber((int)row.RowNumber)
+                                      .SetVatPercent(row.VatPercent)
+                                      .SetQuantity(row.NumberOfUnits)
+                                      .SetDiscountPercent((int)row.DiscountPercent)
+                                      //.SetName(row.Description)
+                                      .SetDescription(row.Description);
+
+        if (isCompany)
+        {
+            numberedOrderRowBuilder.SetAmountExVat(row.PricePerUnit);
+        }
+        else
+        {
+            numberedOrderRowBuilder.SetAmountIncVat(row.PricePerUnit);
+        }
+
+        return numberedOrderRowBuilder;
     }
 }

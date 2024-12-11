@@ -377,7 +377,7 @@ public class WebServiceRowFormatter<T>
                         ArticleNumber = row.GetArticleNumber(),
                         Description = FormatDescription(row),
                         PriceIncludingVat = order.AllPricesAreSpecifiedIncVat,
-                        PricePerUnit = MathUtil.BankersRound( order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
+                        PricePerUnit = MathUtil.BankersRound(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
                         DiscountPercent = row.GetDiscountPercent(),
                         Unit = row.GetUnit(),
                         VatPercent = row.GetVatPercent().GetValueOrDefault()

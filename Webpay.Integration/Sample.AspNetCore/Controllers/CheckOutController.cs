@@ -37,7 +37,7 @@ public class CheckOutController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> LoadPaymentMenu(bool requireBankId, bool isInternational, bool enableShipping = false)
+    public async Task<IActionResult> LoadPaymentMenu(bool requireBankId, bool isInternational)
     {
         return View("Checkout");
     }
@@ -53,6 +53,7 @@ public class CheckOutController : Controller
 
         try
         {
+            TempData["AddressData"] = null;
             var request = WebpayConnection.GetAddresses(Config)
                 .SetCountryCode(TestingTool.DefaultTestCountryCode)
                 .SetOrderTypeInvoice();
@@ -75,6 +76,8 @@ public class CheckOutController : Controller
             }
 
             TempData["AddressData"] = JsonSerializer.Serialize(response.Addresses);
+            TempData["IsCompany"] = IsCompany;
+            TempData.Keep("IsCompany");
 
             ViewBag.Addresses = response.Addresses;
             ViewBag.ShowAdditionalFields = true;
@@ -90,7 +93,8 @@ public class CheckOutController : Controller
     [HttpPost]
     public async Task<IActionResult> FinalizeForm(string PhoneNumber, string EmailAddress, string PaymentOption, long? CampaignCode)
     {
-        var orderItems = _cartService.CartLines.Select(line => line.ToOrderRowBuilder()).ToList();
+        var isCompany = TempData["IsCompany"] != null && Convert.ToBoolean(TempData["IsCompany"]);
+        var orderItems = _cartService.CartLines.Select(line => line.ToOrderRowBuilder(isCompany)).ToList();
 
         if (string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(EmailAddress))
         {
@@ -125,16 +129,25 @@ public class CheckOutController : Controller
         var clientOrderNumber = GenerateRandomOrderNumber();
         var customerAddressData = addressData[0]; // Use first address...
         var ipAddress = GetIpAddress();
-        var individualCustomer = TestingTool.ConfigureCustomer(customerAddressData, ipAddress, PhoneNumber, EmailAddress);
 
         var createOrderBuilder = WebpayConnection.CreateOrder(Config)
             .AddOrderRows(orderItems)
-            .AddCustomerDetails(individualCustomer)
             .SetCountryCode(TestingTool.DefaultTestCountryCode)
             .SetOrderDate(DateTime.Now)
             .SetClientOrderNumber(clientOrderNumber)
             .SetCorrelationId(correlationId)
             .SetCurrency(TestingTool.DefaultTestCurrency);
+
+        if (isCompany)
+        {
+            var companyCustomer = TestingTool.ConfigureCompanyCustomer(customerAddressData, ipAddress, PhoneNumber, EmailAddress);
+            createOrderBuilder.AddCustomerDetails(companyCustomer);
+        }
+        else
+        {
+            var individualCustomer = TestingTool.ConfigureCustomer(customerAddressData, ipAddress, PhoneNumber, EmailAddress);
+            createOrderBuilder.AddCustomerDetails(individualCustomer);
+        }
 
         CreateOrderEuResponse order;
         if (PaymentOption == "PaymentPlan")

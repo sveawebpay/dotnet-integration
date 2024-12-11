@@ -31,16 +31,36 @@ public static class CartLineExtensions
         }
     }
 
-    public static OrderRowBuilder ToOrderRowBuilder(this CartLine line)
+    public static OrderRowBuilder ToOrderRowBuilder(this CartLine line, bool isCompany)
     {
-        return Item.OrderRow()
-                   .SetArticleNumber(line.Product.Reference)
-                   .SetDescription(line.Product.Name)
-                   //.SetAmountExVat(line.Product.Price - line.Product.DiscountAmount)
-                   .SetAmountExVat(line.Product.Price)
-                   .SetQuantity(line.Quantity)
-                   .SetUnit("pcs")
-                   .SetVatPercent(line.Product.VatPercentage)
-                   .SetVatDiscount((int)line.Product.DiscountPercent);
+        //return Item.OrderRow()
+        //           .SetArticleNumber(line.Product.Reference)
+        //           .SetDescription(line.Product.Name)
+        //           //.SetAmountExVat(line.Product.Price - line.Product.DiscountAmount)
+        //           //.SetAmountExVat(line.Product.Price)
+        //           .SetAmountIncVat(line.Product.Price)
+        //           .SetQuantity(line.Quantity)
+        //           .SetUnit("pcs")
+        //           .SetVatPercent(line.Product.VatPercentage)
+        //           .SetVatDiscount((int)line.Product.DiscountPercent);
+
+        var orderRow = Item.OrderRow()
+            .SetArticleNumber(line.Product.Reference)
+            .SetDescription(line.Product.Name)
+            .SetQuantity(line.Quantity)
+            .SetUnit("pcs")
+            .SetVatPercent(line.Product.VatPercentage)
+            .SetVatDiscount((int)line.Product.DiscountPercent);
+
+        if (isCompany)
+        {
+            orderRow.SetAmountExVat(line.Product.Price);
+        }
+        else
+        {
+            orderRow.SetAmountIncVat(line.Product.Price);
+        }
+
+        return orderRow;
     }
 }

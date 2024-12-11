@@ -254,7 +254,8 @@ else if (TempData["ErrorMessage"] != null)
                                                             <th>Vat Percent</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    @*<tbody>*@
+                                                    <tbody id="newOrderRows">
                                                         <!-- Existing Rows -->
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
                                                         {
@@ -266,7 +267,6 @@ else if (TempData["ErrorMessage"] != null)
                                                                         @row.RowNumber
                                                                         <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
                                                                     </td>
-                                                                    @*<td><input type="number" step="0.01" name="OrderRows[@i].RowNumber" value="@row.RowNumber" /></td>*@
                                                                     <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
                                                                     <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
                                                                     <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
@@ -289,6 +289,8 @@ else if (TempData["ErrorMessage"] != null)
                                                             <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
                                                         </tr>
                                                     </tbody>
+
+                                                    <button type="button" class="btn btn-secondary" id="addNewRowButton" style="display: none;">Add New Row</button>
                                                 </table>
                                             </div>
 
@@ -332,7 +334,6 @@ else if (TempData["ErrorMessage"] != null)
                                                     </tbody>
                                                 </table>
                                             </div>
-
                                             <button type="submit" class="btn btn-primary">Execute Action</button>
                                         </form>
                                     </td>
@@ -353,6 +354,7 @@ else if (TempData["ErrorMessage"] != null)
             const editSection = document.getElementById(`editOrderRows-${orderId}`);
             const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
             const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
+            const addNewRowButton = document.getElementById("addNewRowButton");
 			
             const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
 			const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
@@ -360,6 +362,7 @@ else if (TempData["ErrorMessage"] != null)
 
             if (editSection) editSection.style.display = "none";
             if (selectRowsSection) selectRowsSection.style.display = "none";
+            if (addNewRowButton) addNewRowButton.style.display = "none";
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -370,6 +373,7 @@ else if (TempData["ErrorMessage"] != null)
                 } else if (action === "AddOrderRows") {
                     existingRows.forEach(row => (row.style.display = "none"));
                     newRows.forEach(row => (row.style.display = "table-row"));
+                    addNewRowButton.style.display = "block";
                 }
             } else if (action === "CancelOrderRows" || action === "DeliverPartial") {
                 if (selectRowsSection) selectRowsSection.style.display = "block";
@@ -387,6 +391,33 @@ else if (TempData["ErrorMessage"] != null)
                 newRows.forEach(row => (row.style.display = "none"));
             }
         }
+
+        document.getElementById("addNewRowButton").addEventListener("click", function () {
+            const tableBody = document.getElementById("newOrderRows");
+            const rowCount = tableBody.children.length;
+            const newRow = `
+                <tr class="new-order-row">
+                    <td><span class="text-muted">New</span></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
+                    <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
+                    <td>
+                        <button type="button" class="btn btn-danger remove-row-btn">Remove</button>
+                    </td>
+                </tr>`;
+            tableBody.insertAdjacentHTML("beforeend", newRow);
+        });
+
+        // Delegate event listener for dynamically added remove buttons
+        document.getElementById("newOrderRows").addEventListener("click", function (event) {
+            if (event.target && event.target.classList.contains("remove-row-btn")) {
+                const row = event.target.closest("tr");
+                row.remove();
+            }
+        });
     </script>
 }
 

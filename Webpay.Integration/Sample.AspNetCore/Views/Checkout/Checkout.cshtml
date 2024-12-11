@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Checkout";
+    var isCompany = TempData["IsCompany"] != null && Convert.ToBoolean(TempData["IsCompany"]);
 }
 
 <div class="container mt-4">
@@ -66,8 +67,11 @@
                     <label for="paymentOption" class="form-label">Payment Option</label>
                     <select id="paymentOption" name="PaymentOption" class="form-select" onchange="handlePaymentOptionChange()">
                         <option value="Invoice">Invoice</option>
-                        <option value="PaymentPlan">Payment Plan</option>
-                        <option value="AccountCredit">Account Credit</option>
+                        @if (!isCompany)
+                        {
+                            <option value="PaymentPlan">Payment Plan</option>
+                            <option value="AccountCredit">Account Credit</option>
+                        }
                     </select>
                 </div>
 

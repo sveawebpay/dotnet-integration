@@ -196,8 +196,7 @@ public class OrdersController : Controller
         var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
         var newOrder = response.Orders.FirstOrDefault();
         var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
-
-        // TODO: validate order based on action
+        var isCompany = newOrder.Customer.CustomerType == AdminWS.CustomerType.Company;
 
         switch (Action)
         {
@@ -217,7 +216,7 @@ public class OrdersController : Controller
             case "DeliverOrderEu":
                 var orderRowBuilders = newOrder.OrderRows
                     .Where(row => row.Status == "NotDelivered")
-                    .Select(row => row.ToOrderRowBuilder())
+                    .Select(row => row.ToOrderRowBuilder(isCompany))
                     .ToList();
 
                 var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
@@ -300,7 +299,7 @@ public class OrdersController : Controller
                 if (NewOrderRows != null && NewOrderRows.Any())
                 {
                     var newOrderRowBuilders = NewOrderRows
-                        .Select(row => row.ToOrderRowBuilder())
+                        .Select(row => row.ToOrderRowBuilder(isCompany))
                         .ToList();
 
                     var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
@@ -313,13 +312,17 @@ public class OrdersController : Controller
                     if (addition.ResultCode != 0)
                         TempData["ErrorMessage"] = addition.ErrorMessage;
                 }
+                else
+                {
+                    TempData["ErrorMessage"] = "No new order rows found.";
+                }
                 break;
 
             case "UpdateOrderRows":
                 if (OrderRows != null)
                 {
                     var newOrderRowBuilders = OrderRows
-                        .Select(row => row.ToNumberedOrderRowBuilder())
+                        .Select(row => row.ToNumberedOrderRowBuilder(isCompany))
                         .ToList();
                     var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
                         .SetOrderId(long.Parse(OrderId))

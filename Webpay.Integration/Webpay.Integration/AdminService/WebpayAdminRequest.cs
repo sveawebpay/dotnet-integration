@@ -33,6 +33,7 @@ public class WebpayAdminRequest
             NumberOfUnits = orb.GetQuantity(),
             PriceIncludingVat = orb.GetAmountIncVat().HasValue, // true if we have set amountIncVat
             PricePerUnit = (decimal)(orb.GetAmountIncVat() ?? orb.GetAmountExVat()),
+            Unit = orb.GetUnit(),
             VatPercent = GetVatPercentFromBuilderOrderRow(orb.GetVatPercent(), orb.GetAmountIncVat(), orb.GetAmountExVat()),
         };
         return or;

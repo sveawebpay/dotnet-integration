@@ -210,27 +210,27 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="AddOrderRows">Add Order Rows</option>
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
-                                                        <option value="UpdateOrder">Update Order</option>
+                                                        <option value="UpdateOrder">Update Order (Updates ClientOrderId and notes)</option>
                                                         @if (order.Order.OrderType != "PaymentPlan")
                                                         {
                                                             <option value="DeliverPartial">Deliver Partial</option>
                                                         }
                                                         <option value="CancelOrder">Cancel Order</option>
                                                     }
-                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered" 
-                                                        || order.Order.OrderDeliveryStatus == "PartiallyDelivered") 
-                                                        && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
+                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered"
+                                                   || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
+                                                   && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
                                                     {
-                                                        <option value="CreditInvoiceRows">Credit Invoice Rows</option>
+                                                        <option value="CreditInvoiceRows">Credit Rows</option>
                                                         @if (order.Order.OrderType == "Invoice")
                                                         {
                                                             <option value="ApproveInvoice">Approve Invoice</option>
                                                         }
                                                         <!-- WebpayService -->
-                                                        @if (order.Order.OrderType == "PaymentPlan")
+                                                        @*@if (order.Order.OrderType == "PaymentPlan")
                                                         {
                                                             <option value="GetContractPdfEu">GetContractPdfEu</option>
-                                                        }
+                                                        }*@
                                                     }
                                                 </select>
                                             </div>
@@ -285,8 +285,7 @@ else if (TempData["ErrorMessage"] != null)
                                                             <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
                                                         </tr>
                                                     </tbody>
-
-                                                    <button type="button" class="btn btn-secondary" id="addNewRowButton" style="display: none;">Add New Row</button>
+                                                    <button type="button" class="btn btn-primary" id="addNewRowButton" style="display: none; margin-top: 10px; margin-bottom: 10px;">Add New Row</button>
                                                 </table>
                                             </div>
 
@@ -344,40 +343,49 @@ else if (TempData["ErrorMessage"] != null)
     }
 </div>
 
-
 <br />
 <br />
 <br />
 <hr />
-<br />
-<br />
-<br />
 <h1>General actions</h1>
-
 <div>
     <hr />
-    <div class="order-details">
-        <h4>General Actions</h4>
-
-        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders">
-
-            <div class="form-group">
-                <label for="generalActionSelect">Select General Action</label>
-                <select id="generalActionSelect" name="Action" class="form-control">
-                    <option value="">-- Select Action --</option>
-                    <option value="DeliverOrders">Deliver Orders</option>
-                    <option value="GetInvoices">Get Invoices</option>
-                    <option value="GetFinancialReport">Get Financial Report</option>
-                    <option value="GetInvoiceReport">Get Invoice Report</option>
-                    <option value="GetAccountingReport">Get Accounting Report</option>
-                    <option value="GetRegressionReport">Get Regression Report</option>
-                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Run</button>
-        </form>
-    </div>
+    <table class="table" id="general-actions-table" automation="table-general-actions">
+        <thead class="collapsible" automation="toggle-general-actions">
+            <tr>
+                <th>Actions</th>
+                <th>
+                    <div automation="toggle-general-actions">Expand</div>
+                    <div automation="toggle-general-actions">Collapse</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="general-collapsible-content">
+            <tr>
+                <td colspan="2">
+                    <div class="order-details">
+                        <h4>General Actions</h4>
+                        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders">
+                            <div class="form-group">
+                                <label for="generalActionSelect">Select General Action</label>
+                                <select id="generalActionSelect" name="Action" class="form-control">
+                                    <option value="">-- Select Action --</option>
+                                    <option value="DeliverOrders">Deliver Orders</option>
+                                    <option value="GetInvoices">Get Invoices</option>
+                                    <option value="GetFinancialReport">Get Financial Report</option>
+                                    <option value="GetInvoiceReport">Get Invoice Report</option>
+                                    <option value="GetAccountingReport">Get Accounting Report</option>
+                                    <option value="GetRegressionReport">Get Regression Report</option>
+                                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Run</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <hr />
 </div>
 
@@ -388,9 +396,9 @@ else if (TempData["ErrorMessage"] != null)
             const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
             const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
             const addNewRowButton = document.getElementById("addNewRowButton");
-			
+
             const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
-			const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
+            const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
             const notDeliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .not-delivered-row`);
 
             if (editSection) editSection.style.display = "none";
@@ -429,18 +437,18 @@ else if (TempData["ErrorMessage"] != null)
             const tableBody = document.getElementById("newOrderRows");
             const rowCount = tableBody.children.length - 1;
             const newRow = `
-                <tr class="new-order-row">
-                    <td><span class="text-muted">New</span></td>
-                    <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
-                    <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
-                    <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
-                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
-                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
-                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
-                    <td>
-                        <button type="button" class="btn btn-danger remove-row-btn">Remove</button>
-                    </td>
-                </tr>`;
+                        <tr class="new-order-row">
+                            <td><span class="text-muted">New</span></td>
+                            <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
+                            <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
+                            <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
+                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
+                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-row-btn">Remove</button>
+                            </td>
+                        </tr>`;
             tableBody.insertAdjacentHTML("beforeend", newRow);
         });
 
@@ -450,6 +458,20 @@ else if (TempData["ErrorMessage"] != null)
                 const row = event.target.closest("tr");
                 row.remove();
             }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButtons = document.querySelectorAll('[automation="toggle-general-actions"]');
+            const collapsibleContent = document.querySelector('#general-actions-table .general-collapsible-content');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const isExpanded = collapsibleContent.style.display === "table-row-group";
+                    collapsibleContent.style.display = isExpanded ? "table-row-group" : "none";
+                });
+            });
+
+            collapsibleContent.style.display = "none";
         });
     </script>
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Sample.AspNetCore.Extensions;
-
 using System;
 using System.Text.Json.Serialization;
 
@@ -36,7 +34,6 @@ public class SessionMarket : Market
         base.SetCountry(countryId);
         Session.SetJson(MarketSessionKey, this);
     }
-
 
     public static Market GetMarket(IServiceProvider services)
     {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Sample.AspNetCore.Data;
 using Sample.AspNetCore.Extensions;
 using Sample.AspNetCore.Models;
@@ -20,18 +19,14 @@ public class CheckOutController : Controller
 {
     private readonly Cart _cartService;
     private readonly Market _marketService;
-    private readonly MerchantSettings _merchantSettings;
     private readonly StoreDbContext _context;
     private static readonly WebpayConfig Config = new WebpayConfig();
 
     public CheckOutController(
-        IOptionsSnapshot<Models.MerchantSettings> merchantsAccessor,
         Cart cartService,
         Market marketService,
-        StoreDbContext context
-    )
+        StoreDbContext context)
     {
-        _merchantSettings = merchantsAccessor.Value;
         _cartService = cartService;
         _marketService = marketService;
         _context = context;

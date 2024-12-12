@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using Sample.AspNetCore.Models;
 
 namespace Sample.AspNetCore.Data;
@@ -10,7 +9,6 @@ public class StoreDbContext : DbContext
         : base(options)
     {
     }
-
 
     public DbSet<Order> Orders { get; set; }
 

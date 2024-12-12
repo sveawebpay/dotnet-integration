@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
 using Sample.AspNetCore.Data;
 using Sample.AspNetCore.Models;
-
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +14,6 @@ public class CartController : Controller
     private readonly Cart cartService;
     private readonly StoreDbContext storesContext;
 
-
     public CartController(ILogger<CartController> logger, StoreDbContext storesContext, Cart cartService)
     {
         this.storesContext = storesContext;
@@ -27,7 +24,7 @@ public class CartController : Controller
     {
         var productList = await this.storesContext.Products.ToListAsync();
         var product = productList.FirstOrDefault(p => p.ProductId == id);
-        this.cartService.AddItem(product, 1);
+        cartService.AddItem(product, 1);
 
         return RedirectToAction("Index", "Products");
     }

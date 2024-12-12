@@ -8,5 +8,4 @@ public class MarketSettings
     public IEnumerable<string> Languages { get; set; }
     public IEnumerable<string> Currencies { get; set; }
     public IEnumerable<string> Countries { get; set; }
-
 }

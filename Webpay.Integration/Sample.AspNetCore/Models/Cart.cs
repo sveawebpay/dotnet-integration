@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Sample.AspNetCore.Models;
-
-using System.Text.Json.Serialization;
 
 public class Cart
 {
@@ -20,9 +19,6 @@ public class Cart
     public string SveaOrderId { get; set; }
     public bool Vat { get; set; }
     public bool IsInternational { get; set; }
-    public string ShippingStatus { get; set; }
-    public string ShippingDescription { get; set; }
-
 
     public virtual void AddItem(Product product, int quantity)
     {
@@ -37,7 +33,6 @@ public class Cart
         else
             line.Quantity += quantity;
     }
-
 
     public virtual decimal CalculateTotal()
     {
@@ -60,12 +55,10 @@ public class Cart
         });
     }
 
-
     public virtual void Clear()
     {
         CartLineCollection.Clear();
     }
-
 
     public virtual void RemoveItem(Product product, int quantity)
     {
@@ -79,7 +72,6 @@ public class Cart
                 line.Quantity -= quantity;
         }
     }
-
 
     public virtual void Update()
     {
@@ -95,7 +87,6 @@ public class CartLine
     [Display(Name = "Unit quantity")]
     [Range(1, int.MaxValue)]
     public int Quantity { get; set; }
-
 
     public decimal CalculateTotal()
     {

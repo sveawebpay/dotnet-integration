@@ -1,14 +1,10 @@
 ﻿using System;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-
-
 using Sample.AspNetCore.Extensions;
+using System.Text.Json.Serialization;
 
 namespace Sample.AspNetCore.Models;
-
-using System.Text.Json.Serialization;
 
 public class SessionCart : Cart
 {
@@ -16,13 +12,11 @@ public class SessionCart : Cart
 
     [JsonIgnore] public ISession Session { get; set; }
 
-
     public override void AddItem(Product product, int quantity)
     {
         base.AddItem(product, quantity);
         Session.SetJson(CartSessionKey, this);
     }
-
 
     public override void Clear()
     {
@@ -30,24 +24,20 @@ public class SessionCart : Cart
         Session.Remove(CartSessionKey);
     }
 
-
     public static Cart GetCart(IServiceProvider services)
     {
         var session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-
         var cart = session?.GetJson<SessionCart>(CartSessionKey) ?? new SessionCart();
 
         cart.Session = session;
         return cart;
     }
 
-
     public override void RemoveItem(Product product, int quantity)
     {
         base.RemoveItem(product, quantity);
         Session.SetJson(CartSessionKey, this);
     }
-
 
     public override void Update()
     {

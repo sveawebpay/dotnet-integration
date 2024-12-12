@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
 using Sample.AspNetCore.Data;
 
 namespace Sample.AspNetCore.Models;

@@ -2,9 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
 using Sample.AspNetCore.Models;
-
 using System.Threading.Tasks;
 
 public class CurrencyController : Controller
@@ -21,8 +19,8 @@ public class CurrencyController : Controller
     public async Task<IActionResult> SetCurrency(string currencyCode)
     {
         //this.marketService.SetCurrency(currencyCode);
-        this.logger.LogInformation($"Language changed to {currencyCode}");
-        this.marketService.Update();
+        logger.LogInformation($"Language changed to {currencyCode}");
+        marketService.Update();
         return await Task.FromResult(Redirect(Request.Headers["Referer"].ToString()));
     }
 }

@@ -76,6 +76,12 @@ public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
         return new AdminService.CreditPaymentPlanOrderRowsRequest(this);
     }
 
+    public AdminService.CreditAccountCreditOrderRowsRequest CreditAccountCreditOrderRows()
+    {
+        OrderType = PaymentType.ACCOUNTCREDIT;
+        return new AdminService.CreditAccountCreditOrderRowsRequest(this);
+    }
+
     public override CreditOrderRowsBuilder SetCorrelationId(Guid? correlationId)
     {
         _correlationId = correlationId;

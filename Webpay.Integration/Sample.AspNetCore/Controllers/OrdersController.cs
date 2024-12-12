@@ -366,13 +366,13 @@ public class OrdersController : Controller
                 break;
 
             case "UpdateOrder":
-                var clientOrderNumberText = "Updated clientOrderNumber";
+                var clientOrderIdText = "Updated clientOrderId";
                 var notesText = "Updated notes";
 
                 var updateBuilder = new UpdateOrderBuilder(Config)
                     .SetOrderId(long.Parse(OrderId))
                     .SetCountryCode(CountryCode.SE)
-                    .SetClientOrderNumber(clientOrderNumberText)
+                    .SetClientOrderNumber(clientOrderIdText)
                     .SetNotes(notesText);
 
                 var updateResponse = await updateBuilder.UpdatePaymentTypeOrder(paymentType).DoRequestAsync();
@@ -383,7 +383,7 @@ public class OrdersController : Controller
                 break;
 
             case "ApproveInvoice":
-                // TODO: if multiple deliveries, allow user select one
+                // TODO: if multiple deliveries, allow user to select one
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var invoiceDeliveryReference) || !invoiceDeliveryReference.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
@@ -451,7 +451,6 @@ public class OrdersController : Controller
                 // TODO
                 // Provide popup for selecing a row to credit, or create a new row?
 
-                // Order needs to be delivered...
                 var newIncVatCreditOrderRow = new OrderRowBuilder()
                     .SetName("NewCreditOrderRow")
                     .SetAmountIncVat(-10.0M)
@@ -497,6 +496,20 @@ public class OrdersController : Controller
                         //.AddCreditOrderRows(newCreditOrderRows)
                         .SetRowsToCredit(rowIndexesToCredit)
                         .CreditPaymentPlanOrderRows();
+
+                    var creditResponse = await creditBuilder.DoRequestAsync();
+
+                    if (creditResponse.ResultCode != 0)
+                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+                }
+                else if (paymentType == PaymentType.ACCOUNTCREDIT)
+                {
+                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
+                        .SetContractNumber(firstDeliveryReference)
+                        .SetCountryCode(CountryCode.SE)
+                        //.AddCreditOrderRows(newCreditOrderRows)
+                        .SetRowsToCredit(rowIndexesToCredit)
+                        .CreditAccountCreditOrderRows();
 
                     var creditResponse = await creditBuilder.DoRequestAsync();
 

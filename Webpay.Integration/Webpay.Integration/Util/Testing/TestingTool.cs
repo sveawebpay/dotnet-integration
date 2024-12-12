@@ -447,7 +447,7 @@ public static class TestingTool
             .SetZipCode(customerAddress.Zipcode);
     }
 
-    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.OrderRow row, bool isCompany)
+    public static OrderRowBuilder ToOrderRowBuilder(this AdminWS.OrderRow row, bool isCompany, bool isNewRow=false)
     {
         var orderRowBuilder = Item.OrderRow()
                                   .SetArticleNumber(row.ArticleNumber)
@@ -455,7 +455,8 @@ public static class TestingTool
                                   .SetQuantity((int)row.NumberOfUnits)
                                   .SetUnit(row.Unit ?? "pcs")
                                   .SetVatPercent((int)row.VatPercent)
-                                  .SetVatDiscount(0);
+                                  .SetVatDiscount(0)
+                                  .SetDiscountPercent((int)row.DiscountPercent);
 
         if (isCompany)
         {
@@ -463,7 +464,14 @@ public static class TestingTool
         }
         else
         {
-            orderRowBuilder.SetAmountIncVat(row.PricePerUnit);
+            if (isNewRow)
+            {
+                orderRowBuilder.SetAmountIncVat(row.PricePerUnit * (1 + (row.VatPercent / 100)));
+            }
+            else
+            {
+                orderRowBuilder.SetAmountIncVat(row.PricePerUnit);
+            }
         }
 
         return orderRowBuilder;
@@ -476,9 +484,9 @@ public static class TestingTool
                                       .SetRowNumber((int)row.RowNumber)
                                       .SetVatPercent(row.VatPercent)
                                       .SetQuantity(row.NumberOfUnits)
-                                      .SetDiscountPercent((int)row.DiscountPercent)
                                       //.SetName(row.Description)
-                                      .SetDescription(row.Description);
+                                      .SetDescription(row.Description)
+                                      .SetDiscountPercent((int)row.DiscountPercent);
 
         if (isCompany)
         {

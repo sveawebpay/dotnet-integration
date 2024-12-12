@@ -206,18 +206,15 @@ else if (TempData["ErrorMessage"] != null)
                                                         <!-- WebpayService -->
                                                         <option value="CloseOrderEu">CloseOrderEu</option>
                                                         <option value="DeliverOrderEu">DeliverOrderEu</option>
-                                                        @*<option value="GetAccountCreditParamsEu">GetAccountCreditParamsEu</option>
-                                                        <option value="GetPaymentPlanParamsEu">GetPaymentPlanParamsEu</option>*@
                                                         <!-- AdminService -->
                                                         <option value="AddOrderRows">Add Order Rows</option>
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
                                                         <option value="UpdateOrder">Update Order</option>
-                                                        @if (order.Order.OrderType == "Invoice")
+                                                        @if (order.Order.OrderType != "PaymentPlan")
                                                         {
                                                             <option value="DeliverPartial">Deliver Partial</option>
                                                         }
-                                                        <option value="DeliverOrders">Deliver Orders</option>
                                                         <option value="CancelOrder">Cancel Order</option>
                                                     }
                                                     @if ((order.Order.OrderDeliveryStatus == "Delivered" 
@@ -227,7 +224,6 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="CreditInvoiceRows">Credit Invoice Rows</option>
                                                         @if (order.Order.OrderType == "Invoice")
                                                         {
-                                                            <option value="GetInvoices">Get Invoices</option>
                                                             <option value="ApproveInvoice">Approve Invoice</option>
                                                         }
                                                         <!-- WebpayService -->
@@ -348,6 +344,43 @@ else if (TempData["ErrorMessage"] != null)
     }
 </div>
 
+
+<br />
+<br />
+<br />
+<hr />
+<br />
+<br />
+<br />
+<h1>General actions</h1>
+
+<div>
+    <hr />
+    <div class="order-details">
+        <h4>General Actions</h4>
+
+        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders">
+
+            <div class="form-group">
+                <label for="generalActionSelect">Select General Action</label>
+                <select id="generalActionSelect" name="Action" class="form-control">
+                    <option value="">-- Select Action --</option>
+                    <option value="DeliverOrders">Deliver Orders</option>
+                    <option value="GetInvoices">Get Invoices</option>
+                    <option value="GetFinancialReport">Get Financial Report</option>
+                    <option value="GetInvoiceReport">Get Invoice Report</option>
+                    <option value="GetAccountingReport">Get Accounting Report</option>
+                    <option value="GetRegressionReport">Get Regression Report</option>
+                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Run</button>
+        </form>
+    </div>
+    <hr />
+</div>
+
 @section Scripts {
     <script>
         function toggleRowEditing(action, orderId) {
@@ -394,7 +427,7 @@ else if (TempData["ErrorMessage"] != null)
 
         document.getElementById("addNewRowButton").addEventListener("click", function () {
             const tableBody = document.getElementById("newOrderRows");
-            const rowCount = tableBody.children.length;
+            const rowCount = tableBody.children.length - 1;
             const newRow = `
                 <tr class="new-order-row">
                     <td><span class="text-muted">New</span></td>

@@ -195,6 +195,19 @@ public class OrdersController : Controller
 
         var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
         var newOrder = response.Orders.FirstOrDefault();
+
+        if (OrderRows != null && newOrder?.OrderRows != null)
+        {
+            foreach (var row in OrderRows)
+            {
+                var matchingRow = newOrder.OrderRows.FirstOrDefault(newRow => newRow.RowNumber == row.RowNumber);
+                if (matchingRow != null)
+                {
+                    row.Status = matchingRow.Status;
+                }
+            }
+        }
+
         var selectedRows = OrderRows?.Where(row => row.IsSelected).ToList();
         var isCompany = newOrder.Customer.CustomerType == AdminWS.CustomerType.Company;
 
@@ -299,7 +312,7 @@ public class OrdersController : Controller
                 if (NewOrderRows != null && NewOrderRows.Any())
                 {
                     var newOrderRowBuilders = NewOrderRows
-                        .Select(row => row.ToOrderRowBuilder(isCompany))
+                        .Select(row => row.ToOrderRowBuilder(isCompany, true))
                         .ToList();
 
                     var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
@@ -322,6 +335,7 @@ public class OrdersController : Controller
                 if (OrderRows != null)
                 {
                     var newOrderRowBuilders = OrderRows
+                        .Where(row => row.Status == "NotDelivered")
                         .Select(row => row.ToNumberedOrderRowBuilder(isCompany))
                         .ToList();
                     var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
@@ -369,7 +383,7 @@ public class OrdersController : Controller
                 break;
 
             case "ApproveInvoice":
-                // TODO: if multiple deliveries, make user be able to select one
+                // TODO: if multiple deliveries, allow user select one
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var invoiceDeliveryReference) || !invoiceDeliveryReference.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
@@ -379,7 +393,7 @@ public class OrdersController : Controller
                     });
                 }
 
-                var firstInvoiceDeliveryReference = invoiceDeliveryReference.FirstOrDefault(); // Use first delivery reference for credit
+                var firstInvoiceDeliveryReference = invoiceDeliveryReference.FirstOrDefault(); // Use first delivery reference for now
 
                 var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
                     .SetInvoiceId(firstInvoiceDeliveryReference)
@@ -421,35 +435,6 @@ public class OrdersController : Controller
 
                 break;
 
-            case "DeliverOrders":
-                // TODO
-                // Present option for selecting multiple orders to deliver
-
-                var orderIdsToDeliver = new List<long> { long.Parse(OrderId) };
-
-                var builder = WebpayAdmin.DeliverOrders(Config)
-                    .SetOrderIds(orderIdsToDeliver)
-                    .SetCountryCode(CountryCode.SE);
-
-                var delivery = await builder.DeliverPaymentTypeOrders(paymentType).DoRequestAsync();
-
-                if (delivery.ResultCode != 0)
-                    TempData["ErrorMessage"] = delivery.ErrorMessage;
-                else
-                {
-                    var deliveryReferenceNumbers = delivery.OrdersDelivered
-                        .Select(o => o.DeliveryReferenceNumber)
-                        .Select(refNum => refNum)
-                        .ToList();
-
-                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
-                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
-
-                    SveaOrderDeliveryReferences[OrderId].AddRange(deliveryReferenceNumbers);
-                }
-
-                break;
-
             case "CancelOrder":
                 var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
                     .SetOrderId(long.Parse(OrderId))
@@ -475,7 +460,7 @@ public class OrdersController : Controller
 
                 var newCreditOrderRows = new List<OrderRowBuilder> { newIncVatCreditOrderRow };
 
-                // TODO: if multiple deliveries, make user be able to select one
+                // TODO: if multiple deliveries, allow user to select one
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var deliveryReference) || !deliveryReference.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
@@ -485,7 +470,7 @@ public class OrdersController : Controller
                     });
                 }
 
-                var firstDeliveryReference = deliveryReference.FirstOrDefault(); // Use first delivery reference for credit
+                var firstDeliveryReference = deliveryReference.FirstOrDefault(); // Use first delivery reference for now
                 var rowIndexesToCredit = selectedRows.Select(row => row.RowNumber).ToList();
 
                 // TODO: fix delivery IDs and AccountCredit
@@ -521,7 +506,53 @@ public class OrdersController : Controller
 
                 break;
 
-            case "GetInvoices":
+            default:
+                return BadRequest("Invalid action.");
+        }
+
+        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
+            TempData["DeliverMessage"] = "Action successfully executed!";
+
+        return RedirectToAction("Details");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ExecuteGeneralAction(string Action)
+    {
+        var OrderId = "123"; // TODO
+        try
+        {
+            switch (Action)
+            {
+                case "DeliverOrders":
+                    // TODO
+                    // Present option for selecting multiple orders to deliver
+                    //var orderIdsToDeliver = new List<long> { long.Parse(OrderId) };
+
+                    //var builder = WebpayAdmin.DeliverOrders(Config)
+                    //    .SetOrderIds(orderIdsToDeliver)
+                    //    .SetCountryCode(CountryCode.SE);
+
+                    //var delivery = await builder.DeliverPaymentTypeOrders(paymentType).DoRequestAsync();
+
+                    //if (delivery.ResultCode != 0)
+                    //    TempData["ErrorMessage"] = delivery.ErrorMessage;
+                    //else
+                    //{
+                    //    var deliveryReferenceNumbers = delivery.OrdersDelivered
+                    //        .Select(o => o.DeliveryReferenceNumber)
+                    //        .Select(refNum => refNum)
+                    //        .ToList();
+
+                    //    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
+                    //        SveaOrderDeliveryReferences[OrderId] = new List<long>();
+
+                    //    SveaOrderDeliveryReferences[OrderId].AddRange(deliveryReferenceNumbers);
+                    //}
+
+                    break;
+
+                case "GetInvoices":
                 if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var clientInvoiceIds) || !clientInvoiceIds.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
@@ -543,7 +574,7 @@ public class OrdersController : Controller
 
                 var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
                     .SetCountryCode(CountryCode.SE)
-                    .SetInvoiceType(paymentType)
+                    .SetInvoiceType(PaymentType.INVOICE)
                     .SetInvoiceIds(clientInvoiceIds);
 
                 var getInvoicesRequest = getInvoicesBuilder.Build();
@@ -554,14 +585,42 @@ public class OrdersController : Controller
 
                 break;
 
-            default:
-                return BadRequest("Invalid action.");
+                //case "GetFinancialReport":
+                //    await GetFinancialReport(OrderId);
+                //    TempData["ReportMessage"] = "Financial report fetched successfully.";
+                //    break;
+
+                //case "GetInvoiceReport":
+                //    await GetInvoiceReport(OrderId);
+                //    TempData["ReportMessage"] = "Invoice report fetched successfully.";
+                //    break;
+
+                //case "GetAccountingReport":
+                //    await GetAccountingReport(OrderId);
+                //    TempData["ReportMessage"] = "Accounting report fetched successfully.";
+                //    break;
+
+                //case "GetRegressionReport":
+                //    await GetRegressionReport(OrderId);
+                //    TempData["ReportMessage"] = "Regression report fetched successfully.";
+                //    break;
+
+                //case "GetPaymentPlanReport":
+                //    await GetPaymentPlanReport(OrderId);
+                //    TempData["ReportMessage"] = "Payment plan report fetched successfully.";
+                //    break;
+
+                default:
+                    TempData["ErrorMessage"] = "Invalid action selected.";
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
         }
 
-        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
-            TempData["DeliverMessage"] = "Action successfully executed!";
-
-        return RedirectToAction("Details");
+        return RedirectToAction("OrderDetails");
     }
 
     // GET: Orders

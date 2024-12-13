@@ -129,14 +129,20 @@ public class OrdersController : Controller
             }
         }
 
-        var invoiceDeliveryReferences = SveaOrderDeliveryReferences
-            .Where(pair => orderViewModels.Any(order => order.Order.SveaOrderId.ToString() == pair.Key && order.Order.OrderType == "Invoice"))
+        var orderDeliveryReferences = SveaOrderDeliveryReferences
+            .Where(pair => orderViewModels.Any(order => order.Order.SveaOrderId.ToString() == pair.Key))
             .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-        TempData["SveaOrderDeliveryReferences"] = JsonSerializer.Serialize(invoiceDeliveryReferences);
+        var invoiceDeliveryReferences = SveaOrderDeliveryReferences
+            .Where(kvp => orderViewModels.Any(order => order.Order.SveaOrderId == long.Parse(kvp.Key) && order.Order.OrderType == "Invoice"))
+            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+        TempData["SveaOrderDeliveryReferences"] = JsonSerializer.Serialize(orderDeliveryReferences);
+        TempData["SveaInvoiceDeliveryReferences"] = JsonSerializer.Serialize(invoiceDeliveryReferences);
         TempData["CreditedDeliveryReferences"] = JsonSerializer.Serialize(CreditedDeliveryReferences);
         TempData["DeliveryReferenceOrderRows"] = JsonSerializer.Serialize(DeliveryReferenceOrderRows);
         TempData.Keep("SveaOrderDeliveryReferences");
+        TempData.Keep("SveaInvoiceDeliveryReferences");
         TempData.Keep("CreditedDeliveryReferences");
         TempData.Keep("DeliveryReferenceOrderRows");
 
@@ -189,7 +195,7 @@ public class OrdersController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<SelectableNumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows, long? SveaDeliveryReference)
+    public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<SelectableNumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows, long? SveaDeliveryReference, long? SveaInvoiceDeliveryReference)
     {
         TempData["ErrorMessage"] = null;
         TempData["SuccessMessage"] = null;
@@ -489,6 +495,40 @@ public class OrdersController : Controller
                         DeliveryReferenceOrderRows[deliveryReference.ToString()] =
                             existingRows.Except(rowIndexesToCredit).ToList();
                     }
+                }
+
+                break;
+
+            case "GetInvoicePdfLink":
+                if (!SveaInvoiceDeliveryReference.HasValue)
+                {
+                    TempData["ErrorMessage"] = "No Invoice ID selected.";
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
+                }
+                var getInvoicePdfLinkBuilder = WebpayAdmin.GetInvoicePdfLink(Config)
+                    .SetCountryCode(CountryCode.SE)
+                    .SetInvoiceId(SveaInvoiceDeliveryReference.Value);
+
+                var getInvoicePdfLinkRequest = getInvoicePdfLinkBuilder.Build();
+                var pdfLinkResponse = await getInvoicePdfLinkRequest.DoRequestAsync();
+
+                if (pdfLinkResponse.ResultCode != 0)
+                {
+                    TempData["ErrorMessage"] = pdfLinkResponse.ErrorMessage;
+                }
+                else
+                {
+                    var pdfLink = pdfLinkResponse.PdfLink;
+
+                    TempData["SuccessMessage"] = $"Invoice PDF link retrieved successfully: {pdfLink}";
+
+                    return View("Details", new OrderListViewModel
+                    {
+                        PaymentOrders = orderViewModels
+                    });
                 }
 
                 break;

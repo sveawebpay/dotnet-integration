@@ -8,16 +8,20 @@
     var count = 1;
 
     var sveaDeliveryReferences = TempData["SveaOrderDeliveryReferences"] != null
-    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaOrderDeliveryReferences"].ToString())
-    : new Dictionary<string, List<long>>();
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaOrderDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
+
+    var sveaInvoiceDeliveryReferences = TempData["SveaInvoiceDeliveryReferences"] != null
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaInvoiceDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
 
     var creditedDeliveryReferences = TempData["CreditedDeliveryReferences"] != null
-    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["CreditedDeliveryReferences"].ToString())
-    : new Dictionary<string, List<long>>();
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["CreditedDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
 
     var deliveryReferenceOrderRows = TempData["DeliveryReferenceOrderRows"] != null
-    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["DeliveryReferenceOrderRows"].ToString())
-    : new Dictionary<string, List<long>>();
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["DeliveryReferenceOrderRows"].ToString())
+        : new Dictionary<string, List<long>>();
 }
 
 @if (TempData["CancelMessage"] != null)
@@ -278,9 +282,24 @@ else if (TempData["ErrorMessage"] != null)
                                                 </select>
                                             </div>
 
+                                            <!-- Used for GetInvoicePdfLink-->
+                                            <div id="invoiceDeliveryReferences-@order.Order.SveaOrderId" class="invoice-delivery-references" style="display: none;">
+                                                <h4>Select Invoice Delivery Reference</h4>
+                                                <select name="SveaInvoiceDeliveryReference" class="form-control" style="margin-top: 15px; margin-bottom: 15px;">
+                                                    <option value="">-- Select Invoice ID --</option>
+                                                    @if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                                    {
+                                                        foreach (var reference in sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])
+                                                        {
+                                                            <option value="@reference">@reference</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
                                             <!-- Editable Order Rows-->
                                             <div id="editOrderRows-@order.Order.SveaOrderId" class="edit-order-rows" style="display: none;">
-                                                <h4>Edit Order Rows</h4>
+                                                <h4 style="margin-top: 15px; margin-bottom: 15px;">Edit Order Rows</h4>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -640,11 +659,13 @@ else if (TempData["ErrorMessage"] != null)
             const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
             const notDeliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .not-delivered-row`);
             const sveaDeliveryReferences = document.getElementById(`sveaDeliveryReferences-${orderId}`);
+            const invoiceDeliveryReferences = document.getElementById(`invoiceDeliveryReferences-${orderId}`);
 
             if (editSection) editSection.style.display = "none";
             if (selectRowsSection) selectRowsSection.style.display = "none";
             if (addNewRowButton) addNewRowButton.style.display = "none";
             if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
+            if (invoiceDeliveryReferences) invoiceDeliveryReferences.style.display = "none";
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -676,6 +697,10 @@ else if (TempData["ErrorMessage"] != null)
 
                 addNewRowButton.style.display = "block";
                 toggleSveaDeliveryReferencesForCredit(action, orderId);
+            } else if (action === "GetInvoicePdfLink") {
+                if (invoiceDeliveryReferences) {
+                    invoiceDeliveryReferences.style.display = "block";
+                }
             } else {
                 editSection.style.display = "none";
                 existingRows.forEach(row => (row.style.display = "none"));

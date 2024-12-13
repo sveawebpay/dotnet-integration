@@ -32,6 +32,10 @@ else if (TempData["DeliverMessage"] != null)
 {
     <div class="alert alert-success">@TempData["DeliverMessage"]</div>
 }
+else if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
 else if (TempData["CreditMessage"] != null)
 {
     <div class="alert alert-success">@TempData["CreditMessage"]</div>
@@ -559,6 +563,69 @@ else if (TempData["ErrorMessage"] != null)
             }
         </tbody>
     </table>
+}
+
+@{
+    var financialReport = TempData["FinancialReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetFinancialReportResponse>(TempData["FinancialReport"].ToString())
+        : null;
+}
+
+<!-- GetFinancialReport result -->
+@if (financialReport != null)
+{
+    <h2>Financial Report</h2>
+
+    <!-- Report Header -->
+    <div>
+        <h3>Report Header</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Administrator</th>
+                <th>Client Type ID</th>
+                <th>Currency</th>
+                <th>From Date</th>
+                <th>To Date</th>
+            </tr>
+            <tr>
+                <td>@financialReport.ReportHeader.Administrator</td>
+                <td>@financialReport.ReportHeader.ClientTypeId</td>
+                <td>@financialReport.ReportHeader.Currency</td>
+                <td>@financialReport.ReportHeader.FromDate.ToShortDateString()</td>
+                <td>@financialReport.ReportHeader.ToDate.ToShortDateString()</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Report Rows -->
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Row Number</th>
+                    <th>Row ID</th>
+                    <th>Description</th>
+                    <th>Count</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in financialReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.RowNumber</td>
+                        <td>@row.RowId</td>
+                        <td>@row.Description</td>
+                        <td>@row.Count</td>
+                        <td>@row.Credit</td>
+                        <td>@row.Debit</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @section Scripts {

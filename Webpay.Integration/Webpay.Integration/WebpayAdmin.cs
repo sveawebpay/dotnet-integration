@@ -34,6 +34,11 @@ public class WebpayAdmin
         return new GetInvoicesBuilder(configurationProvider);
     }
 
+    public static GetFinancialReportBuilder GetFinancialReport(IConfigurationProvider configurationProvider)
+    {
+        return new GetFinancialReportBuilder(configurationProvider);
+    }
+
     /// <summary>
     /// UpdateOrder
     /// </summary>

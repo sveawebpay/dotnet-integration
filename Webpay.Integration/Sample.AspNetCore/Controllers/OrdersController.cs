@@ -694,7 +694,7 @@ public class OrdersController : Controller
                     else
                     {
                         TempData["Invoices"] = JsonSerializer.Serialize(getInvoicesResponse.Invoices);
-                        TempData["SuccessMessage"] = "Invoices retrieved successfully.";
+                        TempData["SuccessMessage"] = "Invoices retrieved successfully (displayed at bottom of the page).";
 
                         return View("Details", new OrderListViewModel
                         {
@@ -704,10 +704,36 @@ public class OrdersController : Controller
 
                     break;
 
-                //case "GetFinancialReport":
-                //    await GetFinancialReport(OrderId);
-                //    TempData["ReportMessage"] = "Financial report fetched successfully.";
-                //    break;
+                case "GetFinancialReport":
+                    var financialReportBuilder = WebpayAdmin.GetFinancialReport(Config)
+                        .SetCountryCode(CountryCode.SE)
+                        //.SetFromDate(new DateTime(2024, 1, 1))
+                        //.SetToDate(new DateTime(2024, 12, 31));
+                        .SetFromDate(DateTime.Now.AddDays(-120).Date)
+                        .SetToDate(DateTime.Now.Date);
+
+                    var financialReportRequest = financialReportBuilder.Build();
+                    var financialReportResponse = await financialReportRequest.DoRequestAsync();
+
+                    if (financialReportResponse.ResultCode != 0)
+                    {
+                        TempData["ErrorMessage"] = financialReportResponse.ErrorMessage;
+                    }
+                    else
+                    {
+                        var reportHeader = financialReportResponse.ReportHeader;
+                        var reportRows = financialReportResponse.ReportRows;
+
+                        TempData["FinancialReport"] = JsonSerializer.Serialize(financialReportResponse);
+                        TempData["SuccessMessage"] = "Financial report retrieved successfully (displayed at bottom of the page).";
+
+                        return View("Details", new OrderListViewModel
+                        {
+                            PaymentOrders = orderViewModels
+                        });
+                    }
+
+                    break;
 
                 //case "GetInvoiceReport":
                 //    await GetInvoiceReport(OrderId);

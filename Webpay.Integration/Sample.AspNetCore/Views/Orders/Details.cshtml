@@ -1,10 +1,23 @@
 ﻿@using System.Reflection;
+@using System.Text.Json
 @model Sample.AspNetCore.Models.ViewModels.OrderListViewModel
 
 @{
     ViewData["Title"] = "OrderDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var count = 1;
+
+    var sveaDeliveryReferences = TempData["SveaOrderDeliveryReferences"] != null
+    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaOrderDeliveryReferences"].ToString())
+    : new Dictionary<string, List<long>>();
+
+    var creditedDeliveryReferences = TempData["CreditedDeliveryReferences"] != null
+    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["CreditedDeliveryReferences"].ToString())
+    : new Dictionary<string, List<long>>();
+
+    var deliveryReferenceOrderRows = TempData["DeliveryReferenceOrderRows"] != null
+    ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["DeliveryReferenceOrderRows"].ToString())
+    : new Dictionary<string, List<long>>();
 }
 
 @if (TempData["CancelMessage"] != null)
@@ -210,23 +223,25 @@ else if (TempData["ErrorMessage"] != null)
                                                         <option value="AddOrderRows">Add Order Rows</option>
                                                         <option value="UpdateOrderRows">Update Order Rows</option>
                                                         <option value="CancelOrderRows">Cancel Order Rows</option>
-                                                        <option value="UpdateOrder">Update Order (Updates ClientOrderId and notes)</option>
+                                                        <option value="CancelOrder">Cancel Order</option>
                                                         @if (order.Order.OrderType != "PaymentPlan")
                                                         {
                                                             <option value="DeliverPartial">Deliver Partial</option>
                                                         }
-                                                        <option value="CancelOrder">Cancel Order</option>
+                                                        <option value="UpdateOrder">Update Order (Updates ClientOrderId and Notes)</option>
                                                     }
                                                     @if ((order.Order.OrderDeliveryStatus == "Delivered"
                                                    || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
                                                    && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
                                                     {
-                                                        <option value="CreditInvoiceRows">Credit Rows</option>
+                                                        <option value="CreditRows">Credit Rows</option>
                                                         @if (order.Order.OrderType == "Invoice")
                                                         {
-                                                            <option value="ApproveInvoice">Approve Invoice</option>
+                                                            <!-- Deprecated -->
+                                                            @*<option value="ApproveInvoice">Approve Invoice</option>*@
+                                                            <option value="GetInvoicePdfLink">Get Invoice PDF Link</option>
                                                         }
-                                                        <!-- WebpayService -->
+                                                        <!-- WebpayService (Deprecated) -->
                                                         @*@if (order.Order.OrderType == "PaymentPlan")
                                                         {
                                                             <option value="GetContractPdfEu">GetContractPdfEu</option>
@@ -235,7 +250,31 @@ else if (TempData["ErrorMessage"] != null)
                                                 </select>
                                             </div>
 
-                                            <!-- Editable Order Rows Section -->
+                                            <div id="sveaDeliveryReferences-@order.Order.SveaOrderId" class="svea-delivery-references" style="display: none;">
+                                                <h4>Select Svea Delivery Reference</h4>
+                                                <select name="SveaDeliveryReference" class="form-control">
+                                                    <option value="">-- Select Delivery Reference --</option>
+                                                    @if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                                    {
+                                                        foreach (var reference in sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])
+                                                        {
+                                                            var isCredited = creditedDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()) &&
+                                                            creditedDeliveryReferences[order.Order.SveaOrderId.ToString()].Contains(reference);
+
+                                                            if (!isCredited)
+                                                            {
+                                                                <option value="@reference">@reference</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@reference" disabled>@reference (Credited)</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <!-- Editable Order Rows-->
                                             <div id="editOrderRows-@order.Order.SveaOrderId" class="edit-order-rows" style="display: none;">
                                                 <h4>Edit Order Rows</h4>
                                                 <table class="table table-bordered">
@@ -250,7 +289,6 @@ else if (TempData["ErrorMessage"] != null)
                                                             <th>Vat Percent</th>
                                                         </tr>
                                                     </thead>
-                                                    @*<tbody>*@
                                                     <tbody id="newOrderRows">
                                                         <!-- Existing Rows -->
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
@@ -289,7 +327,7 @@ else if (TempData["ErrorMessage"] != null)
                                                 </table>
                                             </div>
 
-                                            <!-- Selectable Order Rows Section -->
+                                            <!-- Selectable Order Rows-->
                                             <div id="selectOrderRows-@order.Order.SveaOrderId" class="select-order-rows" style="display: none;">
                                                 <h4>Select Order Rows</h4>
                                                 <table class="table table-bordered">
@@ -347,7 +385,7 @@ else if (TempData["ErrorMessage"] != null)
 <br />
 <br />
 <hr />
-<h1>General actions</h1>
+<h1>General Actions</h1>
 <div>
     <hr />
     <table class="table" id="general-actions-table" automation="table-general-actions">
@@ -365,10 +403,10 @@ else if (TempData["ErrorMessage"] != null)
                 <td colspan="2">
                     <div class="order-details">
                         <h4>General Actions</h4>
-                        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders">
+                        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders" id="generalActionsForm">
                             <div class="form-group">
                                 <label for="generalActionSelect">Select General Action</label>
-                                <select id="generalActionSelect" name="Action" class="form-control">
+                                <select id="generalActionSelect" name="Action" class="form-control" onchange="handleGeneralActionChange(this.value)">
                                     <option value="">-- Select Action --</option>
                                     <option value="DeliverOrders">Deliver Orders</option>
                                     <option value="GetInvoices">Get Invoices</option>
@@ -379,6 +417,76 @@ else if (TempData["ErrorMessage"] != null)
                                     <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
                                 </select>
                             </div>
+
+                            <div id="paymentTypeDiv" style="display: none;">
+                                <div class="form-group">
+                                    <label for="paymentTypeSelect">Select Payment Type</label>
+                                    <select id="paymentTypeSelect" name="SelectedPaymentType" class="form-control" onchange="filterOrdersByPaymentType()">
+                                        <option value="Invoice">Invoice</option>
+                                        <option value="PaymentPlan">Payment Plan</option>
+                                        <option value="AccountCredit">Account Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="deliverOrdersTable" style="display: none; margin-top: 20px;">
+                                <h4>Select Orders to Deliver</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Status</th>
+                                            <th>Payment Type</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody">
+                                        @foreach (var order in Model.PaymentOrders)
+                                        {
+                                            if (order.Order.OrderDeliveryStatus == "Created" || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
+                                            {
+                                                <tr data-payment-type="@order.Order.OrderType">
+                                                    <td>@order.Order.SveaOrderId</td>
+                                                    <td>@order.Order.OrderDeliveryStatus</td>
+                                                    <td>@order.Order.OrderType</td>
+                                                    <td>
+                                                        <input type="checkbox" name="SelectedIds" value="@order.Order.SveaOrderId" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="sveaDeliveryReferences" style="display: none; margin-top: 20px;">
+                                <h4>Select Svea Delivery References</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Delivery References</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var order in Model.PaymentOrders.Where(o => o.Order.OrderType == "Invoice"))
+                                        {
+                                            if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                            {
+                                                <tr>
+                                                    <td>@order.Order.SveaOrderId</td>
+                                                    <td>@string.Join(", ", sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])</td>
+                                                    <td>
+                                                        <input type="checkbox" name="SelectedIds" value="@string.Join(",", sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Run</button>
                         </form>
                     </div>
@@ -422,10 +530,19 @@ else if (TempData["ErrorMessage"] != null)
                 notDeliveredRows.forEach(row => (row.style.display = "table-row"));
                 deliveredRows.forEach(row => (row.style.display = "none"));
 
-            } else if (action === "CreditInvoiceRows") {
+            } else if (action === "CreditRows") {
+                editSection.style.display = "block";
                 if (selectRowsSection) selectRowsSection.style.display = "block";
                 notDeliveredRows.forEach(row => (row.style.display = "none"));
                 deliveredRows.forEach(row => (row.style.display = "table-row"));
+
+                const firstNewRow = document.querySelector(".new-order-row");
+                if (firstNewRow) {
+                    firstNewRow.remove();
+                }
+
+                addNewRowButton.style.display = "block";
+                toggleSveaDeliveryReferencesForCredit(action, orderId);
             } else {
                 editSection.style.display = "none";
                 existingRows.forEach(row => (row.style.display = "none"));
@@ -433,9 +550,39 @@ else if (TempData["ErrorMessage"] != null)
             }
         }
 
+        function toggleSveaDeliveryReferencesForCredit(action, orderId) {
+            const sveaDeliveryReferences = document.getElementById(`sveaDeliveryReferences-${orderId}`);
+            if (sveaDeliveryReferences) {
+                sveaDeliveryReferences.style.display = action === "CreditRows" ? "block" : "none";
+            }
+
+            const deliveryReferenceSelect = sveaDeliveryReferences?.querySelector("select");
+            if (deliveryReferenceSelect) {
+                deliveryReferenceSelect.addEventListener("change", function () {
+                    filterSelectableOrderRows(orderId, this.value);
+                });
+                filterSelectableOrderRows(orderId, null);
+            }
+        }
+
+        function filterSelectableOrderRows(orderId, deliveryReferenceId) {
+            const rowsContainer = document.querySelector(`#selectOrderRows-${orderId} tbody`);
+            const rows = rowsContainer.querySelectorAll("tr");
+            const deliveryReferenceOrderRows = @Html.Raw(JsonSerializer.Serialize(deliveryReferenceOrderRows));
+
+            rows.forEach(row => {
+                const rowNumber = parseInt(row.querySelector("input[name*='RowNumber']").value, 10);
+                const isIncluded = deliveryReferenceOrderRows[deliveryReferenceId]?.includes(rowNumber);
+
+                row.style.display = isIncluded ? "table-row" : "none";
+            });
+        }
+
         document.getElementById("addNewRowButton").addEventListener("click", function () {
             const tableBody = document.getElementById("newOrderRows");
-            const rowCount = tableBody.children.length - 1;
+            let rowCount = tableBody.children.length - 1;
+            if (rowCount = -1) rowCount = 0;
+
             const newRow = `
                         <tr class="new-order-row">
                             <td><span class="text-muted">New</span></td>
@@ -473,6 +620,48 @@ else if (TempData["ErrorMessage"] != null)
 
             collapsibleContent.style.display = "none";
         });
+
+        function handleGeneralActionChange(action) {
+            toggleDeliverOrdersTable(action);
+            toggleSveaDeliveryReferences(action);
+        }
+
+        function toggleDeliverOrdersTable(action) {
+            const deliverOrdersTable = document.getElementById("deliverOrdersTable");
+            const paymentTypeDiv = document.getElementById("paymentTypeDiv");
+
+            if (action === "DeliverOrders") {
+                paymentTypeDiv.style.display = "block";
+                deliverOrdersTable.style.display = "block";
+                filterOrdersByPaymentType();
+            } else {
+                paymentTypeDiv.style.display = "none";
+                deliverOrdersTable.style.display = "none";
+            }
+        }
+
+        function filterOrdersByPaymentType() {
+            const paymentTypeSelect = document.getElementById("paymentTypeSelect");
+            const selectedPaymentType = paymentTypeSelect.value;
+            const ordersTableBody = document.getElementById("ordersTableBody");
+            const rows = ordersTableBody.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const rowPaymentType = row.getAttribute("data-payment-type");
+                if (selectedPaymentType === "" || rowPaymentType === selectedPaymentType) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        }
+
+        function toggleSveaDeliveryReferences(action) {
+            const sveaDeliveryReferences = document.getElementById("sveaDeliveryReferences");
+            sveaDeliveryReferences.style.display = action === "GetInvoices" ? "block" : "none";
+        }
+
     </script>
 }
 

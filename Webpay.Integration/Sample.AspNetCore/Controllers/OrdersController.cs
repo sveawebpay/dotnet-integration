@@ -604,6 +604,25 @@ public class OrdersController : Controller
                         _ => throw new ArgumentException("Invalid payment type.")
                     };
 
+                    var queriedOrders = new Dictionary<long, AdminWS.GetOrdersResponse>();
+                    foreach (var orderId in SelectedIds.Select(long.Parse))
+                    {
+                        var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
+                            .SetOrderId(orderId)
+                            .SetCountryCode(CountryCode.SE);
+
+                        var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
+                        if (response?.Orders?.FirstOrDefault() is { } newOrder)
+                        {
+                            queriedOrders[orderId] = response;
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Failed to fetch order details for Order ID {orderId}.";
+                            return RedirectToAction("Details");
+                        }
+                    }
+
                     var orderIdsToDeliver = SelectedIds.Select(id => long.Parse(id)).ToList();
 
                     var builder = WebpayAdmin.DeliverOrders(Config)
@@ -642,18 +661,16 @@ public class OrdersController : Controller
                                 DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()] = new List<long>();
                             }
 
-                            var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
-                                .SetOrderId(deliveredOrder.SveaOrderId)
-                                .SetCountryCode(CountryCode.SE);
+                            if (queriedOrders.TryGetValue(sveaOrderId, out var queriedOrderResponse))
+                            {
+                                var queriedOrder = queriedOrderResponse.Orders.FirstOrDefault();
+                                var notDeliveredRowNumbers = queriedOrder?.OrderRows
+                                    .Where(row => row.Status == "NotDelivered")
+                                    .Select(row => row.RowNumber)
+                                    .ToList() ?? new List<long>();
 
-                            var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
-                            var newOrder = response.Orders.FirstOrDefault();
-
-                            var notDeliveredRowNumbers = newOrder.OrderRows
-                                .Where(row => row.Status == "NotDelivered")
-                                .Select(row => row.RowNumber)
-                                .ToList();
-                            DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
+                                DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
+                            }
                         }
 
                         TempData["DeliverMessage"] = $"Successfully delivered {delivery.OrdersDelivered.Count()} orders.";

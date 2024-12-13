@@ -508,10 +508,12 @@ else if (TempData["ErrorMessage"] != null)
             const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
             const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
             const notDeliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .not-delivered-row`);
+            const sveaDeliveryReferences = document.getElementById(`sveaDeliveryReferences-${orderId}`);
 
             if (editSection) editSection.style.display = "none";
             if (selectRowsSection) selectRowsSection.style.display = "none";
             if (addNewRowButton) addNewRowButton.style.display = "none";
+            if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";

@@ -691,6 +691,16 @@ public class OrdersController : Controller
 
                     if (getInvoicesResponse.ResultCode != 0)
                         TempData["ErrorMessage"] = getInvoicesResponse.ErrorMessage;
+                    else
+                    {
+                        TempData["Invoices"] = JsonSerializer.Serialize(getInvoicesResponse.Invoices);
+                        TempData["SuccessMessage"] = "Invoices retrieved successfully.";
+
+                        return View("Details", new OrderListViewModel
+                        {
+                            PaymentOrders = orderViewModels
+                        });
+                    }
 
                     break;
 

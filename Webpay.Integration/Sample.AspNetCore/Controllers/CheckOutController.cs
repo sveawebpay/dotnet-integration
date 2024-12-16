@@ -21,6 +21,7 @@ public class CheckOutController : Controller
     private readonly Market _marketService;
     private readonly StoreDbContext _context;
     private static readonly WebpayConfig Config = new WebpayConfig();
+    private static int SelectedAddressIndex { get; set; }
 
     public CheckOutController(
         Cart cartService,
@@ -82,6 +83,7 @@ public class CheckOutController : Controller
             ViewBag.Error = $"An error occurred: {ex.Message}";
         }
 
+        SelectedAddressIndex = 0;
         return View("Checkout");
     }
 
@@ -120,9 +122,16 @@ public class CheckOutController : Controller
         }
 
         var addressData = JsonSerializer.Deserialize<CustomerAddress[]>(addressDataJson);
+        if (SelectedAddressIndex < 0 || SelectedAddressIndex >= addressData.Length)
+        {
+            ViewBag.Error = "Invalid address selection.";
+            ViewBag.ShowAdditionalFields = true;
+            return View("Checkout");
+        }
+
+        var customerAddressData = addressData[SelectedAddressIndex];
         var correlationId = Guid.NewGuid();
         var clientOrderNumber = GenerateRandomOrderNumber();
-        var customerAddressData = addressData[0]; // Use first address...
         var ipAddress = GetIpAddress();
 
         var createOrderBuilder = WebpayConnection.CreateOrder(Config)
@@ -280,6 +289,13 @@ public class CheckOutController : Controller
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SaveSelectedAddress(int selectedAddressIndex)
+    {
+        SelectedAddressIndex = selectedAddressIndex;
+        return NoContent();
     }
 
     public ViewResult Thankyou()

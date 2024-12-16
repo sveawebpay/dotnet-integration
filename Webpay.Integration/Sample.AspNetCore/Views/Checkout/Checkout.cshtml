@@ -1,10 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Checkout";
     var isCompany = TempData["IsCompany"] != null && Convert.ToBoolean(TempData["IsCompany"]);
+    var testCustomers = new List<dynamic>
+    {
+        new { Result = "Approved", PersonOrOrgNr = "4605092222", CustomerType = "Private", Description = "Credit check successful." },
+        new { Result = "Denied", PersonOrOrgNr = "4610081111", CustomerType = "Private", Description = "Credit not approved; order can still be placed." },
+        new { Result = "Abuse", PersonOrOrgNr = "4606082222", CustomerType = "Private", Description = "Flagged for potential fraud." },
+        new { Result = "Limit", PersonOrOrgNr = "4611071111", CustomerType = "Private", Description = "Credit limit reached." },
+        new { Result = "Approved", PersonOrOrgNr = "4608142222", CustomerType = "Company", Description = "Credit check successful." },
+        new { Result = "Denied", PersonOrOrgNr = "4608302222", CustomerType = "Company", Description = "Credit not approved; order can still be placed." },
+        new { Result = "Abuse", PersonOrOrgNr = "4609191111", CustomerType = "Company", Description = "Flagged for potential fraud." },
+        new { Result = "Limit", PersonOrOrgNr = "4506172222", CustomerType = "Company", Description = "Credit limit reached." }
+    };
 }
 
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Svea Standalone Checkout</h1>
+
+    @*<div class="col-md-3">
+        <div class="card p-3 mb-4">
+            <h5 class="text-center">Test Customers</h5>
+            <ul class="list-group list-group-flush small">
+                @foreach (var customer in testCustomers)
+                {
+                    <li class="list-group-item">
+                        <strong>@customer.Result</strong> -
+                        @customer.PersonOrOrgNr -
+                        @customer.CustomerType<br />
+                        <span class="text-muted">@customer.Description</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>*@
 
     <div class="card p-4 mb-4">
         <h4 class="card-title">Enter Your Details</h4>
@@ -34,19 +62,33 @@
     {
         <div class="card p-4 mb-4">
             <h4 class="card-title">Customer Addresses</h4>
-            <ul class="list-group">
-                @foreach (var address in ViewBag.Addresses)
-                {
-                    <li class="list-group-item">
-                        <strong>@address.SecurityNumber</strong><br />
-                        @address.FirstName @address.LastName<br />
-                        @address.AddressLine1 @address.AddressLine2<br />
-                        @address.Zipcode @address.Postarea<br />
-                        <span>Phone: @address.PhoneNumber</span><br />
-                        <span>AddressSelector: @address.AddressSelector</span>
-                    </li>
-                }
-            </ul>
+            <form asp-action="SaveSelectedAddress" method="post" id="addressSelectionForm">
+                <ul class="list-group">
+                    @for (var i = 0; i < ViewBag.Addresses.Length; i++)
+                    {
+                        var address = ViewBag.Addresses[i];
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="selectedAddressIndex"
+                                       id="address-@i"
+                                       value="@i"
+                                @(i == 0 ? "checked" : "")
+                                       onchange="document.getElementById('addressSelectionForm').submit()" />
+                                <label class="form-check-label" for="address-@i">
+                                    <strong>@address.SecurityNumber</strong><br />
+                                    @address.FirstName @address.LastName<br />
+                                    @address.AddressLine1 @address.AddressLine2<br />
+                                    @address.Zipcode @address.Postarea<br />
+                                    <span>Phone: @address.PhoneNumber</span><br />
+                                    <span>AddressSelector: @address.AddressSelector</span>
+                                </label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </form>
         </div>
     }
 

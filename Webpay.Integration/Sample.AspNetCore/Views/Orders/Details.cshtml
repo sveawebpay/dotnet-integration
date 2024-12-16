@@ -292,7 +292,7 @@ else if (TempData["ErrorMessage"] != null)
                                                             <th>Vat Percent</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="newOrderRows">
+                                                    <tbody id="newOrderRows-@order.Order.SveaOrderId">
                                                         <!-- Existing Rows -->
                                                         @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
                                                         {
@@ -316,17 +316,31 @@ else if (TempData["ErrorMessage"] != null)
 
                                                         <!-- New Rows -->
                                                         <tr class="new-order-row" style="display: table-row;">
+                                                            @*
                                                             <td><span class="text-muted">New</span></td>
                                                             <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
                                                             <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
-                                                            @*<td><input type="number" name="NewOrderRows[0].Quantity" placeholder="New Quantity" /></td>*@
                                                             <td><input type="number" name="NewOrderRows[0].NumberOfUnits" placeholder="New Quantity" /></td>
                                                             <td><input type="number" step="0.01" name="NewOrderRows[0].PricePerUnit" placeholder="New Price Per Unit" /></td>
                                                             <td><input type="number" step="0.01" name="NewOrderRows[0].DiscountPercent" placeholder="New Discount Percent" /></td>
                                                             <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
+                                                            <td>
+                                                                <button type="button"
+                                                                        class="btn btn-danger remove-row-btn"
+                                                                        onclick="removeRow('@order.Order.SveaOrderId', this)">
+                                                                    Remove
+                                                                </button>
+                                                            </td>
+                                                            *@
                                                         </tr>
                                                     </tbody>
-                                                    <button type="button" class="btn btn-primary" id="addNewRowButton" style="display: none; margin-top: 10px; margin-bottom: 10px;">Add New Row</button>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            id="addNewRowButton-@order.Order.SveaOrderId"
+                                                            onclick="addNewRow('@order.Order.SveaOrderId')"
+                                                            style="display: none; margin-top: 10px; margin-bottom: 10px;">
+                                                        Add New Row
+                                                    </button>
                                                 </table>
                                             </div>
 
@@ -857,7 +871,7 @@ else if (TempData["ErrorMessage"] != null)
             const editSection = document.getElementById(`editOrderRows-${orderId}`);
             const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
             const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
-            const addNewRowButton = document.getElementById("addNewRowButton");
+            const addNewRowButton = document.getElementById(`addNewRowButton-${orderId}`);
 
             const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
             const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
@@ -870,7 +884,7 @@ else if (TempData["ErrorMessage"] != null)
             if (addNewRowButton) addNewRowButton.style.display = "none";
             if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
             if (invoiceDeliveryReferences) invoiceDeliveryReferences.style.display = "none";
-            clearOrderRows();
+            clearOrderRows(orderId);
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -941,10 +955,9 @@ else if (TempData["ErrorMessage"] != null)
             });
         }
 
-        document.getElementById("addNewRowButton").addEventListener("click", function () {
-            const tableBody = document.getElementById("newOrderRows");
+        function addNewRow(orderId) {
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
             const rowCount = tableBody.children.length;
-            //if (rowCount === -1) rowCount = 0;
 
             const previousLastRow = tableBody.querySelector("tr:last-child");
             if (previousLastRow) {
@@ -955,37 +968,39 @@ else if (TempData["ErrorMessage"] != null)
             }
 
             const newRow = `
-                        <tr class="new-order-row">
-                            <td><span class="text-muted">New</span></td>
-                            <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
-                            <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
-                            <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
-                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
-                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
-                            <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
-                            <td>
-                                <button type="button" class="btn btn-danger remove-row-btn">Remove</button>
-                            </td>
-                        </tr>`;
+                <tr class="new-order-row">
+                    <td><span class="text-muted">New</span></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
+                    <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-danger remove-row-btn"
+                            onclick="removeRow('${orderId}', this)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>`;
             tableBody.insertAdjacentHTML("beforeend", newRow);
-        });
+        }
 
-        // Delegate event listener for dynamically added remove buttons
-        document.getElementById("newOrderRows").addEventListener("click", function (event) {
-            if (event.target && event.target.classList.contains("remove-row-btn")) {
-                const row = event.target.closest("tr");
-                row.remove();
+        function removeRow(orderId, button) {
+            const row = button.closest("tr");
+            row.remove();
 
-                const tableBody = document.getElementById("newOrderRows");
-                const previousLastRow = tableBody.querySelector("tr:last-child");
-                if (previousLastRow) {
-                    const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
-                    if (previousRemoveButton) {
-                        previousRemoveButton.disabled = false;
-                    }
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
+            const previousLastRow = tableBody.querySelector("tr:last-child");
+            if (previousLastRow) {
+                const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
+                if (previousRemoveButton) {
+                    previousRemoveButton.disabled = false;
                 }
             }
-        });
+        }
 
         document.addEventListener("DOMContentLoaded", function () {
             const toggleButtons = document.querySelectorAll('[automation="toggle-general-actions"]');
@@ -1042,8 +1057,8 @@ else if (TempData["ErrorMessage"] != null)
             sveaDeliveryReferences.style.display = action === "GetInvoices" ? "block" : "none";
         }
 
-        function clearOrderRows() {
-            const tableBody = document.getElementById("newOrderRows");
+        function clearOrderRows(orderId) {
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
             const rows = tableBody.querySelectorAll("tr");
 
             rows.forEach((row, index) => {

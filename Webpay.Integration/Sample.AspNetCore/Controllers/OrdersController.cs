@@ -238,193 +238,38 @@ public class OrdersController : Controller
         switch (Action)
         {
             case "CloseOrderEu":
-                var closeOrderRequest = WebpayConnection.CloseOrder(Config)
-                    .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE);
-
-                var closeOrderResponse = await closeOrderRequest.CloseOrderByOrderType(paymentType.ToString()).DoRequestAsync();
-
-                if (closeOrderResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = closeOrderResponse.ErrorMessage;
-
+                await HandleCloseOrderEu(OrderId, paymentType);
                 break;
 
             case "DeliverOrderEu":
-                var orderRowBuilders = newOrder.OrderRows
-                    .Where(row => row.Status == "NotDelivered")
-                    .Select(row => row.ToOrderRowBuilder(isCompany))
-                    .ToList();
-
-                var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
-                    .AddOrderRows(orderRowBuilders)
-                    .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE);
-
-                if (paymentType == PaymentType.INVOICE)
-                {
-                    deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST);
-                }
-                var deliverOrderResponse = await deliverOrderRequest.DeliverOrderByPaymentType(paymentType).DoRequestAsync();
-
-                if (deliverOrderResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = deliverOrderResponse.ErrorMessage;
-                else
-                {
-                    var deliveryReferenceNumber = paymentType switch
-                    {
-                        PaymentType.INVOICE => deliverOrderResponse.DeliverOrderResult.InvoiceResultDetails.InvoiceId,
-                        PaymentType.PAYMENTPLAN => deliverOrderResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber,
-                        PaymentType.ACCOUNTCREDIT => deliverOrderResponse.DeliverOrderResult.AccountCreditResultDetails.AccountCreditId,
-                        _ => throw new InvalidOperationException("Unsupported PaymentType for delivering order.")
-                    };
-
-                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
-                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
-
-                    SveaOrderDeliveryReferences[OrderId].Add(deliveryReferenceNumber);
-
-                    // Save delivered rows
-                    if (!DeliveryReferenceOrderRows.ContainsKey(deliveryReferenceNumber.ToString()))
-                    {
-                        DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()] = new List<long>();
-                    }
-
-                    var notDeliveredRowNumbers = newOrder.OrderRows
-                        .Where(row => row.Status == "NotDelivered")
-                        .Select(row => row.RowNumber)
-                        .ToList();
-                    DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
-                }
-
+                await HandleDeliverOrderEu(OrderId, paymentType, newOrder, isCompany);
                 break;
 
             case "AddOrderRows":
-                if (NewOrderRows != null && NewOrderRows.Any())
-                {
-                    var newOrderRowBuilders = NewOrderRows
-                        .Select(row => row.ToOrderRowBuilder(isCompany, true))
-                        .ToList();
-
-                    var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
-                        .SetOrderId(long.Parse(OrderId))
-                        .SetCountryCode(CountryCode.SE)
-                        .AddOrderRows(newOrderRowBuilders);
-
-                    var addition = await addOrderRowsBuilder.AddOrderRowsByPaymentType(paymentType).DoRequestAsync();
-
-                    if (addition.ResultCode != 0)
-                        TempData["ErrorMessage"] = addition.ErrorMessage;
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "No new order rows found.";
-                }
+                await HandleAddOrderRows(OrderId, paymentType, NewOrderRows, isCompany);
                 break;
 
             case "UpdateOrderRows":
-                if (OrderRows != null)
-                {
-                    var newOrderRowBuilders = OrderRows
-                        .Where(row => row.Status == "NotDelivered")
-                        .Select(row => row.ToNumberedOrderRowBuilder(isCompany))
-                        .ToList();
-                    var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
-                        .SetOrderId(long.Parse(OrderId))
-                        .SetCountryCode(CountryCode.SE)
-                        .AddUpdateOrderRows(newOrderRowBuilders);
-
-                    var addition = await updateOrderRowsBuilder.UpdateOrderRowsByPaymentType(paymentType).DoRequestAsync();
-
-                    if (addition.ResultCode != 0)
-                        TempData["ErrorMessage"] = addition.ErrorMessage;
-                }
+                await HandleUpdateOrderRows(OrderId, paymentType, OrderRows, isCompany);
                 break;
 
             case "CancelOrderRows":
-                var rowIndexesToCancel = selectedRows.Select(row => row.RowNumber).ToList();
-
-                var cancellation = WebpayAdmin.CancelOrderRows(Config)
-                    .SetOrderId(long.Parse(OrderId))
-                    .SetRowsToCancel(rowIndexesToCancel)
-                    .SetCountryCode(CountryCode.SE);
-
-                var cancellationResponse = await cancellation.CancelPaymentTypeOrderRows(paymentType).DoRequestAsync();
-
-                if (cancellationResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = cancellationResponse.ErrorMessage;
-
+                await HandleCancelOrderRows(OrderId, paymentType, selectedRows);
                 break;
 
             case "UpdateOrder":
-                var clientOrderIdText = "Updated clientOrderId";
-                var notesText = "Updated notes";
-
-                var updateBuilder = new UpdateOrderBuilder(Config)
-                    .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE)
-                    .SetClientOrderNumber(clientOrderIdText)
-                    .SetNotes(notesText);
-
-                var updateResponse = await updateBuilder.UpdatePaymentTypeOrder(paymentType).DoRequestAsync();
-
-                if (updateResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = updateResponse.ErrorMessage;
-
+                await HandleUpdateOrder(OrderId, paymentType);
                 break;
 
             case "DeliverPartial":
-                var rowIndexesToDeliver = selectedRows.Select(row => row.RowNumber).ToList();
-
-                var deliverBuilder = WebpayAdmin.DeliverOrderRows(Config)
-                    .SetCountryCode(CountryCode.SE)
-                    .SetInvoiceDistributionType(DistributionType.POST)
-                    .SetRowsToDeliver(rowIndexesToDeliver)
-                    .SetOrderId(long.Parse(OrderId));
-
-                var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
-
-                if (deliverResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = deliverResponse.ErrorMessage;
-                else
-                {
-                    var deliveryReferenceNumbers = deliverResponse.OrdersDelivered
-                        .Select(o => o.DeliveryReferenceNumber)
-                        .Select(refNum => refNum)
-                        .ToList();
-
-                    if (!SveaOrderDeliveryReferences.ContainsKey(OrderId))
-                        SveaOrderDeliveryReferences[OrderId] = new List<long>();
-
-                    SveaOrderDeliveryReferences[OrderId].AddRange(deliveryReferenceNumbers);
-
-                    // Save delivered rows
-                    var referenceNumber = deliveryReferenceNumbers.FirstOrDefault();
-                    if (!DeliveryReferenceOrderRows.ContainsKey(referenceNumber.ToString()))
-                    {
-                        DeliveryReferenceOrderRows[referenceNumber.ToString()] = new List<long>();
-                    }
-                    DeliveryReferenceOrderRows[referenceNumber.ToString()].AddRange(rowIndexesToDeliver);
-                }
-
+                await HandleDeliverPartial(OrderId, paymentType, selectedRows);
                 break;
 
             case "CancelOrder":
-                var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
-                    .SetOrderId(long.Parse(OrderId))
-                    .SetCountryCode(CountryCode.SE);
-
-                var cancelOrderResponse = await cancelOrderBuilder.CancelPaymentTypeOrder(paymentType).DoRequestAsync();
-
-                if (cancelOrderResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = cancelOrderResponse.ErrorMessage;
-
+                await HandleCancelOrder(OrderId, paymentType);
                 break;
 
             case "CreditRows":
-                var newCreditOrderRows = NewOrderRows
-                    .Select(row => row.ToOrderRowBuilder(isCompany, true))
-                    .ToList();
-
                 if (!SveaDeliveryReference.HasValue)
                 {
                     TempData["ErrorMessage"] = "No delivery reference selected.";
@@ -433,70 +278,10 @@ public class OrdersController : Controller
                         PaymentOrders = orderViewModels
                     });
                 }
-                var deliveryReference = SveaDeliveryReference.Value;
-                var rowIndexesToCredit = selectedRows.Select(row => row.RowNumber).ToList();
-
-                if (paymentType == PaymentType.INVOICE)
+                else
                 {
-                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                        .SetInvoiceId(deliveryReference)
-                        .SetInvoiceDistributionType(DistributionType.POST)
-                        .SetCountryCode(CountryCode.SE)
-                        .AddCreditOrderRows(newCreditOrderRows)
-                        .SetRowsToCredit(rowIndexesToCredit)
-                        .CreditInvoiceOrderRows();
-
-                    var creditResponse = await creditBuilder.DoRequestAsync();
-
-                    if (creditResponse.ResultCode != 0)
-                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+                    await HandleCreditRows(OrderId, paymentType, NewOrderRows, selectedRows, SveaDeliveryReference.Value, isCompany);
                 }
-                else if (paymentType == PaymentType.PAYMENTPLAN)
-                {
-                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                        .SetContractNumber(deliveryReference)
-                        .SetCountryCode(CountryCode.SE)
-                        .AddCreditOrderRows(newCreditOrderRows)
-                        .SetRowsToCredit(rowIndexesToCredit)
-                        .CreditPaymentPlanOrderRows();
-
-                    var creditResponse = await creditBuilder.DoRequestAsync();
-
-                    if (creditResponse.ResultCode != 0)
-                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
-                }
-                else if (paymentType == PaymentType.ACCOUNTCREDIT)
-                {
-                    var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
-                        .SetContractNumber(deliveryReference)
-                        .SetCountryCode(CountryCode.SE)
-                        .AddCreditOrderRows(newCreditOrderRows)
-                        .SetRowsToCredit(rowIndexesToCredit)
-                        .CreditAccountCreditOrderRows();
-
-                    var creditResponse = await creditBuilder.DoRequestAsync();
-
-                    if (creditResponse.ResultCode != 0)
-                        TempData["ErrorMessage"] = creditResponse.ErrorMessage;
-                }
-
-                if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
-                {
-                    if (!CreditedDeliveryReferences.ContainsKey(OrderId))
-                    {
-                        CreditedDeliveryReferences[OrderId] = new List<long>();
-                    }
-                    CreditedDeliveryReferences[OrderId].Add(deliveryReference);
-
-                    if (DeliveryReferenceOrderRows.ContainsKey(deliveryReference.ToString()))
-                    {
-                        var existingRows = DeliveryReferenceOrderRows[deliveryReference.ToString()];
-
-                        DeliveryReferenceOrderRows[deliveryReference.ToString()] =
-                            existingRows.Except(rowIndexesToCredit).ToList();
-                    }
-                }
-
                 break;
 
             case "GetInvoicePdfLink":
@@ -508,27 +293,9 @@ public class OrdersController : Controller
                         PaymentOrders = orderViewModels
                     });
                 }
-                var getInvoicePdfLinkBuilder = WebpayAdmin.GetInvoicePdfLink(Config)
-                    .SetCountryCode(CountryCode.SE)
-                    .SetInvoiceId(SveaInvoiceDeliveryReference.Value);
-
-                var getInvoicePdfLinkRequest = getInvoicePdfLinkBuilder.Build();
-                var pdfLinkResponse = await getInvoicePdfLinkRequest.DoRequestAsync();
-
-                if (pdfLinkResponse.ResultCode != 0)
-                {
-                    TempData["ErrorMessage"] = pdfLinkResponse.ErrorMessage;
-                }
                 else
                 {
-                    var pdfLink = pdfLinkResponse.PdfLink;
-
-                    TempData["SuccessMessage"] = $"Invoice PDF link retrieved successfully: {pdfLink}";
-
-                    return View("Details", new OrderListViewModel
-                    {
-                        PaymentOrders = orderViewModels
-                    });
+                    await HandleGetInvoicePdfLink(SveaInvoiceDeliveryReference.Value);
                 }
 
                 break;
@@ -543,41 +310,14 @@ public class OrdersController : Controller
                         PaymentOrders = orderViewModels
                     });
                 }
-
-                var contractNumber = contractNumbers.FirstOrDefault();
-
-                var contractPdf = await WebpayConnection
-                    .GetContractPdf(Config)
-                    .SetCountryCode(CountryCode.SE)
-                    .SetContractNumber(contractNumber)
-                    .DoRequestAsync();
-
-                if (contractPdf.ResultCode == 0)
-                {
-                    Console.WriteLine("Contract PDF fetched successfully!");
-                    Console.WriteLine($"PDF Link: {contractPdf.PdfLink}");
-
-                    if (!string.IsNullOrEmpty(contractPdf.FileBinaryDataBase64))
-                    {
-                        var pdfBytes = Convert.FromBase64String(contractPdf.FileBinaryDataBase64);
-                        System.IO.File.WriteAllBytes("Contract.pdf", pdfBytes);
-                        Console.WriteLine($"PDF saved to Contract.pdf (Size: {contractPdf.FileLengthInBytes} bytes)");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No binary data available for the PDF.");
-                    }
-                }
                 else
                 {
-                    TempData["ErrorMessage"] = contractPdf.ErrorMessage;
+                    await HandleGetContractPdfEu(OrderId, contractNumbers);
                 }
-
                 break;
 
             case "ApproveInvoice":
-                // TODO: if multiple deliveries, allow user to select one
-                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var invoiceDeliveryReference) || !invoiceDeliveryReference.Any())
+                if (!SveaOrderDeliveryReferences.TryGetValue(OrderId, out var invoiceDeliveryReferences) || !invoiceDeliveryReferences.Any())
                 {
                     TempData["ErrorMessage"] = "No delivery references found for this order.";
                     return View("Details", new OrderListViewModel
@@ -585,21 +325,11 @@ public class OrdersController : Controller
                         PaymentOrders = orderViewModels
                     });
                 }
-
-                var firstInvoiceDeliveryReference = invoiceDeliveryReference.FirstOrDefault(); // Use first delivery reference for now
-
-                var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
-                    .SetInvoiceId(firstInvoiceDeliveryReference)
-                    .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
-                    .SetCountryCode(CountryCode.SE);
-
-                var approveInvoiceResponse = await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
-
-                if (approveInvoiceResponse.ResultCode != 0)
-                    TempData["ErrorMessage"] = approveInvoiceResponse.ErrorMessage;
-
+                else
+                {
+                    await HandleApproveInvoice(OrderId, invoiceDeliveryReferences);
+                }
                 break;
-
             #endregion
 
             default:
@@ -629,150 +359,31 @@ public class OrdersController : Controller
             switch (Action)
             {
                 case "DeliverOrders":
-
                     if (SelectedIds == null || !SelectedIds.Any())
                     {
                         TempData["ErrorMessage"] = "No orders selected for delivery.";
                         return RedirectToAction("Details");
                     }
-
-                    var paymentType = SelectedPaymentType.ToLowerInvariant() switch
-                    {
-                        "invoice" => PaymentType.INVOICE,
-                        "paymentplan" => PaymentType.PAYMENTPLAN,
-                        "accountcredit" => PaymentType.ACCOUNTCREDIT,
-                        _ => throw new ArgumentException("Invalid payment type.")
-                    };
-
-                    var queriedOrders = new Dictionary<long, AdminWS.GetOrdersResponse>();
-                    foreach (var orderId in SelectedIds.Select(long.Parse))
-                    {
-                        var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
-                            .SetOrderId(orderId)
-                            .SetCountryCode(CountryCode.SE);
-
-                        var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
-                        if (response?.Orders?.FirstOrDefault() is { } newOrder)
-                        {
-                            queriedOrders[orderId] = response;
-                        }
-                        else
-                        {
-                            TempData["ErrorMessage"] = $"Failed to fetch order details for Order ID {orderId}.";
-                            return RedirectToAction("Details");
-                        }
-                    }
-
-                    var orderIdsToDeliver = SelectedIds.Select(id => long.Parse(id)).ToList();
-
-                    var builder = WebpayAdmin.DeliverOrders(Config)
-                        .SetOrderIds(orderIdsToDeliver)
-                        .SetCountryCode(CountryCode.SE);
-
-                    if (paymentType == PaymentType.INVOICE)
-                    {
-                        builder.SetInvoiceDistributionType(DistributionType.POST);
-                    }
-
-                    var delivery = await builder.DeliverPaymentTypeOrders(paymentType).DoRequestAsync();
-
-                    if (delivery.ResultCode != 0)
-                        TempData["ErrorMessage"] = delivery.ErrorMessage;
                     else
                     {
-                        foreach (var deliveredOrder in delivery.OrdersDelivered)
-                        {
-                            var sveaOrderId = deliveredOrder.SveaOrderId;
-                            var deliveryReferenceNumber = deliveredOrder.DeliveryReferenceNumber;
-
-                            if (!SveaOrderDeliveryReferences.ContainsKey(sveaOrderId.ToString()))
-                            {
-                                SveaOrderDeliveryReferences[sveaOrderId.ToString()] = new List<long>();
-                            }
-
-                            if (!SveaOrderDeliveryReferences[sveaOrderId.ToString()].Contains(deliveryReferenceNumber))
-                            {
-                                SveaOrderDeliveryReferences[sveaOrderId.ToString()].Add(deliveryReferenceNumber);
-                            }
-
-                            // Save delivered rows
-                            if (!DeliveryReferenceOrderRows.ContainsKey(deliveryReferenceNumber.ToString()))
-                            {
-                                DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()] = new List<long>();
-                            }
-
-                            if (queriedOrders.TryGetValue(sveaOrderId, out var queriedOrderResponse))
-                            {
-                                var queriedOrder = queriedOrderResponse.Orders.FirstOrDefault();
-                                var notDeliveredRowNumbers = queriedOrder?.OrderRows
-                                    .Where(row => row.Status == "NotDelivered")
-                                    .Select(row => row.RowNumber)
-                                    .ToList() ?? new List<long>();
-
-                                DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
-                            }
-                        }
-
-                        TempData["DeliverMessage"] = $"Successfully delivered {delivery.OrdersDelivered.Count()} orders.";
+                        await HandleDeliverOrders(SelectedPaymentType, SelectedIds);
+                        return RedirectToAction("Details");
                     }
-
-                    break;
 
                 case "GetInvoices":
-                    var clientInvoiceIds = SelectedIds.SelectMany(refs => refs.Split(',')).Select(long.Parse).ToList();
-
-                    var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
-                        .SetCountryCode(CountryCode.SE)
-                        .SetInvoiceType(PaymentType.INVOICE)
-                        .SetInvoiceIds(clientInvoiceIds);
-
-                    var getInvoicesRequest = getInvoicesBuilder.Build();
-                    var getInvoicesResponse = await getInvoicesRequest.DoRequestAsync();
-
-                    if (getInvoicesResponse.ResultCode != 0)
-                        TempData["ErrorMessage"] = getInvoicesResponse.ErrorMessage;
+                    if (SelectedIds == null || !SelectedIds.Any())
+                    {
+                        TempData["ErrorMessage"] = "No invoices selected for GetInvoices.";
+                        return RedirectToAction("Details");
+                    }
                     else
                     {
-                        TempData["Invoices"] = JsonSerializer.Serialize(getInvoicesResponse.Invoices);
-                        TempData["SuccessMessage"] = "Invoices retrieved successfully (displayed at bottom of the page).";
-
-                        return View("Details", new OrderListViewModel
-                        {
-                            PaymentOrders = orderViewModels
-                        });
+                        await HandleGetInvoices(SelectedIds);
                     }
-
                     break;
 
                 case "GetFinancialReport":
-                    var financialReportBuilder = WebpayAdmin.GetFinancialReport(Config)
-                        .SetCountryCode(CountryCode.SE)
-                        //.SetFromDate(new DateTime(2024, 1, 1))
-                        //.SetToDate(new DateTime(2024, 12, 31));
-                        .SetFromDate(DateTime.Now.AddDays(-120).Date)
-                        .SetToDate(DateTime.Now.Date);
-
-                    var financialReportRequest = financialReportBuilder.Build();
-                    var financialReportResponse = await financialReportRequest.DoRequestAsync();
-
-                    if (financialReportResponse.ResultCode != 0)
-                    {
-                        TempData["ErrorMessage"] = financialReportResponse.ErrorMessage;
-                    }
-                    else
-                    {
-                        var reportHeader = financialReportResponse.ReportHeader;
-                        var reportRows = financialReportResponse.ReportRows;
-
-                        TempData["FinancialReport"] = JsonSerializer.Serialize(financialReportResponse);
-                        TempData["SuccessMessage"] = "Financial report retrieved successfully (displayed at bottom of the page).";
-
-                        return View("Details", new OrderListViewModel
-                        {
-                            PaymentOrders = orderViewModels
-                        });
-                    }
-
+                    await HandleGetFinancialReport();
                     break;
 
                 //case "GetInvoiceReport":
@@ -805,13 +416,472 @@ public class OrdersController : Controller
             TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
         }
 
-        return RedirectToAction("Details");
+        return View("Details", new OrderListViewModel
+        {
+            PaymentOrders = orderViewModels
+        });
     }
 
     // GET: Orders
     public IActionResult Index()
     {
         return View();
+    }
+
+    private async Task HandleCloseOrderEu(string orderId, PaymentType paymentType)
+    {
+        var closeOrderRequest = WebpayConnection.CloseOrder(Config)
+            .SetOrderId(long.Parse(orderId))
+            .SetCountryCode(CountryCode.SE);
+
+        var closeOrderResponse = await closeOrderRequest.CloseOrderByOrderType(paymentType.ToString()).DoRequestAsync();
+
+        if (closeOrderResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = closeOrderResponse.ErrorMessage;
+    }
+
+    private async Task HandleDeliverOrderEu(string orderId, PaymentType paymentType, AdminWS.Order newOrder, bool isCompany)
+    {
+        var orderRowBuilders = newOrder.OrderRows
+            .Where(row => row.Status == "NotDelivered")
+            .Select(row => row.ToOrderRowBuilder(isCompany))
+            .ToList();
+
+        var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
+            .AddOrderRows(orderRowBuilders)
+            .SetOrderId(long.Parse(orderId))
+            .SetCountryCode(CountryCode.SE);
+
+        if (paymentType == PaymentType.INVOICE)
+        {
+            deliverOrderRequest.SetInvoiceDistributionType(DistributionType.POST);
+        }
+        var deliverOrderResponse = await deliverOrderRequest.DeliverOrderByPaymentType(paymentType).DoRequestAsync();
+
+        if (deliverOrderResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = deliverOrderResponse.ErrorMessage;
+        else
+        {
+            var deliveryReferenceNumber = paymentType switch
+            {
+                PaymentType.INVOICE => deliverOrderResponse.DeliverOrderResult.InvoiceResultDetails.InvoiceId,
+                PaymentType.PAYMENTPLAN => deliverOrderResponse.DeliverOrderResult.PaymentPlanResultDetails.ContractNumber,
+                PaymentType.ACCOUNTCREDIT => deliverOrderResponse.DeliverOrderResult.AccountCreditResultDetails.AccountCreditId,
+                _ => throw new InvalidOperationException("Unsupported PaymentType for delivering order.")
+            };
+
+            if (!SveaOrderDeliveryReferences.ContainsKey(orderId))
+                SveaOrderDeliveryReferences[orderId] = new List<long>();
+
+            SveaOrderDeliveryReferences[orderId].Add(deliveryReferenceNumber);
+
+            // Save delivered rows
+            if (!DeliveryReferenceOrderRows.ContainsKey(deliveryReferenceNumber.ToString()))
+            {
+                DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()] = new List<long>();
+            }
+
+            var notDeliveredRowNumbers = newOrder.OrderRows
+                .Where(row => row.Status == "NotDelivered")
+                .Select(row => row.RowNumber)
+                .ToList();
+            DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
+        }
+    }
+
+    private async Task HandleAddOrderRows(string orderId, PaymentType paymentType, List<AdminWS.OrderRow> newOrderRows, bool isCompany)
+    {
+        if (newOrderRows != null && newOrderRows.Any())
+        {
+            var newOrderRowBuilders = newOrderRows
+                .Select(row => row.ToOrderRowBuilder(isCompany, true))
+                .ToList();
+
+            var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
+                .SetOrderId(long.Parse(orderId))
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRows(newOrderRowBuilders);
+
+            var addition = await addOrderRowsBuilder.AddOrderRowsByPaymentType(paymentType).DoRequestAsync();
+
+            if (addition.ResultCode != 0)
+                TempData["ErrorMessage"] = addition.ErrorMessage;
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "No new order rows found.";
+        }
+    }
+
+    private async Task HandleUpdateOrderRows(string orderId, PaymentType paymentType, List<SelectableNumberedOrderRow> orderRows, bool isCompany)
+    {
+        if (orderRows != null)
+        {
+            var newOrderRowBuilders = orderRows
+                .Where(row => row.Status == "NotDelivered")
+                .Select(row => row.ToNumberedOrderRowBuilder(isCompany))
+                .ToList();
+            var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
+                .SetOrderId(long.Parse(orderId))
+                .SetCountryCode(CountryCode.SE)
+                .AddUpdateOrderRows(newOrderRowBuilders);
+
+            var addition = await updateOrderRowsBuilder.UpdateOrderRowsByPaymentType(paymentType).DoRequestAsync();
+
+            if (addition.ResultCode != 0)
+                TempData["ErrorMessage"] = addition.ErrorMessage;
+        }
+    }
+
+    private async Task HandleCancelOrderRows(string orderId, PaymentType paymentType, List<SelectableNumberedOrderRow> selectedRows)
+    {
+        var rowIndexesToCancel = selectedRows.Select(row => row.RowNumber).ToList();
+
+        var cancellation = WebpayAdmin.CancelOrderRows(Config)
+            .SetOrderId(long.Parse(orderId))
+            .SetRowsToCancel(rowIndexesToCancel)
+            .SetCountryCode(CountryCode.SE);
+
+        var cancellationResponse = await cancellation.CancelPaymentTypeOrderRows(paymentType).DoRequestAsync();
+
+        if (cancellationResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = cancellationResponse.ErrorMessage;
+    }
+
+    private async Task HandleUpdateOrder(string orderId, PaymentType paymentType)
+    {
+        var clientOrderIdText = "Updated clientOrderId";
+        var notesText = "Updated notes";
+
+        var updateBuilder = new UpdateOrderBuilder(Config)
+            .SetOrderId(long.Parse(orderId))
+            .SetCountryCode(CountryCode.SE)
+            .SetClientOrderNumber(clientOrderIdText)
+            .SetNotes(notesText);
+
+        var updateResponse = await updateBuilder.UpdatePaymentTypeOrder(paymentType).DoRequestAsync();
+
+        if (updateResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = updateResponse.ErrorMessage;
+    }
+
+    private async Task HandleDeliverPartial(string orderId, PaymentType paymentType, List<SelectableNumberedOrderRow> selectedRows)
+    {
+        var rowIndexesToDeliver = selectedRows.Select(row => row.RowNumber).ToList();
+
+        var deliverBuilder = WebpayAdmin.DeliverOrderRows(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetInvoiceDistributionType(DistributionType.POST)
+            .SetRowsToDeliver(rowIndexesToDeliver)
+            .SetOrderId(long.Parse(orderId));
+
+        var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
+
+        if (deliverResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = deliverResponse.ErrorMessage;
+        else
+        {
+            var deliveryReferenceNumbers = deliverResponse.OrdersDelivered
+                .Select(o => o.DeliveryReferenceNumber)
+                .Select(refNum => refNum)
+                .ToList();
+
+            if (!SveaOrderDeliveryReferences.ContainsKey(orderId))
+                SveaOrderDeliveryReferences[orderId] = new List<long>();
+
+            SveaOrderDeliveryReferences[orderId].AddRange(deliveryReferenceNumbers);
+
+            // Save delivered rows
+            var referenceNumber = deliveryReferenceNumbers.FirstOrDefault();
+            if (!DeliveryReferenceOrderRows.ContainsKey(referenceNumber.ToString()))
+            {
+                DeliveryReferenceOrderRows[referenceNumber.ToString()] = new List<long>();
+            }
+            DeliveryReferenceOrderRows[referenceNumber.ToString()].AddRange(rowIndexesToDeliver);
+        }
+    }
+
+    private async Task HandleCancelOrder(string orderId, PaymentType paymentType)
+    {
+        var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
+            .SetOrderId(long.Parse(orderId))
+            .SetCountryCode(CountryCode.SE);
+
+        var cancelOrderResponse = await cancelOrderBuilder.CancelPaymentTypeOrder(paymentType).DoRequestAsync();
+
+        if (cancelOrderResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = cancelOrderResponse.ErrorMessage;
+    }
+
+    private async Task HandleCreditRows(string orderId, PaymentType paymentType, List<AdminWS.OrderRow> newOrderRows, List<SelectableNumberedOrderRow> selectedRows, long deliveryReference, bool isCompany)
+    {
+        var newCreditOrderRows = newOrderRows
+            .Select(row => row.ToOrderRowBuilder(isCompany, true))
+            .ToList();
+
+        var rowIndexesToCredit = selectedRows.Select(row => row.RowNumber).ToList();
+
+        if (paymentType == PaymentType.INVOICE)
+        {
+            var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
+                .SetInvoiceId(deliveryReference)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRows(newCreditOrderRows)
+                .SetRowsToCredit(rowIndexesToCredit)
+                .CreditInvoiceOrderRows();
+
+            var creditResponse = await creditBuilder.DoRequestAsync();
+
+            if (creditResponse.ResultCode != 0)
+                TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+        }
+        else if (paymentType == PaymentType.PAYMENTPLAN)
+        {
+            var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
+                .SetContractNumber(deliveryReference)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRows(newCreditOrderRows)
+                .SetRowsToCredit(rowIndexesToCredit)
+                .CreditPaymentPlanOrderRows();
+
+            var creditResponse = await creditBuilder.DoRequestAsync();
+
+            if (creditResponse.ResultCode != 0)
+                TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+        }
+        else if (paymentType == PaymentType.ACCOUNTCREDIT)
+        {
+            var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
+                .SetContractNumber(deliveryReference)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRows(newCreditOrderRows)
+                .SetRowsToCredit(rowIndexesToCredit)
+                .CreditAccountCreditOrderRows();
+
+            var creditResponse = await creditBuilder.DoRequestAsync();
+
+            if (creditResponse.ResultCode != 0)
+                TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+        }
+
+        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
+        {
+            if (!CreditedDeliveryReferences.ContainsKey(orderId))
+            {
+                CreditedDeliveryReferences[orderId] = new List<long>();
+            }
+            CreditedDeliveryReferences[orderId].Add(deliveryReference);
+
+            if (DeliveryReferenceOrderRows.ContainsKey(deliveryReference.ToString()))
+            {
+                var existingRows = DeliveryReferenceOrderRows[deliveryReference.ToString()];
+
+                DeliveryReferenceOrderRows[deliveryReference.ToString()] =
+                    existingRows.Except(rowIndexesToCredit).ToList();
+            }
+        }
+    }
+
+    private async Task HandleGetInvoicePdfLink(long invoiceDeliveryReference)
+    {
+        var getInvoicePdfLinkBuilder = WebpayAdmin.GetInvoicePdfLink(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetInvoiceId(invoiceDeliveryReference);
+
+        var getInvoicePdfLinkRequest = getInvoicePdfLinkBuilder.Build();
+        var pdfLinkResponse = await getInvoicePdfLinkRequest.DoRequestAsync();
+
+        if (pdfLinkResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = pdfLinkResponse.ErrorMessage;
+        }
+        else
+        {
+            var pdfLink = pdfLinkResponse.PdfLink;
+            TempData["SuccessMessage"] = $"Invoice PDF link retrieved successfully: {pdfLink}";
+        }
+    }
+
+    #region Deprecated
+    private async Task HandleGetContractPdfEu(string orderId, List<long> contractNumbers)
+    {
+        var contractNumber = contractNumbers.FirstOrDefault();
+
+        var contractPdf = await WebpayConnection
+            .GetContractPdf(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetContractNumber(contractNumber)
+            .DoRequestAsync();
+
+        if (contractPdf.ResultCode == 0)
+        {
+            Console.WriteLine("Contract PDF fetched successfully!");
+            Console.WriteLine($"PDF Link: {contractPdf.PdfLink}");
+
+            if (!string.IsNullOrEmpty(contractPdf.FileBinaryDataBase64))
+            {
+                var pdfBytes = Convert.FromBase64String(contractPdf.FileBinaryDataBase64);
+                System.IO.File.WriteAllBytes("Contract.pdf", pdfBytes);
+                Console.WriteLine($"PDF saved to Contract.pdf (Size: {contractPdf.FileLengthInBytes} bytes)");
+            }
+            else
+            {
+                Console.WriteLine("No binary data available for the PDF.");
+            }
+        }
+        else
+        {
+            TempData["ErrorMessage"] = contractPdf.ErrorMessage;
+        }
+    }
+
+    private async Task HandleApproveInvoice(string orderId, List<long> invoiceDeliveryReferences)
+    {
+        // TODO: if multiple deliveries, allow user to select one
+        var firstInvoiceDeliveryReference = invoiceDeliveryReferences.FirstOrDefault(); // Use first delivery reference for now
+
+        var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
+            .SetInvoiceId(firstInvoiceDeliveryReference)
+            .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
+            .SetCountryCode(CountryCode.SE);
+
+        var approveInvoiceResponse = await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
+
+        if (approveInvoiceResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = approveInvoiceResponse.ErrorMessage;
+    }
+    #endregion
+
+    private async Task HandleDeliverOrders(string selectedPaymentType, List<string> selectedIds)
+    {
+        var paymentType = selectedPaymentType.ToLowerInvariant() switch
+        {
+            "invoice" => PaymentType.INVOICE,
+            "paymentplan" => PaymentType.PAYMENTPLAN,
+            "accountcredit" => PaymentType.ACCOUNTCREDIT,
+            _ => throw new ArgumentException("Invalid payment type.")
+        };
+
+        var queriedOrders = new Dictionary<long, AdminWS.GetOrdersResponse>();
+        foreach (var orderId in selectedIds.Select(long.Parse))
+        {
+            var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
+                .SetOrderId(orderId)
+                .SetCountryCode(CountryCode.SE);
+
+            var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
+            if (response?.Orders?.FirstOrDefault() is { } newOrder)
+            {
+                queriedOrders[orderId] = response;
+            }
+            else
+            {
+                var errorMessage = $"Failed to fetch order details for Order ID {orderId}.";
+                TempData["ErrorMessage"] = errorMessage;
+                throw new InvalidOperationException(errorMessage);
+            }
+        }
+
+        var orderIdsToDeliver = selectedIds.Select(id => long.Parse(id)).ToList();
+
+        var builder = WebpayAdmin.DeliverOrders(Config)
+            .SetOrderIds(orderIdsToDeliver)
+            .SetCountryCode(CountryCode.SE);
+
+        if (paymentType == PaymentType.INVOICE)
+        {
+            builder.SetInvoiceDistributionType(DistributionType.POST);
+        }
+
+        var delivery = await builder.DeliverPaymentTypeOrders(paymentType).DoRequestAsync();
+
+        if (delivery.ResultCode != 0)
+            TempData["ErrorMessage"] = delivery.ErrorMessage;
+        else
+        {
+            foreach (var deliveredOrder in delivery.OrdersDelivered)
+            {
+                var sveaOrderId = deliveredOrder.SveaOrderId;
+                var deliveryReferenceNumber = deliveredOrder.DeliveryReferenceNumber;
+
+                if (!SveaOrderDeliveryReferences.ContainsKey(sveaOrderId.ToString()))
+                {
+                    SveaOrderDeliveryReferences[sveaOrderId.ToString()] = new List<long>();
+                }
+
+                if (!SveaOrderDeliveryReferences[sveaOrderId.ToString()].Contains(deliveryReferenceNumber))
+                {
+                    SveaOrderDeliveryReferences[sveaOrderId.ToString()].Add(deliveryReferenceNumber);
+                }
+
+                // Save delivered rows
+                if (!DeliveryReferenceOrderRows.ContainsKey(deliveryReferenceNumber.ToString()))
+                {
+                    DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()] = new List<long>();
+                }
+
+                if (queriedOrders.TryGetValue(sveaOrderId, out var queriedOrderResponse))
+                {
+                    var queriedOrder = queriedOrderResponse.Orders.FirstOrDefault();
+                    var notDeliveredRowNumbers = queriedOrder?.OrderRows
+                        .Where(row => row.Status == "NotDelivered")
+                        .Select(row => row.RowNumber)
+                        .ToList() ?? new List<long>();
+
+                    DeliveryReferenceOrderRows[deliveryReferenceNumber.ToString()].AddRange(notDeliveredRowNumbers);
+                }
+            }
+
+            TempData["DeliverMessage"] = $"Successfully delivered {delivery.OrdersDelivered.Count()} orders.";
+        }
+    }
+
+    private async Task HandleGetInvoices(List<string> selectedIds)
+    {
+        var clientInvoiceIds = selectedIds.SelectMany(refs => refs.Split(',')).Select(long.Parse).ToList();
+
+        var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetInvoiceType(PaymentType.INVOICE)
+            .SetInvoiceIds(clientInvoiceIds);
+
+        var getInvoicesRequest = getInvoicesBuilder.Build();
+        var getInvoicesResponse = await getInvoicesRequest.DoRequestAsync();
+
+        if (getInvoicesResponse.ResultCode != 0)
+            TempData["ErrorMessage"] = getInvoicesResponse.ErrorMessage;
+        else
+        {
+            TempData["Invoices"] = JsonSerializer.Serialize(getInvoicesResponse.Invoices);
+            TempData["SuccessMessage"] = "Invoices retrieved successfully (displayed at bottom of the page).";
+        }
+    }
+
+    private async Task HandleGetFinancialReport()
+    {
+        var financialReportBuilder = WebpayAdmin.GetFinancialReport(Config)
+            .SetCountryCode(CountryCode.SE)
+            //.SetFromDate(new DateTime(2024, 1, 1))
+            //.SetToDate(new DateTime(2024, 12, 31));
+            .SetFromDate(DateTime.Now.AddDays(-120).Date)
+            .SetToDate(DateTime.Now.Date);
+
+        var financialReportRequest = financialReportBuilder.Build();
+        var financialReportResponse = await financialReportRequest.DoRequestAsync();
+
+        if (financialReportResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = financialReportResponse.ErrorMessage;
+        }
+        else
+        {
+            var reportHeader = financialReportResponse.ReportHeader;
+            var reportRows = financialReportResponse.ReportRows;
+
+            TempData["FinancialReport"] = JsonSerializer.Serialize(financialReportResponse);
+            TempData["SuccessMessage"] = "Financial report retrieved successfully (displayed at bottom of the page).";
+        }
     }
 
     private bool OrderExists(int id)

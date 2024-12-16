@@ -17,13 +17,13 @@
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Svea Standalone Checkout</h1>
 
-    @*<div class="col-md-3">
-        <div class="card p-3 mb-4">
+    <div class="test-customers" style="position: absolute; top: 200px; right: 40px; width: 300px; z-index: 1000;">
+        <div class="card p-3" style="max-width: 100%;">
             <h5 class="text-center">Test Customers</h5>
             <ul class="list-group list-group-flush small">
                 @foreach (var customer in testCustomers)
                 {
-                    <li class="list-group-item">
+                    <li class="list-group-item p-1">
                         <strong>@customer.Result</strong> -
                         @customer.PersonOrOrgNr -
                         @customer.CustomerType<br />
@@ -32,7 +32,7 @@
                 }
             </ul>
         </div>
-    </div>*@
+    </div>
 
     <div class="card p-4 mb-4">
         <h4 class="card-title">Enter Your Details</h4>

@@ -24,29 +24,9 @@
         : new Dictionary<string, List<long>>();
 }
 
-@if (TempData["CancelMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["CancelMessage"]</div>
-}
-else if (TempData["OrderRowMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["OrderRowMessage"]</div>
-}
-else if (TempData["DeliverMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["DeliverMessage"]</div>
-}
-else if (TempData["SuccessMessage"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-else if (TempData["CreditMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["CreditMessage"]</div>
-}
-else if (TempData["ReversalMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["ReversalMessage"]</div>
 }
 else if (TempData["ErrorMessage"] != null)
 {

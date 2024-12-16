@@ -197,8 +197,7 @@ public class OrdersController : Controller
     [HttpPost]
     public async Task<IActionResult> ExecuteAction(string OrderId, string Action, List<SelectableNumberedOrderRow> OrderRows, List<AdminWS.OrderRow> NewOrderRows, long? SveaDeliveryReference, long? SveaInvoiceDeliveryReference)
     {
-        TempData["ErrorMessage"] = null;
-        TempData["SuccessMessage"] = null;
+        ClearTempData();
 
         if (string.IsNullOrWhiteSpace(OrderId) || string.IsNullOrWhiteSpace(Action))
         {
@@ -336,8 +335,8 @@ public class OrdersController : Controller
                 return BadRequest("Invalid action.");
         }
 
-        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
-            TempData["DeliverMessage"] = "Action successfully executed!";
+        if (string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string) && string.IsNullOrWhiteSpace(TempData["SuccessMessage"] as string))
+            TempData["SuccessMessage"] = "Action successfully executed!";
 
         return RedirectToAction("Details");
     }
@@ -345,8 +344,7 @@ public class OrdersController : Controller
     [HttpPost]
     public async Task<IActionResult> ExecuteGeneralAction(string Action, string SelectedPaymentType, List<string> SelectedIds)
     {
-        TempData["ErrorMessage"] = null;
-        TempData["SuccessMessage"] = null;
+        ClearTempData();
 
         if (string.IsNullOrWhiteSpace(Action))
         {
@@ -829,7 +827,7 @@ public class OrdersController : Controller
                 }
             }
 
-            TempData["DeliverMessage"] = $"Successfully delivered {delivery.OrdersDelivered.Count()} orders.";
+            TempData["SuccessMessage"] = $"Successfully delivered {delivery.OrdersDelivered.Count()} orders.";
         }
     }
 
@@ -959,6 +957,18 @@ public class OrdersController : Controller
             TempData["RegressionReport"] = JsonSerializer.Serialize(regressionReportResponse);
             TempData["SuccessMessage"] = "Regression report retrieved successfully (displayed at bottom of the page).";
         }
+    }
+
+    private void ClearTempData()
+    {
+        TempData["ErrorMessage"] = null;
+        TempData["SuccessMessage"] = null;
+        TempData["Invoices"] = null;
+        TempData["FinancialReport"] = null;
+        TempData["InvoiceReport"] = null;
+        TempData["PaymentPlanReport"] = null;
+        TempData["AccountingReport"] = null;
+        TempData["RegressionReport"] = null;
     }
 
     private bool OrderExists(int id)

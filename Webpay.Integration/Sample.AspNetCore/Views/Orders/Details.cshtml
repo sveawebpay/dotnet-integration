@@ -435,9 +435,9 @@ else if (TempData["ErrorMessage"] != null)
                                     <option value="GetInvoices">Get Invoices</option>
                                     <option value="GetFinancialReport">Get Financial Report</option>
                                     <option value="GetInvoiceReport">Get Invoice Report</option>
+                                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
                                     <option value="GetAccountingReport">Get Accounting Report</option>
                                     <option value="GetRegressionReport">Get Regression Report</option>
-                                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
                                 </select>
                             </div>
 
@@ -520,7 +520,7 @@ else if (TempData["ErrorMessage"] != null)
     <hr />
 </div>
 
-<!-- GetInvoices result -->
+<!-- GetInvoices -->
 @{
     var invoices = TempData["Invoices"] != null
         ? JsonSerializer.Deserialize<List<AdminWS.Invoice>>(TempData["Invoices"].ToString())
@@ -560,7 +560,7 @@ else if (TempData["ErrorMessage"] != null)
                     <td>@invoice.Customer.Email</td>
                     <td>@invoice.Customer.PhoneNumber</td>
                     <td>@invoice.Type</td>
-                    <!-- TODO: Add more properties -->
+                    <!-- TODO: more properties? -->
                     <td>
                         @if (invoice.InvoiceRows != null && invoice.InvoiceRows.Any())
                         {
@@ -584,18 +584,17 @@ else if (TempData["ErrorMessage"] != null)
     </table>
 }
 
+<!-- GetFinancialReport -->
 @{
     var financialReport = TempData["FinancialReport"] != null
         ? JsonSerializer.Deserialize<AdminWS.GetFinancialReportResponse>(TempData["FinancialReport"].ToString())
         : null;
 }
 
-<!-- GetFinancialReport result -->
 @if (financialReport != null)
 {
     <h2>Financial Report</h2>
 
-    <!-- Report Header -->
     <div>
         <h3>Report Header</h3>
         <table class="table table-bordered">
@@ -616,7 +615,6 @@ else if (TempData["ErrorMessage"] != null)
         </table>
     </div>
 
-    <!-- Report Rows -->
     <div>
         <h3>Report Rows</h3>
         <table class="table table-striped">
@@ -640,6 +638,224 @@ else if (TempData["ErrorMessage"] != null)
                         <td>@row.Count</td>
                         <td>@row.Credit</td>
                         <td>@row.Debit</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetInvoiceReport -->
+@{
+    var invoiceReport = TempData["InvoiceReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetInvoiceReportResponse>(TempData["InvoiceReport"].ToString())
+        : null;
+}
+
+@if (invoiceReport != null)
+{
+    <h2>Invoice Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Client ID</th>
+                    <th>Client Order Number</th>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Administration Fee</th>
+                    <th>Credit Fee</th>
+                    <th>Postage Fee</th>
+                    <th>Report Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in invoiceReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.InvoiceId</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.ClientOrderNumber</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Amount</td>
+                        <td>@row.AdministrationFee</td>
+                        <td>@row.CreditFee</td>
+                        <td>@row.PostageFee</td>
+                        <td>@row.ReportDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetPaymentPlanReport -->
+@{
+    var paymentPlanReport = TempData["PaymentPlanReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetPaymentPlanReportResponse>(TempData["PaymentPlanReport"].ToString())
+        : null;
+}
+
+@if (paymentPlanReport != null)
+{
+    <h2>Payment Plan Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Contract ID</th>
+                    <th>Order ID</th>
+                    <th>Client ID</th>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Administration Fee</th>
+                    <th>Pay to Client Amount</th>
+                    <th>Date</th>
+                    <th>Reporting Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in paymentPlanReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.ContractId</td>
+                        <td>@row.OrderId</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Amount</td>
+                        <td>@row.AdministrationFee</td>
+                        <td>@row.PayToClientAmount</td>
+                        <td>@row.Date.ToShortDateString()</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetAccountingReport -->
+@{
+    var accountingReport = TempData["AccountingReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetAccountingReportResponse>(TempData["AccountingReport"].ToString())
+        : null;
+}
+
+@if (accountingReport != null)
+{
+    <h2>Accounting Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Account Number</th>
+                    <th>Client ID</th>
+                    <th>Name</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                    <th>Reporting Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in accountingReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.Id</td>
+                        <td>@row.AccountNumber</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Credit.ToString("N2")</td>
+                        <td>@row.Debit.ToString("N2")</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetRegressionReport -->
+@{
+    var regressionReport = TempData["RegressionReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetRegressionReportResponse>(TempData["RegressionReport"].ToString())
+        : null;
+}
+
+@if (regressionReport != null)
+{
+    <h2>Regression Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Row Number</th>
+                    <th>Client ID</th>
+                    <th>Customer ID</th>
+                    <th>Invoice ID</th>
+                    <th>Client Order Number</th>
+                    <th>Transaction Amount</th>
+                    <th>Fee</th>
+                    <th>Rate</th>
+                    <th>Capital</th>
+                    <th>Posting Date</th>
+                    <th>Record Date</th>
+                    <th>Reporting Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                    <th>Transaction Type</th>
+                    <th>User</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in regressionReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.RowNumber</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.InvoiceId</td>
+                        <td>@row.ClientOrderNumber</td>
+                        <td>@row.TransactionAmount.ToString("N2")</td>
+                        <td>@row.Fee.ToString("N2")</td>
+                        <td>@row.Rate.ToString("N2")</td>
+                        <td>@row.Capital.ToString("N2")</td>
+                        <td>@row.PostingDate.ToShortDateString()</td>
+                        <td>@row.RecordDate.ToShortDateString()</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.TransactionType</td>
+                        <td>@row.User</td>
+                        <td>@row.Name</td>
                     </tr>
                 }
             </tbody>

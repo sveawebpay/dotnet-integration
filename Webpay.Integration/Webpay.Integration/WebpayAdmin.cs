@@ -29,6 +29,11 @@ public class WebpayAdmin
         return new DeliverOrdersBuilder(configurationProvider);
     }
 
+    public static GetInvoicePdfLinkBuilder GetInvoicePdfLink(IConfigurationProvider configurationProvider)
+    {
+        return new GetInvoicePdfLinkBuilder(configurationProvider);
+    }
+
     public static GetInvoicesBuilder GetInvoices(IConfigurationProvider configurationProvider)
     {
         return new GetInvoicesBuilder(configurationProvider);
@@ -39,9 +44,24 @@ public class WebpayAdmin
         return new GetFinancialReportBuilder(configurationProvider);
     }
 
-    public static GetInvoicePdfLinkBuilder GetInvoicePdfLink(IConfigurationProvider configurationProvider)
+    public static GetInvoiceReportBuilder GetInvoiceReport(IConfigurationProvider configurationProvider)
     {
-        return new GetInvoicePdfLinkBuilder(configurationProvider);
+        return new GetInvoiceReportBuilder(configurationProvider);
+    }
+
+    public static GetPaymentPlanReportBuilder GetPaymentPlanReport(IConfigurationProvider configurationProvider)
+    {
+        return new GetPaymentPlanReportBuilder(configurationProvider);
+    }
+
+    public static GetAccountingReportBuilder GetAccountingReport(IConfigurationProvider configurationProvider)
+    {
+        return new GetAccountingReportBuilder(configurationProvider);
+    }
+
+    public static GetRegressionReportBuilder GetRegressionReport(IConfigurationProvider configurationProvider)
+    {
+        return new GetRegressionReportBuilder(configurationProvider);
     }
 
     /// <summary>

@@ -386,25 +386,21 @@ public class OrdersController : Controller
                     await HandleGetFinancialReport();
                     break;
 
-                //case "GetInvoiceReport":
-                //    await GetInvoiceReport(OrderId);
-                //    TempData["ReportMessage"] = "Invoice report fetched successfully.";
-                //    break;
+                case "GetInvoiceReport":
+                    await HandleGetInvoiceReport();
+                    break;
 
-                //case "GetAccountingReport":
-                //    await GetAccountingReport(OrderId);
-                //    TempData["ReportMessage"] = "Accounting report fetched successfully.";
-                //    break;
+                case "GetPaymentPlanReport":
+                    await HandleGetPaymentPlanReport();
+                    break;
 
-                //case "GetRegressionReport":
-                //    await GetRegressionReport(OrderId);
-                //    TempData["ReportMessage"] = "Regression report fetched successfully.";
-                //    break;
+                case "GetAccountingReport":
+                    await HandleGetAccountingReport();
+                    break;
 
-                //case "GetPaymentPlanReport":
-                //    await GetPaymentPlanReport(OrderId);
-                //    TempData["ReportMessage"] = "Payment plan report fetched successfully.";
-                //    break;
+                case "GetRegressionReport":
+                    await HandleGetRegressionReport();
+                    break;
 
                 default:
                     TempData["ErrorMessage"] = "Invalid action selected.";
@@ -876,11 +872,92 @@ public class OrdersController : Controller
         }
         else
         {
-            var reportHeader = financialReportResponse.ReportHeader;
-            var reportRows = financialReportResponse.ReportRows;
-
             TempData["FinancialReport"] = JsonSerializer.Serialize(financialReportResponse);
             TempData["SuccessMessage"] = "Financial report retrieved successfully (displayed at bottom of the page).";
+        }
+    }
+
+    private async Task HandleGetInvoiceReport()
+    {
+        var invoiceReportBuilder = WebpayAdmin.GetInvoiceReport(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetFromDate(DateTime.Now.AddDays(-60).Date)
+            .SetToDate(DateTime.Now.Date);
+
+        var invoiceReportRequest = invoiceReportBuilder.Build();
+        var invoiceReportResponse = await invoiceReportRequest.DoRequestAsync();
+
+        if (invoiceReportResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = invoiceReportResponse.ErrorMessage;
+        }
+        else
+        {
+            TempData["InvoiceReport"] = JsonSerializer.Serialize(invoiceReportResponse);
+            TempData["SuccessMessage"] = "Invoice report retrieved successfully (displayed at bottom of the page).";
+        }
+    }
+
+    private async Task HandleGetPaymentPlanReport()
+    {
+        var paymentPlanReportBuilder = WebpayAdmin.GetPaymentPlanReport(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetFromDate(DateTime.Now.AddDays(-60).Date)
+            .SetToDate(DateTime.Now.Date);
+
+        var paymentPlanReportRequest = paymentPlanReportBuilder.Build();
+        var paymentPlanReportResponse = await paymentPlanReportRequest.DoRequestAsync();
+
+        if (paymentPlanReportResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = paymentPlanReportResponse.ErrorMessage;
+        }
+        else
+        {
+            TempData["PaymentPlanReport"] = JsonSerializer.Serialize(paymentPlanReportResponse);
+            TempData["SuccessMessage"] = "PaymentPlan report retrieved successfully (displayed at bottom of the page).";
+        }
+    }
+
+    private async Task HandleGetAccountingReport()
+    {
+        var accountingReportBuilder = WebpayAdmin.GetAccountingReport(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetFromDate(DateTime.Now.AddDays(-60).Date)
+            .SetToDate(DateTime.Now.Date);
+
+        var accountingReportRequest = accountingReportBuilder.Build();
+        var accountingReportResponse = await accountingReportRequest.DoRequestAsync();
+
+        if (accountingReportResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = accountingReportResponse.ErrorMessage;
+        }
+        else
+        {
+            TempData["AccountingReport"] = JsonSerializer.Serialize(accountingReportResponse);
+            TempData["SuccessMessage"] = "Accounting report retrieved successfully (displayed at bottom of the page).";
+        }
+    }
+
+    private async Task HandleGetRegressionReport()
+    {
+        var regressionReportBuilder = WebpayAdmin.GetRegressionReport(Config)
+            .SetCountryCode(CountryCode.SE)
+            .SetFromDate(DateTime.Now.AddDays(-60).Date)
+            .SetToDate(DateTime.Now.Date);
+
+        var regressionReportRequest = regressionReportBuilder.Build();
+        var regressionReportResponse = await regressionReportRequest.DoRequestAsync();
+
+        if (regressionReportResponse.ResultCode != 0)
+        {
+            TempData["ErrorMessage"] = regressionReportResponse.ErrorMessage;
+        }
+        else
+        {
+            TempData["RegressionReport"] = JsonSerializer.Serialize(regressionReportResponse);
+            TempData["SuccessMessage"] = "Regression report retrieved successfully (displayed at bottom of the page).";
         }
     }
 

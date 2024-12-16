@@ -17,7 +17,11 @@
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Svea Standalone Checkout</h1>
 
-    <div class="test-customers" style="position: absolute; top: 200px; right: 40px; width: 300px; z-index: 1000;">
+    <button id="toggleTestCustomers" class="btn btn-sm btn-primary" style="position: absolute; top: 180px; right: 20px; z-index: 1001;">
+        >
+    </button>
+
+    <div class="test-customers" id="testCustomers" style="position: absolute; top: 200px; right: 40px; width: 300px; z-index: 1000;">
         <div class="card p-3" style="max-width: 100%;">
             <h5 class="text-center">Test Customers</h5>
             <ul class="list-group list-group-flush small">
@@ -264,5 +268,21 @@
         function formatDecimal(value) {
             return value ? parseFloat(value).toFixed(2) : "N/A";
         }
+
+        const toggleButton = document.getElementById("toggleTestCustomers");
+        const testCustomersDiv = document.getElementById("testCustomers");
+
+        let isVisible = true;
+
+        toggleButton.addEventListener("click", () => {
+            isVisible = !isVisible;
+            if (isVisible) {
+                testCustomersDiv.style.display = "block";
+                toggleButton.textContent = ">";
+            } else {
+                testCustomersDiv.style.display = "none";
+                toggleButton.textContent = "<";
+            }
+        });
     </script>
 }

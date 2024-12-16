@@ -843,6 +843,14 @@ else if (TempData["ErrorMessage"] != null)
     </div>
 }
 
+<!-- GetInvoicePdfLink -->
+@if (TempData["PdfBase64"] != null)
+{
+    <h4>Invoice PDF</h4>
+    @*<iframe src="data:application/pdf;base64,@TempData["PdfBase64"]" width="100%" height="500px"></iframe>*@
+    <a href="@Url.Action("GetPdf")" target="_blank" class="btn btn-primary" style="margin-top: 20px">Get Invoice PDF</a>
+}
+
 @section Scripts {
     <script>
         function toggleRowEditing(action, orderId) {

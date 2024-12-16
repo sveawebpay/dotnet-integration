@@ -16,6 +16,7 @@ using Webpay.Integration.Order.Handle;
 using Sample.AspNetCore.Models;
 using System.Text.Json;
 using Order = Sample.AspNetCore.Models.Order;
+using System.Net.Http;
 
 namespace Sample.AspNetCore.Controllers;
 
@@ -27,6 +28,7 @@ public class OrdersController : Controller
     private static readonly Dictionary<string, List<long>> SveaOrderDeliveryReferences = new();
     private static readonly Dictionary<string, List<long>> CreditedDeliveryReferences = new();
     private static readonly Dictionary<string, List<long>> DeliveryReferenceOrderRows = new();
+    private static string pdfString;
 
     public OrdersController(StoreDbContext context)
     {
@@ -704,7 +706,25 @@ public class OrdersController : Controller
         else
         {
             var pdfLink = pdfLinkResponse.PdfLink;
-            TempData["SuccessMessage"] = $"Invoice PDF link retrieved successfully: {pdfLink}";
+
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync(pdfLink);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var pdfData = JsonSerializer.Deserialize<PdfResponse>(jsonResponse);
+                    //TempData["PdfBase64"] = pdfData.Pdf;
+                    TempData["PdfBase64"] = "true";
+                    pdfString = pdfData.Pdf;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to retrieve PDF data.";
+                }
+            }
+
+            TempData["SuccessMessage"] = $"Invoice PDF link retrieved successfully (displayed at bottom of the page).";
         }
     }
 
@@ -721,18 +741,16 @@ public class OrdersController : Controller
 
         if (contractPdf.ResultCode == 0)
         {
-            Console.WriteLine("Contract PDF fetched successfully!");
-            Console.WriteLine($"PDF Link: {contractPdf.PdfLink}");
+            TempData["SuccessMessage"] = $"Contract PDF link retrieved successfully: {contractPdf.PdfLink}";
 
             if (!string.IsNullOrEmpty(contractPdf.FileBinaryDataBase64))
             {
                 var pdfBytes = Convert.FromBase64String(contractPdf.FileBinaryDataBase64);
                 System.IO.File.WriteAllBytes("Contract.pdf", pdfBytes);
-                Console.WriteLine($"PDF saved to Contract.pdf (Size: {contractPdf.FileLengthInBytes} bytes)");
             }
             else
             {
-                Console.WriteLine("No binary data available for the PDF.");
+                TempData["ErrorMessage"] = "No binary data available for the PDF.";
             }
         }
         else
@@ -970,6 +988,19 @@ public class OrdersController : Controller
         }
     }
 
+    [HttpGet]
+    public IActionResult GetPdf()
+    {
+        if (pdfString != null)
+        {
+            var pdfBytes = Convert.FromBase64String(pdfString);
+            return File(pdfBytes, "application/pdf", "Invoice.pdf");
+        }
+
+        TempData["ErrorMessage"] = "No PDF data available.";
+        return RedirectToAction("Details");
+    }
+
     private void ClearTempData()
     {
         TempData["ErrorMessage"] = null;
@@ -980,6 +1011,8 @@ public class OrdersController : Controller
         TempData["PaymentPlanReport"] = null;
         TempData["AccountingReport"] = null;
         TempData["RegressionReport"] = null;
+        TempData["PdfBase64"] = null;
+        pdfString = null;
     }
 
     private bool OrderExists(int id)
@@ -987,3 +1020,4 @@ public class OrdersController : Controller
         return context.Orders.Any(e => e.OrderId == id);
     }
 }
+

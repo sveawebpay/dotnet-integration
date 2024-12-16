@@ -862,6 +862,7 @@ else if (TempData["ErrorMessage"] != null)
             if (addNewRowButton) addNewRowButton.style.display = "none";
             if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
             if (invoiceDeliveryReferences) invoiceDeliveryReferences.style.display = "none";
+            clearOrderRows();
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -934,8 +935,16 @@ else if (TempData["ErrorMessage"] != null)
 
         document.getElementById("addNewRowButton").addEventListener("click", function () {
             const tableBody = document.getElementById("newOrderRows");
-            let rowCount = tableBody.children.length - 1;
-            if (rowCount = -1) rowCount = 0;
+            const rowCount = tableBody.children.length;
+            //if (rowCount === -1) rowCount = 0;
+
+            const previousLastRow = tableBody.querySelector("tr:last-child");
+            if (previousLastRow) {
+                const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
+                if (previousRemoveButton) {
+                    previousRemoveButton.disabled = true;
+                }
+            }
 
             const newRow = `
                         <tr class="new-order-row">
@@ -958,6 +967,15 @@ else if (TempData["ErrorMessage"] != null)
             if (event.target && event.target.classList.contains("remove-row-btn")) {
                 const row = event.target.closest("tr");
                 row.remove();
+
+                const tableBody = document.getElementById("newOrderRows");
+                const previousLastRow = tableBody.querySelector("tr:last-child");
+                if (previousLastRow) {
+                    const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
+                    if (previousRemoveButton) {
+                        previousRemoveButton.disabled = false;
+                    }
+                }
             }
         });
 
@@ -1014,6 +1032,15 @@ else if (TempData["ErrorMessage"] != null)
         function toggleSveaDeliveryReferences(action) {
             const sveaDeliveryReferences = document.getElementById("sveaDeliveryReferences");
             sveaDeliveryReferences.style.display = action === "GetInvoices" ? "block" : "none";
+        }
+
+        function clearOrderRows() {
+            const tableBody = document.getElementById("newOrderRows");
+            const rows = tableBody.querySelectorAll("tr");
+
+            rows.forEach((row, index) => {
+                    row.remove();
+            });
         }
 
     </script>

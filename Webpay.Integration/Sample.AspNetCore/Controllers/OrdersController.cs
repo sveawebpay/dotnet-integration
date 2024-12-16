@@ -629,6 +629,17 @@ public class OrdersController : Controller
 
             if (creditResponse.ResultCode != 0)
                 TempData["ErrorMessage"] = creditResponse.ErrorMessage;
+            else
+            {
+                var creditReferenceNumber = creditResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber;
+                SveaOrderDeliveryReferences[orderId].Add(creditReferenceNumber);
+
+                if (!CreditedDeliveryReferences.ContainsKey(orderId))
+                {
+                    CreditedDeliveryReferences[orderId] = new List<long>();
+                }
+                CreditedDeliveryReferences[orderId].Add(creditReferenceNumber);
+            }
         }
         else if (paymentType == PaymentType.PAYMENTPLAN)
         {

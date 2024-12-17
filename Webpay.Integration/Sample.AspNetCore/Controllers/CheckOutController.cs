@@ -22,6 +22,7 @@ public class CheckOutController : Controller
     private readonly StoreDbContext _context;
     private static readonly WebpayConfig Config = new WebpayConfig();
     private static int SelectedAddressIndex { get; set; }
+    private static bool IsTestCustomersVisible { get; set; }
 
     public CheckOutController(
         Cart cartService,
@@ -41,6 +42,7 @@ public class CheckOutController : Controller
     [HttpPost]
     public async Task<IActionResult> SubmitForm(string SSN, bool IsCompany)
     {
+        SaveTempData();
         if (string.IsNullOrWhiteSpace(SSN))
         {
             ViewBag.Error = "SSN is required.";
@@ -84,12 +86,14 @@ public class CheckOutController : Controller
         }
 
         SelectedAddressIndex = 0;
+
         return View("Checkout");
     }
 
     [HttpPost]
     public async Task<IActionResult> FinalizeForm(string PhoneNumber, string EmailAddress, string PaymentOption, long? CampaignCode)
     {
+        SaveTempData();
         var isCompany = TempData["IsCompany"] != null && Convert.ToBoolean(TempData["IsCompany"]);
         var orderItems = _cartService.CartLines.Select(line => line.ToOrderRowBuilder(isCompany)).ToList();
 
@@ -292,6 +296,14 @@ public class CheckOutController : Controller
     }
 
     [HttpPost]
+    public IActionResult UpdateTestCustomersVisibility(bool IsTestCustomersVisibleInput)
+    {
+        IsTestCustomersVisible = IsTestCustomersVisibleInput;
+        TempData["IsTestCustomersVisible"] = IsTestCustomersVisibleInput.ToString();
+        return NoContent();
+    }
+
+    [HttpPost]
     public async Task<IActionResult> SaveSelectedAddress(int selectedAddressIndex)
     {
         SelectedAddressIndex = selectedAddressIndex;
@@ -305,6 +317,12 @@ public class CheckOutController : Controller
     }
 
     // Helpers
+    private void SaveTempData()
+    {
+        TempData["IsTestCustomersVisible"] = IsTestCustomersVisible;
+        TempData.Keep("IsTestCustomersVisible");
+    }
+
     private string GetIpAddress()
     {
         var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;

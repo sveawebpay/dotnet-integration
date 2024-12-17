@@ -1013,6 +1013,12 @@ public class OrdersController : Controller
         TempData["RegressionReport"] = null;
         TempData["PdfBase64"] = null;
         pdfString = null;
+
+        // Keep these
+        TempData.Keep("SveaOrderDeliveryReferences");
+        TempData.Keep("SveaInvoiceDeliveryReferences");
+        TempData.Keep("CreditedDeliveryReferences");
+        TempData.Keep("DeliveryReferenceOrderRows");
     }
 
     private bool OrderExists(int id)

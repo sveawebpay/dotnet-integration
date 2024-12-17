@@ -862,7 +862,7 @@ else if (TempData["ErrorMessage"] != null)
 {
     <h4>Invoice PDF</h4>
     @*<iframe src="data:application/pdf;base64,@TempData["PdfBase64"]" width="100%" height="500px"></iframe>*@
-    <a href="@Url.Action("GetPdf")" target="_blank" class="btn btn-primary" style="margin-top: 20px">Get Invoice PDF</a>
+    <a href="@Url.Action("GetPdf")" target="_blank" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px">Get Invoice PDF</a>
 }
 
 @section Scripts {
@@ -884,7 +884,7 @@ else if (TempData["ErrorMessage"] != null)
             if (addNewRowButton) addNewRowButton.style.display = "none";
             if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
             if (invoiceDeliveryReferences) invoiceDeliveryReferences.style.display = "none";
-            clearOrderRows(orderId);
+            if (action !== "UpdateOrderRows") clearOrderRows(orderId);
 
             if (action === "AddOrderRows" || action === "UpdateOrderRows") {
                 editSection.style.display = "block";
@@ -957,7 +957,9 @@ else if (TempData["ErrorMessage"] != null)
 
         function addNewRow(orderId) {
             const tableBody = document.getElementById(`newOrderRows-${orderId}`);
-            const rowCount = tableBody.children.length;
+            //const newRows = tableBody.querySelectorAll(".new-order-row");
+            //const rowCount = tableBody.children.length;
+            const rowCount = tableBody.querySelectorAll(".new-order-row").length;
 
             const previousLastRow = tableBody.querySelector("tr:last-child");
             if (previousLastRow) {
@@ -1059,10 +1061,10 @@ else if (TempData["ErrorMessage"] != null)
 
         function clearOrderRows(orderId) {
             const tableBody = document.getElementById(`newOrderRows-${orderId}`);
-            const rows = tableBody.querySelectorAll("tr");
+            const newRows = tableBody.querySelectorAll(".new-order-row");
 
-            rows.forEach((row, index) => {
-                    row.remove();
+            newRows.forEach(row => {
+                row.remove();
             });
         }
 

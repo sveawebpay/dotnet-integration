@@ -78,6 +78,8 @@ Create a class (eg. one for testing values, one for production) that implements 
 return the authorization values asked for.
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
 
+See the [sample test shop](Webpay.Integration/Sample.AspNetCore) for a demonstration of how the SDK can be used.
+
 *NOTE:* This solution may change in future updates!
 
 Step 1:

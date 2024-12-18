@@ -420,7 +420,7 @@ namespace Webpay.Integration.Test.Order.Validator
         public void TestFailOnMissingRows()
         {
             const string expectedMessage =
-                "MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...).";
+                "MISSING VALUE - No order or fee has been included. Use AddOrderRow(...) or AddFee(...).";
 
             var exception = Assert.Throws<SveaWebPayValidationException>(
                 () => WebpayConnection.DeliverOrder(SveaConfig.GetDefaultConfig())

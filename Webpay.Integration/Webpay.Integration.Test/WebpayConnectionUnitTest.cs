@@ -74,7 +74,7 @@ public class WebpayConnectionUnitTest
             .DeliverInvoiceOrder()
                 .PrepareRequest()
         );
-        Assert.That(ex.Message, Is.EqualTo("MISSING VALUE - No order or fee has been included. Use AddOrder(...) or AddFee(...)."));
+        Assert.That(ex.Message, Is.EqualTo("MISSING VALUE - No order or fee has been included. Use AddOrderRow(...) or AddFee(...)."));
     }
 
     [Test]

@@ -291,7 +291,6 @@ public class CreateOrderBuilder : OrderBuilder<CreateOrderBuilder>
         }
 
         _campaignCode = campaignCode;
-        //TODO: AccountCreditDetails
         return new AccountCreditPayment(this);
     }
 

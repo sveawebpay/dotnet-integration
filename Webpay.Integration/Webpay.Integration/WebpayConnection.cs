@@ -78,7 +78,7 @@ public static class WebpayConnection
     }
 
     /// <summary>
-    /// TODO
+    /// GetContractPdf
     /// </summary>
     /// <param name="config"></param>
     /// <returns>GetPaymentPlanParams</returns>

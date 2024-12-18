@@ -123,6 +123,7 @@ else if (TempData["ErrorMessage"] != null)
                                 <th>Svea Will Buy</th>
                                 <td>@(order.Order.SveaWillBuy ? "Yes" : "No")</td>
                             </tr>
+                            <!-- TODO: could add more properties / filter redundant ones? -->
                         </tbody>
                     </table>
 
@@ -554,7 +555,7 @@ else if (TempData["ErrorMessage"] != null)
                     <td>@invoice.Customer.Email</td>
                     <td>@invoice.Customer.PhoneNumber</td>
                     <td>@invoice.Type</td>
-                    <!-- TODO: more properties? -->
+                    <!-- TODO: could add more properties? -->
                     <td>
                         @if (invoice.InvoiceRows != null && invoice.InvoiceRows.Any())
                         {

@@ -139,7 +139,6 @@ public class CreateOrderTest
         var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
         Assert.That(request.CreateOrderInformation.CustomerIdentity.IndividualIdentity == null);
 
-        // Execute the order asynchronously and check response
         var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         Assert.That(order.Accepted);
     }
@@ -192,5 +191,56 @@ public class CreateOrderTest
 
         var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
         Assert.That(order.Accepted);
+    }
+
+    [Test]
+    public async Task Test_CreateOrder_SE_WithNavigationUrlsIndividual()
+    {
+        var createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+            .AddCustomerDetails(Item.IndividualCustomer()
+                .SetNationalIdNumber(TestingTool.DefaultTestIndividualNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .AddNavigationUrls("https://svea.com/confirm", "https://svea.com/reject")
+            .SetCurrency(TestingTool.DefaultTestCurrency);
+
+        var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
+        Assert.That(request.Navigation.ConfirmationUrl.Equals("https://svea.com/confirm"));
+        Assert.That(request.Navigation.RejectionUrl.Equals("https://svea.com/reject"));
+
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
+        Assert.That(order.Accepted);
+        Assert.That(order.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Individual));
+        Assert.That(order.NavigationResult?.RedirectUrl != null);
+        Assert.That(order.CreateOrderResult.PendingReasons.FirstOrDefault().Equals("BankId", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Test]
+    public async Task Test_CreateOrder_SE_WithNavigationUrlsCompany()
+    {
+        var createOrderBuilder = WebpayConnection.CreateOrder(SveaConfig.GetDefaultConfig())
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("1"))
+            .AddOrderRow(TestingTool.CreateExVatBasedOrderRow("2"))
+            .AddCustomerDetails(Item.CompanyCustomer()
+                .SetNationalIdNumber(TestingTool.DefaultTestCompanyNationalIdNumber))
+            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetOrderDate(TestingTool.DefaultTestDate)
+            .SetClientOrderNumber(TestingTool.DefaultTestClientOrderNumber)
+            .AddNavigationUrls("https://svea.com/confirm", "https://svea.com/reject")
+            .SetCurrency(TestingTool.DefaultTestCurrency);
+
+        var request = createOrderBuilder.UseInvoicePayment().PrepareRequest();
+        Assert.That(request.Navigation.ConfirmationUrl.Equals("https://svea.com/confirm"));
+        Assert.That(request.Navigation.RejectionUrl.Equals("https://svea.com/reject"));
+
+        var order = await createOrderBuilder.UseInvoicePayment().DoRequestAsync();
+
+        Assert.That(order.CreateOrderResult.CustomerIdentity.CustomerType, Is.EqualTo(CustomerType.Company));
+        Assert.That(order.Accepted);
+        Assert.That(order.NavigationResult?.RedirectUrl != null);
+        Assert.That(order.CreateOrderResult.PendingReasons.FirstOrDefault().Equals("BankId", StringComparison.OrdinalIgnoreCase));
     }
 }

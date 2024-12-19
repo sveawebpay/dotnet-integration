@@ -78,7 +78,7 @@ Create a class (eg. one for testing values, one for production) that implements 
 return the authorization values asked for.
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
 
-See the [sample test shop](Webpay.Integration/Sample.AspNetCore) for a demonstration of how the SDK can be used.
+See the [sample test shop](Webpay.Integration/Sample.AspNetCore) for a demonstration of how the SDK can be used for Invoice, PaymentPlan and AccountCredit payments.
 
 *NOTE:* This solution may change in future updates!
 
@@ -671,7 +671,7 @@ When discount or coupon is a percentage on total product amount.
 	.SetName("Relative")                   //Optional
 	.SetDescription("RelativeDiscount"))   //Optional
 ```
-### 5.5 Item.IndividualCustomer
+### 5.6 Item.IndividualCustomer
 When adding individual customer information to an order.
 ```csharp
 .AddCustomerDetails(Item.IndividualCustomer()
@@ -688,7 +688,7 @@ When adding individual customer information to an order.
     .SetIpAddress("123.123.123")       		//Optional but desirable
 ```
 
-### 5.5 Item.CompanyCustomer
+### 5.7 Item.CompanyCustomer
 When adding company customer information to an order.
 ```csharp
 .AddCustomerDetails(Item.CompanyCustomer()
@@ -698,7 +698,7 @@ When adding company customer information to an order.
 	.SetAddressSelector("7fd7768")          //Optional. Recieved from getAddresses
 ```
 
-### 5.5 Item.NumberedOrderRow
+### 5.8 Item.NumberedOrderRow
 This is an extension of the orderRow class, used in the WebpayAdmin.QueryOrder() response and methods that adminster individual order rows.
 ```csharp
 Item.NumberedOrderRow()
@@ -710,6 +710,16 @@ Item.NumberedOrderRow()
 	.SetRowNumber()			//required for UpdateOrderrow()
 	.SetStatus()			//optional
 
+```
+### 5.9 AddNavigationUrls
+
+Used to set navigation URLs for strong verification (e.g., BankID), where ConfirmationUrl and RejectionUrl are provided.
+
+    ConfirmationUrl (Required): The URL to which the user is redirected after successfully completing the verification.
+    RejectionUrl (Required): The URL to which the user is redirected if the verification fails.
+
+```csharp
+.AddNavigationUrls("https://example.com/confirm", "https://example.com/reject")
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

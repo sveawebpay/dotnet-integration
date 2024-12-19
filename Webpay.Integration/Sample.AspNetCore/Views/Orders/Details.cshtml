@@ -1,0 +1,1074 @@
+﻿@using System.Reflection;
+@using System.Text.Json
+@model Sample.AspNetCore.Models.ViewModels.OrderListViewModel
+
+@{
+    ViewData["Title"] = "OrderDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 1;
+
+    var sveaDeliveryReferences = TempData["SveaOrderDeliveryReferences"] != null
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaOrderDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
+
+    var sveaInvoiceDeliveryReferences = TempData["SveaInvoiceDeliveryReferences"] != null
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["SveaInvoiceDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
+
+    var creditedDeliveryReferences = TempData["CreditedDeliveryReferences"] != null
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["CreditedDeliveryReferences"].ToString())
+        : new Dictionary<string, List<long>>();
+
+    var deliveryReferenceOrderRows = TempData["DeliveryReferenceOrderRows"] != null
+        ? JsonSerializer.Deserialize<Dictionary<string, List<long>>>(TempData["DeliveryReferenceOrderRows"].ToString())
+        : new Dictionary<string, List<long>>();
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+else if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    @foreach (var order in Model.PaymentOrders)
+    {
+        <div automation="div-fullorder">
+            <div automation="div-order">
+                <div>
+                    <h2>Order #@count</h2>
+                    <hr />
+                    <h4>Order Details</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Order ID</th>
+                                <td>@order.Order.SveaOrderId</td>
+                            </tr>
+                            <tr>
+                                <th>Billing Email</th>
+                                <td>@order.Order.BillingEmailAddress</td>
+                            </tr>
+                            <tr>
+                                <th>Changed Date</th>
+                                <td>@(order.Order.ChangedDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Client ID</th>
+                                <td>@order.Order.ClientId</td>
+                            </tr>
+                            <tr>
+                                <th>Client Order ID</th>
+                                <td>@order.Order.ClientOrderId</td>
+                            </tr>
+                            <tr>
+                                <th>Created Date</th>
+                                <td>@order.Order.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            </tr>
+                            <tr>
+                                <th>Credit Report Accepted</th>
+                                <td>@(order.Order.CreditReportStatus?.Accepted.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Currency</th>
+                                <td>@(order.Order.Currency ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Name</th>
+                                <td>@(order.Order.Customer?.FullName ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer ID</th>
+                                <td>@(order.Order.CustomerId?.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Reference</th>
+                                <td>@(order.Order.CustomerReference ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Delivery Address</th>
+                                <td>@(order.Order.DeliveryAddress?.Street ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Is Possible to Administer</th>
+                                <td>@(order.Order.IsPossibleToAdminister ? "Yes" : "No")</td>
+                            </tr>
+                            <tr>
+                                <th>Is Possible to Cancel</th>
+                                <td>@(order.Order.IsPossibleToCancel ? "Yes" : "No")</td>
+                            </tr>
+                            <tr>
+                                <th>Notes</th>
+                                <td>@(order.Order.Notes ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Delivery Status</th>
+                                <td>@(order.Order.OrderDeliveryStatus ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Status</th>
+                                <td>@(order.Order.OrderStatus ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Order Type</th>
+                                <td>@(order.Order.OrderType ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <th>Svea Will Buy</th>
+                                <td>@(order.Order.SveaWillBuy ? "Yes" : "No")</td>
+                            </tr>
+                            <!-- TODO: could add more properties / filter redundant ones? -->
+                        </tbody>
+                    </table>
+
+                    <h4>Order Rows</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Row Number</th>
+                                <th>Article Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price Per Unit</th>
+                                <th>Discount Percent</th>
+                                <th>Vat Percent</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in order.Order.OrderRows)
+                            {
+                                <tr>
+                                    <td>@row.RowNumber</td>
+                                    <td>@row.ArticleNumber</td>
+                                    <td>@row.Description</td>
+                                    <td>@Convert.ToInt32(row.NumberOfUnits)</td>
+                                    <td>@row.PricePerUnit</td>
+                                    <td>@row.DiscountPercent</td>
+                                    <td>@row.VatPercent</td>
+                                    <td>@row.Status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (order.Order.PendingReasons != null && order.Order.PendingReasons.Any())
+                    {
+                        <h4>Pending Reasons</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Created Date</th>
+                                    <th>Pending Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var reason in order.Order.PendingReasons)
+                                {
+                                    <tr>
+                                        <td>@reason.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                        <td>@reason.PendingType</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (order.IsLoaded)
+                    {
+                        <h4>Order Actions</h4>
+                        <table class="table" automation="table-order">
+                            <thead class="collapsible" automation="toggle-actions">
+                                <tr>
+                                    <th>Actions</th>
+                                    <th>
+                                        <div automation="toggle-actions">Expand</div>
+                                        <div automation="toggle-actions">Collapse</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="collapsible-content">
+                                <tr>
+                                    <td colspan="2">
+                                        <!-- Actions Dropdown -->
+                                        <form method="post" asp-action="ExecuteAction" asp-controller="Orders">
+                                            <input type="hidden" name="OrderId" value="@order.Order.SveaOrderId" />
+                                            <div class="form-group">
+                                                <label for="actionSelect">Select Action</label>
+                                                <select id="actionSelect" name="Action" class="form-control" onchange="toggleRowEditing(this.value, @order.Order.SveaOrderId)">
+                                                    <option value="">-- Select Action --</option>
+                                                    @if (order.Order.OrderDeliveryStatus == "Created" || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
+                                                    {
+                                                        <!-- WebpayService -->
+                                                        <option value="CloseOrderEu">CloseOrderEu</option>
+                                                        <option value="DeliverOrderEu">DeliverOrderEu</option>
+                                                        <!-- AdminService -->
+                                                        <option value="AddOrderRows">Add Order Rows</option>
+                                                        <option value="UpdateOrderRows">Update Order Rows</option>
+                                                        <option value="CancelOrderRows">Cancel Order Rows</option>
+                                                        <option value="CancelOrder">Cancel Order</option>
+                                                        @if (order.Order.OrderType != "PaymentPlan")
+                                                        {
+                                                            <option value="DeliverPartial">Deliver Partial</option>
+                                                        }
+                                                        <option value="UpdateOrder">Update Order (Updates ClientOrderId and Notes)</option>
+                                                    }
+                                                    @if ((order.Order.OrderDeliveryStatus == "Delivered"
+                                                   || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
+                                                   && (order.Order.PendingReasons == null || !order.Order.PendingReasons.Any()))
+                                                    {
+                                                        <option value="CreditRows">Credit Rows</option>
+                                                        @if (order.Order.OrderType == "Invoice")
+                                                        {
+                                                            <!-- Deprecated -->
+                                                            @*<option value="ApproveInvoice">Approve Invoice</option>*@
+                                                            <option value="GetInvoicePdfLink">Get Invoice PDF Link</option>
+                                                        }
+                                                        <!-- WebpayService (Deprecated) -->
+                                                        @*@if (order.Order.OrderType == "PaymentPlan")
+                                                        {
+                                                            <option value="GetContractPdfEu">GetContractPdfEu</option>
+                                                        }*@
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div id="sveaDeliveryReferences-@order.Order.SveaOrderId" class="svea-delivery-references" style="display: none;">
+                                                <h4>Select Svea Delivery Reference</h4>
+                                                <select name="SveaDeliveryReference" class="form-control">
+                                                    <option value="">-- Select Delivery Reference --</option>
+                                                    @if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                                    {
+                                                        foreach (var reference in sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])
+                                                        {
+                                                            var isCredited = creditedDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()) &&
+                                                            creditedDeliveryReferences[order.Order.SveaOrderId.ToString()].Contains(reference);
+
+                                                            if (!isCredited)
+                                                            {
+                                                                <option value="@reference">@reference</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@reference" disabled>@reference (Credited)</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <!-- Used for GetInvoicePdfLink-->
+                                            <div id="invoiceDeliveryReferences-@order.Order.SveaOrderId" class="invoice-delivery-references" style="display: none;">
+                                                <h4>Select Invoice Delivery Reference</h4>
+                                                <select name="SveaInvoiceDeliveryReference" class="form-control" style="margin-top: 15px; margin-bottom: 15px;">
+                                                    <option value="">-- Select Invoice ID --</option>
+                                                    @if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                                    {
+                                                        foreach (var reference in sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])
+                                                        {
+                                                            <option value="@reference">@reference</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <!-- Editable Order Rows-->
+                                            <div id="editOrderRows-@order.Order.SveaOrderId" class="edit-order-rows" style="display: none;">
+                                                <h4 style="margin-top: 15px; margin-bottom: 15px;">Edit Order Rows</h4>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row Number</th>
+                                                            <th>Article Number</th>
+                                                            <th>Description</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price Per Unit</th>
+                                                            <th>Discount Percent</th>
+                                                            <th>Vat Percent</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="newOrderRows-@order.Order.SveaOrderId">
+                                                        <!-- Existing Rows -->
+                                                        @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
+                                                        {
+                                                            var row = order.Order.OrderRows[i];
+                                                            @if (row.Status == "NotDelivered")
+                                                            {
+                                                                <tr class="existing-order-row" style="display: none;">
+                                                                    <td>
+                                                                        @row.RowNumber
+                                                                        <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
+                                                                    </td>
+                                                                    <td><input type="text" name="OrderRows[@i].ArticleNumber" value="@row.ArticleNumber" /></td>
+                                                                    <td><input type="text" name="OrderRows[@i].Description" value="@row.Description" /></td>
+                                                                    <td><input type="number" name="OrderRows[@i].NumberOfUnits" value="@Convert.ToInt32(row.NumberOfUnits)" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].PricePerUnit" value="@row.PricePerUnit" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].DiscountPercent" value="@row.DiscountPercent" /></td>
+                                                                    <td><input type="number" step="0.01" name="OrderRows[@i].VatPercent" value="@row.VatPercent" /></td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                        <!-- New Rows -->
+                                                        <tr class="new-order-row" style="display: table-row;">
+                                                            @*
+                                                            <td><span class="text-muted">New</span></td>
+                                                            <td><input type="text" name="NewOrderRows[0].ArticleNumber" placeholder="New Article Number" /></td>
+                                                            <td><input type="text" name="NewOrderRows[0].Description" placeholder="New Description" /></td>
+                                                            <td><input type="number" name="NewOrderRows[0].NumberOfUnits" placeholder="New Quantity" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].DiscountPercent" placeholder="New Discount Percent" /></td>
+                                                            <td><input type="number" step="0.01" name="NewOrderRows[0].VatPercent" placeholder="New Vat Percent" /></td>
+                                                            <td>
+                                                                <button type="button"
+                                                                        class="btn btn-danger remove-row-btn"
+                                                                        onclick="removeRow('@order.Order.SveaOrderId', this)">
+                                                                    Remove
+                                                                </button>
+                                                            </td>
+                                                            *@
+                                                        </tr>
+                                                    </tbody>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            id="addNewRowButton-@order.Order.SveaOrderId"
+                                                            onclick="addNewRow('@order.Order.SveaOrderId')"
+                                                            style="display: none; margin-top: 10px; margin-bottom: 10px;">
+                                                        Add New Row
+                                                    </button>
+                                                </table>
+                                            </div>
+
+                                            <!-- Selectable Order Rows-->
+                                            <div id="selectOrderRows-@order.Order.SveaOrderId" class="select-order-rows" style="display: none;">
+                                                <h4>Select Order Rows</h4>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row Number</th>
+                                                            <th>Article Number</th>
+                                                            <th>Description</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price Per Unit</th>
+                                                            <th>Discount Percent</th>
+                                                            <th>Vat Percent</th>
+                                                            <th>Select</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (var i = 0; i < order.Order.OrderRows.Count(); i++)
+                                                        {
+                                                            var row = order.Order.OrderRows[i];
+                                                            @if (row.Status != "Cancelled")
+                                                            {
+                                                                <tr class="@((row.Status == "Delivered") ? "delivered-row" : "not-delivered-row")" style="display: none;">
+                                                                    <td>@row.RowNumber</td>
+                                                                    <td>@row.ArticleNumber</td>
+                                                                    <td>@row.Description</td>
+                                                                    <td>@Convert.ToInt32(row.NumberOfUnits)</td>
+                                                                    <td>@row.PricePerUnit</td>
+                                                                    <td>@row.DiscountPercent</td>
+                                                                    <td>@row.VatPercent</td>
+                                                                    <td>
+                                                                        <input type="checkbox" name="OrderRows[@i].IsSelected" value="true" />
+                                                                        <input type="hidden" name="OrderRows[@i].RowNumber" value="@row.RowNumber" />
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Execute Action</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+        count++;
+    }
+</div>
+
+<br />
+<br />
+<br />
+<hr />
+<h1>General Actions</h1>
+<div>
+    <hr />
+    <table class="table" id="general-actions-table" automation="table-general-actions">
+        <thead class="collapsible" automation="toggle-general-actions">
+            <tr>
+                <th>Actions</th>
+                <th>
+                    <div automation="toggle-general-actions">Expand</div>
+                    <div automation="toggle-general-actions">Collapse</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="general-collapsible-content">
+            <tr>
+                <td colspan="2">
+                    <div class="order-details">
+                        <h4>General Actions</h4>
+                        <form method="post" asp-action="ExecuteGeneralAction" asp-controller="Orders" id="generalActionsForm">
+                            <div class="form-group">
+                                <label for="generalActionSelect">Select General Action</label>
+                                <select id="generalActionSelect" name="Action" class="form-control" onchange="handleGeneralActionChange(this.value)">
+                                    <option value="">-- Select Action --</option>
+                                    <option value="DeliverOrders">Deliver Orders</option>
+                                    <option value="GetInvoices">Get Invoices</option>
+                                    <option value="GetFinancialReport">Get Financial Report</option>
+                                    <option value="GetInvoiceReport">Get Invoice Report</option>
+                                    <option value="GetPaymentPlanReport">Get Payment Plan Report</option>
+                                    <option value="GetAccountingReport">Get Accounting Report</option>
+                                    <option value="GetRegressionReport">Get Regression Report</option>
+                                </select>
+                            </div>
+
+                            <div id="paymentTypeDiv" style="display: none;">
+                                <div class="form-group">
+                                    <label for="paymentTypeSelect">Select Payment Type</label>
+                                    <select id="paymentTypeSelect" name="SelectedPaymentType" class="form-control" onchange="filterOrdersByPaymentType()">
+                                        <option value="Invoice">Invoice</option>
+                                        <option value="PaymentPlan">Payment Plan</option>
+                                        <option value="AccountCredit">Account Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="deliverOrdersTable" style="display: none; margin-top: 20px;">
+                                <h4>Select Orders to Deliver</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Status</th>
+                                            <th>Payment Type</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody">
+                                        @foreach (var order in Model.PaymentOrders)
+                                        {
+                                            if (order.Order.OrderDeliveryStatus == "Created" || order.Order.OrderDeliveryStatus == "PartiallyDelivered")
+                                            {
+                                                <tr data-payment-type="@order.Order.OrderType">
+                                                    <td>@order.Order.SveaOrderId</td>
+                                                    <td>@order.Order.OrderDeliveryStatus</td>
+                                                    <td>@order.Order.OrderType</td>
+                                                    <td>
+                                                        <input type="checkbox" name="SelectedIds" value="@order.Order.SveaOrderId" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="sveaDeliveryReferences" style="display: none; margin-top: 20px;">
+                                <h4>Select Svea Delivery References</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Delivery References</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var order in Model.PaymentOrders.Where(o => o.Order.OrderType == "Invoice"))
+                                        {
+                                            if (sveaDeliveryReferences.ContainsKey(order.Order.SveaOrderId.ToString()))
+                                            {
+                                                <tr>
+                                                    <td>@order.Order.SveaOrderId</td>
+                                                    <td>@string.Join(", ", sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])</td>
+                                                    <td>
+                                                        <input type="checkbox" name="SelectedIds" value="@string.Join(",", sveaDeliveryReferences[order.Order.SveaOrderId.ToString()])" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Run</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+</div>
+
+<!-- GetInvoices -->
+@{
+    var invoices = TempData["Invoices"] != null
+        ? JsonSerializer.Deserialize<List<AdminWS.Invoice>>(TempData["Invoices"].ToString())
+        : new List<AdminWS.Invoice>();
+}
+
+@if (invoices.Any())
+{
+    <h2>Invoices</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Client Order ID</th>
+                <th>Amount</th>
+                <th>Credited Amount</th>
+                <th>Unmatched Credit Amount</th>
+                <th>Credit Approved</th>
+                <th>Credited Date</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Customer Phone</th>
+                <th>Invoice Type</th>
+                <th>Invoice Rows</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in invoices)
+            {
+                <tr>
+                    <td>@invoice.ClientOrderId</td>
+                    <td>@invoice.Amount.ToString("N2")</td>
+                    <td>@invoice.CreditedAmount.ToString("N2")</td>
+                    <td>@invoice.UnmatchedCreditAmount.ToString("N2")</td>
+                    <td>@invoice.CreditApproved</td>
+                    <td>@(invoice.CreditedDate.HasValue ? invoice.CreditedDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
+                    <td>@invoice.Customer.FullName</td>
+                    <td>@invoice.Customer.Email</td>
+                    <td>@invoice.Customer.PhoneNumber</td>
+                    <td>@invoice.Type</td>
+                    <!-- TODO: could add more properties? -->
+                    <td>
+                        @if (invoice.InvoiceRows != null && invoice.InvoiceRows.Any())
+                        {
+                            <ul>
+                                @foreach (var row in invoice.InvoiceRows)
+                                {
+                                    <li>
+                                        Row @row.RowNumber: @row.Description (@row.NumberOfUnits @row.Unit) - @row.PricePerUnit.ToString("C")
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>No rows</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- GetFinancialReport -->
+@{
+    var financialReport = TempData["FinancialReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetFinancialReportResponse>(TempData["FinancialReport"].ToString())
+        : null;
+}
+
+@if (financialReport != null)
+{
+    <h2>Financial Report</h2>
+
+    <div>
+        <h3>Report Header</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Administrator</th>
+                <th>Client Type ID</th>
+                <th>Currency</th>
+                <th>From Date</th>
+                <th>To Date</th>
+            </tr>
+            <tr>
+                <td>@financialReport.ReportHeader.Administrator</td>
+                <td>@financialReport.ReportHeader.ClientTypeId</td>
+                <td>@financialReport.ReportHeader.Currency</td>
+                <td>@financialReport.ReportHeader.FromDate.ToShortDateString()</td>
+                <td>@financialReport.ReportHeader.ToDate.ToShortDateString()</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Row Number</th>
+                    <th>Row ID</th>
+                    <th>Description</th>
+                    <th>Count</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in financialReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.RowNumber</td>
+                        <td>@row.RowId</td>
+                        <td>@row.Description</td>
+                        <td>@row.Count</td>
+                        <td>@row.Credit</td>
+                        <td>@row.Debit</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetInvoiceReport -->
+@{
+    var invoiceReport = TempData["InvoiceReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetInvoiceReportResponse>(TempData["InvoiceReport"].ToString())
+        : null;
+}
+
+@if (invoiceReport != null)
+{
+    <h2>Invoice Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Client ID</th>
+                    <th>Client Order Number</th>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Administration Fee</th>
+                    <th>Credit Fee</th>
+                    <th>Postage Fee</th>
+                    <th>Report Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in invoiceReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.InvoiceId</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.ClientOrderNumber</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Amount</td>
+                        <td>@row.AdministrationFee</td>
+                        <td>@row.CreditFee</td>
+                        <td>@row.PostageFee</td>
+                        <td>@row.ReportDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetPaymentPlanReport -->
+@{
+    var paymentPlanReport = TempData["PaymentPlanReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetPaymentPlanReportResponse>(TempData["PaymentPlanReport"].ToString())
+        : null;
+}
+
+@if (paymentPlanReport != null)
+{
+    <h2>Payment Plan Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Contract ID</th>
+                    <th>Order ID</th>
+                    <th>Client ID</th>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Administration Fee</th>
+                    <th>Pay to Client Amount</th>
+                    <th>Date</th>
+                    <th>Reporting Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in paymentPlanReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.ContractId</td>
+                        <td>@row.OrderId</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Amount</td>
+                        <td>@row.AdministrationFee</td>
+                        <td>@row.PayToClientAmount</td>
+                        <td>@row.Date.ToShortDateString()</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetAccountingReport -->
+@{
+    var accountingReport = TempData["AccountingReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetAccountingReportResponse>(TempData["AccountingReport"].ToString())
+        : null;
+}
+
+@if (accountingReport != null)
+{
+    <h2>Accounting Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Account Number</th>
+                    <th>Client ID</th>
+                    <th>Name</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                    <th>Reporting Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in accountingReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.Id</td>
+                        <td>@row.AccountNumber</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.Name</td>
+                        <td>@row.Credit.ToString("N2")</td>
+                        <td>@row.Debit.ToString("N2")</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetRegressionReport -->
+@{
+    var regressionReport = TempData["RegressionReport"] != null
+        ? JsonSerializer.Deserialize<AdminWS.GetRegressionReportResponse>(TempData["RegressionReport"].ToString())
+        : null;
+}
+
+@if (regressionReport != null)
+{
+    <h2>Regression Report</h2>
+
+    <div>
+        <h3>Report Rows</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Row Number</th>
+                    <th>Client ID</th>
+                    <th>Customer ID</th>
+                    <th>Invoice ID</th>
+                    <th>Client Order Number</th>
+                    <th>Transaction Amount</th>
+                    <th>Fee</th>
+                    <th>Rate</th>
+                    <th>Capital</th>
+                    <th>Posting Date</th>
+                    <th>Record Date</th>
+                    <th>Reporting Date</th>
+                    <th>Svea Order Creation Date</th>
+                    <th>Svea Order ID</th>
+                    <th>Checkout Order ID</th>
+                    <th>Transaction Type</th>
+                    <th>User</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in regressionReport.ReportRows)
+                {
+                    <tr>
+                        <td>@row.RowNumber</td>
+                        <td>@row.ClientId</td>
+                        <td>@row.CustomerId</td>
+                        <td>@row.InvoiceId</td>
+                        <td>@row.ClientOrderNumber</td>
+                        <td>@row.TransactionAmount.ToString("N2")</td>
+                        <td>@row.Fee.ToString("N2")</td>
+                        <td>@row.Rate.ToString("N2")</td>
+                        <td>@row.Capital.ToString("N2")</td>
+                        <td>@row.PostingDate.ToShortDateString()</td>
+                        <td>@row.RecordDate.ToShortDateString()</td>
+                        <td>@row.ReportingDate.ToShortDateString()</td>
+                        <td>@row.SveaOrderCreationDate?.ToShortDateString() ?? "N/A"</td>
+                        <td>@row.SveaOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.CheckoutOrderId?.ToString() ?? "N/A"</td>
+                        <td>@row.TransactionType</td>
+                        <td>@row.User</td>
+                        <td>@row.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- GetInvoicePdfLink -->
+@if (TempData["PdfBase64"] != null)
+{
+    <h4>Invoice PDF</h4>
+    @*<iframe src="data:application/pdf;base64,@TempData["PdfBase64"]" width="100%" height="500px"></iframe>*@
+    <a href="@Url.Action("GetPdf")" target="_blank" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px">Get Invoice PDF</a>
+}
+
+@section Scripts {
+    <script>
+        function toggleRowEditing(action, orderId) {
+            const editSection = document.getElementById(`editOrderRows-${orderId}`);
+            const existingRows = document.querySelectorAll(`#editOrderRows-${orderId} .existing-order-row`);
+            const newRows = document.querySelectorAll(`#editOrderRows-${orderId} .new-order-row`);
+            const addNewRowButton = document.getElementById(`addNewRowButton-${orderId}`);
+
+            const selectRowsSection = document.getElementById(`selectOrderRows-${orderId}`);
+            const deliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .delivered-row`);
+            const notDeliveredRows = document.querySelectorAll(`#selectOrderRows-${orderId} .not-delivered-row`);
+            const sveaDeliveryReferences = document.getElementById(`sveaDeliveryReferences-${orderId}`);
+            const invoiceDeliveryReferences = document.getElementById(`invoiceDeliveryReferences-${orderId}`);
+
+            if (editSection) editSection.style.display = "none";
+            if (selectRowsSection) selectRowsSection.style.display = "none";
+            if (addNewRowButton) addNewRowButton.style.display = "none";
+            if (sveaDeliveryReferences) sveaDeliveryReferences.style.display = "none";
+            if (invoiceDeliveryReferences) invoiceDeliveryReferences.style.display = "none";
+            if (action !== "UpdateOrderRows") clearOrderRows(orderId);
+
+            if (action === "AddOrderRows" || action === "UpdateOrderRows") {
+                editSection.style.display = "block";
+
+                if (action === "UpdateOrderRows") {
+                    existingRows.forEach(row => (row.style.display = "table-row"));
+                    newRows.forEach(row => (row.style.display = "none"));
+                } else if (action === "AddOrderRows") {
+                    existingRows.forEach(row => (row.style.display = "none"));
+                    newRows.forEach(row => (row.style.display = "table-row"));
+                    addNewRowButton.style.display = "block";
+                }
+            } else if (action === "CancelOrderRows" || action === "DeliverPartial") {
+                if (selectRowsSection) selectRowsSection.style.display = "block";
+
+                notDeliveredRows.forEach(row => (row.style.display = "table-row"));
+                deliveredRows.forEach(row => (row.style.display = "none"));
+
+            } else if (action === "CreditRows") {
+                editSection.style.display = "block";
+                if (selectRowsSection) selectRowsSection.style.display = "block";
+                notDeliveredRows.forEach(row => (row.style.display = "none"));
+                deliveredRows.forEach(row => (row.style.display = "table-row"));
+
+                const firstNewRow = document.querySelector(".new-order-row");
+                if (firstNewRow) {
+                    firstNewRow.remove();
+                }
+
+                addNewRowButton.style.display = "block";
+                toggleSveaDeliveryReferencesForCredit(action, orderId);
+            } else if (action === "GetInvoicePdfLink") {
+                if (invoiceDeliveryReferences) {
+                    invoiceDeliveryReferences.style.display = "block";
+                }
+            } else {
+                editSection.style.display = "none";
+                existingRows.forEach(row => (row.style.display = "none"));
+                newRows.forEach(row => (row.style.display = "none"));
+            }
+        }
+
+        function toggleSveaDeliveryReferencesForCredit(action, orderId) {
+            const sveaDeliveryReferences = document.getElementById(`sveaDeliveryReferences-${orderId}`);
+            if (sveaDeliveryReferences) {
+                sveaDeliveryReferences.style.display = action === "CreditRows" ? "block" : "none";
+            }
+
+            const deliveryReferenceSelect = sveaDeliveryReferences?.querySelector("select");
+            if (deliveryReferenceSelect) {
+                deliveryReferenceSelect.addEventListener("change", function () {
+                    filterSelectableOrderRows(orderId, this.value);
+                });
+                filterSelectableOrderRows(orderId, null);
+            }
+        }
+
+        function filterSelectableOrderRows(orderId, deliveryReferenceId) {
+            const rowsContainer = document.querySelector(`#selectOrderRows-${orderId} tbody`);
+            const rows = rowsContainer.querySelectorAll("tr");
+            const deliveryReferenceOrderRows = @Html.Raw(JsonSerializer.Serialize(deliveryReferenceOrderRows));
+
+            rows.forEach(row => {
+                const rowNumber = parseInt(row.querySelector("input[name*='RowNumber']").value, 10);
+                const isIncluded = deliveryReferenceOrderRows[deliveryReferenceId]?.includes(rowNumber);
+
+                row.style.display = isIncluded ? "table-row" : "none";
+            });
+        }
+
+        function addNewRow(orderId) {
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
+            //const newRows = tableBody.querySelectorAll(".new-order-row");
+            //const rowCount = tableBody.children.length;
+            const rowCount = tableBody.querySelectorAll(".new-order-row").length;
+
+            const previousLastRow = tableBody.querySelector("tr:last-child");
+            if (previousLastRow) {
+                const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
+                if (previousRemoveButton) {
+                    previousRemoveButton.disabled = true;
+                }
+            }
+
+            const newRow = `
+                <tr class="new-order-row">
+                    <td><span class="text-muted">New</span></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].ArticleNumber" placeholder="New Article Number" /></td>
+                    <td><input type="text" name="NewOrderRows[${rowCount}].Description" placeholder="New Description" /></td>
+                    <td><input type="number" name="NewOrderRows[${rowCount}].NumberOfUnits" placeholder="New Quantity" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].PricePerUnit" placeholder="New Price Per Unit" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].DiscountPercent" placeholder="New Discount Percent" /></td>
+                    <td><input type="number" step="0.01" name="NewOrderRows[${rowCount}].VatPercent" placeholder="New Vat Percent" /></td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-danger remove-row-btn"
+                            onclick="removeRow('${orderId}', this)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>`;
+            tableBody.insertAdjacentHTML("beforeend", newRow);
+        }
+
+        function removeRow(orderId, button) {
+            const row = button.closest("tr");
+            row.remove();
+
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
+            const previousLastRow = tableBody.querySelector("tr:last-child");
+            if (previousLastRow) {
+                const previousRemoveButton = previousLastRow.querySelector(".remove-row-btn");
+                if (previousRemoveButton) {
+                    previousRemoveButton.disabled = false;
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButtons = document.querySelectorAll('[automation="toggle-general-actions"]');
+            const collapsibleContent = document.querySelector('#general-actions-table .general-collapsible-content');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const isExpanded = collapsibleContent.style.display === "table-row-group";
+                    collapsibleContent.style.display = isExpanded ? "table-row-group" : "none";
+                });
+            });
+
+            collapsibleContent.style.display = "none";
+        });
+
+        function handleGeneralActionChange(action) {
+            toggleDeliverOrdersTable(action);
+            toggleSveaDeliveryReferences(action);
+        }
+
+        function toggleDeliverOrdersTable(action) {
+            const deliverOrdersTable = document.getElementById("deliverOrdersTable");
+            const paymentTypeDiv = document.getElementById("paymentTypeDiv");
+
+            if (action === "DeliverOrders") {
+                paymentTypeDiv.style.display = "block";
+                deliverOrdersTable.style.display = "block";
+                filterOrdersByPaymentType();
+            } else {
+                paymentTypeDiv.style.display = "none";
+                deliverOrdersTable.style.display = "none";
+            }
+        }
+
+        function filterOrdersByPaymentType() {
+            const paymentTypeSelect = document.getElementById("paymentTypeSelect");
+            const selectedPaymentType = paymentTypeSelect.value;
+            const ordersTableBody = document.getElementById("ordersTableBody");
+            const rows = ordersTableBody.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const rowPaymentType = row.getAttribute("data-payment-type");
+                if (selectedPaymentType === "" || rowPaymentType === selectedPaymentType) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        }
+
+        function toggleSveaDeliveryReferences(action) {
+            const sveaDeliveryReferences = document.getElementById("sveaDeliveryReferences");
+            sveaDeliveryReferences.style.display = action === "GetInvoices" ? "block" : "none";
+        }
+
+        function clearOrderRows(orderId) {
+            const tableBody = document.getElementById(`newOrderRows-${orderId}`);
+            const newRows = tableBody.querySelectorAll(".new-order-row");
+
+            newRows.forEach(row => {
+                row.remove();
+            });
+        }
+
+    </script>
+}
+

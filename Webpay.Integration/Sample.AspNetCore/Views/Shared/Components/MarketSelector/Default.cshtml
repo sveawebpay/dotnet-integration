@@ -1,0 +1,62 @@
+﻿@model Sample.AspNetCore.Components.MarketSelectorViewModel
+
+<form asp-controller="Market" asp-action="SetMarket" method="post">
+    <input type="hidden" name="marketId"/>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="marketMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Market: @Model.SelectedMarket.Id
+        </button>
+        <div id="marketMenuDropdown" class="dropdown-menu" aria-labelledby="marketMenuButton">
+            @foreach (var market in Model.AvailableMarkets)
+        {
+            <a onclick="updateSettings($(this))" class="dropdown-item" href="#">@market</a>
+        }
+        </div>
+    </div>
+</form>
+
+<form asp-controller="Language" asp-action="SetLanguage" method="post">
+    <input type="hidden" name="languageId"/>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Language: @Model.SelectedLanguage
+        </button>
+        <div id="languageMenuDropdown" class="dropdown-menu" aria-labelledby="languageMenuButton">
+            @foreach (var language in Model.SelectedMarket.Languages)
+        {
+            <a onclick="updateSettings($(this))" class="dropdown-item" href="#">@language</a>
+        }
+        </div>
+    </div>
+</form>
+
+<form asp-controller="Currency" asp-action="SetCurrency" method="post">
+    <input type="hidden" name="currencyCode"/>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Currency: @Model.SelectedCurrencyCode
+        </button>
+        <div id="currencyMenuDropdown" class="dropdown-menu" aria-labelledby="currencyMenuButton">
+            @foreach (var currency in Model.SelectedMarket.Currencies)
+        {
+            <a onclick="updateSettings($(this))" class="dropdown-item" href="#">@currency</a>
+        }
+        </div>
+    </div>
+</form>
+
+
+<form asp-controller="Country" asp-action="SetCountry" method="post">
+    <input type="hidden" name="countryId"/>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="countryMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Country: @Model.SelectedCountry
+        </button>
+        <div id="countryMenuDropdown" class="dropdown-menu" aria-labelledby="countryMenuButton">
+            @foreach (var country in Model.AvailableCountries)
+        {
+            <a onclick="updateSettings($(this))" class="dropdown-item" href="#">@country</a>
+        }
+        </div>
+    </div>
+</form>

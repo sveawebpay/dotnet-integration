@@ -1,49 +1,50 @@
 # C#/.Net Integration Package API for Svea Webpay
 
 ## Table of contents
-* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
-* [2. Build and Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build-and-configuration)
-* [3. Building an order](https://github.com/sveawebpay/dotnet-integration/tree/master#3-building-an-order)
-	* [3.1 Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#31-specify-order)
-	* [3.2 Customer identity](https://github.com/sveawebpay/dotnet-integration/tree/master#32-customer-identity)
-	* [3.3 Other values](https://github.com/sveawebpay/dotnet-integration/tree/master#33-other-values)
-	* [3.4 Choose payment](https://github.com/sveawebpay/dotnet-integration/tree/master#34-choose-payment)
-* [4. Payment method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#4-payment-method-reference)
-    * [4.1 Invoice payment](https://github.com/sveawebpay/dotnet-integration/tree/master#41-invoice-payment)
-    * [4.2 Payment plan payment](https://github.com/sveawebpay/dotnet-integration/tree/master#42-payment-plan-payment)
-	* [4.3 Card payment](https://github.com/sveawebpay/dotnet-integration/tree/master#43-card-payment)
-	* [4.4 Direct bank payment](https://github.com/sveawebpay/dotnet-integration/tree/master#44-direct-bank-payment)
-	* [4.5 PayPage](https://github.com/sveawebpay/dotnet-integration/tree/master#45-paypage)
-* [5. Item reference](https://github.com/sveawebpay/dotnet-integration/tree/master#5-item-reference)
-    * [5.1 Item.OrderRow()](https://github.com/sveawebpay/dotnet-integration/tree/master#51-itemorderrow)
-    * [5.2 Item.ShippingFee()](https://github.com/sveawebpay/dotnet-integration/tree/master#52-itemshippingfee)
-    * [5.3 Item.InvoiceFee()](https://github.com/sveawebpay/dotnet-integration/tree/master#53-iteminvoicefee)
-    * [5.4 Item.FixedDiscount()](https://github.com/sveawebpay/dotnet-integration/tree/master#54-itemfixeddiscount)
-    * [5.5 Item.RelativeDiscount](https://github.com/sveawebpay/dotnet-integration/tree/master#55-itemrelativediscount)
-    * [5.6 Item.IndividualCustomer()](https://github.com/sveawebpay/dotnet-integration/tree/master#56-itemindividualcustomer)
-    * [5.7 Item.CompanyCustomer()](https://github.com/sveawebpay/dotnet-integration/tree/master#57-itemcompanycustomer)
-    * [5.8 Item.NumberedOrderRow()](https://github.com/sveawebpay/dotnet-integration/tree/master#58-itemnumberedorderrow)
-* [6. WebpayConnection entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#6-webpayconnection-entrypoint-method-reference)
-    * [6.1 WebpayConnection.CreateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#61-webpayconnectioncreateorder)
-    * [6.2 WebpayConnection.GetPaymentPlanParams()](https://github.com/sveawebpay/dotnet-integration/tree/master#62-webpayconnectiongetpaymentplanparams)
-    * [6.3 WebpayConnection.PaymentPlanPricePerMonth()](https://github.com/sveawebpay/dotnet-integration/tree/master#63-webpayconnectionpaymentplanpricepermonth)
-    * [6.4 WebpayConnection.GetAddresses()](https://github.com/sveawebpay/dotnet-integration/tree/master#64-webpayconnectiongetaddresses)
-    * [6.5 WebpayConnection.DeliverOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#65-webpayconnectiondeliverorder)
-* [7. Response handler](https://github.com/sveawebpay/dotnet-integration/tree/master#7-response-handler)
-* [8. WebpayAdmin entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#8-webpayadmin-entrypoint-method-reference)
-	* [8.1 WebpayAdmin.QueryOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#71-webpayadminqueryorder)
-	* [8.2 WebpayAdmin.DeliverOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#72-webpayadmindeliverorderrows)
-	* [8.3 WebpayAdmin.DeliverOrders()](https://github.com/sveawebpay/dotnet-integration/tree/master#83-webpayadmindeliverorders)
-	* [8.4 WebpayAdmin.CancelOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#84-webpayadmincancelorder)
-	* [8.5 WebpayAdmin.CancelOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#85-webpayadmincancelorderrows)
-	* [8.6 WebpayAdmin.CreditAmount()](https://github.com/sveawebpay/dotnet-integration/tree/master#86-webpayadmincreditamount)
-	* [8.7 WebpayAdmin.CreditOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#87-webpayadmincreditorderrows)
-	* [8.8 WebpayAdmin.AddOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#88-webpayadminaddorderrows)
-	* [8.9 WebpayAdmin.UpdateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#89-webpayadminupdateorder)
-	* [8.10 WebpayAdmin.UpdateOrderRows()](https://github.com/sveawebpay/dotnet-integration/tree/master#810-webpayadminupdateorderrows)
-* [9. Helper methods](https://github.com/sveawebpay/dotnet-integration/tree/master#9-helpermethods)
-    * [9.1 PeppolID](https://github.com/sveawebpay/dotnet-integration/tree/master#91-peppolid)
-* [APPENDIX](https://github.com/sveawebpay/dotnet-integration/tree/master#appendix)
+* [1. Introduction](#1-introduction)
+* [2. Build and Configuration](#2-build-and-configuration)
+* [3. Building an order](#3-building-an-order)
+	* [3.1 Specify order](#31-specify-order)
+	* [3.2 Customer identity](#32-customer-identity)
+	* [3.3 Other values](#33-other-values)
+	* [3.4 Choose payment](#34-choose-payment)
+* [4. Payment method reference](#4-payment-method-reference)
+    * [4.1 Invoice payment](#41-invoice-payment)
+    * [4.2 Payment plan payment](#42-payment-plan-payment)
+	* [4.3 Card payment](#43-card-payment)
+	* [4.4 Direct bank payment](#44-direct-bank-payment)
+	* [4.5 PayPage](#45-paypage)
+* [5. Item reference](#5-item-reference)
+    * [5.1 Item.OrderRow](#51-itemorderrow)
+    * [5.2 Item.ShippingFee](#52-itemshippingfee)
+    * [5.3 Item.InvoiceFee](#53-iteminvoicefee)
+    * [5.4 Item.FixedDiscount](#54-itemfixeddiscount)
+    * [5.5 Item.RelativeDiscount](#55-itemrelativediscount)
+    * [5.6 Item.IndividualCustomer](#56-itemindividualcustomer)
+    * [5.7 Item.CompanyCustomer](#57-itemcompanycustomer)
+    * [5.8 Item.NumberedOrderRow](#58-itemnumberedorderrow)
+	* [5.9 Item.AddNavigationUrls](#59-itemaddnavigationurls)
+* [6. WebpayConnection entrypoint method reference](#6-webpayconnection-entrypoint-method-reference)
+    * [6.1 WebpayConnection.CreateOrder](#61-webpayconnectioncreateorder)
+    * [6.2 WebpayConnection.GetPaymentPlanParams](#62-webpayconnectiongetpaymentplanparams)
+    * [6.3 WebpayConnection.PaymentPlanPricePerMonth](#63-webpayconnectionpaymentplanpricepermonth)
+    * [6.4 WebpayConnection.GetAddresses](#64-webpayconnectiongetaddresses)
+    * [6.5 WebpayConnection.DeliverOrder](#65-webpayconnectiondeliverorder)
+* [7. Response handler](#7-response-handler)
+* [8. WebpayAdmin entrypoint method reference](#8-webpayadmin-entrypoint-method-reference)
+	* [8.1 WebpayAdmin.QueryOrder](#71-webpayadminqueryorder)
+	* [8.2 WebpayAdmin.DeliverOrderRows](#72-webpayadmindeliverorderrows)
+	* [8.3 WebpayAdmin.DeliverOrders](#83-webpayadmindeliverorders)
+	* [8.4 WebpayAdmin.CancelOrder](#84-webpayadmincancelorder)
+	* [8.5 WebpayAdmin.CancelOrderRows](#85-webpayadmincancelorderrows)
+	* [8.6 WebpayAdmin.CreditAmount](#86-webpayadmincreditamount)
+	* [8.7 WebpayAdmin.CreditOrderRows](#87-webpayadmincreditorderrows)
+	* [8.8 WebpayAdmin.AddOrderRows](#88-webpayadminaddorderrows)
+	* [8.9 WebpayAdmin.UpdateOrder](#89-webpayadminupdateorder)
+	* [8.10 WebpayAdmin.UpdateOrderRows](#810-webpayadminupdateorderrows)
+* [9. Helper methods](#9-helpermethods)
+    * [9.1 PeppolID](#91-peppolid)
+* [APPENDIX](#appendix)
 
 ## !!! Note regarding Svea Checkout !!!
 
@@ -77,6 +78,8 @@ The authorization values are recieved from Svea Ekonomi when creating an account
 Create a class (eg. one for testing values, one for production) that implements the IConfigurationProvider Interface. Let the implemented methods
 return the authorization values asked for.
 Later when starting a WebpayConnection action in your integration file, put an instance of your class as parameter to the constructor.
+
+See the [sample test shop](Webpay.Integration/Sample.AspNetCore) for a demonstration of how the SDK can be used for Invoice, PaymentPlan and AccountCredit payments.
 
 *NOTE:* This solution may change in future updates!
 
@@ -669,7 +672,7 @@ When discount or coupon is a percentage on total product amount.
 	.SetName("Relative")                   //Optional
 	.SetDescription("RelativeDiscount"))   //Optional
 ```
-### 5.5 Item.IndividualCustomer
+### 5.6 Item.IndividualCustomer
 When adding individual customer information to an order.
 ```csharp
 .AddCustomerDetails(Item.IndividualCustomer()
@@ -686,7 +689,7 @@ When adding individual customer information to an order.
     .SetIpAddress("123.123.123")       		//Optional but desirable
 ```
 
-### 5.5 Item.CompanyCustomer
+### 5.7 Item.CompanyCustomer
 When adding company customer information to an order.
 ```csharp
 .AddCustomerDetails(Item.CompanyCustomer()
@@ -696,7 +699,7 @@ When adding company customer information to an order.
 	.SetAddressSelector("7fd7768")          //Optional. Recieved from getAddresses
 ```
 
-### 5.5 Item.NumberedOrderRow
+### 5.8 Item.NumberedOrderRow
 This is an extension of the orderRow class, used in the WebpayAdmin.QueryOrder() response and methods that adminster individual order rows.
 ```csharp
 Item.NumberedOrderRow()
@@ -708,6 +711,16 @@ Item.NumberedOrderRow()
 	.SetRowNumber()			//required for UpdateOrderrow()
 	.SetStatus()			//optional
 
+```
+### 5.9 Item.AddNavigationUrls
+
+Used to set navigation URLs for strong verification (e.g., BankID), where ConfirmationUrl and RejectionUrl are provided.
+
+ConfirmationUrl (Required): The URL to which the user is redirected after successfully completing the verification.
+RejectionUrl (Required): The URL to which the user is redirected if the verification fails.
+
+```csharp
+.AddNavigationUrls("https://example.com/confirm", "https://example.com/reject")
 ```
 
 [<< To top](https://github.com/sveawebpay/dotnet-integration/tree/master#cnet-integration-package-api-for-sveawebpay)

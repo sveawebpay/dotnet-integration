@@ -1,0 +1,21 @@
+﻿@model Sample.AspNetCore.Models.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "Index";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["CancelMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["CancelMessage"]</div>
+}
+else if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
+}
+
+<h1>Orders</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>

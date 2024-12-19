@@ -1,7 +1,7 @@
 # C#/.Net Integration Package API for Svea Webpay
 
 ## Table of contents
-* [1. Introduction](https://github.com/sveawebpay/dotnet-integration/tree/master#1-introduction)
+* [1. Introduction](#1-introduction)
 * [2. Build and Configuration](https://github.com/sveawebpay/dotnet-integration/tree/master#2-build-and-configuration)
 * [3. Building an order](https://github.com/sveawebpay/dotnet-integration/tree/master#3-building-an-order)
 	* [3.1 Specify order](https://github.com/sveawebpay/dotnet-integration/tree/master#31-specify-order)
@@ -23,6 +23,7 @@
     * [5.6 Item.IndividualCustomer()](https://github.com/sveawebpay/dotnet-integration/tree/master#56-itemindividualcustomer)
     * [5.7 Item.CompanyCustomer()](https://github.com/sveawebpay/dotnet-integration/tree/master#57-itemcompanycustomer)
     * [5.8 Item.NumberedOrderRow()](https://github.com/sveawebpay/dotnet-integration/tree/master#58-itemnumberedorderrow)
+	* [5.9 Item.AddNavigationUrls()](https://github.com/sveawebpay/dotnet-integration/tree/master#59-itemaddnavigationurls)
 * [6. WebpayConnection entrypoint method reference](https://github.com/sveawebpay/dotnet-integration/tree/master#6-webpayconnection-entrypoint-method-reference)
     * [6.1 WebpayConnection.CreateOrder()](https://github.com/sveawebpay/dotnet-integration/tree/master#61-webpayconnectioncreateorder)
     * [6.2 WebpayConnection.GetPaymentPlanParams()](https://github.com/sveawebpay/dotnet-integration/tree/master#62-webpayconnectiongetpaymentplanparams)
@@ -711,12 +712,12 @@ Item.NumberedOrderRow()
 	.SetStatus()			//optional
 
 ```
-### 5.9 AddNavigationUrls
+### 5.9 Item.AddNavigationUrls
 
 Used to set navigation URLs for strong verification (e.g., BankID), where ConfirmationUrl and RejectionUrl are provided.
 
-    ConfirmationUrl (Required): The URL to which the user is redirected after successfully completing the verification.
-    RejectionUrl (Required): The URL to which the user is redirected if the verification fails.
+ConfirmationUrl (Required): The URL to which the user is redirected after successfully completing the verification.
+RejectionUrl (Required): The URL to which the user is redirected if the verification fails.
 
 ```csharp
 .AddNavigationUrls("https://example.com/confirm", "https://example.com/reject")

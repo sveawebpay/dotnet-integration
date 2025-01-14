@@ -9,6 +9,7 @@ using Webpay.Integration.CSharp.Util.Constant;
 using Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Util.Testing;
+using Webpay.Integration.CSharp.Order.Row.LowerAmount;
 
 
 namespace Webpay.Integration.CSharp.IntegrationTest
@@ -1050,6 +1051,21 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Accepted);
             Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
             Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
+        }
+        [Test]
+        public void Test_LowerOrder_LowerCardOrder()
+        {
+            // create order
+            var payment = CreateCardOrderWithTwoOrderRows();
+
+            var rows = new List<OrderRow> { new OrderRow { Quantity = 2,RowId = 1}, new OrderRow { Quantity = 2, RowId = 2 } };
+            // do cancelOrder request and assert the response
+            LowerOrderRowBuilder lowerOrderBuilder = WebpayAdmin.LowerOrderRow(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .AddOrderRows(rows)
+                .SetCountryCode(CountryCode.SE);
+            LowerOrderRowResponse response = lowerOrderBuilder.LowerOrderRows().DoRequest();
+            Assert.That(response.Accepted);
         }
         [Test] public void Test_CancelOrderRows_CancelCardOrderRows_CancellingAllRowsGivesOrderStatusAnnulled()
         {

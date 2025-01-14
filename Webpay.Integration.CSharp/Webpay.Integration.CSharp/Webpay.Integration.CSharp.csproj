@@ -60,6 +60,7 @@
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\LowerOrderRowRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRowsRequest.cs" />
     <Compile Include="AdminService\CreditPaymentPlanOrderRowsRequest.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\BasicRequest.cs" />
     <Compile Include="Hosted\Admin\Actions\ConfirmPartial.cs" />
+    <Compile Include="Hosted\Admin\Actions\LowerOrderRow.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerAmountConfirm.cs" />
     <Compile Include="Hosted\Admin\Response\ConfirmPartialResponse.cs" />
     <Compile Include="Hosted\Admin\Response\CreditResponse.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\LowerOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Query.cs" />
     <Compile Include="Hosted\Admin\Actions\QueryByClientOrderNumber.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Delivery.cs" />
+    <Compile Include="Order\Handle\LowerOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderRowsBuilder.cs" />
@@ -122,6 +126,7 @@
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Order\Row\Credit\CreditOrderRowBuilder.cs" />
     <Compile Include="Order\Row\Credit\NewCreditOrderRowBuilder.cs" />
+    <Compile Include="Order\Row\LowerAmount\OrderRow.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>

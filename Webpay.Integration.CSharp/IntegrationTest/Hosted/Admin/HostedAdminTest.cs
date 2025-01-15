@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using Webpay.Integration.CSharp.Order.Row.credit;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row.LowerAmount;
+using System.Text.Json;
+using Webpay.Integration.CSharp.Util;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -207,7 +209,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                             Quantity = 1,
                             DiscountAmount = 10,
                             DiscountPercent=2 ,
-                            Name = "test",
+                            Name = "test > 1",
                             VatPercent=1,
                             UnitPrice = 1
                         }
@@ -227,7 +229,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText, Is.EqualTo("test"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").ChildNodes[1].SelectSingleNode("name").InnerText.XmlUnescape(), Is.EqualTo("test > 1"));
 
         }
         [Test]

@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
+using System.Web;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Order.Row.credit;
 using Webpay.Integration.CSharp.Response;
+using Webpay.Integration.CSharp.Util;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
 {
@@ -71,7 +74,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         private string GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
         {
             return $"<row>" +
-                         $"<name>{orderRow.Name}</name>" +
+                         $"<name>{orderRow.Name.XmlEscape()}</name>" +
                          $"<unitprice>{orderRow.UnitPrice}</unitprice>" +
                          $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
                          $"<vatpercent>{orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +

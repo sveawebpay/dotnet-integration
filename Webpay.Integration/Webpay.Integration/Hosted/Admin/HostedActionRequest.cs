@@ -27,29 +27,6 @@ public class HostedActionRequest
         Headers = headers;
     }
 
-    //public T DoRequestAsync<T>()
-    //{
-    //    var typeToResponseMap = new Dictionary<Type, Func<HostedAdminResponse, object>>
-    //    {
-    //        { typeof(AnnulResponse), response => response.To(Annul.Response) },
-    //        { typeof(ConfirmResponse), response => response.To(Confirm.Response) },
-    //        { typeof(CreditResponse), response => response.To(Credit.Response) },
-    //        { typeof(LowerAmountResponse), response => response.To(LowerAmount.Response) },
-    //        { typeof(LowerAmountConfirmResponse), response => response.To(LowerAmountConfirm.Response) },
-    //        { typeof(QueryResponse), response => response.To(Query.Response) },
-    //        { typeof(RecurResponse), response => response.To(Recur.Response) },
-    //        { typeof(HostedAdminResponse), response => response }
-    //    };
-
-    //    if (typeToResponseMap.TryGetValue(typeof(T), out var converter))
-    //    {
-    //        var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
-    //        return (T)converter(hostedAdminResponse);
-    //    }
-
-    //    throw new SveaWebPayException("Unknown request type");
-    //}
-
     public async Task<T> DoRequestAsync<T>()
     {
         var typeToResponseMap = new Dictionary<Type, Func<HostedAdminResponse, object>>
@@ -59,6 +36,7 @@ public class HostedActionRequest
             { typeof(CreditResponse), response => response.To(Credit.Response) },
             { typeof(LowerAmountResponse), response => response.To(LowerAmount.Response) },
             { typeof(LowerAmountConfirmResponse), response => response.To(LowerAmountConfirm.Response) },
+            { typeof(LowerOrderRowResponse), response => response.To(LowerOrderRow.Response) },
             { typeof(QueryResponse), response => response.To(Query.Response) },
             { typeof(RecurResponse), response => response.To(Recur.Response) },
             { typeof(HostedAdminResponse), response => response }

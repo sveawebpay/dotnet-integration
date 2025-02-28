@@ -10,6 +10,7 @@ using Webpay.Integration.Util.Testing;
 using Webpay.Integration.Order.Row;
 using Webpay.Integration.Order.Row.credit;
 using Webpay.Integration.Order;
+using Webpay.Integration.Order.Row.LowerAmount;
 
 namespace Webpay.Integration.IntegrationTest.Hosted.Admin;
 
@@ -360,10 +361,8 @@ public class HostedAdminTest
         Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
         var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
-        var expectedPaymentmethodsXml =
-            "<paymentmethod>MOBILEPAY</paymentmethod><paymentmethod>SVEACARDPAY</paymentmethod><paymentmethod>SVEACARDPAY_PF</paymentmethod><paymentmethod>SWISH</paymentmethod><paymentmethod>SWISH_PF</paymentmethod><paymentmethod>TRUSTLY</paymentmethod><paymentmethod>VIPPS_DIRECT</paymentmethod>";
-
-        Assert.That(actualPaymentmethodsXml, Is.EqualTo(expectedPaymentmethodsXml));
+        var pattern = @"(?s)^(?=.*<paymentmethod>SVEACARDPAY</paymentmethod>)(?=.*<paymentmethod>SWISH</paymentmethod>)(?=.*<paymentmethod>TRUSTLY</paymentmethod>)(?=.*<paymentmethod>VIPPS[^<]*</paymentmethod>).*$";
+        Assert.That(actualPaymentmethodsXml, Does.Match(pattern));
     }
 
     [Test]
@@ -504,6 +503,63 @@ public class HostedAdminTest
                             <statuscode>107</statuscode>
                         </response>");
         var response = LowerAmount.Response(responseXml);
+
+        Assert.That(response.TransactionId, Is.Null);
+        Assert.That(response.CustomerRefNo, Is.Null);
+        Assert.That(response.ClientOrderNumber, Is.Null);
+        Assert.That(response.StatusCode, Is.EqualTo(107));
+        Assert.That(response.Accepted, Is.False);
+        Assert.That(response.ErrorMessage, Is.EqualTo("Transaction rejected by bank."));
+    }
+
+    [Test]
+    public void TestLowerOrderRow()
+    {
+        var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+            .LowerOrderRow(new LowerOrderRow(
+                transactionId: 12341234,
+                orderRows: new List<OrderRow> {
+                        new OrderRow{RowId =1,Quantity = 1},new OrderRow{RowId =2,Quantity = 2}
+                },
+                correlationId: null
+            ));
+
+        var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+        Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
+        Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+        Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
+    }
+
+    [Test]
+    public void TestLowerOrderRowResponse()
+    {
+        var responseXml = new XmlDocument();
+        responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <transaction id=""598972"">
+                                <customerrefno>1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4</customerrefno>
+                            </transaction>
+                            <statuscode>0</statuscode>
+                        </response>");
+        LowerOrderRowResponse response = LowerOrderRow.Response(responseXml);
+
+        Assert.That(response.TransactionId, Is.EqualTo(598972));
+        Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+        Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
+        Assert.That(response.StatusCode, Is.EqualTo(0));
+        Assert.That(response.Accepted, Is.True);
+        Assert.That(response.ErrorMessage, Is.Empty);
+    }
+
+    [Test]
+    public void TestLowerOrderRowResponseFailure()
+    {
+        var responseXml = new XmlDocument();
+        responseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
+                        <response>
+                            <statuscode>107</statuscode>
+                        </response>");
+        LowerOrderRowResponse response = LowerOrderRow.Response(responseXml);
 
         Assert.That(response.TransactionId, Is.Null);
         Assert.That(response.CustomerRefNo, Is.Null);

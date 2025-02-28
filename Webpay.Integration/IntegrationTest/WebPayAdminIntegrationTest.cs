@@ -4,6 +4,7 @@ using Webpay.Integration.Util.Constant;
 using Webpay.Integration.IntegrationTest.Hosted.Admin;
 using Webpay.Integration.Order.Handle;
 using Webpay.Integration.Util.Testing;
+using Webpay.Integration.Order.Row.LowerAmount;
 
 namespace Webpay.Integration.IntegrationTest;
 
@@ -922,6 +923,23 @@ public class WebpayAdminIntegrationTest
         Assert.That(answer.ResultCode == 0);
         Assert.That(answer.Orders.First().OrderRows.ElementAt(0).Status, Is.EqualTo("Cancelled"));
         Assert.That(answer.Orders.First().OrderRows.ElementAt(1).Status, Is.EqualTo("NotDelivered"));
+    }
+
+    [Test]
+    public async Task Test_LowerOrder_LowerCardOrder()
+    {
+        // create order
+        var payment = await CreateCardOrderWithTwoOrderRows();
+
+        var rows = new List<OrderRow> { new OrderRow { Quantity = 2, RowId = 1 }, new OrderRow { Quantity = 2, RowId = 2 } };
+        // do cancelOrder request and assert the response
+        LowerOrderRowBuilder lowerOrderBuilder = WebpayAdmin.LowerOrderRow(SveaConfig.GetDefaultConfig())
+            .SetTransactionId(payment.TransactionId)
+            .AddOrderRows(rows)
+            .SetCountryCode(CountryCode.SE);
+
+        var response = await lowerOrderBuilder.LowerOrderRows().DoRequestAsync();
+        Assert.That(response.Accepted);
     }
 
     [Test]

@@ -136,5 +136,9 @@ public class WebpayAdmin
         return new ApproveInvoiceBuilder(config);
     }
 
+    public static LowerOrderRowBuilder LowerOrderRow(IConfigurationProvider configurationProvider)
+    {
+        return new LowerOrderRowBuilder(configurationProvider);
+    }
 }
 

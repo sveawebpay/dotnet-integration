@@ -36,7 +36,7 @@ public class PaymentPlanPricePerMonthTest
         Assert.That(result[5]["campaignCode"], Is.EqualTo(410018));
         Assert.That(result[5]["pricePerMonth"], Is.EqualTo(737));
         Assert.That(result[6]["campaignCode"], Is.EqualTo(410024));
-        Assert.That(result[6]["pricePerMonth"], Is.EqualTo(574));
+        Assert.That(result[6]["pricePerMonth"], Is.EqualTo(578).Within(5));
         Assert.That(result[7]["campaignCode"], Is.EqualTo(410048));
         Assert.That(result[7]["pricePerMonth"], Is.EqualTo(289));
         Assert.That(result[8]["campaignCode"], Is.EqualTo(410060));

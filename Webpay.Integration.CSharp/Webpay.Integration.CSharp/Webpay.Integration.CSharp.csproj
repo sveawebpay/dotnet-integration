@@ -92,6 +92,7 @@
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\LowerOrderRowConfirmRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRowsRequest.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\BasicRequest.cs" />
     <Compile Include="Hosted\Admin\Actions\ConfirmPartial.cs" />
+    <Compile Include="Hosted\Admin\Actions\LowerOrderRowConfirm.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerOrderRow.cs" />
     <Compile Include="Hosted\Admin\Actions\LowerAmountConfirm.cs" />
     <Compile Include="Hosted\Admin\Response\ConfirmPartialResponse.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\LowerOrderRowConfirmResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Query.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Delivery.cs" />
+    <Compile Include="Order\Handle\LowerOrderRowConfirmBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderBuilder.cs" />
     <Compile Include="Order\Handle\CancelOrderBuilder.cs" />

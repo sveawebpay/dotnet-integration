@@ -536,10 +536,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/loweramount/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
         }
+       
         [Test]
         public void TestLowerOrderRowResponse()
         {

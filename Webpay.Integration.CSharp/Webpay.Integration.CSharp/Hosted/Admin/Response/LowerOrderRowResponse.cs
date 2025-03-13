@@ -2,9 +2,9 @@ using System.Xml;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Response
 {
-    public class LowerOrderRowResponse : CustomerRefNoResponseBase
+    public class LowerOrderRowConfirmResponse : CustomerRefNoResponseBase
     {
-        public LowerOrderRowResponse(XmlDocument response) : base(response)
+        public LowerOrderRowConfirmResponse(XmlDocument response) : base(response)
         {
             //intentionally left blank
         }

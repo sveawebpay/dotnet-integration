@@ -128,6 +128,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             AddCorrelationIdHeader(lowerOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/lowerorderrow");
         }
+        public HostedActionRequest LowerOrderRowConfirm(LowerOrderRowConfirm lowerOrderRow)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <lowerorderrowconfirm>
+                <transactionid>{0}</transactionid>
+                <capturedate>{1}</capturedate>
+                <orderrows>{2}
+                </orderrows>
+                </lowerorderrowconfirm>", lowerOrderRow.TransactionId,lowerOrderRow.CaptureDate ,lowerOrderRow.GetXmlForOrderRows());
+            AddCorrelationIdHeader(lowerOrderRow.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/lowerorderrowconfirm");
+        }
         public HostedActionRequest LowerAmountConfirm(LowerAmountConfirm lowerAmount)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>

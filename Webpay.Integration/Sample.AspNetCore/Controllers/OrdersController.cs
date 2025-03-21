@@ -150,7 +150,7 @@ public class OrdersController : Controller
 
         return View(new OrderListViewModel
         {
-            PaymentOrders = orderViewModels
+            PaymentOrders = orderViewModels.Where(o => o.IsLoaded).ToList()
         });
     }
 

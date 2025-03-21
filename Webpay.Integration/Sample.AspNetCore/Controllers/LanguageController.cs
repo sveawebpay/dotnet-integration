@@ -1,11 +1,9 @@
-﻿namespace Sample.AspNetCore.Controllers;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
 using Sample.AspNetCore.Models;
-
 using System.Threading.Tasks;
+
+namespace Sample.AspNetCore.Controllers;
 
 public class LanguageController : Controller
 {
@@ -21,8 +19,8 @@ public class LanguageController : Controller
     public async Task<IActionResult> SetLanguage(string languageId)
     {
         //this.marketService.SetLanguage(languageId);
-        this.logger.LogInformation($"Language changed to {languageId}");
-        this.marketService.Update();
+        logger.LogInformation($"Language changed to {languageId}");
+        marketService.Update();
         return await Task.FromResult(Redirect(Request.Headers["Referer"].ToString()));
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Sample.AspNetCore.Data;
 using Sample.AspNetCore.Models;
-
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,8 +35,8 @@ public class ProductsController : Controller
             return View(product);
         }
 
-        this.context.Add(product);
-        await this.context.SaveChangesAsync();
+        context.Add(product);
+        await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
@@ -48,9 +46,9 @@ public class ProductsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var product = await this.context.Products.FindAsync(id);
-        this.context.Products.Remove(product);
-        await this.context.SaveChangesAsync();
+        var product = await context.Products.FindAsync(id);
+        context.Products.Remove(product);
+        await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
@@ -62,7 +60,7 @@ public class ProductsController : Controller
             return NotFound();
         }
 
-        var product = await this.context.Products
+        var product = await context.Products
             .FirstOrDefaultAsync(m => m.ProductId == id);
         if (product == null)
         {
@@ -78,7 +76,7 @@ public class ProductsController : Controller
         if (id == null)
             return NotFound();
 
-        var product = await this.context.Products.FindAsync(id);
+        var product = await context.Products.FindAsync(id);
         if (product == null)
             return NotFound();
         return View(product);
@@ -100,8 +98,8 @@ public class ProductsController : Controller
         {
             try
             {
-                this.context.Update(product);
-                await this.context.SaveChangesAsync();
+                context.Update(product);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -119,11 +117,11 @@ public class ProductsController : Controller
     // GET: Products
     public async Task<IActionResult> Index()
     {
-        return View(await this.context.Products.ToListAsync());
+        return View(await context.Products.ToListAsync());
     }
 
     private bool ProductExists(int id)
     {
-        return this.context.Products.Any(e => e.ProductId == id);
+        return context.Products.Any(e => e.ProductId == id);
     }
 }

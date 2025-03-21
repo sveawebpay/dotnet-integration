@@ -1,9 +1,9 @@
-﻿namespace Sample.AspNetCore.Controllers;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sample.AspNetCore.Models;
 using System.Threading.Tasks;
+
+namespace Sample.AspNetCore.Controllers;
 
 public class CurrencyController : Controller
 {

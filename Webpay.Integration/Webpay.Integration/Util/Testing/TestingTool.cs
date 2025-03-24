@@ -11,7 +11,7 @@ public static class TestingTool
 {
     public const CountryCode DefaultTestCountryCode = CountryCode.SE;
     public const Currency DefaultTestCurrency = Currency.SEK;
-    public const string DefaultTestClientOrderNumber = "33";
+    public const string DefaultTestClientOrderNumber = "WebpayIntegration-33";
     public const string DefaultTestCustomerReferenceNumber = "ref33";
     public const string DefaultTestIndividualNationalIdNumber = "194605092222";
     public const string DefaultTestCompanyNationalIdNumber = "194608142222"; // Enskild firma

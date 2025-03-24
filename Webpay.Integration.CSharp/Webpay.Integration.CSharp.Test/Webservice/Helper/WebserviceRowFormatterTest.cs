@@ -96,6 +96,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Helper
             Assert.That(newRows[0].DiscountPercent, Is.EqualTo(0));
             Assert.That(newRows[0].NumberOfUnits, Is.EqualTo(1));
             Assert.That(newRows[0].Unit, Is.EqualTo("st"));
+            Assert.That(newRows[0].RowType, Is.EqualTo(RowType.InvoiceFee));
         }
 
         [Test]

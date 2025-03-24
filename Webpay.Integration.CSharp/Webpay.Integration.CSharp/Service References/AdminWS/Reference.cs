@@ -17,52 +17,52 @@ namespace Webpay.Integration.CSharp.AdminWS {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BasicRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetClientIdRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.PartialDeliveryRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ExtendOrderRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.DeliveryRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchOrdersRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchInvoicesRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SumOfOrderAmountRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SumOfInvoiceAmountRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SumOfPaymentPlanAmountRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreateOrderRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreateApprovedOrderRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountCreditsRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetClientIdRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest))]
     public partial class BasicRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -180,11 +180,51 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetPendingReasonsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetPendingReasonsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class ApproveInvoiceRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
         private long ClientIdField;
+        
+        private long InvoiceIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class CancelOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
         
         private long SveaOrderIdField;
         
@@ -201,6 +241,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
         public long SveaOrderId {
             get {
@@ -210,492 +263,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.SveaOrderIdField.Equals(value) != true)) {
                     this.SveaOrderIdField = value;
                     this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class CancelAccountCreditAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private decimal AmountIncVatField;
-        
-        private long ClientAccountCreditIdField;
-        
-        private long ClientIdField;
-        
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal AmountIncVat {
-            get {
-                return this.AmountIncVatField;
-            }
-            set {
-                if ((this.AmountIncVatField.Equals(value) != true)) {
-                    this.AmountIncVatField = value;
-                    this.RaisePropertyChanged("AmountIncVat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientAccountCreditId {
-            get {
-                return this.ClientAccountCreditIdField;
-            }
-            set {
-                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
-                    this.ClientAccountCreditIdField = value;
-                    this.RaisePropertyChanged("ClientAccountCreditId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class CancelAccountCreditRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRowsField;
-        
-        private long ClientAccountCreditIdField;
-        
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRows {
-            get {
-                return this.CancellationRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CancellationRowsField, value) != true)) {
-                    this.CancellationRowsField = value;
-                    this.RaisePropertyChanged("CancellationRows");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientAccountCreditId {
-            get {
-                return this.ClientAccountCreditIdField;
-            }
-            set {
-                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
-                    this.ClientAccountCreditIdField = value;
-                    this.RaisePropertyChanged("ClientAccountCreditId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetClientIdRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetClientIdRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long SveaOrderIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class AccountCreditRegressReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime FromDateField;
-        
-        private string ReportNameField;
-        
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string ReportName {
-            get {
-                return this.ReportNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportNameField, value) != true)) {
-                    this.ReportNameField = value;
-                    this.RaisePropertyChanged("ReportName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class AccountingAgreementType25ReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime FromDateField;
-        
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetSpecificationReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime FromDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SpecificationReportType ReportTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SpecificationReportType ReportType {
-            get {
-                return this.ReportTypeField;
-            }
-            set {
-                if ((this.ReportTypeField.Equals(value) != true)) {
-                    this.ReportTypeField = value;
-                    this.RaisePropertyChanged("ReportType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetClientsByIdentityAccountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetClientsByIdentityAccountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoicesPaidToClientForReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime FromDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetDebtInvoicesPaidToClientForReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime FromDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
-    [System.SerializableAttribute()]
-    public partial class GetKickbackReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime RunDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime RunDate {
-            get {
-                return this.RunDateField;
-            }
-            set {
-                if ((this.RunDateField.Equals(value) != true)) {
-                    this.RunDateField = value;
-                    this.RaisePropertyChanged("RunDate");
                 }
             }
         }
@@ -771,19 +338,33 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class CancelOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class CancelPaymentPlanAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        private long ClientIdField;
+        private decimal AmountInclVatField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        private int ClientIdField;
         
-        private long SveaOrderIdField;
+        private long ContractNumberField;
+        
+        private string DescriptionField;
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
+        public decimal AmountInclVat {
+            get {
+                return this.AmountInclVatField;
+            }
+            set {
+                if ((this.AmountInclVatField.Equals(value) != true)) {
+                    this.AmountInclVatField = value;
+                    this.RaisePropertyChanged("AmountInclVat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
             get {
                 return this.ClientIdField;
             }
@@ -795,28 +376,28 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ContractNumber {
             get {
-                return this.OrderTypeField;
+                return this.ContractNumberField;
             }
             set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
+                if ((this.ContractNumberField.Equals(value) != true)) {
+                    this.ContractNumberField = value;
+                    this.RaisePropertyChanged("ContractNumber");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long SveaOrderId {
+        public string Description {
             get {
-                return this.SveaOrderIdField;
+                return this.DescriptionField;
             }
             set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
                 }
             }
         }
@@ -824,176 +405,28 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PartialDeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class PartialDeliveryRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class CancelPaymentPlanRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionTypeField;
-        
-        private Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation OrderToDeliverField;
-        
-        private long[] RowNumbersField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionType {
-            get {
-                return this.InvoiceDistributionTypeField;
-            }
-            set {
-                if ((this.InvoiceDistributionTypeField.Equals(value) != true)) {
-                    this.InvoiceDistributionTypeField = value;
-                    this.RaisePropertyChanged("InvoiceDistributionType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation OrderToDeliver {
-            get {
-                return this.OrderToDeliverField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderToDeliverField, value) != true)) {
-                    this.OrderToDeliverField = value;
-                    this.RaisePropertyChanged("OrderToDeliver");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long[] RowNumbers {
-            get {
-                return this.RowNumbersField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RowNumbersField, value) != true)) {
-                    this.RowNumbersField = value;
-                    this.RaisePropertyChanged("RowNumbers");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class DeliveryRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionTypeField;
-        
-        private Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation[] OrdersToDeliverField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionType {
-            get {
-                return this.InvoiceDistributionTypeField;
-            }
-            set {
-                if ((this.InvoiceDistributionTypeField.Equals(value) != true)) {
-                    this.InvoiceDistributionTypeField = value;
-                    this.RaisePropertyChanged("InvoiceDistributionType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation[] OrdersToDeliver {
-            get {
-                return this.OrdersToDeliverField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrdersToDeliverField, value) != true)) {
-                    this.OrdersToDeliverField = value;
-                    this.RaisePropertyChanged("OrdersToDeliver");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class SearchOrdersRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private int EndIndexField;
-        
-        private Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilterField;
-        
-        private Webpay.Integration.CSharp.AdminWS.SearchOrderSorting SearchOrderSortingField;
-        
-        private int StartIndexField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int EndIndex {
-            get {
-                return this.EndIndexField;
-            }
-            set {
-                if ((this.EndIndexField.Equals(value) != true)) {
-                    this.EndIndexField = value;
-                    this.RaisePropertyChanged("EndIndex");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilter {
-            get {
-                return this.SearchOrderFilterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchOrderFilterField, value) != true)) {
-                    this.SearchOrderFilterField = value;
-                    this.RaisePropertyChanged("SearchOrderFilter");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchOrderSorting SearchOrderSorting {
-            get {
-                return this.SearchOrderSortingField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchOrderSortingField, value) != true)) {
-                    this.SearchOrderSortingField = value;
-                    this.RaisePropertyChanged("SearchOrderSorting");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int StartIndex {
-            get {
-                return this.StartIndexField;
-            }
-            set {
-                if ((this.StartIndexField.Equals(value) != true)) {
-                    this.StartIndexField = value;
-                    this.RaisePropertyChanged("StartIndex");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class AddOrderRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        private Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRowsField;
         
         private long ClientIdField;
         
-        private Webpay.Integration.CSharp.AdminWS.OrderRow[] OrderRowsField;
+        private long ContractNumberField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
-        
-        private long SveaOrderIdField;
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRows {
+            get {
+                return this.CancellationRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CancellationRowsField, value) != true)) {
+                    this.CancellationRowsField = value;
+                    this.RaisePropertyChanged("CancellationRows");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
         public long ClientId {
@@ -1009,197 +442,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.OrderRow[] OrderRows {
+        public long ContractNumber {
             get {
-                return this.OrderRowsField;
+                return this.ContractNumberField;
             }
             set {
-                if ((object.ReferenceEquals(this.OrderRowsField, value) != true)) {
-                    this.OrderRowsField = value;
-                    this.RaisePropertyChanged("OrderRows");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
-            get {
-                return this.OrderTypeField;
-            }
-            set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class UpdateOrderRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
-        
-        private long SveaOrderIdField;
-        
-        private Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] UpdatedOrderRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
-            get {
-                return this.OrderTypeField;
-            }
-            set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] UpdatedOrderRows {
-            get {
-                return this.UpdatedOrderRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UpdatedOrderRowsField, value) != true)) {
-                    this.UpdatedOrderRowsField = value;
-                    this.RaisePropertyChanged("UpdatedOrderRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class SearchInvoicesRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private int EndIndexField;
-        
-        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilterField;
-        
-        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceSorting SearchInvoiceSortingField;
-        
-        private int StartIndexField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int EndIndex {
-            get {
-                return this.EndIndexField;
-            }
-            set {
-                if ((this.EndIndexField.Equals(value) != true)) {
-                    this.EndIndexField = value;
-                    this.RaisePropertyChanged("EndIndex");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilter {
-            get {
-                return this.SearchInvoiceFilterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchInvoiceFilterField, value) != true)) {
-                    this.SearchInvoiceFilterField = value;
-                    this.RaisePropertyChanged("SearchInvoiceFilter");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceSorting SearchInvoiceSorting {
-            get {
-                return this.SearchInvoiceSortingField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchInvoiceSortingField, value) != true)) {
-                    this.SearchInvoiceSortingField = value;
-                    this.RaisePropertyChanged("SearchInvoiceSorting");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int StartIndex {
-            get {
-                return this.StartIndexField;
-            }
-            set {
-                if ((this.StartIndexField.Equals(value) != true)) {
-                    this.StartIndexField = value;
-                    this.RaisePropertyChanged("StartIndex");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoicesRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private Webpay.Integration.CSharp.AdminWS.GetInvoiceInformation[] InvoicesToRetrieveField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.GetInvoiceInformation[] InvoicesToRetrieve {
-            get {
-                return this.InvoicesToRetrieveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InvoicesToRetrieveField, value) != true)) {
-                    this.InvoicesToRetrieveField = value;
-                    this.RaisePropertyChanged("InvoicesToRetrieve");
+                if ((this.ContractNumberField.Equals(value) != true)) {
+                    this.ContractNumberField = value;
+                    this.RaisePropertyChanged("ContractNumber");
                 }
             }
         }
@@ -1222,6 +472,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Webpay.Integration.CSharp.AdminWS.OrderRow[] NewCreditInvoiceRowsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.RowCreditingOption[] RowCreditingOptionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long[] RowNumbersField;
@@ -1279,6 +532,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.RowCreditingOption[] RowCreditingOptions {
+            get {
+                return this.RowCreditingOptionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RowCreditingOptionsField, value) != true)) {
+                    this.RowCreditingOptionsField = value;
+                    this.RaisePropertyChanged("RowCreditingOptions");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public long[] RowNumbers {
             get {
                 return this.RowNumbersField;
@@ -1294,66 +560,84 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlansRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PartialDeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class SearchPaymentPlansRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class PartialDeliveryRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        private int EndIndexField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CancelRemainingRowsField;
         
-        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilterField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionTypeField;
         
-        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanSorting SearchPaymentPlanSortingField;
+        private Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation OrderToDeliverField;
         
-        private int StartIndexField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.RowDeliveryOption[] RowDeliveryOptionsField;
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int EndIndex {
+        private long[] RowNumbersField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool CancelRemainingRows {
             get {
-                return this.EndIndexField;
+                return this.CancelRemainingRowsField;
             }
             set {
-                if ((this.EndIndexField.Equals(value) != true)) {
-                    this.EndIndexField = value;
-                    this.RaisePropertyChanged("EndIndex");
+                if ((this.CancelRemainingRowsField.Equals(value) != true)) {
+                    this.CancelRemainingRowsField = value;
+                    this.RaisePropertyChanged("CancelRemainingRows");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionType {
+            get {
+                return this.InvoiceDistributionTypeField;
+            }
+            set {
+                if ((this.InvoiceDistributionTypeField.Equals(value) != true)) {
+                    this.InvoiceDistributionTypeField = value;
+                    this.RaisePropertyChanged("InvoiceDistributionType");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilter {
+        public Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation OrderToDeliver {
             get {
-                return this.SearchPaymentPlanFilterField;
+                return this.OrderToDeliverField;
             }
             set {
-                if ((object.ReferenceEquals(this.SearchPaymentPlanFilterField, value) != true)) {
-                    this.SearchPaymentPlanFilterField = value;
-                    this.RaisePropertyChanged("SearchPaymentPlanFilter");
+                if ((object.ReferenceEquals(this.OrderToDeliverField, value) != true)) {
+                    this.OrderToDeliverField = value;
+                    this.RaisePropertyChanged("OrderToDeliver");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.RowDeliveryOption[] RowDeliveryOptions {
+            get {
+                return this.RowDeliveryOptionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RowDeliveryOptionsField, value) != true)) {
+                    this.RowDeliveryOptionsField = value;
+                    this.RaisePropertyChanged("RowDeliveryOptions");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanSorting SearchPaymentPlanSorting {
+        public long[] RowNumbers {
             get {
-                return this.SearchPaymentPlanSortingField;
+                return this.RowNumbersField;
             }
             set {
-                if ((object.ReferenceEquals(this.SearchPaymentPlanSortingField, value) != true)) {
-                    this.SearchPaymentPlanSortingField = value;
-                    this.RaisePropertyChanged("SearchPaymentPlanSorting");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int StartIndex {
-            get {
-                return this.StartIndexField;
-            }
-            set {
-                if ((this.StartIndexField.Equals(value) != true)) {
-                    this.StartIndexField = value;
-                    this.RaisePropertyChanged("StartIndex");
+                if ((object.ReferenceEquals(this.RowNumbersField, value) != true)) {
+                    this.RowNumbersField = value;
+                    this.RaisePropertyChanged("RowNumbers");
                 }
             }
         }
@@ -1361,274 +645,13 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExtendOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class UpdateOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class ExtendOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
         private long ClientIdField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PeppolIdField;
-        
-        private long SveaOrderIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderNumber {
-            get {
-                return this.ClientOrderNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
-                    this.ClientOrderNumberField = value;
-                    this.RaisePropertyChanged("ClientOrderNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Notes {
-            get {
-                return this.NotesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
-                    this.NotesField = value;
-                    this.RaisePropertyChanged("Notes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
-            get {
-                return this.OrderTypeField;
-            }
-            set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PeppolId {
-            get {
-                return this.PeppolIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PeppolIdField, value) != true)) {
-                    this.PeppolIdField = value;
-                    this.RaisePropertyChanged("PeppolId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfOrderAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class SumOfOrderAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilterField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilter {
-            get {
-                return this.SearchOrderFilterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchOrderFilterField, value) != true)) {
-                    this.SearchOrderFilterField = value;
-                    this.RaisePropertyChanged("SearchOrderFilter");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfInvoiceAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class SumOfInvoiceAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilterField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilter {
-            get {
-                return this.SearchInvoiceFilterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchInvoiceFilterField, value) != true)) {
-                    this.SearchInvoiceFilterField = value;
-                    this.RaisePropertyChanged("SearchInvoiceFilter");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class SumOfPaymentPlanAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool ReturnPaidToClientAmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilterField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool ReturnPaidToClientAmount {
-            get {
-                return this.ReturnPaidToClientAmountField;
-            }
-            set {
-                if ((this.ReturnPaidToClientAmountField.Equals(value) != true)) {
-                    this.ReturnPaidToClientAmountField = value;
-                    this.RaisePropertyChanged("ReturnPaidToClientAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilter {
-            get {
-                return this.SearchPaymentPlanFilterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchPaymentPlanFilterField, value) != true)) {
-                    this.SearchPaymentPlanFilterField = value;
-                    this.RaisePropertyChanged("SearchPaymentPlanFilter");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class ApproveInvoiceRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private long InvoiceIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class CreateOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> ClientIdField;
-        
-        private Webpay.Integration.CSharp.AdminWS.CreateOrderInformation OrderInformationField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.CreateOrderInformation OrderInformation {
-            get {
-                return this.OrderInformationField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderInformationField, value) != true)) {
-                    this.OrderInformationField = value;
-                    this.RaisePropertyChanged("OrderInformation");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class ReleasePendingRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private string PendingTypeField;
+        private System.DateTime NewExpirationDateField;
         
         private long SveaOrderIdField;
         
@@ -1646,14 +669,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string PendingType {
+        public System.DateTime NewExpirationDate {
             get {
-                return this.PendingTypeField;
+                return this.NewExpirationDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.PendingTypeField, value) != true)) {
-                    this.PendingTypeField = value;
-                    this.RaisePropertyChanged("PendingType");
+                if ((this.NewExpirationDateField.Equals(value) != true)) {
+                    this.NewExpirationDateField = value;
+                    this.RaisePropertyChanged("NewExpirationDate");
                 }
             }
         }
@@ -1667,110 +690,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.SveaOrderIdField.Equals(value) != true)) {
                     this.SveaOrderIdField = value;
                     this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetFinancialReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime FromDateField;
-        
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoiceReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime FromDateField;
-        
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
                 }
             }
         }
@@ -1846,61 +765,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetRegressionReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private long ClientIdField;
-        
-        private System.DateTime FromDateField;
-        
-        private System.DateTime ToDateField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetPaymentPlanReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class GetFinancialReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
         private long ClientIdField;
         
@@ -2040,16 +907,17 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderPdfLinkRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetOrderPdfLinkRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class GetInvoiceReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long ClientIdField;
         
-        private long OrderIdField;
+        private System.DateTime FromDateField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
         public long ClientId {
             get {
                 return this.ClientIdField;
@@ -2063,14 +931,79 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long OrderId {
+        public System.DateTime FromDate {
             get {
-                return this.OrderIdField;
+                return this.FromDateField;
             }
             set {
-                if ((this.OrderIdField.Equals(value) != true)) {
-                    this.OrderIdField = value;
-                    this.RaisePropertyChanged("OrderId");
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoicesWithChangedDueDateRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long[] ClientIdsField;
+        
+        private System.DateTime FromDateField;
+        
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long[] ClientIds {
+            get {
+                return this.ClientIdsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientIdsField, value) != true)) {
+                    this.ClientIdsField = value;
+                    this.RaisePropertyChanged("ClientIds");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
                 }
             }
         }
@@ -2160,25 +1093,63 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderPdfLinkRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetInvoicesWithChangedDueDateRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class GetOrderPdfLinkRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        private long[] ClientIdsField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        private long OrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long OrderId {
+            get {
+                return this.OrderIdField;
+            }
+            set {
+                if ((this.OrderIdField.Equals(value) != true)) {
+                    this.OrderIdField = value;
+                    this.RaisePropertyChanged("OrderId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetPaymentPlanReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
         
         private System.DateTime FromDateField;
         
         private System.DateTime ToDateField;
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long[] ClientIds {
+        public long ClientId {
             get {
-                return this.ClientIdsField;
+                return this.ClientIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.ClientIdsField, value) != true)) {
-                    this.ClientIdsField = value;
-                    this.RaisePropertyChanged("ClientIds");
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
                 }
             }
         }
@@ -2205,6 +1176,717 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.ToDateField.Equals(value) != true)) {
                     this.ToDateField = value;
                     this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetRegressionReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private System.DateTime FromDateField;
+        
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class ReleasePendingRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private string PendingTypeField;
+        
+        private long SveaOrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string PendingType {
+            get {
+                return this.PendingTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PendingTypeField, value) != true)) {
+                    this.PendingTypeField = value;
+                    this.RaisePropertyChanged("PendingType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class UpdateOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingEmailAddressField;
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientOrderNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PeppolIdField;
+        
+        private long SveaOrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingEmailAddress {
+            get {
+                return this.BillingEmailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingEmailAddressField, value) != true)) {
+                    this.BillingEmailAddressField = value;
+                    this.RaisePropertyChanged("BillingEmailAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderNumber {
+            get {
+                return this.ClientOrderNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
+                    this.ClientOrderNumberField = value;
+                    this.RaisePropertyChanged("ClientOrderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notes {
+            get {
+                return this.NotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PeppolId {
+            get {
+                return this.PeppolIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PeppolIdField, value) != true)) {
+                    this.PeppolIdField = value;
+                    this.RaisePropertyChanged("PeppolId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class UpdateOrderRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        
+        private long SveaOrderIdField;
+        
+        private Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] UpdatedOrderRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] UpdatedOrderRows {
+            get {
+                return this.UpdatedOrderRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedOrderRowsField, value) != true)) {
+                    this.UpdatedOrderRowsField = value;
+                    this.RaisePropertyChanged("UpdatedOrderRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetOrdersRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private Webpay.Integration.CSharp.AdminWS.GetOrderInformation[] OrdersToRetrieveField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.GetOrderInformation[] OrdersToRetrieve {
+            get {
+                return this.OrdersToRetrieveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrdersToRetrieveField, value) != true)) {
+                    this.OrdersToRetrieveField = value;
+                    this.RaisePropertyChanged("OrdersToRetrieve");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class DeliveryRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionTypeField;
+        
+        private Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation[] OrdersToDeliverField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> InvoiceDistributionType {
+            get {
+                return this.InvoiceDistributionTypeField;
+            }
+            set {
+                if ((this.InvoiceDistributionTypeField.Equals(value) != true)) {
+                    this.InvoiceDistributionTypeField = value;
+                    this.RaisePropertyChanged("InvoiceDistributionType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.DeliverOrderInformation[] OrdersToDeliver {
+            get {
+                return this.OrdersToDeliverField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrdersToDeliverField, value) != true)) {
+                    this.OrdersToDeliverField = value;
+                    this.RaisePropertyChanged("OrdersToDeliver");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SearchOrdersRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private int EndIndexField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilterField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchOrderSorting SearchOrderSortingField;
+        
+        private int StartIndexField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int EndIndex {
+            get {
+                return this.EndIndexField;
+            }
+            set {
+                if ((this.EndIndexField.Equals(value) != true)) {
+                    this.EndIndexField = value;
+                    this.RaisePropertyChanged("EndIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilter {
+            get {
+                return this.SearchOrderFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchOrderFilterField, value) != true)) {
+                    this.SearchOrderFilterField = value;
+                    this.RaisePropertyChanged("SearchOrderFilter");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchOrderSorting SearchOrderSorting {
+            get {
+                return this.SearchOrderSortingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchOrderSortingField, value) != true)) {
+                    this.SearchOrderSortingField = value;
+                    this.RaisePropertyChanged("SearchOrderSorting");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int StartIndex {
+            get {
+                return this.StartIndexField;
+            }
+            set {
+                if ((this.StartIndexField.Equals(value) != true)) {
+                    this.StartIndexField = value;
+                    this.RaisePropertyChanged("StartIndex");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SearchInvoicesRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private int EndIndexField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilterField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceSorting SearchInvoiceSortingField;
+        
+        private int StartIndexField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int EndIndex {
+            get {
+                return this.EndIndexField;
+            }
+            set {
+                if ((this.EndIndexField.Equals(value) != true)) {
+                    this.EndIndexField = value;
+                    this.RaisePropertyChanged("EndIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilter {
+            get {
+                return this.SearchInvoiceFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchInvoiceFilterField, value) != true)) {
+                    this.SearchInvoiceFilterField = value;
+                    this.RaisePropertyChanged("SearchInvoiceFilter");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceSorting SearchInvoiceSorting {
+            get {
+                return this.SearchInvoiceSortingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchInvoiceSortingField, value) != true)) {
+                    this.SearchInvoiceSortingField = value;
+                    this.RaisePropertyChanged("SearchInvoiceSorting");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int StartIndex {
+            get {
+                return this.StartIndexField;
+            }
+            set {
+                if ((this.StartIndexField.Equals(value) != true)) {
+                    this.StartIndexField = value;
+                    this.RaisePropertyChanged("StartIndex");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoicesRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private Webpay.Integration.CSharp.AdminWS.GetInvoiceInformation[] InvoicesToRetrieveField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.GetInvoiceInformation[] InvoicesToRetrieve {
+            get {
+                return this.InvoicesToRetrieveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoicesToRetrieveField, value) != true)) {
+                    this.InvoicesToRetrieveField = value;
+                    this.RaisePropertyChanged("InvoicesToRetrieve");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlansRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SearchPaymentPlansRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private int EndIndexField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilterField;
+        
+        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanSorting SearchPaymentPlanSortingField;
+        
+        private int StartIndexField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int EndIndex {
+            get {
+                return this.EndIndexField;
+            }
+            set {
+                if ((this.EndIndexField.Equals(value) != true)) {
+                    this.EndIndexField = value;
+                    this.RaisePropertyChanged("EndIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilter {
+            get {
+                return this.SearchPaymentPlanFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchPaymentPlanFilterField, value) != true)) {
+                    this.SearchPaymentPlanFilterField = value;
+                    this.RaisePropertyChanged("SearchPaymentPlanFilter");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanSorting SearchPaymentPlanSorting {
+            get {
+                return this.SearchPaymentPlanSortingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchPaymentPlanSortingField, value) != true)) {
+                    this.SearchPaymentPlanSortingField = value;
+                    this.RaisePropertyChanged("SearchPaymentPlanSorting");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int StartIndex {
+            get {
+                return this.StartIndexField;
+            }
+            set {
+                if ((this.StartIndexField.Equals(value) != true)) {
+                    this.StartIndexField = value;
+                    this.RaisePropertyChanged("StartIndex");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfOrderAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SumOfOrderAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilterField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.SearchOrderFilter SearchOrderFilter {
+            get {
+                return this.SearchOrderFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchOrderFilterField, value) != true)) {
+                    this.SearchOrderFilterField = value;
+                    this.RaisePropertyChanged("SearchOrderFilter");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfInvoiceAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SumOfInvoiceAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilterField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.SearchInvoiceFilter SearchInvoiceFilter {
+            get {
+                return this.SearchInvoiceFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchInvoiceFilterField, value) != true)) {
+                    this.SearchInvoiceFilterField = value;
+                    this.RaisePropertyChanged("SearchInvoiceFilter");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SumOfPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SumOfPaymentPlanAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ReturnPaidToClientAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilterField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ReturnPaidToClientAmount {
+            get {
+                return this.ReturnPaidToClientAmountField;
+            }
+            set {
+                if ((this.ReturnPaidToClientAmountField.Equals(value) != true)) {
+                    this.ReturnPaidToClientAmountField = value;
+                    this.RaisePropertyChanged("ReturnPaidToClientAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlanFilter SearchPaymentPlanFilter {
+            get {
+                return this.SearchPaymentPlanFilterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchPaymentPlanFilterField, value) != true)) {
+                    this.SearchPaymentPlanFilterField = value;
+                    this.RaisePropertyChanged("SearchPaymentPlanFilter");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class CreateOrderRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> ClientIdField;
+        
+        private Webpay.Integration.CSharp.AdminWS.CreateOrderInformation OrderInformationField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.CreateOrderInformation OrderInformation {
+            get {
+                return this.OrderInformationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderInformationField, value) != true)) {
+                    this.OrderInformationField = value;
+                    this.RaisePropertyChanged("OrderInformation");
                 }
             }
         }
@@ -2275,7 +1957,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Webpay.Integration.CSharp.AdminWS.DeliveryAddress DeliveryAddressField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryAddressSelectorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Webpay.Integration.CSharp.AdminWS.InvoiceAddress InvoiceAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InvoiceAddressSelectorField;
         
         private Webpay.Integration.CSharp.AdminWS.OrderInformation OrderInformationField;
         
@@ -2318,7 +2007,20 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryAddressSelector {
+            get {
+                return this.DeliveryAddressSelectorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryAddressSelectorField, value) != true)) {
+                    this.DeliveryAddressSelectorField = value;
+                    this.RaisePropertyChanged("DeliveryAddressSelector");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public Webpay.Integration.CSharp.AdminWS.InvoiceAddress InvoiceAddress {
             get {
                 return this.InvoiceAddressField;
@@ -2327,6 +2029,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.InvoiceAddressField, value) != true)) {
                     this.InvoiceAddressField = value;
                     this.RaisePropertyChanged("InvoiceAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InvoiceAddressSelector {
+            get {
+                return this.InvoiceAddressSelectorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoiceAddressSelectorField, value) != true)) {
+                    this.InvoiceAddressSelectorField = value;
+                    this.RaisePropertyChanged("InvoiceAddressSelector");
                 }
             }
         }
@@ -2340,125 +2055,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.OrderInformationField, value) != true)) {
                     this.OrderInformationField = value;
                     this.RaisePropertyChanged("OrderInformation");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class CancelPaymentPlanRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRowsField;
-        
-        private long ClientIdField;
-        
-        private long ContractNumberField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRows {
-            get {
-                return this.CancellationRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CancellationRowsField, value) != true)) {
-                    this.CancellationRowsField = value;
-                    this.RaisePropertyChanged("CancellationRows");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ContractNumber {
-            get {
-                return this.ContractNumberField;
-            }
-            set {
-                if ((this.ContractNumberField.Equals(value) != true)) {
-                    this.ContractNumberField = value;
-                    this.RaisePropertyChanged("ContractNumber");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class CancelPaymentPlanAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
-        
-        private decimal AmountInclVatField;
-        
-        private int ClientIdField;
-        
-        private long ContractNumberField;
-        
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal AmountInclVat {
-            get {
-                return this.AmountInclVatField;
-            }
-            set {
-                if ((this.AmountInclVatField.Equals(value) != true)) {
-                    this.AmountInclVatField = value;
-                    this.RaisePropertyChanged("AmountInclVat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ContractNumber {
-            get {
-                return this.ContractNumberField;
-            }
-            set {
-                if ((this.ContractNumberField.Equals(value) != true)) {
-                    this.ContractNumberField = value;
-                    this.RaisePropertyChanged("ContractNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
                 }
             }
         }
@@ -2555,21 +2151,583 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     [System.SerializableAttribute()]
-    public partial class GetOrdersRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+    public partial class CancelAccountCreditAmountRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
         
-        private Webpay.Integration.CSharp.AdminWS.GetOrderInformation[] OrdersToRetrieveField;
+        private decimal AmountIncVatField;
+        
+        private long ClientAccountCreditIdField;
+        
+        private long ClientIdField;
+        
+        private string DescriptionField;
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.GetOrderInformation[] OrdersToRetrieve {
+        public decimal AmountIncVat {
             get {
-                return this.OrdersToRetrieveField;
+                return this.AmountIncVatField;
             }
             set {
-                if ((object.ReferenceEquals(this.OrdersToRetrieveField, value) != true)) {
-                    this.OrdersToRetrieveField = value;
-                    this.RaisePropertyChanged("OrdersToRetrieve");
+                if ((this.AmountIncVatField.Equals(value) != true)) {
+                    this.AmountIncVatField = value;
+                    this.RaisePropertyChanged("AmountIncVat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientAccountCreditId {
+            get {
+                return this.ClientAccountCreditIdField;
+            }
+            set {
+                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
+                    this.ClientAccountCreditIdField = value;
+                    this.RaisePropertyChanged("ClientAccountCreditId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class CancelAccountCreditRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRowsField;
+        
+        private long ClientAccountCreditIdField;
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.CancellationRow[] CancellationRows {
+            get {
+                return this.CancellationRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CancellationRowsField, value) != true)) {
+                    this.CancellationRowsField = value;
+                    this.RaisePropertyChanged("CancellationRows");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientAccountCreditId {
+            get {
+                return this.ClientAccountCreditIdField;
+            }
+            set {
+                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
+                    this.ClientAccountCreditIdField = value;
+                    this.RaisePropertyChanged("ClientAccountCreditId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class AccountCreditRegressReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private System.DateTime FromDateField;
+        
+        private string ReportNameField;
+        
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string ReportName {
+            get {
+                return this.ReportNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportNameField, value) != true)) {
+                    this.ReportNameField = value;
+                    this.RaisePropertyChanged("ReportName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class AccountingAgreementType25ReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private System.DateTime FromDateField;
+        
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetDebtInvoicesPaidToClientForReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FromDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoicesPaidToClientForReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FromDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetKickbackReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private System.DateTime RunDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime RunDate {
+            get {
+                return this.RunDateField;
+            }
+            set {
+                if ((this.RunDateField.Equals(value) != true)) {
+                    this.RunDateField = value;
+                    this.RaisePropertyChanged("RunDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetPendingReasonsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetPendingReasonsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private long SveaOrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetSpecificationReportRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FromDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.SpecificationReportType ReportTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.SpecificationReportType ReportType {
+            get {
+                return this.ReportTypeField;
+            }
+            set {
+                if ((this.ReportTypeField.Equals(value) != true)) {
+                    this.ReportTypeField = value;
+                    this.RaisePropertyChanged("ReportType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetClientIdRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.SerializableAttribute()]
+    public partial class GetClientIdRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long SveaOrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class AddOrderRowsRequest : Webpay.Integration.CSharp.AdminWS.BasicRequest {
+        
+        private long ClientIdField;
+        
+        private Webpay.Integration.CSharp.AdminWS.OrderRow[] OrderRowsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        
+        private long SveaOrderIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.OrderRow[] OrderRows {
+            get {
+                return this.OrderRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderRowsField, value) != true)) {
+                    this.OrderRowsField = value;
+                    this.RaisePropertyChanged("OrderRows");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
                 }
             }
         }
@@ -2636,19 +2794,46 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     [System.SerializableAttribute()]
-    public partial class GetOrderInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.NumberedOrderRow))]
+    public partial class OrderRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private long ClientIdField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ArticleNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        private string DescriptionField;
         
-        private long SveaOrderIdField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> DiscountAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> DiscountAmountIncludingVatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal DiscountPercentField;
+        
+        private decimal NumberOfUnitsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> PriceIncludingVatField;
+        
+        private decimal PricePerUnitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Webpay.Integration.CSharp.AdminWS.RowType> RowTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TemporaryReferenceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UnitField;
+        
+        private decimal VatPercentField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -2660,41 +2845,158 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, EmitDefaultValue=false)]
-        public long ClientId {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ArticleNumber {
             get {
-                return this.ClientIdField;
+                return this.ArticleNumberField;
             }
             set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
+                if ((object.ReferenceEquals(this.ArticleNumberField, value) != true)) {
+                    this.ArticleNumberField = value;
+                    this.RaisePropertyChanged("ArticleNumber");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+        public string Description {
             get {
-                return this.OrderTypeField;
+                return this.DescriptionField;
             }
             set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, EmitDefaultValue=false)]
-        public long SveaOrderId {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> DiscountAmount {
             get {
-                return this.SveaOrderIdField;
+                return this.DiscountAmountField;
             }
             set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
+                if ((this.DiscountAmountField.Equals(value) != true)) {
+                    this.DiscountAmountField = value;
+                    this.RaisePropertyChanged("DiscountAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> DiscountAmountIncludingVat {
+            get {
+                return this.DiscountAmountIncludingVatField;
+            }
+            set {
+                if ((this.DiscountAmountIncludingVatField.Equals(value) != true)) {
+                    this.DiscountAmountIncludingVatField = value;
+                    this.RaisePropertyChanged("DiscountAmountIncludingVat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DiscountPercent {
+            get {
+                return this.DiscountPercentField;
+            }
+            set {
+                if ((this.DiscountPercentField.Equals(value) != true)) {
+                    this.DiscountPercentField = value;
+                    this.RaisePropertyChanged("DiscountPercent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal NumberOfUnits {
+            get {
+                return this.NumberOfUnitsField;
+            }
+            set {
+                if ((this.NumberOfUnitsField.Equals(value) != true)) {
+                    this.NumberOfUnitsField = value;
+                    this.RaisePropertyChanged("NumberOfUnits");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> PriceIncludingVat {
+            get {
+                return this.PriceIncludingVatField;
+            }
+            set {
+                if ((this.PriceIncludingVatField.Equals(value) != true)) {
+                    this.PriceIncludingVatField = value;
+                    this.RaisePropertyChanged("PriceIncludingVat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal PricePerUnit {
+            get {
+                return this.PricePerUnitField;
+            }
+            set {
+                if ((this.PricePerUnitField.Equals(value) != true)) {
+                    this.PricePerUnitField = value;
+                    this.RaisePropertyChanged("PricePerUnit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<Webpay.Integration.CSharp.AdminWS.RowType> RowType {
+            get {
+                return this.RowTypeField;
+            }
+            set {
+                if ((this.RowTypeField.Equals(value) != true)) {
+                    this.RowTypeField = value;
+                    this.RaisePropertyChanged("RowType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TemporaryReference {
+            get {
+                return this.TemporaryReferenceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemporaryReferenceField, value) != true)) {
+                    this.TemporaryReferenceField = value;
+                    this.RaisePropertyChanged("TemporaryReference");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Unit {
+            get {
+                return this.UnitField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnitField, value) != true)) {
+                    this.UnitField = value;
+                    this.RaisePropertyChanged("Unit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal VatPercent {
+            get {
+                return this.VatPercentField;
+            }
+            set {
+                if ((this.VatPercentField.Equals(value) != true)) {
+                    this.VatPercentField = value;
+                    this.RaisePropertyChanged("VatPercent");
                 }
             }
         }
@@ -2707,6 +3009,23 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
+    public enum OrderType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Invoice = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PaymentPlan = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Loan = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AccountCredit = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2800,31 +3119,189 @@ namespace Webpay.Integration.CSharp.AdminWS {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationReportType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    public enum SpecificationReportType : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder")]
+    public enum InvoiceDistributionType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Bank = 1,
+        NotDefined = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Card = 2,
+        Post = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Email = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        EInvoiceB2B = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Peppol = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni20 = 20,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni21 = 21,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni22 = 22,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni23 = 23,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Omni24 = 24,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RowCreditingOption", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class RowCreditingOption : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal QuantityToCreditField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long RowNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal QuantityToCredit {
+            get {
+                return this.QuantityToCreditField;
+            }
+            set {
+                if ((this.QuantityToCreditField.Equals(value) != true)) {
+                    this.QuantityToCreditField = value;
+                    this.RaisePropertyChanged("QuantityToCredit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="NumberedOrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class NumberedOrderRow : Webpay.Integration.CSharp.AdminWS.OrderRow {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> CreditInvoiceIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> InvoiceIdField;
+        
+        private long RowNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CreditInvoiceId {
+            get {
+                return this.CreditInvoiceIdField;
+            }
+            set {
+                if ((this.CreditInvoiceIdField.Equals(value) != true)) {
+                    this.CreditInvoiceIdField = value;
+                    this.RaisePropertyChanged("CreditInvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
-    public enum OrderType : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="RowType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
+    public enum RowType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Invoice = 1,
+        Default = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        PaymentPlan = 2,
+        AdjustmentRow = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Loan = 3,
+        GiftCard = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        AccountCredit = 4,
+        InvoiceFee = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2934,21 +3411,153 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder")]
-    public enum InvoiceDistributionType : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="RowDeliveryOption", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class RowDeliveryOption : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> QuantityToDeliverField;
+        
+        private long RowNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> QuantityToDeliver {
+            get {
+                return this.QuantityToDeliverField;
+            }
+            set {
+                if ((this.QuantityToDeliverField.Equals(value) != true)) {
+                    this.QuantityToDeliverField = value;
+                    this.RaisePropertyChanged("QuantityToDeliver");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderEventType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    public enum OrderEventType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotDefined = 0,
+        All = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Post = 1,
+        OrderEvent = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Email = 2,
+        PendingEvent = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetOrderInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        EInvoiceB2B = 4,
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        
+        private long SveaOrderIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, EmitDefaultValue=false)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, EmitDefaultValue=false)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3255,309 +3864,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.NumberedOrderRow))]
-    public partial class OrderRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ArticleNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<decimal> DiscountAmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<bool> DiscountAmountIncludingVatField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal DiscountPercentField;
-        
-        private decimal NumberOfUnitsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<bool> PriceIncludingVatField;
-        
-        private decimal PricePerUnitField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<Webpay.Integration.CSharp.AdminWS.RowType> RowTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TemporaryReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UnitField;
-        
-        private decimal VatPercentField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArticleNumber {
-            get {
-                return this.ArticleNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ArticleNumberField, value) != true)) {
-                    this.ArticleNumberField = value;
-                    this.RaisePropertyChanged("ArticleNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> DiscountAmount {
-            get {
-                return this.DiscountAmountField;
-            }
-            set {
-                if ((this.DiscountAmountField.Equals(value) != true)) {
-                    this.DiscountAmountField = value;
-                    this.RaisePropertyChanged("DiscountAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<bool> DiscountAmountIncludingVat {
-            get {
-                return this.DiscountAmountIncludingVatField;
-            }
-            set {
-                if ((this.DiscountAmountIncludingVatField.Equals(value) != true)) {
-                    this.DiscountAmountIncludingVatField = value;
-                    this.RaisePropertyChanged("DiscountAmountIncludingVat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DiscountPercent {
-            get {
-                return this.DiscountPercentField;
-            }
-            set {
-                if ((this.DiscountPercentField.Equals(value) != true)) {
-                    this.DiscountPercentField = value;
-                    this.RaisePropertyChanged("DiscountPercent");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal NumberOfUnits {
-            get {
-                return this.NumberOfUnitsField;
-            }
-            set {
-                if ((this.NumberOfUnitsField.Equals(value) != true)) {
-                    this.NumberOfUnitsField = value;
-                    this.RaisePropertyChanged("NumberOfUnits");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<bool> PriceIncludingVat {
-            get {
-                return this.PriceIncludingVatField;
-            }
-            set {
-                if ((this.PriceIncludingVatField.Equals(value) != true)) {
-                    this.PriceIncludingVatField = value;
-                    this.RaisePropertyChanged("PriceIncludingVat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal PricePerUnit {
-            get {
-                return this.PricePerUnitField;
-            }
-            set {
-                if ((this.PricePerUnitField.Equals(value) != true)) {
-                    this.PricePerUnitField = value;
-                    this.RaisePropertyChanged("PricePerUnit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<Webpay.Integration.CSharp.AdminWS.RowType> RowType {
-            get {
-                return this.RowTypeField;
-            }
-            set {
-                if ((this.RowTypeField.Equals(value) != true)) {
-                    this.RowTypeField = value;
-                    this.RaisePropertyChanged("RowType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TemporaryReference {
-            get {
-                return this.TemporaryReferenceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TemporaryReferenceField, value) != true)) {
-                    this.TemporaryReferenceField = value;
-                    this.RaisePropertyChanged("TemporaryReference");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Unit {
-            get {
-                return this.UnitField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UnitField, value) != true)) {
-                    this.UnitField = value;
-                    this.RaisePropertyChanged("Unit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal VatPercent {
-            get {
-                return this.VatPercentField;
-            }
-            set {
-                if ((this.VatPercentField.Equals(value) != true)) {
-                    this.VatPercentField = value;
-                    this.RaisePropertyChanged("VatPercent");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="NumberedOrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class NumberedOrderRow : Webpay.Integration.CSharp.AdminWS.OrderRow {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> CreditInvoiceIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> InvoiceIdField;
-        
-        private long RowNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StatusField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> CreditInvoiceId {
-            get {
-                return this.CreditInvoiceIdField;
-            }
-            set {
-                if ((this.CreditInvoiceIdField.Equals(value) != true)) {
-                    this.CreditInvoiceIdField = value;
-                    this.RaisePropertyChanged("CreditInvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long RowNumber {
-            get {
-                return this.RowNumberField;
-            }
-            set {
-                if ((this.RowNumberField.Equals(value) != true)) {
-                    this.RowNumberField = value;
-                    this.RaisePropertyChanged("RowNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Status {
-            get {
-                return this.StatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RowType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
-    public enum RowType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Default = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        AdjustmentRow = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        GiftCard = 2,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoiceFilter", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
     public partial class SearchInvoiceFilter : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -3775,6 +4081,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         CreditLoss = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Refund = 11,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -4185,6 +4494,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CustomerReferenceField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GroupReferenceField;
+        
         private System.DateTime OrderDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4281,6 +4593,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.CustomerReferenceField, value) != true)) {
                     this.CustomerReferenceField = value;
                     this.RaisePropertyChanged("CustomerReference");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GroupReference {
+            get {
+                return this.GroupReferenceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GroupReferenceField, value) != true)) {
+                    this.GroupReferenceField = value;
+                    this.RaisePropertyChanged("GroupReference");
                 }
             }
         }
@@ -5083,20 +5408,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
         Company = 2,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderEventType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    public enum OrderEventType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        All = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        OrderEvent = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        PendingEvent = 2,
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
@@ -5125,6 +5436,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PhoneNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatNumberField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5227,6 +5541,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatNumber {
+            get {
+                return this.VatNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatNumberField, value) != true)) {
+                    this.VatNumberField = value;
+                    this.RaisePropertyChanged("VatNumber");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -5269,6 +5596,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LocalityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalutationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SignedWithNationalIdField;
@@ -5394,6 +5724,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Salutation {
+            get {
+                return this.SalutationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalutationField, value) != true)) {
+                    this.SalutationField = value;
+                    this.RaisePropertyChanged("Salutation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SignedWithNationalId {
             get {
                 return this.SignedWithNationalIdField;
@@ -5471,6 +5814,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LocalityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalutationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StreetAddressField;
@@ -5580,6 +5926,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Salutation {
+            get {
+                return this.SalutationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalutationField, value) != true)) {
+                    this.SalutationField = value;
+                    this.RaisePropertyChanged("Salutation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string StreetAddress {
             get {
                 return this.StreetAddressField;
@@ -5631,6 +5990,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         private decimal AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingEmailAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<long> CheckoutOrderIdField;
         
         private long ClientIdField;
@@ -5670,6 +6032,15 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         private bool WillBuyField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KycProductIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Webpay.Integration.CSharp.AdminWS.KycRiskClassification> KycRiskClassificationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> OrderIdField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -5702,6 +6073,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.AmountField.Equals(value) != true)) {
                     this.AmountField = value;
                     this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingEmailAddress {
+            get {
+                return this.BillingEmailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingEmailAddressField, value) != true)) {
+                    this.BillingEmailAddressField = value;
+                    this.RaisePropertyChanged("BillingEmailAddress");
                 }
             }
         }
@@ -5901,6 +6285,45 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+        public string KycProductId {
+            get {
+                return this.KycProductIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KycProductIdField, value) != true)) {
+                    this.KycProductIdField = value;
+                    this.RaisePropertyChanged("KycProductId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+        public System.Nullable<Webpay.Integration.CSharp.AdminWS.KycRiskClassification> KycRiskClassification {
+            get {
+                return this.KycRiskClassificationField;
+            }
+            set {
+                if ((this.KycRiskClassificationField.Equals(value) != true)) {
+                    this.KycRiskClassificationField = value;
+                    this.RaisePropertyChanged("KycRiskClassification");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+        public System.Nullable<System.Guid> OrderId {
+            get {
+                return this.OrderIdField;
+            }
+            set {
+                if ((this.OrderIdField.Equals(value) != true)) {
+                    this.OrderIdField = value;
+                    this.RaisePropertyChanged("OrderId");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -5929,6 +6352,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         BankIdSigned = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ClientProvided = 6,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -5988,6 +6414,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<Webpay.Integration.CSharp.AdminWS.InvoiceDistributionType> DistributionTypeField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.BillingReference[] BillingReferencesField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -6007,6 +6436,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.DistributionTypeField.Equals(value) != true)) {
                     this.DistributionTypeField = value;
                     this.RaisePropertyChanged("DistributionType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public Webpay.Integration.CSharp.AdminWS.BillingReference[] BillingReferences {
+            get {
+                return this.BillingReferencesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingReferencesField, value) != true)) {
+                    this.BillingReferencesField = value;
+                    this.RaisePropertyChanged("BillingReferences");
                 }
             }
         }
@@ -6080,6 +6522,117 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="KycRiskClassification", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
+    public enum KycRiskClassification : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotAvailable = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Low = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Increased = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        High = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Unacceptable = 5,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BillingReference", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class BillingReference : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private Webpay.Integration.CSharp.AdminWS.BillingReferenceType TypeField;
+        
+        private string ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.BillingReferenceType Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BillingReferenceType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
+    public enum BillingReferenceType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Undefined = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Purchase = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ContactPerson = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvoiceReference = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CostCenter = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvoiceRecipient = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LetterNumber = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AccountingNumber = 7,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -6407,51 +6960,62 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationReportType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    public enum SpecificationReportType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Bank = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Card = 2,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BasicResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.DeliveryResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchOrdersResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.PdfLinkResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrdersResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchOrdersResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchInvoicesResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SumOfAmountResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreateOrderResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.PdfLinkResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CreateApprovedOrderResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.ExtendOrderResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetAccountCreditsResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetClientIdResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetOrdersResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse))]
     public partial class BasicResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -6510,41 +7074,16 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetSpecificationReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SpecificationRow[] RowsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.SpecificationSummation SummationField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SpecificationRow[] Rows {
-            get {
-                return this.RowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RowsField, value) != true)) {
-                    this.RowsField = value;
-                    this.RaisePropertyChanged("Rows");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.SpecificationSummation Summation {
-            get {
-                return this.SummationField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SummationField, value) != true)) {
-                    this.SummationField = value;
-                    this.RaisePropertyChanged("Summation");
-                }
-            }
-        }
+    public partial class ApproveInvoiceResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class CancelOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -6556,9 +7095,16 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class CancelOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class CancelPaymentPlanAmountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class CancelPaymentPlanRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -6578,6 +7124,273 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.OrdersDeliveredField, value) != true)) {
                     this.OrdersDeliveredField = value;
                     this.RaisePropertyChanged("OrdersDelivered");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountingReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetAccountingReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.AccountingReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.AccountingReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetFinancialReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.FinancialReportHeader ReportHeaderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.FinancialReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.FinancialReportHeader ReportHeader {
+            get {
+                return this.ReportHeaderField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportHeaderField, value) != true)) {
+                    this.ReportHeaderField = value;
+                    this.RaisePropertyChanged("ReportHeader");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.FinancialReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceJournalReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoiceJournalReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.InvoiceJournalReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.InvoiceJournalReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PdfLinkResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class PdfLinkResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PdfLinkField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PdfLink {
+            get {
+                return this.PdfLinkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PdfLinkField, value) != true)) {
+                    this.PdfLinkField = value;
+                    this.RaisePropertyChanged("PdfLink");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoiceReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.InvoiceReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.InvoiceReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoicesWithChangedDueDateResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.InvoiceWithChangedDueDate[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.InvoiceWithChangedDueDate[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderEventsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetOrderEventsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.OrderEvent[] EventsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.OrderEvent[] Events {
+            get {
+                return this.EventsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventsField, value) != true)) {
+                    this.EventsField = value;
+                    this.RaisePropertyChanged("Events");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetPaymentPlanReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.PaymentPlanReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.PaymentPlanReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetRegressionReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.RegressionReportRow[] ReportRowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.RegressionReportRow[] ReportRows {
+            get {
+                return this.ReportRowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
+                    this.ReportRowsField = value;
+                    this.RaisePropertyChanged("ReportRows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class ReleasePendingResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class UpdateOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class UpdateOrderRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class GetOrdersResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.Order[] OrdersField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.Order[] Orders {
+            get {
+                return this.OrdersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrdersField, value) != true)) {
+                    this.OrdersField = value;
+                    this.RaisePropertyChanged("Orders");
                 }
             }
         }
@@ -6618,36 +7431,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 }
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class AddOrderRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderRowReferenceItem[] RowNumbersField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderRowReferenceItem[] RowNumbers {
-            get {
-                return this.RowNumbersField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RowNumbersField, value) != true)) {
-                    this.RowNumbersField = value;
-                    this.RaisePropertyChanged("RowNumbers");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class UpdateOrderRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -6749,13 +7532,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class UpdateOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SumOfAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
     public partial class SumOfAmountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
@@ -6793,13 +7569,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class ApproveInvoiceResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
     public partial class CreateOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
@@ -6832,236 +7601,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.OrderRowsField, value) != true)) {
                     this.OrderRowsField = value;
                     this.RaisePropertyChanged("OrderRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class ReleasePendingResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetFinancialReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.FinancialReportHeader ReportHeaderField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.FinancialReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.FinancialReportHeader ReportHeader {
-            get {
-                return this.ReportHeaderField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportHeaderField, value) != true)) {
-                    this.ReportHeaderField = value;
-                    this.RaisePropertyChanged("ReportHeader");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.FinancialReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoiceReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.InvoiceReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.InvoiceReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountingReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetAccountingReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.AccountingReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.AccountingReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetRegressionReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.RegressionReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.RegressionReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetPaymentPlanReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.PaymentPlanReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.PaymentPlanReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceJournalReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoiceJournalReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.InvoiceJournalReportRow[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.InvoiceJournalReportRow[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PdfLinkResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class PdfLinkResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PdfLinkField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PdfLink {
-            get {
-                return this.PdfLinkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PdfLinkField, value) != true)) {
-                    this.PdfLinkField = value;
-                    this.RaisePropertyChanged("PdfLink");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderEventsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetOrderEventsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.OrderEvent[] EventsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.OrderEvent[] Events {
-            get {
-                return this.EventsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EventsField, value) != true)) {
-                    this.EventsField = value;
-                    this.RaisePropertyChanged("Events");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class GetInvoicesWithChangedDueDateResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.InvoiceWithChangedDueDate[] ReportRowsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.InvoiceWithChangedDueDate[] ReportRows {
-            get {
-                return this.ReportRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReportRowsField, value) != true)) {
-                    this.ReportRowsField = value;
-                    this.RaisePropertyChanged("ReportRows");
                 }
             }
         }
@@ -7195,16 +7734,154 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     [System.SerializableAttribute()]
-    public partial class CancelPaymentPlanRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class CancelAccountCreditAmountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     [System.SerializableAttribute()]
-    public partial class CancelPaymentPlanAmountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class CancelAccountCreditRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExtendOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class ExtendOrderResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class AccountCreditRegressReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportDataRow[] RowsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportDataRow[] Rows {
+            get {
+                return this.RowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RowsField, value) != true)) {
+                    this.RowsField = value;
+                    this.RaisePropertyChanged("Rows");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class AccountingAgreementType25ReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportDataRow[] RowsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25Summation[] SummationsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportDataRow[] Rows {
+            get {
+                return this.RowsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RowsField, value) != true)) {
+                    this.RowsField = value;
+                    this.RaisePropertyChanged("Rows");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25Summation[] Summations {
+            get {
+                return this.SummationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SummationsField, value) != true)) {
+                    this.SummationsField = value;
+                    this.RaisePropertyChanged("Summations");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class GetDebtInvoicesPaidToClientForReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] InvoicesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] Invoices {
+            get {
+                return this.InvoicesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoicesField, value) != true)) {
+                    this.InvoicesField = value;
+                    this.RaisePropertyChanged("Invoices");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class GetInvoicesPaidToClientForReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] InvoicesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] Invoices {
+            get {
+                return this.InvoicesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoicesField, value) != true)) {
+                    this.InvoicesField = value;
+                    this.RaisePropertyChanged("Invoices");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.SerializableAttribute()]
+    public partial class GetKickbackReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.KickbackReportRow[] KickbacksField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.KickbackReportRow[] Kickbacks {
+            get {
+                return this.KickbacksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KickbacksField, value) != true)) {
+                    this.KickbacksField = value;
+                    this.RaisePropertyChanged("Kickbacks");
+                }
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -7292,20 +7969,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
-    [System.SerializableAttribute()]
-    public partial class CancelAccountCreditAmountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
-    [System.SerializableAttribute()]
-    public partial class CancelAccountCreditRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetClientIdResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     [System.SerializableAttribute()]
     public partial class GetClientIdResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
@@ -7329,41 +7992,18 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     [System.SerializableAttribute()]
-    public partial class AccountCreditRegressReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class GetSpecificationReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportDataRow[] RowsField;
+        private Webpay.Integration.CSharp.AdminWS.SpecificationRow[] RowsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.SpecificationSummation SummationField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportDataRow[] Rows {
-            get {
-                return this.RowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RowsField, value) != true)) {
-                    this.RowsField = value;
-                    this.RaisePropertyChanged("Rows");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
-    [System.SerializableAttribute()]
-    public partial class AccountingAgreementType25ReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportDataRow[] RowsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25Summation[] SummationsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportDataRow[] Rows {
+        public Webpay.Integration.CSharp.AdminWS.SpecificationRow[] Rows {
             get {
                 return this.RowsField;
             }
@@ -7376,14 +8016,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25Summation[] Summations {
+        public Webpay.Integration.CSharp.AdminWS.SpecificationSummation Summation {
             get {
-                return this.SummationsField;
+                return this.SummationField;
             }
             set {
-                if ((object.ReferenceEquals(this.SummationsField, value) != true)) {
-                    this.SummationsField = value;
-                    this.RaisePropertyChanged("Summations");
+                if ((object.ReferenceEquals(this.SummationField, value) != true)) {
+                    this.SummationField = value;
+                    this.RaisePropertyChanged("Summation");
                 }
             }
         }
@@ -7391,22 +8031,22 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetClientsByIdentityAccountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetClientsByIdentityAccountResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class AddOrderRowsResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.ClientData[] ClientsField;
+        private Webpay.Integration.CSharp.AdminWS.OrderRowReferenceItem[] RowNumbersField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.ClientData[] Clients {
+        public Webpay.Integration.CSharp.AdminWS.OrderRowReferenceItem[] RowNumbers {
             get {
-                return this.ClientsField;
+                return this.RowNumbersField;
             }
             set {
-                if ((object.ReferenceEquals(this.ClientsField, value) != true)) {
-                    this.ClientsField = value;
-                    this.RaisePropertyChanged("Clients");
+                if ((object.ReferenceEquals(this.RowNumbersField, value) != true)) {
+                    this.RowNumbersField = value;
+                    this.RaisePropertyChanged("RowNumbers");
                 }
             }
         }
@@ -7414,92 +8054,1824 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderRowReferenceItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     [System.SerializableAttribute()]
-    public partial class GetInvoicesPaidToClientForReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class OrderRowReferenceItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] InvoicesField;
+        private long RowNumberField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] Invoices {
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TemporaryReferenceField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.InvoicesField;
+                return this.extensionDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.InvoicesField, value) != true)) {
-                    this.InvoicesField = value;
-                    this.RaisePropertyChanged("Invoices");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
                 }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TemporaryReference {
+            get {
+                return this.TemporaryReferenceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemporaryReferenceField, value) != true)) {
+                    this.TemporaryReferenceField = value;
+                    this.RaisePropertyChanged("TemporaryReference");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeliverOrderResult", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetDebtInvoicesPaidToClientForReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class DeliverOrderResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private long ClientIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] InvoicesField;
+        private string ClientOrderIdField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.InvoicePaidToClientRow[] Invoices {
+        private decimal DeliveredAmountField;
+        
+        private long DeliveryReferenceNumberField;
+        
+        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        
+        private long SveaOrderIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.InvoicesField;
+                return this.extensionDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.InvoicesField, value) != true)) {
-                    this.InvoicesField = value;
-                    this.RaisePropertyChanged("Invoices");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
                 }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderId {
+            get {
+                return this.ClientOrderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderIdField, value) != true)) {
+                    this.ClientOrderIdField = value;
+                    this.RaisePropertyChanged("ClientOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal DeliveredAmount {
+            get {
+                return this.DeliveredAmountField;
+            }
+            set {
+                if ((this.DeliveredAmountField.Equals(value) != true)) {
+                    this.DeliveredAmountField = value;
+                    this.RaisePropertyChanged("DeliveredAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long DeliveryReferenceNumber {
+            get {
+                return this.DeliveryReferenceNumberField;
+            }
+            set {
+                if ((this.DeliveryReferenceNumberField.Equals(value) != true)) {
+                    this.DeliveryReferenceNumberField = value;
+                    this.RaisePropertyChanged("DeliveryReferenceNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
+            get {
+                return this.OrderTypeField;
+            }
+            set {
+                if ((this.OrderTypeField.Equals(value) != true)) {
+                    this.OrderTypeField = value;
+                    this.RaisePropertyChanged("OrderType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetKickbackReportResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class AccountingReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.KickbackReportRow[] KickbacksField;
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.KickbackReportRow[] Kickbacks {
+        private long AccountNumberField;
+        
+        private long ClientIdField;
+        
+        private decimal CreditField;
+        
+        private decimal DebitField;
+        
+        private int IdField;
+        
+        private string NameField;
+        
+        private System.DateTime ReportingDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.KickbacksField;
+                return this.extensionDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.KickbacksField, value) != true)) {
-                    this.KickbacksField = value;
-                    this.RaisePropertyChanged("Kickbacks");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long AccountNumber {
+            get {
+                return this.AccountNumberField;
+            }
+            set {
+                if ((this.AccountNumberField.Equals(value) != true)) {
+                    this.AccountNumberField = value;
+                    this.RaisePropertyChanged("AccountNumber");
                 }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal Credit {
+            get {
+                return this.CreditField;
+            }
+            set {
+                if ((this.CreditField.Equals(value) != true)) {
+                    this.CreditField = value;
+                    this.RaisePropertyChanged("Credit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal Debit {
+            get {
+                return this.DebitField;
+            }
+            set {
+                if ((this.DebitField.Equals(value) != true)) {
+                    this.DebitField = value;
+                    this.RaisePropertyChanged("Debit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ReportingDate {
+            get {
+                return this.ReportingDateField;
+            }
+            set {
+                if ((this.ReportingDateField.Equals(value) != true)) {
+                    this.ReportingDateField = value;
+                    this.RaisePropertyChanged("ReportingDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportHeader", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class GetOrdersResponse : Webpay.Integration.CSharp.AdminWS.BasicResponse {
+    public partial class FinancialReportHeader : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.Order[] OrdersField;
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.Order[] Orders {
+        private Webpay.Integration.CSharp.AdminWS.Address AddressField;
+        
+        private string AdministratorField;
+        
+        private int ClientTypeIdField;
+        
+        private string CurrencyField;
+        
+        private System.DateTime FromDateField;
+        
+        private System.DateTime ToDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.OrdersField;
+                return this.extensionDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.OrdersField, value) != true)) {
-                    this.OrdersField = value;
-                    this.RaisePropertyChanged("Orders");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public Webpay.Integration.CSharp.AdminWS.Address Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
                 }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Administrator {
+            get {
+                return this.AdministratorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdministratorField, value) != true)) {
+                    this.AdministratorField = value;
+                    this.RaisePropertyChanged("Administrator");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientTypeId {
+            get {
+                return this.ClientTypeIdField;
+            }
+            set {
+                if ((this.ClientTypeIdField.Equals(value) != true)) {
+                    this.ClientTypeIdField = value;
+                    this.RaisePropertyChanged("ClientTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class FinancialReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int CountField;
+        
+        private decimal CreditField;
+        
+        private decimal DebitField;
+        
+        private string DescriptionField;
+        
+        private int RowIdField;
+        
+        private int RowNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int Count {
+            get {
+                return this.CountField;
+            }
+            set {
+                if ((this.CountField.Equals(value) != true)) {
+                    this.CountField = value;
+                    this.RaisePropertyChanged("Count");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal Credit {
+            get {
+                return this.CreditField;
+            }
+            set {
+                if ((this.CreditField.Equals(value) != true)) {
+                    this.CreditField = value;
+                    this.RaisePropertyChanged("Credit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal Debit {
+            get {
+                return this.DebitField;
+            }
+            set {
+                if ((this.DebitField.Equals(value) != true)) {
+                    this.DebitField = value;
+                    this.RaisePropertyChanged("Debit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int RowId {
+            get {
+                return this.RowIdField;
+            }
+            set {
+                if ((this.RowIdField.Equals(value) != true)) {
+                    this.RowIdField = value;
+                    this.RaisePropertyChanged("RowId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceJournalReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class InvoiceJournalReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int ClientIdField;
+        
+        private long CustomerIdField;
+        
+        private decimal InvoiceAmountField;
+        
+        private long InvoiceIdField;
+        
+        private string NameField;
+        
+        private string OrderNumberField;
+        
+        private System.DateTime PostingDateField;
+        
+        private System.DateTime ReportingDateField;
+        
+        private decimal VatAmountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((this.CustomerIdField.Equals(value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal InvoiceAmount {
+            get {
+                return this.InvoiceAmountField;
+            }
+            set {
+                if ((this.InvoiceAmountField.Equals(value) != true)) {
+                    this.InvoiceAmountField = value;
+                    this.RaisePropertyChanged("InvoiceAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string OrderNumber {
+            get {
+                return this.OrderNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderNumberField, value) != true)) {
+                    this.OrderNumberField = value;
+                    this.RaisePropertyChanged("OrderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime PostingDate {
+            get {
+                return this.PostingDateField;
+            }
+            set {
+                if ((this.PostingDateField.Equals(value) != true)) {
+                    this.PostingDateField = value;
+                    this.RaisePropertyChanged("PostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ReportingDate {
+            get {
+                return this.ReportingDateField;
+            }
+            set {
+                if ((this.ReportingDateField.Equals(value) != true)) {
+                    this.ReportingDateField = value;
+                    this.RaisePropertyChanged("ReportingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal VatAmount {
+            get {
+                return this.VatAmountField;
+            }
+            set {
+                if ((this.VatAmountField.Equals(value) != true)) {
+                    this.VatAmountField = value;
+                    this.RaisePropertyChanged("VatAmount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class InvoiceReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private decimal AdministrationFeeField;
+        
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> CheckoutOrderIdField;
+        
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientOrderNumberField;
+        
+        private decimal CreditFeeField;
+        
+        private long CustomerIdField;
+        
+        private long InvoiceIdField;
+        
+        private string NameField;
+        
+        private decimal PostageFeeField;
+        
+        private System.DateTime ReportDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> SveaOrderIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal AdministrationFee {
+            get {
+                return this.AdministrationFeeField;
+            }
+            set {
+                if ((this.AdministrationFeeField.Equals(value) != true)) {
+                    this.AdministrationFeeField = value;
+                    this.RaisePropertyChanged("AdministrationFee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CheckoutOrderId {
+            get {
+                return this.CheckoutOrderIdField;
+            }
+            set {
+                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
+                    this.CheckoutOrderIdField = value;
+                    this.RaisePropertyChanged("CheckoutOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderNumber {
+            get {
+                return this.ClientOrderNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
+                    this.ClientOrderNumberField = value;
+                    this.RaisePropertyChanged("ClientOrderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal CreditFee {
+            get {
+                return this.CreditFeeField;
+            }
+            set {
+                if ((this.CreditFeeField.Equals(value) != true)) {
+                    this.CreditFeeField = value;
+                    this.RaisePropertyChanged("CreditFee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((this.CustomerIdField.Equals(value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal PostageFee {
+            get {
+                return this.PostageFeeField;
+            }
+            set {
+                if ((this.PostageFeeField.Equals(value) != true)) {
+                    this.PostageFeeField = value;
+                    this.RaisePropertyChanged("PostageFee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ReportDate {
+            get {
+                return this.ReportDateField;
+            }
+            set {
+                if ((this.ReportDateField.Equals(value) != true)) {
+                    this.ReportDateField = value;
+                    this.RaisePropertyChanged("ReportDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SveaOrderCreationDate {
+            get {
+                return this.SveaOrderCreationDateField;
+            }
+            set {
+                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
+                    this.SveaOrderCreationDateField = value;
+                    this.RaisePropertyChanged("SveaOrderCreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceWithChangedDueDate", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class InvoiceWithChangedDueDate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int ClientIdField;
+        
+        private System.DateTime DueDateField;
+        
+        private System.DateTime InvoiceDateField;
+        
+        private long InvoiceIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime OrgDueDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime DueDate {
+            get {
+                return this.DueDateField;
+            }
+            set {
+                if ((this.DueDateField.Equals(value) != true)) {
+                    this.DueDateField = value;
+                    this.RaisePropertyChanged("DueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime InvoiceDate {
+            get {
+                return this.InvoiceDateField;
+            }
+            set {
+                if ((this.InvoiceDateField.Equals(value) != true)) {
+                    this.InvoiceDateField = value;
+                    this.RaisePropertyChanged("InvoiceDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime OrgDueDate {
+            get {
+                return this.OrgDueDateField;
+            }
+            set {
+                if ((this.OrgDueDateField.Equals(value) != true)) {
+                    this.OrgDueDateField = value;
+                    this.RaisePropertyChanged("OrgDueDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class OrderEvent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long EventIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EventTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrderActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.PendingEvent PendingEventField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long SveaOrderIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long EventId {
+            get {
+                return this.EventIdField;
+            }
+            set {
+                if ((this.EventIdField.Equals(value) != true)) {
+                    this.EventIdField = value;
+                    this.RaisePropertyChanged("EventId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EventType {
+            get {
+                return this.EventTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventTypeField, value) != true)) {
+                    this.EventTypeField = value;
+                    this.RaisePropertyChanged("EventType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrderAction {
+            get {
+                return this.OrderActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderActionField, value) != true)) {
+                    this.OrderActionField = value;
+                    this.RaisePropertyChanged("OrderAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.PendingEvent PendingEvent {
+            get {
+                return this.PendingEventField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PendingEventField, value) != true)) {
+                    this.PendingEventField = value;
+                    this.RaisePropertyChanged("PendingEvent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PendingEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class PendingEvent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionReasonField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdentifierField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrderStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PendingStatusField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActionReason {
+            get {
+                return this.ActionReasonField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionReasonField, value) != true)) {
+                    this.ActionReasonField = value;
+                    this.RaisePropertyChanged("ActionReason");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Identifier {
+            get {
+                return this.IdentifierField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdentifierField, value) != true)) {
+                    this.IdentifierField = value;
+                    this.RaisePropertyChanged("Identifier");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrderStatus {
+            get {
+                return this.OrderStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderStatusField, value) != true)) {
+                    this.OrderStatusField = value;
+                    this.RaisePropertyChanged("OrderStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PendingStatus {
+            get {
+                return this.PendingStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PendingStatusField, value) != true)) {
+                    this.PendingStatusField = value;
+                    this.RaisePropertyChanged("PendingStatus");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class PaymentPlanReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AdministrationFeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> CheckoutOrderIdField;
+        
+        private int ClientIdField;
+        
+        private long ContractIdField;
+        
+        private long CustomerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrderIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal PayToClientAmountField;
+        
+        private System.DateTime ReportingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> SveaOrderIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal AdministrationFee {
+            get {
+                return this.AdministrationFeeField;
+            }
+            set {
+                if ((this.AdministrationFeeField.Equals(value) != true)) {
+                    this.AdministrationFeeField = value;
+                    this.RaisePropertyChanged("AdministrationFee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CheckoutOrderId {
+            get {
+                return this.CheckoutOrderIdField;
+            }
+            set {
+                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
+                    this.CheckoutOrderIdField = value;
+                    this.RaisePropertyChanged("CheckoutOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long ContractId {
+            get {
+                return this.ContractIdField;
+            }
+            set {
+                if ((this.ContractIdField.Equals(value) != true)) {
+                    this.ContractIdField = value;
+                    this.RaisePropertyChanged("ContractId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((this.CustomerIdField.Equals(value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Date {
+            get {
+                return this.DateField;
+            }
+            set {
+                if ((this.DateField.Equals(value) != true)) {
+                    this.DateField = value;
+                    this.RaisePropertyChanged("Date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrderId {
+            get {
+                return this.OrderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderIdField, value) != true)) {
+                    this.OrderIdField = value;
+                    this.RaisePropertyChanged("OrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal PayToClientAmount {
+            get {
+                return this.PayToClientAmountField;
+            }
+            set {
+                if ((this.PayToClientAmountField.Equals(value) != true)) {
+                    this.PayToClientAmountField = value;
+                    this.RaisePropertyChanged("PayToClientAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime ReportingDate {
+            get {
+                return this.ReportingDateField;
+            }
+            set {
+                if ((this.ReportingDateField.Equals(value) != true)) {
+                    this.ReportingDateField = value;
+                    this.RaisePropertyChanged("ReportingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SveaOrderCreationDate {
+            get {
+                return this.SveaOrderCreationDateField;
+            }
+            set {
+                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
+                    this.SveaOrderCreationDateField = value;
+                    this.RaisePropertyChanged("SveaOrderCreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegressionReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class RegressionReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal CapitalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> CheckoutOrderIdField;
+        
+        private int ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientOrderNumberField;
+        
+        private long CustomerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal FeeField;
+        
+        private long InvoiceIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        private System.DateTime PostingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal RateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime RecordDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ReportingDateField;
+        
+        private int RowNumberField;
+        
+        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
+        
+        private System.Nullable<long> SveaOrderIdField;
+        
+        private decimal TransactionAmountField;
+        
+        private int TransactionTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Capital {
+            get {
+                return this.CapitalField;
+            }
+            set {
+                if ((this.CapitalField.Equals(value) != true)) {
+                    this.CapitalField = value;
+                    this.RaisePropertyChanged("Capital");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CheckoutOrderId {
+            get {
+                return this.CheckoutOrderIdField;
+            }
+            set {
+                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
+                    this.CheckoutOrderIdField = value;
+                    this.RaisePropertyChanged("CheckoutOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderNumber {
+            get {
+                return this.ClientOrderNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
+                    this.ClientOrderNumberField = value;
+                    this.RaisePropertyChanged("ClientOrderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((this.CustomerIdField.Equals(value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Fee {
+            get {
+                return this.FeeField;
+            }
+            set {
+                if ((this.FeeField.Equals(value) != true)) {
+                    this.FeeField = value;
+                    this.RaisePropertyChanged("Fee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long InvoiceId {
+            get {
+                return this.InvoiceIdField;
+            }
+            set {
+                if ((this.InvoiceIdField.Equals(value) != true)) {
+                    this.InvoiceIdField = value;
+                    this.RaisePropertyChanged("InvoiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.DateTime PostingDate {
+            get {
+                return this.PostingDateField;
+            }
+            set {
+                if ((this.PostingDateField.Equals(value) != true)) {
+                    this.PostingDateField = value;
+                    this.RaisePropertyChanged("PostingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Rate {
+            get {
+                return this.RateField;
+            }
+            set {
+                if ((this.RateField.Equals(value) != true)) {
+                    this.RateField = value;
+                    this.RaisePropertyChanged("Rate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime RecordDate {
+            get {
+                return this.RecordDateField;
+            }
+            set {
+                if ((this.RecordDateField.Equals(value) != true)) {
+                    this.RecordDateField = value;
+                    this.RaisePropertyChanged("RecordDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ReportingDate {
+            get {
+                return this.ReportingDateField;
+            }
+            set {
+                if ((this.ReportingDateField.Equals(value) != true)) {
+                    this.ReportingDateField = value;
+                    this.RaisePropertyChanged("ReportingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int RowNumber {
+            get {
+                return this.RowNumberField;
+            }
+            set {
+                if ((this.RowNumberField.Equals(value) != true)) {
+                    this.RowNumberField = value;
+                    this.RaisePropertyChanged("RowNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.Nullable<System.DateTime> SveaOrderCreationDate {
+            get {
+                return this.SveaOrderCreationDateField;
+            }
+            set {
+                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
+                    this.SveaOrderCreationDateField = value;
+                    this.RaisePropertyChanged("SveaOrderCreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.Nullable<long> SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public decimal TransactionAmount {
+            get {
+                return this.TransactionAmountField;
+            }
+            set {
+                if ((this.TransactionAmountField.Equals(value) != true)) {
+                    this.TransactionAmountField = value;
+                    this.RaisePropertyChanged("TransactionAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int TransactionType {
+            get {
+                return this.TransactionTypeField;
+            }
+            set {
+                if ((this.TransactionTypeField.Equals(value) != true)) {
+                    this.TransactionTypeField = value;
+                    this.RaisePropertyChanged("TransactionType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
@@ -7515,6 +9887,9 @@ namespace Webpay.Integration.CSharp.AdminWS {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Webpay.Integration.CSharp.AdminWS.AccountCreditDetails AccountCreditDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingEmailAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ChangedDateField;
@@ -7585,6 +9960,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((object.ReferenceEquals(this.AccountCreditDetailsField, value) != true)) {
                     this.AccountCreditDetailsField = value;
                     this.RaisePropertyChanged("AccountCreditDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingEmailAddress {
+            get {
+                return this.BillingEmailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingEmailAddressField, value) != true)) {
+                    this.BillingEmailAddressField = value;
+                    this.RaisePropertyChanged("BillingEmailAddress");
                 }
             }
         }
@@ -7874,18 +10262,15 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationSummation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
     [System.SerializableAttribute()]
-    public partial class SpecificationSummation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AccountCreditDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal TotalAmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal TotalFeeField;
+        private decimal CampaignCodeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -7898,27 +10283,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal TotalAmount {
+        public decimal CampaignCode {
             get {
-                return this.TotalAmountField;
+                return this.CampaignCodeField;
             }
             set {
-                if ((this.TotalAmountField.Equals(value) != true)) {
-                    this.TotalAmountField = value;
-                    this.RaisePropertyChanged("TotalAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal TotalFee {
-            get {
-                return this.TotalFeeField;
-            }
-            set {
-                if ((this.TotalFeeField.Equals(value) != true)) {
-                    this.TotalFeeField = value;
-                    this.RaisePropertyChanged("TotalFee");
+                if ((this.CampaignCodeField.Equals(value) != true)) {
+                    this.CampaignCodeField = value;
+                    this.RaisePropertyChanged("CampaignCode");
                 }
             }
         }
@@ -7935,30 +10307,18 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreditReportStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class SpecificationRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class CreditReportStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
+        private bool AcceptedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime DateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal FeeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SveaIsPaymentFacilitatorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long TransactionIdField;
+        private System.DateTime CreationDateField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -7971,79 +10331,27 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
+        public bool Accepted {
             get {
-                return this.AmountField;
+                return this.AcceptedField;
             }
             set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
+                if ((this.AcceptedField.Equals(value) != true)) {
+                    this.AcceptedField = value;
+                    this.RaisePropertyChanged("Accepted");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderNumber {
+        public System.DateTime CreationDate {
             get {
-                return this.ClientOrderNumberField;
+                return this.CreationDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
-                    this.ClientOrderNumberField = value;
-                    this.RaisePropertyChanged("ClientOrderNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Date {
-            get {
-                return this.DateField;
-            }
-            set {
-                if ((this.DateField.Equals(value) != true)) {
-                    this.DateField = value;
-                    this.RaisePropertyChanged("Date");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Fee {
-            get {
-                return this.FeeField;
-            }
-            set {
-                if ((this.FeeField.Equals(value) != true)) {
-                    this.FeeField = value;
-                    this.RaisePropertyChanged("Fee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool SveaIsPaymentFacilitator {
-            get {
-                return this.SveaIsPaymentFacilitatorField;
-            }
-            set {
-                if ((this.SveaIsPaymentFacilitatorField.Equals(value) != true)) {
-                    this.SveaIsPaymentFacilitatorField = value;
-                    this.RaisePropertyChanged("SveaIsPaymentFacilitator");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long TransactionId {
-            get {
-                return this.TransactionIdField;
-            }
-            set {
-                if ((this.TransactionIdField.Equals(value) != true)) {
-                    this.TransactionIdField = value;
-                    this.RaisePropertyChanged("TransactionId");
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
                 }
             }
         }
@@ -8060,25 +10368,93 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DeliverOrderResult", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class DeliverOrderResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class PaymentPlanDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private long ClientIdField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal CampaignCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderIdField;
+        private int ContractLengthMonthsField;
         
-        private decimal DeliveredAmountField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> ContractNumberField;
         
-        private long DeliveryReferenceNumberField;
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
         
-        private Webpay.Integration.CSharp.AdminWS.OrderType OrderTypeField;
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal CampaignCode {
+            get {
+                return this.CampaignCodeField;
+            }
+            set {
+                if ((this.CampaignCodeField.Equals(value) != true)) {
+                    this.CampaignCodeField = value;
+                    this.RaisePropertyChanged("CampaignCode");
+                }
+            }
+        }
         
-        private long SveaOrderIdField;
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ContractLengthMonths {
+            get {
+                return this.ContractLengthMonthsField;
+            }
+            set {
+                if ((this.ContractLengthMonthsField.Equals(value) != true)) {
+                    this.ContractLengthMonthsField = value;
+                    this.RaisePropertyChanged("ContractLengthMonths");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> ContractNumber {
+            get {
+                return this.ContractNumberField;
+            }
+            set {
+                if ((this.ContractNumberField.Equals(value) != true)) {
+                    this.ContractNumberField = value;
+                    this.RaisePropertyChanged("ContractNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PendingReason", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class PendingReason : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private System.DateTime CreatedDateField;
+        
+        private string PendingTypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -8091,79 +10467,27 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
+        public System.DateTime CreatedDate {
             get {
-                return this.ClientIdField;
+                return this.CreatedDateField;
             }
             set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderId {
-            get {
-                return this.ClientOrderIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientOrderIdField, value) != true)) {
-                    this.ClientOrderIdField = value;
-                    this.RaisePropertyChanged("ClientOrderId");
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal DeliveredAmount {
+        public string PendingType {
             get {
-                return this.DeliveredAmountField;
+                return this.PendingTypeField;
             }
             set {
-                if ((this.DeliveredAmountField.Equals(value) != true)) {
-                    this.DeliveredAmountField = value;
-                    this.RaisePropertyChanged("DeliveredAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long DeliveryReferenceNumber {
-            get {
-                return this.DeliveryReferenceNumberField;
-            }
-            set {
-                if ((this.DeliveryReferenceNumberField.Equals(value) != true)) {
-                    this.DeliveryReferenceNumberField = value;
-                    this.RaisePropertyChanged("DeliveryReferenceNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.OrderType OrderType {
-            get {
-                return this.OrderTypeField;
-            }
-            set {
-                if ((this.OrderTypeField.Equals(value) != true)) {
-                    this.OrderTypeField = value;
-                    this.RaisePropertyChanged("OrderType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
+                if ((object.ReferenceEquals(this.PendingTypeField, value) != true)) {
+                    this.PendingTypeField = value;
+                    this.RaisePropertyChanged("PendingType");
                 }
             }
         }
@@ -8449,67 +10773,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.SveaOrderIdField.Equals(value) != true)) {
                     this.SveaOrderIdField = value;
                     this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderRowReferenceItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
-    [System.SerializableAttribute()]
-    public partial class OrderRowReferenceItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long RowNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TemporaryReferenceField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long RowNumber {
-            get {
-                return this.RowNumberField;
-            }
-            set {
-                if ((this.RowNumberField.Equals(value) != true)) {
-                    this.RowNumberField = value;
-                    this.RaisePropertyChanged("RowNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TemporaryReference {
-            get {
-                return this.TemporaryReferenceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TemporaryReferenceField, value) != true)) {
-                    this.TemporaryReferenceField = value;
-                    this.RaisePropertyChanged("TemporaryReference");
                 }
             }
         }
@@ -9684,2243 +11947,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportHeader", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class FinancialReportHeader : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private Webpay.Integration.CSharp.AdminWS.Address AddressField;
-        
-        private string AdministratorField;
-        
-        private int ClientTypeIdField;
-        
-        private string CurrencyField;
-        
-        private System.DateTime FromDateField;
-        
-        private System.DateTime ToDateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public Webpay.Integration.CSharp.AdminWS.Address Address {
-            get {
-                return this.AddressField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
-                    this.AddressField = value;
-                    this.RaisePropertyChanged("Address");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Administrator {
-            get {
-                return this.AdministratorField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AdministratorField, value) != true)) {
-                    this.AdministratorField = value;
-                    this.RaisePropertyChanged("Administrator");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientTypeId {
-            get {
-                return this.ClientTypeIdField;
-            }
-            set {
-                if ((this.ClientTypeIdField.Equals(value) != true)) {
-                    this.ClientTypeIdField = value;
-                    this.RaisePropertyChanged("ClientTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class FinancialReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int CountField;
-        
-        private decimal CreditField;
-        
-        private decimal DebitField;
-        
-        private string DescriptionField;
-        
-        private int RowIdField;
-        
-        private int RowNumberField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int Count {
-            get {
-                return this.CountField;
-            }
-            set {
-                if ((this.CountField.Equals(value) != true)) {
-                    this.CountField = value;
-                    this.RaisePropertyChanged("Count");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal Credit {
-            get {
-                return this.CreditField;
-            }
-            set {
-                if ((this.CreditField.Equals(value) != true)) {
-                    this.CreditField = value;
-                    this.RaisePropertyChanged("Credit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal Debit {
-            get {
-                return this.DebitField;
-            }
-            set {
-                if ((this.DebitField.Equals(value) != true)) {
-                    this.DebitField = value;
-                    this.RaisePropertyChanged("Debit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int RowId {
-            get {
-                return this.RowIdField;
-            }
-            set {
-                if ((this.RowIdField.Equals(value) != true)) {
-                    this.RowIdField = value;
-                    this.RaisePropertyChanged("RowId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int RowNumber {
-            get {
-                return this.RowNumberField;
-            }
-            set {
-                if ((this.RowNumberField.Equals(value) != true)) {
-                    this.RowNumberField = value;
-                    this.RaisePropertyChanged("RowNumber");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class InvoiceReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private decimal AdministrationFeeField;
-        
-        private decimal AmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> CheckoutOrderIdField;
-        
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderNumberField;
-        
-        private decimal CreditFeeField;
-        
-        private long CustomerIdField;
-        
-        private long InvoiceIdField;
-        
-        private string NameField;
-        
-        private decimal PostageFeeField;
-        
-        private System.DateTime ReportDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> SveaOrderIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal AdministrationFee {
-            get {
-                return this.AdministrationFeeField;
-            }
-            set {
-                if ((this.AdministrationFeeField.Equals(value) != true)) {
-                    this.AdministrationFeeField = value;
-                    this.RaisePropertyChanged("AdministrationFee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> CheckoutOrderId {
-            get {
-                return this.CheckoutOrderIdField;
-            }
-            set {
-                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
-                    this.CheckoutOrderIdField = value;
-                    this.RaisePropertyChanged("CheckoutOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderNumber {
-            get {
-                return this.ClientOrderNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
-                    this.ClientOrderNumberField = value;
-                    this.RaisePropertyChanged("ClientOrderNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal CreditFee {
-            get {
-                return this.CreditFeeField;
-            }
-            set {
-                if ((this.CreditFeeField.Equals(value) != true)) {
-                    this.CreditFeeField = value;
-                    this.RaisePropertyChanged("CreditFee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((this.CustomerIdField.Equals(value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal PostageFee {
-            get {
-                return this.PostageFeeField;
-            }
-            set {
-                if ((this.PostageFeeField.Equals(value) != true)) {
-                    this.PostageFeeField = value;
-                    this.RaisePropertyChanged("PostageFee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ReportDate {
-            get {
-                return this.ReportDateField;
-            }
-            set {
-                if ((this.ReportDateField.Equals(value) != true)) {
-                    this.ReportDateField = value;
-                    this.RaisePropertyChanged("ReportDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> SveaOrderCreationDate {
-            get {
-                return this.SveaOrderCreationDateField;
-            }
-            set {
-                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
-                    this.SveaOrderCreationDateField = value;
-                    this.RaisePropertyChanged("SveaOrderCreationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountingReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class AccountingReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private long AccountNumberField;
-        
-        private long ClientIdField;
-        
-        private decimal CreditField;
-        
-        private decimal DebitField;
-        
-        private int IdField;
-        
-        private string NameField;
-        
-        private System.DateTime ReportingDateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long AccountNumber {
-            get {
-                return this.AccountNumberField;
-            }
-            set {
-                if ((this.AccountNumberField.Equals(value) != true)) {
-                    this.AccountNumberField = value;
-                    this.RaisePropertyChanged("AccountNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal Credit {
-            get {
-                return this.CreditField;
-            }
-            set {
-                if ((this.CreditField.Equals(value) != true)) {
-                    this.CreditField = value;
-                    this.RaisePropertyChanged("Credit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal Debit {
-            get {
-                return this.DebitField;
-            }
-            set {
-                if ((this.DebitField.Equals(value) != true)) {
-                    this.DebitField = value;
-                    this.RaisePropertyChanged("Debit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ReportingDate {
-            get {
-                return this.ReportingDateField;
-            }
-            set {
-                if ((this.ReportingDateField.Equals(value) != true)) {
-                    this.ReportingDateField = value;
-                    this.RaisePropertyChanged("ReportingDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RegressionReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class RegressionReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal CapitalField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> CheckoutOrderIdField;
-        
-        private int ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderNumberField;
-        
-        private long CustomerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal FeeField;
-        
-        private long InvoiceIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        private System.DateTime PostingDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal RateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime RecordDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ReportingDateField;
-        
-        private int RowNumberField;
-        
-        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
-        
-        private System.Nullable<long> SveaOrderIdField;
-        
-        private decimal TransactionAmountField;
-        
-        private int TransactionTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Capital {
-            get {
-                return this.CapitalField;
-            }
-            set {
-                if ((this.CapitalField.Equals(value) != true)) {
-                    this.CapitalField = value;
-                    this.RaisePropertyChanged("Capital");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> CheckoutOrderId {
-            get {
-                return this.CheckoutOrderIdField;
-            }
-            set {
-                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
-                    this.CheckoutOrderIdField = value;
-                    this.RaisePropertyChanged("CheckoutOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderNumber {
-            get {
-                return this.ClientOrderNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
-                    this.ClientOrderNumberField = value;
-                    this.RaisePropertyChanged("ClientOrderNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((this.CustomerIdField.Equals(value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Fee {
-            get {
-                return this.FeeField;
-            }
-            set {
-                if ((this.FeeField.Equals(value) != true)) {
-                    this.FeeField = value;
-                    this.RaisePropertyChanged("Fee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime PostingDate {
-            get {
-                return this.PostingDateField;
-            }
-            set {
-                if ((this.PostingDateField.Equals(value) != true)) {
-                    this.PostingDateField = value;
-                    this.RaisePropertyChanged("PostingDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Rate {
-            get {
-                return this.RateField;
-            }
-            set {
-                if ((this.RateField.Equals(value) != true)) {
-                    this.RateField = value;
-                    this.RaisePropertyChanged("Rate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime RecordDate {
-            get {
-                return this.RecordDateField;
-            }
-            set {
-                if ((this.RecordDateField.Equals(value) != true)) {
-                    this.RecordDateField = value;
-                    this.RaisePropertyChanged("RecordDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ReportingDate {
-            get {
-                return this.ReportingDateField;
-            }
-            set {
-                if ((this.ReportingDateField.Equals(value) != true)) {
-                    this.ReportingDateField = value;
-                    this.RaisePropertyChanged("ReportingDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int RowNumber {
-            get {
-                return this.RowNumberField;
-            }
-            set {
-                if ((this.RowNumberField.Equals(value) != true)) {
-                    this.RowNumberField = value;
-                    this.RaisePropertyChanged("RowNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.Nullable<System.DateTime> SveaOrderCreationDate {
-            get {
-                return this.SveaOrderCreationDateField;
-            }
-            set {
-                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
-                    this.SveaOrderCreationDateField = value;
-                    this.RaisePropertyChanged("SveaOrderCreationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.Nullable<long> SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal TransactionAmount {
-            get {
-                return this.TransactionAmountField;
-            }
-            set {
-                if ((this.TransactionAmountField.Equals(value) != true)) {
-                    this.TransactionAmountField = value;
-                    this.RaisePropertyChanged("TransactionAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int TransactionType {
-            get {
-                return this.TransactionTypeField;
-            }
-            set {
-                if ((this.TransactionTypeField.Equals(value) != true)) {
-                    this.TransactionTypeField = value;
-                    this.RaisePropertyChanged("TransactionType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string User {
-            get {
-                return this.UserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserField, value) != true)) {
-                    this.UserField = value;
-                    this.RaisePropertyChanged("User");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class PaymentPlanReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AdministrationFeeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> CheckoutOrderIdField;
-        
-        private int ClientIdField;
-        
-        private long ContractIdField;
-        
-        private long CustomerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime DateField;
-        
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OrderIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal PayToClientAmountField;
-        
-        private System.DateTime ReportingDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> SveaOrderCreationDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> SveaOrderIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal AdministrationFee {
-            get {
-                return this.AdministrationFeeField;
-            }
-            set {
-                if ((this.AdministrationFeeField.Equals(value) != true)) {
-                    this.AdministrationFeeField = value;
-                    this.RaisePropertyChanged("AdministrationFee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> CheckoutOrderId {
-            get {
-                return this.CheckoutOrderIdField;
-            }
-            set {
-                if ((this.CheckoutOrderIdField.Equals(value) != true)) {
-                    this.CheckoutOrderIdField = value;
-                    this.RaisePropertyChanged("CheckoutOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long ContractId {
-            get {
-                return this.ContractIdField;
-            }
-            set {
-                if ((this.ContractIdField.Equals(value) != true)) {
-                    this.ContractIdField = value;
-                    this.RaisePropertyChanged("ContractId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((this.CustomerIdField.Equals(value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Date {
-            get {
-                return this.DateField;
-            }
-            set {
-                if ((this.DateField.Equals(value) != true)) {
-                    this.DateField = value;
-                    this.RaisePropertyChanged("Date");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderId {
-            get {
-                return this.OrderIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderIdField, value) != true)) {
-                    this.OrderIdField = value;
-                    this.RaisePropertyChanged("OrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal PayToClientAmount {
-            get {
-                return this.PayToClientAmountField;
-            }
-            set {
-                if ((this.PayToClientAmountField.Equals(value) != true)) {
-                    this.PayToClientAmountField = value;
-                    this.RaisePropertyChanged("PayToClientAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ReportingDate {
-            get {
-                return this.ReportingDateField;
-            }
-            set {
-                if ((this.ReportingDateField.Equals(value) != true)) {
-                    this.ReportingDateField = value;
-                    this.RaisePropertyChanged("ReportingDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> SveaOrderCreationDate {
-            get {
-                return this.SveaOrderCreationDateField;
-            }
-            set {
-                if ((this.SveaOrderCreationDateField.Equals(value) != true)) {
-                    this.SveaOrderCreationDateField = value;
-                    this.RaisePropertyChanged("SveaOrderCreationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceJournalReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class InvoiceJournalReportRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int ClientIdField;
-        
-        private long CustomerIdField;
-        
-        private decimal InvoiceAmountField;
-        
-        private long InvoiceIdField;
-        
-        private string NameField;
-        
-        private string OrderNumberField;
-        
-        private System.DateTime PostingDateField;
-        
-        private System.DateTime ReportingDateField;
-        
-        private decimal VatAmountField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((this.CustomerIdField.Equals(value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal InvoiceAmount {
-            get {
-                return this.InvoiceAmountField;
-            }
-            set {
-                if ((this.InvoiceAmountField.Equals(value) != true)) {
-                    this.InvoiceAmountField = value;
-                    this.RaisePropertyChanged("InvoiceAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string OrderNumber {
-            get {
-                return this.OrderNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderNumberField, value) != true)) {
-                    this.OrderNumberField = value;
-                    this.RaisePropertyChanged("OrderNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime PostingDate {
-            get {
-                return this.PostingDateField;
-            }
-            set {
-                if ((this.PostingDateField.Equals(value) != true)) {
-                    this.PostingDateField = value;
-                    this.RaisePropertyChanged("PostingDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime ReportingDate {
-            get {
-                return this.ReportingDateField;
-            }
-            set {
-                if ((this.ReportingDateField.Equals(value) != true)) {
-                    this.ReportingDateField = value;
-                    this.RaisePropertyChanged("ReportingDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public decimal VatAmount {
-            get {
-                return this.VatAmountField;
-            }
-            set {
-                if ((this.VatAmountField.Equals(value) != true)) {
-                    this.VatAmountField = value;
-                    this.RaisePropertyChanged("VatAmount");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class OrderEvent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime CreationDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long EventIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EventTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OrderActionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.PendingEvent PendingEventField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long SveaOrderIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreationDate {
-            get {
-                return this.CreationDateField;
-            }
-            set {
-                if ((this.CreationDateField.Equals(value) != true)) {
-                    this.CreationDateField = value;
-                    this.RaisePropertyChanged("CreationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long EventId {
-            get {
-                return this.EventIdField;
-            }
-            set {
-                if ((this.EventIdField.Equals(value) != true)) {
-                    this.EventIdField = value;
-                    this.RaisePropertyChanged("EventId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EventType {
-            get {
-                return this.EventTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EventTypeField, value) != true)) {
-                    this.EventTypeField = value;
-                    this.RaisePropertyChanged("EventType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderAction {
-            get {
-                return this.OrderActionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderActionField, value) != true)) {
-                    this.OrderActionField = value;
-                    this.RaisePropertyChanged("OrderAction");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.PendingEvent PendingEvent {
-            get {
-                return this.PendingEventField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PendingEventField, value) != true)) {
-                    this.PendingEventField = value;
-                    this.RaisePropertyChanged("PendingEvent");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PendingEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class PendingEvent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActionReasonField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdentifierField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OrderStatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PendingStatusField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ActionReason {
-            get {
-                return this.ActionReasonField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActionReasonField, value) != true)) {
-                    this.ActionReasonField = value;
-                    this.RaisePropertyChanged("ActionReason");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Identifier {
-            get {
-                return this.IdentifierField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdentifierField, value) != true)) {
-                    this.IdentifierField = value;
-                    this.RaisePropertyChanged("Identifier");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderStatus {
-            get {
-                return this.OrderStatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderStatusField, value) != true)) {
-                    this.OrderStatusField = value;
-                    this.RaisePropertyChanged("OrderStatus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PendingStatus {
-            get {
-                return this.PendingStatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PendingStatusField, value) != true)) {
-                    this.PendingStatusField = value;
-                    this.RaisePropertyChanged("PendingStatus");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceWithChangedDueDate", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class InvoiceWithChangedDueDate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int ClientIdField;
-        
-        private System.DateTime DueDateField;
-        
-        private System.DateTime InvoiceDateField;
-        
-        private long InvoiceIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime OrgDueDateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime DueDate {
-            get {
-                return this.DueDateField;
-            }
-            set {
-                if ((this.DueDateField.Equals(value) != true)) {
-                    this.DueDateField = value;
-                    this.RaisePropertyChanged("DueDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime InvoiceDate {
-            get {
-                return this.InvoiceDateField;
-            }
-            set {
-                if ((this.InvoiceDateField.Equals(value) != true)) {
-                    this.InvoiceDateField = value;
-                    this.RaisePropertyChanged("InvoiceDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public long InvoiceId {
-            get {
-                return this.InvoiceIdField;
-            }
-            set {
-                if ((this.InvoiceIdField.Equals(value) != true)) {
-                    this.InvoiceIdField = value;
-                    this.RaisePropertyChanged("InvoiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime OrgDueDate {
-            get {
-                return this.OrgDueDateField;
-            }
-            set {
-                if ((this.OrgDueDateField.Equals(value) != true)) {
-                    this.OrgDueDateField = value;
-                    this.RaisePropertyChanged("OrgDueDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PendingReason", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class PendingReason : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private System.DateTime CreatedDateField;
-        
-        private string PendingTypeField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime CreatedDate {
-            get {
-                return this.CreatedDateField;
-            }
-            set {
-                if ((this.CreatedDateField.Equals(value) != true)) {
-                    this.CreatedDateField = value;
-                    this.RaisePropertyChanged("CreatedDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string PendingType {
-            get {
-                return this.PendingTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PendingTypeField, value) != true)) {
-                    this.PendingTypeField = value;
-                    this.RaisePropertyChanged("PendingType");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class AccountCreditListItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientAccountCreditIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientOrderIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ContractNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime CreatedDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CustomerCountryCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CustomerNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.CustomerType CustomerTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NationalIdNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> PaidToClientDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long SveaOrderIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientAccountCreditId {
-            get {
-                return this.ClientAccountCreditIdField;
-            }
-            set {
-                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
-                    this.ClientAccountCreditIdField = value;
-                    this.RaisePropertyChanged("ClientAccountCreditId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientOrderId {
-            get {
-                return this.ClientOrderIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientOrderIdField, value) != true)) {
-                    this.ClientOrderIdField = value;
-                    this.RaisePropertyChanged("ClientOrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ContractNumber {
-            get {
-                return this.ContractNumberField;
-            }
-            set {
-                if ((this.ContractNumberField.Equals(value) != true)) {
-                    this.ContractNumberField = value;
-                    this.RaisePropertyChanged("ContractNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreatedDate {
-            get {
-                return this.CreatedDateField;
-            }
-            set {
-                if ((this.CreatedDateField.Equals(value) != true)) {
-                    this.CreatedDateField = value;
-                    this.RaisePropertyChanged("CreatedDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CustomerCountryCode {
-            get {
-                return this.CustomerCountryCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CustomerCountryCodeField, value) != true)) {
-                    this.CustomerCountryCodeField = value;
-                    this.RaisePropertyChanged("CustomerCountryCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CustomerName {
-            get {
-                return this.CustomerNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CustomerNameField, value) != true)) {
-                    this.CustomerNameField = value;
-                    this.RaisePropertyChanged("CustomerName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.CustomerType CustomerType {
-            get {
-                return this.CustomerTypeField;
-            }
-            set {
-                if ((this.CustomerTypeField.Equals(value) != true)) {
-                    this.CustomerTypeField = value;
-                    this.RaisePropertyChanged("CustomerType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NationalIdNumber {
-            get {
-                return this.NationalIdNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NationalIdNumberField, value) != true)) {
-                    this.NationalIdNumberField = value;
-                    this.RaisePropertyChanged("NationalIdNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> PaidToClientDate {
-            get {
-                return this.PaidToClientDateField;
-            }
-            set {
-                if ((this.PaidToClientDateField.Equals(value) != true)) {
-                    this.PaidToClientDateField = value;
-                    this.RaisePropertyChanged("PaidToClientDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Status {
-            get {
-                return this.StatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long SveaOrderId {
-            get {
-                return this.SveaOrderIdField;
-            }
-            set {
-                if ((this.SveaOrderIdField.Equals(value) != true)) {
-                    this.SveaOrderIdField = value;
-                    this.RaisePropertyChanged("SveaOrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class AccountCreditItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] AccountCreditRowsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientAccountCreditIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ContractNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime CreationDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.CreditReportStatus CreditReportStatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Webpay.Integration.CSharp.AdminWS.CustomerIdentity CustomerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> CustomerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeliveryStatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long OrderIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] AccountCreditRows {
-            get {
-                return this.AccountCreditRowsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AccountCreditRowsField, value) != true)) {
-                    this.AccountCreditRowsField = value;
-                    this.RaisePropertyChanged("AccountCreditRows");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientAccountCreditId {
-            get {
-                return this.ClientAccountCreditIdField;
-            }
-            set {
-                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
-                    this.ClientAccountCreditIdField = value;
-                    this.RaisePropertyChanged("ClientAccountCreditId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ContractNumber {
-            get {
-                return this.ContractNumberField;
-            }
-            set {
-                if ((this.ContractNumberField.Equals(value) != true)) {
-                    this.ContractNumberField = value;
-                    this.RaisePropertyChanged("ContractNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreationDate {
-            get {
-                return this.CreationDateField;
-            }
-            set {
-                if ((this.CreationDateField.Equals(value) != true)) {
-                    this.CreationDateField = value;
-                    this.RaisePropertyChanged("CreationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.CreditReportStatus CreditReportStatus {
-            get {
-                return this.CreditReportStatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreditReportStatusField, value) != true)) {
-                    this.CreditReportStatusField = value;
-                    this.RaisePropertyChanged("CreditReportStatus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Webpay.Integration.CSharp.AdminWS.CustomerIdentity Customer {
-            get {
-                return this.CustomerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CustomerField, value) != true)) {
-                    this.CustomerField = value;
-                    this.RaisePropertyChanged("Customer");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((this.CustomerIdField.Equals(value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeliveryStatus {
-            get {
-                return this.DeliveryStatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeliveryStatusField, value) != true)) {
-                    this.DeliveryStatusField = value;
-                    this.RaisePropertyChanged("DeliveryStatus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long OrderId {
-            get {
-                return this.OrderIdField;
-            }
-            set {
-                if ((this.OrderIdField.Equals(value) != true)) {
-                    this.OrderIdField = value;
-                    this.RaisePropertyChanged("OrderId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CreditReportStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class CreditReportStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool AcceptedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime CreationDateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Accepted {
-            get {
-                return this.AcceptedField;
-            }
-            set {
-                if ((this.AcceptedField.Equals(value) != true)) {
-                    this.AcceptedField = value;
-                    this.RaisePropertyChanged("Accepted");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreationDate {
-            get {
-                return this.CreationDateField;
-            }
-            set {
-                if ((this.CreationDateField.Equals(value) != true)) {
-                    this.CreationDateField = value;
-                    this.RaisePropertyChanged("CreationDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportDataRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
     public partial class AccountCreditRegressReportDataRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -12584,105 +12610,15 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ClientData", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
-    [System.SerializableAttribute()]
-    public partial class ClientData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int AgreementTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ClientIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CountryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int AgreementType {
-            get {
-                return this.AgreementTypeField;
-            }
-            set {
-                if ((this.AgreementTypeField.Equals(value) != true)) {
-                    this.AgreementTypeField = value;
-                    this.RaisePropertyChanged("AgreementType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoicePaidToClientRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Internal.Service.Types")]
     [System.SerializableAttribute()]
     public partial class InvoicePaidToClientRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> AdjustmentAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> AdministrationFeeField;
@@ -12718,6 +12654,19 @@ namespace Webpay.Integration.CSharp.AdminWS {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> AdjustmentAmount {
+            get {
+                return this.AdjustmentAmountField;
+            }
+            set {
+                if ((this.AdjustmentAmountField.Equals(value) != true)) {
+                    this.AdjustmentAmountField = value;
+                    this.RaisePropertyChanged("AdjustmentAmount");
+                }
             }
         }
         
@@ -12975,15 +12924,54 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class AccountCreditDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AccountCreditListItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal CampaignCodeField;
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientAccountCreditIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientOrderIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ContractNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerCountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.CustomerType CustomerTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NationalIdNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PaidToClientDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long SveaOrderIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -12996,14 +12984,183 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal CampaignCode {
+        public decimal Amount {
             get {
-                return this.CampaignCodeField;
+                return this.AmountField;
             }
             set {
-                if ((this.CampaignCodeField.Equals(value) != true)) {
-                    this.CampaignCodeField = value;
-                    this.RaisePropertyChanged("CampaignCode");
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientAccountCreditId {
+            get {
+                return this.ClientAccountCreditIdField;
+            }
+            set {
+                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
+                    this.ClientAccountCreditIdField = value;
+                    this.RaisePropertyChanged("ClientAccountCreditId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderId {
+            get {
+                return this.ClientOrderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderIdField, value) != true)) {
+                    this.ClientOrderIdField = value;
+                    this.RaisePropertyChanged("ClientOrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ContractNumber {
+            get {
+                return this.ContractNumberField;
+            }
+            set {
+                if ((this.ContractNumberField.Equals(value) != true)) {
+                    this.ContractNumberField = value;
+                    this.RaisePropertyChanged("ContractNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerCountryCode {
+            get {
+                return this.CustomerCountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerCountryCodeField, value) != true)) {
+                    this.CustomerCountryCodeField = value;
+                    this.RaisePropertyChanged("CustomerCountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerName {
+            get {
+                return this.CustomerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerNameField, value) != true)) {
+                    this.CustomerNameField = value;
+                    this.RaisePropertyChanged("CustomerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.CustomerType CustomerType {
+            get {
+                return this.CustomerTypeField;
+            }
+            set {
+                if ((this.CustomerTypeField.Equals(value) != true)) {
+                    this.CustomerTypeField = value;
+                    this.RaisePropertyChanged("CustomerType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NationalIdNumber {
+            get {
+                return this.NationalIdNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NationalIdNumberField, value) != true)) {
+                    this.NationalIdNumberField = value;
+                    this.RaisePropertyChanged("NationalIdNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PaidToClientDate {
+            get {
+                return this.PaidToClientDateField;
+            }
+            set {
+                if ((this.PaidToClientDateField.Equals(value) != true)) {
+                    this.PaidToClientDateField = value;
+                    this.RaisePropertyChanged("PaidToClientDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long SveaOrderId {
+            get {
+                return this.SveaOrderIdField;
+            }
+            set {
+                if ((this.SveaOrderIdField.Equals(value) != true)) {
+                    this.SveaOrderIdField = value;
+                    this.RaisePropertyChanged("SveaOrderId");
                 }
             }
         }
@@ -13020,21 +13177,48 @@ namespace Webpay.Integration.CSharp.AdminWS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.SerializableAttribute()]
-    public partial class PaymentPlanDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AccountCreditItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal CampaignCodeField;
+        private Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] AccountCreditRowsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ContractLengthMonthsField;
+        private decimal AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> ContractNumberField;
+        private long ClientAccountCreditIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ContractNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.CreditReportStatus CreditReportStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Webpay.Integration.CSharp.AdminWS.CustomerIdentity CustomerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> CustomerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long OrderIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -13047,33 +13231,59 @@ namespace Webpay.Integration.CSharp.AdminWS {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal CampaignCode {
+        public Webpay.Integration.CSharp.AdminWS.NumberedOrderRow[] AccountCreditRows {
             get {
-                return this.CampaignCodeField;
+                return this.AccountCreditRowsField;
             }
             set {
-                if ((this.CampaignCodeField.Equals(value) != true)) {
-                    this.CampaignCodeField = value;
-                    this.RaisePropertyChanged("CampaignCode");
+                if ((object.ReferenceEquals(this.AccountCreditRowsField, value) != true)) {
+                    this.AccountCreditRowsField = value;
+                    this.RaisePropertyChanged("AccountCreditRows");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ContractLengthMonths {
+        public decimal Amount {
             get {
-                return this.ContractLengthMonthsField;
+                return this.AmountField;
             }
             set {
-                if ((this.ContractLengthMonthsField.Equals(value) != true)) {
-                    this.ContractLengthMonthsField = value;
-                    this.RaisePropertyChanged("ContractLengthMonths");
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> ContractNumber {
+        public long ClientAccountCreditId {
+            get {
+                return this.ClientAccountCreditIdField;
+            }
+            set {
+                if ((this.ClientAccountCreditIdField.Equals(value) != true)) {
+                    this.ClientAccountCreditIdField = value;
+                    this.RaisePropertyChanged("ClientAccountCreditId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ContractNumber {
             get {
                 return this.ContractNumberField;
             }
@@ -13081,6 +13291,283 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 if ((this.ContractNumberField.Equals(value) != true)) {
                     this.ContractNumberField = value;
                     this.RaisePropertyChanged("ContractNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.CreditReportStatus CreditReportStatus {
+            get {
+                return this.CreditReportStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreditReportStatusField, value) != true)) {
+                    this.CreditReportStatusField = value;
+                    this.RaisePropertyChanged("CreditReportStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Webpay.Integration.CSharp.AdminWS.CustomerIdentity Customer {
+            get {
+                return this.CustomerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerField, value) != true)) {
+                    this.CustomerField = value;
+                    this.RaisePropertyChanged("Customer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((this.CustomerIdField.Equals(value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryStatus {
+            get {
+                return this.DeliveryStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryStatusField, value) != true)) {
+                    this.DeliveryStatusField = value;
+                    this.RaisePropertyChanged("DeliveryStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long OrderId {
+            get {
+                return this.OrderIdField;
+            }
+            set {
+                if ((this.OrderIdField.Equals(value) != true)) {
+                    this.OrderIdField = value;
+                    this.RaisePropertyChanged("OrderId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationSummation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SpecificationSummation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalFeeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalAmount {
+            get {
+                return this.TotalAmountField;
+            }
+            set {
+                if ((this.TotalAmountField.Equals(value) != true)) {
+                    this.TotalAmountField = value;
+                    this.RaisePropertyChanged("TotalAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalFee {
+            get {
+                return this.TotalFeeField;
+            }
+            set {
+                if ((this.TotalFeeField.Equals(value) != true)) {
+                    this.TotalFeeField = value;
+                    this.RaisePropertyChanged("TotalFee");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    [System.SerializableAttribute()]
+    public partial class SpecificationRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientOrderNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal FeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SveaIsPaymentFacilitatorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long TransactionIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientOrderNumber {
+            get {
+                return this.ClientOrderNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientOrderNumberField, value) != true)) {
+                    this.ClientOrderNumberField = value;
+                    this.RaisePropertyChanged("ClientOrderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Date {
+            get {
+                return this.DateField;
+            }
+            set {
+                if ((this.DateField.Equals(value) != true)) {
+                    this.DateField = value;
+                    this.RaisePropertyChanged("Date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Fee {
+            get {
+                return this.FeeField;
+            }
+            set {
+                if ((this.FeeField.Equals(value) != true)) {
+                    this.FeeField = value;
+                    this.RaisePropertyChanged("Fee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SveaIsPaymentFacilitator {
+            get {
+                return this.SveaIsPaymentFacilitatorField;
+            }
+            set {
+                if ((this.SveaIsPaymentFacilitatorField.Equals(value) != true)) {
+                    this.SveaIsPaymentFacilitatorField = value;
+                    this.RaisePropertyChanged("SveaIsPaymentFacilitator");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long TransactionId {
+            get {
+                return this.TransactionIdField;
+            }
+            set {
+                if ((this.TransactionIdField.Equals(value) != true)) {
+                    this.TransactionIdField = value;
+                    this.RaisePropertyChanged("TransactionId");
                 }
             }
         }
@@ -13099,17 +13586,101 @@ namespace Webpay.Integration.CSharp.AdminWS {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AdminWS.IAdminService")]
     public interface IAdminService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrders", ReplyAction="http://tempuri.org/IAdminService/GetOrdersResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/AddOrderRows", ReplyAction="http://tempuri.org/IAdminService/AddOrderRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse AddOrderRows(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelOrderRows", ReplyAction="http://tempuri.org/IAdminService/CancelOrderRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse CancelOrderRows(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ApproveInvoice", ReplyAction="http://tempuri.org/IAdminService/ApproveInvoiceResponse")]
+        Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse ApproveInvoice(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelAccountCreditAmount", ReplyAction="http://tempuri.org/IAdminService/CancelAccountCreditAmountResponse")]
+        Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse CancelAccountCreditAmount(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelAccountCreditRows", ReplyAction="http://tempuri.org/IAdminService/CancelAccountCreditRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse CancelAccountCreditRows(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelOrder", ReplyAction="http://tempuri.org/IAdminService/CancelOrderResponse")]
         Webpay.Integration.CSharp.AdminWS.CancelOrderResponse CancelOrder(Webpay.Integration.CSharp.AdminWS.CancelOrderRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelOrderRows", ReplyAction="http://tempuri.org/IAdminService/CancelOrderRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse CancelOrderRows(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelPaymentPlanAmount", ReplyAction="http://tempuri.org/IAdminService/CancelPaymentPlanAmountResponse")]
+        Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse CancelPaymentPlanAmount(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelPaymentPlanRows", ReplyAction="http://tempuri.org/IAdminService/CancelPaymentPlanRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse CancelPaymentPlanRows(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CreditInvoiceRows", ReplyAction="http://tempuri.org/IAdminService/CreditInvoiceRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.DeliveryResponse CreditInvoiceRows(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/DeliverPartial", ReplyAction="http://tempuri.org/IAdminService/DeliverPartialResponse")]
         Webpay.Integration.CSharp.AdminWS.DeliveryResponse DeliverPartial(Webpay.Integration.CSharp.AdminWS.PartialDeliveryRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ExtendOrder", ReplyAction="http://tempuri.org/IAdminService/ExtendOrderResponse")]
+        Webpay.Integration.CSharp.AdminWS.ExtendOrderResponse ExtendOrder(Webpay.Integration.CSharp.AdminWS.ExtendOrderRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReport", ReplyAction="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse GenerateAccountCreditRegressReport(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25Report", ReplyAction="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25ReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse GenerateAccountingAgreementType25Report(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetAccountingReport", ReplyAction="http://tempuri.org/IAdminService/GetAccountingReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse GetAccountingReport(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReport", ReplyAction="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse GetDebtInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetFinancialReport", ReplyAction="http://tempuri.org/IAdminService/GetFinancialReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse GetFinancialReport(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoiceJournalReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoiceJournalReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse GetInvoiceJournalReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicePdfLink", ReplyAction="http://tempuri.org/IAdminService/GetInvoicePdfLinkResponse")]
+        Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetInvoicePdfLink(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoiceReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoiceReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse GetInvoiceReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse GetInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDate", ReplyAction="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDateResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse GetInvoicesWithChangedDueDate(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetKickbackReport", ReplyAction="http://tempuri.org/IAdminService/GetKickbackReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse GetKickbackReport(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrderEvents", ReplyAction="http://tempuri.org/IAdminService/GetOrderEventsResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse GetOrderEvents(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrderPdfLink", ReplyAction="http://tempuri.org/IAdminService/GetOrderPdfLinkResponse")]
+        Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetOrderPdfLink(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetPaymentPlanReport", ReplyAction="http://tempuri.org/IAdminService/GetPaymentPlanReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse GetPaymentPlanReport(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetPendingReasons", ReplyAction="http://tempuri.org/IAdminService/GetPendingReasonsResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse GetPendingReasons(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetRegressionReport", ReplyAction="http://tempuri.org/IAdminService/GetRegressionReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse GetRegressionReport(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetSpecificationReport", ReplyAction="http://tempuri.org/IAdminService/GetSpecificationReportResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse GetSpecificationReport(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ReleasePendingOrder", ReplyAction="http://tempuri.org/IAdminService/ReleasePendingOrderResponse")]
+        Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse ReleasePendingOrder(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/UpdateOrder", ReplyAction="http://tempuri.org/IAdminService/UpdateOrderResponse")]
+        Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse UpdateOrder(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/UpdateOrderRows", ReplyAction="http://tempuri.org/IAdminService/UpdateOrderRowsResponse")]
+        Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse UpdateOrderRows(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrders", ReplyAction="http://tempuri.org/IAdminService/GetOrdersResponse")]
+        Webpay.Integration.CSharp.AdminWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/DeliverOrders", ReplyAction="http://tempuri.org/IAdminService/DeliverOrdersResponse")]
         Webpay.Integration.CSharp.AdminWS.DeliveryResponse DeliverOrders(Webpay.Integration.CSharp.AdminWS.DeliveryRequest request);
@@ -13117,26 +13688,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/SearchOrders", ReplyAction="http://tempuri.org/IAdminService/SearchOrdersResponse")]
         Webpay.Integration.CSharp.AdminWS.SearchOrdersResponse SearchOrders(Webpay.Integration.CSharp.AdminWS.SearchOrdersRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/AddOrderRows", ReplyAction="http://tempuri.org/IAdminService/AddOrderRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse AddOrderRows(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/UpdateOrderRows", ReplyAction="http://tempuri.org/IAdminService/UpdateOrderRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse UpdateOrderRows(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/SearchInvoices", ReplyAction="http://tempuri.org/IAdminService/SearchInvoicesResponse")]
         Webpay.Integration.CSharp.AdminWS.SearchInvoicesResponse SearchInvoices(Webpay.Integration.CSharp.AdminWS.SearchInvoicesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoices", ReplyAction="http://tempuri.org/IAdminService/GetInvoicesResponse")]
         Webpay.Integration.CSharp.AdminWS.GetInvoicesResponse GetInvoices(Webpay.Integration.CSharp.AdminWS.GetInvoicesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CreditInvoiceRows", ReplyAction="http://tempuri.org/IAdminService/CreditInvoiceRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.DeliveryResponse CreditInvoiceRows(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/SearchPaymentPlans", ReplyAction="http://tempuri.org/IAdminService/SearchPaymentPlansResponse")]
         Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansResponse SearchPaymentPlans(Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/UpdateOrder", ReplyAction="http://tempuri.org/IAdminService/UpdateOrderResponse")]
-        Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse UpdateOrder(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetSumOfOrderAmount", ReplyAction="http://tempuri.org/IAdminService/GetSumOfOrderAmountResponse")]
         Webpay.Integration.CSharp.AdminWS.SumOfAmountResponse GetSumOfOrderAmount(Webpay.Integration.CSharp.AdminWS.SumOfOrderAmountRequest request);
@@ -13147,47 +13706,8 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmount", ReplyAction="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmountResponse")]
         Webpay.Integration.CSharp.AdminWS.SumOfAmountResponse GetSumOfPaymentPlanAmount(Webpay.Integration.CSharp.AdminWS.SumOfPaymentPlanAmountRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ApproveInvoice", ReplyAction="http://tempuri.org/IAdminService/ApproveInvoiceResponse")]
-        Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse ApproveInvoice(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CreateOrder", ReplyAction="http://tempuri.org/IAdminService/CreateOrderResponse")]
         Webpay.Integration.CSharp.AdminWS.CreateOrderResponse CreateOrder(Webpay.Integration.CSharp.AdminWS.CreateOrderRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ReleasePendingOrder", ReplyAction="http://tempuri.org/IAdminService/ReleasePendingOrderResponse")]
-        Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse ReleasePendingOrder(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetFinancialReport", ReplyAction="http://tempuri.org/IAdminService/GetFinancialReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse GetFinancialReport(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoiceReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoiceReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse GetInvoiceReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetAccountingReport", ReplyAction="http://tempuri.org/IAdminService/GetAccountingReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse GetAccountingReport(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetRegressionReport", ReplyAction="http://tempuri.org/IAdminService/GetRegressionReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse GetRegressionReport(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetPaymentPlanReport", ReplyAction="http://tempuri.org/IAdminService/GetPaymentPlanReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse GetPaymentPlanReport(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoiceJournalReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoiceJournalReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse GetInvoiceJournalReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicePdfLink", ReplyAction="http://tempuri.org/IAdminService/GetInvoicePdfLinkResponse")]
-        Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetInvoicePdfLink(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrderPdfLink", ReplyAction="http://tempuri.org/IAdminService/GetOrderPdfLinkResponse")]
-        Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetOrderPdfLink(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetOrderEvents", ReplyAction="http://tempuri.org/IAdminService/GetOrderEventsResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse GetOrderEvents(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetPendingReasons", ReplyAction="http://tempuri.org/IAdminService/GetPendingReasonsResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse GetPendingReasons(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDate", ReplyAction="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDateResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse GetInvoicesWithChangedDueDate(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/ChangeInvoiceDueDate", ReplyAction="http://tempuri.org/IAdminService/ChangeInvoiceDueDateResponse")]
         Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateResponse ChangeInvoiceDueDate(Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateRequest request);
@@ -13195,47 +13715,14 @@ namespace Webpay.Integration.CSharp.AdminWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CreateApprovedOrder", ReplyAction="http://tempuri.org/IAdminService/CreateApprovedOrderResponse")]
         Webpay.Integration.CSharp.AdminWS.CreateApprovedOrderResponse CreateApprovedOrder(Webpay.Integration.CSharp.AdminWS.CreateApprovedOrderRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelPaymentPlanRows", ReplyAction="http://tempuri.org/IAdminService/CancelPaymentPlanRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse CancelPaymentPlanRows(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelPaymentPlanAmount", ReplyAction="http://tempuri.org/IAdminService/CancelPaymentPlanAmountResponse")]
-        Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse CancelPaymentPlanAmount(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/SearchAccountCredits", ReplyAction="http://tempuri.org/IAdminService/SearchAccountCreditsResponse")]
         Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsResponse SearchAccountCredits(Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetAccountCredits", ReplyAction="http://tempuri.org/IAdminService/GetAccountCreditsResponse")]
         Webpay.Integration.CSharp.AdminWS.GetAccountCreditsResponse GetAccountCredits(Webpay.Integration.CSharp.AdminWS.GetAccountCreditsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelAccountCreditAmount", ReplyAction="http://tempuri.org/IAdminService/CancelAccountCreditAmountResponse")]
-        Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse CancelAccountCreditAmount(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/CancelAccountCreditRows", ReplyAction="http://tempuri.org/IAdminService/CancelAccountCreditRowsResponse")]
-        Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse CancelAccountCreditRows(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetClientId", ReplyAction="http://tempuri.org/IAdminService/GetClientIdResponse")]
         Webpay.Integration.CSharp.AdminWS.GetClientIdResponse GetClientId(Webpay.Integration.CSharp.AdminWS.GetClientIdRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReport", ReplyAction="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse GenerateAccountCreditRegressReport(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25Report", ReplyAction="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25ReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse GenerateAccountingAgreementType25Report(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetSpecificationReport", ReplyAction="http://tempuri.org/IAdminService/GetSpecificationReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse GetSpecificationReport(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetClientsByIdentityAccount", ReplyAction="http://tempuri.org/IAdminService/GetClientsByIdentityAccountResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountResponse GetClientsByIdentityAccount(Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReport", ReplyAction="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse GetInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReport", ReplyAction="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse GetDebtInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdminService/GetKickbackReport", ReplyAction="http://tempuri.org/IAdminService/GetKickbackReportResponse")]
-        Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse GetKickbackReport(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -13265,20 +13752,132 @@ namespace Webpay.Integration.CSharp.AdminWS {
                 base(binding, remoteAddress) {
         }
         
-        public Webpay.Integration.CSharp.AdminWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest request) {
-            return base.Channel.GetOrders(request);
+        public Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse AddOrderRows(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest request) {
+            return base.Channel.AddOrderRows(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse CancelOrderRows(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest request) {
-            return base.Channel.CancelOrderRows(request);
+        public Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse ApproveInvoice(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest request) {
+            return base.Channel.ApproveInvoice(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse CancelAccountCreditAmount(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest request) {
+            return base.Channel.CancelAccountCreditAmount(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse CancelAccountCreditRows(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest request) {
+            return base.Channel.CancelAccountCreditRows(request);
         }
         
         public Webpay.Integration.CSharp.AdminWS.CancelOrderResponse CancelOrder(Webpay.Integration.CSharp.AdminWS.CancelOrderRequest request) {
             return base.Channel.CancelOrder(request);
         }
         
+        public Webpay.Integration.CSharp.AdminWS.CancelOrderRowsResponse CancelOrderRows(Webpay.Integration.CSharp.AdminWS.CancelOrderRowsRequest request) {
+            return base.Channel.CancelOrderRows(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse CancelPaymentPlanAmount(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest request) {
+            return base.Channel.CancelPaymentPlanAmount(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse CancelPaymentPlanRows(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest request) {
+            return base.Channel.CancelPaymentPlanRows(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.DeliveryResponse CreditInvoiceRows(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest request) {
+            return base.Channel.CreditInvoiceRows(request);
+        }
+        
         public Webpay.Integration.CSharp.AdminWS.DeliveryResponse DeliverPartial(Webpay.Integration.CSharp.AdminWS.PartialDeliveryRequest request) {
             return base.Channel.DeliverPartial(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.ExtendOrderResponse ExtendOrder(Webpay.Integration.CSharp.AdminWS.ExtendOrderRequest request) {
+            return base.Channel.ExtendOrder(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse GenerateAccountCreditRegressReport(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest request) {
+            return base.Channel.GenerateAccountCreditRegressReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse GenerateAccountingAgreementType25Report(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest request) {
+            return base.Channel.GenerateAccountingAgreementType25Report(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse GetAccountingReport(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest request) {
+            return base.Channel.GetAccountingReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse GetDebtInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest request) {
+            return base.Channel.GetDebtInvoicesPaidToClientForReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse GetFinancialReport(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest request) {
+            return base.Channel.GetFinancialReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse GetInvoiceJournalReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest request) {
+            return base.Channel.GetInvoiceJournalReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetInvoicePdfLink(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest request) {
+            return base.Channel.GetInvoicePdfLink(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse GetInvoiceReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest request) {
+            return base.Channel.GetInvoiceReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse GetInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest request) {
+            return base.Channel.GetInvoicesPaidToClientForReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse GetInvoicesWithChangedDueDate(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest request) {
+            return base.Channel.GetInvoicesWithChangedDueDate(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse GetKickbackReport(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest request) {
+            return base.Channel.GetKickbackReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse GetOrderEvents(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest request) {
+            return base.Channel.GetOrderEvents(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetOrderPdfLink(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest request) {
+            return base.Channel.GetOrderPdfLink(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse GetPaymentPlanReport(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest request) {
+            return base.Channel.GetPaymentPlanReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse GetPendingReasons(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest request) {
+            return base.Channel.GetPendingReasons(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse GetRegressionReport(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest request) {
+            return base.Channel.GetRegressionReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse GetSpecificationReport(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest request) {
+            return base.Channel.GetSpecificationReport(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse ReleasePendingOrder(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest request) {
+            return base.Channel.ReleasePendingOrder(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse UpdateOrder(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest request) {
+            return base.Channel.UpdateOrder(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse UpdateOrderRows(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest request) {
+            return base.Channel.UpdateOrderRows(request);
+        }
+        
+        public Webpay.Integration.CSharp.AdminWS.GetOrdersResponse GetOrders(Webpay.Integration.CSharp.AdminWS.GetOrdersRequest request) {
+            return base.Channel.GetOrders(request);
         }
         
         public Webpay.Integration.CSharp.AdminWS.DeliveryResponse DeliverOrders(Webpay.Integration.CSharp.AdminWS.DeliveryRequest request) {
@@ -13289,14 +13888,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
             return base.Channel.SearchOrders(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.AddOrderRowsResponse AddOrderRows(Webpay.Integration.CSharp.AdminWS.AddOrderRowsRequest request) {
-            return base.Channel.AddOrderRows(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsResponse UpdateOrderRows(Webpay.Integration.CSharp.AdminWS.UpdateOrderRowsRequest request) {
-            return base.Channel.UpdateOrderRows(request);
-        }
-        
         public Webpay.Integration.CSharp.AdminWS.SearchInvoicesResponse SearchInvoices(Webpay.Integration.CSharp.AdminWS.SearchInvoicesRequest request) {
             return base.Channel.SearchInvoices(request);
         }
@@ -13305,16 +13896,8 @@ namespace Webpay.Integration.CSharp.AdminWS {
             return base.Channel.GetInvoices(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.DeliveryResponse CreditInvoiceRows(Webpay.Integration.CSharp.AdminWS.CreditInvoiceRequest request) {
-            return base.Channel.CreditInvoiceRows(request);
-        }
-        
         public Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansResponse SearchPaymentPlans(Webpay.Integration.CSharp.AdminWS.SearchPaymentPlansRequest request) {
             return base.Channel.SearchPaymentPlans(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.UpdateOrderResponse UpdateOrder(Webpay.Integration.CSharp.AdminWS.UpdateOrderRequest request) {
-            return base.Channel.UpdateOrder(request);
         }
         
         public Webpay.Integration.CSharp.AdminWS.SumOfAmountResponse GetSumOfOrderAmount(Webpay.Integration.CSharp.AdminWS.SumOfOrderAmountRequest request) {
@@ -13329,60 +13912,8 @@ namespace Webpay.Integration.CSharp.AdminWS {
             return base.Channel.GetSumOfPaymentPlanAmount(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.ApproveInvoiceResponse ApproveInvoice(Webpay.Integration.CSharp.AdminWS.ApproveInvoiceRequest request) {
-            return base.Channel.ApproveInvoice(request);
-        }
-        
         public Webpay.Integration.CSharp.AdminWS.CreateOrderResponse CreateOrder(Webpay.Integration.CSharp.AdminWS.CreateOrderRequest request) {
             return base.Channel.CreateOrder(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.ReleasePendingResponse ReleasePendingOrder(Webpay.Integration.CSharp.AdminWS.ReleasePendingRequest request) {
-            return base.Channel.ReleasePendingOrder(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetFinancialReportResponse GetFinancialReport(Webpay.Integration.CSharp.AdminWS.GetFinancialReportRequest request) {
-            return base.Channel.GetFinancialReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetInvoiceReportResponse GetInvoiceReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceReportRequest request) {
-            return base.Channel.GetInvoiceReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetAccountingReportResponse GetAccountingReport(Webpay.Integration.CSharp.AdminWS.GetAccountingReportRequest request) {
-            return base.Channel.GetAccountingReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetRegressionReportResponse GetRegressionReport(Webpay.Integration.CSharp.AdminWS.GetRegressionReportRequest request) {
-            return base.Channel.GetRegressionReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportResponse GetPaymentPlanReport(Webpay.Integration.CSharp.AdminWS.GetPaymentPlanReportRequest request) {
-            return base.Channel.GetPaymentPlanReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportResponse GetInvoiceJournalReport(Webpay.Integration.CSharp.AdminWS.GetInvoiceJournalReportRequest request) {
-            return base.Channel.GetInvoiceJournalReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetInvoicePdfLink(Webpay.Integration.CSharp.AdminWS.GetInvoicePdfLinkRequest request) {
-            return base.Channel.GetInvoicePdfLink(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.PdfLinkResponse GetOrderPdfLink(Webpay.Integration.CSharp.AdminWS.GetOrderPdfLinkRequest request) {
-            return base.Channel.GetOrderPdfLink(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetOrderEventsResponse GetOrderEvents(Webpay.Integration.CSharp.AdminWS.GetOrderEventsRequest request) {
-            return base.Channel.GetOrderEvents(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetPendingReasonsResponse GetPendingReasons(Webpay.Integration.CSharp.AdminWS.GetPendingReasonsRequest request) {
-            return base.Channel.GetPendingReasons(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateResponse GetInvoicesWithChangedDueDate(Webpay.Integration.CSharp.AdminWS.GetInvoicesWithChangedDueDateRequest request) {
-            return base.Channel.GetInvoicesWithChangedDueDate(request);
         }
         
         public Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateResponse ChangeInvoiceDueDate(Webpay.Integration.CSharp.AdminWS.ChangeInvoiceDueDateRequest request) {
@@ -13393,14 +13924,6 @@ namespace Webpay.Integration.CSharp.AdminWS {
             return base.Channel.CreateApprovedOrder(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsResponse CancelPaymentPlanRows(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanRowsRequest request) {
-            return base.Channel.CancelPaymentPlanRows(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountResponse CancelPaymentPlanAmount(Webpay.Integration.CSharp.AdminWS.CancelPaymentPlanAmountRequest request) {
-            return base.Channel.CancelPaymentPlanAmount(request);
-        }
-        
         public Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsResponse SearchAccountCredits(Webpay.Integration.CSharp.AdminWS.SearchAccountCreditsRequest request) {
             return base.Channel.SearchAccountCredits(request);
         }
@@ -13409,44 +13932,8 @@ namespace Webpay.Integration.CSharp.AdminWS {
             return base.Channel.GetAccountCredits(request);
         }
         
-        public Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountResponse CancelAccountCreditAmount(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditAmountRequest request) {
-            return base.Channel.CancelAccountCreditAmount(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsResponse CancelAccountCreditRows(Webpay.Integration.CSharp.AdminWS.CancelAccountCreditRowsRequest request) {
-            return base.Channel.CancelAccountCreditRows(request);
-        }
-        
         public Webpay.Integration.CSharp.AdminWS.GetClientIdResponse GetClientId(Webpay.Integration.CSharp.AdminWS.GetClientIdRequest request) {
             return base.Channel.GetClientId(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportResponse GenerateAccountCreditRegressReport(Webpay.Integration.CSharp.AdminWS.AccountCreditRegressReportRequest request) {
-            return base.Channel.GenerateAccountCreditRegressReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportResponse GenerateAccountingAgreementType25Report(Webpay.Integration.CSharp.AdminWS.AccountingAgreementType25ReportRequest request) {
-            return base.Channel.GenerateAccountingAgreementType25Report(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetSpecificationReportResponse GetSpecificationReport(Webpay.Integration.CSharp.AdminWS.GetSpecificationReportRequest request) {
-            return base.Channel.GetSpecificationReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountResponse GetClientsByIdentityAccount(Webpay.Integration.CSharp.AdminWS.GetClientsByIdentityAccountRequest request) {
-            return base.Channel.GetClientsByIdentityAccount(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportResponse GetInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetInvoicesPaidToClientForReportRequest request) {
-            return base.Channel.GetInvoicesPaidToClientForReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportResponse GetDebtInvoicesPaidToClientForReport(Webpay.Integration.CSharp.AdminWS.GetDebtInvoicesPaidToClientForReportRequest request) {
-            return base.Channel.GetDebtInvoicesPaidToClientForReport(request);
-        }
-        
-        public Webpay.Integration.CSharp.AdminWS.GetKickbackReportResponse GetKickbackReport(Webpay.Integration.CSharp.AdminWS.GetKickbackReportRequest request) {
-            return base.Channel.GetKickbackReport(request);
         }
     }
 }

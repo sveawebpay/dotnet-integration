@@ -3678,7 +3678,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         CustomerCreditNoSuchEntity,
         
         /// <remarks/>
-        InvalidCampainCodeAmountCombination,
+        InvalidCampaignCodeAmountCombination,
     }
     
     /// <remarks/>
@@ -4167,7 +4167,7 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         Accepted,
         
         /// <remarks/>
-        CusomterCreditRejected,
+        CustomerCreditRejected,
         
         /// <remarks/>
         CustomerOverCreditLimit,
@@ -4429,6 +4429,9 @@ namespace Webpay.Integration.CSharp.WebpayWS {
         
         /// <remarks/>
         GiftCard,
+        
+        /// <remarks/>
+        InvoiceFee,
     }
     
     /// <remarks/>

@@ -6,6 +6,7 @@
       <xs:enumeration value="Default" />
       <xs:enumeration value="AdjustmentRow" />
       <xs:enumeration value="GiftCard" />
+      <xs:enumeration value="InvoiceFee" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="RowType" nillable="true" type="tns:RowType" />
@@ -46,7 +47,27 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="ClientProvided">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="AddressSource" nillable="true" type="tns:AddressSource" />
+  <xs:simpleType name="BillingReferenceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Undefined" />
+      <xs:enumeration value="Purchase" />
+      <xs:enumeration value="ContactPerson" />
+      <xs:enumeration value="InvoiceReference" />
+      <xs:enumeration value="CostCenter" />
+      <xs:enumeration value="InvoiceRecipient" />
+      <xs:enumeration value="LetterNumber" />
+      <xs:enumeration value="AccountingNumber" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BillingReferenceType" nillable="true" type="tns:BillingReferenceType" />
 </xs:schema>

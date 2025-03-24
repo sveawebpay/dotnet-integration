@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" />
+  <xs:complexType name="CancelAccountCreditAmountRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q1:BasicRequest">
+        <xs:sequence>
+          <xs:element name="AmountIncVat" type="xs:decimal" />
+          <xs:element name="ClientAccountCreditId" type="xs:long" />
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="Description" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelAccountCreditAmountRequest" nillable="true" type="tns:CancelAccountCreditAmountRequest" />
+  <xs:complexType name="CancelAccountCreditRowsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q2:BasicRequest">
+        <xs:sequence>
+          <xs:element name="CancellationRows" nillable="true" type="q2:ArrayOfCancellationRow" />
+          <xs:element name="ClientAccountCreditId" type="xs:long" />
+          <xs:element name="ClientId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelAccountCreditRowsRequest" nillable="true" type="tns:CancelAccountCreditRowsRequest" />
+  <xs:complexType name="AccountCreditRegressReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q3:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ReportName" nillable="true" type="xs:string" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountCreditRegressReportRequest" nillable="true" type="tns:AccountCreditRegressReportRequest" />
+  <xs:complexType name="AccountingAgreementType25ReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q4:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountingAgreementType25ReportRequest" nillable="true" type="tns:AccountingAgreementType25ReportRequest" />
+  <xs:complexType name="GetDebtInvoicesPaidToClientForReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q5:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetDebtInvoicesPaidToClientForReportRequest" nillable="true" type="tns:GetDebtInvoicesPaidToClientForReportRequest" />
+  <xs:complexType name="GetInvoicesPaidToClientForReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q6:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoicesPaidToClientForReportRequest" nillable="true" type="tns:GetInvoicesPaidToClientForReportRequest" />
+  <xs:complexType name="GetKickbackReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q7:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="RunDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetKickbackReportRequest" nillable="true" type="tns:GetKickbackReportRequest" />
+  <xs:complexType name="GetPendingReasonsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q8:BasicRequest">
+        <xs:sequence>
+          <xs:element name="ClientId" type="xs:long" />
+          <xs:element name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetPendingReasonsRequest" nillable="true" type="tns:GetPendingReasonsRequest" />
+  <xs:complexType name="GetSpecificationReportRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q9:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" type="xs:long" />
+          <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ReportType" type="q9:SpecificationReportType" />
+          <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSpecificationReportRequest" nillable="true" type="tns:GetSpecificationReportRequest" />
+  <xs:complexType name="GetSpecificationReportResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q10="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q10:BasicResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Rows" nillable="true" type="q10:ArrayOfSpecificationRow" />
+          <xs:element minOccurs="0" name="Summation" nillable="true" type="q10:SpecificationSummation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSpecificationReportResponse" nillable="true" type="tns:GetSpecificationReportResponse" />
+  <xs:complexType name="GetClientIdRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q11="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" base="q11:BasicRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SveaOrderId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientIdRequest" nillable="true" type="tns:GetClientIdRequest" />
+</xs:schema>

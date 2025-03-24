@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Order;
-using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
 using Webpay.Integration.CSharp.Util.Calculation;
 using Webpay.Integration.CSharp.WebpayWS;
@@ -430,7 +428,8 @@ namespace Webpay.Integration.CSharp.Webservice.Helper
                     PricePerUnit = MathUtil.BankersRound(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
                     DiscountPercent = row.GetDiscountPercent(),
                     Unit = row.GetUnit(),
-                    VatPercent = row.GetVatPercent().GetValueOrDefault()
+                    VatPercent = row.GetVatPercent().GetValueOrDefault(),
+                    RowType = RowType.InvoiceFee
                 };
                 return wsRow;
             });

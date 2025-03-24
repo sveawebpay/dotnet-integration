@@ -1,4 +1,6 @@
-﻿namespace Webpay.Integration.Order.Row;
+﻿using Webpay.Integration.Util.Constant;
+
+namespace Webpay.Integration.Order.Row;
 
 public class InvoiceFeeBuilder : IRowBuilder, IPriced<InvoiceFeeBuilder>
 {
@@ -76,8 +78,7 @@ public class InvoiceFeeBuilder : IRowBuilder, IPriced<InvoiceFeeBuilder>
 
     public string GetArticleNumber()
     {
-        //Invoice fees have no article number
-        return "";
+        return OrderRowTypeConstants.InvoiceFeeArticleNumber;
     }
 
     /// <summary>

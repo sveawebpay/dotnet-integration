@@ -3110,6 +3110,9 @@ namespace AdminWS
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         GiftCard = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvoiceFee = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -12192,7 +12195,7 @@ namespace AdminWS
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name '{0}'.", endpointConfiguration));
         }
-
+        
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
             if ((endpointConfiguration == EndpointConfiguration.WcfAdminSoapService))

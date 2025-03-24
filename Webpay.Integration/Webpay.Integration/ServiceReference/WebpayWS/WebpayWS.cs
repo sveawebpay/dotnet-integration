@@ -4622,6 +4622,9 @@ namespace WebpayWS
         
         /// <remarks/>
         GiftCard,
+        
+        /// <remarks/>
+        InvoiceFee,
     }
     
     /// <remarks/>

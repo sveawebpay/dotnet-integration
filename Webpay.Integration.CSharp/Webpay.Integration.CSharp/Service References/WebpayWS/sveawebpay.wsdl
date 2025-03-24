@@ -94,7 +94,7 @@
         <s:restriction base="s:string">
           <s:enumeration value="Error" />
           <s:enumeration value="Accepted" />
-          <s:enumeration value="CusomterCreditRejected" />
+          <s:enumeration value="CustomerCreditRejected" />
           <s:enumeration value="CustomerOverCreditLimit" />
           <s:enumeration value="CustomerAbuseBlock" />
           <s:enumeration value="OrderExpired" />
@@ -490,7 +490,7 @@
           <s:enumeration value="OverOrderLimit" />
           <s:enumeration value="CustomerSveaRejected" />
           <s:enumeration value="CustomerCreditNoSuchEntity" />
-          <s:enumeration value="InvalidCampainCodeAmountCombination" />
+          <s:enumeration value="InvalidCampaignCodeAmountCombination" />
         </s:restriction>
       </s:simpleType>
       <s:element name="GetPaymentPlanStatus">
@@ -1019,6 +1019,7 @@
           <s:enumeration value="Default" />
           <s:enumeration value="AdjustmentRow" />
           <s:enumeration value="GiftCard" />
+          <s:enumeration value="InvoiceFee" />
         </s:restriction>
       </s:simpleType>
       <s:complexType name="CustomerIdentity">

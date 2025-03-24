@@ -413,7 +413,8 @@ public class WebServiceRowFormatter<T>
                 PricePerUnit = MathUtil.BankersRound(order.AllPricesAreSpecifiedIncVat ? row.GetAmountIncVat().GetValueOrDefault() : row.GetAmountExVat().GetValueOrDefault()),
                 DiscountPercent = row.GetDiscountPercent(),
                 Unit = row.GetUnit(),
-                VatPercent = row.GetVatPercent().GetValueOrDefault()
+                VatPercent = row.GetVatPercent().GetValueOrDefault(),
+                RowType = RowType.InvoiceFee
             };
             return wsRow;
         });

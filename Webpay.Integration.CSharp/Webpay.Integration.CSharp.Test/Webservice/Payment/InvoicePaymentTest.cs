@@ -220,7 +220,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
             Assert.That(request.CreateOrderInformation.OrderRows[1].DiscountPercent, Is.EqualTo(0));
 
-            Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(""));
+            Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(OrderRowTypeConstants.InvoiceFeeArticleNumber));
             Assert.That(request.CreateOrderInformation.OrderRows[2].Description, Is.EqualTo("Svea fee: Fee for invoice"));
             Assert.That(request.CreateOrderInformation.OrderRows[2].PricePerUnit, Is.EqualTo(50));
             Assert.That(request.CreateOrderInformation.OrderRows[2].NumberOfUnits, Is.EqualTo(1));
@@ -423,7 +423,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.That(orderRow2.PriceIncludingVat, Is.True);
 
             var orderRow3 = request.CreateOrderInformation.OrderRows[2];
-            Assert.That(orderRow3.ArticleNumber, Is.EqualTo(""));
+            Assert.That(orderRow3.ArticleNumber, Is.EqualTo(OrderRowTypeConstants.InvoiceFeeArticleNumber));
             Assert.That(orderRow3.Description, Is.EqualTo("Svea fee: Fee for invoice"));
             Assert.That(orderRow3.PricePerUnit, Is.EqualTo(62.50M));
             Assert.That(orderRow3.NumberOfUnits, Is.EqualTo(1));
@@ -464,7 +464,7 @@ namespace Webpay.Integration.CSharp.Test.Webservice.Payment
             Assert.That(request.CreateOrderInformation.OrderRows[1].VatPercent, Is.EqualTo(25));
             Assert.That(request.CreateOrderInformation.OrderRows[1].DiscountPercent, Is.EqualTo(0));
 
-            Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(""));
+            Assert.That(request.CreateOrderInformation.OrderRows[2].ArticleNumber, Is.EqualTo(OrderRowTypeConstants.InvoiceFeeArticleNumber));
             Assert.That(request.CreateOrderInformation.OrderRows[2].Description, Is.EqualTo("Svea fee: Fee for invoice"));
             Assert.That(request.CreateOrderInformation.OrderRows[2].PricePerUnit, Is.EqualTo(62.5M));
             Assert.That(request.CreateOrderInformation.OrderRows[2].NumberOfUnits, Is.EqualTo(1));

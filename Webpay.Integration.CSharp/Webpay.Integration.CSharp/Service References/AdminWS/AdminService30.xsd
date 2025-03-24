@@ -8,6 +8,7 @@
   <xs:element name="ArrayOfInvoicePaidToClientRow" nillable="true" type="tns:ArrayOfInvoicePaidToClientRow" />
   <xs:complexType name="InvoicePaidToClientRow">
     <xs:sequence>
+      <xs:element minOccurs="0" name="AdjustmentAmount" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="AdministrationFee" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
       <xs:element minOccurs="0" name="CheckoutOrderId" nillable="true" type="xs:long" />

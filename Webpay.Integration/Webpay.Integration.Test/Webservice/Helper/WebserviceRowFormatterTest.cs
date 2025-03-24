@@ -4,6 +4,7 @@ using Webpay.Integration.Order.Row;
 using Webpay.Integration.Util.Testing;
 using WebpayWS;
 using Webpay.Integration.Webservice.Helper;
+using Webpay.Integration.Util.Constant;
 
 namespace Webpay.Integration.Test.Webservice.Helper;
 
@@ -84,7 +85,7 @@ public class WebserviceRowFormatterTest
 
         var newRows = new WebServiceRowFormatter<CreateOrderBuilder>(order).FormatRows();
 
-        Assert.That(newRows[0].ArticleNumber, Is.Empty);
+        Assert.That(newRows[0].ArticleNumber, Is.EqualTo(OrderRowTypeConstants.InvoiceFeeArticleNumber));
         Assert.That(newRows[0].Description, Is.EqualTo("Tester"));
         Assert.That(newRows[0].PricePerUnit, Is.EqualTo(5.0));
         Assert.That(newRows[0].VatPercent, Is.EqualTo(25.0));
@@ -92,6 +93,7 @@ public class WebserviceRowFormatterTest
         Assert.That(newRows[0].DiscountPercent, Is.EqualTo(0));
         Assert.That(newRows[0].NumberOfUnits, Is.EqualTo(1));
         Assert.That(newRows[0].Unit, Is.EqualTo("st"));
+        Assert.That(newRows[0].RowType, Is.EqualTo(RowType.InvoiceFee));
     }
 
     [Test]

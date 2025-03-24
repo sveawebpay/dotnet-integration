@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="AdminService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WcfAdminSoapService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Internal.Service.Types" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Order" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Invoice" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.PaymentPlan" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder" />
+      <xsd:import schemaLocation="http://webpayadminservice.svea.com/AdminService.svc?xsd=xsd15" namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.AccountCredit" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAdminService_AddOrderRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrderRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddOrderRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrderRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ApproveInvoice_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveInvoice" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ApproveInvoice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelAccountCreditAmount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAccountCreditAmount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelAccountCreditAmount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAccountCreditAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelAccountCreditRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAccountCreditRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelAccountCreditRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAccountCreditRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelOrderRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrderRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelOrderRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrderRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelPaymentPlanAmount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlanAmount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelPaymentPlanAmount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlanAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelPaymentPlanRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlanRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CancelPaymentPlanRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelPaymentPlanRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreditInvoiceRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreditInvoiceRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreditInvoiceRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreditInvoiceRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeliverPartial_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverPartial" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeliverPartial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverPartialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ExtendOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExtendOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ExtendOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExtendOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GenerateAccountCreditRegressReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAccountCreditRegressReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GenerateAccountCreditRegressReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAccountCreditRegressReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GenerateAccountingAgreementType25Report_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAccountingAgreementType25Report" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GenerateAccountingAgreementType25Report_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAccountingAgreementType25ReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetAccountingReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountingReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetAccountingReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountingReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetDebtInvoicesPaidToClientForReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDebtInvoicesPaidToClientForReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetDebtInvoicesPaidToClientForReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDebtInvoicesPaidToClientForReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetFinancialReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinancialReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetFinancialReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinancialReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoiceJournalReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoiceJournalReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoiceJournalReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoiceJournalReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicePdfLink_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicePdfLink" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicePdfLink_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicePdfLinkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoiceReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoiceReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoiceReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoiceReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicesPaidToClientForReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicesPaidToClientForReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicesPaidToClientForReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicesPaidToClientForReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicesWithChangedDueDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicesWithChangedDueDate" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoicesWithChangedDueDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicesWithChangedDueDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetKickbackReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetKickbackReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetKickbackReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetKickbackReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrderEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderEvents" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrderEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrderPdfLink_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderPdfLink" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrderPdfLink_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderPdfLinkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetPaymentPlanReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetPaymentPlanReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentPlanReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetPendingReasons_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPendingReasons" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetPendingReasons_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPendingReasonsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetRegressionReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegressionReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetRegressionReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegressionReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSpecificationReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSpecificationReport" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSpecificationReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSpecificationReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ReleasePendingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReleasePendingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ReleasePendingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReleasePendingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateOrderRows_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderRows" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UpdateOrderRows_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrders" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeliverOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverOrders" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_DeliverOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchOrders" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchInvoices_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchInvoices" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchInvoices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchInvoicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoices_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoices" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetInvoices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvoicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchPaymentPlans_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchPaymentPlans" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchPaymentPlans_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchPaymentPlansResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfOrderAmount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfOrderAmount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfOrderAmount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfOrderAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfInvoiceAmount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfInvoiceAmount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfInvoiceAmount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfInvoiceAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfPaymentPlanAmount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfPaymentPlanAmount" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetSumOfPaymentPlanAmount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumOfPaymentPlanAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ChangeInvoiceDueDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeInvoiceDueDate" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_ChangeInvoiceDueDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeInvoiceDueDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreateApprovedOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateApprovedOrder" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CreateApprovedOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateApprovedOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchAccountCredits_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchAccountCredits" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_SearchAccountCredits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchAccountCreditsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetAccountCredits_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountCredits" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetAccountCredits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountCreditsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetClientId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientId" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetClientId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientIdResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAdminService">
+    <wsdl:operation name="AddOrderRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/AddOrderRows" message="tns:IAdminService_AddOrderRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/AddOrderRowsResponse" message="tns:IAdminService_AddOrderRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveInvoice">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/ApproveInvoice" message="tns:IAdminService_ApproveInvoice_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/ApproveInvoiceResponse" message="tns:IAdminService_ApproveInvoice_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditAmount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelAccountCreditAmount" message="tns:IAdminService_CancelAccountCreditAmount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelAccountCreditAmountResponse" message="tns:IAdminService_CancelAccountCreditAmount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelAccountCreditRows" message="tns:IAdminService_CancelAccountCreditRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelAccountCreditRowsResponse" message="tns:IAdminService_CancelAccountCreditRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelOrder" message="tns:IAdminService_CancelOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelOrderResponse" message="tns:IAdminService_CancelOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrderRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelOrderRows" message="tns:IAdminService_CancelOrderRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelOrderRowsResponse" message="tns:IAdminService_CancelOrderRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanAmount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelPaymentPlanAmount" message="tns:IAdminService_CancelPaymentPlanAmount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelPaymentPlanAmountResponse" message="tns:IAdminService_CancelPaymentPlanAmount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CancelPaymentPlanRows" message="tns:IAdminService_CancelPaymentPlanRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CancelPaymentPlanRowsResponse" message="tns:IAdminService_CancelPaymentPlanRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreditInvoiceRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CreditInvoiceRows" message="tns:IAdminService_CreditInvoiceRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CreditInvoiceRowsResponse" message="tns:IAdminService_CreditInvoiceRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeliverPartial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/DeliverPartial" message="tns:IAdminService_DeliverPartial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/DeliverPartialResponse" message="tns:IAdminService_DeliverPartial_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExtendOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/ExtendOrder" message="tns:IAdminService_ExtendOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/ExtendOrderResponse" message="tns:IAdminService_ExtendOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountCreditRegressReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReport" message="tns:IAdminService_GenerateAccountCreditRegressReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReportResponse" message="tns:IAdminService_GenerateAccountCreditRegressReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountingAgreementType25Report">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25Report" message="tns:IAdminService_GenerateAccountingAgreementType25Report_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25ReportResponse" message="tns:IAdminService_GenerateAccountingAgreementType25Report_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountingReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetAccountingReport" message="tns:IAdminService_GetAccountingReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetAccountingReportResponse" message="tns:IAdminService_GetAccountingReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDebtInvoicesPaidToClientForReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReport" message="tns:IAdminService_GetDebtInvoicesPaidToClientForReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReportResponse" message="tns:IAdminService_GetDebtInvoicesPaidToClientForReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFinancialReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetFinancialReport" message="tns:IAdminService_GetFinancialReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetFinancialReportResponse" message="tns:IAdminService_GetFinancialReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceJournalReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoiceJournalReport" message="tns:IAdminService_GetInvoiceJournalReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoiceJournalReportResponse" message="tns:IAdminService_GetInvoiceJournalReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicePdfLink">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoicePdfLink" message="tns:IAdminService_GetInvoicePdfLink_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoicePdfLinkResponse" message="tns:IAdminService_GetInvoicePdfLink_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoiceReport" message="tns:IAdminService_GetInvoiceReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoiceReportResponse" message="tns:IAdminService_GetInvoiceReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesPaidToClientForReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReport" message="tns:IAdminService_GetInvoicesPaidToClientForReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReportResponse" message="tns:IAdminService_GetInvoicesPaidToClientForReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesWithChangedDueDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDate" message="tns:IAdminService_GetInvoicesWithChangedDueDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDateResponse" message="tns:IAdminService_GetInvoicesWithChangedDueDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetKickbackReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetKickbackReport" message="tns:IAdminService_GetKickbackReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetKickbackReportResponse" message="tns:IAdminService_GetKickbackReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetOrderEvents" message="tns:IAdminService_GetOrderEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetOrderEventsResponse" message="tns:IAdminService_GetOrderEvents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderPdfLink">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetOrderPdfLink" message="tns:IAdminService_GetOrderPdfLink_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetOrderPdfLinkResponse" message="tns:IAdminService_GetOrderPdfLink_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetPaymentPlanReport" message="tns:IAdminService_GetPaymentPlanReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetPaymentPlanReportResponse" message="tns:IAdminService_GetPaymentPlanReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPendingReasons">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetPendingReasons" message="tns:IAdminService_GetPendingReasons_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetPendingReasonsResponse" message="tns:IAdminService_GetPendingReasons_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRegressionReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetRegressionReport" message="tns:IAdminService_GetRegressionReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetRegressionReportResponse" message="tns:IAdminService_GetRegressionReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificationReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetSpecificationReport" message="tns:IAdminService_GetSpecificationReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetSpecificationReportResponse" message="tns:IAdminService_GetSpecificationReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleasePendingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/ReleasePendingOrder" message="tns:IAdminService_ReleasePendingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/ReleasePendingOrderResponse" message="tns:IAdminService_ReleasePendingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateOrder" message="tns:IAdminService_UpdateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateOrderResponse" message="tns:IAdminService_UpdateOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderRows">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UpdateOrderRows" message="tns:IAdminService_UpdateOrderRows_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UpdateOrderRowsResponse" message="tns:IAdminService_UpdateOrderRows_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetOrders" message="tns:IAdminService_GetOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetOrdersResponse" message="tns:IAdminService_GetOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/DeliverOrders" message="tns:IAdminService_DeliverOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/DeliverOrdersResponse" message="tns:IAdminService_DeliverOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/SearchOrders" message="tns:IAdminService_SearchOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/SearchOrdersResponse" message="tns:IAdminService_SearchOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvoices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/SearchInvoices" message="tns:IAdminService_SearchInvoices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/SearchInvoicesResponse" message="tns:IAdminService_SearchInvoices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetInvoices" message="tns:IAdminService_GetInvoices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetInvoicesResponse" message="tns:IAdminService_GetInvoices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchPaymentPlans">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/SearchPaymentPlans" message="tns:IAdminService_SearchPaymentPlans_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/SearchPaymentPlansResponse" message="tns:IAdminService_SearchPaymentPlans_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfOrderAmount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetSumOfOrderAmount" message="tns:IAdminService_GetSumOfOrderAmount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetSumOfOrderAmountResponse" message="tns:IAdminService_GetSumOfOrderAmount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfInvoiceAmount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetSumOfInvoiceAmount" message="tns:IAdminService_GetSumOfInvoiceAmount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetSumOfInvoiceAmountResponse" message="tns:IAdminService_GetSumOfInvoiceAmount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfPaymentPlanAmount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmount" message="tns:IAdminService_GetSumOfPaymentPlanAmount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmountResponse" message="tns:IAdminService_GetSumOfPaymentPlanAmount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CreateOrder" message="tns:IAdminService_CreateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CreateOrderResponse" message="tns:IAdminService_CreateOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeInvoiceDueDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/ChangeInvoiceDueDate" message="tns:IAdminService_ChangeInvoiceDueDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/ChangeInvoiceDueDateResponse" message="tns:IAdminService_ChangeInvoiceDueDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateApprovedOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CreateApprovedOrder" message="tns:IAdminService_CreateApprovedOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CreateApprovedOrderResponse" message="tns:IAdminService_CreateApprovedOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchAccountCredits">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/SearchAccountCredits" message="tns:IAdminService_SearchAccountCredits_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/SearchAccountCreditsResponse" message="tns:IAdminService_SearchAccountCredits_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountCredits">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetAccountCredits" message="tns:IAdminService_GetAccountCredits_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetAccountCreditsResponse" message="tns:IAdminService_GetAccountCredits_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetClientId" message="tns:IAdminService_GetClientId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetClientIdResponse" message="tns:IAdminService_GetClientId_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WcfAdminSoapService" type="tns:IAdminService">
+    <wsp:PolicyReference URI="#WcfAdminSoapService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddOrderRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/AddOrderRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveInvoice">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/ApproveInvoice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditAmount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelAccountCreditAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelAccountCreditRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrderRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelOrderRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanAmount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelPaymentPlanAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CancelPaymentPlanRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInvoiceRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CreditInvoiceRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverPartial">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/DeliverPartial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExtendOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/ExtendOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountCreditRegressReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountingAgreementType25Report">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25Report" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountingReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetAccountingReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDebtInvoicesPaidToClientForReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFinancialReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetFinancialReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceJournalReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoiceJournalReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicePdfLink">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoicePdfLink" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoiceReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesPaidToClientForReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesWithChangedDueDate">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetKickbackReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetKickbackReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderEvents">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetOrderEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderPdfLink">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetOrderPdfLink" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetPaymentPlanReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPendingReasons">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetPendingReasons" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegressionReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetRegressionReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificationReport">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetSpecificationReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleasePendingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/ReleasePendingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderRows">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/UpdateOrderRows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrders">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/DeliverOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchOrders">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/SearchOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvoices">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/SearchInvoices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoices">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetInvoices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPaymentPlans">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/SearchPaymentPlans" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfOrderAmount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetSumOfOrderAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfInvoiceAmount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetSumOfInvoiceAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfPaymentPlanAmount">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeInvoiceDueDate">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/ChangeInvoiceDueDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateApprovedOrder">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/CreateApprovedOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAccountCredits">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/SearchAccountCredits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountCredits">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetAccountCredits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientId">
+      <soap12:operation soapAction="http://tempuri.org/IAdminService/GetClientId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AdminSoapService" type="tns:IAdminService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddOrderRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/AddOrderRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveInvoice">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/ApproveInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditAmount">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelAccountCreditAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelAccountCreditRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelAccountCreditRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrderRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelOrderRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanAmount">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelPaymentPlanAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPaymentPlanRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CancelPaymentPlanRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInvoiceRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CreditInvoiceRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverPartial">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/DeliverPartial" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExtendOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/ExtendOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountCreditRegressReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GenerateAccountCreditRegressReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAccountingAgreementType25Report">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GenerateAccountingAgreementType25Report" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountingReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetAccountingReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDebtInvoicesPaidToClientForReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetDebtInvoicesPaidToClientForReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFinancialReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetFinancialReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceJournalReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoiceJournalReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicePdfLink">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoicePdfLink" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoiceReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesPaidToClientForReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoicesPaidToClientForReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoicesWithChangedDueDate">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoicesWithChangedDueDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetKickbackReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetKickbackReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderEvents">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetOrderEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderPdfLink">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetOrderPdfLink" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentPlanReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetPaymentPlanReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPendingReasons">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetPendingReasons" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegressionReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetRegressionReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpecificationReport">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetSpecificationReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleasePendingOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/ReleasePendingOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/UpdateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderRows">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/UpdateOrderRows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeliverOrders">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/DeliverOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchOrders">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/SearchOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvoices">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/SearchInvoices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoices">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetInvoices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPaymentPlans">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/SearchPaymentPlans" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfOrderAmount">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetSumOfOrderAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfInvoiceAmount">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetSumOfInvoiceAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumOfPaymentPlanAmount">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetSumOfPaymentPlanAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeInvoiceDueDate">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/ChangeInvoiceDueDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateApprovedOrder">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CreateApprovedOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAccountCredits">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/SearchAccountCredits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountCredits">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetAccountCredits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientId">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetClientId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdminService">
+    <wsdl:port name="WcfAdminSoapService" binding="tns:WcfAdminSoapService">
+      <soap12:address location="http://webpayadminservice.svea.com/AdminService.svc/secure" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://webpayadminservice.svea.com/AdminService.svc/secure</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="AdminSoapService" binding="tns:AdminSoapService">
+      <soap:address location="http://webpayadminservice.svea.com/AdminService.svc/backward" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

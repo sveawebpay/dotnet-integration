@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-
+using System.Text.Json;
 
 namespace Sample.AspNetCore.Extensions;
-
-using System.Text.Json;
 
 public static class SessionExtensions
 {
@@ -14,7 +12,6 @@ public static class SessionExtensions
             ? default
             : JsonSerializer.Deserialize<T>(sessionData);
     }
-
 
     public static void SetJson(this ISession session, string key, object value)
     {

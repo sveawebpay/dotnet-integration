@@ -144,6 +144,7 @@ public class CheckOutController : Controller
             .SetOrderDate(DateTime.Now)
             .SetClientOrderNumber(clientOrderNumber)
             .SetCorrelationId(correlationId)
+            .AddNavigationUrls("https://localhost:44345/CheckOut/Thankyou", "https://svea.com/reject") // TODO: only do this if using bankid. Also maybe set localhost uri dynamically?
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
         if (isCompany)
@@ -224,6 +225,11 @@ public class CheckOutController : Controller
             });
 
             await _context.SaveChangesAsync(true);
+
+            if (!string.IsNullOrEmpty(order.NavigationResult.RedirectUrl))
+            {
+                return Redirect(order.NavigationResult.RedirectUrl);
+            }
             return RedirectToAction("Thankyou");
         }
         else

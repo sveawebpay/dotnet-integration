@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Sample.AspNetCore.Data;
 using Sample.AspNetCore.Extensions;
 using Sample.AspNetCore.Models;
@@ -17,18 +18,22 @@ namespace Sample.AspNetCore.Controllers;
 
 public class CheckOutController : Controller
 {
+   private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly Cart _cartService;
     private readonly Market _marketService;
     private readonly StoreDbContext _context;
     private static readonly WebpayConfig Config = new WebpayConfig();
     private static int SelectedAddressIndex { get; set; }
     private static bool IsTestCustomersVisible { get; set; }
+    private static bool UseBankID { get; set; } = false;
 
     public CheckOutController(
+        IHttpContextAccessor httpContextAccessor,
         Cart cartService,
         Market marketService,
         StoreDbContext context)
     {
+        _httpContextAccessor = httpContextAccessor;
         _cartService = cartService;
         _marketService = marketService;
         _context = context;
@@ -36,6 +41,8 @@ public class CheckOutController : Controller
 
     public async Task<IActionResult> LoadPaymentMenu(bool requireBankId, bool isInternational)
     {
+        TempData["UseBankID"] = false;
+        UseBankID = false;
         return View("Checkout");
     }
 
@@ -146,6 +153,16 @@ public class CheckOutController : Controller
             .SetCorrelationId(correlationId)
             .SetCurrency(TestingTool.DefaultTestCurrency);
 
+        if (UseBankID)
+        {
+            var request = _httpContextAccessor.HttpContext.Request;
+            var baseUrl = $"{request.Scheme}://{request.Host}";
+            var thankYouUrl = $"{baseUrl}/CheckOut/Thankyou";
+            var rejectUrl = $"{baseUrl}/CheckOut/LoadPaymentMenu";
+
+            createOrderBuilder.AddNavigationUrls(thankYouUrl, rejectUrl);
+        }
+
         if (isCompany)
         {
             var companyCustomer = TestingTool.ConfigureCompanyCustomer(customerAddressData, ipAddress, PhoneNumber, EmailAddress);
@@ -224,6 +241,11 @@ public class CheckOutController : Controller
             });
 
             await _context.SaveChangesAsync(true);
+
+            if (UseBankID && !string.IsNullOrEmpty(order?.NavigationResult.RedirectUrl))
+            {
+                return Redirect(order.NavigationResult.RedirectUrl);
+            }
             return RedirectToAction("Thankyou");
         }
         else
@@ -307,6 +329,14 @@ public class CheckOutController : Controller
     public async Task<IActionResult> SaveSelectedAddress(int selectedAddressIndex)
     {
         SelectedAddressIndex = selectedAddressIndex;
+        return NoContent();
+    }
+
+    [HttpPost]
+    public IActionResult UpdateUseBankID(bool useBankIDInput)
+    {
+        UseBankID = useBankIDInput;
+        TempData["UseBankID"] = useBankIDInput.ToString();
         return NoContent();
     }
 

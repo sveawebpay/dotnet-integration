@@ -76,6 +76,17 @@
 </table>
 <div class="text-center">
     <for-row>
+
+        <a 
+            class="btn btn-primary" 
+            automation="button-checkout" 
+            asp-action="LoadPaymentMenu" 
+            asp-controller="CheckOut">
+            Checkout
+        </a>
+
+        <!-- Hide for now -->
+        <!--
         <a 
             class="btn btn-primary" 
             automation="button-checkout-require" 
@@ -87,8 +98,8 @@
             Checkout (Require BankId)
         </a>
         @if (!Model.IsInternational)
-    {
-        <a 
+        {
+            <a 
                 class="btn btn-primary" 
                 automation="button-checkout" 
                 asp-action="LoadPaymentMenu" 
@@ -98,10 +109,7 @@
                 asp-controller="CheckOut">
                 Checkout
             </a>
-    }
-
-        <!-- Hide for now -->
-        <!--
+        }
         <a 
             class="btn btn-primary" 
             automation="button-checkout-international" 

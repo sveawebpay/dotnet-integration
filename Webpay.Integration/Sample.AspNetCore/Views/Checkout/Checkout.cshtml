@@ -13,6 +13,7 @@
         new { Result = "Limit", PersonOrOrgNr = "4506172222", CustomerType = "Company", Description = "Credit limit reached." }
     };
     var isVisible = TempData["IsTestCustomersVisible"] == null ? true : TempData["IsTestCustomersVisible"].ToString()?.ToLower() == "true";
+    var useBankID = TempData["UseBankID"] != null ? Convert.ToBoolean(TempData["UseBankID"]) : false;
 }
 
 <div class="container mt-4">
@@ -41,6 +42,16 @@
                 }
             </ul>
         </div>
+    </div>
+
+    <div class="use-bankid-container" style="margin-top: 20px; margin-bottom: 20px;">
+        <form id="toggleBankIDForm" method="post" action="/CheckOut/UpdateUseBankID">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="useBankID" name="useBankIDInput" value="true"
+                       @(useBankID ? "checked" : "") onchange="this.form.submit()" />
+                <label class="form-check-label" for="useBankID">Use BankID</label>
+            </div>
+        </form>
     </div>
 
     <div class="card p-4 mb-4">

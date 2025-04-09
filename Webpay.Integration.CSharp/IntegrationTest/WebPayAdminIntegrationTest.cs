@@ -1058,13 +1058,30 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             // create order
             var payment = CreateCardOrderWithTwoOrderRows();
 
-            var rows = new List<OrderRow> { new OrderRow { Quantity = 2,RowId = 1}, new OrderRow { Quantity = 2, RowId = 2 } };
+            var rows = new List<OrderRow> { new OrderRow { Quantity = 2, RowId = 1 }, new OrderRow { Quantity = 2, RowId = 2 } };
             // do cancelOrder request and assert the response
             LowerOrderRowBuilder lowerOrderBuilder = WebpayAdmin.LowerOrderRow(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
                 .AddOrderRows(rows)
                 .SetCountryCode(CountryCode.SE);
             LowerOrderRowResponse response = lowerOrderBuilder.LowerOrderRows().DoRequest();
+            Assert.That(response.Accepted);
+        }
+
+        [Test]
+        public void Test_LowerOrderRowConfirm_LowerCardOrder()
+        {
+            // create order
+            var payment = CreateCardOrderWithTwoOrderRows();
+
+            var rows = new List<OrderRow> { new OrderRow { Quantity = 2, RowId = 1 }, new OrderRow { Quantity = 2, RowId = 2 } };
+            // do cancelOrder request and assert the response
+            LowerOrderRowConfirmBuilder lowerOrderrowConfirmBuilder = WebpayAdmin.LowerOrderRowConfirm(SveaConfig.GetDefaultConfig())
+                .SetTransactionId(payment.TransactionId)
+                .AddOrderRows(rows)
+                .SetCaptureDate(DateTime.Now)
+                .SetCountryCode(CountryCode.SE);
+            var response = lowerOrderrowConfirmBuilder.LowerOrderRowsConfirm().DoRequest();
             Assert.That(response.Accepted);
         }
         [Test] public void Test_CancelOrderRows_CancelCardOrderRows_CancellingAllRowsGivesOrderStatusAnnulled()

@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Xml;
+using System.Xml.Linq;
 using Webpay.Integration.CSharp.Response.Hosted;
 using Webpay.Integration.CSharp.Util.Calculation;
 
@@ -15,8 +16,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Response
             {
                 Accepted = true;
             }
-
-            var errorMessage = TextString(response, "/response/errorMessage");
+            var errorMessage = "";
+            if (response.SelectSingleNode("/response/errorMessage")!=null)
+            {
+                 errorMessage = TextString(response, "/response/errorMessage");
+            }
+           
             ErrorMessage = string.IsNullOrEmpty(errorMessage) ? SveaResponse.StatusCodeToMessage(StatusCode).Item2 : errorMessage;
         }
 

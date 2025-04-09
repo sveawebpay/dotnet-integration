@@ -44,7 +44,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
 
 
 
-        public AdminService.LowerOrderRowConfirmRequest LowerOrderRows()
+        public AdminService.LowerOrderRowConfirmRequest LowerOrderRowsConfirm()
         {
             return new AdminService.LowerOrderRowConfirmRequest(this);
         }

@@ -205,6 +205,11 @@ namespace Webpay.Integration.CSharp
         {
             return new LowerOrderRowBuilder(configurationProvider);
         }
+
+        public static LowerOrderRowConfirmBuilder LowerOrderRowConfirm(IConfigurationProvider configurationProvider)
+        {
+            return new LowerOrderRowConfirmBuilder(configurationProvider);
+        }
     }
 }
  

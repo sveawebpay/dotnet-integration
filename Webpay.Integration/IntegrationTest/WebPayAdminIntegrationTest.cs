@@ -754,7 +754,6 @@ public class WebpayAdminIntegrationTest
         Assert.That(addition.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
     }
 
-
     [Test]
     public async Task Test_AddOrderRows_AddInvoiceOrderRows_UsingInvoiceFee()
     {
@@ -766,27 +765,27 @@ public class WebpayAdminIntegrationTest
         var firstOrderRowDescription = "This should be the third order row!";
 
         var firstOrderRow = new OrderRowBuilder()
-            .SetAmountIncVat(firstOrderRowPriceIncVat)
+            .SetAmountExVat(firstOrderRowPriceIncVat)
             .SetVatPercent(25M)
             .SetQuantity(1M)
             .SetDiscountPercent(10)
             .SetName(firstOrderRowName)
             .SetDescription(firstOrderRowDescription);
 
-        var secondOrderRowPriceExVat = 32M;
+        var secondOrderRowPrice = 32M;
         var secondOrderRowName = "New row #2";
         var secondOrderRowDescription = "This should be the fourth order row!";
 
         var secondOrderRow = new OrderRowBuilder(firstOrderRow);
         secondOrderRow
-            .SetAmountExVat(secondOrderRowPriceExVat)
+            .SetAmountExVat(secondOrderRowPrice)
             .SetName(secondOrderRowName)
             .SetDescription(secondOrderRowDescription);
 
         var invoiceFee = new InvoiceFeeBuilder()
             .SetName("Invoice Fee")
             .SetDescription("Invoice fee for additional service")
-            .SetAmountIncVat(10M)
+            .SetAmountExVat(10M)
             .SetVatPercent(25M)
             .SetUnit("pcs");
 
@@ -799,9 +798,7 @@ public class WebpayAdminIntegrationTest
 
         var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
 
-        Assert.That(addition.ResultCode != 0);
-        Assert.That(addition.ResultCode, Is.EqualTo(50036));
-        Assert.That(addition.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
+        Assert.That(addition.ResultCode == 0);
     }
 
     [Test]

@@ -11,10 +11,12 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal long Id { get; private set; }
         internal PaymentType OrderType { get; set; }
         internal List<OrderRowBuilder> OrderRows { get; private set; }
+        internal List<InvoiceFeeBuilder> InvoiceFeeRows { get; private set; }
 
         public AddOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {
-            this.OrderRows = new List<OrderRowBuilder>();
+            OrderRows = new List<OrderRowBuilder>();
+            InvoiceFeeRows = new List<InvoiceFeeBuilder>();
         }
 
         public AddOrderRowsBuilder SetOrderId(long orderId)
@@ -37,6 +39,27 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public AddOrderRowsBuilder AddOrderRows( IList<OrderRowBuilder> orderRows)
         {
             OrderRows.AddRange(orderRows);
+            return this;
+        }
+
+        public AddOrderRowsBuilder AddFee(IRowBuilder fee)
+        {
+            InvoiceFeeBuilder invoiceFee = fee as InvoiceFeeBuilder;
+            if (invoiceFee != null)
+            {
+                InvoiceFeeRows.Add(invoiceFee);
+            }
+
+            return this;
+        }
+
+        public AddOrderRowsBuilder AddInvoiceFee(InvoiceFeeBuilder invoiceFee)
+        {
+            if (invoiceFee == null)
+            {
+                throw new ArgumentNullException(nameof(invoiceFee));
+            }
+            InvoiceFeeRows.Add(invoiceFee);
             return this;
         }
 

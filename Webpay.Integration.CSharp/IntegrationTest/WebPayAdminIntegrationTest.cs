@@ -391,6 +391,85 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(queryConfirmedOrderAnswer.Transaction.Status, Is.EqualTo("CONFIRMED"));
             Assert.That(queryConfirmedOrderAnswer.Transaction.AuthorizedAmount, Is.EqualTo(250.00M)); //r1, 100.00ex@25*2 => 250.00
         }
+
+        [Test]
+        public async void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingUsingInoiceFee()
+        {
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId);
+
+            var deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.That(deliverResponse.ResultCode == 0);
+
+            var newExVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountExVat(8.0M)
+                .SetVatPercent(25)
+                .SetQuantity(1M);
+
+            var newCreditOrderRows = new List<OrderRowBuilder> { newExVatCreditOrderRow };
+
+            var invoiceFee = new InvoiceFeeBuilder()
+                .SetName("CreditInvoiceFee")
+                .SetDescription("Fee for crediting invoice")
+                .SetAmountExVat(5.0M)
+                .SetVatPercent(20);
+
+            var creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRows(newCreditOrderRows)
+                .AddFee(invoiceFee);
+
+            var creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.That(creditResponse.ResultCode == 0);
+        }
+
+        [Test]
+        public async void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddInoiceFee()
+        {
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+
+            var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+                .SetCountryCode(CountryCode.SE)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetRowToDeliver(1)
+                .SetRowToDeliver(2)
+                .SetOrderId(order.CreateOrderResult.SveaOrderId);
+
+            var deliverResponse = deliverBuilder.DeliverInvoiceOrderRows().DoRequest();
+            Assert.That(deliverResponse.ResultCode == 0);
+
+            var newExVatCreditOrderRow = new OrderRowBuilder()
+                .SetName("NewCreditOrderRow")
+                .SetAmountExVat(8.0M)
+                .SetVatPercent(25)
+                .SetQuantity(1M);
+
+            var newCreditOrderRows = new List<OrderRowBuilder> { newExVatCreditOrderRow };
+
+            var creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+                .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+                .SetInvoiceDistributionType(DistributionType.POST)
+                .SetCountryCode(CountryCode.SE)
+                .AddCreditOrderRows(newCreditOrderRows)
+                .AddInvoiceFee(new InvoiceFeeBuilder()
+                    .SetName("CreditInvoiceFee")
+                    .SetDescription("Fee for crediting invoice")
+                    .SetAmountExVat(5.0M)
+                    .SetVatPercent(20));
+
+            var creditResponse = creditBuilder.CreditInvoiceOrderRows().DoRequest();
+            Assert.That(creditResponse.ResultCode == 0);
+        }
+
         // WebpayAdmin.CreditOrderRows()
         [Test] public void Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingSetRowToCredit()
         {
@@ -617,6 +696,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             AdminWS.CancelPaymentPlanRowsResponse creditResponse = creditBuilder.CreditPaymentPlanOrderRows().DoRequest();
             Assert.That(creditResponse.Accepted);
         }
+
         // WebpayAdmin.AddOrderRows()
         [Test] public void Test_AddOrderRows_AddInvoiceOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
         {
@@ -675,6 +755,54 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).PricePerUnit, Is.EqualTo(secondOrderRowPriceExVat));
             Assert.That(answer.Orders.FirstOrDefault().OrderRows.ElementAt(3).Description, Is.EqualTo(secondOrderRowName + ": " + secondOrderRowDescription));
         }
+
+        [Test]
+        public async void Test_AddOrderRows_AddInvoiceOrderRows_UsingInvoiceFee()
+        {
+            var order = TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+            Assert.That(order.Accepted);
+
+            var firstOrderRowPriceIncVat = 80M;
+            var firstOrderRowName = "New row #1";
+            var firstOrderRowDescription = "This should be the third order row!";
+
+            var firstOrderRow = new OrderRowBuilder()
+                .SetAmountExVat(firstOrderRowPriceIncVat)
+                .SetVatPercent(25M)
+                .SetQuantity(1M)
+                .SetDiscountPercent(10)
+                .SetName(firstOrderRowName)
+                .SetDescription(firstOrderRowDescription);
+
+            var secondOrderRowPrice = 32M;
+            var secondOrderRowName = "New row #2";
+            var secondOrderRowDescription = "This should be the fourth order row!";
+
+            var secondOrderRow = new OrderRowBuilder(firstOrderRow);
+            secondOrderRow
+                .SetAmountExVat(secondOrderRowPrice)
+                .SetName(secondOrderRowName)
+                .SetDescription(secondOrderRowDescription);
+
+            var invoiceFee = new InvoiceFeeBuilder()
+                .SetName("Invoice Fee")
+                .SetDescription("Invoice fee for additional service")
+                .SetAmountExVat(10M)
+                .SetVatPercent(25M)
+                .SetUnit("pcs");
+
+            var builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
+                .SetOrderId(order.CreateOrderResult.SveaOrderId)
+                .SetCountryCode(CountryCode.SE)
+                .AddOrderRow(firstOrderRow)
+                .AddOrderRow(secondOrderRow)
+                .AddInvoiceFee(invoiceFee);
+
+            var addition = builder.AddInvoiceOrderRows().DoRequest();
+
+            Assert.That(addition.ResultCode == 0);
+        }
+
         [Test] public void Test_AddOrderRows_AddPaymentPlanOrderRows_OriginalAndUpdatedOrdersSpecifiedExVat()
         {
             // create order

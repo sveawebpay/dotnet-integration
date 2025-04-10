@@ -60,6 +60,40 @@ namespace Webpay.Integration.CSharp.AdminService
             return or;
         }
 
+        protected AdminWS.OrderRow ConvertInvoiceFeeBuilderToAdminWSOrderRow(InvoiceFeeBuilder invoiceFee)
+        {
+            var orderRow = new AdminWS.OrderRow()
+            {
+                ArticleNumber = invoiceFee.GetArticleNumber(),
+                Description = GetDescriptionFromBuilderOrderRow(invoiceFee.GetName(), invoiceFee.GetDescription()),
+                DiscountPercent = invoiceFee.GetDiscountPercent(),
+                NumberOfUnits = invoiceFee.GetQuantity(),
+                PriceIncludingVat = invoiceFee.GetAmountIncVat().HasValue,
+                PricePerUnit = (decimal)(invoiceFee.GetAmountIncVat() ?? invoiceFee.GetAmountExVat()),
+                Unit = invoiceFee.GetUnit(),
+                RowType = AdminWS.RowType.InvoiceFee,
+                VatPercent = GetVatPercentFromBuilderOrderRow(invoiceFee.GetVatPercent(), invoiceFee.GetAmountIncVat(), invoiceFee.GetAmountExVat())
+            };
+            return orderRow;
+        }
+
+        protected AdminWS.NumberedOrderRow ConvertInvoiceFeeBuilderToAdminWSNumberedOrderRow(InvoiceFeeBuilder invoiceFee)
+        {
+            var orderRow = new AdminWS.NumberedOrderRow()
+            {
+                ArticleNumber = invoiceFee.GetArticleNumber(),
+                Description = GetDescriptionFromBuilderOrderRow(invoiceFee.GetName(), invoiceFee.GetDescription()),
+                DiscountPercent = invoiceFee.GetDiscountPercent(),
+                NumberOfUnits = invoiceFee.GetQuantity(),
+                PriceIncludingVat = invoiceFee.GetAmountIncVat().HasValue,
+                PricePerUnit = (decimal)(invoiceFee.GetAmountIncVat() ?? invoiceFee.GetAmountExVat()),
+                Unit = invoiceFee.GetUnit(),
+                RowType = AdminWS.RowType.InvoiceFee,
+                VatPercent = GetVatPercentFromBuilderOrderRow(invoiceFee.GetVatPercent(), invoiceFee.GetAmountIncVat(), invoiceFee.GetAmountExVat())
+            };
+            return orderRow;
+        }
+
         protected AdminWS.NumberedOrderRow ConvertNumberedOrderRowBuilderToAdminWSNumberedOrderRow(NumberedOrderRowBuilder norb)
         {
             var nor = new AdminWS.NumberedOrderRow()

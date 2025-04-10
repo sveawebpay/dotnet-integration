@@ -9,10 +9,12 @@ public class AddOrderRowsBuilder : Builder<AddOrderRowsBuilder>
     internal long Id { get; private set; }
     internal PaymentType OrderType { get; set; }
     internal List<OrderRowBuilder> OrderRows { get; private set; }
+    internal List<InvoiceFeeBuilder> InvoiceFeeRows { get; private set; }
 
     public AddOrderRowsBuilder(IConfigurationProvider config) : base(config)
     {
-        this.OrderRows = new List<OrderRowBuilder>();
+        OrderRows = new List<OrderRowBuilder>();
+        InvoiceFeeRows = new List<InvoiceFeeBuilder>();
     }
 
     public AddOrderRowsBuilder SetOrderId(long orderId)
@@ -36,6 +38,34 @@ public class AddOrderRowsBuilder : Builder<AddOrderRowsBuilder>
     public AddOrderRowsBuilder AddOrderRows( IList<OrderRowBuilder> orderRows)
     {
         OrderRows.AddRange(orderRows);
+        return this;
+    }
+
+    public AddOrderRowsBuilder AddFee(IRowBuilder fee)
+    {
+        if (fee is InvoiceFeeBuilder invoiceFee)
+        {
+            InvoiceFeeRows.Add(invoiceFee);
+        }
+        else if (fee is ShippingFeeBuilder)
+        {
+            throw new NotSupportedException("Shipping fee is not supported.");
+        }
+        else
+        {
+            throw new ArgumentException("Provided fee row must be an InvoiceFeeBuilder", nameof(fee));
+        }
+    
+        return this;
+    }
+    
+    public AddOrderRowsBuilder AddInvoiceFee(InvoiceFeeBuilder invoiceFee)
+    {
+        if (invoiceFee == null)
+        {
+            throw new ArgumentNullException(nameof(invoiceFee));
+        }
+        InvoiceFeeRows.Add(invoiceFee);
         return this;
     }
 

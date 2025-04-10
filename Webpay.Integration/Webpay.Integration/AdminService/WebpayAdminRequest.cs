@@ -39,6 +39,40 @@ public class WebpayAdminRequest
         return or;
     }
 
+    protected AdminWS.OrderRow ConvertInvoiceFeeBuilderToAdminWSOrderRow(InvoiceFeeBuilder invoiceFee)
+    {
+        var orderRow = new AdminWS.OrderRow()
+        {
+            ArticleNumber = invoiceFee.GetArticleNumber(),
+            Description = GetDescriptionFromBuilderOrderRow(invoiceFee.GetName(), invoiceFee.GetDescription()),
+            DiscountPercent = invoiceFee.GetDiscountPercent(),
+            NumberOfUnits = invoiceFee.GetQuantity(),
+            PriceIncludingVat = invoiceFee.GetAmountIncVat().HasValue,
+            PricePerUnit = (decimal)(invoiceFee.GetAmountIncVat() ?? invoiceFee.GetAmountExVat()),
+            Unit = invoiceFee.GetUnit(),
+            RowType = AdminWS.RowType.InvoiceFee,
+            VatPercent = GetVatPercentFromBuilderOrderRow(invoiceFee.GetVatPercent(), invoiceFee.GetAmountIncVat(), invoiceFee.GetAmountExVat())
+        };
+        return orderRow;
+    }
+
+    protected AdminWS.NumberedOrderRow ConvertInvoiceFeeBuilderToAdminWSNumberedOrderRow(InvoiceFeeBuilder invoiceFee)
+    {
+        var orderRow = new AdminWS.NumberedOrderRow()
+        {
+            ArticleNumber = invoiceFee.GetArticleNumber(),
+            Description = GetDescriptionFromBuilderOrderRow(invoiceFee.GetName(), invoiceFee.GetDescription()),
+            DiscountPercent = invoiceFee.GetDiscountPercent(),
+            NumberOfUnits = invoiceFee.GetQuantity(),
+            PriceIncludingVat = invoiceFee.GetAmountIncVat().HasValue,
+            PricePerUnit = (decimal)(invoiceFee.GetAmountIncVat() ?? invoiceFee.GetAmountExVat()),
+            Unit = invoiceFee.GetUnit(),
+            RowType = AdminWS.RowType.InvoiceFee,
+            VatPercent = GetVatPercentFromBuilderOrderRow(invoiceFee.GetVatPercent(), invoiceFee.GetAmountIncVat(), invoiceFee.GetAmountExVat())
+        };
+        return orderRow;
+    }
+
     protected AdminWS.NumberedOrderRow ConvertNumberedOrderRowBuilderToAdminWSNumberedOrderRow(NumberedOrderRowBuilder norb)
     {
         var nor = new AdminWS.NumberedOrderRow()
@@ -58,13 +92,13 @@ public class WebpayAdminRequest
     protected static decimal GetVatPercentFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat)
     {
         // Calculate vatPercent from 2 out of 3 of builder order row vat%, incVat, exVat 
-        return (vp ?? (((incvat??0M)/(exvat??0M)) - 1M) * 100M);
+        return (vp ?? (((incvat ?? 0M)/(exvat ?? 0M)) - 1M) * 100M);
     }
 
     protected static decimal GetAmountIncVatFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat)
     {
         // Calculate amountIncVat from 2 out of 3 of builder order row vat%, incVat, exVat 
-        return (incvat ?? ((exvat??0M) * (1 + GetVatPercentFromBuilderOrderRow(vp, incvat, exvat) / 100M)));
+        return (incvat ?? ((exvat ?? 0M) * (1 + GetVatPercentFromBuilderOrderRow(vp, incvat, exvat) / 100M)));
     }
 
     protected static decimal GetRowAmountIncVatFromBuilderOrderRow(decimal? vp, decimal? incvat, decimal? exvat, decimal quantity)

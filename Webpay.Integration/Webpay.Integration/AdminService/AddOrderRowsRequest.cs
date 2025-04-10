@@ -27,7 +27,10 @@ public class AddOrderRowsRequest : WebpayAdminRequest
             SveaOrderId = _builder.Id,
             OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),
             ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
-            OrderRows = _builder.OrderRows.Select(x => ConvertOrderRowBuilderToAdminWSOrderRow(x)).ToArray()
+            OrderRows = _builder.OrderRows
+                          .Select(x => ConvertOrderRowBuilderToAdminWSOrderRow(x))
+                          .Concat(_builder.InvoiceFeeRows.Select(x => ConvertInvoiceFeeBuilderToAdminWSOrderRow(x)))
+                          .ToArray()
         };
 
         var endpoint = _builder.GetConfig().GetEndPoint(PaymentType.ADMIN_TYPE);

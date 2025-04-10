@@ -386,6 +386,84 @@ public class WebpayAdminIntegrationTest
     }
 
     [Test]
+    public async Task Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingUsingInoiceFee()
+    {
+        var order = await TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+
+        var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(CountryCode.SE)
+            .SetInvoiceDistributionType(DistributionType.POST)
+            .SetRowToDeliver(1)
+            .SetRowToDeliver(2)
+            .SetOrderId(order.CreateOrderResult.SveaOrderId);
+
+        var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
+        Assert.That(deliverResponse.ResultCode == 0);
+
+        var newExVatCreditOrderRow = new OrderRowBuilder()
+            .SetName("NewCreditOrderRow")
+            .SetAmountExVat(8.0M)
+            .SetVatPercent(25)
+            .SetQuantity(1M);
+
+        var newCreditOrderRows = new List<OrderRowBuilder> { newExVatCreditOrderRow };
+
+        var invoiceFee = new InvoiceFeeBuilder()
+            .SetName("CreditInvoiceFee")
+            .SetDescription("Fee for crediting invoice")
+            .SetAmountExVat(5.0M)
+            .SetVatPercent(20);
+
+        var creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+            .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+            .SetInvoiceDistributionType(DistributionType.POST)
+            .SetCountryCode(CountryCode.SE)
+            .AddCreditOrderRows(newCreditOrderRows)
+            .AddFee(invoiceFee);
+
+        var creditResponse = await creditBuilder.CreditInvoiceOrderRows().DoRequestAsync();
+        Assert.That(creditResponse.ResultCode == 0);
+    }
+
+    [Test]
+    public async Task Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddInoiceFee()
+    {
+        var order = await TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+
+        var deliverBuilder = WebpayAdmin.DeliverOrderRows(SveaConfig.GetDefaultConfig())
+            .SetCountryCode(CountryCode.SE)
+            .SetInvoiceDistributionType(DistributionType.POST)
+            .SetRowToDeliver(1)
+            .SetRowToDeliver(2)
+            .SetOrderId(order.CreateOrderResult.SveaOrderId);
+
+        var deliverResponse = await deliverBuilder.DeliverInvoiceOrderRows().DoRequestAsync();
+        Assert.That(deliverResponse.ResultCode == 0);
+
+        var newExVatCreditOrderRow = new OrderRowBuilder()
+            .SetName("NewCreditOrderRow")
+            .SetAmountExVat(8.0M)
+            .SetVatPercent(25)
+            .SetQuantity(1M);
+
+        var newCreditOrderRows = new List<OrderRowBuilder> { newExVatCreditOrderRow };
+
+        var creditBuilder = WebpayAdmin.CreditOrderRows(SveaConfig.GetDefaultConfig())
+            .SetInvoiceId(deliverResponse.OrdersDelivered.FirstOrDefault().DeliveryReferenceNumber)
+            .SetInvoiceDistributionType(DistributionType.POST)
+            .SetCountryCode(CountryCode.SE)
+            .AddCreditOrderRows(newCreditOrderRows)
+            .AddInvoiceFee(new InvoiceFeeBuilder()
+                .SetName("CreditInvoiceFee")
+                .SetDescription("Fee for crediting invoice")
+                .SetAmountExVat(5.0M)
+                .SetVatPercent(20));
+
+        var creditResponse = await creditBuilder.CreditInvoiceOrderRows().DoRequestAsync();
+        Assert.That(creditResponse.ResultCode == 0);
+    }
+
+    [Test]
     public async Task Test_CreditOrderRows_CreditInvoiceOrderRows_CreditUsingAddNewOrderRowAndMismatchedVatFlagSettingsFails()
     {
         var order = await TestingTool.CreateInvoiceOrderWithTwoOrderRows();
@@ -671,6 +749,56 @@ public class WebpayAdminIntegrationTest
             .AddOrderRow(secondOrderRow);
 
         var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
+        Assert.That(addition.ResultCode != 0);
+        Assert.That(addition.ResultCode, Is.EqualTo(50036));
+        Assert.That(addition.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));
+    }
+
+
+    [Test]
+    public async Task Test_AddOrderRows_AddInvoiceOrderRows_UsingInvoiceFee()
+    {
+        var order = await TestingTool.CreateInvoiceOrderWithTwoOrderRows();
+        Assert.That(order.Accepted);
+
+        var firstOrderRowPriceIncVat = 80M;
+        var firstOrderRowName = "New row #1";
+        var firstOrderRowDescription = "This should be the third order row!";
+
+        var firstOrderRow = new OrderRowBuilder()
+            .SetAmountIncVat(firstOrderRowPriceIncVat)
+            .SetVatPercent(25M)
+            .SetQuantity(1M)
+            .SetDiscountPercent(10)
+            .SetName(firstOrderRowName)
+            .SetDescription(firstOrderRowDescription);
+
+        var secondOrderRowPriceExVat = 32M;
+        var secondOrderRowName = "New row #2";
+        var secondOrderRowDescription = "This should be the fourth order row!";
+
+        var secondOrderRow = new OrderRowBuilder(firstOrderRow);
+        secondOrderRow
+            .SetAmountExVat(secondOrderRowPriceExVat)
+            .SetName(secondOrderRowName)
+            .SetDescription(secondOrderRowDescription);
+
+        var invoiceFee = new InvoiceFeeBuilder()
+            .SetName("Invoice Fee")
+            .SetDescription("Invoice fee for additional service")
+            .SetAmountIncVat(10M)
+            .SetVatPercent(25M)
+            .SetUnit("pcs");
+
+        var builder = WebpayAdmin.AddOrderRows(SveaConfig.GetDefaultConfig())
+            .SetOrderId(order.CreateOrderResult.SveaOrderId)
+            .SetCountryCode(CountryCode.SE)
+            .AddOrderRow(firstOrderRow)
+            .AddOrderRow(secondOrderRow)
+            .AddInvoiceFee(invoiceFee);
+
+        var addition = await builder.AddInvoiceOrderRows().DoRequestAsync();
+
         Assert.That(addition.ResultCode != 0);
         Assert.That(addition.ResultCode, Is.EqualTo(50036));
         Assert.That(addition.ErrorMessage, Is.EqualTo("The flag PriceIncludingVat must be used consistently for all order rows in the order."));

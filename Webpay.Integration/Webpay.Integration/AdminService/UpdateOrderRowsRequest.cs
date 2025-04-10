@@ -27,7 +27,10 @@ public class UpdateOrderRowsRequest : WebpayAdminRequest
             SveaOrderId = _builder.Id,
             OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),
             ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
-            UpdatedOrderRows = _builder.NumberedOrderRows.Select(ConvertNumberedOrderRowBuilderToAdminWSNumberedOrderRow).ToArray()
+            UpdatedOrderRows = _builder.NumberedOrderRows
+                .Select(ConvertNumberedOrderRowBuilderToAdminWSNumberedOrderRow)
+                .Concat(_builder.InvoiceFeeRows.Select(x => ConvertInvoiceFeeBuilderToAdminWSNumberedOrderRow(x)))
+                .ToArray()
         };
 
         var endpoint = _builder.GetConfig().GetEndPoint(PaymentType.ADMIN_TYPE);

@@ -11,11 +11,13 @@ public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
     internal DistributionType DistributionType { get; private set; }
     internal List<long> RowIndexesToCredit { get; private set; }
     internal List<OrderRowBuilder> NewCreditOrderRows { get; private set; }
+    internal List<InvoiceFeeBuilder> InvoiceFeeRows { get; private set; }
 
     public CreditOrderRowsBuilder(IConfigurationProvider config) : base(config)
     {
         RowIndexesToCredit = new List<long>();
         NewCreditOrderRows = new List<OrderRowBuilder>();
+        InvoiceFeeRows = new List<InvoiceFeeBuilder>();
     }
 
     public CreditOrderRowsBuilder SetInvoiceId(long invoiceId)
@@ -61,6 +63,34 @@ public class CreditOrderRowsBuilder : Builder<CreditOrderRowsBuilder>
     public CreditOrderRowsBuilder AddCreditOrderRows(IList<OrderRowBuilder> newCreditOrderRows)
     {
         NewCreditOrderRows.AddRange(newCreditOrderRows);
+        return this;
+    }
+
+    public CreditOrderRowsBuilder AddFee(IRowBuilder fee)
+    {
+        if (fee is InvoiceFeeBuilder invoiceFee)
+        {
+            InvoiceFeeRows.Add(invoiceFee);
+        }
+        else if (fee is ShippingFeeBuilder)
+        {
+            throw new NotSupportedException("Shipping fee credit is not supported.");
+        }
+        else
+        {
+            throw new ArgumentException("Provided fee row must be an InvoiceFeeBuilder", nameof(fee));
+        }
+    
+        return this;
+    }
+    
+    public CreditOrderRowsBuilder AddInvoiceFee(InvoiceFeeBuilder invoiceFee)
+    {
+        if (invoiceFee == null)
+        {
+            throw new ArgumentNullException(nameof(invoiceFee));
+        }
+        InvoiceFeeRows.Add(invoiceFee);
         return this;
     }
 

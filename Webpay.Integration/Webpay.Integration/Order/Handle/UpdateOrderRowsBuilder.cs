@@ -12,7 +12,7 @@ public class UpdateOrderRowsBuilder : Builder<UpdateOrderRowsBuilder>
 
     public UpdateOrderRowsBuilder(IConfigurationProvider config) : base(config)
     {
-        this.NumberedOrderRows = new List<NumberedOrderRowBuilder>();
+        NumberedOrderRows = new List<NumberedOrderRowBuilder>();
     }
 
     public UpdateOrderRowsBuilder SetOrderId(long orderId)

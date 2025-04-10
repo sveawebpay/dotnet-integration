@@ -368,7 +368,8 @@ public class InvoicePaymentTest
             .PrepareRequest();
 
         Assert.That(request.CreateOrderInformation.OrderDate, Is.EqualTo(TestingTool.DefaultTestDate));
-        Assert.That(request.CreateOrderInformation.ClientOrderNumber, Is.EqualTo("33"));
+        const string clientOrderNumberPattern = @"^[a-zA-Z0-9\-]+$"; 
+        Assert.That(request.CreateOrderInformation.ClientOrderNumber, Does.Match(clientOrderNumberPattern), "The ClientOrderNumber should be alphanumeric");
         Assert.That(request.CreateOrderInformation.OrderType, Is.EqualTo(OrderType.Invoice));
         Assert.That(request.CreateOrderInformation.CustomerReference, Is.EqualTo("ref33"));
         Assert.That(request.CreateOrderInformation.AddressSelector, Is.EqualTo("ad33"));

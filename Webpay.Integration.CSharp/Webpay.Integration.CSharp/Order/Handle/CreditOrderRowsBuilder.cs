@@ -14,11 +14,13 @@ namespace Webpay.Integration.CSharp.Order.Handle
         internal DistributionType DistributionType { get; private set; }
         internal List<long> RowIndexesToCredit { get; private set; }
         internal List<OrderRowBuilder> NewCreditOrderRows { get; private set; }
+        internal List<InvoiceFeeBuilder> InvoiceFeeRows { get; private set; }
 
         public CreditOrderRowsBuilder(IConfigurationProvider config) : base(config)
         {
             RowIndexesToCredit = new List<long>();
             NewCreditOrderRows = new List<OrderRowBuilder>();
+            InvoiceFeeRows = new List<InvoiceFeeBuilder>();
         }
 
         public CreditOrderRowsBuilder SetInvoiceId(long invoiceId)
@@ -54,6 +56,27 @@ namespace Webpay.Integration.CSharp.Order.Handle
         public CreditOrderRowsBuilder AddCreditOrderRows(IList<OrderRowBuilder> newCreditOrderRows)
         {
             NewCreditOrderRows.AddRange(newCreditOrderRows);
+            return this;
+        }
+
+        public CreditOrderRowsBuilder AddFee(IRowBuilder fee)
+        {
+            InvoiceFeeBuilder invoiceFee = fee as InvoiceFeeBuilder;
+            if (invoiceFee != null)
+            {
+                InvoiceFeeRows.Add(invoiceFee);
+            }
+
+            return this;
+        }
+
+        public CreditOrderRowsBuilder AddInvoiceFee(InvoiceFeeBuilder invoiceFee)
+        {
+            if (invoiceFee == null)
+            {
+                throw new ArgumentNullException(nameof(invoiceFee));
+            }
+            InvoiceFeeRows.Add(invoiceFee);
             return this;
         }
 

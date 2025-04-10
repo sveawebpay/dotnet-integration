@@ -28,7 +28,10 @@ namespace Webpay.Integration.CSharp.AdminService
                 SveaOrderId = _builder.Id,
                 OrderType = ConvertPaymentTypeToOrderType(_builder.OrderType),    // not required for EU-clients
                 ClientId = _builder.GetConfig().GetClientNumber(_builder.OrderType, _builder.GetCountryCode()),
-                OrderRows = _builder.OrderRows.Select(x => ConvertOrderRowBuilderToAdminWSOrderRow(x)).ToArray()
+                OrderRows = _builder.OrderRows
+                              .Select(x => ConvertOrderRowBuilderToAdminWSOrderRow(x))
+                              .Concat(_builder.InvoiceFeeRows.Select(x => ConvertInvoiceFeeBuilderToAdminWSOrderRow(x)))
+                              .ToArray()
             };
 
             // make request to correct endpoint, return response object

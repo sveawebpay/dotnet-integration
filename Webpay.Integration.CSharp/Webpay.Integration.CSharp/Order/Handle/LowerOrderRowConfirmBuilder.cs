@@ -11,7 +11,7 @@ namespace Webpay.Integration.CSharp.Order.Handle
     {
         internal long Id;
         internal List<OrderRow> OrderRows;
-        internal DateTime CaptureDate;
+        internal string CaptureRequestId;
         public LowerOrderRowConfirmBuilder(IConfigurationProvider config) : base(config)
         {
             this.OrderRows = new List<OrderRow>();
@@ -23,9 +23,9 @@ namespace Webpay.Integration.CSharp.Order.Handle
             return this;
         }
 
-        public LowerOrderRowConfirmBuilder SetCaptureDate(DateTime captureDate)
+        public LowerOrderRowConfirmBuilder SetCaptureRequestId(string captureRequestId)
         {
-            CaptureDate = captureDate;
+            CaptureRequestId = captureRequestId;
             return this;
         }
 

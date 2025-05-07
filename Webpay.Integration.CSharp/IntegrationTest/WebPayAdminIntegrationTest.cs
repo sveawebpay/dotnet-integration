@@ -1079,7 +1079,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest
             LowerOrderRowConfirmBuilder lowerOrderrowConfirmBuilder = WebpayAdmin.LowerOrderRowConfirm(SveaConfig.GetDefaultConfig())
                 .SetTransactionId(payment.TransactionId)
                 .AddOrderRows(rows)
-                .SetCaptureDate(DateTime.Now)
+                .SetCaptureRequestId(Guid.NewGuid().ToString())
                 .SetCountryCode(CountryCode.SE);
             var response = lowerOrderrowConfirmBuilder.LowerOrderRowsConfirm().DoRequest();
             Assert.That(response.Accepted);

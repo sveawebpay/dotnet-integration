@@ -9,13 +9,12 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
     {
         public readonly List<OrderRow> OrderRows;
         public readonly long TransactionId;
-        public readonly DateTime CaptureDate;
-
-        public LowerOrderRowConfirm(long transactionId, List<OrderRow> orderRows, DateTime captureDate, Guid? correlationId) : base(correlationId)
+        public readonly string CaptureRequestId;
+        public LowerOrderRowConfirm(long transactionId, List<OrderRow> orderRows, string captureRequestId, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             OrderRows = orderRows;
-            CaptureDate = captureDate;
+            CaptureRequestId = captureRequestId;
         }
 
         public static LowerOrderRowConfirmResponse Response(XmlDocument responseXml)

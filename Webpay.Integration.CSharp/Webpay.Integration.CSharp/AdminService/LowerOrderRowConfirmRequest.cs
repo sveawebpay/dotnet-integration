@@ -23,7 +23,7 @@ namespace Webpay.Integration.CSharp.AdminService
             .LowerOrderRowConfirm(new LowerOrderRowConfirm(
                 transactionId: _builder.Id,
                 orderRows:_builder.OrderRows,
-                captureDate:_builder.CaptureDate,
+                captureRequestId:_builder.CaptureRequestId,
                 correlationId:_builder.GetCorrelationId()));
 
             return hostedActionRequest.DoRequest<LowerOrderRowConfirmResponse>();

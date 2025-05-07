@@ -133,10 +133,10 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <lowerorderrowconfirm>
                 <transactionid>{0}</transactionid>
-                <capturedate>{1}</capturedate>
+                <captureRequestId>{1}</captureRequestId>
                 <orderrows>{2}
                 </orderrows>
-                </lowerorderrowconfirm>", lowerOrderRowConfrim.TransactionId,lowerOrderRowConfrim.CaptureDate.ToString("yyyy-MM-dd"), lowerOrderRowConfrim.GetXmlForOrderRows());
+                </lowerorderrowconfirm>", lowerOrderRowConfrim.TransactionId,lowerOrderRowConfrim.CaptureRequestId, lowerOrderRowConfrim.GetXmlForOrderRows());
             AddCorrelationIdHeader(lowerOrderRowConfrim.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/lowerorderrowconfirm");
         }

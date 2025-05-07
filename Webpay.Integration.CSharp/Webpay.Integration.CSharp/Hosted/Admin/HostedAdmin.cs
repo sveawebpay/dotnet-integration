@@ -133,7 +133,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <lowerorderrowconfirm>
                 <transactionid>{0}</transactionid>
-                <captureRequestId>{1}</captureRequestId>
+                <capturerequestid>{1}</capturerequestid>
                 <orderrows>{2}
                 </orderrows>
                 </lowerorderrowconfirm>", lowerOrderRowConfrim.TransactionId,lowerOrderRowConfrim.CaptureRequestId, lowerOrderRowConfrim.GetXmlForOrderRows());

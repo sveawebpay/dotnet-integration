@@ -92,6 +92,8 @@
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\PaymentGateway\EditOrderRowRequest.cs" />
+    <Compile Include="AdminService\PaymentGateway\AddOrderRowRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowConfirmRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowRequest.cs" />
     <Compile Include="AdminService\UpdateOrderRequest.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="Config\SveaTestConfigurationProvider.cs" />
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
+    <Compile Include="Hosted\Admin\Actions\PaymentGateway\AddOrderRow.cs" />
+    <Compile Include="Hosted\Admin\Actions\PaymentGateway\EditOrderRow.cs" />
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\BasicRequest.cs" />
     <Compile Include="Hosted\Admin\Actions\ConfirmPartial.cs" />
@@ -130,6 +134,8 @@
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\PaymentGateway\EditOrderRowResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\PaymentGateway\AddOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowConfirmResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountResponse.cs" />
@@ -148,6 +154,8 @@
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Delivery.cs" />
+    <Compile Include="Order\Handle\PaymentGateway\EditOrderRowBuilder.cs" />
+    <Compile Include="Order\Handle\PaymentGateway\AddOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowConfirmBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\CreditOrderBuilder.cs" />
@@ -162,8 +170,10 @@
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Order\Row\Credit\CreditOrderRowBuilder.cs" />
     <Compile Include="Order\Row\Credit\NewCreditOrderRowBuilder.cs" />
+    <Compile Include="Order\Row\Edit\OrderRow.cs" />
     <Compile Include="Order\Row\LowerAmount\OrderRow.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
+    <Compile Include="Order\Row\Add\OrderRow.cs" />
     <Compile Include="Service References\AdminWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -585,6 +595,7 @@
   <ItemGroup>
     <None Include="Service References\AdminWS\AdminService11.disco" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

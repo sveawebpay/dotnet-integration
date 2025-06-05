@@ -1,4 +1,5 @@
 ﻿using System;
+using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
@@ -25,7 +26,7 @@ namespace Webpay.Integration.CSharp.AdminService
                 transactionId: _builder.Id,
                 orderRows: _builder.OrderRows,
                 correlationId: _builder.GetCorrelationId()))
-                ;
+            ;
 
             return hostedActionRequest.DoRequest<AddOrderRowResponse>();
         }

@@ -2,9 +2,9 @@ using System.Xml;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway
 {
-    public class AddOrderRowResponse : CustomerRefNoResponseBase
+    public class UpdateOrderRowResponse : CustomerRefNoResponseBase
     {
-        public AddOrderRowResponse(XmlDocument response) : base(response)
+        public UpdateOrderRowResponse(XmlDocument response) : base(response)
         {
             //intentionally left blank
         }

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Webpay.Integration.CSharp.Order.Row.Edit
+namespace Webpay.Integration.CSharp.Order.Row.Update
 {
     public class OrderRow
     {

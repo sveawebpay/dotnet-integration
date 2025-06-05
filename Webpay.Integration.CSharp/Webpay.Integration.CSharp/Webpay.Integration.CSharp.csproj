@@ -92,7 +92,7 @@
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
-    <Compile Include="AdminService\PaymentGateway\EditOrderRowRequest.cs" />
+    <Compile Include="AdminService\PaymentGateway\UpdateOrderRowRequest.cs" />
     <Compile Include="AdminService\PaymentGateway\AddOrderRowRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowConfirmRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowRequest.cs" />
@@ -113,7 +113,7 @@
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
     <Compile Include="Hosted\Admin\Actions\PaymentGateway\AddOrderRow.cs" />
-    <Compile Include="Hosted\Admin\Actions\PaymentGateway\EditOrderRow.cs" />
+    <Compile Include="Hosted\Admin\Actions\PaymentGateway\UpdateOrderRow.cs" />
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\BasicRequest.cs" />
     <Compile Include="Hosted\Admin\Actions\ConfirmPartial.cs" />
@@ -134,7 +134,7 @@
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
-    <Compile Include="Hosted\Admin\Response\PaymentGateway\EditOrderRowResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\PaymentGateway\UpdateOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\PaymentGateway\AddOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowConfirmResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowResponse.cs" />
@@ -154,7 +154,7 @@
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Delivery.cs" />
-    <Compile Include="Order\Handle\PaymentGateway\EditOrderRowBuilder.cs" />
+    <Compile Include="Order\Handle\PaymentGateway\UpdateOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\PaymentGateway\AddOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowConfirmBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowBuilder.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="Order\Handle\QueryOrderBuilder.cs" />
     <Compile Include="Order\Row\Credit\CreditOrderRowBuilder.cs" />
     <Compile Include="Order\Row\Credit\NewCreditOrderRowBuilder.cs" />
-    <Compile Include="Order\Row\Edit\OrderRow.cs" />
+    <Compile Include="Order\Row\Update\OrderRow.cs" />
     <Compile Include="Order\Row\LowerAmount\OrderRow.cs" />
     <Compile Include="Order\Row\NumberedOrderRowBuilder.cs" />
     <Compile Include="Order\Row\Add\OrderRow.cs" />

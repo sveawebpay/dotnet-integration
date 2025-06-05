@@ -8,24 +8,24 @@ using Webpay.Integration.CSharp.Util.Constant;
 
 namespace Webpay.Integration.CSharp.AdminService
 {
-    public class EditOrderRowRequest : WebpayAdminRequest
+    public class UpdateOrderRowRequest : WebpayAdminRequest
     {
-        private readonly EditOrderRowBuilder _builder;
+        private readonly UpdateOrderRowBuilder _builder;
 
-        public EditOrderRowRequest(EditOrderRowBuilder builder) {
+        public UpdateOrderRowRequest(UpdateOrderRowBuilder builder) {
             _builder = builder;
         }
 
-        public EditOrderRowResponse DoRequest()
+        public UpdateOrderRowResponse DoRequest()
         {
             var hostedActionRequest = 
             new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
-            .EditOrderRow(new EditOrderRow(
+            .EditOrderRow(new UpdateOrderRow(
                 transactionId: _builder.Id,
                 orderRows: _builder.OrderRows,
                 correlationId: _builder.GetCorrelationId()));
 
-            return hostedActionRequest.DoRequest<EditOrderRowResponse>();
+            return hostedActionRequest.DoRequest<UpdateOrderRowResponse>();
         }
 
     }

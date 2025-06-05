@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Webpay.Integration.CSharp.AdminService.PaymentGateway;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Order.Row.Update;
 using Webpay.Integration.CSharp.Util.Constant;
@@ -34,12 +35,6 @@ namespace Webpay.Integration.CSharp.Order.Handle.PaymentGateway
         {
             OrderRows.AddRange(orderRows);
             return this;
-        }
-
-        public AdminService.UpdateOrderRowRequest EditOrderRows()
-        {
-            
-            return new AdminService.UpdateOrderRowRequest(this);
         }
 
         public override UpdateOrderRowBuilder SetCorrelationId(Guid? correlationId)

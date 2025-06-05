@@ -36,10 +36,6 @@ namespace Webpay.Integration.CSharp.Order.Handle.PaymentGateway
             return this;
         }
 
-        public AdminService.AddOrderRowRequest AddOrderRows()
-        {
-            return new AdminService.AddOrderRowRequest(this);
-        }
 
         public override AddOrderRowBuilder SetCorrelationId(Guid? correlationId)
         {

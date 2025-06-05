@@ -8,7 +8,7 @@ using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Handle.PaymentGateway;
 using Webpay.Integration.CSharp.Util.Constant;
 
-namespace Webpay.Integration.CSharp.AdminService
+namespace Webpay.Integration.CSharp.AdminService.PaymentGateway
 {
     public class AddOrderRowRequest : WebpayAdminRequest
     {

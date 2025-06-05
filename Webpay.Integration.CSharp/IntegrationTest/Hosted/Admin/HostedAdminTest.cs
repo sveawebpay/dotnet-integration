@@ -547,7 +547,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
-                .EditOrderRow(new UpdateOrderRow(
+                .UpdateOrderRow(new UpdateOrderRow(
                     transactionId: 12341234,
                     orderRows: new List<Order.Row.Update.OrderRow> {
                         new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
@@ -582,30 +582,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
         }
 
-        //[Test]
-        //public void TestAddOrderRowResponse()
-        //{
-        //    var builder = new AddOrEditOrderRowBuilder(SveaConfig.GetDefaultConfig());
-        //    builder.SetCountryCode(CountryCode.SE)
-        //        .SetTransactionId(12341234)
-        //        .SetEdit(true)
-        //        .AddOrderRows(new List<Order.Row.Add.OrderRow> {
-        //                new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
-        //                 new Order.Row.Add.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
-        //            }
-        //       );
-
-        //    builder.EditOrderRows().DoRequest();
-        //    var response = builder.EditOrderRows().DoRequest();
-
-        //    Assert.That(response.TransactionId, Is.EqualTo(12341234));
-        //    Assert.That(response.CustomerRefNo, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-        //    Assert.That(response.ClientOrderNumber, Is.EqualTo("1ba66a0d653ca4cf3a5bc3eeb9ed1a2b4"));
-        //    Assert.That(response.StatusCode, Is.EqualTo(0));
-        //    Assert.That(response.Accepted, Is.True);
-        //    Assert.That(response.ErrorMessage, Is.Empty);
-        //}
-
+       
 
         [Test]
         public void TestLowerOrderRowResponse()

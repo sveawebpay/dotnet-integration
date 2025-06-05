@@ -20,7 +20,7 @@ namespace Webpay.Integration.CSharp.AdminService
         {
             var hostedActionRequest = 
             new HostedAdmin(_builder.GetConfig(), _builder.GetCountryCode())
-            .EditOrderRow(new UpdateOrderRow(
+            .UpdateOrderRow(new UpdateOrderRow(
                 transactionId: _builder.Id,
                 orderRows: _builder.OrderRows,
                 correlationId: _builder.GetCorrelationId()));

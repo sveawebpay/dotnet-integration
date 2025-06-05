@@ -543,7 +543,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         }
 
         [Test]
-        public void TestEditOrderRow()
+        public void TestUpdateOrderRow()
         {
 
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)

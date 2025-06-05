@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
 using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -153,7 +154,28 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             AddCorrelationIdHeader(lowerAmount.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramountconfirm");
         }
-
+        public HostedActionRequest AddOrderRow(AddOrderRow updateOrderRow)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <addorderrow>
+                <transactionid>{0}</transactionid>
+                <orderrows>{2}
+                </orderrows>
+                </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
+            AddCorrelationIdHeader(updateOrderRow.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/addorderrow");
+        }
+        public HostedActionRequest UpdateOrderRow(UpdateOrderRow updateOrderRow)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <addorderrow>
+                <transactionid>{0}</transactionid>
+                <orderrows>{2}
+                </orderrows>
+                </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
+            AddCorrelationIdHeader(updateOrderRow.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updateorderrow");
+        }
         public HostedActionRequest Query(QueryByTransactionId query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Webpay.Integration.CSharp.Order.Row.LowerAmount
         {
             return $"<orderrow>" +
                     $"<rowid>{RowId}</rowid>" +
-                    $"<quantity>{Quantity}</quantity>" +
+                    $"<quantity>{Quantity?.ToString(CultureInfo.InvariantCulture)}</quantity>" +
                     $"</orderrow>";
         }
     }

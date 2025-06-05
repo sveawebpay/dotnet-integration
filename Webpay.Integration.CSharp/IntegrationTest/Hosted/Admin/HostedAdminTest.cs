@@ -18,6 +18,7 @@ using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row.LowerAmount;
 using System.Text.Json;
 using Webpay.Integration.CSharp.Util;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -540,7 +541,49 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/lowerorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
         }
+
+        [Test]
+        public void TestUpdateOrderRow()
+        {
+
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .UpdateOrderRow(new UpdateOrderRow(
+                    transactionId: 12341234,
+                    orderRows: new List<Order.Row.Update.OrderRow> {
+                        new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
+                         new Order.Row.Update.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
+                    },
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
+        }
+        [Test]
+        public void TestAddOrderRow()
+        {
+
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .AddOrderRow(new AddOrderRow(
+                    transactionId: 12341234,
+                    orderRows: new List<Order.Row.Add.OrderRow> {
+                        new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
+                         new Order.Row.Add.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
+                    },
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));          
+
+        }
+
        
+
         [Test]
         public void TestLowerOrderRowResponse()
         {

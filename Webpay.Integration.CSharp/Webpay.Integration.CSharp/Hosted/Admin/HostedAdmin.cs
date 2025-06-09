@@ -168,11 +168,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
         public HostedActionRequest UpdateOrderRow(UpdateOrderRow updateOrderRow)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <addorderrow>
+                <updateorderrow>
                 <transactionid>{0}</transactionid>
                 <orderrows>{1}
                 </orderrows>
-                </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
+                </updateorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
             AddCorrelationIdHeader(updateOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updateorderrow");
         }

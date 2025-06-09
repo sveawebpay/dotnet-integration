@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Net;
+using Webpay.Integration.CSharp.AdminWS;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Exception;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
+using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
 using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Util.Constant;
 
@@ -58,6 +61,18 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
                 return (T)(object)hostedAdminResponse.To(LowerAmount.Response);
             }
+
+            if (typeof(T) == typeof(UpdateOrderRowResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(UpdateOrderRow.Response);
+            }
+
+            if (typeof(T) == typeof(AddOrderRowResponse))
+            {
+                var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
+                return (T)(object)hostedAdminResponse.To(AddOrderRow.Response);
+            }
             //LowerAmountConfirm
             if (typeof(T) == typeof(LowerAmountConfirmResponse))
             {
@@ -94,6 +109,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
                 var hostedAdminResponse = HostedAdminRequest.HostedAdminCall(GetEndPointBase(), PrepareRequest());
                 return (T)(object)hostedAdminResponse;
             }
+
             //default catch-all
             throw new SveaWebPayException("unknown request type");
         }

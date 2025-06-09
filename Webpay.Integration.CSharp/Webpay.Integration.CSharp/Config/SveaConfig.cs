@@ -2,6 +2,7 @@
 {
     public class SveaConfig
     {
+        //private const string HostedTestAdminBaseUrl = "https://webpaypaymentgateway.test.svea.com/webpay/";
         private const string HostedTestAdminBaseUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/";
         private const string HostedProdAdminBaseUrl = "https://webpaypaymentgateway.svea.com/webpay/";
         //private const string SwpTestUrl = "https://webpaypaymentgatewaystage.svea.com/webpay/payment";

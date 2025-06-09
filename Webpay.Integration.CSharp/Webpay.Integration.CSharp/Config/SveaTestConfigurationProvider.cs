@@ -131,8 +131,8 @@ namespace Webpay.Integration.CSharp.Config
         {
             return type == PaymentType.HOSTED
             //? (country == CountryCode.NO ? "9d8d83fe18ed0fe3cf6de8bfd29d82bdaf228f3f8b292b087ec48736b083ce4699c3493a406f02f1300e24490e0c7d0d6d55bfc38dd8e9c1390ac17ce56bdb1a" : "8a9cece566e808da63c6f07ff415ff9e127909d000d259aba24daa2fed6d9e3f8b0b62e8ad1fa91c7d7cd6fc3352deaae66cdb533123edf127ad7d1f4c77e7a3")
-            ? (country == CountryCode.NO ? "9d8d83fe18ed0fe3cf6de8bfd29d82bdaf228f3f8b292b087ec48736b083ce4699c3493a406f02f1300e24490e0c7d0d6d55bfc38dd8e9c1390ac17ce56bdb1a" : "1f8bcd8a564073f7156efd2522d5998f5487a1dcd19e1e120276fb1fb7e233a6059c45d6eb44a8d7342a4989bbb95acd4708051bbc145bda43ae0dd3503928db")
-
+            ? (country == CountryCode.NO ? "9d8d83fe18ed0fe3cf6de8bfd29d82bdaf228f3f8b292b087ec48736b083ce4699c3493a406f02f1300e24490e0c7d0d6d55bfc38dd8e9c1390ac17ce56bdb1a" : "1f8bcd8a564073f7156efd2522d5998f5487a1dcd19e1e120276fb1fb7e233a6059c45d6eb44a8d7342a4989bbb95acd4708051bbc145bda43ae0dd3503928db") //Stage
+            //? (country == CountryCode.NO ? "9d8d83fe18ed0fe3cf6de8bfd29d82bdaf228f3f8b292b087ec48736b083ce4699c3493a406f02f1300e24490e0c7d0d6d55bfc38dd8e9c1390ac17ce56bdb1a" : "e1569af730dc934f34146a182e4cf9277f268a4575a5a68b03167f393ab78cb321a9339c1e7904466bdeec72ee762c693738f4398fc1d26ccfc2a6492838c1a5") //test
             : "";
         }
 

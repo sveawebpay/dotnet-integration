@@ -19,6 +19,7 @@ using Webpay.Integration.CSharp.Order.Row.LowerAmount;
 using System.Text.Json;
 using Webpay.Integration.CSharp.Util;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
+using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -181,6 +182,43 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("id").InnerText, Is.EqualTo("1234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/credit/deliveries").FirstChild.SelectSingleNode("orderrows").FirstChild.FirstChild.InnerText, Is.EqualTo("1"));
+        }
+
+        [Test]
+        public void TestUpdateOrderRows_PG()
+        {
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+               .UpdateOrderRow(new UpdateOrderRow(
+                   transactionId: 102026690,
+                   orderRows: new List<Order.Row.Update.OrderRow> {
+                        new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,RowId = 1}
+                   },
+                   correlationId: null
+               ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+
+            var hostedAdminResponse = hostedActionRequest.DoRequest<UpdateOrderRowResponse>();
+            Assert.That(hostedAdminResponse.StatusCode, Is.EqualTo("0"));
+            
+        }
+        [Test]
+        public void TestAddOrderRows_PG()
+        {
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+               .AddOrderRow(new AddOrderRow(
+                   transactionId: 102026690,
+                   orderRows: new List<Order.Row.Add.OrderRow> {
+                        new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1}
+                   },
+                   correlationId: null
+               ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+
+            var hostedAdminResponse = hostedActionRequest.DoRequest<AddOrderRowResponse>();
+            Assert.That(hostedAdminResponse.StatusCode, Is.EqualTo("0"));
+
         }
         [Test]
         public void TestCreditOrderRowsWithoutDeliveryId()
@@ -557,6 +595,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 ));
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));

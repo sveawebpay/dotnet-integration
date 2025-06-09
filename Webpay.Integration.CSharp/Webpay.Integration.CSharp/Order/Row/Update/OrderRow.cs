@@ -4,7 +4,7 @@ namespace Webpay.Integration.CSharp.Order.Row.Update
 {
     public class OrderRow
     {
-        public string RowId { get; set; }
+        public int RowId { get; set; }
         public string Name { get; set; }
         public long UnitPrice { get; set; }
         public decimal Quantity { get; set; }
@@ -14,7 +14,7 @@ namespace Webpay.Integration.CSharp.Order.Row.Update
         public string ArticleNumber { get; set; }
         public string GetXmlForOrderRow()
         {
-            return $"<row>" +
+            return $"<orderrow>" +
                     $"<rowid>{RowId}</rowid>" +
                     $"<name>{Name}</name>" +
                     $"<quantity>{Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
@@ -23,7 +23,7 @@ namespace Webpay.Integration.CSharp.Order.Row.Update
                     $"<discountpercent>{DiscountPercent}</discountpercent>" +
                     $"<unit>{Unit}</unit>" +
                     $"<articlenumber>{ArticleNumber}</articlenumber>"+
-                    $"</row>";
+                    $"</orderrow>";
         }
     }
 }

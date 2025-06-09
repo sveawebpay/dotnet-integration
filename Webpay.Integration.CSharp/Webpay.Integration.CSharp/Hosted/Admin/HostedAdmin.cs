@@ -159,7 +159,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <addorderrow>
                 <transactionid>{0}</transactionid>
-                <orderrows>{2}
+                <orderrows>{1}
                 </orderrows>
                 </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
             AddCorrelationIdHeader(updateOrderRow.CorrelationId);
@@ -170,7 +170,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <addorderrow>
                 <transactionid>{0}</transactionid>
-                <orderrows>{2}
+                <orderrows>{1}
                 </orderrows>
                 </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
             AddCorrelationIdHeader(updateOrderRow.CorrelationId);

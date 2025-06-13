@@ -207,9 +207,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                .AddOrderRow(new AddOrderRow(
-                   transactionId: 102026690,
+                   transactionId: 102038418,
                    orderRows: new List<Order.Row.Add.OrderRow> {
-                        new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1}
+                        new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
+                         new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
+                          new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1}
                    },
                    correlationId: null
                ));

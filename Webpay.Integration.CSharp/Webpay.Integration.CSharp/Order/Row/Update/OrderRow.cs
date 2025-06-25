@@ -19,8 +19,8 @@ namespace Webpay.Integration.CSharp.Order.Row.Update
                     $"<name>{Name}</name>" +
                     $"<quantity>{Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
                     $"<unitprice>{UnitPrice}</unitprice>" +
-                    $"<vatpercent>{VatPercent}</vatpercent>" +
-                    $"<discountpercent>{DiscountPercent}</discountpercent>" +
+                    $"<vatpercent>{VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +
+                    $"<discountpercent>{DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
                     $"<unit>{Unit}</unit>" +
                     $"<articlenumber>{ArticleNumber}</articlenumber>"+
                     $"</orderrow>";

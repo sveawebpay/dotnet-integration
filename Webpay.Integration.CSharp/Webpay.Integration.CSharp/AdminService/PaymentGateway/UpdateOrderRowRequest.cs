@@ -23,6 +23,7 @@ namespace Webpay.Integration.CSharp.AdminService.PaymentGateway
             .UpdateOrderRow(new UpdateOrderRow(
                 transactionId: _builder.Id,
                 orderRows: _builder.OrderRows,
+                reference: _builder.Reference,
                 correlationId: _builder.GetCorrelationId()));
 
             return hostedActionRequest.DoRequest<UpdateOrderRowResponse>();

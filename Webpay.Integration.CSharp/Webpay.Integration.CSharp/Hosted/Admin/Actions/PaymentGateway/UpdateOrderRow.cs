@@ -9,11 +9,13 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway
     public class UpdateOrderRow : BasicRequest
     {
         public readonly long TransactionId;
+        public readonly string Reference;
         public readonly List<OrderRow> OrderRows;
-        public UpdateOrderRow(long transactionId, List<OrderRow> orderRows, Guid? correlationId) : base(correlationId)
+        public UpdateOrderRow(long transactionId, List<OrderRow> orderRows,string reference, Guid? correlationId) : base(correlationId)
         {
             TransactionId = transactionId;
             OrderRows = orderRows;
+            Reference = reference;
         }
         public string GetXmlForOrderRows()
         {

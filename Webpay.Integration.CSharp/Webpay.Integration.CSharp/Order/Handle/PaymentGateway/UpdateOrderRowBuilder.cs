@@ -11,6 +11,7 @@ namespace Webpay.Integration.CSharp.Order.Handle.PaymentGateway
     {
         internal long Id;
         internal List<OrderRow> OrderRows;
+        internal string Reference;
         public UpdateOrderRowBuilder(IConfigurationProvider config) : base(config)
         {
             this.OrderRows = new List<OrderRow>();
@@ -22,7 +23,11 @@ namespace Webpay.Integration.CSharp.Order.Handle.PaymentGateway
             return this;
         }
 
-       
+        public UpdateOrderRowBuilder SetReference(string reference)
+        {
+            Reference = reference;
+            return this;
+        }
 
         public override UpdateOrderRowBuilder SetCountryCode(CountryCode countryCode)
         {

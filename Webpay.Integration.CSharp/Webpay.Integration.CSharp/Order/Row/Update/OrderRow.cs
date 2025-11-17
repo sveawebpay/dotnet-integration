@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Xml;
+using Webpay.Integration.CSharp.Util;
 
 namespace Webpay.Integration.CSharp.Order.Row.Update
 {
@@ -17,14 +19,14 @@ namespace Webpay.Integration.CSharp.Order.Row.Update
         {
             return $"<orderrow>" +
                     $"<rowid>{RowId}</rowid>" +
-                    $"<name>{Name}</name>" +
+                    $"<name>{Name.XmlEscape()}</name>" +
                     $"<quantity>{Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
                     $"<unitprice>{UnitPrice}</unitprice>" +
                     $"<vatpercent>{VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +
                     $"<discountpercent>{DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
                     $"<discountamount>{DiscountAmount}</discountamount>" +
                     $"<unit>{Unit}</unit>" +
-                    $"<articlenumber>{ArticleNumber}</articlenumber>"+
+                    $"<articlenumber>{ArticleNumber.XmlEscape()}</articlenumber>"+
                     $"</orderrow>";
         }
     }

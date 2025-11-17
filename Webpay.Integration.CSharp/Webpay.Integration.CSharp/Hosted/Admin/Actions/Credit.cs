@@ -81,7 +81,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
                          $"<discountpercent>{orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
                          $"<discountamount>{orderRow.DiscountAmount}</discountamount>" +
                          $"<unit>{orderRow.Unit}</unit>" +
-                         $"<articlenumber>{orderRow.ArticleNumber}</articlenumber>" +
+                         $"<articlenumber>{orderRow.ArticleNumber.XmlEscape()}</articlenumber>" +
                          $"</row>";
         }
         private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)

@@ -190,11 +190,11 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                .UpdateOrderRow(new UpdateOrderRow(
                    transactionId: 102026690,
-
+               
                    orderRows: new List<Order.Row.Update.OrderRow> {
-                        new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,RowId = 1}
+                        new Order.Row.Update.OrderRow{Name ="t1&& gg",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,RowId = 1}
                    },
-                   "reference",
+                   reference: "ref-123",
                    correlationId: null
                ));
 
@@ -595,7 +595,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                         new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
                          new Order.Row.Update.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
                     },
-                     "reference",
+                     reference:"reference",
                     correlationId: null
                 ));
 

@@ -16,6 +16,8 @@ public class Cart
         private set => CartLineCollection = value.ToList();
     }
 
+    public bool IsEmpty => CartLines == null || !CartLines.Any();
+
     public string SveaOrderId { get; set; }
     public bool Vat { get; set; }
     public bool IsInternational { get; set; }

@@ -19,6 +19,7 @@ using Webpay.Integration;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using WebpayWS;
+
 using Cart = Sample.AspNetCore.Models.Cart;
 
 namespace Sample.AspNetCore.Controllers;
@@ -71,6 +72,12 @@ public class CheckOutController : Controller
             return View("Checkout");
         }
 
+        if (!_cartService.CartLines.Any())
+        {
+            ViewBag.Error = "Cart is empty.";
+            return View("Checkout");
+        }
+
         try
         {
             TempData["AddressData"] = null;
@@ -100,6 +107,7 @@ public class CheckOutController : Controller
                 TempData["AddressData"] = JsonSerializer.Serialize(mockedAddresses);
                 TempData["IsCompany"] = IsCompany;
                 TempData.Keep("IsCompany");
+                TempData.Keep("AddressData");
 
                 ViewBag.Addresses = mockedAddresses;
                 ViewBag.ShowAdditionalFields = true;
@@ -303,8 +311,12 @@ public class CheckOutController : Controller
         }
         else
         {
-            ViewBag.Error = "Something went wrong. Please try again.";
-            ViewBag.ShowAdditionalFields = true;
+            if (order.ErrorMessage != null)
+                ViewBag.Error = order.ErrorMessage;
+            else
+                ViewBag.Error = "Something went wrong. Please try again.";
+
+            ViewBag.ShowAdditionalFields = false;
             return View("Checkout");
         }
     }

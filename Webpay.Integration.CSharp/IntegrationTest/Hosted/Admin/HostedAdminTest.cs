@@ -1,25 +1,26 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 using System.Xml;
-using NUnit.Framework;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
+using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
+using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
 using Webpay.Integration.CSharp.Hosted.Payment;
-using Webpay.Integration.CSharp.Util.Constant;
-using Webpay.Integration.CSharp.Util.Testing;
+using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Handle;
 using Webpay.Integration.CSharp.Order.Row;
-using System.Collections.Generic;
 using Webpay.Integration.CSharp.Order.Row.credit;
-using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row.LowerAmount;
-using System.Text.Json;
 using Webpay.Integration.CSharp.Util;
-using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
-using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
+using Webpay.Integration.CSharp.Util.Constant;
+using Webpay.Integration.CSharp.Util.Testing;
 
 namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 {
@@ -203,6 +204,28 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminResponse = hostedActionRequest.DoRequest<UpdateOrderRowResponse>();
             Assert.That(hostedAdminResponse.StatusCode, Is.EqualTo("0"));
             
+        }
+
+        [Test]
+        public void TestUpdateMetadata_PG()
+        {
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+               .UpdateMetadata(new UpdateMetadata(
+                   transactionId: 1357296,
+
+                   metadata: new Dictionary<string, string> {
+                         { "Potato", "Yes" },
+                         { "Merchants Favorite Number", "012345678901234567890123456789" },
+                         { "Name", "Santa" }
+                   },
+                   correlationId: null
+               ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+
+            var hostedAdminResponse = hostedActionRequest.DoRequest<UpdateMetadataResponse>();
+            Assert.That(hostedAdminResponse.StatusCode, Is.EqualTo(0));
+
         }
         [Test]
         public void TestAddOrderRows_PG()

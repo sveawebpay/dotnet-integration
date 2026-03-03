@@ -24,5 +24,13 @@ namespace Webpay.Integration.CSharp.Util
             node.InnerXml = escaped;
             return node.InnerText;
         }
+
+        public static string GetXml(this KeyValuePair<string, string> item)
+        {
+            return $"<item>" +
+                     $"<key>{item.Key}</key>" +
+                     $"<value>{item.Value}</value>" +
+                   $"</item>";
+        }
     }
 }

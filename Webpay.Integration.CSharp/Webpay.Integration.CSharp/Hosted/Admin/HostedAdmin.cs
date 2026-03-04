@@ -177,6 +177,17 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             AddCorrelationIdHeader(updateOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updateorderrow");
         }
+        public HostedActionRequest UpdateMetadata(UpdateMetadata metadata)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <updatepaymentmetadata>
+                <transactionid>{0}</transactionid>
+                <metadata>{1}
+                </metadata>
+                </updatepaymentmetadata>", metadata.TransactionId, metadata.GetXmlForMetadata());
+            AddCorrelationIdHeader(metadata.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updatepaymentmetadata");
+        }
         public HostedActionRequest Query(QueryByTransactionId query)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>

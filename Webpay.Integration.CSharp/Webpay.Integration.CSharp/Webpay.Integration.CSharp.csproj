@@ -92,6 +92,7 @@
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />
     <Compile Include="AdminService\ConfirmTransactionRequest.cs" />
     <Compile Include="AdminService\CancelOrderRowsRequest.cs" />
+    <Compile Include="AdminService\PaymentGateway\UpdateMetadataRequest.cs" />
     <Compile Include="AdminService\PaymentGateway\UpdateOrderRowRequest.cs" />
     <Compile Include="AdminService\PaymentGateway\AddOrderRowRequest.cs" />
     <Compile Include="AdminService\LowerOrderRowConfirmRequest.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Exception\SveaWebPayException.cs" />
     <Compile Include="Exception\SveaWebPayValidationException.cs" />
     <Compile Include="Hosted\Admin\Actions\PaymentGateway\AddOrderRow.cs" />
+    <Compile Include="Hosted\Admin\Actions\PaymentGateway\UpdateMetadata.cs" />
     <Compile Include="Hosted\Admin\Actions\PaymentGateway\UpdateOrderRow.cs" />
     <Compile Include="Hosted\Admin\Actions\Annul.cs" />
     <Compile Include="Hosted\Admin\Actions\BasicRequest.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Hosted\Admin\Response\GetReconciliationReportResponse.cs" />
     <Compile Include="Hosted\Admin\Actions\Credit.cs" />
     <Compile Include="Hosted\Admin\Response\LowerAmountConfirmResponse.cs" />
+    <Compile Include="Hosted\Admin\Response\PaymentGateway\UpdateMetadataResponse.cs" />
     <Compile Include="Hosted\Admin\Response\PaymentGateway\UpdateOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\PaymentGateway\AddOrderRowResponse.cs" />
     <Compile Include="Hosted\Admin\Response\LowerOrderRowConfirmResponse.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Hosted\Admin\Actions\Recur.cs" />
     <Compile Include="Order\Builder.cs" />
     <Compile Include="Order\Delivery.cs" />
+    <Compile Include="Order\Handle\PaymentGateway\UpdatePaymentMetadataBuilder.cs" />
     <Compile Include="Order\Handle\PaymentGateway\UpdateOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\PaymentGateway\AddOrderRowBuilder.cs" />
     <Compile Include="Order\Handle\LowerOrderRowConfirmBuilder.cs" />

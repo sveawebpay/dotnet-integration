@@ -87,6 +87,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Webpay.Integration.CSharp, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Webpay.Integration.CSharp.2.9.0-alpha\lib\net472\Webpay.Integration.CSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService\ConfirmPartialTransactionRequest.cs" />

@@ -28,7 +28,7 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
             var xml = "";
             foreach (var row in OrderRows)
             {
-                if(row.GetQuantity()>0 && row.GetRowNumber()>=0)
+                if(row.GetQuantity()>-1 && row.GetRowNumber()>=0)
                 {
                    xml += string.Format(@"
                 <orderrow>

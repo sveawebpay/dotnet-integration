@@ -495,7 +495,7 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
         async function openCreditAgreementPdf(e) {
             e.preventDefault();
             try {
-                const url = '/CheckOut/GetCreditAgreementPdf?paymentOption=Invoice&country=NO';
+                const url = '/CheckOut/GetInvoiceCreditAgreementPdf?paymentOption=Invoice&country=NO';
                 const resp = await fetch(url);
                 if (!resp.ok) throw new Error('Klarte ikke å hente kredittavtalen.');
                 const buf = await resp.arrayBuffer();

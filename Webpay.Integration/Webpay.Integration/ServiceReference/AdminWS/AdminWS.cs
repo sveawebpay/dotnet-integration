@@ -2712,6 +2712,8 @@ namespace AdminWS
         
         private decimal VatPercentField;
         
+        private string ReferenceField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ArticleNumber
         {
@@ -2867,6 +2869,19 @@ namespace AdminWS
                 this.VatPercentField = value;
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        public string Reference
+        {
+            get
+            {
+                return this.ReferenceField;
+            }
+            set
+            {
+                this.ReferenceField = value;
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
@@ -2955,7 +2970,7 @@ namespace AdminWS
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
     public enum InvoiceDistributionType : int
     {
         
@@ -2976,6 +2991,9 @@ namespace AdminWS
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Omni = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Kivra = 17,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Omni20 = 20,
@@ -3001,6 +3019,8 @@ namespace AdminWS
         
         private decimal QuantityToCreditField;
         
+        private string ReferenceField;
+        
         private long RowNumberField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
@@ -3013,6 +3033,19 @@ namespace AdminWS
             set
             {
                 this.QuantityToCreditField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference
+        {
+            get
+            {
+                return this.ReferenceField;
+            }
+            set
+            {
+                this.ReferenceField = value;
             }
         }
         
@@ -5311,6 +5344,10 @@ namespace AdminWS
         
         private System.Nullable<System.Guid> OrderIdField;
         
+        private string KycProductTypeField;
+        
+        private AdminWS.Item[] MetadataField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public AdminWS.AccountCreditInformation AccountCreditInformation
         {
@@ -5583,6 +5620,32 @@ namespace AdminWS
                 this.OrderIdField = value;
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        public string KycProductType
+        {
+            get
+            {
+                return this.KycProductTypeField;
+            }
+            set
+            {
+                this.KycProductTypeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        public AdminWS.Item[] Metadata
+        {
+            get
+            {
+                return this.MetadataField;
+            }
+            set
+            {
+                this.MetadataField = value;
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
@@ -5727,6 +5790,43 @@ namespace AdminWS
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Unacceptable = 5,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Item", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    public partial class Item : object
+    {
+        
+        private string KeyField;
+        
+        private string ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key
+        {
+            get
+            {
+                return this.KeyField;
+            }
+            set
+            {
+                this.KeyField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.ValueField;
+            }
+            set
+            {
+                this.ValueField = value;
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -12161,6 +12261,13 @@ namespace AdminWS
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
+        
+        #if !NET6_0_OR_GREATER
+        public virtual System.Threading.Tasks.Task CloseAsync()
+        {
+            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
+        }
+        #endif
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {

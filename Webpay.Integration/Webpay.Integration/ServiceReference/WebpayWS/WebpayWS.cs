@@ -159,6 +159,12 @@ namespace WebpayWS
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
         System.Threading.Tasks.Task<WebpayWS.GetContractPdfEuResponse> GetContractPdfEuAsync(WebpayWS.GetContractPdfEuRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://webservices.sveaekonomi.se/webpay/GetInvoiceCreditAgreementPdf", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicResponse))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BasicRequest))]
+        System.Threading.Tasks.Task<WebpayWS.GetInvoiceCreditAgreementPdfResponse> GetInvoiceCreditAgreementPdfAsync(WebpayWS.GetInvoiceCreditAgreementPdfRequest request);
     }
     
     /// <remarks/>
@@ -400,6 +406,8 @@ namespace WebpayWS
         
         private decimal toAmountField;
         
+        private decimal effectiveInterestField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public long CampaignCode
@@ -565,6 +573,20 @@ namespace WebpayWS
             set
             {
                 this.toAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public decimal EffectiveInterest
+        {
+            get
+            {
+                return this.effectiveInterestField;
+            }
+            set
+            {
+                this.effectiveInterestField = value;
             }
         }
     }
@@ -911,7 +933,10 @@ namespace WebpayWS
         Peppol,
         
         /// <remarks/>
-        Omni,
+        OmniCatchAll,
+        
+        /// <remarks/>
+        Kivra,
         
         /// <remarks/>
         Omni20,
@@ -2880,6 +2905,7 @@ namespace WebpayWS
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetInvoiceCreditAgreementPdfResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetContractPdfEuResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanParamsEuResponse))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetAccountCreditParamsEuResponse))]
@@ -2938,6 +2964,62 @@ namespace WebpayWS
             set
             {
                 this.errorMessageField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
+    public partial class GetInvoiceCreditAgreementPdfResponse : BasicResponse
+    {
+        
+        private int resultCodeField;
+        
+        private long fileLengthInBytesField;
+        
+        private string fileBinaryDataBase64Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int ResultCode
+        {
+            get
+            {
+                return this.resultCodeField;
+            }
+            set
+            {
+                this.resultCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public long FileLengthInBytes
+        {
+            get
+            {
+                return this.fileLengthInBytesField;
+            }
+            set
+            {
+                this.fileLengthInBytesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FileBinaryDataBase64
+        {
+            get
+            {
+                return this.fileBinaryDataBase64Field;
+            }
+            set
+            {
+                this.fileBinaryDataBase64Field = value;
             }
         }
     }
@@ -4439,6 +4521,8 @@ namespace WebpayWS
         
         private System.Nullable<RowType> rowTypeField;
         
+        private string referenceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string ArticleNumber
@@ -4604,6 +4688,20 @@ namespace WebpayWS
             set
             {
                 this.rowTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string Reference
+        {
+            get
+            {
+                return this.referenceField;
+            }
+            set
+            {
+                this.referenceField = value;
             }
         }
     }
@@ -5729,6 +5827,7 @@ namespace WebpayWS
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetInvoiceCreditAgreementPdfRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetContractPdfEuRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPaymentPlanParamsEuRequest))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetAccountCreditParamsEuRequest))]
@@ -5779,6 +5878,142 @@ namespace WebpayWS
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
+    public partial class GetInvoiceCreditAgreementPdfRequest : BasicRequest
+    {
+        
+        private string countryCodeField;
+        
+        private string fullNameField;
+        
+        private string streetAddressField;
+        
+        private string postalCodeField;
+        
+        private string cityField;
+        
+        private System.DateTime orderCreatedDateField;
+        
+        private decimal totalAmountField;
+        
+        private string nationalIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string CountryCode
+        {
+            get
+            {
+                return this.countryCodeField;
+            }
+            set
+            {
+                this.countryCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string StreetAddress
+        {
+            get
+            {
+                return this.streetAddressField;
+            }
+            set
+            {
+                this.streetAddressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string PostalCode
+        {
+            get
+            {
+                return this.postalCodeField;
+            }
+            set
+            {
+                this.postalCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string City
+        {
+            get
+            {
+                return this.cityField;
+            }
+            set
+            {
+                this.cityField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime OrderCreatedDate
+        {
+            get
+            {
+                return this.orderCreatedDateField;
+            }
+            set
+            {
+                this.orderCreatedDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal TotalAmount
+        {
+            get
+            {
+                return this.totalAmountField;
+            }
+            set
+            {
+                this.totalAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string NationalId
+        {
+            get
+            {
+                return this.nationalIdField;
+            }
+            set
+            {
+                this.nationalIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public partial class GetContractPdfEuRequest : BasicRequest
     {
         
@@ -5805,6 +6040,22 @@ namespace WebpayWS
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://webservices.sveaekonomi.se/webpay")]
     public partial class GetPaymentPlanParamsEuRequest : BasicRequest
     {
+        
+        private System.Nullable<decimal> amountField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public System.Nullable<decimal> Amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -6754,10 +7005,22 @@ namespace WebpayWS
             return base.Channel.GetContractPdfEuAsync(request);
         }
         
+        public System.Threading.Tasks.Task<WebpayWS.GetInvoiceCreditAgreementPdfResponse> GetInvoiceCreditAgreementPdfAsync(WebpayWS.GetInvoiceCreditAgreementPdfRequest request)
+        {
+            return base.Channel.GetInvoiceCreditAgreementPdfAsync(request);
+        }
+        
         public virtual System.Threading.Tasks.Task OpenAsync()
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
+        
+        #if !NET6_0_OR_GREATER
+        public virtual System.Threading.Tasks.Task CloseAsync()
+        {
+            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
+        }
+        #endif
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {

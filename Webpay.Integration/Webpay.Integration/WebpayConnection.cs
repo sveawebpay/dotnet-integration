@@ -7,6 +7,7 @@ using Webpay.Integration.Webservice.Getaddresses;
 using Webpay.Integration.Webservice.Getpaymentplanparams;
 using Webpay.Integration.Webservice.GetAccountCreditParams;
 using Webpay.Integration.Webservice.GetContractPdf;
+using Webpay.Integration.Webservice.GetInvoiceCreditAgreementPdf;
 
 namespace Webpay.Integration;
 
@@ -120,6 +121,16 @@ public static class WebpayConnection
         }
 
         return new GetAddresses(config);
+    }
+
+    public static GetInvoiceCreditAgreementPdf GetInvoiceCreditAgreementPdf(IConfigurationProvider config = null)
+    {
+        if (config == null)
+        {
+            throw new SveaWebPayException("A configuration must be provided. For testing purposes use SveaConfig.GetDefaultConfig()");
+        }
+
+        return new GetInvoiceCreditAgreementPdf(config);
     }
 
     /// <summary>

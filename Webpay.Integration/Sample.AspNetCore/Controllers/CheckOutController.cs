@@ -5,6 +5,7 @@ using Sample.AspNetCore.Extensions;
 using Sample.AspNetCore.Models;
 using Sample.AspNetCore.Webpay;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,20 +13,23 @@ using Webpay.Integration;
 using Webpay.Integration.Util.Constant;
 using Webpay.Integration.Util.Testing;
 using WebpayWS;
+
 using Cart = Sample.AspNetCore.Models.Cart;
 
 namespace Sample.AspNetCore.Controllers;
 
 public class CheckOutController : Controller
 {
-   private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly Cart _cartService;
     private readonly Market _marketService;
     private readonly StoreDbContext _context;
     private static readonly WebpayConfig Config = new WebpayConfig();
+
     private static int SelectedAddressIndex { get; set; }
     private static bool IsTestCustomersVisible { get; set; }
     private static bool UseBankID { get; set; } = false;
+    private static bool UseKalp { get; set; } = false;
 
     public CheckOutController(
         IHttpContextAccessor httpContextAccessor,
@@ -41,8 +45,14 @@ public class CheckOutController : Controller
 
     public async Task<IActionResult> LoadPaymentMenu(bool requireBankId, bool isInternational)
     {
-        TempData["UseBankID"] = false;
         UseBankID = false;
+        UseKalp = false;
+        IsTestCustomersVisible = true;
+        TempData["UseBankID"] = UseBankID;
+        TempData["UseKalp"] = UseKalp;
+        TempData["CountryId"] = _marketService.CountryId;
+        TempData["IsTestCustomersVisible"] = IsTestCustomersVisible;
+
         return View("Checkout");
     }
 
@@ -56,36 +66,76 @@ public class CheckOutController : Controller
             return View("Checkout");
         }
 
+        if (!_cartService.CartLines.Any())
+        {
+            ViewBag.Error = "Cart is empty.";
+            return View("Checkout");
+        }
+
         try
         {
             TempData["AddressData"] = null;
-            var request = WebpayConnection.GetAddresses(Config)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
-                .SetOrderTypeInvoice();
 
-            if (IsCompany)
+            var countryCode = _marketService.CountryId.GetCountryCode();
+
+            if (!IsCompany && (countryCode is CountryCode.FI || countryCode is CountryCode.NO))
             {
-                request.SetCompany(SSN);
+                var isFI = countryCode is CountryCode.FI;
+                var mockedAddress = new CustomerAddress
+                {
+                    LegalName = isFI ? "Matti Meikäläinen" : "Ola Normann",
+                    SecurityNumber = SSN,
+                    PhoneNumber = "112233",
+                    AddressLine1 = isFI ? "Testitie 1" : "Testveien 2",
+                    AddressLine2 = "1A",
+                    Postcode = isFI ? 370 : 0359,
+                    Zipcode = isFI ? "370" : "0359",
+                    Postarea = isFI ? "Helsinki" : "Oslo",
+                    BusinessType = BusinessTypeCode.Person,
+                    FirstName = isFI ? "Matti" : "Ola",
+                    LastName = isFI ? "Meikäläinen" : "Normann"
+                };
+
+                var mockedAddresses = new List<CustomerAddress> { mockedAddress }.ToArray();
+
+                TempData["AddressData"] = JsonSerializer.Serialize(mockedAddresses);
+                TempData["IsCompany"] = IsCompany;
+                TempData.Keep("IsCompany");
+                TempData.Keep("AddressData");
+
+                ViewBag.Addresses = mockedAddresses;
+                ViewBag.ShowAdditionalFields = true;
             }
             else
             {
-                request.SetIndividual(SSN);
+                var request = WebpayConnection.GetAddresses(Config)
+                    .SetCountryCode(countryCode)
+                    .SetOrderTypeInvoice();
+
+                if (IsCompany)
+                {
+                    request.SetCompany(SSN);
+                }
+                else
+                {
+                    request.SetIndividual(SSN);
+                }
+
+                var response = await request.DoRequestAsync();
+
+                if (response.RejectionCode != GetCustomerAddressesRejectionCode.Accepted)
+                {
+                    ViewBag.Error = "Failed to fetch address. Please verify the SSN.";
+                    return View("Checkout");
+                }
+
+                TempData["AddressData"] = JsonSerializer.Serialize(response.Addresses);
+                TempData["IsCompany"] = IsCompany;
+                TempData.Keep("IsCompany");
+
+                ViewBag.Addresses = response.Addresses;
+                ViewBag.ShowAdditionalFields = true;
             }
-
-            var response = await request.DoRequestAsync();
-
-            if (response.RejectionCode != GetCustomerAddressesRejectionCode.Accepted)
-            {
-                ViewBag.Error = "Failed to fetch address. Please verify the SSN.";
-                return View("Checkout");
-            }
-
-            TempData["AddressData"] = JsonSerializer.Serialize(response.Addresses);
-            TempData["IsCompany"] = IsCompany;
-            TempData.Keep("IsCompany");
-
-            ViewBag.Addresses = response.Addresses;
-            ViewBag.ShowAdditionalFields = true;
         }
         catch (Exception ex)
         {
@@ -147,7 +197,7 @@ public class CheckOutController : Controller
 
         var createOrderBuilder = WebpayConnection.CreateOrder(Config)
             .AddOrderRows(orderItems)
-            .SetCountryCode(TestingTool.DefaultTestCountryCode)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetOrderDate(DateTime.Now)
             .SetClientOrderNumber(clientOrderNumber)
             .SetCorrelationId(correlationId)
@@ -178,7 +228,7 @@ public class CheckOutController : Controller
         if (PaymentOption == "PaymentPlan")
         {
             var paymentPlanParam = await WebpayConnection.GetPaymentPlanParams(Config)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .DoRequestAsync();
 
             var selectedCampaign = paymentPlanParam.CampaignCodes
@@ -196,7 +246,7 @@ public class CheckOutController : Controller
         else if (PaymentOption == "AccountCredit")
         {
             var accountCreditParam = await WebpayConnection.GetAccountCreditParams(Config)
-                .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .DoRequestAsync();
 
             var selectedCampaign = accountCreditParam.AccountCreditCampaignCodes
@@ -246,12 +296,21 @@ public class CheckOutController : Controller
             {
                 return Redirect(order.NavigationResult.RedirectUrl);
             }
+
+            // temp
+            if (UseKalp)
+                return Redirect("https://www.svea.com/sv-se/logga-in");
+
             return RedirectToAction("Thankyou");
         }
         else
         {
-            ViewBag.Error = "Something went wrong. Please try again.";
-            ViewBag.ShowAdditionalFields = true;
+            if (order.ErrorMessage != null)
+                ViewBag.Error = order.ErrorMessage;
+            else
+                ViewBag.Error = "Something went wrong. Please try again.";
+
+            ViewBag.ShowAdditionalFields = false;
             return View("Checkout");
         }
     }
@@ -268,7 +327,7 @@ public class CheckOutController : Controller
                 case "PaymentPlan":
                     var paymentPlanParams = await WebpayConnection
                         .GetPaymentPlanParams(Config)
-                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                        .SetCountryCode(_marketService.CountryId.GetCountryCode())
                         .DoRequestAsync();
 
                     if (paymentPlanParams.ResultCode != 0)
@@ -289,7 +348,7 @@ public class CheckOutController : Controller
                 case "AccountCredit":
                     var accountCreditParams = await WebpayConnection
                         .GetAccountCreditParams(Config)
-                        .SetCountryCode(TestingTool.DefaultTestCountryCode)
+                        .SetCountryCode(_marketService.CountryId.GetCountryCode())
                         .DoRequestAsync();
 
                     if (accountCreditParams.ResultCode != 0)
@@ -340,17 +399,88 @@ public class CheckOutController : Controller
         return NoContent();
     }
 
+    [HttpPost]
+    public IActionResult UpdateUseKalp(bool useKalpInput)
+    {
+        UseKalp = useKalpInput;
+        TempData["UseKalp"] = useKalpInput.ToString();
+        return NoContent();
+    }
+
     public ViewResult Thankyou()
     {
         _cartService.Clear();
         return View();
     }
 
-    // Helpers
+    [HttpGet]
+    public async Task<IActionResult> GetInvoiceCreditAgreementPdf(string paymentOption, string country)
+    {
+        if (!country.Equals("NO", StringComparison.OrdinalIgnoreCase))
+            return BadRequest("Unsupported country for credit agreement PDF.");
+
+        var countryCode = _marketService.CountryId.GetCountryCode();
+
+        var addressDataJson = TempData.Peek("AddressData") as string;
+        if (string.IsNullOrWhiteSpace(addressDataJson))
+            return BadRequest("Address data is missing.");
+
+        var addresses = JsonSerializer.Deserialize<CustomerAddress[]>(addressDataJson);
+        if (addresses == null || addresses.Length == 0)
+            return BadRequest("No addresses available.");
+
+        if (SelectedAddressIndex < 0 || SelectedAddressIndex >= addresses.Length)
+            return BadRequest("Invalid address selection.");
+
+        var a = addresses[SelectedAddressIndex];
+        var fullName = !string.IsNullOrWhiteSpace(a.LegalName)
+            ? a.LegalName
+            : $"{a.FirstName?.Trim()} {a.LastName?.Trim()}".Trim();
+
+        var street = $"{a.AddressLine1} {a.AddressLine2 ?? ""}".Trim();
+        var postal = !string.IsNullOrWhiteSpace(a.Zipcode) ? a.Zipcode : a.Postcode.ToString();
+        var city = a.Postarea;
+        var nationalId = a.SecurityNumber ?? "";
+        var totalAmount = _cartService.CartLines.Sum(line => line.CalculateTotal());
+
+        var response = await WebpayConnection
+            .GetInvoiceCreditAgreementPdf(Config)
+            .SetCountryCode(countryCode)
+            .SetFullName(fullName)
+            .SetStreetAddress(street)
+            .SetPostalCode(postal)
+            .SetCity(city)
+            .SetOrderCreatedDate(DateTime.UtcNow)
+            .SetTotalAmount(totalAmount)
+            .SetNationalId(nationalId)
+            .DoRequestAsync();
+
+        if (response == null)
+            return StatusCode(500, "No response returned from service.");
+
+        if (string.IsNullOrWhiteSpace(response.FileBinaryDataBase64))
+            return NotFound("No PDF returned from service.");
+
+        byte[] pdfBytes;
+        try
+        {
+            pdfBytes = Convert.FromBase64String(response.FileBinaryDataBase64);
+        }
+        catch
+        {
+            return BadRequest("Invalid base64 PDF returned from service.");
+        }
+
+        return File(pdfBytes, "application/pdf", "kredittavtale.pdf");
+    }
+
     private void SaveTempData()
     {
         TempData["IsTestCustomersVisible"] = IsTestCustomersVisible;
+        TempData["CountryId"] = _marketService.CountryId;
+
         TempData.Keep("IsTestCustomersVisible");
+        TempData.Keep("CountryId");
     }
 
     private string GetIpAddress()

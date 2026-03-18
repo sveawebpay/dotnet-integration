@@ -13,7 +13,7 @@ namespace AdminWS
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BasicRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AdminWS.ApproveInvoiceRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AdminWS.CancelOrderRequest))]
@@ -96,7 +96,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Authentication", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class Authentication : object
     {
@@ -133,7 +133,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ApproveInvoiceRequest : AdminWS.BasicRequest
     {
@@ -170,7 +170,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelOrderRequest : AdminWS.BasicRequest
     {
@@ -222,7 +222,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelOrderRowsRequest : AdminWS.BasicRequest
     {
@@ -289,7 +289,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelPaymentPlanAmountRequest : AdminWS.BasicRequest
     {
@@ -356,7 +356,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelPaymentPlanRowsRequest : AdminWS.BasicRequest
     {
@@ -408,7 +408,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreditInvoiceRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreditInvoiceRequest : AdminWS.BasicRequest
     {
@@ -505,7 +505,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PartialDeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PartialDeliveryRequest : AdminWS.BasicRequest
     {
@@ -587,7 +587,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ExtendOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ExtendOrderRequest : AdminWS.BasicRequest
     {
@@ -639,7 +639,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountingReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetAccountingReportRequest : AdminWS.BasicRequest
     {
@@ -706,7 +706,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetFinancialReportRequest : AdminWS.BasicRequest
     {
@@ -758,7 +758,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceJournalReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoiceJournalReportRequest : AdminWS.BasicRequest
     {
@@ -810,7 +810,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicePdfLinkRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoicePdfLinkRequest : AdminWS.BasicRequest
     {
@@ -847,7 +847,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoiceReportRequest : AdminWS.BasicRequest
     {
@@ -899,7 +899,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoicesWithChangedDueDateRequest : AdminWS.BasicRequest
     {
@@ -951,7 +951,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderEventsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrderEventsRequest : AdminWS.BasicRequest
     {
@@ -1033,7 +1033,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderPdfLinkRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrderPdfLinkRequest : AdminWS.BasicRequest
     {
@@ -1070,7 +1070,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetPaymentPlanReportRequest : AdminWS.BasicRequest
     {
@@ -1122,7 +1122,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetRegressionReportRequest : AdminWS.BasicRequest
     {
@@ -1174,7 +1174,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ReleasePendingRequest : AdminWS.BasicRequest
     {
@@ -1226,7 +1226,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class UpdateOrderRequest : AdminWS.BasicRequest
     {
@@ -1353,7 +1353,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class UpdateOrderRowsRequest : AdminWS.BasicRequest
     {
@@ -1420,7 +1420,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrdersRequest : AdminWS.BasicRequest
     {
@@ -1442,7 +1442,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeliveryRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class DeliveryRequest : AdminWS.BasicRequest
     {
@@ -1479,7 +1479,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrdersRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchOrdersRequest : AdminWS.BasicRequest
     {
@@ -1546,7 +1546,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchInvoicesRequest : AdminWS.BasicRequest
     {
@@ -1613,7 +1613,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoicesRequest : AdminWS.BasicRequest
     {
@@ -1635,7 +1635,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlansRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchPaymentPlansRequest : AdminWS.BasicRequest
     {
@@ -1702,7 +1702,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SumOfOrderAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SumOfOrderAmountRequest : AdminWS.BasicRequest
     {
@@ -1724,7 +1724,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SumOfInvoiceAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SumOfInvoiceAmountRequest : AdminWS.BasicRequest
     {
@@ -1746,7 +1746,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SumOfPaymentPlanAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SumOfPaymentPlanAmountRequest : AdminWS.BasicRequest
     {
@@ -1783,7 +1783,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreateOrderRequest : AdminWS.BasicRequest
     {
@@ -1820,7 +1820,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ChangeInvoiceDueDateRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ChangeInvoiceDueDateRequest : AdminWS.BasicRequest
     {
@@ -1872,7 +1872,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateApprovedOrderRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreateApprovedOrderRequest : AdminWS.BasicRequest
     {
@@ -1984,7 +1984,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchAccountCreditsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchAccountCreditsRequest : AdminWS.BasicRequest
     {
@@ -2051,7 +2051,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountCreditsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetAccountCreditsRequest : AdminWS.BasicRequest
     {
@@ -2073,7 +2073,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class CancelAccountCreditAmountRequest : AdminWS.BasicRequest
     {
@@ -2140,7 +2140,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class CancelAccountCreditRowsRequest : AdminWS.BasicRequest
     {
@@ -2192,7 +2192,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class AccountCreditRegressReportRequest : AdminWS.BasicRequest
     {
@@ -2259,7 +2259,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class AccountingAgreementType25ReportRequest : AdminWS.BasicRequest
     {
@@ -2311,7 +2311,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetDebtInvoicesPaidToClientForReportRequest : AdminWS.BasicRequest
     {
@@ -2363,7 +2363,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetInvoicesPaidToClientForReportRequest : AdminWS.BasicRequest
     {
@@ -2415,7 +2415,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetKickbackReportRequest : AdminWS.BasicRequest
     {
@@ -2452,7 +2452,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetPendingReasonsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetPendingReasonsRequest : AdminWS.BasicRequest
     {
@@ -2489,7 +2489,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetSpecificationReportRequest : AdminWS.BasicRequest
     {
@@ -2556,7 +2556,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetClientIdRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetClientIdRequest : AdminWS.BasicRequest
     {
@@ -2578,7 +2578,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsRequest", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AddOrderRowsRequest : AdminWS.BasicRequest
     {
@@ -2645,7 +2645,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Setting", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class Setting : object
     {
@@ -2682,7 +2682,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AdminWS.NumberedOrderRow))]
     public partial class OrderRow : object
@@ -2711,6 +2711,8 @@ namespace AdminWS
         private string UnitField;
         
         private decimal VatPercentField;
+        
+        private string ReferenceField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ArticleNumber
@@ -2867,9 +2869,22 @@ namespace AdminWS
                 this.VatPercentField = value;
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        public string Reference
+        {
+            get
+            {
+                return this.ReferenceField;
+            }
+            set
+            {
+                this.ReferenceField = value;
+            }
+        }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public enum OrderType : int
     {
@@ -2888,7 +2903,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancellationRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancellationRow : object
     {
@@ -2954,8 +2969,8 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.DeliverOrder")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceDistributionType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
     public enum InvoiceDistributionType : int
     {
         
@@ -2978,6 +2993,9 @@ namespace AdminWS
         Omni = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        Kivra = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         Omni20 = 20,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -2994,12 +3012,14 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RowCreditingOption", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class RowCreditingOption : object
     {
         
         private decimal QuantityToCreditField;
+        
+        private string ReferenceField;
         
         private long RowNumberField;
         
@@ -3013,6 +3033,19 @@ namespace AdminWS
             set
             {
                 this.QuantityToCreditField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference
+        {
+            get
+            {
+                return this.ReferenceField;
+            }
+            set
+            {
+                this.ReferenceField = value;
             }
         }
         
@@ -3031,7 +3064,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="NumberedOrderRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class NumberedOrderRow : AdminWS.OrderRow
     {
@@ -3097,7 +3130,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RowType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
     public enum RowType : int
     {
@@ -3116,7 +3149,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeliverOrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class DeliverOrderInformation : object
     {
@@ -3198,7 +3231,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RowDeliveryOption", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class RowDeliveryOption : object
     {
@@ -3234,7 +3267,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderEventType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum OrderEventType : int
     {
@@ -3250,7 +3283,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrderInformation : object
     {
@@ -3302,7 +3335,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrderFilter", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchOrderFilter : object
     {
@@ -3414,7 +3447,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrderSorting", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchOrderSorting : object
     {
@@ -3450,7 +3483,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderDeliveryStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum OrderDeliveryStatus : int
     {
@@ -3468,7 +3501,7 @@ namespace AdminWS
         Cancelled = 3,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public enum OrderStatus : int
     {
@@ -3492,7 +3525,7 @@ namespace AdminWS
         Pending = 5,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TextMatchType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Order")]
     public enum TextMatchType : int
     {
@@ -3510,7 +3543,7 @@ namespace AdminWS
         NationalIdNumber = 4,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SortDirection", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum SortDirection : int
     {
@@ -3522,7 +3555,7 @@ namespace AdminWS
         Descending = 2,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SortOrderProperty", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum SortOrderProperty : int
     {
@@ -3556,7 +3589,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoiceFilter", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchInvoiceFilter : object
     {
@@ -3653,7 +3686,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoiceSorting", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchInvoiceSorting : object
     {
@@ -3689,7 +3722,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoicePaymentStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum InvoicePaymentStatus : int
     {
@@ -3728,7 +3761,7 @@ namespace AdminWS
         Refund = 11,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TextMatchType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.Invoice")]
     public enum TextMatchType1 : int
     {
@@ -3749,7 +3782,7 @@ namespace AdminWS
         ClientInvoiceId = 5,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SortInvoiceProperty", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum SortInvoiceProperty : int
     {
@@ -3789,7 +3822,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoiceInformation : object
     {
@@ -3826,7 +3859,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlanFilter", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchPaymentPlanFilter : object
     {
@@ -3923,7 +3956,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlanSorting", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchPaymentPlanSorting : object
     {
@@ -3959,7 +3992,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum PaymentPlanStatus : int
     {
@@ -3983,7 +4016,7 @@ namespace AdminWS
         Finished = 5,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TextMatchType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.PaymentP" +
         "lan")]
     public enum TextMatchType2 : int
@@ -4005,7 +4038,7 @@ namespace AdminWS
         ContractNumber = 5,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SortPaymentPlanProperty", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum SortPaymentPlanProperty : int
     {
@@ -4042,7 +4075,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder")]
     public partial class CreateOrderInformation : object
     {
@@ -4229,7 +4262,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateAccountCreditDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder")]
     public partial class CreateAccountCreditDetails : object
     {
@@ -4251,7 +4284,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreatePaymentPlanDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder")]
     public partial class CreatePaymentPlanDetails : object
     {
@@ -4318,7 +4351,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerIdentity", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public partial class CustomerIdentity : object
     {
@@ -4535,7 +4568,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Address", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public partial class Address : object
     {
@@ -4677,7 +4710,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CompanyIdentity", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public partial class CompanyIdentity : object
     {
@@ -4714,7 +4747,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IndividualIdentity", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public partial class IndividualIdentity : object
     {
@@ -4780,7 +4813,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public enum CustomerType : int
     {
@@ -4793,7 +4826,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CustomerInformation : object
     {
@@ -4920,7 +4953,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeliveryAddress", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class DeliveryAddress : object
     {
@@ -5107,7 +5140,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceAddress", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceAddress : object
     {
@@ -5264,7 +5297,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class OrderInformation : object
     {
@@ -5310,6 +5343,10 @@ namespace AdminWS
         private System.Nullable<AdminWS.KycRiskClassification> KycRiskClassificationField;
         
         private System.Nullable<System.Guid> OrderIdField;
+        
+        private string KycProductTypeField;
+        
+        private AdminWS.Item[] MetadataField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public AdminWS.AccountCreditInformation AccountCreditInformation
@@ -5583,9 +5620,35 @@ namespace AdminWS
                 this.OrderIdField = value;
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        public string KycProductType
+        {
+            get
+            {
+                return this.KycProductTypeField;
+            }
+            set
+            {
+                this.KycProductTypeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        public AdminWS.Item[] Metadata
+        {
+            get
+            {
+                return this.MetadataField;
+            }
+            set
+            {
+                this.MetadataField = value;
+            }
+        }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AddressSource", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
     public enum AddressSource : int
     {
@@ -5610,7 +5673,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountCreditInformation : object
     {
@@ -5632,7 +5695,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceInformation : object
     {
@@ -5669,7 +5732,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PaymentPlanInformation : object
     {
@@ -5705,7 +5768,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="KycRiskClassification", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public enum KycRiskClassification : int
     {
@@ -5730,7 +5793,44 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Item", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
+    public partial class Item : object
+    {
+        
+        private string KeyField;
+        
+        private string ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key
+        {
+            get
+            {
+                return this.KeyField;
+            }
+            set
+            {
+                this.KeyField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.ValueField;
+            }
+            set
+            {
+                this.ValueField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BillingReference", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class BillingReference : object
     {
@@ -5766,7 +5866,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BillingReferenceType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Enums")]
     public enum BillingReferenceType : int
     {
@@ -5797,7 +5897,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchAccountCreditFilter", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchAccountCreditFilter : object
     {
@@ -5909,7 +6009,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchAccountCreditSorting", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
     public partial class SearchAccountCreditSorting : object
     {
@@ -5945,7 +6045,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum AccountCreditStatus : int
     {
@@ -5963,7 +6063,7 @@ namespace AdminWS
         Cancelled = 3,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TextMatchType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Search.AccountC" +
         "redit")]
     public enum TextMatchType3 : int
@@ -5988,7 +6088,7 @@ namespace AdminWS
         AccountCreditId = 6,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SortAccountCreditProperty", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
     public enum SortAccountCreditProperty : int
     {
@@ -6013,7 +6113,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountCreditInformation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
     public partial class GetAccountCreditInformation : object
     {
@@ -6049,7 +6149,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationReportType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum SpecificationReportType : int
     {
@@ -6062,7 +6162,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BasicResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AdminWS.ApproveInvoiceResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AdminWS.CancelOrderResponse))]
@@ -6140,42 +6240,42 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ApproveInvoiceResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ApproveInvoiceResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelOrderResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelOrderRowsResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelPaymentPlanAmountResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelPaymentPlanRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CancelPaymentPlanRowsResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeliveryResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class DeliveryResponse : AdminWS.BasicResponse
     {
@@ -6197,7 +6297,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountingReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetAccountingReportResponse : AdminWS.BasicResponse
     {
@@ -6219,7 +6319,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetFinancialReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetFinancialReportResponse : AdminWS.BasicResponse
     {
@@ -6256,7 +6356,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceJournalReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoiceJournalReportResponse : AdminWS.BasicResponse
     {
@@ -6278,7 +6378,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PdfLinkResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PdfLinkResponse : AdminWS.BasicResponse
     {
@@ -6300,7 +6400,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoiceReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoiceReportResponse : AdminWS.BasicResponse
     {
@@ -6322,7 +6422,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesWithChangedDueDateResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoicesWithChangedDueDateResponse : AdminWS.BasicResponse
     {
@@ -6344,7 +6444,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrderEventsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrderEventsResponse : AdminWS.BasicResponse
     {
@@ -6366,7 +6466,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetPaymentPlanReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetPaymentPlanReportResponse : AdminWS.BasicResponse
     {
@@ -6388,7 +6488,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetRegressionReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetRegressionReportResponse : AdminWS.BasicResponse
     {
@@ -6410,28 +6510,28 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ReleasePendingResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ReleasePendingResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class UpdateOrderResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UpdateOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class UpdateOrderRowsResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetOrdersResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetOrdersResponse : AdminWS.BasicResponse
     {
@@ -6453,7 +6553,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchOrdersResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchOrdersResponse : AdminWS.BasicResponse
     {
@@ -6490,7 +6590,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchInvoicesResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchInvoicesResponse : AdminWS.BasicResponse
     {
@@ -6527,7 +6627,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class GetInvoicesResponse : AdminWS.BasicResponse
     {
@@ -6549,7 +6649,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchPaymentPlansResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SearchPaymentPlansResponse : AdminWS.BasicResponse
     {
@@ -6586,7 +6686,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SumOfAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SumOfAmountResponse : AdminWS.BasicResponse
     {
@@ -6623,7 +6723,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreateOrderResponse : AdminWS.BasicResponse
     {
@@ -6660,14 +6760,14 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ChangeInvoiceDueDateResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class ChangeInvoiceDueDateResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateApprovedOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreateApprovedOrderResponse : AdminWS.BasicResponse
     {
@@ -6779,28 +6879,28 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditAmountResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class CancelAccountCreditAmountResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CancelAccountCreditRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class CancelAccountCreditRowsResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ExtendOrderResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class ExtendOrderResponse : AdminWS.BasicResponse
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class AccountCreditRegressReportResponse : AdminWS.BasicResponse
     {
@@ -6822,7 +6922,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class AccountingAgreementType25ReportResponse : AdminWS.BasicResponse
     {
@@ -6859,7 +6959,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetDebtInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetDebtInvoicesPaidToClientForReportResponse : AdminWS.BasicResponse
     {
@@ -6881,7 +6981,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetInvoicesPaidToClientForReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetInvoicesPaidToClientForReportResponse : AdminWS.BasicResponse
     {
@@ -6903,7 +7003,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetKickbackReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetKickbackReportResponse : AdminWS.BasicResponse
     {
@@ -6925,7 +7025,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetPendingReasonsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetPendingReasonsResponse : AdminWS.BasicResponse
     {
@@ -6947,7 +7047,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SearchAccountCreditsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class SearchAccountCreditsResponse : AdminWS.BasicResponse
     {
@@ -6984,7 +7084,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAccountCreditsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetAccountCreditsResponse : AdminWS.BasicResponse
     {
@@ -7006,7 +7106,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetClientIdResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Responses")]
     public partial class GetClientIdResponse : AdminWS.BasicResponse
     {
@@ -7028,7 +7128,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetSpecificationReportResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Requests")]
     public partial class GetSpecificationReportResponse : AdminWS.BasicResponse
     {
@@ -7065,7 +7165,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AddOrderRowsResponse", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AddOrderRowsResponse : AdminWS.BasicResponse
     {
@@ -7087,7 +7187,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderRowReferenceItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice")]
     public partial class OrderRowReferenceItem : object
     {
@@ -7124,7 +7224,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeliverOrderResult", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class DeliverOrderResult : object
     {
@@ -7221,7 +7321,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountingReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountingReportRow : object
     {
@@ -7333,7 +7433,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportHeader", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class FinancialReportHeader : object
     {
@@ -7430,7 +7530,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FinancialReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class FinancialReportRow : object
     {
@@ -7527,7 +7627,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceJournalReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceJournalReportRow : object
     {
@@ -7669,7 +7769,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceReportRow : object
     {
@@ -7871,7 +7971,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceWithChangedDueDate", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceWithChangedDueDate : object
     {
@@ -7953,7 +8053,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class OrderEvent : object
     {
@@ -8065,7 +8165,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PendingEvent", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PendingEvent : object
     {
@@ -8132,7 +8232,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PaymentPlanReportRow : object
     {
@@ -8334,7 +8434,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RegressionReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class RegressionReportRow : object
     {
@@ -8611,7 +8711,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Order", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class Order : object
     {
@@ -8963,7 +9063,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service.Account")]
     public partial class AccountCreditDetails : object
     {
@@ -8985,7 +9085,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreditReportStatus", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class CreditReportStatus : object
     {
@@ -9022,7 +9122,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanDetails", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PaymentPlanDetails : object
     {
@@ -9074,7 +9174,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PendingReason", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PendingReason : object
     {
@@ -9111,7 +9211,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class OrderListItem : object
     {
@@ -9358,7 +9458,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class InvoiceListItem : object
     {
@@ -9619,7 +9719,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoiceType", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public enum InvoiceType : int
     {
@@ -9632,7 +9732,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Invoice", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class Invoice : object
     {
@@ -10074,7 +10174,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentPlanListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class PaymentPlanListItem : object
     {
@@ -10276,7 +10376,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateOrderResult", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Webservice.CreateOrder")]
     public partial class CreateOrderResult : object
     {
@@ -10388,7 +10488,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditRegressReportDataRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountCreditRegressReportDataRow : object
     {
@@ -10665,7 +10765,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25ReportDataRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountingAgreementType25ReportDataRow : object
     {
@@ -10822,7 +10922,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountingAgreementType25Summation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountingAgreementType25Summation : object
     {
@@ -10949,7 +11049,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvoicePaidToClientRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Internal.Service.Types")]
     public partial class InvoicePaidToClientRow : object
     {
@@ -11106,7 +11206,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="KickbackReportRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class KickbackReportRow : object
     {
@@ -11203,7 +11303,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditListItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountCreditListItem : object
     {
@@ -11420,7 +11520,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountCreditItem", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class AccountCreditItem : object
     {
@@ -11607,7 +11707,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationSummation", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SpecificationSummation : object
     {
@@ -11644,7 +11744,7 @@ namespace AdminWS
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SpecificationRow", Namespace="http://schemas.datacontract.org/2004/07/DataObjects.Admin.Service")]
     public partial class SpecificationRow : object
     {
@@ -11740,7 +11840,7 @@ namespace AdminWS
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AdminWS.IAdminService")]
     public interface IAdminService
     {
@@ -11884,13 +11984,13 @@ namespace AdminWS
         System.Threading.Tasks.Task<AdminWS.GetClientIdResponse> GetClientIdAsync(AdminWS.GetClientIdRequest request);
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     public interface IAdminServiceChannel : AdminWS.IAdminService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     public partial class AdminServiceClient : System.ServiceModel.ClientBase<AdminWS.IAdminService>, AdminWS.IAdminService
     {
         
@@ -12161,6 +12261,13 @@ namespace AdminWS
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
+        
+        #if !NET6_0_OR_GREATER
+        public virtual System.Threading.Tasks.Task CloseAsync()
+        {
+            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
+        }
+        #endif
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {

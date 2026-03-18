@@ -1,4 +1,5 @@
-﻿using Webpay.Integration.Config;
+﻿using System;
+using Webpay.Integration.Config;
 using Webpay.Integration.Exception;
 using Webpay.Integration.Util.Constant;
 
@@ -21,7 +22,7 @@ public class WebpayConfig : IConfigurationProvider
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.DK) => "danmarktest2",
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.NL) => "hollandtest",
             (PaymentType.INVOICE or PaymentType.PAYMENTPLAN, CountryCode.DE) => "germanytest",
-            _ => ""
+            _ => throw new SveaWebPayException($"No credentials match the payment type {type} and country {country}.")
         };
 
     public int GetClientNumber(PaymentType type, CountryCode country) => (country, type) switch
@@ -40,19 +41,19 @@ public class WebpayConfig : IConfigurationProvider
         (CountryCode.DE, PaymentType.INVOICE) => 14997,
         (CountryCode.DE, PaymentType.PAYMENTPLAN) => 16997,
         (CountryCode.SE, PaymentType.ADMIN_TYPE) => 79021,
-        _ => 0
+        _ => throw new SveaWebPayException($"No client number registered for payment type {type} and country {country}.")
     };
 
     public string GetMerchantId(PaymentType type, CountryCode country)
     {
-        return type == PaymentType.HOSTED ? (country == CountryCode.NO ? "1109" : "1110") : "";
+        return type == PaymentType.HOSTED ? (country == CountryCode.NO ? "1109" : "1110") : throw new SveaWebPayException($"No merchant id registered for payment type {type} and country {country}.");
     }
 
     public string GetSecretWord(PaymentType type, CountryCode country)
     {
         return type == PaymentType.HOSTED
         ? (country == CountryCode.NO ? "9d8d83fe18ed0fe3cf6de8bfd29d82bdaf228f3f8b292b087ec48736b083ce4699c3493a406f02f1300e24490e0c7d0d6d55bfc38dd8e9c1390ac17ce56bdb1a" : "1f8bcd8a564073f7156efd2522d5998f5487a1dcd19e1e120276fb1fb7e233a6059c45d6eb44a8d7342a4989bbb95acd4708051bbc145bda43ae0dd3503928db")
-        : "";
+        : throw new SveaWebPayException($"No secret word registered for payment type {type} and country {country}.");
     }
 
     public string GetEndPoint(PaymentType type) => type switch

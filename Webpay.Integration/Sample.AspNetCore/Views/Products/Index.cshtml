@@ -3,7 +3,7 @@
 @inject Cart CartService
 @{
     ViewData["Title"] = "Index";
-Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @if (TempData["AbortMessage"] != null)
@@ -15,8 +15,6 @@ else if (TempData["ErrorMessage"] != null)
     <div class="alert alert-warning">@TempData["ErrorMessage"]</div>
 }
 <h1>Store</h1>
-
-
 
 <p>
     <a asp-action="Create">Create New Product</a>
@@ -54,8 +52,8 @@ else if (TempData["ErrorMessage"] != null)
     </thead>
     <tbody>
         @foreach (var item in Model)
-    {
-        <tr>
+        {
+            <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Reference)</td>
                 <td>@Html.DisplayFor(modelItem => item.Type)</td>
@@ -67,7 +65,7 @@ else if (TempData["ErrorMessage"] != null)
 
                 <td><a class="btn btn-primary" automation="button-addtocart" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId" style="width: 130px;">Add to Cart</a></td>
             </tr>
-    }
+        }
     </tbody>
 </table>
 @if (CartService.CartLines.Any())

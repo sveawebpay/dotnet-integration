@@ -22,7 +22,9 @@ namespace Sample.AspNetCore.Controllers;
 
 public class OrdersController : Controller
 {
-    private readonly StoreDbContext context;
+    private readonly StoreDbContext _context;
+    private readonly Market _marketService;
+
     private static readonly WebpayConfig Config = new WebpayConfig();
     private static List<OrderViewModel> orderViewModels = new List<OrderViewModel>();
     private static readonly Dictionary<string, List<long>> SveaOrderDeliveryReferences = new();
@@ -30,20 +32,21 @@ public class OrdersController : Controller
     private static readonly Dictionary<string, List<long>> DeliveryReferenceOrderRows = new();
     private static string pdfString;
 
-    public OrdersController(StoreDbContext context)
+    public OrdersController(StoreDbContext context, Market marketService)
     {
-        this.context = context;
+        _context = context;
+        _marketService = marketService;
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Clear()
     {
-        var orders = await context.Orders.ToListAsync();
+        var orders = await _context.Orders.ToListAsync();
         if (orders != null)
         {
-            context.Orders.RemoveRange(orders);
-            await context.SaveChangesAsync();
+            _context.Orders.RemoveRange(orders);
+            await _context.SaveChangesAsync();
         }
 
         orderViewModels.Clear();
@@ -69,8 +72,8 @@ public class OrdersController : Controller
     {
         if (ModelState.IsValid)
         {
-            context.Add(order);
-            await context.SaveChangesAsync();
+            _context.Add(order);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -85,7 +88,7 @@ public class OrdersController : Controller
         var orders = new List<Order>();
         if (id.HasValue)
         {
-            var order = await context.Orders.FirstOrDefaultAsync();
+            var order = await _context.Orders.FirstOrDefaultAsync();
             if (order == null)
             {
                 return NotFound();
@@ -95,7 +98,7 @@ public class OrdersController : Controller
         }
         else
         {
-            orders = await context.Orders.ToListAsync();
+            orders = await _context.Orders.ToListAsync();
         }
         
         orderViewModels = new List<OrderViewModel>();
@@ -109,7 +112,7 @@ public class OrdersController : Controller
                 {
                     var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
                         .SetOrderId(long.Parse(order.SveaOrderId))
-                        .SetCountryCode(CountryCode.SE);
+                        .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
                     var response = order.PaymentType switch
                     {
@@ -160,7 +163,7 @@ public class OrdersController : Controller
         if (id == null)
             return NotFound();
 
-        var order = await context.Orders.FindAsync(id);
+        var order = await _context.Orders.FindAsync(id);
         if (order == null)
             return NotFound();
         return View(order);
@@ -180,8 +183,8 @@ public class OrdersController : Controller
         {
             try
             {
-                context.Update(order);
-                await context.SaveChangesAsync();
+                _context.Update(order);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -210,13 +213,13 @@ public class OrdersController : Controller
             });
         }
 
-        var order = await context.Orders.FirstOrDefaultAsync(o => o.SveaOrderId == OrderId);
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.SveaOrderId == OrderId);
         var paymentType = order.PaymentType;
 
         // Fetch order again to get latest data
         var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
             .SetOrderId(long.Parse(OrderId))
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
         var newOrder = response.Orders.FirstOrDefault();
@@ -428,7 +431,7 @@ public class OrdersController : Controller
     {
         var closeOrderRequest = WebpayConnection.CloseOrder(Config)
             .SetOrderId(long.Parse(orderId))
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         var closeOrderResponse = await closeOrderRequest.CloseOrderByOrderType(paymentType.ToString()).DoRequestAsync();
 
@@ -446,7 +449,7 @@ public class OrdersController : Controller
         var deliverOrderRequest = WebpayConnection.DeliverOrder(Config)
             .AddOrderRows(orderRowBuilders)
             .SetOrderId(long.Parse(orderId))
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         if (paymentType == PaymentType.INVOICE)
         {
@@ -495,7 +498,7 @@ public class OrdersController : Controller
 
             var addOrderRowsBuilder = WebpayAdmin.AddOrderRows(Config)
                 .SetOrderId(long.Parse(orderId))
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .AddOrderRows(newOrderRowBuilders);
 
             var addition = await addOrderRowsBuilder.AddOrderRowsByPaymentType(paymentType).DoRequestAsync();
@@ -519,7 +522,7 @@ public class OrdersController : Controller
                 .ToList();
             var updateOrderRowsBuilder = WebpayAdmin.UpdateOrderRows(Config)
                 .SetOrderId(long.Parse(orderId))
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .AddUpdateOrderRows(newOrderRowBuilders);
 
             var addition = await updateOrderRowsBuilder.UpdateOrderRowsByPaymentType(paymentType).DoRequestAsync();
@@ -536,7 +539,7 @@ public class OrdersController : Controller
         var cancellation = WebpayAdmin.CancelOrderRows(Config)
             .SetOrderId(long.Parse(orderId))
             .SetRowsToCancel(rowIndexesToCancel)
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         var cancellationResponse = await cancellation.CancelPaymentTypeOrderRows(paymentType).DoRequestAsync();
 
@@ -551,7 +554,7 @@ public class OrdersController : Controller
 
         var updateBuilder = new UpdateOrderBuilder(Config)
             .SetOrderId(long.Parse(orderId))
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetClientOrderNumber(clientOrderIdText)
             .SetNotes(notesText);
 
@@ -566,7 +569,7 @@ public class OrdersController : Controller
         var rowIndexesToDeliver = selectedRows.Select(row => row.RowNumber).ToList();
 
         var deliverBuilder = WebpayAdmin.DeliverOrderRows(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetInvoiceDistributionType(DistributionType.POST)
             .SetRowsToDeliver(rowIndexesToDeliver)
             .SetOrderId(long.Parse(orderId));
@@ -601,7 +604,7 @@ public class OrdersController : Controller
     {
         var cancelOrderBuilder = WebpayAdmin.CancelOrder(Config)
             .SetOrderId(long.Parse(orderId))
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         var cancelOrderResponse = await cancelOrderBuilder.CancelPaymentTypeOrder(paymentType).DoRequestAsync();
 
@@ -622,7 +625,7 @@ public class OrdersController : Controller
             var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
                 .SetInvoiceId(deliveryReference)
                 .SetInvoiceDistributionType(DistributionType.POST)
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .AddCreditOrderRows(newCreditOrderRows)
                 .SetRowsToCredit(rowIndexesToCredit)
                 .CreditInvoiceOrderRows();
@@ -647,7 +650,7 @@ public class OrdersController : Controller
         {
             var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
                 .SetContractNumber(deliveryReference)
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .AddCreditOrderRows(newCreditOrderRows)
                 .SetRowsToCredit(rowIndexesToCredit)
                 .CreditPaymentPlanOrderRows();
@@ -661,7 +664,7 @@ public class OrdersController : Controller
         {
             var creditBuilder = WebpayAdmin.CreditOrderRows(Config)
                 .SetContractNumber(deliveryReference)
-                .SetCountryCode(CountryCode.SE)
+                .SetCountryCode(_marketService.CountryId.GetCountryCode())
                 .AddCreditOrderRows(newCreditOrderRows)
                 .SetRowsToCredit(rowIndexesToCredit)
                 .CreditAccountCreditOrderRows();
@@ -693,7 +696,7 @@ public class OrdersController : Controller
     private async Task HandleGetInvoicePdfLink(long invoiceDeliveryReference)
     {
         var getInvoicePdfLinkBuilder = WebpayAdmin.GetInvoicePdfLink(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetInvoiceId(invoiceDeliveryReference);
 
         var getInvoicePdfLinkRequest = getInvoicePdfLinkBuilder.Build();
@@ -735,7 +738,7 @@ public class OrdersController : Controller
 
         var contractPdf = await WebpayConnection
             .GetContractPdf(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetContractNumber(contractNumber)
             .DoRequestAsync();
 
@@ -766,8 +769,8 @@ public class OrdersController : Controller
 
         var approveInvoiceBuilder = WebpayAdmin.ApproveInvoice(Config)
             .SetInvoiceId(firstInvoiceDeliveryReference)
-            .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, CountryCode.SE))
-            .SetCountryCode(CountryCode.SE);
+            .SetClientId(Config.GetClientNumber(PaymentType.INVOICE, _marketService.CountryId.GetCountryCode()))
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         var approveInvoiceResponse = await approveInvoiceBuilder.ApproveInvoice().DoRequestAsync();
 
@@ -791,7 +794,7 @@ public class OrdersController : Controller
         {
             var queryOrderBuilder = WebpayAdmin.QueryOrder(Config)
                 .SetOrderId(orderId)
-                .SetCountryCode(CountryCode.SE);
+                .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
             var response = await queryOrderBuilder.QueryPaymentTypeOrder(paymentType).DoRequestAsync();
             if (response?.Orders?.FirstOrDefault() is { } newOrder)
@@ -810,7 +813,7 @@ public class OrdersController : Controller
 
         var builder = WebpayAdmin.DeliverOrders(Config)
             .SetOrderIds(orderIdsToDeliver)
-            .SetCountryCode(CountryCode.SE);
+            .SetCountryCode(_marketService.CountryId.GetCountryCode());
 
         if (paymentType == PaymentType.INVOICE)
         {
@@ -865,7 +868,7 @@ public class OrdersController : Controller
         var clientInvoiceIds = selectedIds.SelectMany(refs => refs.Split(',')).Select(long.Parse).ToList();
 
         var getInvoicesBuilder = WebpayAdmin.GetInvoices(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetInvoiceType(PaymentType.INVOICE)
             .SetInvoiceIds(clientInvoiceIds);
 
@@ -884,7 +887,7 @@ public class OrdersController : Controller
     private async Task HandleGetFinancialReport()
     {
         var financialReportBuilder = WebpayAdmin.GetFinancialReport(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             //.SetFromDate(new DateTime(2024, 1, 1))
             //.SetToDate(new DateTime(2024, 12, 31));
             .SetFromDate(DateTime.Now.AddDays(-120).Date)
@@ -907,7 +910,7 @@ public class OrdersController : Controller
     private async Task HandleGetInvoiceReport()
     {
         var invoiceReportBuilder = WebpayAdmin.GetInvoiceReport(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetFromDate(DateTime.Now.AddDays(-60).Date)
             .SetToDate(DateTime.Now.Date);
 
@@ -928,7 +931,7 @@ public class OrdersController : Controller
     private async Task HandleGetPaymentPlanReport()
     {
         var paymentPlanReportBuilder = WebpayAdmin.GetPaymentPlanReport(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetFromDate(DateTime.Now.AddDays(-60).Date)
             .SetToDate(DateTime.Now.Date);
 
@@ -949,7 +952,7 @@ public class OrdersController : Controller
     private async Task HandleGetAccountingReport()
     {
         var accountingReportBuilder = WebpayAdmin.GetAccountingReport(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetFromDate(DateTime.Now.AddDays(-60).Date)
             .SetToDate(DateTime.Now.Date);
 
@@ -970,7 +973,7 @@ public class OrdersController : Controller
     private async Task HandleGetRegressionReport()
     {
         var regressionReportBuilder = WebpayAdmin.GetRegressionReport(Config)
-            .SetCountryCode(CountryCode.SE)
+            .SetCountryCode(_marketService.CountryId.GetCountryCode())
             .SetFromDate(DateTime.Now.AddDays(-60).Date)
             .SetToDate(DateTime.Now.Date);
 
@@ -1023,7 +1026,7 @@ public class OrdersController : Controller
 
     private bool OrderExists(int id)
     {
-        return context.Orders.Any(e => e.OrderId == id);
+        return _context.Orders.Any(e => e.OrderId == id);
     }
 }
 

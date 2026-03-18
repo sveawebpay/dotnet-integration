@@ -1,19 +1,73 @@
-﻿@{
+﻿@using Sample.AspNetCore.Webpay
+@using Webpay.Integration.Util.Constant
+@{
     ViewData["Title"] = "Checkout";
     var isCompany = TempData["IsCompany"] != null && Convert.ToBoolean(TempData["IsCompany"]);
-    var testCustomers = new List<dynamic>
+
+    var country = TempData["CountryId"] != null ? TempData["CountryId"].ToString() : "SE";
+    var testCustomers = new List<dynamic>();
+
+    if(country == "NO")
     {
-        new { Result = "Approved", PersonOrOrgNr = "4605092222", CustomerType = "Private", Description = "Credit check successful." },
-        new { Result = "Denied", PersonOrOrgNr = "4610081111", CustomerType = "Private", Description = "Credit not approved; order can still be placed." },
-        new { Result = "Abuse", PersonOrOrgNr = "4606082222", CustomerType = "Private", Description = "Flagged for potential fraud." },
-        new { Result = "Limit", PersonOrOrgNr = "4611071111", CustomerType = "Private", Description = "Credit limit reached." },
-        new { Result = "Approved", PersonOrOrgNr = "4608142222", CustomerType = "Company", Description = "Credit check successful." },
-        new { Result = "Denied", PersonOrOrgNr = "4608302222", CustomerType = "Company", Description = "Credit not approved; order can still be placed." },
-        new { Result = "Abuse", PersonOrOrgNr = "4609191111", CustomerType = "Company", Description = "Flagged for potential fraud." },
-        new { Result = "Limit", PersonOrOrgNr = "4506172222", CustomerType = "Company", Description = "Credit limit reached." }
-    };
+        testCustomers = new List<dynamic>
+        {
+            new { Result = "Approved", PersonOrOrgNr = "17054512066", CustomerType = "Private", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "14077421433", CustomerType = "Private", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "30036549854", CustomerType = "Private", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "22084419684", CustomerType = "Private", Description = "Credit limit reached." },
+            new { Result = "Approved", PersonOrOrgNr = "923313850", CustomerType = "Company", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "842852102", CustomerType = "Company", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "931024280", CustomerType = "Company", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "812345672", CustomerType = "Company", Description = "Credit limit reached." }
+        };
+    }
+    else if(country == "FI")
+    {
+        testCustomers = new List<dynamic>
+        {
+            new { Result = "Approved", PersonOrOrgNr = "160264-999N", CustomerType = "Private", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "111248-999C", CustomerType = "Private", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "261295-9985", CustomerType = "Private", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "261295-9985", CustomerType = "Private", Description = "Credit limit reached." },
+            new { Result = "Approved", PersonOrOrgNr = "9999999-2", CustomerType = "Company", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "8888888-3", CustomerType = "Company", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "7777777-4", CustomerType = "Company", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "6666666-5", CustomerType = "Company", Description = "Credit limit reached." }
+        };
+    }
+    else
+    {
+        testCustomers = new List<dynamic>
+        {
+            new { Result = "Approved", PersonOrOrgNr = "4605092222", CustomerType = "Private", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "4610081111", CustomerType = "Private", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "4606082222", CustomerType = "Private", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "4611071111", CustomerType = "Private", Description = "Credit limit reached." },
+            new { Result = "Approved", PersonOrOrgNr = "4608142222", CustomerType = "Company", Description = "Credit check successful." },
+            new { Result = "Denied", PersonOrOrgNr = "4608302222", CustomerType = "Company", Description = "Credit not approved; order can still be placed." },
+            new { Result = "Abuse", PersonOrOrgNr = "4609191111", CustomerType = "Company", Description = "Flagged for potential fraud." },
+            new { Result = "Limit", PersonOrOrgNr = "4506172222", CustomerType = "Company", Description = "Credit limit reached." }
+        };
+    }
+
     var isVisible = TempData["IsTestCustomersVisible"] == null ? true : TempData["IsTestCustomersVisible"].ToString()?.ToLower() == "true";
     var useBankID = TempData["UseBankID"] != null ? Convert.ToBoolean(TempData["UseBankID"]) : false;
+    var useKalp = TempData["UseKalp"] != null ? Convert.ToBoolean(TempData["UseKalp"]) : false;
+
+    var config = new WebpayConfig();
+    var countryCode = country.GetCountryCode();
+    var wsEndPoint = config.GetEndPoint(PaymentType.INVOICE);
+    var asEndPoint = config.GetEndPoint(PaymentType.ADMIN_TYPE);
+    var webpayConfigVisible = false;
+
+    var approvedPrivate = testCustomers.FirstOrDefault(x => x.Result == "Approved" && x.CustomerType == "Private");
+    var approvedCompany = testCustomers.FirstOrDefault(x => x.Result == "Approved" && x.CustomerType == "Company");
+    var privateSSN = approvedPrivate != null ? approvedPrivate.PersonOrOrgNr : "";
+    var companySSN = approvedCompany != null ? approvedCompany.PersonOrOrgNr : "";
+    var ssnPlaceholder = isCompany ? companySSN : privateSSN;
+    
+    var emailPlaceholder = "test@svea.com";
+    var phonePlaceholder = "01111111";
 }
 
 <div class="container mt-4">
@@ -44,6 +98,73 @@
         </div>
     </div>
 
+    <button id="toggleWebpayConfig" class="btn btn-sm btn-secondary mt-4">
+        Webpay Config
+    </button>
+
+    <div id="webpayConfig" class="card mt-2" style="display:@(webpayConfigVisible ? "block" : "none");">
+        <div class="card-header">
+            Webpay Config Settings (Country: @country)
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="text-center" style="padding-top:15px;">Credentials</th>
+                    </tr>
+                    <tr>
+                        <th>Payment Type</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Client Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Invoice</td>
+                        <td>@config.GetUsername(PaymentType.INVOICE, countryCode)</td>
+                        <td>@config.GetPassword(PaymentType.INVOICE, countryCode)</td>
+                        <td>@config.GetClientNumber(PaymentType.INVOICE, countryCode)</td>
+                    </tr>
+                    <tr>
+                        <td>PaymentPlan</td>
+                        <td>@config.GetUsername(PaymentType.PAYMENTPLAN, countryCode)</td>
+                        <td>@config.GetPassword(PaymentType.PAYMENTPLAN, countryCode)</td>
+                        <td>@config.GetClientNumber(PaymentType.PAYMENTPLAN, countryCode)</td>
+                    </tr>
+                    @if (countryCode == CountryCode.SE)
+                    {
+                        <tr>
+                            <td>AccountCredit</td>
+                            <td>@config.GetUsername(PaymentType.ACCOUNTCREDIT, countryCode)</td>
+                            <td>@config.GetPassword(PaymentType.ACCOUNTCREDIT, countryCode)</td>
+                            <td>@config.GetClientNumber(PaymentType.ACCOUNTCREDIT, countryCode)</td>
+                        </tr>
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="5" class="text-center" style="padding-top:15px;">Endpoints</th>
+                    </tr>
+                    <tr>
+                        <th>Service</th>
+                        <th colspan="4">URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WebService</td>
+                        <td colspan="4">@wsEndPoint</td>
+                    </tr>
+                    <tr>
+                        <td>AdminService</td>
+                        <td colspan="4">@asEndPoint</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="use-bankid-container" style="margin-top: 20px; margin-bottom: 20px;">
         <form id="toggleBankIDForm" method="post" action="/CheckOut/UpdateUseBankID">
             <div class="form-check">
@@ -54,12 +175,22 @@
         </form>
     </div>
 
+    <div class="use-kalp-container" style="margin-top: 20px; margin-bottom: 20px;">
+        <form id="toggleKalpForm" method="post" action="/CheckOut/UpdateUseKalp">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="useKalp" name="useKalpInput" value="true"
+                       @(useKalp ? "checked" : "") onchange="this.form.submit()" />
+                <label class="form-check-label" for="useKalp">Use Kalp</label>
+            </div>
+        </form>
+    </div>
+
     <div class="card p-4 mb-4">
         <h4 class="card-title">Enter Your Details</h4>
         <form asp-action="SubmitForm" method="post">
             <div class="mb-3">
                 <label for="ssn" class="form-label">SSN</label>
-                <input type="text" id="ssn" name="SSN" class="form-control" required />
+                <input type="text" id="ssn" name="SSN" class="form-control" placeholder="@ssnPlaceholder" data-private-placeholder="@privateSSN" data-company-placeholder="@companySSN" required />
             </div>
             <div class="form-check mb-3">
                 <input type="checkbox" id="isCompany" name="IsCompany" class="form-check-input" value="true" />
@@ -119,22 +250,47 @@
             <form asp-action="FinalizeForm" method="post">
                 <div class="mb-3">
                     <label for="phoneNumber" class="form-label">Phone Number</label>
-                    <input type="text" id="phoneNumber" name="PhoneNumber" class="form-control" required />
+                    <input type="text" id="phoneNumber" name="PhoneNumber" class="form-control" placeholder="@phonePlaceholder" required />
                 </div>
+
                 <div class="mb-3">
                     <label for="emailAddress" class="form-label">Email Address</label>
-                    <input type="email" id="emailAddress" name="EmailAddress" class="form-control" required />
+                    <input type="email" id="emailAddress" name="EmailAddress" class="form-control" placeholder="@emailPlaceholder" required />
                 </div>
-                <div class="mb-3">
+
+                <div id="invoiceInfoNO" class="alert alert-info align-items-start gap-2 d-none" style="margin-top:12px;">
+                    <div class="mt-3"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                    <div class="flex-grow-1">
+                        <strong>Betal etter at du har mottatt dine varer.</strong>
+                    </div>
+                    <a href="#"
+                       id="invoiceInfoNO_more"
+                       class="ms-2 align-self-center"
+                       aria-label="Mer informasjon"
+                       title="Mer informasjon"
+                       style="text-decoration:underline;"
+                       data-bs-toggle="modal" data-bs-target="#invoiceInfoModalNO"
+                       data-toggle="modal" data-target="#invoiceInfoModalNO">Mer info</a>
+                </div>
+
+                <div class="mb-3 mt-3">
                     <label for="paymentOption" class="form-label">Payment Option</label>
                     <select id="paymentOption" name="PaymentOption" class="form-select" onchange="handlePaymentOptionChange()">
                         <option value="Invoice">Invoice</option>
                         @if (!isCompany)
                         {
                             <option value="PaymentPlan">Payment Plan</option>
-                            <option value="AccountCredit">Account Credit</option>
+                            @if (countryCode == CountryCode.SE)
+                            {
+                                <option value="AccountCredit">Account Credit</option>
+                            }
                         }
                     </select>
+                </div>
+
+                <div id="bankidDisclaimerNO" class="text-muted d-none" style="margin:10px 0 14px 0;">
+                    Ved å identifisere deg med BankID i neste steg, godkjenner du vilkårene i
+                    <a href="#" onclick="openCreditAgreementPdf(event)">kredittavtalen</a>.
                 </div>
 
                 <div id="campaignSection" class="mb-3" style="display: none;">
@@ -176,13 +332,96 @@
                     <button type="submit" id="finalizeButton" class="btn btn-success">Finalize</button>
                     <button type="button" id="showCampaignsButton" class="btn btn-primary" style="display: none;" onclick="fetchCampaigns()">Show Campaigns</button>
                 </div>
+
+                <div class="mt-4 small text-muted" id="legalNotice">
+                    @if (countryCode == CountryCode.NO)
+                    {
+                        var sveaTermsUrl = "https://cdn.svea.com/webpay/nn-NO/checkout-vilkaar.pdf";
+                        <text>
+                            Ved å bekrefte kjøpet, godkjenner jeg
+                            <a href="@sveaTermsUrl" target="_blank" rel="noopener noreferrer">Sveas vilkår</a>,
+                            <a href="@sveaTermsUrl" target="_blank" rel="noopener noreferrer">butikkens kjøpsvilkår</a>,
+                            samt deling av mine opplysninger med butikken og den ansvarlige for leveranse av kjøpet.
+                        </text>
+                        <div class="mt-2">
+                            <a href="https://www.svea.com/nb-no/om-oss/forbrukerrettigheter/" target="_blank" rel="noopener noreferrer">
+                                Personvernerklæring og cookies
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        var sveaTermsUrl = "https://cdn.svea.com/webpay/sv-SE/SE_Checkout_villkor.pdf";
+                        <text>
+                            Genom att ange dina uppgifter godkänner du
+                            <a href="@sveaTermsUrl" target="_blank" rel="noopener noreferrer">Sveas allmänna villkor</a>
+                            och
+                            <a href="@sveaTermsUrl" target="_blank" rel="noopener noreferrer">butikens köpvillkor</a>.
+                            Du bekräftar också att du tagit del av
+                            <a href="https://www.svea.com/sv-se/om-oss/integritet" target="_blank" rel="noopener noreferrer">Sveas dataskyddsinformation</a>.
+                        </text>
+                    }
+                </div>
+
             </form>
         </div>
     }
 </div>
 
+<div class="modal fade" id="invoiceInfoModalNO" tabindex="-1" aria-labelledby="invoiceInfoModalNO_Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="invoiceInfoModalNO_Label">Betaling med faktura</h5>
+      </div>
+
+      <div class="modal-body" style="white-space:pre-wrap;">
+Betaling med faktura
+Ved å velge faktura som betalingsmåte kan du betale etter at du har mottatt dine varer. Betaling med faktura krever at du er over 18 år. Det vil bli gjort en kredittvurdering av deg.
+
+Når får jeg fakturaen?
+Fakturaen sendes ut samtidig med varen og betalingsfrist er minimum 14 dager. Fakturaen sendes som eFaktura dersom du har godkjent dette, alternativt i DigiPost, per e-post eller per brev. Fakturaen vil også være tilgjengelig i Svea Pay app og på Mine Sider.
+
+Er det noen ekstra kostnader?
+Det er ingen kostnader knyttet til faktura så lenge du betaler i tide. 
+
+Hva skjer hvis jeg ikke betaler?
+Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved manglende betaling vil kravet bli overført til inkasso.
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-dismiss="modal">Lukk</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
+
+        // Norway-specific payment terms info
+        const IS_NO_COUNTRY = @((countryCode == CountryCode.NO).ToString().ToLower());
+
+        function setNOInvoiceVisibility(show) {
+          const info = document.getElementById("invoiceInfoNO");
+          const bankid = document.getElementById("bankidDisclaimerNO");
+          if (info) {
+            info.classList.toggle('d-none', !show);
+            info.classList.toggle('d-flex', show);
+          }
+          if (bankid) bankid.classList.toggle('d-none', !show);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const sel = document.getElementById("paymentOption");
+          if (sel) sel.addEventListener("change", handlePaymentOptionChange);
+
+          handlePaymentOptionChange();
+        });
+
+        // Payment option change
         function handlePaymentOptionChange() {
             const paymentOption = document.getElementById("paymentOption").value;
             const finalizeButton = document.getElementById("finalizeButton");
@@ -209,8 +448,68 @@
                 showCampaignsButton.style.display = "none";
                 campaignSection.style.display = "none";
             }
+
+                const showNOInvoice = IS_NO_COUNTRY && paymentOption === "Invoice";
+                setNOInvoiceVisibility(showNOInvoice);
         }
 
+        function openInvoiceInfoModalNO() {
+          const el = document.getElementById('invoiceInfoModalNO');
+          if (!el) return;
+
+          // Bootstrap v5.x:
+          if (window.bootstrap && bootstrap.Modal) {
+            // getOrCreateInstance if available (bootstrap 5.2+), else use via constructor
+            const modal = (typeof bootstrap.Modal.getOrCreateInstance === 'function')
+              ? bootstrap.Modal.getOrCreateInstance(el)
+              : (bootstrap.Modal.getInstance?.(el) || new bootstrap.Modal(el));
+
+            modal.show();
+            return;
+          }
+
+          // Bootstrap v4 fallback (jQuery plugin)
+          if (window.jQuery && typeof jQuery.fn.modal === 'function') {
+            jQuery('#invoiceInfoModalNO').modal('show');
+            return;
+          }
+
+          // fallback
+          alert('Betaling med faktura...\n\n(Modal requires Bootstrap JS to be loaded)');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const isBS5 = !!(window.bootstrap && bootstrap.Modal);
+          const btnClose5 = document.querySelector('#invoiceInfoModalNO .btn-close');
+          const btnClose4 = document.querySelector('#invoiceInfoModalNO .close');
+          if (isBS5) {
+            btnClose4?.classList.add('d-none');
+            btnClose5?.classList.remove('d-none');
+          } else if (window.jQuery && typeof jQuery.fn.modal === 'function') {
+            btnClose5?.classList.add('d-none');
+            btnClose4?.classList.remove('d-none');
+          }
+        });
+
+        // Open norweigan credit agreement PDF in new tab
+        async function openCreditAgreementPdf(e) {
+            e.preventDefault();
+            try {
+                const url = '/CheckOut/GetInvoiceCreditAgreementPdf?paymentOption=Invoice&country=NO';
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error('Klarte ikke å hente kredittavtalen.');
+                const buf = await resp.arrayBuffer();
+                const blob = new Blob([buf], { type: 'application/pdf' });
+                const blobUrl = URL.createObjectURL(blob);
+                window.open(blobUrl, '_blank');
+                // Revoke after some delay
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+            } catch (err) {
+                alert(err.message || 'Noe gikk galt ved åpning av kredittavtalen.');
+            }
+        }
+
+        // Campaigns
         async function fetchCampaigns() {
             const paymentOption = document.getElementById("paymentOption").value;
             const showCampaignsButton = document.getElementById("showCampaignsButton");
@@ -285,6 +584,7 @@
             return value ? parseFloat(value).toFixed(2) : "N/A";
         }
 
+        // Toggle test customers visibility
         const toggleButton = document.getElementById("toggleTestCustomers");
         const testCustomersDiv = document.getElementById("testCustomers");
         const visibilityForm = document.getElementById("toggleVisibilityForm");
@@ -305,5 +605,51 @@
             visibilityInput.value = isVisible;
             visibilityForm.submit();
         });
+
+        // Toggle Webpay config visibility
+        document.getElementById("toggleWebpayConfig").addEventListener("click", function () {
+            var configDiv = document.getElementById("webpayConfig");
+            if (configDiv.style.display === "none" || configDiv.style.display === "") {
+                configDiv.style.display = "block";
+            } else {
+                configDiv.style.display = "none";
+            }
+        });
+
+        // For placeholders
+        document.getElementById("isCompany").addEventListener("change", function () {
+            var ssnInput = document.getElementById("ssn");
+            var privatePlaceholder = ssnInput.getAttribute("data-private-placeholder");
+            var companyPlaceholder = ssnInput.getAttribute("data-company-placeholder");
+
+            if (this.checked) {
+                ssnInput.setAttribute("placeholder", companyPlaceholder);
+            } else {
+                ssnInput.setAttribute("placeholder", privatePlaceholder);
+            }
+        });
+
+        function acceptPlaceholderOnEnter(inputElem) {
+            inputElem.addEventListener("keydown", function(e) {
+                //if (e.key === "Enter") {
+                if (e.key === "Tab") {
+                    if (!this.value.trim()) {
+                        this.value = this.getAttribute("placeholder");
+                    }
+                    //e.preventDefault();
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var ssnInput = document.getElementById("ssn");
+            var emailInput = document.getElementById("emailAddress");
+            var phoneInput = document.getElementById("phoneNumber");
+            // Attach listeners
+            acceptPlaceholderOnEnter(ssnInput);
+            acceptPlaceholderOnEnter(emailInput);
+            acceptPlaceholderOnEnter(phoneInput);
+        });
+
     </script>
 }

@@ -15,13 +15,13 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var line in Model.CartLines)
-    {
-        <tr>
+        @foreach (var line in Model.CartLines)
+        {
+            <tr>
                 <td class="text-center">
                     <form asp-action="UpdateQuantity" asp-controller="Cart" method="post">
                         <input type="hidden" name="id"
-                           value="@line.Product.ProductId" />
+                               value="@line.Product.ProductId" />
                         <input type="number" required min="1" name="Quantity" value="@line.Quantity" automation="input-quantity" />
                         <button type="submit" class="btn btn-sm btn-danger" automation="button-updatequantity">
                             Update
@@ -29,19 +29,19 @@
                     </form>
                 </td>
                 @{
-                var discount = line.Product.DiscountAmount != 0
+                    var discount = line.Product.DiscountAmount != 0
                     ? $"{line.Product.DiscountAmount.ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"))}"
                     : line.Product.DiscountPercent != 0 ? $"{line.Product.DiscountPercent}%" : null;
 
-                var orderRowTotalBeforeDiscount = (line.Quantity * line.Product.Price);
+                    var orderRowTotalBeforeDiscount = (line.Quantity * line.Product.Price);
 
-                var orderRowTotalAfterDiscount = line.Product.DiscountAmount != 0
-                ? (orderRowTotalBeforeDiscount - line.Product.DiscountAmount).ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"))
-                : line.Product.DiscountPercent != 0
-                ? (orderRowTotalBeforeDiscount - (orderRowTotalBeforeDiscount * line.Product.DiscountPercent / 100)).ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"))
-                : orderRowTotalBeforeDiscount.ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"));
+                    var orderRowTotalAfterDiscount = line.Product.DiscountAmount != 0
+                    ? (orderRowTotalBeforeDiscount - line.Product.DiscountAmount).ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"))
+                    : line.Product.DiscountPercent != 0
+                    ? (orderRowTotalBeforeDiscount - (orderRowTotalBeforeDiscount * line.Product.DiscountPercent / 100)).ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"))
+                    : orderRowTotalBeforeDiscount.ToString("c", CultureInfo.CreateSpecificCulture("sv-SE"));
 
-            }
+                }
                 <td class="text-left">@line.Product.Name</td>
                 <td class="text-right"> @((line.Product.Price).ToString("c", CultureInfo.CreateSpecificCulture("sv-SE")))</td>
                 <td class="text-right">
@@ -56,14 +56,14 @@
                 <td>
                     <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
                         <input type="hidden" name="Id"
-                           value="@line.Product.ProductId" />
+                               value="@line.Product.ProductId" />
                         <button type="submit" class="btn btn-sm btn-danger">
                             Remove
                         </button>
                     </form>
                 </td>
             </tr>
-    }
+        }
     </tbody>
     <tfoot>
         <tr>
@@ -77,56 +77,66 @@
 <div class="text-center">
     <for-row>
 
-        <a 
-            class="btn btn-primary" 
-            automation="button-checkout" 
-            asp-action="LoadPaymentMenu" 
-            asp-controller="CheckOut">
-            Checkout
-        </a>
+        @if (!Model.IsEmpty)
+        {
+            <a class="btn btn-primary"
+               automation="button-checkout"
+               asp-action="LoadPaymentMenu"
+               asp-controller="CheckOut">
+                Checkout
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-primary-disabled disabled"
+               style="pointer-events: none;"
+               title="Cart is empty">
+                Checkout
+            </a>
+        }
 
         <!-- Hide for now -->
         <!--
-        <a 
-            class="btn btn-primary" 
-            automation="button-checkout-require" 
-            asp-action="LoadPaymentMenu" 
-            asp-route-requireBankId="true" 
-            asp-route-isInternational="false"  
-            asp-route-enableShipping="false" 
+        <a
+            class="btn btn-primary"
+            automation="button-checkout-require"
+            asp-action="LoadPaymentMenu"
+            asp-route-requireBankId="true"
+            asp-route-isInternational="false"
+            asp-route-enableShipping="false"
             asp-controller="CheckOut">
             Checkout (Require BankId)
         </a>
         @if (!Model.IsInternational)
         {
-            <a 
-                class="btn btn-primary" 
-                automation="button-checkout" 
-                asp-action="LoadPaymentMenu" 
-                asp-route-requireBankId="false" 
-                asp-route-isInternational="false"  
-                asp-route-enableShipping="false" 
-                asp-controller="CheckOut">
-                Checkout
-            </a>
+                <a
+                    class="btn btn-primary"
+                    automation="button-checkout"
+                    asp-action="LoadPaymentMenu"
+                    asp-route-requireBankId="false"
+                    asp-route-isInternational="false"
+                    asp-route-enableShipping="false"
+                    asp-controller="CheckOut">
+                    Checkout
+                </a>
         }
-        <a 
-            class="btn btn-primary" 
-            automation="button-checkout-international" 
-            asp-action="LoadPaymentMenu" 
-            asp-route-requireBankId="false" 
-            asp-route-isInternational="true"  
-            asp-route-enableShipping="false" 
+        <a
+            class="btn btn-primary"
+            automation="button-checkout-international"
+            asp-action="LoadPaymentMenu"
+            asp-route-requireBankId="false"
+            asp-route-isInternational="true"
+            asp-route-enableShipping="false"
             asp-controller="CheckOut">
             Checkout (International)
         </a>
-        <a 
-            class="btn btn-primary" 
-            automation="button-checkout-shipping" 
-            asp-action="LoadPaymentMenu" 
-            asp-route-requireBankId="true" 
-            asp-route-isInternational="false" 
-            asp-route-enableShipping="true" 
+        <a
+            class="btn btn-primary"
+            automation="button-checkout-shipping"
+            asp-action="LoadPaymentMenu"
+            asp-route-requireBankId="true"
+            asp-route-isInternational="false"
+            asp-route-enableShipping="true"
             asp-controller="CheckOut">
             Checkout (Enable shipping)
         </a>

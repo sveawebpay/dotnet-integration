@@ -295,9 +295,6 @@
 
                 <div id="campaignSection" class="mb-3" style="display: none;">
                     <h5>Available Campaigns</h5>
-                    <!--
-                    <table id="campaignTable" class="table table-bordered" style="width: 95%; margin: auto;">
-                    -->
                     <div class="table-responsive" style="max-width: 100%;">
                         <table id="campaignTable"
                                class="table table-bordered table-sm"
@@ -562,7 +559,7 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             paymentPlanHeader.style.display = "none";
             accountCreditHeader.style.display = "none";
 
-            // Hide payment plan specific sections when not PaymentPlan
+            // Hide payment plan specific sections (enabled via updateCampaignSummary)
             document.getElementById("campaignSummary").style.display = "none";
             document.getElementById("konsumentverketWarning").style.setProperty('display', 'none', 'important');
             document.getElementById("paymentPlanInfoSection").style.display = "none";
@@ -644,11 +641,11 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             }
         }
 
-        // Campaigns
         // Store campaigns globally for summary calculations
         let currentCampaigns = [];
         let cartTotal = 0;
 
+        // Campaign helpers
         async function fetchCartTotal() {
             try {
                 const resp = await fetch('/CheckOut/GetCartTotal');
@@ -748,30 +745,7 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             }
         }
 
-        function updateCampaignSummary1(campaign) {
-            if (!campaign) return;
-
-            const amount = cartTotal;
-            const months = campaign.contractLengthInMonths || 1;
-            const monthlyPayment = Math.round(amount * campaign.monthlyAnnuityFactor);
-            const totalCost = monthlyPayment * months + campaign.initialFee;
-
-            document.getElementById("summaryInitialFee").textContent = campaign.initialFee + " kr";
-            document.getElementById("summaryNotificationFee").textContent = campaign.notificationFee + " kr";
-            document.getElementById("summaryInterestRate").textContent = campaign.interestRatePercent + " %";
-            document.getElementById("summaryEffectiveInterest").textContent = formatDecimal(campaign.effectiveInterest) + " %";
-            document.getElementById("summaryTotalCost").innerHTML = "<strong>" + totalCost.toLocaleString('sv-SE') + " kr</strong>";
-
-            document.getElementById("campaignSummary").style.display = "block";
-
-            const month1Payment = monthlyPayment + campaign.initialFee;
-            document.getElementById("modalMonth1").textContent = month1Payment.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonth2").textContent = monthlyPayment.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonthRangeLabel").textContent = "Månad 3–" + months;
-            document.getElementById("modalMonthRest").textContent = monthlyPayment.toLocaleString('sv-SE') + " kr";
-        }
-
-        function updateCampaignSummary2(campaign) {
+        function updateCampaignSummary(campaign) {
             if (!campaign) return;
 
             const amount = cartTotal;
@@ -794,64 +768,6 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             document.getElementById("modalMonth2").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
             document.getElementById("modalMonthRangeLabel").textContent = "Månad 3\u2013" + months;
             document.getElementById("modalMonthRest").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
-        }
-
-        function updateCampaignSummary(campaign) {
-            if (!campaign) return;
-
-            const amount = cartTotal;
-            const months = campaign.contractLengthInMonths || 1;
-
-            // old
-            const oldMonthlyPayment = Math.round(amount * campaign.monthlyAnnuityFactor);
-            const oldTotalCost = oldMonthlyPayment * months + campaign.initialFee;
-
-            const oldMonth1Payment = oldMonthlyPayment + campaign.initialFee;
-            const oldMonth2Payment = oldMonthlyPayment; // no notification fee in old logic
-            const oldMonthRestPayment = oldMonthlyPayment;
-
-            console.log('OLD CALCULATION:');
-            console.log('oldMonthlyPayment:', oldMonthlyPayment);
-            console.log('oldTotalCost:', oldTotalCost);
-            console.log('oldMonth1Payment:', oldMonth1Payment);
-            console.log('oldMonth2Payment:', oldMonth2Payment);
-            console.log('oldMonthRestPayment:', oldMonthRestPayment);
-
-            // ---------- NEW CALCULATIONS (for UI display) ----------
-            const monthlyPayment = amount * campaign.monthlyAnnuityFactor;
-            const totalCost = campaign.initialFee + (monthlyPayment + campaign.notificationFee) * months;
-
-            document.getElementById("summaryInitialFee").textContent =
-                campaign.initialFee + " kr";
-            document.getElementById("summaryNotificationFee").textContent =
-                campaign.notificationFee + " kr";
-            document.getElementById("summaryInterestRate").textContent =
-                campaign.interestRatePercent + " %";
-            document.getElementById("summaryEffectiveInterest").textContent =
-                formatDecimal(campaign.effectiveInterest) + " %";
-            document.getElementById("summaryTotalCost").innerHTML =
-                "<strong>" + Math.round(totalCost).toLocaleString('sv-SE') + " kr</strong>";
-
-            document.getElementById("campaignSummary").style.display = "block";
-
-            const monthlyWithFee = Math.round(monthlyPayment + campaign.notificationFee);
-            const month1PaymentNew = Math.round(monthlyPayment + campaign.notificationFee + campaign.initialFee);
-
-            document.getElementById("modalMonth1").textContent =
-                month1PaymentNew.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonth2").textContent =
-                monthlyWithFee.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonthRangeLabel").textContent =
-                "Månad 3–" + months;
-            document.getElementById("modalMonthRest").textContent =
-                monthlyWithFee.toLocaleString('sv-SE') + " kr";
-
-            // ---------- OPTIONAL: log new values too for direct side-by-side comparison ----------
-            console.log('NEW CALCULATION:');
-            console.log('monthlyPayment (raw, before rounding in places):', monthlyPayment);
-            console.log('totalCost:', Math.round(totalCost));
-            console.log('month1PaymentNew:', month1PaymentNew);
-            console.log('monthlyWithFee:', monthlyWithFee);
         }
 
         function formatDecimal(value) {

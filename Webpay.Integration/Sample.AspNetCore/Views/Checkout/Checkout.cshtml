@@ -354,6 +354,18 @@
                                     <td class="text-end" id="summaryEffectiveInterest"></td>
                                 </tr>
                                 <tr>
+                                    <td>Månad 1</td>
+                                    <td class="text-end" id="summaryMonth1"></td>
+                                </tr>
+                                <tr id="summaryRestRow">
+                                    <td>Månad 2–<span id="summaryMonthTo"></span></td>
+                                    <td class="text-end" id="summaryMonthRest"></td>
+                                </tr>
+                                <tr>
+                                    <td>Genomsnitt/mån</td>
+                                    <td class="text-end" id="summaryAvgPerMonth"></td>
+                                </tr>
+                                <tr>
                                     <td><strong>Totalkostnad</strong></td>
                                     <td class="text-end" id="summaryTotalCost"><strong></strong></td>
                                 </tr>
@@ -749,29 +761,54 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             if (!campaign) return;
 
             const amount = cartTotal;
-            const months = campaign.contractLengthInMonths || 1;
-            const monthlyPayment = amount * campaign.monthlyAnnuityFactor;
-            const totalCost = campaign.initialFee + (monthlyPayment + campaign.notificationFee) * months;
+            const months = Number(campaign.contractLengthInMonths) || 1;
+            const monthlyPayment = amount * Number(campaign.monthlyAnnuityFactor || 0);
 
-            document.getElementById("summaryInitialFee").textContent = campaign.initialFee + " kr";
-            document.getElementById("summaryNotificationFee").textContent = campaign.notificationFee + " kr";
-            document.getElementById("summaryInterestRate").textContent = campaign.interestRatePercent + " %";
-            document.getElementById("summaryEffectiveInterest").textContent = formatDecimal(campaign.effectiveInterest) + " %";
-            document.getElementById("summaryTotalCost").innerHTML = "<strong>" + Math.round(totalCost).toLocaleString('sv-SE') + " kr</strong>";
+            const initialFee = Number(campaign.initialFee || 0);
+            const notificationFee = Number(campaign.notificationFee || 0);
+            const interestRate = Number(campaign.interestRatePercent || 0);
+            const effectiveInterest = Number(campaign.effectiveInterest || 0);
+
+            const monthlyWithFee = Math.round(monthlyPayment + notificationFee);
+            const month1Payment = Math.round(monthlyPayment + notificationFee + initialFee);
+
+            const totalCost = initialFee + (monthlyWithFee) * months;
+
+            document.getElementById("summaryInitialFee").textContent = formatCurrency(initialFee);
+            document.getElementById("summaryNotificationFee").textContent = formatCurrency(notificationFee);
+            document.getElementById("summaryInterestRate").textContent = interestRate + " %";
+            document.getElementById("summaryEffectiveInterest").textContent = (effectiveInterest ? formatDecimal(effectiveInterest) : "0.00") + " %";
+            document.getElementById("summaryTotalCost").innerHTML = "<strong>" + formatCurrency(totalCost) + "</strong>";
+
+            document.getElementById("summaryMonth1").textContent = formatCurrency(month1Payment);
+
+            const restRow = document.getElementById("summaryRestRow");
+            if (months > 1) {
+                document.getElementById("summaryMonthTo").textContent = months;
+                document.getElementById("summaryMonthRest").textContent = formatCurrency(monthlyWithFee);
+                restRow.style.display = "";
+            } else {
+                // Hide the Månad 2-N row if only 1 month
+                restRow.style.display = "none";
+            }
+
+            const avgPerMonth = totalCost / months;
+            document.getElementById("summaryAvgPerMonth").textContent = formatCurrency(avgPerMonth);
 
             document.getElementById("campaignSummary").style.display = "block";
-
-            var monthlyWithFee = Math.round(monthlyPayment + campaign.notificationFee);
-            var month1Payment = Math.round(monthlyPayment + campaign.notificationFee + campaign.initialFee);
-
-            document.getElementById("modalMonth1").textContent = month1Payment.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonth2").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
-            document.getElementById("modalMonthRangeLabel").textContent = "Månad 3\u2013" + months;
-            document.getElementById("modalMonthRest").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonth1").textContent = formatCurrency(month1Payment);
+            document.getElementById("modalMonth2").textContent = formatCurrency(monthlyWithFee);
+            document.getElementById("modalMonthRangeLabel").textContent = "Månad 3–" + months;
+            document.getElementById("modalMonthRest").textContent = formatCurrency(monthlyWithFee);
         }
 
         function formatDecimal(value) {
             return value ? parseFloat(value).toFixed(2) : "N/A";
+        }
+
+        function formatCurrency(n) {
+            const v = Number.isFinite(n) ? Math.round(n) : 0;
+            return v.toLocaleString('sv-SE') + " kr";
         }
 
         // Toggle test customers visibility

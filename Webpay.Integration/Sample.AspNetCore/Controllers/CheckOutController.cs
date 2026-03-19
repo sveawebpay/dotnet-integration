@@ -328,6 +328,7 @@ public class CheckOutController : Controller
                     var paymentPlanParams = await WebpayConnection
                         .GetPaymentPlanParams(Config)
                         .SetCountryCode(_marketService.CountryId.GetCountryCode())
+                        .SetAmount(totalAmount)
                         .DoRequestAsync();
 
                     if (paymentPlanParams.ResultCode != 0)
@@ -374,6 +375,13 @@ public class CheckOutController : Controller
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
+    }
+
+    [HttpGet]
+    public IActionResult GetCartTotal()
+    {
+        var total = _cartService.CartLines.Sum(line => line.CalculateTotal());
+        return Json(new { total });
     }
 
     [HttpPost]

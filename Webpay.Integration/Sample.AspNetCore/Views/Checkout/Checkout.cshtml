@@ -295,36 +295,119 @@
 
                 <div id="campaignSection" class="mb-3" style="display: none;">
                     <h5>Available Campaigns</h5>
+                    <!--
                     <table id="campaignTable" class="table table-bordered" style="width: 95%; margin: auto;">
-                        <thead>
-                            <tr id="paymentPlanHeader">
-                                <th>Campaign Code</th>
-                                <th>Description</th>
-                                <th>Contract Length (Months)</th>
-                                <th>Monthly Factor</th>
-                                <th>Initial Fee</th>
-                                <th>Notification Fee</th>
-                                <th>Interest Rate (%)</th>
-                                <th>Interest-Free Months</th>
-                                <th>Payment-Free Months</th>
-                                <th>Amount Range</th>
-                                <th>Select</th>
-                            </tr>
-                            <tr id="accountCreditHeader" style="display: none;">
-                                <th>Campaign Code</th>
-                                <th>Description</th>
-                                <th>Initial Fee</th>
-                                <th>Lowest Amount to Pay Per Month</th>
-                                <th>Lowest Percent to Pay Per Month (%)</th>
-                                <th>Lowest Order Amount</th>
-                                <th>Interest Rate (%)</th>
-                                <th>Notification Fee</th>
-                                <th>Select</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    -->
+                    <div class="table-responsive" style="max-width: 100%;">
+                        <table id="campaignTable"
+                               class="table table-bordered table-sm"
+                               style="width: 92%; margin: 0 auto; font-size: 0.95rem;">
+                            <thead>
+                                <tr id="paymentPlanHeader">
+                                    <th>Campaign Code</th>
+                                    <th>Description</th>
+                                    <th>Contract Length (Months)</th>
+                                    <th>Monthly Factor</th>
+                                    <th>Initial Fee</th>
+                                    <th>Notification Fee</th>
+                                    <th>Interest Rate (%)</th>
+                                    <th>Effective Interest (%)</th>
+                                    <th>Interest-Free Months</th>
+                                    <th>Payment-Free Months</th>
+                                    <th>Amount Range</th>
+                                    <th>Select</th>
+                                </tr>
+                                <tr id="accountCreditHeader" style="display: none;">
+                                    <th>Campaign Code</th>
+                                    <th>Description</th>
+                                    <th>Initial Fee</th>
+                                    <th>Lowest Amount to Pay Per Month</th>
+                                    <th>Lowest Percent to Pay Per Month (%)</th>
+                                    <th>Lowest Order Amount</th>
+                                    <th>Interest Rate (%)</th>
+                                    <th>Notification Fee</th>
+                                    <th>Select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Campaign Summary for selected campaign -->
+                <div id="campaignSummary" class="card mb-3" style="display:none; max-width:500px; margin: 0 auto;">
+                    <div class="card-body p-3">
+                        <table class="table table-sm table-borderless mb-2">
+                            <tbody>
+                                <tr>
+                                    <td>Uppläggningsavgift</td>
+                                    <td class="text-end" id="summaryInitialFee"></td>
+                                </tr>
+                                <tr>
+                                    <td>Administrationsavgift</td>
+                                    <td class="text-end" id="summaryNotificationFee"></td>
+                                </tr>
+                                <tr>
+                                    <td>Årsränta</td>
+                                    <td class="text-end" id="summaryInterestRate"></td>
+                                </tr>
+                                <tr>
+                                    <td>Effektiv ränta</td>
+                                    <td class="text-end" id="summaryEffectiveInterest"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Totalkostnad</strong></td>
+                                    <td class="text-end" id="summaryTotalCost"><strong></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <a href="#" id="saFunkarDetLink" data-bs-toggle="modal" data-bs-target="#saFunkarDetModal"
+                               style="text-decoration:underline; font-weight:bold; color:#005aa0;">
+                                Så funkar det
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konsumentverket warning -->
+                <div id="konsumentverketWarning" class="alert alert-warning mb-3" style="display:none; max-width: 720px; margin: 0 auto;">
+                    <div style="font-size:1.5rem;">⚠️</div>
+                    <div>
+                        <strong>Att låna kostar pengar!</strong> Om du inte kan betala tillbaka skulden i tid
+                        riskerar du en betalningsanmärkning. Det kan leda till svårigheter att få
+                        hyra bostad, teckna abonnemang och få nya lån. För stöd, vänd dig till
+                        budget- och skuldrådgivningen i din kommun. Kontaktuppgifter finns
+                        på <a href="https://www.konsumentverket.se" target="_blank" rel="noopener noreferrer">konsumentverket.se</a>.
+                    </div>
+                </div>
+
+                <!-- Purchase amount display -->
+                <div id="purchaseAmountDisplay" class="text-center mb-3" style="display:none;">
+                    <div style="font-size:2rem; font-weight:bold;" id="purchaseAmountValue"></div>
+                    <div class="text-muted">Köpbelopp (inkl. moms)</div>
+                </div>
+
+                <!-- "Vad händer om jag inte följer betalplanen" section -->
+                <div id="paymentPlanInfoSection" class="card mb-3" style="display:none; background-color:#f0f4f8;">
+                    <div class="card-body">
+                        <p>
+                            <strong>Vad händer om jag inte följer betalplanen?</strong><br />
+                            De här villkoren gäller så länge du följer betalplanen. Om du betalar ett lägre
+                            belopp eller senare, börjar de
+                            <a href="https://cdn.svea.com/webpay/sv-SE/WP_Allmanna%20villkor%20Delbetalning_Konto.pdf" target="_blank" rel="noopener noreferrer">generella villkoren</a>
+                            att gälla, för närvarande 55 kr i
+                            månaden i administrationsavgift och 22,00 % i rörlig årsränta.
+                        </p>
+
+                        <p>
+                            <strong>Kostnadsexempel vid generella villkor</strong><br />
+                            Om du handlar för 10 000 kr och betalar av det under 12 månader, innebär det
+                            en månadskostnad på 991 kr (totalt 11 891 kr), och den effektiva räntan
+                            blir 38,82 %.
+                        </p>
+                    </div>
                 </div>
 
                 <input type="hidden" id="selectedCampaignCode" name="CampaignCode" />
@@ -398,6 +481,52 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
   </div>
 </div>
 
+<div class="modal fade" id="saFunkarDetModal" tabindex="-1" aria-labelledby="saFunkarDetModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content" style="background-color:#1a3a5c; color:#fff;">
+      <div class="modal-body p-4">
+        <h4 class="mb-3">Så funkar delbetalning</h4>
+
+        <h6>Fast månadsbelopp</h6>
+        <p>Du betalar ett fast månadsbelopp enligt den betalplan
+        som du valt. Första månaden betalar du också en
+        uppläggningsavgift.</p>
+
+        <h6>Så mycket betalar du</h6>
+        <table class="table table-sm table-borderless text-white mb-3">
+            <tbody>
+                <tr>
+                    <td>● Idag</td>
+                    <td class="text-end">0 kr</td>
+                </tr>
+                <tr>
+                    <td class="ps-3">Månad 1</td>
+                    <td class="text-end" id="modalMonth1"></td>
+                </tr>
+                <tr>
+                    <td class="ps-3">Månad 2</td>
+                    <td class="text-end" id="modalMonth2"></td>
+                </tr>
+                <tr>
+                    <td class="ps-3" id="modalMonthRangeLabel">Månad 3–</td>
+                    <td class="text-end" id="modalMonthRest"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="small">I månadsbeloppet ingår avbetalning på ditt köp,
+        administrationsavgift och eventuell ränta.</p>
+
+        <h6>Har du frågor?</h6>
+        <p>Kontakta kundtjänst på 08-514 931 13 så hjälper vi dig.</p>
+      </div>
+      <div class="modal-footer border-0 p-3">
+        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
 
@@ -433,6 +562,12 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
             paymentPlanHeader.style.display = "none";
             accountCreditHeader.style.display = "none";
 
+            // Hide payment plan specific sections when not PaymentPlan
+            document.getElementById("campaignSummary").style.display = "none";
+            document.getElementById("konsumentverketWarning").style.setProperty('display', 'none', 'important');
+            document.getElementById("paymentPlanInfoSection").style.display = "none";
+            document.getElementById("purchaseAmountDisplay").style.display = "none";
+
             if (paymentOption === "PaymentPlan") {
                 paymentPlanHeader.style.display = "";
                 finalizeButton.style.display = "none";
@@ -449,8 +584,8 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
                 campaignSection.style.display = "none";
             }
 
-                const showNOInvoice = IS_NO_COUNTRY && paymentOption === "Invoice";
-                setNOInvoiceVisibility(showNOInvoice);
+            const showNOInvoice = IS_NO_COUNTRY && paymentOption === "Invoice";
+            setNOInvoiceVisibility(showNOInvoice);
         }
 
         function openInvoiceInfoModalNO() {
@@ -510,15 +645,32 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
         }
 
         // Campaigns
+        // Store campaigns globally for summary calculations
+        let currentCampaigns = [];
+        let cartTotal = 0;
+
+        async function fetchCartTotal() {
+            try {
+                const resp = await fetch('/CheckOut/GetCartTotal');
+                const data = await resp.json();
+                cartTotal = data.total;
+            } catch (e) {
+                console.error('Failed to fetch cart total', e);
+            }
+        }
+
         async function fetchCampaigns() {
             const paymentOption = document.getElementById("paymentOption").value;
             const showCampaignsButton = document.getElementById("showCampaignsButton");
+
+            await fetchCartTotal();
 
             try {
                 const response = await fetch(`/CheckOut/GetCampaigns?paymentOption=${paymentOption}`);
                 if (!response.ok) throw new Error("Failed to fetch campaigns.");
 
                 const campaigns = await response.json();
+                currentCampaigns = campaigns;
                 const campaignTableBody = document.querySelector("#campaignTable tbody");
                 const hiddenSelectedCampaignCode = document.getElementById("selectedCampaignCode");
                 campaignTableBody.innerHTML = "";
@@ -550,7 +702,8 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
                                 <td>${formatDecimal(campaign.monthlyAnnuityFactor)}</td>
                                 <td>${campaign.initialFee}</td>
                                 <td>${campaign.notificationFee}</td>
-                                <td>${campaign.interestRatePercent}</td>
+                                <td>${campaign.interestRatePercent}%</td>
+                                <td>${formatDecimal(campaign.effectiveInterest)}%</td>
                                 <td>${campaign.numberOfInterestFreeMonths}</td>
                                 <td>${campaign.numberOfPaymentFreeMonths}</td>
                                 <td>${campaign.fromAmount} - ${campaign.toAmount}</td>
@@ -569,15 +722,136 @@ Ved forsinket betaling vil det påløpe purregebyr og forsinkelsesrenter. Ved ma
                 document.getElementById("finalizeButton").style.display = "block";
                 showCampaignsButton.style.display = "none";
 
+                // Show extra sections for PaymentPlan
+                if (paymentOption === "PaymentPlan") {
+                    document.getElementById("konsumentverketWarning").style.display = "flex";
+                    document.getElementById("konsumentverketWarning").style.setProperty('display', 'flex', 'important');
+                    document.getElementById("paymentPlanInfoSection").style.display = "block";
+                    document.getElementById("purchaseAmountDisplay").style.display = "block";
+                    document.getElementById("purchaseAmountValue").textContent =
+                        cartTotal.toLocaleString('sv-SE') + " kr";
+                    updateCampaignSummary(campaigns[0]);
+                }
+
                 document.addEventListener("change", (event) => {
                     if (event.target.name === "CampaignCode") {
-                        const selectedCampaignCode = event.target.value;
-                        document.getElementById("selectedCampaignCode").value = selectedCampaignCode;
+                        const selectedCode = event.target.value;
+                        document.getElementById("selectedCampaignCode").value = selectedCode;
+                        const selected = currentCampaigns.find(
+                            c => c.campaignCode.toString() === selectedCode
+                        );
+                        if (selected) updateCampaignSummary(selected);
                     }
                 });
             } catch (error) {
                 alert(error.message);
             }
+        }
+
+        function updateCampaignSummary1(campaign) {
+            if (!campaign) return;
+
+            const amount = cartTotal;
+            const months = campaign.contractLengthInMonths || 1;
+            const monthlyPayment = Math.round(amount * campaign.monthlyAnnuityFactor);
+            const totalCost = monthlyPayment * months + campaign.initialFee;
+
+            document.getElementById("summaryInitialFee").textContent = campaign.initialFee + " kr";
+            document.getElementById("summaryNotificationFee").textContent = campaign.notificationFee + " kr";
+            document.getElementById("summaryInterestRate").textContent = campaign.interestRatePercent + " %";
+            document.getElementById("summaryEffectiveInterest").textContent = formatDecimal(campaign.effectiveInterest) + " %";
+            document.getElementById("summaryTotalCost").innerHTML = "<strong>" + totalCost.toLocaleString('sv-SE') + " kr</strong>";
+
+            document.getElementById("campaignSummary").style.display = "block";
+
+            const month1Payment = monthlyPayment + campaign.initialFee;
+            document.getElementById("modalMonth1").textContent = month1Payment.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonth2").textContent = monthlyPayment.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonthRangeLabel").textContent = "Månad 3–" + months;
+            document.getElementById("modalMonthRest").textContent = monthlyPayment.toLocaleString('sv-SE') + " kr";
+        }
+
+        function updateCampaignSummary2(campaign) {
+            if (!campaign) return;
+
+            const amount = cartTotal;
+            const months = campaign.contractLengthInMonths || 1;
+            const monthlyPayment = amount * campaign.monthlyAnnuityFactor;
+            const totalCost = campaign.initialFee + (monthlyPayment + campaign.notificationFee) * months;
+
+            document.getElementById("summaryInitialFee").textContent = campaign.initialFee + " kr";
+            document.getElementById("summaryNotificationFee").textContent = campaign.notificationFee + " kr";
+            document.getElementById("summaryInterestRate").textContent = campaign.interestRatePercent + " %";
+            document.getElementById("summaryEffectiveInterest").textContent = formatDecimal(campaign.effectiveInterest) + " %";
+            document.getElementById("summaryTotalCost").innerHTML = "<strong>" + Math.round(totalCost).toLocaleString('sv-SE') + " kr</strong>";
+
+            document.getElementById("campaignSummary").style.display = "block";
+
+            var monthlyWithFee = Math.round(monthlyPayment + campaign.notificationFee);
+            var month1Payment = Math.round(monthlyPayment + campaign.notificationFee + campaign.initialFee);
+
+            document.getElementById("modalMonth1").textContent = month1Payment.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonth2").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonthRangeLabel").textContent = "Månad 3\u2013" + months;
+            document.getElementById("modalMonthRest").textContent = monthlyWithFee.toLocaleString('sv-SE') + " kr";
+        }
+
+        function updateCampaignSummary(campaign) {
+            if (!campaign) return;
+
+            const amount = cartTotal;
+            const months = campaign.contractLengthInMonths || 1;
+
+            // old
+            const oldMonthlyPayment = Math.round(amount * campaign.monthlyAnnuityFactor);
+            const oldTotalCost = oldMonthlyPayment * months + campaign.initialFee;
+
+            const oldMonth1Payment = oldMonthlyPayment + campaign.initialFee;
+            const oldMonth2Payment = oldMonthlyPayment; // no notification fee in old logic
+            const oldMonthRestPayment = oldMonthlyPayment;
+
+            console.log('OLD CALCULATION:');
+            console.log('oldMonthlyPayment:', oldMonthlyPayment);
+            console.log('oldTotalCost:', oldTotalCost);
+            console.log('oldMonth1Payment:', oldMonth1Payment);
+            console.log('oldMonth2Payment:', oldMonth2Payment);
+            console.log('oldMonthRestPayment:', oldMonthRestPayment);
+
+            // ---------- NEW CALCULATIONS (for UI display) ----------
+            const monthlyPayment = amount * campaign.monthlyAnnuityFactor;
+            const totalCost = campaign.initialFee + (monthlyPayment + campaign.notificationFee) * months;
+
+            document.getElementById("summaryInitialFee").textContent =
+                campaign.initialFee + " kr";
+            document.getElementById("summaryNotificationFee").textContent =
+                campaign.notificationFee + " kr";
+            document.getElementById("summaryInterestRate").textContent =
+                campaign.interestRatePercent + " %";
+            document.getElementById("summaryEffectiveInterest").textContent =
+                formatDecimal(campaign.effectiveInterest) + " %";
+            document.getElementById("summaryTotalCost").innerHTML =
+                "<strong>" + Math.round(totalCost).toLocaleString('sv-SE') + " kr</strong>";
+
+            document.getElementById("campaignSummary").style.display = "block";
+
+            const monthlyWithFee = Math.round(monthlyPayment + campaign.notificationFee);
+            const month1PaymentNew = Math.round(monthlyPayment + campaign.notificationFee + campaign.initialFee);
+
+            document.getElementById("modalMonth1").textContent =
+                month1PaymentNew.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonth2").textContent =
+                monthlyWithFee.toLocaleString('sv-SE') + " kr";
+            document.getElementById("modalMonthRangeLabel").textContent =
+                "Månad 3–" + months;
+            document.getElementById("modalMonthRest").textContent =
+                monthlyWithFee.toLocaleString('sv-SE') + " kr";
+
+            // ---------- OPTIONAL: log new values too for direct side-by-side comparison ----------
+            console.log('NEW CALCULATION:');
+            console.log('monthlyPayment (raw, before rounding in places):', monthlyPayment);
+            console.log('totalCost:', Math.round(totalCost));
+            console.log('month1PaymentNew:', month1PaymentNew);
+            console.log('monthlyWithFee:', monthlyWithFee);
         }
 
         function formatDecimal(value) {

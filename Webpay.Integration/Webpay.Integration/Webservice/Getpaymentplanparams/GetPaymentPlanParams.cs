@@ -11,6 +11,7 @@ public class GetPaymentPlanParams
 {
     protected ServiceSoapClient _soapsc;
     private CountryCode _countryCode;
+    private decimal? _amount;
     private readonly IConfigurationProvider _config;
 
     public GetPaymentPlanParams(IConfigurationProvider config)
@@ -26,6 +27,12 @@ public class GetPaymentPlanParams
     public GetPaymentPlanParams SetCountryCode(CountryCode countryCode)
     {
         _countryCode = countryCode;
+        return this;
+    }
+
+    public GetPaymentPlanParams SetAmount(decimal amount)
+    {
+        _amount = amount;
         return this;
     }
 
@@ -61,7 +68,8 @@ public class GetPaymentPlanParams
 
         var request = new GetPaymentPlanParamsEuRequest
         {
-            Auth = GetStoreAuthorization()
+            Auth = GetStoreAuthorization(),
+            Amount = _amount
         };
 
         return request;

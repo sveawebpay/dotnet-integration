@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
 using Webpay.Integration.CSharp.Order.Row.Replace;
+using OrderRow = Webpay.Integration.CSharp.Order.Row.Replace.OrderRow;
 
 namespace Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway
 {

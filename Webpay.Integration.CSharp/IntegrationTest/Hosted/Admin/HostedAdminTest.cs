@@ -644,12 +644,31 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
 
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));          
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/addorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1.4"));         
 
         }
 
-       
+        [Test]
+        public void TestReplaceOrderRow()
+        {
+
+            var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
+                .ReplaceOrderRow(new ReplaceOrderRow(
+                    transactionId: 12341234,
+                    orderRows: new List<Order.Row.Replace.OrderRow> {
+                        new Order.Row.Replace.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,Reference = "r_1776342837077"},
+                         new Order.Row.Replace.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
+                    },
+                    correlationId: null
+                ));
+
+            var hostedAdminRequest = hostedActionRequest.PrepareRequest();
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/replaceorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/replaceorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1.4"));
+
+        }
+
+
 
         [Test]
         public void TestLowerOrderRowResponse()

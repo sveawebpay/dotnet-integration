@@ -154,16 +154,27 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             AddCorrelationIdHeader(lowerAmount.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramountconfirm");
         }
-        public HostedActionRequest AddOrderRow(AddOrderRow updateOrderRow)
+        public HostedActionRequest AddOrderRow(AddOrderRow addOrderRow)
         {
             var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
                 <addorderrow>
                 <transactionid>{0}</transactionid>
                 <orderrows>{1}
                 </orderrows>
-                </addorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows());
-            AddCorrelationIdHeader(updateOrderRow.CorrelationId);
+                </addorderrow>", addOrderRow.TransactionId, addOrderRow.GetXmlForOrderRows());
+            AddCorrelationIdHeader(addOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/addorderrow");
+        }
+        public HostedActionRequest ReplaceOrderRow(ReplaceOrderRow replaceOrderRow)
+        {
+            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
+                <replaceorderrow>
+                <transactionid>{0}</transactionid>
+                <orderrows>{1}
+                </orderrows>
+                </replaceorderrow>", replaceOrderRow.TransactionId, replaceOrderRow.GetXmlForOrderRows());
+            AddCorrelationIdHeader(replaceOrderRow.CorrelationId);
+            return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/replaceorderrow");
         }
         public HostedActionRequest UpdateOrderRow(UpdateOrderRow updateOrderRow)
         {

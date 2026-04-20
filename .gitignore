@@ -120,3 +120,5 @@ UpgradeLog*.XML
 *.exe
 /.gitignore
 
+/Webpay.Integration.CSharp/Webpay.Integration.CSharp/Push_Nuget.bat
+/Webpay.Integration.CSharp/Webpay.Integration.CSharp/Push_Nuget_Script.ps1

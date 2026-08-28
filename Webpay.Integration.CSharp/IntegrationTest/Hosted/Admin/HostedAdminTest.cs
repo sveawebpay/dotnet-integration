@@ -190,7 +190,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                .UpdateOrderRow(new UpdateOrderRow(
-                   transactionId: 102026690,
+                   transactionId: 1357296,
                
                    orderRows: new List<Order.Row.Update.OrderRow> {
                         new Order.Row.Update.OrderRow{Name ="t1&& gg",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,RowId = 1}
@@ -232,7 +232,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
         {
             var hostedActionRequest = new HostedAdmin(SveaConfig.GetDefaultConfig(), CountryCode.SE)
                .AddOrderRow(new AddOrderRow(
-                   transactionId: 102038418,
+                   transactionId: 1357296,
                    orderRows: new List<Order.Row.Add.OrderRow> {
                         new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
                          new Order.Row.Add.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
@@ -436,10 +436,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             Assert.That(hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/statuscode").InnerText, Is.EqualTo("0"));
 
             var actualPaymentmethodsXml = hostedAdminResponse.MessageXmlDocument.SelectSingleNode("/response/paymentmethods").InnerXml;
-            var expectedPaymentmethodsXml =
-                "<paymentmethod>MOBILEPAY</paymentmethod><paymentmethod>SVEACARDPAY</paymentmethod><paymentmethod>SVEACARDPAY_PF</paymentmethod><paymentmethod>SWISH</paymentmethod><paymentmethod>SWISH_PF</paymentmethod><paymentmethod>TRUSTLY</paymentmethod>";
-
-            Assert.That(actualPaymentmethodsXml, Is.EqualTo(expectedPaymentmethodsXml));
+            Assert.Fail(actualPaymentmethodsXml);
         }
 
 
@@ -615,7 +612,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
                 .UpdateOrderRow(new UpdateOrderRow(
                     transactionId: 12341234,
                     orderRows: new List<Order.Row.Update.OrderRow> {
-                        new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1},
+                        new Order.Row.Update.OrderRow{Name ="t1",Quantity = 1.4M,ArticleNumber ="123",DiscountPercent = 3,Unit = "Pc",UnitPrice = 100,VatPercent = 1,RowId = 1},
                          new Order.Row.Update.OrderRow{Name ="t2",Quantity = 3.4M,ArticleNumber ="132423423",DiscountPercent = 1,Unit = "Pc",UnitPrice = 200,VatPercent = 2}
                     },
                      reference:"reference",
@@ -625,7 +622,7 @@ namespace Webpay.Integration.CSharp.IntegrationTest.Hosted.Admin
             var hostedAdminRequest = hostedActionRequest.PrepareRequest();
 
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/transactionid").InnerText, Is.EqualTo("12341234"));
-            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1"));
+            Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("quantity").InnerText, Is.EqualTo("1.4"));
             Assert.That(hostedAdminRequest.MessageXmlDocument.SelectSingleNode("/updateorderrow/orderrows").FirstChild.SelectSingleNode("rowid").InnerText, Is.EqualTo("1"));
         }
         [Test]

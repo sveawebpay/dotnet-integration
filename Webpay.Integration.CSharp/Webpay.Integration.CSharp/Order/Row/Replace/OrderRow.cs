@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
-using System.Xml;
-using Webpay.Integration.CSharp.Util;
+using System.Xml.Linq;
 
 namespace Webpay.Integration.CSharp.Order.Row.Replace
 {
@@ -17,17 +16,17 @@ namespace Webpay.Integration.CSharp.Order.Row.Replace
         public string Reference { get; set; }
         public string GetXmlForOrderRow()
         {
-            return $"<row>" +
-                    $"<name>{Name.XmlEscape()}</name>" +
-                    $"<quantity>{Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
-                    $"<unitprice>{UnitPrice}</unitprice>" +
-                    $"<vatpercent>{VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +
-                    $"<discountpercent>{DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
-                    $"<discountamount>{DiscountAmount}</discountamount>" +
-                    $"<unit>{Unit}</unit>" +
-                    $"<articlenumber>{ArticleNumber.XmlEscape()}</articlenumber>"+
-                    $"<reference>{Reference.XmlEscape()}</reference>" +
-                    $"</row>";
+            return new XElement("row",
+                new XElement("name", Name),
+                new XElement("quantity", Quantity.ToString(CultureInfo.InvariantCulture)),
+                new XElement("unitprice", UnitPrice),
+                new XElement("vatpercent", VatPercent.ToString(CultureInfo.InvariantCulture)),
+                new XElement("discountpercent", DiscountPercent.ToString(CultureInfo.InvariantCulture)),
+                new XElement("discountamount", DiscountAmount),
+                new XElement("unit", Unit),
+                new XElement("articlenumber", ArticleNumber),
+                new XElement("reference", Reference)
+            ).ToString(SaveOptions.DisableFormatting);
         }
     }
 }

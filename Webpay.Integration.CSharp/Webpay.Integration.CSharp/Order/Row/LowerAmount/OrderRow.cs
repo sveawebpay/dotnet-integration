@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Webpay.Integration.CSharp.Hosted.Admin.Response;
+using System.Xml.Linq;
 
 namespace Webpay.Integration.CSharp.Order.Row.LowerAmount
 {
@@ -15,10 +12,10 @@ namespace Webpay.Integration.CSharp.Order.Row.LowerAmount
 
         public string GetXmlForOrderRow()
         {
-            return $"<orderrow>" +
-                    $"<rowid>{RowId}</rowid>" +
-                    $"<quantity>{Quantity?.ToString(CultureInfo.InvariantCulture)}</quantity>" +
-                    $"</orderrow>";
+            return new XElement("orderrow",
+                new XElement("rowid", RowId),
+                new XElement("quantity", Quantity?.ToString(CultureInfo.InvariantCulture))
+            ).ToString(SaveOptions.DisableFormatting);
         }
     }
 }

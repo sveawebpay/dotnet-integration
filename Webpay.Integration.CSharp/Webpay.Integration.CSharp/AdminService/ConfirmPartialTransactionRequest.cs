@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
@@ -63,11 +64,14 @@ namespace Webpay.Integration.CSharp.AdminService
 
         private ConfirmPartialResponse GetDefaultResponse()
         {
+            var doc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", null),
+                new XElement("response",
+                    new XElement("statuscode", 100)
+                )
+            );
             var dummyInternalErrorResponseXml = new XmlDocument();
-            dummyInternalErrorResponseXml.LoadXml(@"<?xml version='1.0' encoding='UTF-8'?>
-                        <response>
-                            <statuscode>100</statuscode>
-                        </response>");
+            dummyInternalErrorResponseXml.LoadXml($"{doc.Declaration}\n{doc.ToString(SaveOptions.DisableFormatting)}");
 
             return ConfirmPartial.Response(dummyInternalErrorResponseXml);
         }

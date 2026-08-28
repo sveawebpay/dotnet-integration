@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Webpay.Integration.CSharp.Util
 {
@@ -27,10 +28,10 @@ namespace Webpay.Integration.CSharp.Util
 
         public static string GetXml(this KeyValuePair<string, string> item)
         {
-            return $"<item>" +
-                     $"<key>{item.Key}</key>" +
-                     $"<value>{item.Value}</value>" +
-                   $"</item>";
+            return new XElement("item",
+                new XElement("key", item.Key),
+                new XElement("value", item.Value)
+            ).ToString(SaveOptions.DisableFormatting);
         }
     }
 }

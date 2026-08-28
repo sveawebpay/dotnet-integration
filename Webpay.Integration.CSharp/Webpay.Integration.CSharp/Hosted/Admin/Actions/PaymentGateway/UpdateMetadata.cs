@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using Webpay.Integration.CSharp.Hosted.Admin.Response.PaymentGateway;
 using Webpay.Integration.CSharp.Util;
 
@@ -17,12 +19,9 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway
         }
         public string GetXmlForMetadata()
         {
-            var xml = "";
-            foreach (var item in Metadata)
-            {
-                xml += item.GetXml();
-            };
-            return xml;
+            if (Metadata == null) return "";
+            var elements = Metadata.Select(item => XElement.Parse(item.GetXml()));
+            return string.Concat(elements.Select(e => e.ToString(SaveOptions.DisableFormatting)));
         }
         public static UpdateMetadataResponse Response(XmlDocument response)
         {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using Webpay.Integration.CSharp.Config;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions;
 using Webpay.Integration.CSharp.Hosted.Admin.Actions.PaymentGateway;
@@ -22,22 +24,33 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
             Headers = new List<AdminRequestHeader>();
         }
 
+        private static string CreateXml(XElement rootElement)
+        {
+            var doc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", null),
+                rootElement
+            );
+            return $"{doc.Declaration}\n{doc}";
+        }
+
         public HostedActionRequest Annul(Annul annul)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <annul>
-                <transactionid>{0}</transactionid>
-                </annul>", annul.TransactionId);
+            var xml = CreateXml(
+                new XElement("annul",
+                    new XElement("transactionid", annul.TransactionId)
+                )
+            );
             AddCorrelationIdHeader(annul.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/annul");
         }
 
         public HostedActionRequest CancelRecurSubscription(CancelRecurSubscription cancelRecurSubscription)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <cancelrecursubscription>
-                <subscriptionid>{0}</subscriptionid>
-                </cancelrecursubscription>", cancelRecurSubscription.SubscriptionId);
+            var xml = CreateXml(
+                new XElement("cancelrecursubscription",
+                    new XElement("subscriptionid", cancelRecurSubscription.SubscriptionId)
+                )
+            );
             AddCorrelationIdHeader(cancelRecurSubscription.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/cancelrecursubscription");
@@ -45,52 +58,58 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest Confirm(Confirm confirm)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <confirm>
-                <transactionid>{0}</transactionid>
-                <capturedate>{1}</capturedate>
-                </confirm>", confirm.TransactionId, confirm.CaptureDate.ToString("yyyy-MM-dd"));
+            var xml = CreateXml(
+                new XElement("confirm",
+                    new XElement("transactionid", confirm.TransactionId),
+                    new XElement("capturedate", confirm.CaptureDate.ToString("yyyy-MM-dd"))
+                )
+            );
             AddCorrelationIdHeader(confirm.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/confirm");
         }
 
         public HostedActionRequest ConfirmPartial(ConfirmPartial confirmPartial)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <confirmPartial>
-                <captureRequestId>{0}</captureRequestId>
-                <transactionid>{1}</transactionid>
-                <amount>{2}</amount>
-                <orderrows>{3}
-                </orderrows>
-                </confirmPartial>", confirmPartial.CallerReferenceId.ToString(), confirmPartial.TransactionId, confirmPartial.Amount, confirmPartial.GetXmlForOrderRows());
+            var orderrows = !string.IsNullOrEmpty(confirmPartial.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + confirmPartial.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("confirmPartial",
+                    new XElement("captureRequestId", confirmPartial.CallerReferenceId.ToString()),
+                    new XElement("transactionid", confirmPartial.TransactionId),
+                    new XElement("amount", confirmPartial.Amount),
+                    new XElement("orderrows", orderrows)
+                )
+            );
             AddCorrelationIdHeader(confirmPartial.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/confirmpartial");
         }
 
         public HostedActionRequest Credit(Credit credit)
         {
-            var creditByAmount = $"<amounttocredit>{credit.AmountToCredit}</amounttocredit>";
-            if (credit.Deliveries.Count>0)
-            {
-                creditByAmount = "";
-            }
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <credit>
-                <transactionid>{0}</transactionid>
-                {1}
-                {2}
-                </credit>", credit.TransactionId, creditByAmount, credit.GetXmlForDeliveries());
+            var deliveriesXml = credit.GetXmlForDeliveries();
+            var creditElement = new XElement("credit",
+                new XElement("transactionid", credit.TransactionId),
+                credit.Deliveries != null && credit.Deliveries.Count > 0
+                    ? null
+                    : new XElement("amounttocredit", credit.AmountToCredit),
+                !string.IsNullOrEmpty(deliveriesXml)
+                    ? XElement.Parse(deliveriesXml)
+                    : null
+            );
+            var xml = CreateXml(creditElement);
             AddCorrelationIdHeader(credit.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/credit");
         }
 
         public HostedActionRequest GetPaymentMethods(GetPaymentMethods getPaymentMethods)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <getpaymentmethods>
-                <merchantid>{0}</merchantid>
-                </getpaymentmethods>", getPaymentMethods.MerchantId);
+            var xml = CreateXml(
+                new XElement("getpaymentmethods",
+                    new XElement("merchantid", getPaymentMethods.MerchantId)
+                )
+            );
             AddCorrelationIdHeader(getPaymentMethods.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/getpaymentmethods");
@@ -98,10 +117,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest GetReconciliationReport(GetReconciliationReport getReconciliationReport)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <getreconciliationreport>
-                <date>{0}</date>
-                </getreconciliationreport>", getReconciliationReport.Date.ToString("yyyy-MM-dd"));
+            var xml = CreateXml(
+                new XElement("getreconciliationreport",
+                    new XElement("date", getReconciliationReport.Date.ToString("yyyy-MM-dd"))
+                )
+            );
             AddCorrelationIdHeader(getReconciliationReport.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/getreconciliationreport");
@@ -109,102 +129,134 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest LowerAmount(LowerAmount lowerAmount)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <loweramount>
-                <transactionid>{0}</transactionid>
-                <amounttolower>{1}</amounttolower>
-                </loweramount>", lowerAmount.TransactionId, lowerAmount.AmountToLower);
+            var xml = CreateXml(
+                new XElement("loweramount",
+                    new XElement("transactionid", lowerAmount.TransactionId),
+                    new XElement("amounttolower", lowerAmount.AmountToLower)
+                )
+            );
             AddCorrelationIdHeader(lowerAmount.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramount");
         }
 
         public HostedActionRequest LowerOrderRow(LowerOrderRow lowerOrderRow)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <lowerorderrow>
-                <transactionid>{0}</transactionid>
-                <orderrows>{1}
-                </orderrows>
-                </lowerorderrow>", lowerOrderRow.TransactionId, lowerOrderRow.GetXmlForOrderRows());
+            var orderrows = !string.IsNullOrEmpty(lowerOrderRow.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + lowerOrderRow.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("lowerorderrow",
+                    new XElement("transactionid", lowerOrderRow.TransactionId),
+                    new XElement("orderrows", orderrows)
+                )
+            );
             AddCorrelationIdHeader(lowerOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/lowerorderrow");
         }
+
         public HostedActionRequest LowerOrderRowConfirm(LowerOrderRowConfirm lowerOrderRowConfrim)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <lowerorderrowconfirm>
-                <transactionid>{0}</transactionid>
-                <capturerequestid>{1}</capturerequestid>
-                <orderrows>{2}
-                </orderrows>
-                </lowerorderrowconfirm>", lowerOrderRowConfrim.TransactionId,lowerOrderRowConfrim.CaptureRequestId, lowerOrderRowConfrim.GetXmlForOrderRows());
+            var orderrows = !string.IsNullOrEmpty(lowerOrderRowConfrim.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + lowerOrderRowConfrim.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("lowerorderrowconfirm",
+                    new XElement("transactionid", lowerOrderRowConfrim.TransactionId),
+                    new XElement("capturerequestid", lowerOrderRowConfrim.CaptureRequestId),
+                    new XElement("orderrows", orderrows)
+                )
+            );
             AddCorrelationIdHeader(lowerOrderRowConfrim.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/lowerorderrowconfirm");
         }
+
         public HostedActionRequest LowerAmountConfirm(LowerAmountConfirm lowerAmount)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <loweramountconfirm>
-                <transactionid>{0}</transactionid>
-                <amounttolower>{1}</amounttolower>
-                <capturedate>{2}</capturedate>
-                </loweramountconfirm>", lowerAmount.TransactionId, 
-                                        lowerAmount.AmountToLower,
-                                        lowerAmount.CaptureDate.ToString("yyyy-MM-dd"));
+            var xml = CreateXml(
+                new XElement("loweramountconfirm",
+                    new XElement("transactionid", lowerAmount.TransactionId),
+                    new XElement("amounttolower", lowerAmount.AmountToLower),
+                    new XElement("capturedate", lowerAmount.CaptureDate.ToString("yyyy-MM-dd"))
+                )
+            );
             AddCorrelationIdHeader(lowerAmount.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/loweramountconfirm");
         }
+
         public HostedActionRequest AddOrderRow(AddOrderRow addOrderRow)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <addorderrow>
-                <transactionid>{0}</transactionid>
-                <orderrows>{1}
-                </orderrows>
-                </addorderrow>", addOrderRow.TransactionId, addOrderRow.GetXmlForOrderRows());
+            var orderrows = !string.IsNullOrEmpty(addOrderRow.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + addOrderRow.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("addorderrow",
+                    new XElement("transactionid", addOrderRow.TransactionId),
+                    new XElement("orderrows", orderrows)
+                )
+            );
             AddCorrelationIdHeader(addOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/addorderrow");
         }
+
         public HostedActionRequest ReplaceOrderRow(ReplaceOrderRow replaceOrderRow)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <replaceorderrow>
-                <transactionid>{0}</transactionid>
-                <orderrows>{1}
-                </orderrows>
-                </replaceorderrow>", replaceOrderRow.TransactionId, replaceOrderRow.GetXmlForOrderRows());
+            var orderrows = !string.IsNullOrEmpty(replaceOrderRow.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + replaceOrderRow.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("replaceorderrow",
+                    new XElement("transactionid", replaceOrderRow.TransactionId),
+                    new XElement("orderrows", orderrows)
+                )
+            );
             AddCorrelationIdHeader(replaceOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/replaceorderrow");
         }
+
         public HostedActionRequest UpdateOrderRow(UpdateOrderRow updateOrderRow)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <updateorderrow>
-                <transactionid>{0}</transactionid>
-                <orderrows>{1}
-                </orderrows>
-                <reference>{2}</reference>
-                </updateorderrow>", updateOrderRow.TransactionId, updateOrderRow.GetXmlForOrderRows(),updateOrderRow.Reference);
+            var orderrows = !string.IsNullOrEmpty(updateOrderRow.GetXmlForOrderRows())
+                ? XElement.Parse("<orderrows>" + updateOrderRow.GetXmlForOrderRows() + "</orderrows>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("updateorderrow",
+                    new XElement("transactionid", updateOrderRow.TransactionId),
+                    new XElement("orderrows", orderrows),
+                    new XElement("reference", updateOrderRow.Reference)
+                )
+            );
             AddCorrelationIdHeader(updateOrderRow.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updateorderrow");
         }
+
         public HostedActionRequest UpdateMetadata(UpdateMetadata metadata)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <updatepaymentmetadata>
-                <transactionid>{0}</transactionid>
-                <metadata>{1}
-                </metadata>
-                </updatepaymentmetadata>", metadata.TransactionId, metadata.GetXmlForMetadata());
+            var metadataElements = !string.IsNullOrEmpty(metadata.GetXmlForMetadata())
+                ? XElement.Parse("<metadata>" + metadata.GetXmlForMetadata() + "</metadata>").Elements()
+                : Enumerable.Empty<XElement>();
+
+            var xml = CreateXml(
+                new XElement("updatepaymentmetadata",
+                    new XElement("transactionid", metadata.TransactionId),
+                    new XElement("metadata", metadataElements)
+                )
+            );
             AddCorrelationIdHeader(metadata.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/updatepaymentmetadata");
         }
+
         public HostedActionRequest Query(QueryByTransactionId query)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <query>
-                <transactionid>{0}</transactionid>
-                </query>", query.TransactionId);
+            var xml = CreateXml(
+                new XElement("query",
+                    new XElement("transactionid", query.TransactionId)
+                )
+            );
             AddCorrelationIdHeader(query.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/querytransactionid");
@@ -212,10 +264,11 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest Query(QueryByCustomerRefNo query)
         {
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <query>
-                <customerrefno>{0}</customerrefno>
-                </query>", query.CustomerRefNo);
+            var xml = CreateXml(
+                new XElement("query",
+                    new XElement("customerrefno", query.CustomerRefNo)
+                )
+            );
             AddCorrelationIdHeader(query.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers,
                 "/querycustomerrefno");
@@ -223,15 +276,15 @@ namespace Webpay.Integration.CSharp.Hosted.Admin
 
         public HostedActionRequest Recur(Recur recur)
         {
-            var vat = recur.Vat != 0 ? "<vat>" + recur.Vat + "</vat>" : "";
-            var xml = string.Format(@"<?xml version=""1.0"" encoding=""UTF-8""?>
-                <recur>
-                <customerrefno>{0}</customerrefno>
-                <subscriptionid>{1}</subscriptionid>
-                <currency>{2}</currency>
-                <amount>{3}</amount>
-                {4}
-                </recur >", recur.CustomerRefNo, recur.SubscriptionId, recur.Currency, recur.Amount, vat);
+            var xml = CreateXml(
+                new XElement("recur",
+                    new XElement("customerrefno", recur.CustomerRefNo),
+                    new XElement("subscriptionid", recur.SubscriptionId),
+                    new XElement("currency", recur.Currency),
+                    new XElement("amount", recur.Amount),
+                    recur.Vat != 0 ? new XElement("vat", recur.Vat) : null
+                )
+            );
             AddCorrelationIdHeader(recur.CorrelationId);
             return new HostedActionRequest(xml, CountryCode, MerchantId, ConfigurationProvider, Headers, "/recur");
         }

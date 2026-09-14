@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Web;
 using System.Xml;
+using System.Xml.Linq;
 using Webpay.Integration.CSharp.Hosted.Admin.Response;
 using Webpay.Integration.CSharp.Order;
 using Webpay.Integration.CSharp.Order.Row;
@@ -28,69 +29,56 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         public string GetXmlForDeliveries()
         {
-            var xml = "<deliveries>";
-            Deliveries.ForEach(delivery =>
-            {
-                if(delivery != null)
-                {
-                    xml += GetXmlForDelivery(delivery);
-                }
-                
-            });
-            xml += "</deliveries>";
-            return xml;
+            var deliveries = new XElement("deliveries",
+                Deliveries?.Where(d => d != null).Select(GetXmlForDelivery)
+            );
+            return deliveries.ToString(SaveOptions.DisableFormatting);
         }
 
         public static CreditResponse Response(XmlDocument responseXml)
         {
             return new CreditResponse(responseXml);
         }
-        private string GetXmlForDelivery(Delivery delivery)
+        private XElement GetXmlForDelivery(Delivery delivery)
         {
-            return $"<delivery>" +
-                        $"<id>{delivery.Id}</id> " +
-                        $"<orderrows>{GetXmlForOrderRows(delivery)}</orderrows>" +
-                        $"</delivery>";
+            return new XElement("delivery",
+                new XElement("id", delivery.Id),
+                new XElement("orderrows", GetXmlForOrderRows(delivery))
+            );
         }
-        private string GetXmlForOrderRows(Delivery delivery)
+        private IEnumerable<XElement> GetXmlForOrderRows(Delivery delivery)
         {
-            var xml = "";
-            if (delivery.OrderRows.Count() > 0 || delivery.NewOrderRows.Count() > 0)
+            var rows = new List<XElement>();
+            if (delivery.OrderRows != null && delivery.OrderRows.Count() > 0)
             {
-
-                foreach (var row in delivery.OrderRows)
-                {
-                    xml += GetXmlForOrderRow(row);
-
-                }
-                foreach (var row in delivery.NewOrderRows)
-                {
-                    xml += GetXmlForOrderRow(row);
-
-                }
+                rows.AddRange(delivery.OrderRows.Select(GetXmlForOrderRow));
             }
-            return xml;
+            if (delivery.NewOrderRows != null && delivery.NewOrderRows.Count() > 0)
+            {
+                rows.AddRange(delivery.NewOrderRows.Select(GetXmlForOrderRow));
+            }
+            return rows;
         }
-        private string GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
+        private XElement GetXmlForOrderRow(NewCreditOrderRowBuilder orderRow)
         {
-            return $"<row>" +
-                         $"<name>{orderRow.Name.XmlEscape()}</name>" +
-                         $"<unitprice>{orderRow.UnitPrice}</unitprice>" +
-                         $"<quantity>{orderRow.Quantity.ToString(CultureInfo.InvariantCulture)}</quantity>" +
-                         $"<vatpercent>{orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)}</vatpercent>" +
-                         $"<discountpercent>{orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)}</discountpercent>" +
-                         $"<discountamount>{orderRow.DiscountAmount}</discountamount>" +
-                         $"<unit>{orderRow.Unit}</unit>" +
-                         $"<articlenumber>{orderRow.ArticleNumber.XmlEscape()}</articlenumber>" +
-                         $"</row>";
+            return new XElement("row",
+                new XElement("name", orderRow.Name),
+                new XElement("unitprice", orderRow.UnitPrice),
+                new XElement("quantity", orderRow.Quantity.ToString(CultureInfo.InvariantCulture)),
+                new XElement("vatpercent", orderRow.VatPercent.ToString(CultureInfo.InvariantCulture)),
+                new XElement("discountpercent", orderRow.DiscountPercent.ToString(CultureInfo.InvariantCulture)),
+                new XElement("discountamount", orderRow.DiscountAmount),
+                new XElement("unit", orderRow.Unit),
+                new XElement("articlenumber", orderRow.ArticleNumber)
+            );
         }
-        private string GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
+        private XElement GetXmlForOrderRow(CreditOrderRowBuilder orderRow)
         {
             var quantity = orderRow.Quantity.HasValue ? orderRow.Quantity.Value.ToString(CultureInfo.InvariantCulture) : orderRow.Quantity.ToString();
-            return $"<row>" +
-                   $"<rowid>{orderRow.RowId}</rowid>" +
-                   $"<quantity>{quantity}</quantity>" +
-                   $"</row>";
+            return new XElement("row",
+                new XElement("rowid", orderRow.RowId),
+                new XElement("quantity", quantity)
+            );
         }
         public bool ValidateCreditRequest(out CreditResponse response)
         {
@@ -163,12 +151,15 @@ namespace Webpay.Integration.CSharp.Hosted.Admin.Actions
         }
         private CreditResponse GetValidationErrorResponse(string message)
         {
+            var doc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", null),
+                new XElement("response",
+                    new XElement("statuscode", 403),
+                    new XElement("errorMessage", message)
+                )
+            );
             var ValidationErrorResponseXml = new XmlDocument();
-            ValidationErrorResponseXml.LoadXml($"<?xml version='1.0' encoding='UTF-8'?>" +
-                $"<response>" +
-                $"<statuscode>403</statuscode>" +
-                $"<errorMessage>{message}</errorMessage>" +
-                $"</response>");
+            ValidationErrorResponseXml.LoadXml($"{doc.Declaration}\n{doc.ToString(SaveOptions.DisableFormatting)}");
 
             return Credit.Response(ValidationErrorResponseXml);
         }
